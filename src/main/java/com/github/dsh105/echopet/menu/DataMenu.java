@@ -47,6 +47,7 @@ public class DataMenu implements Menu {
 		OTHER,
 		HORSE_TYPE,
 		HORSE_VARIANT,
-		HORSE_MARKING;
+		HORSE_MARKING,
+		HORSE_ARMOUR;
 	}
 }

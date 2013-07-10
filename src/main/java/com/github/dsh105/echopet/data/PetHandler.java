@@ -18,6 +18,7 @@ import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.blaze.BlazePet;
 import com.github.dsh105.echopet.entity.pet.creeper.CreeperPet;
 import com.github.dsh105.echopet.entity.pet.enderman.EndermanPet;
+import com.github.dsh105.echopet.entity.pet.horse.HorseArmour;
 import com.github.dsh105.echopet.entity.pet.horse.HorseMarking;
 import com.github.dsh105.echopet.entity.pet.horse.HorsePet;
 import com.github.dsh105.echopet.entity.pet.horse.HorseType;
@@ -389,6 +390,7 @@ public class PetHandler {
 		HorseType ht = HorseType.NORMAL;
 		HorseVariant hv = HorseVariant.WHITE;
 		HorseMarking hm = HorseMarking.NONE;
+		HorseArmour ha = HorseArmour.NONE;
 		
 		for (PetData pd : data) {
 			if (petType.isDataAllowed(pd)) {
@@ -550,6 +552,22 @@ public class PetHandler {
 							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
 						}
 					}
+					
+					if (pd.isType(Type.HORSE_ARMOUR)) {
+						try {
+							if (pd == PetData.NOARMOUR) {
+								ha = HorseArmour.NONE;
+							}
+							else {
+								HorseArmour a = HorseArmour.valueOf(pd.toString());
+								if (a != null) {
+									ha = a;
+								}
+							}
+						} catch(Exception e) {
+							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
+						}
+					}
 				}
 				
 				list.add(pd);
@@ -559,6 +577,7 @@ public class PetHandler {
 			HorsePet hp = (HorsePet) pet;
 			hp.setHorseType(ht);
 			hp.setVariant(hv, hm);
+			hp.setArmour(ha);
 		}
 		
 		if (b) {

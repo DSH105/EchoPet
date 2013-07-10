@@ -12,6 +12,7 @@ public class HorsePet extends Pet implements IAgeablePet {
 	HorseType horseType;
 	HorseVariant variant;
 	HorseMarking marking;
+	HorseArmour armour;
 	boolean baby = false;
 	boolean chested = false;
 	
@@ -28,6 +29,11 @@ public class HorsePet extends Pet implements IAgeablePet {
 		((EntityHorsePet) getPet()).setVariant(variant, marking);
 		this.variant = variant;
 		this.marking = marking;
+	}
+	
+	public void setArmour(HorseArmour armour) {
+		((EntityHorsePet) getPet()).setArmour(armour);
+		this.armour = armour;
 	}
 	
 	public void setBaby(boolean flag) {
@@ -50,6 +56,10 @@ public class HorsePet extends Pet implements IAgeablePet {
 	
 	public HorseMarking getMarking() {
 		return this.marking;
+	}
+	
+	public HorseArmour getArmour() {
+		return this.armour;
 	}
 	
 	public boolean isBaby() {

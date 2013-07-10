@@ -12,9 +12,10 @@ import com.github.dsh105.echopet.menu.DataMenu.DataMenuType;
 
 public enum MenuItem {
 	
-	HORSE_TYPE(Material.HAY_BLOCK, 1, (short) 0, DataMenuType.HORSE_TYPE, "Horse Type", "Horse"),
-	HORSE_VARIANT(Material.LEASH, 1, (short) 0, DataMenuType.HORSE_VARIANT, "Horse Variant", "Horse"),
-	HORSE_MARKING(Material.INK_SACK, 1, (short) 0, DataMenuType.HORSE_MARKING, "Horse Marking", "Horse"),
+	HORSE_TYPE(Material.HAY_BLOCK, 1, (short) 0, DataMenuType.HORSE_TYPE, "Type", "Horse"),
+	HORSE_VARIANT(Material.LEASH, 1, (short) 0, DataMenuType.HORSE_VARIANT, "Variant", "Horse"),
+	HORSE_MARKING(Material.INK_SACK, 1, (short) 0, DataMenuType.HORSE_MARKING, "Marking", "Horse"),
+	HORSE_ARMOUR(Material.IRON_CHESTPLATE, 1, (short) 0, DataMenuType.HORSE_ARMOUR, "Armour", "Horse"),
 	CHESTED(Material.CHEST, 1, (short) 0, DataMenuType.BOOLEAN, "Chested", "Horse"),
 	FIRE(Material.FIRE, 1, (short) 0, DataMenuType.BOOLEAN, "Fire", "Blaze"),
 	SADDLE(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Saddle", "Pig"),

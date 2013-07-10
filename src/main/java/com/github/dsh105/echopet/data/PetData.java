@@ -23,6 +23,11 @@ public enum PetData {
 	//GRAY,
 	DARKBROWN("darkbrown", Type.HORSE_VARIANT),
 	
+	NOARMOUR("noarmour", Type.HORSE_ARMOUR),
+	IRON("iron", Type.HORSE_ARMOUR),
+	GOLD("gold", Type.HORSE_ARMOUR),
+	DIAMOND("diamond", Type.HORSE_ARMOUR),
+	
 	NONE("noMarking", Type.HORSE_MARKING),
 	SOCKS("whiteSocks", Type.HORSE_MARKING),
 	WHITEPATCH("whitePatch", Type.HORSE_MARKING),
@@ -93,6 +98,6 @@ public enum PetData {
 	}
 	
 	public enum Type {
-		BOOLEAN, OTHER, COLOR, CAT, SIZE, PROF, HORSE_TYPE, HORSE_VARIANT, HORSE_MARKING;
+		BOOLEAN, OTHER, COLOR, CAT, SIZE, PROF, HORSE_TYPE, HORSE_VARIANT, HORSE_MARKING, HORSE_ARMOUR;
 	}
 }
