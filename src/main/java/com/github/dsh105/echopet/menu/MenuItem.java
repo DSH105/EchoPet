@@ -1,0 +1,67 @@
+package com.github.dsh105.echopet.menu;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import com.github.dsh105.echopet.menu.DataMenu.DataMenuType;
+
+public enum MenuItem {
+	
+	HORSE_TYPE(Material.HAY_BLOCK, 1, (short) 0, DataMenuType.HORSE_TYPE, "Horse Type", "Horse"),
+	HORSE_VARIANT(Material.LEASH, 1, (short) 0, DataMenuType.HORSE_VARIANT, "Horse Variant", "Horse"),
+	HORSE_MARKING(Material.INK_SACK, 1, (short) 0, DataMenuType.HORSE_MARKING, "Horse Marking", "Horse"),
+	CHESTED(Material.CHEST, 1, (short) 0, DataMenuType.BOOLEAN, "Chested", "Horse"),
+	FIRE(Material.FIRE, 1, (short) 0, DataMenuType.BOOLEAN, "Fire", "Blaze"),
+	SADDLE(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Saddle", "Pig"),
+	SHEARED(Material.SHEARS, 1, (short) 0, DataMenuType.BOOLEAN, "Sheared", "Sheep"),
+	SCREAMING(Material.ENDER_PEARL, 1, (short) 0, DataMenuType.BOOLEAN, "Screaming", "Enderman"),
+	POTION(Material.getMaterial(373), 1, (short) 0, DataMenuType.BOOLEAN, "Potion", "Witch"),
+	SHIELD(Material.GLASS, 1, (short) 0, DataMenuType.BOOLEAN, "Shield", "Wither"),
+	POWER(Material.BEACON, 1, (short) 0, DataMenuType.BOOLEAN, "Powered", "Creeper"),
+	SIZE(Material.SLIME_BALL, 1, (short) 0, DataMenuType.SIZE, "Size", "Slime", "MagmaCube"),
+	BABY(Material.INK_SACK, 1, (short) 15, DataMenuType.BOOLEAN, "Baby", "PigZombie", "Zombie", "Chicken", "Cow", "MushroomCow", "Ocelot", "Pig", "Sheep", "Wolf", "Villager"),
+	CAT_TYPE(Material.RAW_FISH, 1, (short) 0, DataMenuType.CAT_TYPE, "Cat Type", "Ocelot"),
+	ANGRY(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Angry", "Wolf"),
+	TAMED(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Tamed", "Wolf"),
+	WITHER(Material.getMaterial(397), 1, (short) 1, DataMenuType.BOOLEAN, "Wither", "Skeleton"),
+	VILLAGER(Material.EMERALD, 1, (short) 0, DataMenuType.BOOLEAN, "Villager", "Zombie", "PigZombie"),
+	COLOR(Material.WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf"),
+	PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Proffession", "Villager"),
+	RIDE(Material.CARROT_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet using your mouse."),
+	HAT(Material.IRON_HELMET, 1, (short) 0, DataMenuType.BOOLEAN, "Hat Pet", "Wear your pet on your head.");
+	
+	private Material mat;
+	private String name;
+	private List<String> lore;
+	private short data;
+	DataMenuType menuType;
+	
+	MenuItem(Material mat, int amount, short data, DataMenuType menuType, String name, String... lore) {
+		this.mat = mat;
+		this.name = name;
+		List<String> list = new ArrayList<String>();
+		for (String s : lore) {
+			list.add(s);
+		}
+		this.lore = list;
+		this.menuType = menuType;
+	}
+	
+	public ItemStack getItem() {
+		ItemStack i = new ItemStack(this.mat, 1, this.data);
+		ItemMeta meta = i.getItemMeta();
+		meta.setDisplayName(ChatColor.RED + this.name);
+		meta.setLore(this.lore);
+		i.setItemMeta(meta);
+		return i;
+	}
+	
+	public DataMenuType getMenuType() {
+		return this.menuType;
+	}
+}

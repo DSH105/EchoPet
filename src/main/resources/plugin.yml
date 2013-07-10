@@ -1,0 +1,10 @@
+name: EchoPet
+version: ${echopet.version}
+author: DSH105
+description: Pets...Forever Echoing In Your Footsteps.
+website: http://dev.bukkit.org/server-mods/echopet/
+main: ${main.class}
+prefix: EchoPet
+commands:
+    ecupdate:
+        description: Update the EchoPet plugin.
