@@ -59,7 +59,7 @@ Since 1.3, EchoPet has been sending small amounts of information to MCStats.org 
 
 ### Auto-Updater
 
-EchoPet comes with an [[http://forums.bukkit.org/threads/updater-easy-safe-and-policy-compliant-auto-updating-for-your-plugins.96681/|auto-updater]] to save you, as a server owner, from continually checking this page for new files. It simply connects to dev.bukkit.org and compares the versions of available files. If you **do not** wish for EchoPet to perform this check, navigate to the Configuration File (config.yml) in the EchoPet directory of your plugins folder and change "checkForUpdates" and "autoUpdate" to "false". The first value disables the version comparison altogether and the second updates the plugin automatically if new files are detected.
+EchoPet comes with an [AutoUpdater](http://forums.bukkit.org/threads/updater-easy-safe-and-policy-compliant-auto-updating-for-your-plugins.96681/) to save you, as a server owner, from continually checking this page for new files. It simply connects to dev.bukkit.org and compares the versions of available files. If you **do not** wish for EchoPet to perform this check, navigate to the Configuration File (config.yml) in the EchoPet directory of your plugins folder and change "checkForUpdates" and "autoUpdate" to "false". The first value disables the version comparison altogether and the second updates the plugin automatically if new files are detected.
 
 ***
 
