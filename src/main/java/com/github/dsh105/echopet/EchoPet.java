@@ -41,7 +41,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_6_R2.CraftServer;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
 
 import com.github.dsh105.echopet.commands.CustomCommand;
 import com.github.dsh105.echopet.commands.PetCommand;
