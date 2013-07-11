@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.server.v1_6_R2.World;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
