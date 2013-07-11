@@ -79,7 +79,7 @@ public class PetCommand implements CommandExecutor {
 						return true;
 					}
 					
-					String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(1, args, " "));
+					String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(2, args, " "));
 					if (name.length() > 32) {
 						sender.sendMessage(Lang.PET_NAME_TOO_LONG.toString());
 						return true;
