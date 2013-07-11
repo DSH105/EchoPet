@@ -247,11 +247,11 @@ public class EchoPet extends JavaPlugin {
 		
 		String cmdString = DO.getCommandString();
 		if (CM.getCommand(cmdString) != null) {
-			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Command temporarily registered under " + ChatColor.RED + "/ec:" + cmdString);
+			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Pet Command temporarily registered under " + ChatColor.RED + "/ec:" + cmdString);
 		}
 		String adminCmdString = DO.getCommandString() + "admin";
 		if (CM.getCommand(adminCmdString) != null) {
-			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
+			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Pet Admin Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
 		}
 		CustomCommand petCmd = new CustomCommand(cmdString);
 		CM.register("ec", petCmd);
