@@ -82,6 +82,12 @@
             <version>${minecraft.version}-${craftbukkit.version}-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R6</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -92,5 +98,9 @@
           <id>lilypad</id>
           <url>http://ci.lilypadmc.org/plugin/repository/everything</url>
       </repository>
+      <repository>
+        <id>Plugin Metrics</id>
+        <url>http://repo.mcstats.org/content/repositories/public</url>
+    </repository>
     </repositories>
 </project>
