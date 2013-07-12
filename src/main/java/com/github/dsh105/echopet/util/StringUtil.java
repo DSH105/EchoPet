@@ -330,13 +330,13 @@ public class StringUtil {
 			String[] s = {ChatColor.GOLD + "/pet <type>:[data],[data];[name]",
 					ChatColor.YELLOW + "    - Changes your current pet.",
 					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
-					ChatColor.YELLOW + "    - Pet names can be entered using a colon.",
+					ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type>",
 					
 					ChatColor.GOLD + "/pet <type>:[data],[data];[name <mount>:[data],[data];[name]",
 					ChatColor.YELLOW + "    - Spawns a pet by your side with the specified mount.",
 					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
-					ChatColor.YELLOW + "    - Pet names can be entered using a colon.",
+					ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type> and echopet.pet.type.<mount>",
 					
 					ChatColor.GOLD + "/pet name <name>",
@@ -354,7 +354,7 @@ public class StringUtil {
 			String[] s = {ChatColor.GOLD + "/pet mount <type>:[data],[data];[name]",
 					ChatColor.YELLOW + "    - Changes the mount type of your current pet.",
 					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
-					ChatColor.YELLOW + "    - Pet names can be entered using a colon.",
+					ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type>",
 					
 					ChatColor.GOLD + "/pet name mount <name>",
@@ -371,7 +371,6 @@ public class StringUtil {
 		if (i == 3) {
 			String[] s = {ChatColor.GOLD + "/pet list",
 					ChatColor.YELLOW + "    - Lists available pet types.",
-					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.list",
 					
 					ChatColor.GOLD + "/pet info",
