@@ -93,7 +93,7 @@ public enum PetType {
 	BAT(EntityBatPet.class, BatPet.class, "Bat Pet", 6, EntityType.BAT),
 	CHICKEN(EntityChickenPet.class, ChickenPet.class, "Chicken Pet", 4, EntityType.CHICKEN, PetData.BABY),
 	COW(EntityCowPet.class, CowPet.class, "Cow Pet", 10, EntityType.COW, PetData.BABY),
-	HORSE(EntityHorsePet.class, HorsePet.class, "Horse Pet", 30, EntityType.HORSE, /*PetData.BABY,*/ PetData.CHESTED,    // I tested baby horses and they just turned invisible. It also resets all of their existing data. I'll have to find a workaround for this...
+	HORSE(EntityHorsePet.class, HorsePet.class, "Horse Pet", 30, EntityType.HORSE, /*PetData.BABY,*/ PetData.CHESTED, PetData.SADDLE,    // I tested baby horses and they just turned invisible. It also resets all of their existing data. I'll have to find a workaround for this...
 			PetData.NORMAL, PetData.DONKEY,
 			PetData.MULE, PetData.SKELETON, PetData.ZOMBIE, PetData.WHITE,
 			PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK,

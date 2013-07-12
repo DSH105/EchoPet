@@ -15,6 +15,7 @@ public class HorsePet extends Pet implements IAgeablePet {
 	HorseArmour armour;
 	boolean baby = false;
 	boolean chested = false;
+	boolean saddle = false;
 	
 	public HorsePet(Player owner, PetType petType) {
 		super(owner, petType);
@@ -41,6 +42,11 @@ public class HorsePet extends Pet implements IAgeablePet {
 		this.baby = flag;
 	}
 	
+	public void setSaddled(boolean flag) {
+		((EntityHorsePet) getPet()).setSaddled(flag);
+		this.saddle = flag;
+	}
+	
 	public void setChested(boolean flag) {
 		((EntityHorsePet) getPet()).setChested(flag);
 		this.chested = flag;
@@ -64,6 +70,10 @@ public class HorsePet extends Pet implements IAgeablePet {
 	
 	public boolean isBaby() {
 		return this.baby;
+	}
+	
+	public boolean isSaddled() {
+		return this.saddle;
 	}
 	
 	public boolean isChested() {

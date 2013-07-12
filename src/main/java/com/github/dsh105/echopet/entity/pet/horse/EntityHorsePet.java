@@ -26,6 +26,11 @@ public class EntityHorsePet extends EntityAgeablePet {
 		}
 		((HorsePet) pet).baby = flag;
 	}
+	
+	public void setSaddled(boolean flag) {
+		this.b(4, flag);
+		((HorsePet) pet).saddle = flag;
+	}
 
 	public void setType(HorseType t) {
 		if (t != HorseType.NORMAL) {
