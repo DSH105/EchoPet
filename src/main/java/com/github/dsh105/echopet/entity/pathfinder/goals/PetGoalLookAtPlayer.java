@@ -37,6 +37,9 @@ public class PetGoalLookAtPlayer extends PetGoal {
 		if (this.a.aC().nextFloat() >= this.e) {
 			return false;
 		}
+		else if (this.a.passenger != null) {
+			return false;
+		}
 		else {
 			if (this.f == EntityHuman.class) {
 				this.b = this.a.world.findNearbyPlayer(this.a, (double) this.c);
