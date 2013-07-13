@@ -47,7 +47,7 @@ public class EntityHorsePet extends EntityAgeablePet {
 	}
 	
 	public void setArmour(HorseArmour a) {
-		if (this.datawatcher.getByte(19) == HorseType.NORMAL.getId()) {
+		if (this.datawatcher.getByte(19) == Byte.valueOf((byte) HorseType.NORMAL.getId())) {
 			this.datawatcher.watch(22, Integer.valueOf(a.getId()));
 			((HorsePet) pet).armour = a;
 		}
