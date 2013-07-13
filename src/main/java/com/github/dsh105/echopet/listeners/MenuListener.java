@@ -58,6 +58,7 @@ public class MenuListener implements Listener {
 			if (slot <= size && inv.getItem(slot) != null) {
 				if (inv.getItem(slot).equals(DataMenuItem.CLOSE.getItem())) {
 					player.closeInventory();
+					event.setCancelled(true);
 					return;
 				}
 				for (final MenuItem mi : MenuItem.values()) {
@@ -84,6 +85,7 @@ public class MenuListener implements Listener {
 							menu.open(false);
 						}
 					}.runTaskLater(ec, 1L);
+					event.setCancelled(true);
 					return;
 				}
 				
