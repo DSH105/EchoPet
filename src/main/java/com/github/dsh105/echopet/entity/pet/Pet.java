@@ -211,6 +211,9 @@ public class Pet {
 	}
 	
 	public Pet createMount(final PetType pt) {
+		if (this.ownerIsRiding) {
+			this.ownerRidePet(false);
+		}
 		if (this.mount != null) {
 			this.removeMount();
 		}
