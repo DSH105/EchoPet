@@ -193,6 +193,7 @@ public class Pet {
 	public void removeMount() {
 		if (mount != null) {
 			mount.removePet();
+			this.mount = null;
 		}
 	}
 	
