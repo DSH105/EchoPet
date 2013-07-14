@@ -107,6 +107,16 @@ public class EchoPet extends JavaPlugin {
 	
 	public void onEnable() {
 		plugin = this;
+		// Make sure that the plugin is running under the correct version to prevent errors
+		if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString())) {
+			this.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
+					+ this.getDescription().getVersion() + ChatColor.RED
+					+ " is only compatible with:");
+			this.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
+			this.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
+			this.checkUpdates();
+			return;
+		}
 		PluginManager manager = getServer().getPluginManager();
 		DO = new DefaultOptions(this);
 		
@@ -145,17 +155,6 @@ public class EchoPet extends JavaPlugin {
 		/*if (DO.useSql()) {
 			sqlCon = new SQLConnection(this);
 		}*/
-		
-		// Make sure that the plugin is running under the correct version to prevent errors
-		if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString())) {
-			this.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
-					+ this.getDescription().getVersion() + ChatColor.RED
-					+ " is only compatible with:");
-			this.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
-			this.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
-			this.checkUpdates();
-			return;
-		}
 		
 		// Register custom entities
 		try {
