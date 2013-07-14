@@ -302,9 +302,10 @@ public class PetCommand implements CommandExecutor {
 						return true;
 					}
 					
-					if (ec.DO.allowMounts(petType)) {
+					if (!ec.DO.allowMounts(petType)) {
 						sender.sendMessage(Lang.MOUNTS_DISABLED.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
+						return true;
 					}
 					
 					if (sender.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)) {
