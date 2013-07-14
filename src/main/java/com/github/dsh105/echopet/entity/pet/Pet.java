@@ -210,10 +210,17 @@ public class Pet {
 		return b ? this.dataTrue : this.dataFalse;
 	}
 	
-	public Pet createMount(PetType pt) {
-		Pet p = pt.getNewPetInstance(owner, pt);
-		this.mount = p;
-		this.craftPet.setPassenger(this.mount.getCraftPet());
+	public Pet createMount(final PetType pt) {
+		if (this.mount != null) {
+			this.removeMount();
+		}
+		new BukkitRunnable() {
+			public void run() {
+				Pet p = pt.getNewPetInstance(owner, pt);
+				mount = p;
+				craftPet.setPassenger(mount.getCraftPet());
+			}
+		}.runTaskLater(EchoPet.getPluginInstance(), 5L);
 		return this.mount;
 	}
 	
