@@ -325,78 +325,78 @@ public class StringUtil {
 		return list;
 	}
 
-	public static String[] getHelpPage(int i) {
+	public static String[] getHelpPage(int i, String cmdLabel) {
 		if (i == 1) {
-			String[] s = {ChatColor.GOLD + "/pet <type>:[data],[data];[name]",
+			String[] s = {ChatColor.GOLD + "/" + cmdLabel + " <type>:[data],[data];[name]",
 					ChatColor.YELLOW + "    - Changes your current pet.",
 					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
 					ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type>",
 					
-					ChatColor.GOLD + "/pet <type>:[data],[data];[name <mount>:[data],[data];[name]",
+					ChatColor.GOLD + "/" + cmdLabel + " <type>:[data],[data];[name <mount>:[data],[data];[name]",
 					ChatColor.YELLOW + "    - Spawns a pet by your side with the specified mount.",
 					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
 					ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type> and echopet.pet.type.<mount>",
 					
-					ChatColor.GOLD + "/pet name <name>",
+					ChatColor.GOLD + "/" + cmdLabel + " name <name>",
 					ChatColor.YELLOW + "    - Set the name tag of your pet.",
 					ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.name",
 					
-					ChatColor.GOLD + "/pet remove",
+					ChatColor.GOLD + "/" + cmdLabel + " remove",
 					ChatColor.YELLOW + "    - Remove your current pet.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.remove"};
 			return s;
 		}
 		
 		if (i == 2) {
-			String[] s = {ChatColor.GOLD + "/pet mount <type>:[data],[data];[name]",
+			String[] s = {ChatColor.GOLD + "/" + cmdLabel + " mount <type>:[data],[data];[name]",
 					ChatColor.YELLOW + "    - Changes the mount type of your current pet.",
 					ChatColor.YELLOW + "    - Each data value is separated by a comma.",
 					ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type>",
 					
-					ChatColor.GOLD + "/pet name mount <name>",
+					ChatColor.GOLD + "/" + cmdLabel + " name mount <name>",
 					ChatColor.YELLOW + "    - Set the name tag of your pet's mount.",
 					ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.name",
 					
-					ChatColor.GOLD + "/pet mount remove",
+					ChatColor.GOLD + "/" + cmdLabel + " mount remove",
 					ChatColor.YELLOW + "    - Remove your pet's current mount.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.remove"};
 			return s;
 		}
 		
 		if (i == 3) {
-			String[] s = {ChatColor.GOLD + "/pet list",
+			String[] s = {ChatColor.GOLD + "/" + cmdLabel + " list",
 					ChatColor.YELLOW + "    - Lists available pet types.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.list",
 					
-					ChatColor.GOLD + "/pet info",
+					ChatColor.GOLD + "/" + cmdLabel + " info",
 					ChatColor.YELLOW + "    - Provides info on your current pet.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.info",
 					
-					ChatColor.GOLD + "/pet default set <type>:[data],[data] [mount]:[data],[data]",
+					ChatColor.GOLD + "/" + cmdLabel + " default set <type>:[data],[data] [mount]:[data],[data]",
 					ChatColor.YELLOW + "    - Set the default pet for when you log in.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.default.set.type.<type> and echopet.pet.default.set.type.<mount>",
 					
-					ChatColor.GOLD + "/pet default set current",
+					ChatColor.GOLD + "/" + cmdLabel + " default set current",
 					ChatColor.YELLOW + "    - Set the default pet to your current pet.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.default.set.current",
 					
-					ChatColor.GOLD + "/pet default remove",
+					ChatColor.GOLD + "/" + cmdLabel + " default remove",
 					ChatColor.YELLOW + "    - Remove your default pet.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.default.remove",};
 			return s;
 		}
 		
 		if (i == 4) {
-			String[] s = {ChatColor.GOLD + "/pet ride",
+			String[] s = {ChatColor.GOLD + "/" + cmdLabel + " ride",
 					ChatColor.YELLOW + "    - Ride your pet.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.ride",
 					
-					ChatColor.GOLD + "/pet hat",
+					ChatColor.GOLD + "/" + cmdLabel + " hat",
 					ChatColor.YELLOW + "    - Have your pet ride on your head.",
 					ChatColor.YELLOW + "    - Appears higher to the owner to prevent sight obstruction.",
 					ChatColor.DARK_RED + "    - Permission: echopet.pet.hat",};
@@ -437,42 +437,42 @@ public class StringUtil {
 		return builder.toString();
 	}
 	
-	public static boolean sendHelpMessage(CommandSender sender, String[] args) {
+	public static boolean sendHelpMessage(CommandSender sender, String[] args, String cmdLabel) {
 		if (args[0].equalsIgnoreCase("default")) {
 			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help Intelligence ------------");
-			sender.sendMessage(ChatColor.GOLD + "/pet default set <type>:[data],[data];<name> [mount]:[data],[data];<name>");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " default set <type>:[data],[data];<name> [mount]:[data],[data];<name>");
 			sender.sendMessage(ChatColor.YELLOW + "    - Set the default pet for when you log in.");
-			sender.sendMessage(ChatColor.GOLD + "/pet default remove");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " default remove");
 			sender.sendMessage(ChatColor.YELLOW + "    - Remove your default pet.");
 			return true;
 		}
 		else if (args[0].equalsIgnoreCase("name")) {
 			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help Intelligence ------------");
-			sender.sendMessage(ChatColor.GOLD + "/pet name <name>");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " name <name>");
 			sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet.");
 			sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-			sender.sendMessage(ChatColor.GOLD + "/pet name mount <name>");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " name mount <name>");
 			sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet's mount.");
 			sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
 			return true;
 		}
 		else if (args[0].equalsIgnoreCase("mount")) {
 			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help Intelligence ------------");
-			sender.sendMessage(ChatColor.GOLD + "/pet mount <type>:[data],[data]");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " mount <type>:[data],[data]");
 			sender.sendMessage(ChatColor.YELLOW + "    - Changes the mount type of your current pet.");
 			sender.sendMessage(ChatColor.YELLOW + "    - Each data value is separated by a comma.");
-			sender.sendMessage(ChatColor.GOLD + "/pet name mount <name>");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " name mount <name>");
 			sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet's mount.");
 			sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-			sender.sendMessage(ChatColor.GOLD + "/pet mount remove");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " mount remove");
 			sender.sendMessage(ChatColor.YELLOW + "    - Remove your pet's current mount.");
 			return true;
 		}
 		else if (args[0].equalsIgnoreCase("remove")) {
 			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help Intelligence ------------");
-			sender.sendMessage(ChatColor.GOLD + "/pet remove");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " remove");
 			sender.sendMessage(ChatColor.YELLOW + "    - Remove your current pet.");
-			sender.sendMessage(ChatColor.GOLD + "/pet mount remove");
+			sender.sendMessage(ChatColor.GOLD + "/" + cmdLabel + " mount remove");
 			sender.sendMessage(ChatColor.YELLOW + "    - Remove your pet's current mount.");
 			return true;
 		}

@@ -43,6 +43,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.dsh105.echopet.commands.CustomCommand;
+import com.github.dsh105.echopet.commands.PetAdminCommand;
 import com.github.dsh105.echopet.commands.PetCommand;
 import com.github.dsh105.echopet.config.DefaultOptions;
 import com.github.dsh105.echopet.config.YAMLConfig;
@@ -254,11 +255,11 @@ public class EchoPet extends JavaPlugin {
 		}
 		CustomCommand petCmd = new CustomCommand(cmdString);
 		CM.register("ec", petCmd);
-		petCmd.setExecutor(new PetCommand(this));
+		petCmd.setExecutor(new PetCommand(this, cmdString));
 		
 		CustomCommand petAdminCmd = new CustomCommand(adminCmdString);
 		CM.register("ec", petAdminCmd);
-		petAdminCmd.setExecutor(new PetCommand(this));
+		petAdminCmd.setExecutor(new PetAdminCommand(this, adminCmdString));
 		
 		// Register listeners
 		manager.registerEvents(new MenuListener(this), this);
