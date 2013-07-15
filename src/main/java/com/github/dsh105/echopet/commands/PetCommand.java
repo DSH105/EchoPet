@@ -16,6 +16,7 @@ import com.github.dsh105.echopet.data.UnorganisedPetData;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.menu.MenuOption;
 import com.github.dsh105.echopet.menu.PetMenu;
+import com.github.dsh105.echopet.util.HelpPage;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.MenuUtil;
 import com.github.dsh105.echopet.util.PetUtil;
@@ -24,9 +25,11 @@ import com.github.dsh105.echopet.util.StringUtil;
 public class PetCommand implements CommandExecutor {
 
 	private EchoPet ec;
+	private String cmdLabel;
 	
-	public PetCommand(EchoPet ec) {
+	public PetCommand(EchoPet ec, String commandLabel) {
 		this.ec = ec;
+		this.cmdLabel = commandLabel;
 	}
 	
 	//public static HashMap<String, Menu> openMenus = new HashMap<String, Menu>();
@@ -57,10 +60,10 @@ public class PetCommand implements CommandExecutor {
 				
 				if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("mount"))) {
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
-					sender.sendMessage(ChatColor.GOLD + "/pet name <name>");
+					sender.sendMessage(ChatColor.GOLD + "/" + this.cmdLabel + " name <name>");
 					sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet.");
 					sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-					sender.sendMessage(ChatColor.GOLD + "/pet name mount <name>");
+					sender.sendMessage(ChatColor.GOLD + "/" + this.cmdLabel + " name mount <name>");
 					sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet's mount.");
 					sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
 					return true;
@@ -174,7 +177,7 @@ public class PetCommand implements CommandExecutor {
 				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/3 ------------");
 					sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-					for (String s : StringUtil.getHelpPage(1)) {
+					for (String s : HelpPage.getHelpPage(1)) {
 						sender.sendMessage(s);
 					}
 					return true;
@@ -329,14 +332,14 @@ public class PetCommand implements CommandExecutor {
 					if (StringUtil.isInt(args[1])) {
 						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/3 ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-						for (String s : StringUtil.getHelpPage(Integer.parseInt(args[1]))) {
+						for (String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))) {
 							sender.sendMessage(s);
 						}
 						return true;
 					}
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/3 ------------");
 					sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-					for (String s : StringUtil.getHelpPage(1)) {
+					for (String s : HelpPage.getHelpPage(1)) {
 						sender.sendMessage(s);
 					}
 					return true;
@@ -487,7 +490,7 @@ public class PetCommand implements CommandExecutor {
 		if (sendError) {
 			// Something went wrong. Maybe the player didn't use a command correctly?
 			// Send them a message with the exact command to make sure
-			if (!StringUtil.sendHelpMessage(sender, args)) {
+			if (!HelpPage.sendRelevantHelpMessage(sender, args)) {
 				sender.sendMessage(Lang.COMMAND_ERROR.toString()
 						.replace("%cmd%", "/" + cmd.getLabel() + " " + (args.length == 0 ? "" : StringUtil .combineSplit(0, args, " "))));
 			}
