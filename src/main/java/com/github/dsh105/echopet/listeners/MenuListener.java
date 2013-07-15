@@ -1,5 +1,7 @@
 package com.github.dsh105.echopet.listeners;
 
+import java.util.Iterator;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -174,12 +176,16 @@ public class MenuListener implements Listener {
 		WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
 		
 		if (wmd != null) {
-			for (PetData dataTemp : wmd.petDataTrue) {
+			Iterator<PetData> i = wmd.petDataTrue.listIterator();
+			while (i.hasNext()) {
+				PetData dataTemp = i.next();
 				if (!StringUtil.hpp("echopet.pet.data", dataTemp.getConfigOptionString().toLowerCase(), player)) {
 					wmd.petDataTrue.remove(dataTemp);
 				}
 			}
-			for (PetData dataTemp : wmd.petDataFalse) {
+			Iterator<PetData> i2 = wmd.petDataFalse.listIterator();
+			while (i2.hasNext()) {
+				PetData dataTemp = i2.next();
 				if (!StringUtil.hpp("echopet.pet.data", dataTemp.getConfigOptionString().toLowerCase(), player)) {
 					wmd.petDataFalse.remove(dataTemp);
 				}
