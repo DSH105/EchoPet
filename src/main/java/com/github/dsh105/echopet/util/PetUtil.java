@@ -180,7 +180,7 @@ public class PetUtil {
 		
 		boolean b = true;
 		for(PetData dataTemp : petDataList) {
-			if (!StringUtil.hpp("echopet.data", dataTemp.getConfigOptionString().toLowerCase(), sender, false)) {
+			if (!StringUtil.hpp("echopet.pet.data", dataTemp.getConfigOptionString().toLowerCase(), sender, false)) {
 				b = false;
 			}
 		}
