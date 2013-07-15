@@ -17,7 +17,7 @@ public class SkeletonPet extends Pet {
 	}
 	
 	public void setWither(boolean flag) {
-		((EntitySkeletonPet) getPet()).setWither(flag);
+		((EntitySkeletonPet) getEntityPet()).setWither(flag);
 		this.wither = flag;
 	}
 	

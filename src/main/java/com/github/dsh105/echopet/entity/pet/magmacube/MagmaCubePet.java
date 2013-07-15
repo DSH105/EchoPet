@@ -15,7 +15,7 @@ public class MagmaCubePet extends Pet {
 	}
 	
 	public void setSize(int i) {
-		((EntityMagmaCubePet) getPet()).setSize(i);
+		((EntityMagmaCubePet) getEntityPet()).setSize(i);
 		this.size = i;
 	}
 	

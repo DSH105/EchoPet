@@ -35,7 +35,7 @@ public class PetOwnerListener implements Listener {
 		Pet pet = ec.PH.getPet(p);
 		if (pet != null && (event.getRightClicked() instanceof CraftPet)) {
 			event.setCancelled(true);
-			((EntityPet) pet.getPet()).a(((CraftPlayer) p).getHandle());
+			((EntityPet) pet.getEntityPet()).a(((CraftPlayer) p).getHandle());
 		}
 	}
 	

@@ -15,7 +15,7 @@ public class SlimePet extends Pet {
 	}
 	
 	public void setSize(int i) {
-		((EntitySlimePet) getPet()).setSize(i);
+		((EntitySlimePet) getEntityPet()).setSize(i);
 		this.size = i;
 	}
 	

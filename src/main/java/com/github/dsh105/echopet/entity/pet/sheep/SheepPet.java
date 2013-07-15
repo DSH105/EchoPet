@@ -19,7 +19,7 @@ public class SheepPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntitySheepPet) getPet()).setBaby(flag);
+		((EntitySheepPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
@@ -28,7 +28,7 @@ public class SheepPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setSheared(boolean flag) {
-		((EntitySheepPet) getPet()).setSheared(flag);
+		((EntitySheepPet) getEntityPet()).setSheared(flag);
 		this.sheared = flag;
 	}
 	
@@ -45,11 +45,11 @@ public class SheepPet extends Pet implements IAgeablePet {
 	}
 
 	public void setColor(DyeColor c) {
-		((EntitySheepPet) getPet()).setColor(c.getWoolData());
+		((EntitySheepPet) getEntityPet()).setColor(c.getWoolData());
 	}
 	
 	public void setColor(byte b) {
-		((EntitySheepPet) getPet()).setColor(b);
+		((EntitySheepPet) getEntityPet()).setColor(b);
 	}
 	
 }

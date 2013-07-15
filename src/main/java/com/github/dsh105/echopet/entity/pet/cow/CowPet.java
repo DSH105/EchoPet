@@ -16,7 +16,7 @@ public class CowPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityCowPet) getPet()).setBaby(flag);
+		((EntityCowPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	

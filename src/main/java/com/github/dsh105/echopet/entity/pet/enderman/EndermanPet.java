@@ -15,7 +15,7 @@ public class EndermanPet extends Pet {
 	}
 	
 	public void setScreaming(boolean flag) {
-		((EntityEndermanPet) getPet()).setScreaming(flag);
+		((EntityEndermanPet) getEntityPet()).setScreaming(flag);
 		this.scream = flag;
 	}
 	

@@ -22,7 +22,7 @@ public class VillagerPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityVillagerPet) getPet()).setBaby(flag);
+		((EntityVillagerPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
@@ -35,7 +35,7 @@ public class VillagerPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setProfession(Profession prof) {
-		((EntityVillagerPet) getPet()).setProfession(prof.getId());
+		((EntityVillagerPet) getEntityPet()).setProfession(prof.getId());
 		this.profession = prof;
 	}
 	

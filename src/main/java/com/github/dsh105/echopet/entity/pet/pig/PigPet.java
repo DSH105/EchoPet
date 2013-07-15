@@ -17,7 +17,7 @@ public class PigPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityPigPet) getPet()).setBaby(flag);
+		((EntityPigPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
@@ -26,7 +26,7 @@ public class PigPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setSaddle(boolean flag) {
-		((EntityPigPet) getPet()).setSaddle(flag);
+		((EntityPigPet) getEntityPet()).setSaddle(flag);
 		this.saddle = flag;
 	}
 	

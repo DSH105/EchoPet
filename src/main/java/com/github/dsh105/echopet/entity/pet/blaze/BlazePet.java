@@ -15,7 +15,7 @@ public class BlazePet extends Pet {
 	}
 
 	public void setOnFire(boolean flag) {
-		((EntityBlazePet) getPet()).setOnFire(flag);
+		((EntityBlazePet) getEntityPet()).setOnFire(flag);
 		this.onFire = flag;
 	}
 	

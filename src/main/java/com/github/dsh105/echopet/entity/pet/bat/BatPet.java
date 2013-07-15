@@ -15,7 +15,7 @@ public class BatPet extends Pet {
 	}
 	
 	public void setHanging(boolean flag) {
-		((EntityBatPet) getPet()).setHanging(flag);
+		((EntityBatPet) getEntityPet()).setHanging(flag);
 		this.hanging = flag;
 	}
 	

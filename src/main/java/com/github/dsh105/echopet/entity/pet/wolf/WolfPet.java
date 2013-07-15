@@ -20,7 +20,7 @@ public class WolfPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setCollarColor(DyeColor dc) {
-		((EntityWolfPet) getPet()).setCollarColor(dc);
+		((EntityWolfPet) getEntityPet()).setCollarColor(dc);
 		this.collar = dc;
 	}
 	
@@ -29,7 +29,7 @@ public class WolfPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityWolfPet) getPet()).setBaby(flag);
+		((EntityWolfPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
@@ -38,7 +38,7 @@ public class WolfPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setTamed(boolean flag) {
-		((EntityWolfPet) getPet()).setTamed(flag);
+		((EntityWolfPet) getEntityPet()).setTamed(flag);
 		this.tamed = flag;
 	}
 	
@@ -47,7 +47,7 @@ public class WolfPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setAngry(boolean flag) {
-		((EntityWolfPet) getPet()).setAngry(flag);
+		((EntityWolfPet) getEntityPet()).setAngry(flag);
 		this.angry = flag;
 	}
 	

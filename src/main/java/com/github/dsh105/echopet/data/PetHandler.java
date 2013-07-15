@@ -101,7 +101,7 @@ public class PetHandler {
 	
 	public Pet getPet(Entity pet) {
 		for (Pet pi : pets) {
-			if (pi.getPet() == pet || pi.getMount().getPet() == pet) {
+			if (pi.getEntityPet() == pet || pi.getMount().getEntityPet() == pet) {
 				return pi;
 			}
 			if (pi.getCraftPet() == pet || pi.getMount().getCraftPet() == pet) {

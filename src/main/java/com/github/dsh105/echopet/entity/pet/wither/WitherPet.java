@@ -15,7 +15,7 @@ public class WitherPet extends Pet {
 	}
 	
 	public void setShielded(boolean flag) {
-		((EntityWitherPet) getPet()).setShielded(flag);
+		((EntityWitherPet) getEntityPet()).setShielded(flag);
 		this.shield = flag;
 	}
 	

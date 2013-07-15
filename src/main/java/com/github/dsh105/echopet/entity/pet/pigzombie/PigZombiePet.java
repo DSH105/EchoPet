@@ -18,7 +18,7 @@ public class PigZombiePet extends Pet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityPigZombiePet) getPet()).setBaby(flag);
+		((EntityPigZombiePet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
@@ -27,7 +27,7 @@ public class PigZombiePet extends Pet {
 	}
 	
 	public void setVillager(boolean flag) {
-		((EntityPigZombiePet) getPet()).setVillager(flag);
+		((EntityPigZombiePet) getEntityPet()).setVillager(flag);
 		this.villager = flag;
 	}
 	

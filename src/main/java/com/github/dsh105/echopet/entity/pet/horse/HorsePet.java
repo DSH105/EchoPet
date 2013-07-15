@@ -22,33 +22,33 @@ public class HorsePet extends Pet implements IAgeablePet {
 	}
 	
 	public void setHorseType(HorseType type) {
-		((EntityHorsePet) getPet()).setType(type);
+		((EntityHorsePet) getEntityPet()).setType(type);
 		this.horseType = type;
 	}
 	
 	public void setVariant(HorseVariant variant, HorseMarking marking) {
-		((EntityHorsePet) getPet()).setVariant(variant, marking);
+		((EntityHorsePet) getEntityPet()).setVariant(variant, marking);
 		this.variant = variant;
 		this.marking = marking;
 	}
 	
 	public void setArmour(HorseArmour armour) {
-		((EntityHorsePet) getPet()).setArmour(armour);
+		((EntityHorsePet) getEntityPet()).setArmour(armour);
 		this.armour = armour;
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityHorsePet) getPet()).setBaby(flag);
+		((EntityHorsePet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
 	public void setSaddled(boolean flag) {
-		((EntityHorsePet) getPet()).setSaddled(flag);
+		((EntityHorsePet) getEntityPet()).setSaddled(flag);
 		this.saddle = flag;
 	}
 	
 	public void setChested(boolean flag) {
-		((EntityHorsePet) getPet()).setChested(flag);
+		((EntityHorsePet) getEntityPet()).setChested(flag);
 		this.chested = flag;
 	}
 	

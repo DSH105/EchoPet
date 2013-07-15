@@ -15,7 +15,7 @@ public class CreeperPet extends Pet {
 	}
 	
 	public void setPowered(boolean flag) {
-		((EntityCreeperPet) getPet()).setPowered(flag);
+		((EntityCreeperPet) getEntityPet()).setPowered(flag);
 		this.powered = flag;
 	}
 	

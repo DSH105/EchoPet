@@ -16,7 +16,7 @@ public class MushroomCowPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityMushroomCowPet) getPet()).setBaby(flag);
+		((EntityMushroomCowPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	

@@ -182,7 +182,7 @@ public class Pet {
 		this.craftPet = cp;
 	}
 	
-	public EntityPet getPet() {
+	public EntityPet getEntityPet() {
 		return this.pet;
 	}
 	

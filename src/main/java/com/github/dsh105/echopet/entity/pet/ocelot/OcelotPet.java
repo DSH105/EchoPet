@@ -18,7 +18,7 @@ public class OcelotPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setBaby(boolean flag) {
-		((EntityOcelotPet) getPet()).setBaby(flag);
+		((EntityOcelotPet) getEntityPet()).setBaby(flag);
 		this.baby = flag;
 	}
 	
@@ -35,6 +35,6 @@ public class OcelotPet extends Pet implements IAgeablePet {
 	}
 	
 	public void setCatType(int i) {
-		((EntityOcelotPet) getPet()).setCatType(i);
+		((EntityOcelotPet) getEntityPet()).setCatType(i);
 	}
 }
