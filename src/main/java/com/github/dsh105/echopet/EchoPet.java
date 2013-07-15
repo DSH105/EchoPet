@@ -98,6 +98,9 @@ public class EchoPet extends JavaPlugin {
 	//private SQLConnection sqlCon;
 	public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 	
+	public String cmdString = "pet";
+	public String adminCmdString = "petadmin";
+	
 	// Update data
 	public boolean update = false;
 	public String name = "";
