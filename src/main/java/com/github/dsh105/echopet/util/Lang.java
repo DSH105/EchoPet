@@ -13,6 +13,7 @@ public enum Lang {
 	DIMENSION_CHANGE("dimension_change", "&eYour pet cannot co-exist in two dimensions. It has been removed and will remain in the previous world."),
 	AUTOSAVE_PET_LOAD("autosave_pet_load", "&eYour last active pet (&6%petname%&e) from this World (&6%world%&e) now follows close behind you."),
 	DEFAULT_PET_LOAD("default_pet_load", "&eYour default pet &e(&6%petname%&e) now follows close behind you."),
+	DATABASE_PET_LOAD("sql_pet_load", "&eYour Saved Pet (&6%petname%&e) now follows close behind you."),
 	
 	NO_PET("no_pet", "&eYou don't currently have a pet."),
 	NO_MOUNT("no_mount", "&eYour pet does not have a mount."),
@@ -44,7 +45,15 @@ public enum Lang {
 	REMOVE_DEFAULT("remove_default", "&eDefault pet removed successfully."),
 	SET_DEFAULT("set_default", "&eYour default pet has been set to &6%type%&e."),
 	SET_DEFAULT_WITH_MOUNT("set_default_with_mount", "&eYour default pet has been set to &6%type%&e with a &6%mtype% &emount."),
-	SET_DEFAULT_TO_CURRENT("set_default_current", "&eYour default pet has been set to your current pet");
+	SET_DEFAULT_TO_CURRENT("set_default_current", "&eYour default pet has been set to your current pet"),
+	
+	NULL_PLAYER("null_player", "&6%player% &eis not online or does not exist."),
+	PLAYER_PET_REMOVED("player_pet_removed", "&6%player%&e's Pet has been removed."),
+	PLAYER_NAME_MOUNT("player_name_mount", "&6%player%&e's &ePet's mount has been named to &r%name%&e."),
+	PLAYER_NAME_PET("player_name_pet", "&6%player%&e's &6%type% &ehas been named &r%name%&e."),
+	NO_PLAYER_FILE_DATA("no_player_file_data", "&eNo file data exists for &6%player%&e."),
+	PLAYER_NO_MOUNT("player_no_mount", "&6%player%&e's &ePet does not have a mount."),
+	PLAYER_NO_PET("player_has_no_pet", "&6%player% &edoes not currently have a Pet.");
 	
 	private String path;
 	private String def;
