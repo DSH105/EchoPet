@@ -80,10 +80,10 @@ public class DefaultOptions {
 	
 	public void setDefaultValues(YAMLConfig config) {
 		try {
-			config.set("commandString", "pet");
+			config.set("commandString", config.getString("commandString","pet"));
 			
-			config.set("autoUpdate", false, "If set to true, EchoPet will automatically download and install", "new updates.");
-			config.set("checkForUpdates", true, "If -autoUpdate- is set to false, EchoPet will notify certain", "players of new updates if they are available (if set to true).");
+			config.set("autoUpdate", config.getBoolean("autoUpdate", false), "If set to true, EchoPet will automatically download and install", "new updates.");
+			config.set("checkForUpdates", config.getBoolean("checkForUpdates", true), "If -autoUpdate- is set to false, EchoPet will notify certain", "players of new updates if they are available (if set to true).");
 			
 			/*config.set("sql.use", false, "If true, the plugin will utilise SQL Database using the info below.");
 			config.set("sql.host", "localhost");
