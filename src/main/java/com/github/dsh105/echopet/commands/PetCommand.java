@@ -247,7 +247,7 @@ public class PetCommand implements CommandExecutor {
 				if (sender.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)) {
 					Pet pi = ec.PH.createPet((Player) sender, petType);
 					if (!petDataList.isEmpty()) {
-						ec.PH.setData(pi, (PetData[]) petDataList.toArray(new PetData[petDataList.size()]), true);
+						ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
 					}
 					if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
 						pi.setName(UPD.petName);
@@ -314,7 +314,7 @@ public class PetCommand implements CommandExecutor {
 					if (sender.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)) {
 						pi.createMount(petType);
 						if (!petDataList.isEmpty()) {
-							ec.PH.setData(pi, (PetData[]) petDataList.toArray(new PetData[petDataList.size()]), true);
+							ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
 						}
 						if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
 							pi.setName(UPD.petName);
@@ -350,7 +350,7 @@ public class PetCommand implements CommandExecutor {
 				
 				if (args[1].equalsIgnoreCase("remove")) {
 					if (StringUtil.hpp("echopet.pet", "default.remove", sender, false) || sender.hasPermission("echopet.pet.default.*")) {
-						String path = "default." + ((Player) sender).getName() + ".";
+						String path = "default." + sender.getName() + ".";
 						if (ec.getPetConfig().get(path + "pet.type") == null) {
 							sender.sendMessage(Lang.NO_DEFAULT.toString());
 							return true;
@@ -386,13 +386,13 @@ public class PetCommand implements CommandExecutor {
 						&& StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(mountType), sender, false))) {
 					Pet pi = ec.PH.createPet(((Player) sender), petType, mountType);
 					if (!petDataList.isEmpty()) {
-						ec.PH.setData(pi, (PetData[]) petDataList.toArray(new PetData[petDataList.size()]), true);
+						ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
 					}
 					if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
 						pi.setName(UPD.petName);
 					}
 					if (!mountDataList.isEmpty()) {
-						ec.PH.setData(pi.getMount(), (PetData[]) mountDataList.toArray(new PetData[mountDataList.size()]), true);
+						ec.PH.setData(pi.getMount(), mountDataList.toArray(new PetData[mountDataList.size()]), true);
 					}
 					if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
 						pi.getMount().setName(UPD.petName);

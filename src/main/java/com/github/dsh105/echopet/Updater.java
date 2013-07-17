@@ -280,7 +280,7 @@ public class Updater
             Enumeration<? extends ZipEntry> e = zipFile.entries();
             while(e.hasMoreElements())
             {
-                ZipEntry entry = (ZipEntry)e.nextElement();
+                ZipEntry entry = e.nextElement();
                 File destinationFilePath = new File(zipPath,entry.getName());
                 destinationFilePath.getParentFile().mkdirs();
                 if(entry.isDirectory())

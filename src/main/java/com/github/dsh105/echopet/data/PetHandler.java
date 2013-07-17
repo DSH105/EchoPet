@@ -134,7 +134,7 @@ public class PetHandler {
 				tempData.add(data);
 			}
 		}
-		setData(pi, (PetData[]) tempData.toArray(new PetData[tempData.size()]), true);
+		setData(pi, tempData.toArray(new PetData[tempData.size()]), true);
 		
 		ArrayList<PetData> tempMountData = new ArrayList<PetData>();
 		if (pi.getMount() != null) {
@@ -143,7 +143,7 @@ public class PetHandler {
 					tempMountData.add(data);
 				}
 			}
-			setData(pi.getMount(), (PetData[]) tempMountData.toArray(new PetData[tempData.size()]), true);
+			setData(pi.getMount(), tempMountData.toArray(new PetData[tempData.size()]), true);
 		}
 		
 		if ((Boolean) ec.DO.getConfigOption("sendForceMessage", true)) {

@@ -99,7 +99,7 @@ public enum DataMenuItem {
 	}
 	
 	public ItemStack getItem() {
-		ItemStack i = new ItemStack(this.mat, this.amount, (short) this.data);
+		ItemStack i = new ItemStack(this.mat, this.amount, this.data);
 		ItemMeta meta = i.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + this.name);
 		meta.setLore(this.lore);

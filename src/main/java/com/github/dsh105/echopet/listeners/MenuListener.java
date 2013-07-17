@@ -192,7 +192,7 @@ public class MenuListener implements Listener {
 			}
 			
 			if (!wmd.petDataTrue.isEmpty()) {
-				ec.PH.setData(pet, (PetData[]) wmd.petDataTrue.toArray(new PetData[wmd.petDataFalse.size()]), true);
+				ec.PH.setData(pet, wmd.petDataTrue.toArray(new PetData[wmd.petDataFalse.size()]), true);
 				try {
 					Particle.FIRE.sendToLocation(pet.getLocation());
 				} catch (Exception e) {
@@ -201,7 +201,7 @@ public class MenuListener implements Listener {
 			}
 			
 			if (!wmd.petDataFalse.isEmpty()) {
-				ec.PH.setData(pet, (PetData[]) wmd.petDataTrue.toArray(new PetData[wmd.petDataTrue.size()]), false);
+				ec.PH.setData(pet, wmd.petDataTrue.toArray(new PetData[wmd.petDataTrue.size()]), false);
 				try {
 					Particle.RAINBOW_SMOKE.sendToLocation(pet.getLocation());
 				} catch (Exception e) {

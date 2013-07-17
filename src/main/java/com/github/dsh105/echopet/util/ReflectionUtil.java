@@ -100,7 +100,7 @@ public class ReflectionUtil {
 	}*/
 	
 	public static void spawnFirework(World w, Location l, FireworkEffect fe) {
-		Firework fw = (Firework) w.spawn(l, Firework.class);
+		Firework fw = w.spawn(l, Firework.class);
 		FireworkMeta fwm = fw.getFireworkMeta();
 		fwm.clearEffects();
 		fwm.addEffect(fe);

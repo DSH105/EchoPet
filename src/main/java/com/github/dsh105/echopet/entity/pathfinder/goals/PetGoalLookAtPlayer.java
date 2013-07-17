@@ -45,7 +45,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 				this.b = this.a.world.findNearbyPlayer(this.a, (double) this.c);
 			}
 			else {
-				this.b = this.a.world.a(this.f, this.b.boundingBox.grow((double) this.c, 3.0D, (double) this.c), (Entity) this.b);
+				this.b = this.a.world.a(this.f, this.b.boundingBox.grow((double) this.c, 3.0D, (double) this.c), this.b);
 			}
 			return this.b != null;
 		}

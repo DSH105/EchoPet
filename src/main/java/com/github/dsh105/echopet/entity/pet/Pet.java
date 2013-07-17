@@ -85,22 +85,22 @@ public class Pet {
 		}
 		if (!flag) {
 			if (this.mount != null) {
-				((EntityPet) this.mount.getCraftPet().getHandle()).mount(null);
-				((EntityPet) this.craftPet.getHandle()).mount(null);
-				((EntityPet) this.mount.getCraftPet().getHandle()).mount(((EntityPet) this.craftPet.getHandle()));
+				this.mount.getCraftPet().getHandle().mount(null);
+				this.craftPet.getHandle().mount(null);
+				this.mount.getCraftPet().getHandle().mount(this.craftPet.getHandle());
 			}
 			else {
-				((EntityPet) this.craftPet.getHandle()).mount(null);
+				this.craftPet.getHandle().mount(null);
 			}
 		}
 		else {
 			if (this.mount != null) {
-				((EntityPet) this.mount.getCraftPet().getHandle()).mount(null);
-				((EntityPet) this.craftPet.getHandle()).mount(((CraftPlayer) this.owner).getHandle());
+				this.mount.getCraftPet().getHandle().mount(null);
+				this.craftPet.getHandle().mount(((CraftPlayer) this.owner).getHandle());
 				this.craftPet.setPassenger(this.mount.getCraftPet());
 			}
 			else {
-				((EntityPet) this.craftPet.getHandle()).mount(((CraftPlayer) this.owner).getHandle());
+				this.craftPet.getHandle().mount(((CraftPlayer) this.owner).getHandle());
 			}
 		}
 		this.isHat = flag;
@@ -153,7 +153,7 @@ public class Pet {
 	public void setName(String s) {
 		s = StringUtil.replaceStringWithColours(s);
 		name = s;
-		LivingEntity le = (LivingEntity) craftPet;
+		LivingEntity le = craftPet;
 		le.setCustomName(s);
 		le.setCustomNameVisible((Boolean) ec.DO.getConfigOption("petTagVisible", true));
 	}
