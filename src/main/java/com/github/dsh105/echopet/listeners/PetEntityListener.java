@@ -1,5 +1,7 @@
 package com.github.dsh105.echopet.listeners;
 
+import com.github.dsh105.echopet.api.event.PetInteractEvent;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,7 +44,9 @@ public class PetEntityListener implements Listener {
 	public void onEntityDamage(EntityDamageEvent event) {
 		Entity e = event.getEntity();
 		if (e instanceof CraftPet) {
-			event.setCancelled(true);
+			PetInteractEvent iEvent = new PetInteractEvent(((CraftPet) e).getPet(), PetInteractEvent.Action.LEFT_CLICK, true);
+			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
+			event.setCancelled(iEvent.isCancelled());
 		}
 	}
 	

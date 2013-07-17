@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.listeners;
 
 
+import com.github.dsh105.echopet.api.event.PetInteractEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -35,7 +36,10 @@ public class PetOwnerListener implements Listener {
 		Pet pet = ec.PH.getPet(p);
 		if (pet != null && (event.getRightClicked() instanceof CraftPet)) {
 			event.setCancelled(true);
-			((EntityPet) pet.getEntityPet()).a(((CraftPlayer) p).getHandle());
+			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
+			if (!iEvent.isCancelled()) {
+				pet.getEntityPet().a(((CraftPlayer) p).getHandle());
+			}
 		}
 	}
 	
