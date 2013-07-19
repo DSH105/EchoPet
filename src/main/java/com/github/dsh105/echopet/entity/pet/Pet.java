@@ -22,8 +22,6 @@ import com.github.dsh105.echopet.util.StringUtil;
 
 public class Pet {
 	
-	private EchoPet ec;
-	
 	private Player owner;
 	private EntityPet pet;
 	private PetType petType;
@@ -38,7 +36,6 @@ public class Pet {
 	public ArrayList<PetData> dataFalse = new ArrayList<PetData>();
 	
 	public Pet(Player owner, PetType petType) {
-		this.ec = EchoPet.getPluginInstance();
 		this.owner = owner;
 		this.petType = petType;
 		this.pet = this.createPet();
@@ -122,8 +119,7 @@ public class Pet {
 			l.getChunk().load();
 		}
 		if (!mcWorld.addEntity(entityPet, SpawnReason.CUSTOM)) {
-			owner.sendMessage(ec.prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
-			ec.PH.removePet(this);
+			owner.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
 		}
 		
 		Event spawnEvent = new PetSpawnEvent(this, l);
@@ -155,7 +151,7 @@ public class Pet {
 		name = s;
 		LivingEntity le = craftPet;
 		le.setCustomName(s);
-		le.setCustomNameVisible((Boolean) ec.DO.getConfigOption("petTagVisible", true));
+		le.setCustomNameVisible((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("petTagVisible", true));
 	}
 	
 	public Location getLocation() {
