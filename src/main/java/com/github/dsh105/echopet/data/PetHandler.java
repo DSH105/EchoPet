@@ -582,13 +582,29 @@ public class PetHandler {
 		}
 		
 		if (b) {
-			for (PetData d : list) {
-				pet.dataTrue.add(d);
+			if (!list.isEmpty()) {
+				for (PetData d : list) {
+					if (pet.dataFalse.contains(d)) {
+						pet.dataFalse.remove(d);
+					}
+					if (!pet.dataTrue.contains(d)) {
+						pet.dataTrue.add(d);
+					}
+				}
+				//this.updateFileData("autosave", pet, list, true);
 			}
 		}
 		else {
-			for (PetData d : list) {
-				pet.dataFalse.add(d);
+			if (!list.isEmpty()) {
+				for (PetData d : list) {
+					if (pet.dataTrue.contains(d)) {
+						pet.dataTrue.remove(d);
+					}
+					if (!pet.dataFalse.contains(d)) {
+						pet.dataFalse.add(d);
+					}
+				}
+				//this.updateFileData("autosave", pet, list, false);
 			}
 		}
 	}
