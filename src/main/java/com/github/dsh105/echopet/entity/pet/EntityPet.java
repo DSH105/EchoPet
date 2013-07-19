@@ -212,18 +212,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		bukkitEntity.remove();
 	}
 	
-	public void travelDimension() {
-		byte b0;
-		if (this.world.worldProvider.dimension == -1) {
-			b0 = 0;
-		}
-		else {
-			b0 = -1;
-		}
-		this.b(b0);
-		this.setLocation(this.getOwner().getLocation());
-	}
-	
 	@Override
 	public void e(float f, float f1) { //f1 = sidewards, f1 = forwards/backwards
 		if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
