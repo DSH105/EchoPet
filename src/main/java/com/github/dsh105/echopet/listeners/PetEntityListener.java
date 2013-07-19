@@ -3,10 +3,12 @@ package com.github.dsh105.echopet.listeners;
 import com.github.dsh105.echopet.api.event.PetInteractEvent;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 
@@ -44,9 +46,20 @@ public class PetEntityListener implements Listener {
 	public void onEntityDamage(EntityDamageEvent event) {
 		Entity e = event.getEntity();
 		if (e instanceof CraftPet) {
-			PetInteractEvent iEvent = new PetInteractEvent(((CraftPet) e).getPet(), PetInteractEvent.Action.LEFT_CLICK, true);
-			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
-			event.setCancelled(iEvent.isCancelled());
+			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
+		Entity e = event.getEntity();
+		if (e instanceof CraftPet) {
+			Entity damager = event.getDamager();
+			if (damager instanceof Player) {
+				PetInteractEvent iEvent = new PetInteractEvent(((CraftPet) e).getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
+				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
+				event.setCancelled(iEvent.isCancelled());
+			}
 		}
 	}
 	

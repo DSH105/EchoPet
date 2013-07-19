@@ -33,9 +33,11 @@ public class PetOwnerListener implements Listener {
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player p = event.getPlayer();
-		Pet pet = ec.PH.getPet(p);
-		if (pet != null && (event.getRightClicked() instanceof CraftPet)) {
+		Entity e = event.getRightClicked();
+		if (e instanceof CraftPet) {
+			Pet pet = ((CraftPet) e).getPet();
 			event.setCancelled(true);
+			PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
 			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
 			if (!iEvent.isCancelled()) {
 				pet.getEntityPet().a(((CraftPlayer) p).getHandle());
