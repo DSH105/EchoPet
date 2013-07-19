@@ -28,6 +28,8 @@ public class PetMenu implements Menu {
 	
 	public void open(boolean sendMessage) {
 		this.pet.getOwner().openInventory(this.inv);
-		this.pet.getOwner().sendMessage(Lang.OPEN_MENU.toString().replace("%type%", StringUtil.capitalise(this.pet.getPetType().toString().replace("_", " "))));
+		if (sendMessage) {
+			this.pet.getOwner().sendMessage(Lang.OPEN_MENU.toString().replace("%type%", StringUtil.capitalise(this.pet.getPetType().toString().replace("_", " "))));
+		}
 	}
 }
