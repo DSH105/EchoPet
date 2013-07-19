@@ -34,29 +34,7 @@ public class WorldChangeListener implements Listener {
 			//pi.getPet().travelDimension();
 		}
 		
-		if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null) {
-			Pet pet = ec.PH.createPetFromFile("default", p);
-			if (pi == null) {
-				ec.PH.removePet(ec.PH.getPet(p));
-			}
-			else {
-				p.sendMessage(Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
-			}
-			return;
-		}
-		if (ec.DO.autoLoadPets(p)) {
-			String w = p.getWorld().getName();
-			if (ec.getPetConfig().get("autosave." + "." + w + "." + p.getName() + ".pet.type") != null) {
-				Pet pet = ec.PH.createPetFromFile("autosave", p);
-				if (pet == null) {
-					ec.PH.removePet(ec.PH.getPet(p));
-				}
-				else {
-					p.sendMessage(Lang.AUTOSAVE_PET_LOAD.toString().replace("%world%", w).replace("%petname%", StringUtil.capitalise(pet.getPetName().toString())));
-				}
-				return;
-			}
-		}
+		PetOwnerListener.loadPets(p, false);
 	}
 	
 	// Pets used to be able to enter portals.
