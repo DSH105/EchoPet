@@ -124,8 +124,7 @@ public class PetOwnerListener implements Listener {
 		}
 		
 		if (ec.DO.autoLoadPets(p)) {
-			String w = p.getWorld().getName();
-			if (ec.getPetConfig().get("autosave." + "." + w + "." + p.getName() + ".pet.type") != null) {
+			if (ec.getPetConfig().get("autosave." + "." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
 					ec.PH.removePet(ec.PH.getPet(p));

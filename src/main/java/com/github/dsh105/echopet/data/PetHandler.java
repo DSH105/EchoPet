@@ -253,9 +253,8 @@ public class PetHandler {
 	public void saveFileData(String type, Pet pi) {
 		clearFileData(type, pi);
 		try {
-			String w = pi.getLocation().getWorld().getName();
 			String oName = pi.getOwner().getName();
-			String path = type + "." + w + "." + oName;
+			String path = type + "." + oName;
 			PetType petType = pi.getPetType();
 			
 			ec.getPetConfig().set(path + ".pet.type", petType.toString());
@@ -308,9 +307,8 @@ public class PetHandler {
 		if (UMD.petName == null || UMD.petName.equalsIgnoreCase("")) {
 			mountName = pt.getDefaultName(p);
 		}
-		
-		String w = p.getWorld().getName();
-		String path = type + "." + w + "." + p.getName();
+
+		String path = type + "." + p.getName();
 		try {
 			ec.getPetConfig().set(path + ".pet.type", pt.toString());
 			ec.getPetConfig().set(path + ".pet.name", petName);
@@ -336,9 +334,8 @@ public class PetHandler {
 		PetType pt = UPD.petType;
 		PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 		String petName = UPD.petName;
-		
-		String w = p.getWorld().getName();
-		String path = type + "." + w + "." + p.getName();
+
+		String path = type +"." + p.getName();
 		try {
 			ec.getPetConfig().set(path + ".pet.type", pt.toString());
 			ec.getPetConfig().set(path + ".pet.name", petName);
@@ -363,26 +360,14 @@ public class PetHandler {
 	public void clearFileData(String type, Pet pi) {
 		String oName = pi.getOwner().getName();
 		String w = pi.getLocation().getWorld().getName();
-		String path = type + "." + w + "." + oName;
 		if (ec.getPetConfig().get(path + ".pet.type") != null) {
-			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
 				for (String key1 : ec.getPetConfig().getConfigurationSection(path + "." + key).getKeys(false)) {
-					if (ec.getPetConfig().get(path + "." + key + "." + key1) != null) {
-						ec.getPetConfig().set(path + "." + key + "." + key1, null);
-					}
 				}
-				if (ec.getPetConfig().get(path + "." + key) != null) {
-					ec.getPetConfig().set(path + "." + key, null);
-				}
-			}
-		}
-		ec.getPetConfig().saveConfig();
 	}
 	
 	public void clearFileData(String type, Player p) {
 		String pName = p.getName();
-		String w = p.getWorld().getName();
-		String path = type + "." + w + "." + pName;
+		String path = type + "." + pName;
 		if (ec.getPetConfig().get(path + ".pet.type") != null) {
 			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
 				for (String key1 : ec.getPetConfig().getConfigurationSection(path + "." + key).getKeys(false)) {
