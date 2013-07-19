@@ -64,9 +64,11 @@ public class PetAdminCommand implements CommandExecutor {
 							return true;
 						}
 						
-						ec.PH.removePet(pet);
+
 						ec.PH.clearFileData("autosave", pet);
-						
+						ec.SPH.clearFromDatabase(p);
+						ec.PH.removePet(pet);
+
 						sender.sendMessage(Lang.PLAYER_PET_REMOVED.toString().replace("%player%", p.getName()));
 						p.sendMessage(Lang.REMOVE_PET.toString());
 					}

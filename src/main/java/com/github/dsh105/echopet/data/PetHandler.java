@@ -54,11 +54,14 @@ public class PetHandler {
 	}
     
     public void removeAllPets() {
-        for (Pet pi : getAllPetData()) {
-			saveFileData("autosave", pi);
-			pi.removePet();
-		}
-        pets.clear();
+	    Iterator<Pet> i = pets.listIterator();
+	    while (i.hasNext()) {
+		    Pet p = i.next();
+		    saveFileData("autosave", p);
+		    ec.SPH.saveToDatabase(p, false);
+		    p.removePet();
+		    i.remove();
+	    }
     }
 	
 	public Pet createPet(Player owner, PetType petType) {
@@ -69,7 +72,8 @@ public class PetHandler {
 		//Pet pi = new Pet(owner, petType);
 		forceAllValidData(pi);
 		pets.add(pi);
-		saveFileData("autosave", pi);
+		//saveFileData("autosave", pi);
+		//ec.SPH.saveToDatabase(pi, false);
 		return pi;
 	}
 	
@@ -82,7 +86,8 @@ public class PetHandler {
 		pi.createMount(mountType);
 		forceAllValidData(pi);
 		pets.add(pi);
-		saveFileData("autosave", pi);
+		//saveFileData("autosave", pi);
+		//ec.SPH.saveToDatabase(pi, false);
 		return pi;
 	}
 	
@@ -163,6 +168,16 @@ public class PetHandler {
 			}
 		}
 	}
+
+	public void updateFileData(String type, Pet pet, ArrayList<PetData> list, boolean b) {
+		ec.SPH.updateDatabase(pet.getOwner(), list, b, pet.isMount());
+		String w = pet.getOwner().getWorld().getName();
+		String path = type + "." + w + "." + pet.getOwner().getName();
+		for (PetData pd : list) {
+			ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), b);
+		}
+		ec.getPetConfig().saveConfig();
+	}
 	
 	public Pet createPetFromFile(String type, Player p) {
 		if (ec.DO.autoLoadPets(p)) {
@@ -221,8 +236,8 @@ public class PetHandler {
 		while (i.hasNext()) {
 			Pet p = i.next();
 			if (p.getOwner() == player) {
-				clearFileData("autosave", p);
 				saveFileData("autosave", p);
+				ec.SPH.saveToDatabase(p, false);
 				p.removePet();
 				i.remove();
 			}
@@ -230,7 +245,7 @@ public class PetHandler {
 	}
 	
 	public void removePet(Pet pi) {
-		saveFileData("autosave", pi);
+		//saveFileData("autosave", pi);
 		pi.removePet();
 		pets.remove(pi);
 	}

@@ -76,6 +76,8 @@ public class PetOwnerListener implements Listener {
 		Pet pi = ec.PH.getPet(p);
 		if (pi != null) {
 			//ec.PH.saveFileData("autosave", pi);
+			ec.PH.saveFileData("autosave", pi);
+			ec.SPH.saveToDatabase(pi, false);
 			ec.PH.removePet(pi);
 		}
 	}
@@ -90,13 +92,25 @@ public class PetOwnerListener implements Listener {
 		new BukkitRunnable() {
 			
 			public void run() {
-				loadPets(p);
+				loadPets(p, true);
 			}
 			
 		}.runTaskLater(ec, 20);
 	}
 	
-	private void loadPets(Player p) {
+	public static void loadPets(Player p, boolean sendMessage) {
+		EchoPet ec = EchoPet.getPluginInstance();
+		if (ec.DO.sqlOverride()) {
+			Pet pet = ec.SPH.createPetFromDatabase(p);
+			if (pet == null) {
+				return;
+			}
+				if (sendMessage) {
+					p.sendMessage(Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
+				}
+			}
+			return;
+		}
 		
 		if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null) {
 			Pet pi = ec.PH.createPetFromFile("default", p);
@@ -129,6 +143,8 @@ public class PetOwnerListener implements Listener {
 		Player p = event.getEntity();
 		Pet pet = ec.PH.getPet(p); 
 		if (pet != null) {
+			ec.PH.saveFileData("autosave", pet);
+			ec.SPH.saveToDatabase(pet, false);
 			ec.PH.removePet(pet);
 			p.sendMessage(Lang.REMOVE_PET_DEATH.toString());
 		}

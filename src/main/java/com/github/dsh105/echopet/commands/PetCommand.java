@@ -218,9 +218,9 @@ public class PetCommand implements CommandExecutor {
 						sender.sendMessage(Lang.NO_PET.toString());
 						return true;
 					}
-					ec.PH.removePet(pi);
-					
 					ec.PH.clearFileData("autosave", pi);
+					ec.SPH.clearFromDatabase(pi.getOwner());
+					ec.PH.removePet(pi);
 					sender.sendMessage(Lang.REMOVE_PET.toString());
 					return true;
 				} else sendError = false;
@@ -252,6 +252,8 @@ public class PetCommand implements CommandExecutor {
 					if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
 						pi.setName(UPD.petName);
 					}
+					ec.PH.saveFileData("autosave", pi);
+					ec.SPH.saveToDatabase(pi, false);
 					sender.sendMessage(Lang.CREATE_PET.toString()
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 					return true;
@@ -276,6 +278,8 @@ public class PetCommand implements CommandExecutor {
 							return true;
 						}
 						pi.removeMount();
+						ec.PH.saveFileData("autosave", pi);
+						ec.SPH.saveToDatabase(pi, false);
 						sender.sendMessage(Lang.REMOVE_MOUNT.toString());
 						return true;
 					} else sendError = false;
@@ -319,6 +323,8 @@ public class PetCommand implements CommandExecutor {
 						if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
 							pi.setName(UPD.petName);
 						}
+						ec.PH.saveFileData("autosave", pi);
+						ec.SPH.saveToDatabase(pi, false);
 						sender.sendMessage(Lang.CHANGE_MOUNT.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 						return true;
@@ -357,6 +363,7 @@ public class PetCommand implements CommandExecutor {
 						}
 						
 						ec.PH.clearFileData("default", (Player) sender);
+						ec.SPH.clearFromDatabase((Player) sender);
 						sender.sendMessage(Lang.REMOVE_DEFAULT.toString());
 						return true;
 					} else sendError = false;
@@ -397,6 +404,8 @@ public class PetCommand implements CommandExecutor {
 					if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
 						pi.getMount().setName(UPD.petName);
 					}
+					ec.PH.saveFileData("autosave", pi);
+					ec.SPH.saveToDatabase(pi, false);
 					sender.sendMessage(Lang.CREATE_PET_WITH_MOUNT.toString()
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
 							.replace("%mtype%", StringUtil.capitalise(mountType.toString().replace("_", ""))));

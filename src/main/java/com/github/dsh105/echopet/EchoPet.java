@@ -3,7 +3,10 @@ package com.github.dsh105.echopet;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.SQLException;
 
+import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.EntityBat;
 import net.minecraft.server.v1_6_R2.EntityBlaze;
 import net.minecraft.server.v1_6_R2.EntityCaveSpider;
@@ -49,6 +52,7 @@ import com.github.dsh105.echopet.config.DefaultOptions;
 import com.github.dsh105.echopet.config.YAMLConfig;
 import com.github.dsh105.echopet.config.YAMLConfigManager;
 import com.github.dsh105.echopet.data.AutoSave;
+import com.github.dsh105.echopet.data.PetData;
 import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.entity.pet.bat.EntityBatPet;
 import com.github.dsh105.echopet.entity.pet.blaze.EntityBlazePet;
@@ -81,8 +85,11 @@ import com.github.dsh105.echopet.listeners.MenuListener;
 import com.github.dsh105.echopet.listeners.PetEntityListener;
 import com.github.dsh105.echopet.listeners.PetOwnerListener;
 import com.github.dsh105.echopet.listeners.WorldChangeListener;
+import com.github.dsh105.echopet.mysql.SQLConnection;
+import com.github.dsh105.echopet.mysql.SQLPetHandler;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.ReflectionUtil;
+import com.github.dsh105.echopet.util.SQLUtil;
 
 public class EchoPet extends JavaPlugin {
 	
@@ -95,7 +102,9 @@ public class EchoPet extends JavaPlugin {
 	public DefaultOptions DO;
 	public AutoSave AS;
 	public PetHandler PH;
-	//private SQLConnection sqlCon;
+	public SQLPetHandler SPH;
+	public SQLConnection sqlCon;
+	private SQLRefresh sqlRefresh;
 	public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 	
 	public String cmdString = "pet";
@@ -154,17 +163,38 @@ public class EchoPet extends JavaPlugin {
 		langConfig.reloadConfig();
 		
 		PH = new PetHandler(this);
+		SPH = new SQLPetHandler();
 		
-		// *May* add MySQL support
-		/*if (DO.useSql()) {
-			sqlCon = new SQLConnection(this);
-		}*/
+		if (DO.useSql()) {
+			String host = mainConfig.getString("sql.host", "localhost");
+			int port = mainConfig.getInt("sql.port", 3306);
+			String db = mainConfig.getString("sql.database", "EchoPet");
+			String user = mainConfig.getString("sql.username", "none");
+			String pass = mainConfig.getString("sql.password", "none");
+			sqlCon = new SQLConnection(host, port, db, user, pass);
+			Connection con = sqlCon.getConnection();
+			if (con != null) {
+				try {
+					con.prepareStatement("CREATE TABLE IF NOT EXISTS Pets (" +
+							"OwnerName varchar(255)," +
+							"PetType varchar(255)," +
+							"PetName varchar(255)," +
+							SQLUtil.serialise(PetData.values(), false) + ", " +
+							"MountPetType varchar(255), MountPetName varchar(255), " +
+							SQLUtil.serialise(PetData.values(), true) +
+							", PRIMARY KEY (OwnerName)" +
+							");").executeUpdate();
+				} catch (SQLException e) {
+					this.severe(e, "Failed to create 'Pets' table in MySQL Database");
+				}
+			}
+		}
 		
 		// Register custom entities
 		try {
 			Method a = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, Integer.TYPE);
 			a.setAccessible(true);
-			
+
 			a.invoke(a, EntityBatPet.class, "BatPet", 65);
 			a.invoke(a, EntityBat.class, "Bat", 65);
 			a.invoke(a, EntityBlazePet.class, "BlazePet", 61);
@@ -230,8 +260,10 @@ public class EchoPet extends JavaPlugin {
 		
 		// Check whether to start AutoSave
 		if (getMainConfig().getBoolean("autoSave")) {
-			AS = new AutoSave(this, getMainConfig().getInt("autoSaveTimer"));
+			AS = new AutoSave(getMainConfig().getInt("autoSaveTimer"));
 		}
+
+		this.sqlRefresh = new SQLRefresh(getMainConfig().getInt("sql.timeout") * 20 * 60);
 		
 		// Register custom commands
 		// Command string based off the string defined in config.yml
@@ -355,9 +387,9 @@ public class EchoPet extends JavaPlugin {
 		}
 	}*/
 	
-	/*public SQLConnection getSqlCon() {
-		return this.sqlCon;
-	}*/
+	public Connection getSqlCon() {
+		return this.sqlCon.getConnection();
+	}
 	
 	public YAMLConfig getPetConfig() {
 		return this.petConfig;

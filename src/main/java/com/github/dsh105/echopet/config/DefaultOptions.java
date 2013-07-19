@@ -74,9 +74,16 @@ public class DefaultOptions {
 		return ec.getMainConfig().getDouble("rideJump", 0.5D);
 	}
 	
-	/*public boolean useSql() {
-		return ec.getMainConfig().getBoolean("sql.use", true);
-	}*/
+	public boolean useSql() {
+		return ec.getMainConfig().getBoolean("sql.use", false);
+	}
+	
+	public boolean sqlOverride() {
+		if (useSql()) {
+			return ec.getMainConfig().getBoolean("sql.overrideFile");
+		}
+		return false;
+	}
 	
 	public void setDefaultValues(YAMLConfig config) {
 		try {
@@ -85,12 +92,14 @@ public class DefaultOptions {
 			config.set("autoUpdate", config.getBoolean("autoUpdate", false), "If set to true, EchoPet will automatically download and install", "new updates.");
 			config.set("checkForUpdates", config.getBoolean("checkForUpdates", true), "If -autoUpdate- is set to false, EchoPet will notify certain", "players of new updates if they are available (if set to true).");
 			
-			/*config.set("sql.use", false, "If true, the plugin will utilise SQL Database using the info below.");
-			config.set("sql.host", "localhost");
-			config.set("sql.port", 3306);
-			config.set("sql.database", "EchoPet");
-			config.set("sql.username", "none");
-			config.set("sql.password", "none");*/
+			config.set("sql.overrideFile", config.getBoolean("sql.overrideFile", true), "If true, Pets saved to a MySQL Database will override", "those saved to a file (Default and AutoSave Pets)");
+			config.set("sql.timeout", config.getInt("sql.timeout", 30));
+			config.set("sql.use", config.getBoolean("sql.use", false));
+			config.set("sql.host", config.getString("sql.host", "localhost"));
+			config.set("sql.port", config.getInt("sql.port", 3306));
+			config.set("sql.database", config.getString("sql.database", "EchoPet"));
+			config.set("sql.username", config.getString("sql.username", "none"));
+			config.set("sql.password", config.getString("sql.password", "none"));
 			
 			config.set("debug", config.getBoolean("debug", false), "If true, EchoPet will print errors to the console. Useful for", "debugging certain aspects of the plugin.");
 			config.set("autoSave", config.getBoolean("autoSave", true), "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
