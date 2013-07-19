@@ -1,7 +1,7 @@
 name: EchoPet
 version: ${echopet.version}
 author: DSH105
-description: Pets...Forever Echoing In Your Footsteps.
+description: Mobs Under Your Control.
 website: http://dev.bukkit.org/server-mods/echopet/
 main: ${main.class}
 prefix: EchoPet
