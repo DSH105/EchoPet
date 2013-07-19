@@ -110,7 +110,7 @@ public class Pet {
 		}
 	}
 	
-	public EntityPet createPet() {
+	protected EntityPet createPet() {
 		PetType pt = this.petType;
 		Location l = owner.getLocation();;
 		World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
@@ -122,6 +122,7 @@ public class Pet {
 		}
 		if (!mcWorld.addEntity(entityPet, SpawnReason.CUSTOM)) {
 			owner.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
+			EchoPet.getPluginInstance().PH.removePet(this);
 		}
 		
 		Event spawnEvent = new PetSpawnEvent(this, l);
@@ -176,7 +177,7 @@ public class Pet {
 		return this.craftPet;
 	}
 	
-	public void setCraftPet(CraftPet cp) {
+	protected void setCraftPet(CraftPet cp) {
 		this.craftPet = cp;
 	}
 	
@@ -233,7 +234,7 @@ public class Pet {
 		return this.petType;
 	}
 	
-	public boolean isPetType(PetType pt) {
+	protected boolean isPetType(PetType pt) {
 		return pt.equals(this.petType);
 	}
 
