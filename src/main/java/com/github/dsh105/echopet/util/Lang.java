@@ -10,8 +10,8 @@ public enum Lang {
 	COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /pet for help."),
 	IN_GAME_ONLY("in_game_only", "&6%cmd% &ecan only be used in-game."),
 	
-	DIMENSION_CHANGE("dimension_change", "&eYour pet cannot co-exist in two dimensions. It has been removed and will remain in the previous world."),
-	AUTOSAVE_PET_LOAD("autosave_pet_load", "&eYour last active pet (&6%petname%&e) from this World (&6%world%&e) now follows close behind you."),
+	DIMENSION_CHANGE("dimension_change", "&eDimension change initiated. Warping space and time to retrieve your Pet..."),
+	AUTOSAVE_PET_LOAD("autosave_pet_load", "&eYour last active pet (&6%petname%&e) now follows close behind you."),
 	DEFAULT_PET_LOAD("default_pet_load", "&eYour default pet &e(&6%petname%&e) now follows close behind you."),
 	DATABASE_PET_LOAD("sql_pet_load", "&eYour Saved Pet (&6%petname%&e) now follows close behind you."),
 	
