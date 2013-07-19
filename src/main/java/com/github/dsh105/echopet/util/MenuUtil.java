@@ -81,8 +81,8 @@ public class MenuUtil {
 			//options.add(new MenuOption(i++, MenuItem.BABY));
 			options.add(new MenuOption(i++, MenuItem.CHESTED));
 			options.add(new MenuOption(i++, MenuItem.SADDLE));
-			options.add(new MenuOption(i++, MenuItem.HORSE_ARMOUR));
 			options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));
+			options.add(new MenuOption(i++, MenuItem.HORSE_ARMOUR));
 			options.add(new MenuOption(i++, MenuItem.HORSE_VARIANT));
 			options.add(new MenuOption(i++, MenuItem.HORSE_MARKING));
 		}
