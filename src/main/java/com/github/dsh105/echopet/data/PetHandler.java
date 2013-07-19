@@ -487,7 +487,12 @@ public class PetHandler {
 				}
 				
 				if (pd == PetData.SADDLE) {
-					((PigPet) pet).setSaddle(b);
+					if (petType == PetType.PIG) {
+						((PigPet) pet).setSaddle(b);
+					}
+					else if (petType == PetType.HORSE) {
+						((HorsePet) pet).setSaddled(b);
+					}
 				}
 				
 				if (pd == PetData.SHEARED) {
