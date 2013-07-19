@@ -105,6 +105,7 @@ public class PetOwnerListener implements Listener {
 			if (pet == null) {
 				return;
 			}
+			else {
 				if (sendMessage) {
 					p.sendMessage(Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
 				}
@@ -115,10 +116,12 @@ public class PetOwnerListener implements Listener {
 		if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null) {
 			Pet pi = ec.PH.createPetFromFile("default", p);
 			if (pi == null) {
-				ec.PH.removePet(ec.PH.getPet(p));
+				return;
 			}
 			else {
-				p.sendMessage(Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+				if (sendMessage) {
+					p.sendMessage(Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+				}
 			}
 			return;
 		}
@@ -127,10 +130,12 @@ public class PetOwnerListener implements Listener {
 			if (ec.getPetConfig().get("autosave." + "." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
-					ec.PH.removePet(ec.PH.getPet(p));
+					return;
 				}
 				else {
-					p.sendMessage(Lang.AUTOSAVE_PET_LOAD.toString().replace("%world%", w).replace("%petname%", pi.getPetName().toString()));
+					if (sendMessage) {
+						p.sendMessage(Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+					}
 				}
 				return;
 			}
