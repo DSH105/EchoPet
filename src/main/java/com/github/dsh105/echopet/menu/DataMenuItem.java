@@ -57,7 +57,7 @@ public enum DataMenuItem {
 	CREAMY_HORSE(DataMenuType.HORSE_VARIANT, PetData.CREAMY, Material.WOOL, 1, (short) 4, "Creamy", "Variant"),
 	CHESTNUT_HORSE(DataMenuType.HORSE_VARIANT, PetData.CHESTNUT, Material.STAINED_CLAY, 1, (short) 8, "Chestnut", "Variant"),
 	BROWN_HORSE(DataMenuType.HORSE_VARIANT, PetData.BROWN, Material.WOOL, 1, (short) 12, "Brown", "Variant"),
-	BLACK_HORSE(DataMenuType.HORSE_VARIANT, PetData.BLACK, Material.WOOL, 1, (short) 15, "White", "Variant"),
+	BLACK_HORSE(DataMenuType.HORSE_VARIANT, PetData.BLACK, Material.WOOL, 1, (short) 15, "Black", "Variant"),
 	GRAY_HORSE(DataMenuType.HORSE_VARIANT, PetData.GRAY, Material.WOOL, 1, (short) 7, "Gray", "Variant"),
 	DARKBROWN_HORSE(DataMenuType.HORSE_VARIANT, PetData.DARKBROWN, Material.STAINED_CLAY, 1, (short) 7, "Dark Brown", "Variant"),
 	
