@@ -21,11 +21,13 @@ import com.github.dsh105.echopet.util.Particle;
 import com.github.dsh105.echopet.util.StringUtil;
 
 public class Pet {
+
+	private boolean isMount = false;
 	
 	private Player owner;
 	private EntityPet pet;
 	private PetType petType;
-	private Pet mount = null;
+	private Pet mount;
 	private CraftPet craftPet;
 	
 	private boolean ownerIsRiding = false;
@@ -219,8 +221,11 @@ public class Pet {
 				Pet p = pt.getNewPetInstance(owner, pt);
 				mount = p;
 				craftPet.setPassenger(mount.getCraftPet());
+				p.isMount = true;
+				EchoPet.getPluginInstance().SPH.saveToDatabase(mount, true);
 			}
 		}.runTaskLater(EchoPet.getPluginInstance(), 5L);
+
 		return this.mount;
 	}
 	
@@ -230,5 +235,9 @@ public class Pet {
 	
 	public boolean isPetType(PetType pt) {
 		return pt.equals(this.petType);
+	}
+
+	public boolean isMount() {
+		return this.isMount;
 	}
 }
