@@ -14,9 +14,7 @@ public class AutoSave {
 				EchoPet ec = EchoPet.getPluginInstance();
 				for (Pet pi : ec.PH.getAllPetData()) {
 					ec.PH.saveFileData("autosave", pi);
-					if (ec.DO.useSql()) {
-						ec.SPH.saveToDatabase(pi, false);
-					}
+					ec.SPH.saveToDatabase(pi, false);
 				}
 			}
 		}.runTaskTimer(EchoPet.getPluginInstance(), (20*timer)/2, 20*timer);
