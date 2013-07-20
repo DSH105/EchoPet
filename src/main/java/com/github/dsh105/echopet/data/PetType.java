@@ -119,14 +119,11 @@ public enum PetType {
 			PetData.ORANGE, PetData.PINK, PetData.PURPLE,
 			PetData.SILVER, PetData.WHITE, PetData.YELLOW),
 	VILLAGER(EntityVillagerPet.class, VillagerPet.class, "Villager Pet", 20, EntityType.VILLAGER, PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
-	
-	
+
 	/*
-	 * It is currently undecided whether to include Wisp and Human Pets.
-	 * May cause major issues, especially seeing as the Wisp is not based off a living entity.
+	 * It is currently undecided whether to include Human Pets.
 	 */
-	
-	//WISP(EntityWispPet.class, WispPet.class, "Wisp Pet", EntityType.EXPERIENCE_ORB),
+
 	//HUMAN(EntityHumanPet.class, HumanPet.class, "Human Pet", 20, EntityType.UNKNOWN)
 	;
 	
