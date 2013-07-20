@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
-import com.github.dsh105.echopet.entity.pet.wisp.EntityWispPet;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.EntityBat;
 import net.minecraft.server.v1_6_R2.EntityBlaze;
