@@ -56,8 +56,8 @@ public class MenuListener implements Listener {
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
 		int size = (title.equals("EchoPet DataMenu - Color")) ? 17 : 8;
-		if (title.equals("EchoPet DataMenu")) {
-			if (slot <= size && inv.getItem(slot) != null) {
+		if (slot <= size && inv.getItem(slot) != null) {
+			if (title.equals("EchoPet DataMenu")) {
 				if (inv.getItem(slot).equals(DataMenuItem.CLOSE.getItem())) {
 					player.closeInventory();
 					event.setCancelled(true);
@@ -74,11 +74,9 @@ public class MenuListener implements Listener {
 						}.runTaskLater(ec, 1L);
 					}
 				}
+				event.setCancelled(true);
 			}
-			event.setCancelled(true);
-		}
-		else if (title.startsWith("EchoPet DataMenu - ")) {
-			if (slot <= size && inv.getItem(slot) != null) {
+			else if (title.startsWith("EchoPet DataMenu - ")) {
 				if (inv.getItem(slot).equals(DataMenuItem.BACK.getItem())) {
 					player.closeInventory();
 					new BukkitRunnable() {
@@ -90,7 +88,7 @@ public class MenuListener implements Listener {
 					event.setCancelled(true);
 					return;
 				}
-				
+
 				String[] split = title.split(" - ");
 				WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
 				if (wmd == null) {
@@ -156,8 +154,8 @@ public class MenuListener implements Listener {
 				} catch (Exception e) {
 					EchoPet.getPluginInstance().debug(e, "Encountered error whilst handling InventoryClick event for EchoPet DataMenu (" + player.getName() + ")");
 				}
+				event.setCancelled(true);
 			}
-			event.setCancelled(true);
 		}
 	}
 	
