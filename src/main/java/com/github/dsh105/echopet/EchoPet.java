@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
+import com.github.dsh105.echopet.entity.pet.wisp.EntityWispPet;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.EntityBat;
 import net.minecraft.server.v1_6_R2.EntityBlaze;
@@ -193,9 +194,10 @@ public class EchoPet extends JavaPlugin {
 				} catch (SQLException e) {
 					this.severe(e, "Failed to create 'Pets' table in MySQL Database");
 				}
+				this.sqlRefresh = new SQLRefresh(getMainConfig().getInt("sql.timeout") * 20 * 60);
 			}
 		}
-		
+
 		// Register custom entities
 		try {
 			Method a = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, Integer.TYPE);
@@ -249,7 +251,6 @@ public class EchoPet extends JavaPlugin {
 			a.invoke(a, EntitySquid.class, "Squid", 94);
 			a.invoke(a, EntityVillagerPet.class, "VillagerPet", 120);
 			a.invoke(a, EntityVillager.class, "Villager", 120);
-			//a.invoke(a, EntityWispPet.class, "WispPet", 2);
 			a.invoke(a, EntityWitchPet.class, "WitchPet", 66);
 			a.invoke(a, EntityWitch.class, "Witch", 66);
 			a.invoke(a, EntityWitherPet.class, "WitherPet", 64);
@@ -258,19 +259,18 @@ public class EchoPet extends JavaPlugin {
 			a.invoke(a, EntityWolf.class, "Wolf", 95);
 			a.invoke(a, EntityZombiePet.class, "ZombiePet", 54);
 			a.invoke(a, EntityZombie.class, "Zombie", 54);
-			
+
 		} catch (Exception e) {
 			this.log(ChatColor.RED + "Error registering Pet entities. Please report to developer.");
 			this.log(ChatColor.RED + "" + e.getStackTrace());
 		}
-		
+
 		// Check whether to start AutoSave
 		if (getMainConfig().getBoolean("autoSave")) {
 			AS = new AutoSave(getMainConfig().getInt("autoSaveTimer"));
 		}
 
-		this.sqlRefresh = new SQLRefresh(getMainConfig().getInt("sql.timeout") * 20 * 60);
-		
+
 		// Register custom commands
 		// Command string based off the string defined in config.yml
 		// By default, set to 'pet'
