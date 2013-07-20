@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.github.dsh105.echopet.api.EchoPetAPI;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.EntityBat;
 import net.minecraft.server.v1_6_R2.EntityBlaze;
@@ -106,6 +107,8 @@ public class EchoPet extends JavaPlugin {
 	public SQLConnection sqlCon;
 	private SQLRefresh sqlRefresh;
 	public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
+
+	private EchoPetAPI api;
 	
 	public String cmdString = "pet";
 	public String adminCmdString = "petadmin";
@@ -130,6 +133,9 @@ public class EchoPet extends JavaPlugin {
 			this.checkUpdates();
 			return;
 		}
+
+		this.api = new EchoPetAPI();
+
 		PluginManager manager = getServer().getPluginManager();
 		DO = new DefaultOptions(this);
 		
@@ -359,6 +365,10 @@ public class EchoPet extends JavaPlugin {
 			}
 		}
 		return false;
+	}
+
+	public EchoPetAPI getAPI() {
+		return this.api;
 	}
 	
 	public static EchoPet getPluginInstance() {
