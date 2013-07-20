@@ -81,10 +81,10 @@ public class PetAdminCommand implements CommandExecutor {
 				if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("mount"))) {
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
 					sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> <name>");
-					sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet.");
+					sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet.");
 					sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
 					sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> mount <name>");
-					sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet's mount.");
+					sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet's mount.");
 					sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
 					return true;
 				}
