@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.entity.pet.Pet;
 
+import java.util.ArrayList;
+
 public class EchoPetAPI {
 
 	/**
@@ -61,6 +63,11 @@ public class EchoPetAPI {
 	 */
 	public Pet getPet(Player player) {
 		return EchoPet.getPluginInstance().PH.getPet(player);
+	}
+
+	public Pet[] getAllPets() {
+		ArrayList<Pet> pets = EchoPet.getPluginInstance().PH.getPets();
+		return pets.toArray(new Pet[pets.size()]);
 	}
 
 	/**

@@ -52,6 +52,10 @@ public class PetHandler {
 	public static PetHandler getInstance() {
 		return ec.PH;
 	}
+
+	public ArrayList<Pet> getPets() {
+		return pets;
+	}
     
     public void removeAllPets() {
 	    Iterator<Pet> i = pets.listIterator();
