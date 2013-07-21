@@ -356,16 +356,20 @@ public class SQLPetHandler {
 	}
 
 	public void clearFromDatabase(Player p) {
+		clearFromDatabase(p.getName());
+	}
+
+	public void clearFromDatabase(String name) {
 		if (EchoPet.getPluginInstance().DO.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
 
 			if (con != null) {
 				try {
 					PreparedStatement ps1 = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
-					ps1.setString(1, p.getName());
+					ps1.setString(1, name);
 					ps1.executeUpdate();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to retrieve Pet data for " + p.getName() + " in MySQL Database");
+					EchoPet.getPluginInstance().severe(e, "Failed to retrieve Pet data for " + name + " in MySQL Database");
 				} finally {
 					// Close the connection
 				/*try {

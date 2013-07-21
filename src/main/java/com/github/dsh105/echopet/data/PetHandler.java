@@ -364,9 +364,8 @@ public class PetHandler {
 	public void clearFileData(String type, Pet pi) {
 		clearFileData(type, pi.getOwner());
 	}
-	
-	public void clearFileData(String type, Player p) {
-		String pName = p.getName();
+
+	public void clearFileData(String type, String pName) {
 		String path = type + "." + pName;
 		if (ec.getPetConfig().get(path + ".pet.type") != null) {
 			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
@@ -381,6 +380,10 @@ public class PetHandler {
 			}
 		}
 		ec.getPetConfig().saveConfig();
+	}
+	
+	public void clearFileData(String type, Player p) {
+		clearFileData(type, p.getName());
 	}
 	
 	public void setData(Pet pet, PetData[] data, boolean b) {
