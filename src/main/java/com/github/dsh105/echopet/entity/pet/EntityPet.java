@@ -214,15 +214,23 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	
 	@Override
 	public void e(float f, float f1) { //f1 = sidewards, f1 = forwards/backwards
+
+		// Can only jump over half slabs if the rider is not the owner
+		// I like this idea
+		// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityHorse.java#L914
 		if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
 			super.e(f, f1);
+			this.Y = 0.5F;
 			return;
 		}
 		EntityHuman human = (EntityHuman) this.passenger;
 		if (human.getBukkitEntity() != this.getOwner().getPlayer()) {
 			super.e(f, f1);
+			this.Y = 0.5F;
 			return;
 		}
+
+		this.Y = 1.0F;
 		
 		this.lastYaw = this.yaw = this.passenger.yaw;
         this.pitch = this.passenger.pitch * 0.5F;
