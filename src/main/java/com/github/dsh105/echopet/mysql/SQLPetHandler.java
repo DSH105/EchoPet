@@ -381,4 +381,33 @@ public class SQLPetHandler {
 			}
 		}
 	}
+
+	public void clearMountFromDatabase(String name) {
+		if (EchoPet.getPluginInstance().DO.useSql()) {
+			Connection con = EchoPet.getPluginInstance().getSqlCon();
+
+			if (con != null) {
+				try {
+					ArrayList<PetData> arrayList = new ArrayList<PetData>();
+					for (PetData pd : PetData.values()) {
+						arrayList.add(pd);
+					}
+					String list = SQLUtil.serialiseUpdate(arrayList, null, true);
+					PreparedStatement ps = con.prepareStatement("UPDATE Pets SET ? WHERE OwnerName = ?;");
+					ps.setString(1, list);
+					ps.setString(2, name);
+					ps.executeUpdate();
+				} catch (SQLException e) {
+					EchoPet.getPluginInstance().severe(e, "Failed to retrieve Pet data for " + name + " in MySQL Database");
+				} finally {
+					// Close the connection
+				/*try {
+					con.close();
+				} catch (SQLException e) {
+					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
+				}*/
+				}
+			}
+		}
+	}
 }
