@@ -343,7 +343,7 @@ public class PetCommand implements CommandExecutor {
 						}
 						return true;
 					}
-					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/3 ------------");
+					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/4 ------------");
 					sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
 					for (String s : HelpPage.getHelpPage(1)) {
 						sender.sendMessage(s);
