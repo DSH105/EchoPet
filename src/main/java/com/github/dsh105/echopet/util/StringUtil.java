@@ -276,15 +276,16 @@ public class StringUtil {
 		
 	}*/
 	
-	public static ArrayList<String> getPetList(CommandSender sender) {
+	public static ArrayList<String> getPetList(CommandSender sender, boolean petAdmin) {
 		ArrayList<String> list = new ArrayList<String>();
+		String admin = petAdmin ? "admin" : "";
 		for (PetType pt : PetType.values()) {
 			ChatColor color1 = ChatColor.GREEN;
 			ChatColor color2 = ChatColor.DARK_GREEN;
 			String separator = ", ";
 			if (sender instanceof Player) {
 				
-				if (!sender.hasPermission("echopet." + pt.toString().toLowerCase().replace("_", ""))) {
+				if (!sender.hasPermission("echopet.pet" + admin + ".type." + pt.toString().toLowerCase().replace("_", ""))) {
 					color1 = ChatColor.RED;
 					color2 = ChatColor.DARK_RED;
 				}
