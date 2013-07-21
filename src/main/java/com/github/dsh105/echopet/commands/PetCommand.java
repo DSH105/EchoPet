@@ -188,7 +188,7 @@ public class PetCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("list")) {
 				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
-					for (String s : StringUtil.getPetList(sender)) {
+					for (String s : StringUtil.getPetList(sender, false)) {
 						sender.sendMessage(s);
 					}
 					return true;
@@ -233,7 +233,7 @@ public class PetCommand implements CommandExecutor {
 					return true;
 				}
 				
-				UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[0]);
+				UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[0], false);
 				if (UPD == null) {
 					return true;
 				}
@@ -298,7 +298,7 @@ public class PetCommand implements CommandExecutor {
 						return true;
 					}
 					
-					UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[1]);
+					UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[1], false);
 					if (UPD == null) {
 						return true;
 					}
@@ -316,12 +316,12 @@ public class PetCommand implements CommandExecutor {
 					}
 					
 					if (sender.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)) {
-						pi.createMount(petType);
+						Pet mount = pi.createMount(petType);
 						if (!petDataList.isEmpty()) {
-							ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
+							ec.PH.setData(mount, petDataList.toArray(new PetData[petDataList.size()]), true);
 						}
 						if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-							pi.setName(UPD.petName);
+							mount.setName(UPD.petName);
 						}
 						ec.PH.saveFileData("autosave", pi);
 						ec.SPH.saveToDatabase(pi, false);
@@ -371,14 +371,14 @@ public class PetCommand implements CommandExecutor {
 			}
 			
 			else if (sendError) {
-				UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[0]);
+				UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[0], false);
 				if (UPD == null) {
 					return true;
 				}
 				PetType petType = UPD.petType;
 				ArrayList<PetData> petDataList = UPD.petDataList;
 				
-				UnorganisedPetData UMD = PetUtil.formPetFromArgs(ec, sender, args[1]);
+				UnorganisedPetData UMD = PetUtil.formPetFromArgs(ec, sender, args[1], false);
 				if (UMD == null) {
 					return true;
 				}
@@ -436,7 +436,7 @@ public class PetCommand implements CommandExecutor {
 					}
 					
 					else if (sendError) {
-						UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[2]);
+						UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[2], false);
 						if (UPD == null) {
 							return true;
 						}
@@ -464,14 +464,14 @@ public class PetCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("default")) {
 				
 				if (args[1].equalsIgnoreCase("set")) {
-					UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[2]);
+					UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[2], false);
 					if (UPD == null) {
 						return true;
 					}
 					PetType petType = UPD.petType;
 					ArrayList<PetData> petDataList = UPD.petDataList;
 					
-					UnorganisedPetData UMD = PetUtil.formPetFromArgs(ec, sender, args[3]);
+					UnorganisedPetData UMD = PetUtil.formPetFromArgs(ec, sender, args[3], false);
 					if (UMD == null) {
 						return true;
 					}

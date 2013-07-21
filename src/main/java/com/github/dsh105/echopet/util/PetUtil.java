@@ -33,7 +33,8 @@ public class PetUtil {
 		return petType.toString().toLowerCase().replace("_", "");
 	}
 	
-	public static UnorganisedPetData formPetFromArgs(EchoPet ec, CommandSender sender, String s) {
+	public static UnorganisedPetData formPetFromArgs(EchoPet ec, CommandSender sender, String s, boolean petAdmin) {
+		String admin = petAdmin ? "admin" : "";
 		String petString = s;
 		String dataString = "";
 		PetData singlePetData = null;
@@ -180,7 +181,7 @@ public class PetUtil {
 		
 		boolean b = true;
 		for(PetData dataTemp : petDataList) {
-			if (!StringUtil.hpp("echopet.pet.data", dataTemp.getConfigOptionString().toLowerCase(), sender, false)) {
+			if (!StringUtil.hpp("echopet.pet" + admin + ".data", dataTemp.getConfigOptionString().toLowerCase(), sender, false)) {
 				b = false;
 			}
 		}
