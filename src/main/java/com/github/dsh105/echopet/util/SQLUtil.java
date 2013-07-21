@@ -54,14 +54,14 @@ public class SQLUtil {
 		return s;
 	}
 
-	public static String serialiseUpdate(ArrayList<PetData> data, Boolean result, boolean isMount) {
+	public static String serialiseUpdate(ArrayList<PetData> data, Object value, boolean isMount) {
 		String s = "";
 		String mount = isMount ? "Mount" : "";
 		for (PetData pd : data) {
 			if (!s.equalsIgnoreCase("")) {
 				s = s + ", ";
 			}
-			s = s + mount + "`" + pd.toString() + "` = '" + result.toString() + "'";
+			s = s + mount + "`" + pd.toString() + "` = '" + value.toString() + "'";
 		}
 		return s;
 	}
