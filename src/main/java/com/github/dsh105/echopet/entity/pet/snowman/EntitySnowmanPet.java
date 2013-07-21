@@ -1,5 +1,7 @@
 package com.github.dsh105.echopet.entity.pet.snowman;
 
+import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R2.World;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
@@ -27,5 +29,16 @@ public class EntitySnowmanPet extends EntityPet {
 	@Override
 	public SizeCategory getSizeCategory() {
 		return SizeCategory.REGULAR;
+	}
+
+	@Override
+	public void l_() {
+		if (this.random.nextBoolean()) {
+			try {
+				Particle.SNOW_SHOVEL.sendToLocation(pet.getLocation());
+			} catch (Exception e) {
+				EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+			}
+		}
 	}
 }

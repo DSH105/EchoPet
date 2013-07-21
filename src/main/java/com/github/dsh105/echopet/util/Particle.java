@@ -30,11 +30,12 @@ public enum Particle {
 	SNOWBALL("snowballpoof", 1f, 20, "snowball", false),
 	SNOW_SHOVEL("snowshovel", 0.02f, 30, "snow", false),
 	SLIME_SPLAT("slime", 1f, 30, "slime", false),
+	BUBBLE("bubble", 0f, 50, "bubble", false),
+	SPELL_AMBIENT("mobSpellAmbient", 1f, 100, "spellAmbient", false),
 	VOID("townaura", 1f, 100, "void", false);
-	
+
 	/*
 	 * Unused effects
-	 * BUBBLE("bubble", 0f, 50, "bubble"),
 	 * FIREWORK_SPARK("fireworksSpark", 0f, 50, "firework_spark"),
 	 * MOB_SPELL("mobSpell", 2f, 50, "" "mob_spell"),
 	 * SPELL("spell", 1f, 50, "" "spell"),

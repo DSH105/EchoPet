@@ -1,5 +1,7 @@
 package com.github.dsh105.echopet.entity.pet.squid;
 
+import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R2.World;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
@@ -7,9 +9,7 @@ import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntitySquidPet extends EntityPet {
-	
-	//TODO: Make movement a lot smoother
-	
+
 	public EntitySquidPet(World world, Pet pet) {
 		super(world, pet);
 		this.a(0.95F, 0.95F);
@@ -29,5 +29,24 @@ public class EntitySquidPet extends EntityPet {
 	@Override
 	public SizeCategory getSizeCategory() {
 		return SizeCategory.REGULAR;
+	}
+
+	@Override
+	public void l_() {
+		super.l_();
+		if (this.random.nextBoolean()) {
+			if (pet.getEntityPet().world.getMaterial((int) pet.getEntityPet().locX, (int) pet.getEntityPet().locY, (int) pet.getEntityPet().locZ).isLiquid()) {
+				try {
+					Particle.BUBBLE.sendToLocation(pet.getLocation());
+				} catch (Exception e) {
+					EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+				}
+			}
+			try {
+				Particle.SPLASH.sendToLocation(pet.getLocation());
+			} catch (Exception e) {
+				EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+			}
+		}
 	}
 }
