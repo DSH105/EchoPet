@@ -2,58 +2,21 @@ package com.github.dsh105.echopet.entity.pet.human;
 // May support human pets
 // This may require a large amount of testing, especially getting the client to render certain skins
 
-/*
-package me.dsh105.echopet.entity.pet.human;
-
+import com.github.dsh105.echopet.entity.pet.EntityPet;
+import com.github.dsh105.echopet.entity.pet.Pet;
+import com.github.dsh105.echopet.entity.pet.SizeCategory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import net.minecraft.server.v1_6_R1.*;
-import org.bukkit.craftbukkit.v1_6_R1.*;
-import me.dsh105.echopet.entity.pet.EntityPet;
-import me.dsh105.echopet.entity.pet.Pet;
+import net.minecraft.server.v1_6_R2.*;
+import org.bukkit.craftbukkit.v1_6_R2.*;
+
 public class EntityHumanPet extends EntityPet {
 	
 	public EntityHumanPet(World world, Pet pet) {
 		super(world, pet);
-		this.height = 1.62F;
-		this.aK = "humanoid";
-		this.aJ = 180.0F;
 		this.fireProof = true;
-	}
-
-	public void e(float f, float f1) {
-		double d0 = this.locX;
-		double d1 = this.locY;
-		double d2 = this.locZ;
-
-		if (pet.getOwner().isFlying()) {
-			double d3 = this.motY;
-			float f2 = this.aP;
-			super.e(f, f1);
-			this.motY = d3 * 0.6D;
-			this.aP = f2;
-		} else {
-			super.e(f, f1);
-		}
-	}
-
-	protected void b(int i, boolean flag) {
-		byte b0 = this.datawatcher.getByte(16);
-
-		if (flag) {
-			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 1 << i)));
-		} else {
-			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & ~(1 << i))));
-		}
-	}
-
-	protected void a() {
-		super.a();
-		this.datawatcher.a(16, Byte.valueOf((byte) 0));
-		this.datawatcher.a(17, Byte.valueOf((byte) 0));
-		this.datawatcher.a(18, Integer.valueOf(0));
 	}
 
 	protected void a(int i, int j, int k, int l) {
@@ -89,4 +52,14 @@ public class EntityHumanPet extends EntityPet {
 	protected String r() {
 		return "random.breath";
 	}
-}*/
+
+	@Override
+	protected String aO() {
+		return "";
+	}
+
+	@Override
+	public SizeCategory getSizeCategory() {
+		return SizeCategory.REGULAR;
+	}
+}

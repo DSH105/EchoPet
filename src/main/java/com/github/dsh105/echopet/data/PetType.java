@@ -3,6 +3,8 @@ package com.github.dsh105.echopet.data;
 import java.util.Arrays;
 import java.util.List;
 
+import com.github.dsh105.echopet.entity.pet.human.EntityHumanPet;
+import com.github.dsh105.echopet.entity.pet.human.HumanPet;
 import net.minecraft.server.v1_6_R2.World;
 
 import org.bukkit.entity.EntityType;
