@@ -20,13 +20,17 @@ public class EntityHorsePet extends EntityAgeablePet {
 	
 	public void setBaby(boolean flag) {
 		if (flag) {
-			this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
+			this.datawatcher.watch(12, Integer.valueOf(-24000));
 		} else {
 			this.datawatcher.watch(12, new Integer(0));
 		}
 		((HorsePet) pet).baby = flag;
 	}
-	
+
+	public boolean isBaby() {
+		return ((HorsePet) pet).isBaby();
+	}
+
 	public void setSaddled(boolean flag) {
 		this.b(4, flag);
 		((HorsePet) pet).saddle = flag;
@@ -123,6 +127,11 @@ public class EntityHorsePet extends EntityAgeablePet {
 	
 	@Override
 	public SizeCategory getSizeCategory() {
-		return SizeCategory.LARGE;
+		if (this.isBaby()) {
+			return SizeCategory.TINY;
+		}
+		else {
+			return SizeCategory.LARGE;
+		}
 	}
 }
