@@ -10,10 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.dsh105.echopet.EchoPet;
@@ -150,7 +147,16 @@ public class PetOwnerListener implements Listener {
 			ec.PH.saveFileData("autosave", pet);
 			ec.SPH.saveToDatabase(pet, false);
 			ec.PH.removePet(pet);
-			p.sendMessage(Lang.REMOVE_PET_DEATH.toString());
+			//p.sendMessage(Lang.REMOVE_PET_DEATH.toString());
+		}
+	}
+
+	@EventHandler
+	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		Player p = event.getPlayer();
+		Pet pet = ec.PH.getPet(p);
+		if (pet != null) {
+			loadPets(p, false);
 		}
 	}
 }
