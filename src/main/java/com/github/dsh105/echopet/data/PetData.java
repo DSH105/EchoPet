@@ -61,12 +61,12 @@ public enum PetData {
 	ORANGE("orange", Type.COLOR),
 	PINK("pink", Type.COLOR),
 	PURPLE("purple", Type.COLOR),
+	RED("red", Type.CAT, Type.COLOR),
 	SILVER("silver", Type.COLOR),
 	WHITE("white", Type.COLOR, Type.HORSE_VARIANT),
 	YELLOW("yellow", Type.COLOR),
-	
+
 	//BLACK
-	RED("red", Type.CAT),
 	SIAMESE("siamese",  Type.CAT),
 	WILD("wild", Type.CAT),
 	
