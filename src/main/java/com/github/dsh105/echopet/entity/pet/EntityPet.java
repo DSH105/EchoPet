@@ -30,6 +30,9 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	
 	public EntityLiving goalTarget = null;
 	protected Pet pet;
+
+	protected int particle = 0;
+	protected int particleCounter = 0;
 	
 	private Field jump = null;
 	private double jumpHeight;
@@ -259,5 +262,17 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
     			EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.");
     		}
         }
+	}
+
+	@Override
+	public void l_() {
+		super.l_();
+		if (this.particle == this.particleCounter) {
+			this.particle = 0;
+			this.particleCounter = this.random.nextInt(50);
+		}
+		else {
+			this.particle++;
+		}
 	}
 }

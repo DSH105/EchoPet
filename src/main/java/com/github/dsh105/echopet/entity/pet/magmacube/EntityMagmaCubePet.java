@@ -66,7 +66,7 @@ public class EntityMagmaCubePet extends EntityPet {
 			getControllerJump().a();
 		}
 
-		if (this.random.nextBoolean()) {
+		if (this.random.nextBoolean() && particle <= 0) {
 			try {
 				Particle.FIRE.sendToLocation(pet.getLocation());
 			} catch (Exception e) {

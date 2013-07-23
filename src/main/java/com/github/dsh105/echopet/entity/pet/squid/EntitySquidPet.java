@@ -34,7 +34,7 @@ public class EntitySquidPet extends EntityPet {
 	@Override
 	public void l_() {
 		super.l_();
-		if (this.random.nextBoolean()) {
+		if (this.random.nextBoolean() && particle <= 0) {
 			if (pet.getEntityPet().world.getMaterial((int) pet.getEntityPet().locX, (int) pet.getEntityPet().locY, (int) pet.getEntityPet().locZ).isLiquid()) {
 				try {
 					Particle.BUBBLE.sendToLocation(pet.getLocation());

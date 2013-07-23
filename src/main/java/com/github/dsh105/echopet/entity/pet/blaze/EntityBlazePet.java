@@ -43,7 +43,8 @@ public class EntityBlazePet extends EntityPet {
 
 	@Override
 	public void l_() {
-		if (this.random.nextBoolean()) {
+		super.l_();
+		if (this.random.nextBoolean() && particle <= 0) {
 			try {
 				Particle.FIRE.sendToLocation(pet.getLocation());
 			} catch (Exception e) {

@@ -47,6 +47,7 @@ public class EntityWitherPet extends EntityPet {
 
 	@Override
 	public void l_() {
+		super.l_();
 		if (this.random.nextBoolean()) {
 			try {
 				Particle.VOID.sendToLocation(pet.getLocation());
