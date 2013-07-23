@@ -3,6 +3,7 @@ package com.github.dsh105.echopet.entity.pet;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.github.dsh105.echopet.data.PetType;
 import net.minecraft.server.v1_6_R2.EntityCreature;
 import net.minecraft.server.v1_6_R2.EntityHuman;
 import net.minecraft.server.v1_6_R2.EntityLiving;
@@ -195,7 +196,8 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		
 		if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
 			ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
-			PetMenu menu = new PetMenu(getPet(), options);
+			int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
+			PetMenu menu = new PetMenu(getPet(), options, size);
 			menu.open(true);
 			return true;
 		}

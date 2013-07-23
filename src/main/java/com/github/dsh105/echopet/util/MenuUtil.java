@@ -78,7 +78,7 @@ public class MenuUtil {
 			options.add(new MenuOption(i++, MenuItem.PROFESSION));
 		}
 		if (pt == PetType.HORSE) {
-			//options.add(new MenuOption(i++, MenuItem.BABY));
+			options.add(new MenuOption(i++, MenuItem.BABY));
 			options.add(new MenuOption(i++, MenuItem.CHESTED));
 			options.add(new MenuOption(i++, MenuItem.SADDLE));
 			options.add(new MenuOption(i++, MenuItem.HORSE_TYPE));

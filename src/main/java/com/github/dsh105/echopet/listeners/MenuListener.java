@@ -2,6 +2,7 @@ package com.github.dsh105.echopet.listeners;
 
 import java.util.Iterator;
 
+import com.github.dsh105.echopet.data.PetType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -86,7 +87,8 @@ public class MenuListener implements Listener {
 					player.closeInventory();
 					new BukkitRunnable() {
 						public void run() {
-							PetMenu menu = new PetMenu(pet, MenuUtil.createOptionList(pet.getPetType()));
+							int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
+							PetMenu menu = new PetMenu(pet, MenuUtil.createOptionList(pet.getPetType()), size);
 							menu.open(false);
 						}
 					}.runTaskLater(ec, 1L);
