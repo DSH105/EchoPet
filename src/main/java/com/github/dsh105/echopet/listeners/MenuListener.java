@@ -125,16 +125,6 @@ public class MenuListener implements Listener {
 						}
 					}
 					else if (EnumUtil.isEnumType(PetData.class, split[1].toUpperCase())) {
-						if (inv.getItem(slot).equals(DataMenuItem.BACK.getItem())) {
-							player.closeInventory();
-							new BukkitRunnable() {
-								public void run() {
-									PetMenu menu = new PetMenu(pet, MenuUtil.createOptionList(pet.getPetType()));
-									menu.open(false);
-								}
-							}.runTaskLater(ec, 1L);
-							return;
-						}
 						PetData pd = PetData.valueOf(split[1].toUpperCase());
 						for (DataMenuItem dmi : DataMenuItem.values()) {
 							if (inv.getItem(slot).equals(dmi.getItem())) {
