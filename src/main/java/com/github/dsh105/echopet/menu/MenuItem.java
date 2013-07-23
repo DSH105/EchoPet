@@ -33,7 +33,7 @@ public enum MenuItem {
 	VILLAGER(Material.EMERALD, 1, (short) 0, DataMenuType.BOOLEAN, "Villager", "Zombie", "PigZombie"),
 	COLOR(Material.WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf"),
 	PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Proffession", "Villager"),
-	RIDE(Material.CARROT_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet using your mouse."),
+	RIDE(Material.CARROT_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet."),
 	HAT(Material.IRON_HELMET, 1, (short) 0, DataMenuType.BOOLEAN, "Hat Pet", "Wear your pet on your head.");
 	
 	private Material mat;
