@@ -42,7 +42,7 @@ public class Pet {
 		this.petType = petType;
 		this.pet = this.createPet();
 		this.teleportToOwner();
-		setName(petType.getDefaultName(owner));
+		setName(petType.getDefaultName(owner.getName()));
 	}
 	
 	public boolean isOwnerRiding() {

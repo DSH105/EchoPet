@@ -148,8 +148,8 @@ public enum PetType {
 		return this.maxHealth;
 	}
 	
-	public String getDefaultName(Player p) {
-		return EchoPet.getPluginInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", p.getName()).replace("(userApos)", p.getName() + "'s");
+	public String getDefaultName(String name) {
+		return EchoPet.getPluginInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
 		//return this.defaultName;
 	}
 	

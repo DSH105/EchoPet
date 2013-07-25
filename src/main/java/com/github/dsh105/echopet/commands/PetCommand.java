@@ -356,7 +356,7 @@ public class PetCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("default")) {
 				
 				if (args[1].equalsIgnoreCase("remove")) {
-					if (StringUtil.hpp("echopet.pet", "default.remove", sender, false) || sender.hasPermission("echopet.pet.default.*")) {
+					if (StringUtil.hpp("echopet.pet", "default.remove", sender, false) || (sender.hasPermission("echopet.pet.default.*") && sender instanceof Player)) {
 						String path = "default." + sender.getName() + ".";
 						if (ec.getPetConfig().get(path + "pet.type") == null) {
 							sender.sendMessage(Lang.NO_DEFAULT.toString());
@@ -422,7 +422,7 @@ public class PetCommand implements CommandExecutor {
 				
 				if (args[1].equalsIgnoreCase("set")) {
 					if (args[2].equalsIgnoreCase("current")) {
-						if (StringUtil.hpp("echopet.pet", "default.set.current", sender, false) || sender.hasPermission("echopet.pet.default.*")) {
+						if (StringUtil.hpp("echopet.pet", "default.set.current", sender, false) || (sender.hasPermission("echopet.pet.default.*") && sender instanceof Player)) {
 							
 							Pet pi = ec.PH.getPet(((Player) sender));
 							if (pi == null) {
@@ -448,8 +448,8 @@ public class PetCommand implements CommandExecutor {
 							return true;
 						}
 						
-						if (sender.hasPermission("echopet.pet.default.set.type.*") || StringUtil.hpp("echopet.pet", "default.set.type" + PetUtil.getPetPerm(petType), sender, false)
-								|| sender.hasPermission("echopet.pet.default.*")) {
+						if ((sender.hasPermission("echopet.pet.default.set.type.*") && sender instanceof Player) || StringUtil.hpp("echopet.pet", "default.set.type" + PetUtil.getPetPerm(petType), sender, false)
+								|| (sender.hasPermission("echopet.pet.default.*") && sender instanceof Player)) {
 							ec.PH.saveFileData("default", (Player) sender, UPD);
 							sender.sendMessage(Lang.SET_DEFAULT.toString()
 									.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
@@ -485,8 +485,8 @@ public class PetCommand implements CommandExecutor {
 					
 					if ((StringUtil.hpp("echopet.pet", "default.set.type" + PetUtil.getPetPerm(petType), sender, false)
 							&& StringUtil.hpp("echopet.pet", "default.set.type" + PetUtil.getPetPerm(petType), sender, false))
-									|| sender.hasPermission("echopet.pet.default.*")
-									|| sender.hasPermission("echopet.pet.default.set.type.*")) {
+									|| (sender.hasPermission("echopet.pet.default.*") && sender instanceof Player)
+									|| (sender.hasPermission("echopet.pet.default.set.type.*") && sender instanceof Player)) {
 						ec.PH.saveFileData("default", (Player) sender, UPD, UMD);
 						sender.sendMessage(Lang.SET_DEFAULT_WITH_MOUNT.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))

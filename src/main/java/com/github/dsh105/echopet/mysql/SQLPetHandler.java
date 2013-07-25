@@ -249,13 +249,13 @@ public class SQLPetHandler {
 			PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 			String petName = UPD.petName;
 			if (UPD.petName == null || UPD.petName.equalsIgnoreCase("")) {
-				petName = pt.getDefaultName(p);
+				petName = pt.getDefaultName(p.getName());
 			}
 			PetType mountType = UMD.petType;
 			PetData[] mountData = UMD.petDataList.toArray(new PetData[UMD.petDataList.size()]);
 			String mountName = UMD.petName;
 			if (UMD.petName == null || UMD.petName.equalsIgnoreCase("")) {
-				mountName = pt.getDefaultName(p);
+				mountName = pt.getDefaultName(p.getName());
 			}
 
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
@@ -316,7 +316,7 @@ public class SQLPetHandler {
 			PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 			String petName = UPD.petName;
 			if (UPD.petName == null || UPD.petName.equalsIgnoreCase("")) {
-				petName = pt.getDefaultName(p);
+				petName = pt.getDefaultName(p.getName());
 			}
 
 			Connection con = EchoPet.getPluginInstance().getSqlCon();

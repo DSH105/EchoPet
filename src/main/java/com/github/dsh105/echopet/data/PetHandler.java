@@ -191,7 +191,7 @@ public class PetHandler {
 				PetType petType = PetType.valueOf(ec.getPetConfig().getString(path + ".pet.type"));
 				String name = ec.getPetConfig().getString(path + ".pet.name");
 				if (name.equalsIgnoreCase("") || name == null) {
-					name = petType.getDefaultName(p);
+					name = petType.getDefaultName(name);
 				}
 				if (petType == null) return null;
 				Pet pi = petType.getNewPetInstance(p, petType);
@@ -296,23 +296,27 @@ public class PetHandler {
 		} catch (Exception e) {}
 		ec.getPetConfig().saveConfig();
 	}
-	
+
 	public void saveFileData(String type, Player p, UnorganisedPetData UPD, UnorganisedPetData UMD) {
-		clearFileData(type, p);
+		this.saveFileData(type, p.getName(), UPD, UMD);
+	}
+	
+	public void saveFileData(String type, String name, UnorganisedPetData UPD, UnorganisedPetData UMD) {
+		clearFileData(type, name);
 		PetType pt = UPD.petType;
 		PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 		String petName = UPD.petName;
 		if (UPD.petName == null || UPD.petName.equalsIgnoreCase("")) {
-			petName = pt.getDefaultName(p);
+			petName = pt.getDefaultName(name);
 		}
 		PetType mountType = UMD.petType;
 		PetData[] mountData = UMD.petDataList.toArray(new PetData[UMD.petDataList.size()]);
 		String mountName = UMD.petName;
 		if (UMD.petName == null || UMD.petName.equalsIgnoreCase("")) {
-			mountName = pt.getDefaultName(p);
+			mountName = pt.getDefaultName(name);
 		}
 
-		String path = type + "." + p.getName();
+		String path = type + "." + name;
 		try {
 			ec.getPetConfig().set(path + ".pet.type", pt.toString());
 			ec.getPetConfig().set(path + ".pet.name", petName);
@@ -332,14 +336,18 @@ public class PetHandler {
 		} catch (Exception e) {}
 		ec.getPetConfig().saveConfig();
 	}
-	
+
 	public void saveFileData(String type, Player p, UnorganisedPetData UPD) {
-		clearFileData(type, p);
+		this.saveFileData(type, p.getName(), UPD);
+	}
+	
+	public void saveFileData(String type, String name, UnorganisedPetData UPD) {
+		clearFileData(type, name);
 		PetType pt = UPD.petType;
 		PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 		String petName = UPD.petName;
 
-		String path = type +"." + p.getName();
+		String path = type +"." + name;
 		try {
 			ec.getPetConfig().set(path + ".pet.type", pt.toString());
 			ec.getPetConfig().set(path + ".pet.name", petName);
