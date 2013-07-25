@@ -48,7 +48,7 @@ public class PetAdminCommand implements CommandExecutor {
 
 			if (args[0].equalsIgnoreCase("help")) {
 				if (StringUtil.hpp("echopet.petadmin", "", sender, true)) {
-					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/3 ------------");
+					sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help 1/4 ------------");
 					sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
 					for (String s : AdminHelpPage.getHelpPage(1)) {
 						sender.sendMessage(s);
@@ -95,7 +95,7 @@ public class PetAdminCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("help")) {
 				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
 					if (StringUtil.isInt(args[1])) {
-						sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help " + args[1] + "/3 ------------");
+						sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help " + args[1] + "/4 ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
 						for (String s : AdminHelpPage.getHelpPage(Integer.parseInt(args[1]))) {
 							sender.sendMessage(s);
@@ -140,6 +140,7 @@ public class PetAdminCommand implements CommandExecutor {
 
 						sender.sendMessage(Lang.PLAYER_PET_REMOVED.toString().replace("%player%", p.getName()));
 						p.sendMessage(Lang.REMOVE_PET.toString());
+						return true;
 					}
 				} else sendError = false;
 			}
@@ -427,9 +428,9 @@ public class PetAdminCommand implements CommandExecutor {
 						}
 						ec.PH.saveFileData("autosave", pet);
 						ec.SPH.saveToDatabase(pet, false);
-						target.sendMessage(Lang.CREATE_PET.toString()
+						target.sendMessage(Lang.CHANGE_MOUNT.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
-						sender.sendMessage(Lang.PLAYER_CREATE_PET.toString()
+						sender.sendMessage(Lang.PLAYER_CHANGE_MOUNT.toString()
 								.replace("%player%", target.getName())
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 						return true;
@@ -556,7 +557,7 @@ public class PetAdminCommand implements CommandExecutor {
 						sender.sendMessage(Lang.PET_NAME_TOO_LONG.toString());
 						return true;
 					}
-					pet.getMount().setName(name);
+					pet.setName(name);
 					sender.sendMessage(Lang.PLAYER_NAME_PET.toString()
 							.replace("%player%", target.getName())
 							.replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
@@ -573,10 +574,10 @@ public class PetAdminCommand implements CommandExecutor {
 		if (sendError) {
 			// Something went wrong. Maybe the player didn't use a command correctly?
 			// Send them a message with the exact command to make sure
-			/*if (!StringUtil.sendHelpMessage(sender, args)) {
+			if (!AdminHelpPage.sendRelevantHelpMessage(sender, args)) {
 				sender.sendMessage(Lang.COMMAND_ERROR.toString()
 						.replace("%cmd%", "/" + cmd.getLabel() + " " + (args.length == 0 ? "" : StringUtil .combineSplit(0, args, " "))));
-			}*/
+			}
 		}
 		return true;
 	}

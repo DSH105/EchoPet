@@ -47,6 +47,7 @@ public enum Lang {
 	SET_DEFAULT_WITH_MOUNT("set_default_with_mount", "&eYour default pet has been set to &6%type%&e with a &6%mtype% &emount."),
 	SET_DEFAULT_TO_CURRENT("set_default_current", "&eYour default pet has been set to your current pet"),
 
+	PLAYER_CHANGE_MOUNT("player_change_mount", "&6%player%&e's pet's mount has been changed to a &6%type%&e."),
 	PLAYER_SET_DEFAULT_WITH_MOUNT("player_set_default_with_mount", "&6%player%&e's default pet has been set to &6%type%&e with a &6%mtype% &emount."),
 	PLAYER_SET_DEFAULT("player_set_default", "&6%player%&e's default pet has been set to &6%type%&e."),
 	PLAYER_SET_DEFAULT_TO_CURRENT("player_set_default_current", "&6%player%&e's default pet has been set to their current pet"),

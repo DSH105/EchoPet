@@ -25,7 +25,7 @@ public enum AdminHelpPage {
 			ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
 			ChatColor.DARK_RED + "    - Permission: echopet.petadmin.name",
 
-			ChatColor.GOLD + "/" + EchoPet.getPluginInstance().adminCmdString + " remove",
+			ChatColor.GOLD + "/" + EchoPet.getPluginInstance().adminCmdString + " <player> remove",
 			ChatColor.YELLOW + "    - Remove a Player's current pet.",
 			ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
 
@@ -89,7 +89,7 @@ public enum AdminHelpPage {
 	}
 
 	public static String[] getHelpPage(int i) {
-		for (HelpPage hp : HelpPage.values()) {
+		for (AdminHelpPage hp : AdminHelpPage.values()) {
 			if (hp.getId() == i) {
 				return hp.getLines();
 			}
@@ -99,29 +99,29 @@ public enum AdminHelpPage {
 
 	public static boolean sendRelevantHelpMessage(CommandSender sender, String[] args) {
 		if (args[0].equalsIgnoreCase("default")) {
-			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help ------------");
-			for (String s : HelpPage.DEFAULT.getLines()) {
+			sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help ------------");
+			for (String s : AdminHelpPage.DEFAULT.getLines()) {
 				sender.sendMessage(s);
 			}
 			return true;
 		}
 		else if (args[0].equalsIgnoreCase("name")) {
-			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help ------------");
-			for (String s : HelpPage.GENERAL.getLines()) {
+			sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help ------------");
+			for (String s : AdminHelpPage.GENERAL.getLines()) {
 				sender.sendMessage(s);
 			}
 			return true;
 		}
 		else if (args[0].equalsIgnoreCase("mount")) {
-			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help ------------");
-			for (String s : HelpPage.MOUNT.getLines()) {
+			sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help ------------");
+			for (String s : AdminHelpPage.MOUNT.getLines()) {
 				sender.sendMessage(s);
 			}
 			return true;
 		}
 		else if (args[0].equalsIgnoreCase("remove")) {
-			sender.sendMessage(ChatColor.RED + "------------ EchoPet Help ------------");
-			for (String s : HelpPage.GENERAL.getLines()) {
+			sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help ------------");
+			for (String s : AdminHelpPage.GENERAL.getLines()) {
 				sender.sendMessage(s);
 			}
 			return true;
