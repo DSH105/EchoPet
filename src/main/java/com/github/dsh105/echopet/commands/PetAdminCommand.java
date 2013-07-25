@@ -32,7 +32,7 @@ public class PetAdminCommand implements CommandExecutor {
 		
 		if (args.length == 0) {
 			
-			if (StringUtil.hpp("echopet.pet", "", sender, true)) {
+			if (StringUtil.hpp("echopet.petadmin", "", sender, true)) {
 				PluginDescriptionFile pdFile = ec.getDescription();
 				sender.sendMessage(ChatColor.RED + "-------- EchoPet --------");
 				sender.sendMessage(ChatColor.GOLD + "Author: " + ChatColor.YELLOW + "DSH105");
@@ -72,7 +72,7 @@ public class PetAdminCommand implements CommandExecutor {
 		if (args.length == 2) {
 
 			if (args[0].equalsIgnoreCase("info")) {
-				if (StringUtil.hpp("echopet.pet", "info", sender, false)) {
+				if (StringUtil.hpp("echopet.petadmin", "info", sender, false)) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target == null) {
 						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
@@ -93,7 +93,7 @@ public class PetAdminCommand implements CommandExecutor {
 			}
 
 			if (args[0].equalsIgnoreCase("help")) {
-				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
+				if (StringUtil.hpp("echopet.petadmin", "", sender, true)) {
 					if (StringUtil.isInt(args[1])) {
 						sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help " + args[1] + "/4 ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
@@ -329,10 +329,10 @@ public class PetAdminCommand implements CommandExecutor {
 					return true;
 				}
 
-				if ((StringUtil.hpp("echopet.pet", "default.set.type" + PetUtil.getPetPerm(petType), sender, false)
-						&& StringUtil.hpp("echopet.pet", "default.set.type" + PetUtil.getPetPerm(petType), sender, false))
-						|| (sender.hasPermission("echopet.pet.default.*") && sender instanceof Player)
-						|| (sender.hasPermission("echopet.pet.default.set.type.*") && sender instanceof Player)) {
+				if ((StringUtil.hpp("echopet.petadmin", "default.set.type" + PetUtil.getPetPerm(petType), sender, false)
+						&& StringUtil.hpp("echopet.petadmin", "default.set.type" + PetUtil.getPetPerm(petType), sender, false))
+						|| (sender.hasPermission("echopet.petadmin.default.*") && sender instanceof Player)
+						|| (sender.hasPermission("echopet.petadmin.default.set.type.*") && sender instanceof Player)) {
 					PetHandler.getInstance().saveFileData("default", name, UPD, UMD);
 					sender.sendMessage(Lang.PLAYER_SET_DEFAULT_WITH_MOUNT.toString()
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
@@ -463,7 +463,7 @@ public class PetAdminCommand implements CommandExecutor {
 					return true;
 				}
 
-				if (sender.hasPermission("echopet.petadmin.type.*") || (StringUtil.hpp("echopetadmin.pet", "type." + PetUtil.getPetPerm(petType), sender, false)
+				if (sender.hasPermission("echopet.petadmin.type.*") || (StringUtil.hpp("echopetadmin.petadmin", "type." + PetUtil.getPetPerm(petType), sender, false)
 						&& StringUtil.hpp("echopet.petadmin", "type." + PetUtil.getPetPerm(mountType), sender, false))) {
 					Pet pi = ec.PH.createPet(target, petType, mountType);
 					if (!petDataList.isEmpty()) {
