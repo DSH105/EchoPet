@@ -46,12 +46,23 @@ public enum Lang {
 	SET_DEFAULT("set_default", "&eYour default pet has been set to &6%type%&e."),
 	SET_DEFAULT_WITH_MOUNT("set_default_with_mount", "&eYour default pet has been set to &6%type%&e with a &6%mtype% &emount."),
 	SET_DEFAULT_TO_CURRENT("set_default_current", "&eYour default pet has been set to your current pet"),
-	
+
+	PLAYER_SET_DEFAULT_WITH_MOUNT("player_set_default_with_mount", "&6%player%&e's default pet has been set to &6%type%&e with a &6%mtype% &emount."),
+	PLAYER_SET_DEFAULT("player_set_default", "&6%player%&e's default pet has been set to &6%type%&e."),
+	PLAYER_SET_DEFAULT_TO_CURRENT("player_set_default_current", "&6%player%&e's default pet has been set to their current pet"),
+	PLAYER_REMOVE_DEFAULT("player_remove_default", "&6%player%&e's default pet removed successfully."),
+	PLAYER_NO_DEFAULT("player_no_default", "&6%player% &edoes not currently have a default pet set."),
+	PLAYER_REMOVE_MOUNT("player_remove_mount", "&6%player%&e's pet's mount has been removed."),
+	PLAYER_CREATE_PET_WITH_MOUNT("player_create_pet_with_mount", "&eA &6%type% &enow follows close behind &6%player% &ewith a &6%mtype% &emount."),
+	PLAYER_CREATE_PET("player_create_pet", "&eA &6%type% &enow follows close behind &6%player%&e."),
+	PLAYER_RIDE_PET_ON("player_ride_pet_on", "&6%player% &eis now riding their pet."),
+	PLAYER_RIDE_PET_OFF("player_ride_pet_off", "&6%player% &eis no longer riding their pet."),
+	PLAYER_HAT_PET_ON("player_hat_pet_on", "&6%player%&e's pet now rides on their head."),
+	PLAYER_HAT_PET_OFF("player_hat_pet_off", "&6%player%&e's pet no longer rides on their head."),
 	NULL_PLAYER("null_player", "&6%player% &eis not online or does not exist."),
 	PLAYER_PET_REMOVED("player_pet_removed", "&6%player%&e's Pet has been removed."),
 	PLAYER_NAME_MOUNT("player_name_mount", "&6%player%&e's &ePet's mount has been named to &r%name%&e."),
 	PLAYER_NAME_PET("player_name_pet", "&6%player%&e's &6%type% &ehas been named &r%name%&e."),
-	NO_PLAYER_FILE_DATA("no_player_file_data", "&eNo file data exists for &6%player%&e."),
 	PLAYER_NO_MOUNT("player_no_mount", "&6%player%&e's &ePet does not have a mount."),
 	PLAYER_NO_PET("player_has_no_pet", "&6%player% &edoes not currently have a Pet.");
 	
