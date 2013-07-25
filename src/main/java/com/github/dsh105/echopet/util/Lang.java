@@ -7,7 +7,8 @@ import com.github.dsh105.echopet.EchoPet;
 
 public enum Lang {
 	
-	COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /pet for help."),
+	ADMIN_COMMAND_ERROR("admin_cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getPluginInstance().adminCmdString + " for help"),
+	COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getPluginInstance().adminCmdString + " for help."),
 	IN_GAME_ONLY("in_game_only", "&6%cmd% &ecan only be used in-game."),
 	
 	DIMENSION_CHANGE("dimension_change", "&eDimension change initiated. Warping space and time to retrieve your Pet..."),

@@ -575,7 +575,7 @@ public class PetAdminCommand implements CommandExecutor {
 			// Something went wrong. Maybe the player didn't use a command correctly?
 			// Send them a message with the exact command to make sure
 			if (!AdminHelpPage.sendRelevantHelpMessage(sender, args)) {
-				sender.sendMessage(Lang.COMMAND_ERROR.toString()
+				sender.sendMessage(Lang.ADMIN_COMMAND_ERROR.toString()
 						.replace("%cmd%", "/" + cmd.getLabel() + " " + (args.length == 0 ? "" : StringUtil .combineSplit(0, args, " "))));
 			}
 		}
