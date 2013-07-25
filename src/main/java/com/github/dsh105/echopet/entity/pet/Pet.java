@@ -124,9 +124,13 @@ public class Pet {
 			owner.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
 			EchoPet.getPluginInstance().PH.removePet(this);
 		}
-		
-		Event spawnEvent = new PetSpawnEvent(this, l);
+
+		PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);
 		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(spawnEvent);
+		if (spawnEvent.isCancelled()) {
+			this.removePet();
+			return null;
+		}
 		try {
 			Particle.MAGIC_RUNES.sendToLocation(l);
 		} catch (Exception e) {
