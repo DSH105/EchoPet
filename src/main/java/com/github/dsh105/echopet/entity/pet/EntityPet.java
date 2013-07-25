@@ -3,6 +3,7 @@ package com.github.dsh105.echopet.entity.pet;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.data.PetType;
 import net.minecraft.server.v1_6_R2.EntityCreature;
 import net.minecraft.server.v1_6_R2.EntityHuman;
@@ -258,7 +259,11 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         if (jump != null && this.onGround) {
         	try {
     			if (jump.getBoolean(this.passenger)) {
-    				this.motY = this.jumpHeight;
+				    PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+				    EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+				    if (!rideEvent.isCancelled()) {
+					    this.motY = rideEvent.getJumpHeight();
+				    }
     			}
     		} catch (Exception e) {
     			EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.");
