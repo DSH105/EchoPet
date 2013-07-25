@@ -67,6 +67,10 @@ public class PetAdminCommand implements CommandExecutor {
 				} else sendError = false;
 			}
 
+		}
+		
+		if (args.length == 2) {
+
 			if (args[0].equalsIgnoreCase("info")) {
 				if (StringUtil.hpp("echopet.pet", "info", sender, false)) {
 					Player target = Bukkit.getPlayer(args[1]);
@@ -87,10 +91,6 @@ public class PetAdminCommand implements CommandExecutor {
 					return true;
 				} else sendError = false;
 			}
-
-		}
-		
-		if (args.length == 2) {
 
 			if (args[0].equalsIgnoreCase("help")) {
 				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
