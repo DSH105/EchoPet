@@ -68,9 +68,15 @@ public class PetHandler {
 	    }
     }
 	
-	public Pet createPet(Player owner, PetType petType) {
+	public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
 		if (getPet(owner) != null) {
 			removePets(owner);
+		}
+		if (!ec.DO.allowPetType(petType)) {
+			if (sendMessageOnFail) {
+				owner.sendMessage(Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
+			}
+			return null;
 		}
 		Pet pi = petType.getNewPetInstance(owner, petType);
 		//Pet pi = new Pet(owner, petType);
@@ -81,13 +87,19 @@ public class PetHandler {
 		return pi;
 	}
 	
-	public Pet createPet(Player owner, PetType petType, PetType mountType) {
+	public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
 		if (getPet(owner) != null) {
 			removePets(owner);
 		}
+		if (!ec.DO.allowPetType(petType)) {
+			if (sendFailMessage) {
+				owner.sendMessage(Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
+			}
+			return null;
+		}
 		Pet pi = petType.getNewPetInstance(owner, petType);
 		//Pet pi = new Pet(owner, petType);
-		pi.createMount(mountType);
+		pi.createMount(mountType, true);
 		forceAllValidData(pi);
 		pets.add(pi);
 		//saveFileData("autosave", pi);
@@ -194,6 +206,9 @@ public class PetHandler {
 					name = petType.getDefaultName(name);
 				}
 				if (petType == null) return null;
+				if (!ec.DO.allowPetType(petType)) {
+					return null;
+				}
 				Pet pi = petType.getNewPetInstance(p, petType);
 				//Pet pi = new Pet(p, petType);
 				

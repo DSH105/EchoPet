@@ -171,7 +171,10 @@ public class SQLPetHandler {
 						}
 
 						PetHandler ph = PetHandler.getInstance();
-						pet = ph.createPet(owner, pt);
+						pet = ph.createPet(owner, pt, false);
+						if (pet == null) {
+							return null;
+						}
 						pet.setName(name);
 						PetData[] PDT = createArray(map, true);
 						PetData[] PDF = createArray(map, false);
@@ -194,16 +197,18 @@ public class SQLPetHandler {
 								}
 							}
 
-							Pet mount = pet.createMount(mt);
-							mount.setName(mName);
-							PetData[] MDT = createArray(map, true);
-							PetData[] MDF = createArray(map, false);
+							Pet mount = pet.createMount(mt, false);
+							if (mount != null) {
+								mount.setName(mName);
+								PetData[] MDT = createArray(map, true);
+								PetData[] MDF = createArray(map, false);
 
-							if (MDT != null) {
-								ph.setData(mount, MDT, true);
-							}
-							if (MDF != null) {
-								ph.setData(mount, MDF, false);
+								if (MDT != null) {
+									ph.setData(mount, MDT, true);
+								}
+								if (MDF != null) {
+									ph.setData(mount, MDF, false);
+								}
 							}
 						}
 					}

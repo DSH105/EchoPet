@@ -1,6 +1,8 @@
 package com.github.dsh105.echopet.entity.pet;
 
 import java.util.ArrayList;
+
+import com.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_6_R2.*;
 import org.bukkit.craftbukkit.v1_6_R2.*;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
@@ -214,7 +216,13 @@ public class Pet {
 		return b ? this.dataTrue : this.dataFalse;
 	}
 	
-	public Pet createMount(final PetType pt) {
+	public Pet createMount(final PetType pt, boolean sendFailMessage) {
+		if (!EchoPet.getPluginInstance().DO.allowMounts(this.petType)) {
+			if (sendFailMessage) {
+				this.owner.sendMessage(Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.petType.toString())));
+			}
+			return null;
+		}
 		if (this.ownerIsRiding) {
 			this.ownerRidePet(false);
 		}

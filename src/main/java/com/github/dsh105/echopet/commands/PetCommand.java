@@ -246,7 +246,10 @@ public class PetCommand implements CommandExecutor {
 				}
 				
 				if (sender.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)) {
-					Pet pi = ec.PH.createPet((Player) sender, petType);
+					Pet pi = ec.PH.createPet((Player) sender, petType, true);
+					if (pi == null) {
+						return true;
+					}
 					if (!petDataList.isEmpty()) {
 						ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
 					}
@@ -317,7 +320,10 @@ public class PetCommand implements CommandExecutor {
 					}
 					
 					if (sender.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)) {
-						Pet mount = pi.createMount(petType);
+						Pet mount = pi.createMount(petType, true);
+						if (mount == null) {
+							return true;
+						}
 						if (!petDataList.isEmpty()) {
 							ec.PH.setData(mount, petDataList.toArray(new PetData[petDataList.size()]), true);
 						}
@@ -392,7 +398,10 @@ public class PetCommand implements CommandExecutor {
 				
 				if (sender.hasPermission("echopet.pet.type.*") || (StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(petType), sender, false)
 						&& StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(mountType), sender, false))) {
-					Pet pi = ec.PH.createPet(((Player) sender), petType, mountType);
+					Pet pi = ec.PH.createPet(((Player) sender), petType, mountType, true);
+					if (pi == null) {
+						return true;
+					}
 					if (!petDataList.isEmpty()) {
 						ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
 					}

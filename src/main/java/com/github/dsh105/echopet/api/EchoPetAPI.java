@@ -26,7 +26,11 @@ public class EchoPetAPI {
 	 */
 	public Pet givePet(Player player, PetType petType, boolean sendMessage) {
 		if (player != null && petType != null) {
-			Pet pet = EchoPet.getPluginInstance().PH.createPet(player, petType);
+			Pet pet = EchoPet.getPluginInstance().PH.createPet(player, petType, sendMessage);
+			if (pet == null) {
+				EchoPet.getPluginInstance().log("[SEVERE] Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml.");
+				return null;
+			}
 			if (sendMessage) {
 				player.sendMessage(Lang.CREATE_PET.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			}
