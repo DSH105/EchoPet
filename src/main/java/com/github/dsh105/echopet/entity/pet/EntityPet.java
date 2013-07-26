@@ -73,8 +73,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			this.getNavigation().b(true);
 			
 			petGoalSelector.addGoal("Float", new PetGoalFloat(this));
-			//petGoalSelector.addGoal("Ride", new PetGoalPassenger(this, EchoPet.getPluginInstance().DO.getRideSpeed(), EchoPet.getPluginInstance().DO.getRideJumpHeight()));
-			
+
 			petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(), this.getSizeCategory().getStopWalk(), this.getSizeCategory().getTeleport()));
 			petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
 			petGoalSelector.addGoal("RandomLookAround", new PetGoalRandomLookaround(this));
@@ -82,21 +81,12 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("flyTeleport", false)) {
 				petGoalSelector.addGoal("Fly", new PetGoalFly(this));
 			}
-			//petGoalSelector.addGoal("RandomStroll", new PetGoalRandomStroll(this));
 			
 		} catch (Exception e) {
 			EchoPet.getPluginInstance().severe(e, "Error creating new pet entity.");
 		}
 	}
-	
-	/*public void setPet(Pet pet) {
-		if (pet != null) {
-			this.pet = pet;
-			((LivingEntity) this.getBukkitEntity()).setMaxHealth(pet.getPetType().getMaxHealth());
-			this.setHealth(pet.getPetType().getMaxHealth());
-		}
-	}*/
-	
+
 	public Pet getPet() {
 		return this.pet;
 	}
