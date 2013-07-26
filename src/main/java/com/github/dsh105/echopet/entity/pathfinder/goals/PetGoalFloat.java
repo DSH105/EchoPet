@@ -5,24 +5,24 @@ import com.github.dsh105.echopet.entity.pet.EntityPet;
 
 public class PetGoalFloat extends PetGoal {
 	
-	private EntityPet a;
+	private EntityPet pet;
 	
 	public PetGoalFloat(EntityPet pet) {
-		this.a = pet;
-		a.getNavigation().e(true);
+		this.pet = pet;
+		pet.getNavigation().e(true);
 	}
 	
 	@Override
-	public boolean a() {
-		return a.world.getMaterial((int) a.locX, (int) a.locY, (int) a.locZ).isLiquid();
+	public boolean shouldStart() {
+		return pet.world.getMaterial((int) pet.locX, (int) pet.locY, (int) pet.locZ).isLiquid();
 	}
 	
 	@Override
-	public void e() {
+	public void tick() {
 		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalFloat.java#L18
 		//a.aB() - 1.6.1
-		if (a.aC().nextFloat() < 0.8F) {
-			this.a.getControllerJump().a();
+		if (pet.aC().nextFloat() < 0.8F) {
+			this.pet.getControllerJump().a();
 		}
 	}
 }

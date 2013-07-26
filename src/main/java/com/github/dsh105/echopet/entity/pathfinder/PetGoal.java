@@ -2,13 +2,13 @@ package com.github.dsh105.echopet.entity.pathfinder;
 
 public abstract class PetGoal {
 	
-	public abstract boolean a(); // shouldStart
+	public abstract boolean shouldStart();
 	
-	public boolean b() {return !a();} //shouldFinish
+	public boolean shouldFinish() {return !shouldStart();}
 	
-	public void c() {} //start
+	public void start() {}
 	
-	public void d() {} //finish
+	public void finish() {}
 	
-	public void e() {} //tick over/run
+	public void tick() {}
 }

@@ -9,64 +9,64 @@ import com.github.dsh105.echopet.entity.pet.EntityPet;
 @SuppressWarnings("rawtypes")
 public class PetGoalLookAtPlayer extends PetGoal {
 	
-	private EntityPet a; //pet
-	protected Entity b; //player
-	private float c; //range
-	private int d; //ticks left
-	private float e; //chance
-	private Class f;
+	private EntityPet pet;
+	protected Entity player;
+	private float range;
+	private int ticksLeft;
+	private float chance;
+	private Class clazz;
 	
 	public PetGoalLookAtPlayer(EntityPet pet, Class c, float f) {
-		this.a = pet;
-		this.c = f;
-		this.e = 0.2F;
-		this.f = c;
+		this.pet = pet;
+		this.range = f;
+		this.chance = 0.2F;
+		this.clazz = c;
 	}
 	
 	public PetGoalLookAtPlayer(EntityPet pet, Class c, float f, float f1) {
-		this.a = pet;
-		this.c = f;
-		this.e = f1;
-		this.f = c;
+		this.pet = pet;
+		this.range = f;
+		this.chance = f1;
+		this.clazz = c;
 	}
 	
 	@Override
-	public boolean a() {
+	public boolean shouldStart() {
 		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalLookAtPlayer.java#L29
 		//a.aB() - 1.6.1
-		if (this.a.aC().nextFloat() >= this.e) {
+		if (this.pet.aC().nextFloat() >= this.chance) {
 			return false;
 		}
-		else if (this.a.passenger != null) {
+		else if (this.pet.passenger != null) {
 			return false;
 		}
 		else {
-			if (this.f == EntityHuman.class) {
-				this.b = this.a.world.findNearbyPlayer(this.a, (double) this.c);
+			if (this.clazz == EntityHuman.class) {
+				this.player = this.pet.world.findNearbyPlayer(this.pet, (double) this.range);
 			}
 			else {
-				this.b = this.a.world.a(this.f, this.b.boundingBox.grow((double) this.c, 3.0D, (double) this.c), this.b);
+				this.player = this.pet.world.a(this.clazz, this.player.boundingBox.grow((double) this.range, 3.0D, (double) this.range), this.player);
 			}
-			return this.b != null;
+			return this.player != null;
 		}
 	}
 	
 	@Override
-	public boolean b() {
-		return !this.b.isAlive() ? false : (this.a.e(this.b) > (double) (this.c * this.c) ? false : this.d > 0);
+	public boolean shouldFinish() {
+		return !this.player.isAlive() ? false : (this.pet.e(this.player) > (double) (this.range * this.range) ? false : this.ticksLeft > 0);
 	}
 	
 	public void c() {
-		this.d = 40 + this.a.aC().nextInt(40);
+		this.ticksLeft = 40 + this.pet.aC().nextInt(40);
 	}
 
 	public void d() {
-		this.b = null;
+		this.player = null;
 	}
 
 	public void e() {
 		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalLookAtPlayer.java#L59
-		this.a.getControllerLook().a(this.b.locX, this.b.locY + (double) this.b.getHeadHeight(), this.b.locZ, 10.0F, (float) this.a.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
-		--this.d;
+		this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
+		--this.ticksLeft;
 	}
 }

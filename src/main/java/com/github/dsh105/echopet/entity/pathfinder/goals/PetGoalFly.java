@@ -12,7 +12,7 @@ public class PetGoalFly extends PetGoal {
 	}
 	
 	@Override
-	public boolean a() {
+	public boolean shouldStart() {
 		if (!this.pet.isAlive()) {
 			return false;
 		}
@@ -28,7 +28,7 @@ public class PetGoalFly extends PetGoal {
 	}
 	
 	@Override
-	public boolean b() {
+	public boolean shouldFinish() {
 		if (this.pet.getOwner() == null) {
 			return true;
 		}
@@ -41,7 +41,7 @@ public class PetGoalFly extends PetGoal {
 	}
 	
 	@Override
-	public void e() {
+	public void tick() {
 		this.pet.teleport(this.pet.getOwner().getLocation());
 	}
 }

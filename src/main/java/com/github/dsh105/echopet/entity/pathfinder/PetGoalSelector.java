@@ -36,7 +36,7 @@ public class PetGoalSelector {
 			b.remove(goalItem);
 			a.remove(goalItem);
 			if (c.contains(goalItem)) {
-				goal.d();
+				goal.finish();
 			}
 			c.remove(goalItem);
 		}
@@ -51,7 +51,7 @@ public class PetGoalSelector {
 		b.clear();
 		for (PetGoalSelectorItem goalItem : c) {
 			PetGoal goal = goalItem.a;
-			goal.d();
+			goal.finish();
 		}
 		c.clear();
 	}
@@ -62,7 +62,7 @@ public class PetGoalSelector {
 			PetGoalSelectorItem goalItem = i.next();
 			PetGoal goal = goalItem.a;
 			if (!c.contains(goalItem)) {
-				if (goal.a()) {
+				if (goal.shouldStart()) {
 					c.add(goalItem);
 				}
 			}
@@ -72,8 +72,8 @@ public class PetGoalSelector {
 		while (i2.hasNext()) {
 			PetGoalSelectorItem goalItem = i2.next();
 			PetGoal goal = goalItem.a;
-			if (goal.b()) {
-				goal.d();
+			if (goal.shouldFinish()) {
+				goal.finish();
 				i2.remove();
 			}
 		}
@@ -82,7 +82,7 @@ public class PetGoalSelector {
 		while (i3.hasNext()) {
 			PetGoalSelectorItem goalItem = i3.next();
 			PetGoal goal = goalItem.a;
-			goal.e();
+			goal.tick();
 		}
 	}
 }

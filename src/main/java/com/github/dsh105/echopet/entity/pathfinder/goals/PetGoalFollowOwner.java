@@ -15,7 +15,7 @@ public class PetGoalFollowOwner extends PetGoal {
 	private EntityPet pet; //d
 	private float speed = 0.4F; //f
 	private Navigation nav; //g
-	private int h = 0; //h
+	private int timer = 0; //h
 	private double startDistance;
 	private double stopDistance;
 	private double teleportDistance;
@@ -31,7 +31,7 @@ public class PetGoalFollowOwner extends PetGoal {
 	}
 	
 	@Override
-	public boolean a() {
+	public boolean shouldStart() {
 		if (!this.pet.isAlive()) {
 			return false;
 		}
@@ -48,7 +48,7 @@ public class PetGoalFollowOwner extends PetGoal {
 	}
 	
 	@Override
-	public boolean b() {
+	public boolean shouldFinish() {
 		if (this.owner == null) {
 			return true;
 		}
@@ -61,25 +61,25 @@ public class PetGoalFollowOwner extends PetGoal {
 	}
 	
 	@Override
-	public void c() {
-		this.h = 0;
+	public void start() {
+		this.timer = 0;
 		//this.nav.a(false);
 	}
 	
 	@Override
-	public void d() {
+	public void finish() {
 		this.nav.g();
 	}
 	
 	@Override
-	public void e() {
+	public void tick() {
 		
 		Location ol = pet.getOwner().getLocation();
 		
 		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalFollowOwner.java#L57
 		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
-		if (--this.h <= 0) {
-			this.h = 10;
+		if (--this.timer <= 0) {
+			this.timer = 10;
 			if (this.pet.getOwner().isSprinting()) {
 				this.speed = 0.5F;
 			}
