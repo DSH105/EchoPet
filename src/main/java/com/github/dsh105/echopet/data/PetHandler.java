@@ -178,9 +178,6 @@ public class PetHandler {
 			if (dataToString != " ") {
 				pi.getOwner().sendMessage(Lang.DATA_FORCE_MESSAGE.toString()
 						.replace("%data%", dataToString));
-				pi.getOwner().sendMessage(ec.prefix + ChatColor.YELLOW
-						+ "The following data types have been forced by the server: "
-						+ dataToString);
 			}
 		}
 	}
