@@ -1,6 +1,5 @@
 package com.github.dsh105.echopet.listeners;
 
-
 import com.github.dsh105.echopet.api.event.PetInteractEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
@@ -15,7 +14,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.entity.pet.CraftPet;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.util.Lang;
 
@@ -41,7 +39,7 @@ public class PetOwnerListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player) {
@@ -55,14 +53,23 @@ public class PetOwnerListener implements Listener {
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		Player p = event.getPlayer();
-		Pet pi = ec.PH.getPet(p);
+		final Pet pi = ec.PH.getPet(p);
 		if (pi != null) {
 			if (event.getFrom().getWorld() == event.getTo().getWorld()) {
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						pi.teleportToOwner();
+					}
+
+				}.runTaskLater(EchoPet.getPluginInstance(), 5L);
 				pi.teleportToOwner();
 			}
 			else {
 				ec.PH.removePets(p); // Safeguard for Multiworld travel
 				p.sendMessage(Lang.DIMENSION_CHANGE.toString());
+				loadPets(p, false);
 			}
 		}
 	}
