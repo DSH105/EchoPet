@@ -1,5 +1,6 @@
 package com.github.dsh105.echopet.listeners;
 
+import com.github.dsh105.echopet.api.event.PetDamageEvent;
 import com.github.dsh105.echopet.api.event.PetInteractEvent;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -40,13 +41,15 @@ public class PetEntityListener implements Listener {
 			}
 		}
 	}
-	
-	// Stops pets getting damaged. Invincible pets :D
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
 		Entity e = event.getEntity();
 		if (e instanceof CraftPet) {
-			event.setCancelled(true);
+			CraftPet craftPet = (CraftPet) e;
+			PetDamageEvent damageEvent = new PetDamageEvent(craftPet.getPet(), event.getCause(), event.getDamage());
+			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(damageEvent);
+			event.setDamage(damageEvent.getDamage());
+			event.setCancelled(damageEvent.isCancelled());
 		}
 	}
 
