@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class EchoPetAPI {
 
 	/**
-	 * Gives a Pet to the specified {@link Player}
+	 * Gives a {@link Pet} to the specified {@link Player}
 	 * <p>
 	 * Pets will be spawned immediately next to the target player, linked until it is removed.
 	 *
@@ -40,7 +40,7 @@ public class EchoPetAPI {
 	}
 
 	/**
-	 * Removes a Pet if the {@link Player} has one active
+	 * Removes a {@link Pet} if the {@link Player} has one active
 	 *
 	 * @param player the {@link Player} to remove their Pet from
 	 * @param sendMessage defines if the plugin sends a message to the target {@link Player}
@@ -50,7 +50,7 @@ public class EchoPetAPI {
 	}
 
 	/**
-	 * Checks if a {@link Player} has a Pet
+	 * Checks if a {@link Player} has a {@link Pet}
 	 *
 	 * @param player the {@link Player} used to check for Pet
 	 * @return true if {@link Player} has a Pet, false if not
@@ -60,7 +60,7 @@ public class EchoPetAPI {
 	}
 
 	/**
-	 * Gets a {@link Player}'s Pet
+	 * Gets a {@link Player}'s {@link Pet}
 	 *
 	 * @param player the {@link Player} to get the Pet of
 	 * @return the {@link Pet} instance linked to the {@link Player}
@@ -68,6 +68,12 @@ public class EchoPetAPI {
 	public Pet getPet(Player player) {
 		return EchoPet.getPluginInstance().PH.getPet(player);
 	}
+
+	/**
+	 * Gets all active {@link Pet}
+	 *
+	 * @return an array of all active {@link Pet}s
+	 */
 
 	public Pet[] getAllPets() {
 		ArrayList<Pet> pets = EchoPet.getPluginInstance().PH.getPets();
