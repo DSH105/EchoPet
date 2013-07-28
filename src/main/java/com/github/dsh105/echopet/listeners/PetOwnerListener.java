@@ -121,7 +121,7 @@ public class PetOwnerListener implements Listener {
 		}
 		
 		if (ec.DO.autoLoadPets(p)) {
-			if (ec.getPetConfig().get("autosave." + "." + p.getName() + ".pet.type") != null) {
+			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
 					return;
