@@ -2,6 +2,7 @@ package com.github.dsh105.echopet.entity.pet;
 
 import java.util.ArrayList;
 
+import com.github.dsh105.echopet.api.event.PetTeleportEvent;
 import com.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_6_R2.*;
 import org.bukkit.craftbukkit.v1_6_R2.*;
@@ -142,8 +143,17 @@ public class Pet {
 	}
 	
 	public void teleportToOwner() {
-		Location l = owner.getLocation();
-		if (l.getWorld() != this.getLocation().getWorld()) {
+		this.teleport(this.owner.getLocation());
+	}
+
+	public void teleport(Location to) {
+		PetTeleportEvent teleportEvent = new PetTeleportEvent(this.pet.getPet(), this.pet.getLocation(), to);
+		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(teleportEvent);
+		if (teleportEvent.isCancelled()) {
+			return;
+		}
+		Location l = teleportEvent.getTo();
+		if (l.getWorld() == this.getLocation().getWorld()) {
 			if (mount != null) {
 				mount.getCraftPet().eject();
 				mount.getCraftPet().teleport(l);

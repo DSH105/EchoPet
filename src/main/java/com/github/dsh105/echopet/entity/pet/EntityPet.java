@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.github.dsh105.echopet.api.event.PetAttackEvent;
 import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
+import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import com.github.dsh105.echopet.data.PetType;
 import net.minecraft.server.v1_6_R2.*;
 
@@ -217,7 +218,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	}
 	
 	@Override
-	public void e(float f, float f1) { //f1 = sidewards, f1 = forwards/backwards
+	public void e(float f, float f1) { //f = sidewards, f1 = forwards/backwards
 
 		// Can only jump over half slabs if the rider is not the owner
 		// I like this idea
@@ -234,6 +235,15 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			return;
 		}
 
+		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), f1, f);
+		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+		if (moveEvent.isCancelled()) {
+			return;
+		}
+
+		float forMot = moveEvent.getForwardMotionSpeed();
+		float sideMot = moveEvent.getSidewardMotionSpeed();
+
 		this.Y = 1.0F;
 		
 		this.lastYaw = this.yaw = this.passenger.yaw;
@@ -241,16 +251,16 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         this.b(this.yaw, this.pitch);
         this.aP = this.aN = this.yaw;
         
-        f = ((EntityLiving) this.passenger).be * 0.5F;
-        f1 = ((EntityLiving) this.passenger).bf;
+        sideMot = ((EntityLiving) this.passenger).be * 0.5F;
+        forMot = ((EntityLiving) this.passenger).bf;
         
-        if (f1 <= 0.0F) {
-            f1 *= 0.25F;
+        if (forMot <= 0.0F) {
+            forMot *= 0.25F;
         }
-        f *= 0.75F;
+        sideMot *= 0.75F;
         
         this.i(this.rideSpeed);
-        super.e(f, f1);
+        super.e(sideMot, forMot);
 
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
 

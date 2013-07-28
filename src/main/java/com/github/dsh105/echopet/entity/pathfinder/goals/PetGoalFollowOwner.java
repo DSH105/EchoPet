@@ -1,5 +1,8 @@
 package com.github.dsh105.echopet.entity.pathfinder.goals;
 
+import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.api.event.PetMoveEvent;
+import com.github.dsh105.echopet.api.event.PetTeleportEvent;
 import net.minecraft.server.v1_6_R2.EntityPlayer;
 import net.minecraft.server.v1_6_R2.Navigation;
 
@@ -77,9 +80,6 @@ public class PetGoalFollowOwner extends PetGoal {
 	
 	@Override
 	public void tick() {
-		
-		Location ol = pet.getOwner().getLocation();
-		
 		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalFollowOwner.java#L57
 		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
 		if (--this.timer <= 0) {
@@ -93,13 +93,19 @@ public class PetGoalFollowOwner extends PetGoal {
 			else {
 				this.speed = 0.4F;
 			}
-			if ((!this.pet.getOwner().isFlying() && this.pet.e(this.owner) > this.teleportDistance) || (this.pet.getOwner().isFlying() && this.pet.e(this.owner) > 50)) {
-				this.pet.getPet().teleportToOwner();
+			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
+			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+			if (moveEvent.isCancelled()) {
+				return;
 			}
-			if (!this.nav.a(ol.getX(), ol.getY(), ol.getZ(), speed)) {
+			Location to = moveEvent.getTo();
+			if ((!this.pet.getOwner().isFlying() && this.pet.e(this.owner) > this.teleportDistance) || (this.pet.getOwner().isFlying() && this.pet.e(this.owner) > 50)) {
+				this.pet.getPet().teleport(this.pet.getOwner().getLocation());
+			}
+			else if (!this.nav.a(to.getX(), to.getY(), to.getZ(), speed)) {
 				if (owner.onGround && pet.goalTarget == null) {
-					this.pet.setPositionRotation(ol.getX(), ol.getY(), ol.getZ(), this.pet.yaw, this.pet.pitch);
-					this.nav.a(ol.getX(), ol.getY(), ol.getZ(), speed);
+					this.pet.setPositionRotation(to.getX(), to.getY(), to.getZ(), this.pet.yaw, this.pet.pitch);
+					this.nav.a(to.getX(), to.getY(), to.getZ(), speed);
 				}
 			}
 		}
