@@ -1,5 +1,7 @@
 package com.github.dsh105.echopet.menu;
 
+import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.api.event.PetMenuOpenEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -21,6 +23,11 @@ public class DataMenu implements Menu {
 	}
 	
 	public void open(boolean sendMessage) {
+		PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet, PetMenuOpenEvent.MenuType.DATA);
+		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(menuEvent);
+		if (menuEvent.isCancelled()) {
+			return;
+		}
 		Player p = this.pet.getOwner();
 		if (p != null) {
 			p.openInventory(this.inv);
