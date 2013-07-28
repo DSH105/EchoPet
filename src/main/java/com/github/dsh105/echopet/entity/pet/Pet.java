@@ -47,15 +47,30 @@ public class Pet {
 		this.teleportToOwner();
 		setName(petType.getDefaultName(owner.getName()));
 	}
-	
+
+	/**
+	 * Gets the Ride Mode state of this {@link Pet}
+	 *
+	 * @return true if the owner is riding
+	 */
 	public boolean isOwnerRiding() {
 		return this.ownerIsRiding;
 	}
-	
+
+	/**
+	 * Gets the Hat Mode state of this {@link Pet}
+	 *
+	 * @return true if Hat Mode is active
+	 */
 	public boolean isPetHat() {
 		return this.isHat;
 	}
-	
+
+	/**
+	 * Sets the Ride Mode state of this {@link Pet}
+	 *
+	 * @param flag true if your wish for the owner to ride their {@link Pet}
+	 */
 	public void ownerRidePet(boolean flag) {
 		if (this.isHat) {
 			this.setAsHat(false);
@@ -80,7 +95,12 @@ public class Pet {
 			EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
 		}
 	}
-	
+
+	/**
+	 * Sets the Hat Mode state of this {@link Pet}
+	 *
+	 * @param flag true if your wish for this {@link Pet} to be a Hat
+	 */
 	public void setAsHat(boolean flag) {
 		if (this.ownerIsRiding) {
 			this.ownerRidePet(false);
@@ -141,11 +161,19 @@ public class Pet {
 		}
 		return entityPet;
 	}
-	
+
+	/**
+	 * Teleports this {@link Pet} to its owner
+	 */
 	public void teleportToOwner() {
 		this.teleport(this.owner.getLocation());
 	}
 
+	/**
+	 * Teleports this {@link Pet} to a {@link Location}
+	 *
+	 * @param to {@link Location} to teleport the {@link Pet} to
+	 */
 	public void teleport(Location to) {
 		PetTeleportEvent teleportEvent = new PetTeleportEvent(this.pet.getPet(), this.pet.getLocation(), to);
 		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(teleportEvent);
@@ -164,7 +192,12 @@ public class Pet {
 			}
 		}
 	}
-	
+
+	/**
+	 * Set the name tag of this {@link Pet}
+	 *
+	 * @param s new name of the {@link Pet}
+	 */
 	public void setName(String s) {
 		s = StringUtil.replaceStringWithColours(s);
 		name = s;
@@ -172,23 +205,47 @@ public class Pet {
 		le.setCustomName(s);
 		le.setCustomNameVisible((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("petTagVisible", true));
 	}
-	
+
+	/**
+	 * Gets the {@link Location} of this {@link Pet}
+	 * @return
+	 */
 	public Location getLocation() {
 		return this.craftPet.getLocation();
 	}
-	
+
+	/**
+	 * Gets this {@link Pet}'s name
+	 *
+	 * @return this {@link Pet}'s name
+	 */
 	public String getPetName() {
 		return this.name;
 	}
-	
+
+	/**
+	 * Get this {@link Pet}'s name without colours translated
+	 *
+	 * @return the name of this {@link Pet}
+	 */
 	public String getNameToString() {
 		return StringUtil.replaceColoursWithString(name);
 	}
-	
+
+	/**
+	 * Gets this {@link Pet}'s owner
+	 *
+	 * @return a {@link Player} object that owns this {@link Pet}
+	 */
 	public Player getOwner() {
 		return this.owner;
 	}
-	
+
+	/**
+	 * Gets the {@link CraftPet} for this {@link Pet}
+	 *
+	 * @return a {@link CraftPet} object for this {@link Pet}
+	 */
 	public CraftPet getCraftPet() {
 		return this.craftPet;
 	}
@@ -196,22 +253,40 @@ public class Pet {
 	protected void setCraftPet(CraftPet cp) {
 		this.craftPet = cp;
 	}
-	
+
+	/**
+	 * Gets the {@link EntityPet} for this {@link Pet}
+	 *
+	 * @return a {@link EntityPet} object for this {@link Pet}
+	 */
 	public EntityPet getEntityPet() {
 		return this.pet;
 	}
-	
+
+	/**
+	 * Gets this {@link Pet}'s mount
+	 *
+	 * @return {@link Pet} object mounted on this {@link Pet}, null if one does not exist
+	 */
 	public Pet getMount() {
 		return mount;
 	}
-	
+
+	/**
+	 * Remove this {@link Pet}'s mount
+	 */
 	public void removeMount() {
 		if (mount != null) {
 			mount.removePet();
 			this.mount = null;
 		}
 	}
-	
+
+	/**
+	 * Remove this {@link Pet}
+	 * <p>
+	 * Kills this {@link Pet} and removes any mounts
+	 */
 	public void removePet() {
 		try {
 			Particle.CLOUD.sendToLocation(this.craftPet.getLocation());
@@ -221,11 +296,24 @@ public class Pet {
 			craftPet.remove();
 		} catch (Exception e) {}
 	}
-	
+
+	/**
+	 * Get active {@link PetData} for this {@link Pet}
+	 *
+	 * @param b get data on (true) or off (false)
+	 * @return An {@link ArrayList} of {@link PetData} for this {@link Pet}
+	 */
 	public ArrayList<PetData> getAllData(boolean b) {
 		return b ? this.dataTrue : this.dataFalse;
 	}
-	
+
+	/**
+	 * Creates a Mount for this {@link Pet}
+	 *
+	 * @param pt the {@link PetType} used to create a mount
+	 * @param sendFailMessage whether to send a message to the owner if mounts are disabled
+	 * @return a new {@link Pet} object that is mounting this {@link Pet}
+	 */
 	public Pet createMount(final PetType pt, boolean sendFailMessage) {
 		if (!EchoPet.getPluginInstance().DO.allowMounts(this.petType)) {
 			if (sendFailMessage) {
@@ -251,7 +339,12 @@ public class Pet {
 
 		return this.mount;
 	}
-	
+
+	/**
+	 * Get this {@link Pet}'s type
+	 *
+	 * @return {@link PetType} for this {@link Pet}
+	 */
 	public PetType getPetType() {
 		return this.petType;
 	}
@@ -260,6 +353,11 @@ public class Pet {
 		return pt.equals(this.petType);
 	}
 
+	/**
+	 * Gets whether this {@link Pet} is a Mount
+	 *
+	 * @return true if it is a mount, false if not
+	 */
 	public boolean isMount() {
 		return this.isMount;
 	}

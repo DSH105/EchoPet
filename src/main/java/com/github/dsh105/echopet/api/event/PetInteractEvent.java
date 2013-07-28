@@ -21,6 +21,11 @@ public class PetInteractEvent extends Event implements Cancellable {
 		this.cancelled = cancelledByDefault;
 	}
 
+	/**
+	 * Gets the {@link Pet} involved in this event
+	 *
+	 * @return the {@link Pet} involved
+	 */
 	public Pet getPet() {
 		return this.pet;
 	}
@@ -33,6 +38,12 @@ public class PetInteractEvent extends Event implements Cancellable {
 		return this.action;
 	}
 
+	/**
+	 * Gets the cancellation state of this event. A cancelled event will not
+	 * be executed in the server, but will still pass to other plugins
+	 *
+	 * @return true if this event is cancelled
+	 */
 	public boolean isCancelled() {
 		return this.cancelled;
 	}
@@ -41,6 +52,12 @@ public class PetInteractEvent extends Event implements Cancellable {
 		return this.player == this.pet.getOwner();
 	}
 
+	/**
+	 * Sets the cancellation state of this event. A cancelled event will not
+	 * be executed in the server, but will still pass to other plugins
+	 *
+	 * @param cancel true if you wish to cancel this event
+	 */
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;
 	}
