@@ -116,8 +116,9 @@ public class DefaultOptions {
 			config.set("rideJump", config.getDouble("rideJump", 0.5D), "Jump height for ridden pets.");
 			config.set("sendForceMessage", config.getBoolean("sendForceMessage", true), "For all values forced (below), EchoPet will notify the player", "(if set to true).");
 			for (PetType petType : PetType.values()) {
-				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", config.getString("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", petType.getDefaultName()));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true));
+				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", config.getString("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", petType.getDefaultName()));
+				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", petType.getAttackDamage()));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true));
 				for (PetData dataType : PetData.values()) {
 					if (petType.isDataAllowed(dataType)) {
