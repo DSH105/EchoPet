@@ -2,9 +2,17 @@ package com.github.dsh105.echopet.api;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.data.PetData;
+import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
+import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
+import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
+import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.StringUtil;
+import net.minecraft.server.v1_6_R2.EntityHuman;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.github.dsh105.echopet.data.PetType;
@@ -124,4 +132,72 @@ public class EchoPetAPI {
 	public boolean hasData(Pet pet, PetData petData) {
 		return pet.getAllData(true).contains(petData);
 	}
+
+	/**
+	 * Set a target for the {@link Pet} to attack
+	 *
+	 * @param pet the attacker
+	 * @param target the {@link LivingEntity} for the {@link Pet} to attack
+	 */
+	public void setAttackTarget(Pet pet, LivingEntity target) {
+		if (pet.getEntityPet().petGoalSelector.getGoal(PetGoalAttack.class) != null) {
+			pet.getCraftPet().setTarget(target);
+		}
+	}
+
+	/**
+	 * Get the {@link LivingEntity} that a {@link Pet} is targetting
+	 *
+	 * @param pet the attacker
+	 * @return {@link LivingEntity} being attacked, null if none
+	 */
+	public LivingEntity getAttackTarget(Pet pet) {
+		return pet.getCraftPet().getTarget();
+	}
+
+	/**
+	 * Add a predefined goal to a {@link Pet} from the API
+	 *
+	 * @param pet the {@link Pet} to add the goal to
+	 * @param goalType type of goal (enum)
+	 */
+	public void addGoal(Pet pet, GoalType goalType) {
+		if (pet == null) {
+			return;
+		}
+		if (goalType == GoalType.ATTACK) {
+			pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getPluginInstance().DO.getConfigOption("", 0.0D), (Integer) EchoPet.getPluginInstance().DO.getConfigOption("", 0)));
+		}
+		else if (goalType == GoalType.FLOAT) {
+			pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));
+		}
+		else if (goalType == GoalType.FOLLOW_OWNER) {
+			pet.getEntityPet().petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(), pet.getEntityPet().getSizeCategory().getStopWalk(), pet.getEntityPet().getSizeCategory().getTeleport()));
+		}
+		else if (goalType == GoalType.LOOK_AT_PLAYER) {
+			pet.getEntityPet().petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(pet.getEntityPet(), EntityHuman.class, 8.0F));
+		}
+	}
+
+	/**
+	 * Add an implementation of {@link PetGoal} to a {@link Pet}
+	 *
+	 * @param pet the {@link Pet} to add the {@link PetGoal} to
+	 * @param goal the {@link PetGoal} to add
+	 * @param identifier a {@link String} to identify the goal
+	 */
+	public void addGoal(Pet pet, PetGoal goal, String identifier) {
+		pet.getEntityPet().petGoalSelector.addGoal(identifier, goal);
+	}
+
+	/**
+	 * {@link Enum} of predefined {@link PetGoal}s
+	 */
+	public enum GoalType {
+		ATTACK,
+		FLOAT,
+		FOLLOW_OWNER,
+		LOOK_AT_PLAYER;
+	}
 }
+
