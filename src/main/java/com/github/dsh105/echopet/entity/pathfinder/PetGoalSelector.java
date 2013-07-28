@@ -43,7 +43,11 @@ public class PetGoalSelector {
 	}
 	
 	public PetGoal getGoal(String s) {
-		return this.goalMap.get(s).a;
+		PetGoalSelectorItem goalItem = this.goalMap.get(s);
+		if (goalItem != null) {
+			return goalItem.a;
+		}
+		return null;
 	}
 	
 	public PetGoal getGoal(Class<? extends PetGoal> goalClass) {
