@@ -68,7 +68,7 @@ public class PetEntityListener implements Listener {
 		}
 		else if (event.getDamager() instanceof CraftPet) {
 			CraftPet craftPet = (CraftPet) event.getDamager();
-			PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), event.getDamage());
+			PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, event.getDamage());
 			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
 			event.setDamage(attackEvent.getDamage());
 			event.setCancelled(attackEvent.isCancelled());

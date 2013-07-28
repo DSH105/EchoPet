@@ -39,16 +39,6 @@ public class PetOwnerListener implements Listener {
 			}
 		}
 	}
-
-	@EventHandler
-	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-		if (event.getEntity() instanceof Player) {
-			Entity e = event.getDamager();
-			if (e instanceof CraftPet) {
-				event.setCancelled(true);
-			}
-		}
-	}
 	
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent event) {

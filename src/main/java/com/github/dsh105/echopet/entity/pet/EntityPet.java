@@ -3,13 +3,10 @@ package com.github.dsh105.echopet.entity.pet;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.github.dsh105.echopet.api.event.PetAttackEvent;
 import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.data.PetType;
-import net.minecraft.server.v1_6_R2.EntityCreature;
-import net.minecraft.server.v1_6_R2.EntityHuman;
-import net.minecraft.server.v1_6_R2.EntityLiving;
-import net.minecraft.server.v1_6_R2.IMonster;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R2.*;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
@@ -66,6 +63,17 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			this.remove();
 		}
 	}
+
+	public void attack(Entity entity) {
+		PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), this.getPet().getPetType().getAttackDamage());
+		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
+		if (!attackEvent.isCancelled()) {
+			if (entity instanceof Player) {
+				//TODO: WorldGuard PvP check
+			}
+			entity.damageEntity(DamageSource.mobAttack(this), (float) attackEvent.getDamage());
+		}
+	}
 	
 	public void setPathfinding() {
 		try {
@@ -76,7 +84,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 
 			petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(), this.getSizeCategory().getStopWalk(), this.getSizeCategory().getTeleport()));
 			petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
-			petGoalSelector.addGoal("RandomLookAround", new PetGoalRandomLookaround(this));
+			//petGoalSelector.addGoal("RandomLookAround", new PetGoalRandomLookaround(this));
 			
 			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("flyTeleport", false)) {
 				petGoalSelector.addGoal("Fly", new PetGoalFly(this));
@@ -243,9 +251,9 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         
         this.i(this.rideSpeed);
         super.e(f, f1);
-        
+
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
-        
+
         if (jump != null && this.onGround) {
         	try {
     			if (jump.getBoolean(this.passenger)) {

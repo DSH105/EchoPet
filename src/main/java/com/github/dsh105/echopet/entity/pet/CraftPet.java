@@ -1,9 +1,13 @@
 package com.github.dsh105.echopet.entity.pet;
 
+import net.minecraft.server.v1_6_R2.EntityCreature;
+import net.minecraft.server.v1_6_R2.EntityLiving;
 import org.bukkit.craftbukkit.v1_6_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 
 public class CraftPet extends CraftCreature {
 
@@ -33,8 +37,23 @@ public class CraftPet extends CraftCreature {
 	}
 
 	@Override
+	public void damage(double amount) {
+		super.damage(amount);
+	}
+
+	@Override
+	public void damage(double amount, Entity entity) {
+		super.damage(amount);
+	}
+
+	@Override
 	public void setHealth(double health) {
 		super.setHealth(health);
+	}
+
+	@Override
+	public void setMaxHealth(double amount) {
+		super.setMaxHealth(amount);
 	}
 
 	public void _INVALID_damage(int amount) {
@@ -67,5 +86,22 @@ public class CraftPet extends CraftCreature {
 
 	public void _INVALID_setLastDamage(int damage) {
 		setLastDamage((double) damage);
+	}
+
+	public CraftLivingEntity getTarget() {
+		if (getHandle().target == null) return null;
+		if (!(getHandle().target instanceof EntityLiving)) return null;
+		return (CraftLivingEntity) getHandle().target.getBukkitEntity();
+	}
+
+	public void setTarget(LivingEntity target) {
+		EntityCreature entity = getHandle();
+		if (target == null) {
+			entity.target = null;
+		}
+		else if (target instanceof CraftLivingEntity) {
+			entity.target = ((CraftLivingEntity) target).getHandle();
+			entity.pathEntity = entity.world.findPath(entity, entity.target, 16.0F, true, false, false, true);
+		}
 	}
 }

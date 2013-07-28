@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.api.event;
 
 import com.github.dsh105.echopet.entity.pet.Pet;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -12,10 +13,12 @@ public class PetAttackEvent extends Event implements Cancellable {
 	private boolean cancelled = false;
 
 	private Pet pet;
+	private Entity attacked;
 	private double damage;
 
-	public PetAttackEvent(Pet pet, final double damage) {
+	public PetAttackEvent(Pet pet, Entity attacked, final double damage) {
 		this.pet = pet;
+		this.attacked = attacked;
 		this.damage = damage;
 	}
 
@@ -25,6 +28,10 @@ public class PetAttackEvent extends Event implements Cancellable {
 
 	public void setDamage(double damage) {
 		this.damage = damage;
+	}
+
+	public Entity getAttacked() {
+		return this.attacked;
 	}
 
 	public Pet getPet() {
