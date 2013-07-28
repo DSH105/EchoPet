@@ -7,68 +7,78 @@ import java.util.Map;
 
 public class PetGoalSelector {
 	
-	private Map<String, PetGoalSelectorItem> a = new HashMap<String, PetGoalSelectorItem>();
-	private ArrayList<PetGoalSelectorItem> b = new ArrayList<PetGoalSelectorItem>();
-	private ArrayList<PetGoalSelectorItem> c = new ArrayList<PetGoalSelectorItem>();
+	private Map<String, PetGoalSelectorItem> goalMap = new HashMap<String, PetGoalSelectorItem>();
+	private ArrayList<PetGoalSelectorItem> goalList = new ArrayList<PetGoalSelectorItem>();
+	private ArrayList<PetGoalSelectorItem> activeGoalList = new ArrayList<PetGoalSelectorItem>();
 	
 	public void addGoal(int i, String s, PetGoal goal) {
 		PetGoalSelectorItem goalItem = new PetGoalSelectorItem(this, i, goal);
-		if (a.containsKey(goalItem)) {
+		if (this.goalMap.containsKey(goalItem)) {
 			return;
 		}
-		a.put(s, goalItem);
-		b.add(i, goalItem);
+		this.goalMap.put(s, goalItem);
+		this.goalList.add(i, goalItem);
 	}
 	
 	public void addGoal(String s, PetGoal goal) {
 		PetGoalSelectorItem goalItem = new PetGoalSelectorItem(this, goal);
-		if (a.containsKey(goalItem)) {
+		if (this.goalMap.containsKey(goalItem)) {
 			return;
 		}
-		a.put(s, goalItem);
-		b.add(goalItem);
+		this.goalMap.put(s, goalItem);
+		this.goalList.add(goalItem);
 	}
 	
 	public void removeGoal(String s) {
-		if (a.containsKey(s)) {
-			PetGoalSelectorItem goalItem = a.get(s);
+		if (this.goalMap.containsKey(s)) {
+			PetGoalSelectorItem goalItem = this.goalMap.get(s);
 			PetGoal goal = goalItem.a;
-			b.remove(goalItem);
-			a.remove(goalItem);
-			if (c.contains(goalItem)) {
+			this.goalList.remove(goalItem);
+			this.goalMap.remove(goalItem);
+			if (this.activeGoalList.contains(goalItem)) {
 				goal.finish();
 			}
-			c.remove(goalItem);
+			this.activeGoalList.remove(goalItem);
 		}
 	}
 	
 	public PetGoal getGoal(String s) {
-		return a.get(s).a;
+		return this.goalMap.get(s).a;
+	}
+	
+	public PetGoal getGoal(Class<? extends PetGoal> goalClass) {
+		for (PetGoalSelectorItem goalItem : this.goalList) {
+			PetGoal goal = goalItem.a;
+			if (goalClass.isInstance(goal)) {
+				return goal;
+			}
+		}
+		return null;
 	}
 	
 	public void removeGoals() {
-		a.clear();
-		b.clear();
-		for (PetGoalSelectorItem goalItem : c) {
+		this.goalMap.clear();
+		this.goalList.clear();
+		for (PetGoalSelectorItem goalItem : this.activeGoalList) {
 			PetGoal goal = goalItem.a;
 			goal.finish();
 		}
-		c.clear();
+		this.activeGoalList.clear();
 	}
 	
 	public void run() {
-		ListIterator<PetGoalSelectorItem> i = b.listIterator();
+		ListIterator<PetGoalSelectorItem> i = this.goalList.listIterator();
 		while (i.hasNext()) {
 			PetGoalSelectorItem goalItem = i.next();
 			PetGoal goal = goalItem.a;
-			if (!c.contains(goalItem)) {
+			if (!this.activeGoalList.contains(goalItem)) {
 				if (goal.shouldStart()) {
-					c.add(goalItem);
+					this.activeGoalList.add(goalItem);
 				}
 			}
 		}
 		
-		ListIterator<PetGoalSelectorItem> i2 = c.listIterator();
+		ListIterator<PetGoalSelectorItem> i2 = this.activeGoalList.listIterator();
 		while (i2.hasNext()) {
 			PetGoalSelectorItem goalItem = i2.next();
 			PetGoal goal = goalItem.a;
@@ -78,7 +88,7 @@ public class PetGoalSelector {
 			}
 		}
 		
-		ListIterator<PetGoalSelectorItem> i3 = c.listIterator();
+		ListIterator<PetGoalSelectorItem> i3 = this.activeGoalList.listIterator();
 		while (i3.hasNext()) {
 			PetGoalSelectorItem goalItem = i3.next();
 			PetGoal goal = goalItem.a;
