@@ -52,7 +52,7 @@ public class PetGoalFollowOwner extends PetGoal {
 	
 	@Override
 	public boolean shouldFinish() {
-		PetGoalAttack attackGoal = (PetGoalAttack) this.pet.petGoalSelector.getGoal("Attack");
+		PetGoalAttack attackGoal = (PetGoalAttack) this.pet.petGoalSelector.getGoal(PetGoalAttack.class);
 		if (attackGoal != null && attackGoal.isActive) {
 			return true;
 		}
