@@ -22,14 +22,29 @@ public class PetAttackEvent extends Event implements Cancellable {
 		this.damage = damage;
 	}
 
+	/**
+	 * Gets the damage dealt by the {@link Pet}
+	 *
+	 * @return damage dealt
+	 */
 	public double getDamage() {
 		return this.damage;
 	}
 
+	/**
+	 * Sets the damage to be applied to the attacked
+	 *
+	 * @param damage amount of health to take off the attacked
+	 */
 	public void setDamage(double damage) {
 		this.damage = damage;
 	}
 
+	/**
+	 * Gets the {@link Entity} attacked
+	 *
+	 * @return the {@link Entity} attacked
+	 */
 	public Entity getAttacked() {
 		return this.attacked;
 	}

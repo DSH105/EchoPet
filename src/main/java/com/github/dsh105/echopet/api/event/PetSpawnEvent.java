@@ -29,9 +29,25 @@ public class PetSpawnEvent extends Event implements Cancellable {
 	public Pet getPet() {
 		return this.pet;
 	}
-	
+
+	/**
+	 * Gets the spawn Location of the Pet
+	 * <p>
+	 * This Location is most likely going to be the owner's Location
+	 *
+	 * @return the Location this Pet spawned
+	 */
 	public Location getSpawnLocation() {
 		return this.spawnLocation;
+	}
+
+	/**
+	 * Sets the spawn Location of this Pet
+	 *
+	 * @param spawnLocation new Location to spawn the Pet
+	 */
+	public void setSpawnLocation(Location spawnLocation) {
+		this.spawnLocation = spawnLocation;
 	}
 
 	public HandlerList getHandlers() {

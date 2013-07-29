@@ -30,12 +30,31 @@ public class PetInteractEvent extends Event implements Cancellable {
 		return this.pet;
 	}
 
+	/**
+	 * Gets the player that interated with the Pet
+	 *
+	 * @return
+	 */
 	public Player getPlayer() {
 		return this.player;
 	}
 
+	/**
+	 * Gets the action executed by the {@link Player}
+	 *
+	 * @return the {@link Action} of the event
+	 */
 	public Action getAction() {
 		return this.action;
+	}
+
+	/**
+	 * Returns whether the {@link Player} that interacted was the Pet's owner
+	 *
+	 * @return true if it is the owner
+	 */
+	public boolean isPlayerOwner() {
+		return this.player == this.pet.getOwner();
 	}
 
 	/**
@@ -46,10 +65,6 @@ public class PetInteractEvent extends Event implements Cancellable {
 	 */
 	public boolean isCancelled() {
 		return this.cancelled;
-	}
-
-	public boolean isPlayerOwner() {
-		return this.player == this.pet.getOwner();
 	}
 
 	/**
@@ -68,7 +83,14 @@ public class PetInteractEvent extends Event implements Cancellable {
 	}
 
 	public enum Action {
+		/**
+		 * Left clicking a Pet
+		 */
 		LEFT_CLICK,
+
+		/**
+		 * Right clicking a Pet
+		 */
 		RIGHT_CLICK;
 	}
 }

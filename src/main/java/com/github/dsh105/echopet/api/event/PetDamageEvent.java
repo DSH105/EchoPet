@@ -21,10 +21,20 @@ public class PetDamageEvent extends Event implements Cancellable {
 		this.damageCause = damageCause;
 	}
 
+	/**
+	 * Gets the damage dealt by the {@link Pet}
+	 *
+	 * @return damage dealt
+	 */
 	public double getDamage() {
 		return this.damage;
 	}
 
+	/**
+	 * Sets the damage of the event
+	 *
+	 * @param damage amount of health to take off
+	 */
 	public void setDamage(double damage) {
 		this.damage = damage;
 	}

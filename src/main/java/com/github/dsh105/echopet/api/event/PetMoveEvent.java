@@ -21,14 +21,29 @@ public class PetMoveEvent extends Event implements Cancellable {
 		this.to = to;
 	}
 
+	/**
+	 * Gets the Location this Pet moved to
+	 *
+	 * @return Location moved to
+	 */
 	public Location getTo() {
 		return this.to;
 	}
 
+	/**
+	 * Gets the Location this Pet moved from
+	 *
+	 * @return Location moved from
+	 */
 	public Location getFrom() {
 		return this.from;
 	}
 
+	/**
+	 * Sets the location that this Pet will move to
+	 *
+	 * @param to New Location this Pet will move to
+	 */
 	public void setTo(Location to) {
 		this.to = to;
 	}

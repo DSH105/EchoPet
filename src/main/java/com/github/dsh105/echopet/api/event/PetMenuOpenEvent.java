@@ -27,6 +27,11 @@ public class PetMenuOpenEvent extends Event implements Cancellable {
 		return this.pet;
 	}
 
+	/**
+	 * Returns the type of Menu opened
+	 *
+	 * @return {@link MenuType} representing the menu opened
+	 */
 	public MenuType getMenuType() {
 		return this.menuType;
 	}

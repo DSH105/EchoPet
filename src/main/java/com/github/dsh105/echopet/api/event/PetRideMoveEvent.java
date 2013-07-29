@@ -29,18 +29,38 @@ public class PetRideMoveEvent extends Event implements Cancellable {
 		return this.pet;
 	}
 
+	/**
+	 * Gets the motion speed moved forward
+	 *
+	 * @return forward motion speed
+	 */
 	public float getForwardMotionSpeed() {
 		return this.forwardSpeed;
 	}
 
+	/**
+	 * Gets the motion speed moved sidewards
+	 *
+	 * @return sideward motion speed
+	 */
 	public float getSidewardMotionSpeed() {
 		return this.sidewardSpeed;
 	}
 
+	/**
+	 * Sets the motion speed moved forward
+	 *
+	 * @param forwardMotionSpeed new forward motion speed
+	 */
 	public void setForwardMotionSpeed(float forwardMotionSpeed) {
 		this.forwardSpeed = forwardMotionSpeed;
 	}
 
+	/**
+	 * Sets the motion speed moved forward
+	 *
+	 * @param sidewardMotionSpeed new forward motion speed
+	 */
 	public void setSidewardMotionSpeed(float sidewardMotionSpeed) {
 		this.sidewardSpeed = sidewardMotionSpeed;
 	}

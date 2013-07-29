@@ -27,10 +27,20 @@ public class PetRideJumpEvent extends Event implements Cancellable {
 		return this.pet;
 	}
 
+	/**
+	 * Gets the height jumped by this Pet
+	 *
+	 * @return height jumped
+	 */
 	public double getJumpHeight() {
 		return this.jumpHeight;
 	}
 
+	/**
+	 * Sets the height this Pet jumped
+	 *
+	 * @param jumpHeight new jump height for this event
+	 */
 	public void setJumpHeight(double jumpHeight) {
 		this.jumpHeight = jumpHeight;
 	}
