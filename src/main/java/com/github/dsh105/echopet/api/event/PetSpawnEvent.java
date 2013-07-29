@@ -13,8 +13,8 @@ public class PetSpawnEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
 	
-	private final Pet pet;
-	private final Location spawnLocation;
+	private Pet pet;
+	private Location spawnLocation;
 	
 	public PetSpawnEvent(Pet pet, Location spawnLocation) {
 		this.pet = pet;
