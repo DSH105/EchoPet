@@ -15,12 +15,6 @@ public class DefaultOptions {
 	public DefaultOptions(EchoPet ec) {
 		this.ec = ec;
 	}
-
-	public String getDefaultPetName(PetType petType) {
-		return StringUtil.replaceStringWithColours(ec.getMainConfig().getString("pets."
-				+ petType.toString().toLowerCase().replace("_", " ") + ".defaultName",
-				petType.getDefaultName()));
-	}
 	
 	public boolean allowPetType(PetType petType) {
 		return ec.getMainConfig().getBoolean("pets."
