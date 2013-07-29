@@ -195,10 +195,12 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		}*/
 		
 		if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
-			ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
-			int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
-			PetMenu menu = new PetMenu(getPet(), options, size);
-			menu.open(true);
+			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("petMenuOnInteract", true)) {
+				ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
+				int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
+				PetMenu menu = new PetMenu(getPet(), options, size);
+				menu.open(true);
+			}
 			return true;
 		}
 		return false;

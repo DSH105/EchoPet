@@ -100,6 +100,7 @@ public class DefaultOptions {
 			config.set("autoSaveTimer", config.getInt("autoSaveTimer", 180), "Interval between autosave of pet data (in seconds).");
 			config.set("requireDefaultPerm", config.getBoolean("requireDefaultPerm", false), "If true, players will need the -echopet.echopet-", "permission to perform commands.");
 			config.set("petTagVisible", config.getBoolean("petTagVisible", true), "Pet name tags are always visible (true) or only when a", "player is looking at them (false)");
+			config.set("petMenuOnInteract", config.getBoolean("petMenuOnInteract", true), "Boolean value defining whether to allow", "the PetMenu to be opened by interaction (right click)");
 			config.set("startWalkDistance", config.getInt("startWalkDistance", 12), "Distance away from the player before their starts walking.");
 			config.set("stopWalkDistance", config.getInt("stopWalkDistance", 8), "Distance away from the player before their stops walking.");
 			config.set("teleportDistance", config.getInt("teleportDistance", 30), "Distance away from the player before their pet teleports.");
