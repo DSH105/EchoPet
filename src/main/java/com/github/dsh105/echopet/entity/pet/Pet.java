@@ -134,8 +134,14 @@ public class Pet {
 	}
 	
 	protected EntityPet createPet() {
+		Location l = owner.getLocation();
+		PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);
+		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(spawnEvent);
+		if (spawnEvent.isCancelled()) {
+			return null;
+		}
+		l = spawnEvent.getSpawnLocation();
 		PetType pt = this.petType;
-		Location l = owner.getLocation();;
 		World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
 		EntityPet entityPet = pt.getNewEntityInstance(mcWorld, this);
 		
@@ -146,13 +152,7 @@ public class Pet {
 		if (!mcWorld.addEntity(entityPet, SpawnReason.CUSTOM)) {
 			owner.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
 			EchoPet.getPluginInstance().PH.removePet(this);
-		}
-
-		PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);
-		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(spawnEvent);
-		if (spawnEvent.isCancelled()) {
-			this.removePet();
-			return null;
+			spawnEvent.setCancelled(true);
 		}
 		try {
 			Particle.MAGIC_RUNES.sendToLocation(l);
