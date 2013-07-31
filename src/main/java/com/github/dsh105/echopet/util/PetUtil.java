@@ -44,6 +44,10 @@ public class PetUtil {
 			String[] split = s.split(";");
 			if (split[0].contains(":")) {
 				String[] splitt = split[0].split(":");
+				if (splitt.length <= 1) {
+					sender.sendMessage(Lang.STRING_ERROR.toString().replace("%string%", split[0]));
+					return null;
+				}
 				petString = splitt[0].toLowerCase();
 				dataString = splitt[1];
 				name = split[1];
@@ -68,6 +72,10 @@ public class PetUtil {
 			}
 			else if (split[1].contains(":")) {
 				String[] splitt = split[1].split(":");
+				if (splitt.length <= 1) {
+					sender.sendMessage(Lang.STRING_ERROR.toString().replace("%string%", split[1]));
+					return null;
+				}
 				petString = split[0].toLowerCase();
 				name = splitt[0];
 				dataString = splitt[1];
@@ -97,6 +105,10 @@ public class PetUtil {
 		}
 		else if (s.contains(":")) {
 			String[] split = s.split(":");
+			if (split.length <= 1) {
+				sender.sendMessage(Lang.STRING_ERROR.toString().replace("%string%", s));
+				return null;
+			}
 			petString = split[0].toLowerCase();
 			dataString = split[1];
 			if (!dataString.contains(",")) {
