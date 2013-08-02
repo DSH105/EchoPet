@@ -57,48 +57,49 @@ public class PetHandler {
 		return pets;
 	}
 
-	public void loadPets(Player p, boolean findDefault, boolean sendMessage) {
+	public Pet loadPets(Player p, boolean findDefault, boolean sendMessage) {
 		EchoPet ec = EchoPet.getPluginInstance();
 		if (ec.DO.sqlOverride()) {
 			Pet pet = ec.SPH.createPetFromDatabase(p);
 			if (pet == null) {
-				return;
+				return null;
 			}
 			else {
 				if (sendMessage) {
 					p.sendMessage(Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
 				}
 			}
-			return;
+			return pet;
 		}
 
 		if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null && findDefault) {
 			Pet pi = ec.PH.createPetFromFile("default", p);
 			if (pi == null) {
-				return;
+				return null;
 			}
 			else {
 				if (sendMessage) {
 					p.sendMessage(Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
 				}
 			}
-			return;
+			return pi;
 		}
 
 		if (ec.DO.autoLoadPets(p)) {
 			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
-					return;
+					return null;
 				}
 				else {
 					if (sendMessage) {
 						p.sendMessage(Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
 					}
 				}
-				return;
+				return pi;
 			}
 		}
+		return null;
 	}
     
     public void removeAllPets() {
