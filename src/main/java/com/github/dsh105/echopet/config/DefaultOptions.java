@@ -105,6 +105,7 @@ public class DefaultOptions {
 			config.set("stopWalkDistance", config.getInt("stopWalkDistance", 8), "Distance away from the player before their stops walking.");
 			config.set("teleportDistance", config.getInt("teleportDistance", 30), "Distance away from the player before their pet teleports.");
 			config.set("flyTeleport", config.getBoolean("flyTeleport", false), "If set to true, when the player is flying, their pet will", "continually teleport towards them.");
+			config.set("canAttackPlayers", config.get("canAttackPlayers", false), "If true, Pets can damage players.");
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session", "If set to false, pets will still be loaded for players", "with the -echopet.override- permission");
 			config.set("autoLoadDefaultPets", config.getBoolean("autoLoadDefaultPets", true), "If false, default pets will not be loaded for players");
 			config.set("rideSpeed", config.getDouble("rideSpeed", 0.35D), "The speed the pet travels when ridden by players.");

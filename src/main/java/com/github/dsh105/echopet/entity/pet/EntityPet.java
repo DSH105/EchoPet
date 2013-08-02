@@ -69,8 +69,10 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), this.getPet().getPetType().getAttackDamage());
 		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
 		if (!attackEvent.isCancelled()) {
-			if (entity instanceof Player) {
-				//TODO: WorldGuard PvP check
+			if (entity instanceof EntityPlayer) {
+				if (!((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("canAttackPlayers", false))) {
+					return;
+				}
 			}
 			entity.damageEntity(DamageSource.mobAttack(this), (float) attackEvent.getDamage());
 		}
