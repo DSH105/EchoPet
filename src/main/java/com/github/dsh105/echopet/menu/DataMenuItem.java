@@ -43,6 +43,7 @@ public enum DataMenuItem {
 	ORANGE(DataMenuType.COLOR, PetData.ORANGE, Material.WOOL, 1, (short) 1, "Orange", "Wool Or Collar Color"),
 	PINK(DataMenuType.COLOR, PetData.PINK, Material.WOOL, 1, (short) 6, "Pink", "Wool Or Collar Color"),
 	PURPLE(DataMenuType.COLOR, PetData.PURPLE, Material.WOOL, 1, (short) 10, "Purple", "Wool Or Collar Color"),
+	RED(DataMenuType.COLOR, PetData.RED, Material.WOOL, 1, (short) 14, "Red", "Wool Or Collar Color"),
 	SILVER(DataMenuType.COLOR, PetData.SILVER, Material.WOOL, 1, (short) 8, "Silver", "Wool Or Collar Color"),
 	WHITE(DataMenuType.COLOR, PetData.WHITE, Material.WOOL, 1, (short) 0, "White", "Wool Or Collar Color"),
 	YELLOW(DataMenuType.COLOR, PetData.YELLOW, Material.WOOL, 1, (short) 4, "Yellow", "Wool Or Collar Color"),
