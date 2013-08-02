@@ -14,7 +14,7 @@ public enum AdminHelpPage {
 			ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
 			ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type>",
 
-			ChatColor.GOLD + "/" + EchoPet.getPluginInstance().adminCmdString + " <player> <type>:[data],[data];[name <mount>:[data],[data];[name]",
+			ChatColor.GOLD + "/" + EchoPet.getPluginInstance().adminCmdString + " <player> <type>:[data],[data];[name] <mount>:[data],[data];[name]",
 			ChatColor.YELLOW + "    - Gives a Pet to a Player with the specified mount.",
 			ChatColor.YELLOW + "    - Each data value is separated by a comma.",
 			ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
@@ -25,7 +25,7 @@ public enum AdminHelpPage {
 			ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
 			ChatColor.DARK_RED + "    - Permission: echopet.petadmin.name",
 
-			ChatColor.GOLD + "/" + EchoPet.getPluginInstance().adminCmdString + " <player> remove",
+			ChatColor.GOLD + "/" + EchoPet.getPluginInstance().adminCmdString + " remove <player>",
 			ChatColor.YELLOW + "    - Remove a Player's current pet.",
 			ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
 

@@ -349,13 +349,13 @@ public class PetAdminCommand implements CommandExecutor {
 		if (args.length == 3) {
 
 			if (args[0].equalsIgnoreCase("mount")) {
-				if (args[2].equalsIgnoreCase("remove")) {
+				if (args[1].equalsIgnoreCase("remove")) {
 					if (StringUtil.hpp("echopet.petadmin", "remove", sender, false)) {
-						Player p = Bukkit.getPlayer(args[1]);
+						Player p = Bukkit.getPlayer(args[2]);
 						if (p == null) {
-							String path =  "autosave." + "." + args[1];
+							String path =  "autosave." + "." + args[2];
 							if (ec.getPetConfig().get(path + ".mount.type") == null) {
-								sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+								sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[2]));
 								return true;
 							}
 							else {
@@ -363,7 +363,7 @@ public class PetAdminCommand implements CommandExecutor {
 									ec.getPetConfig().set(path + ".mount" + key, null);
 								}
 
-								EchoPet.getPluginInstance().SPH.clearMountFromDatabase(args[1]);
+								EchoPet.getPluginInstance().SPH.clearMountFromDatabase(args[2]);
 								sender.sendMessage(Lang.PLAYER_REMOVE_MOUNT.toString().replace("%player%", p.getName()));
 								return true;
 							}
