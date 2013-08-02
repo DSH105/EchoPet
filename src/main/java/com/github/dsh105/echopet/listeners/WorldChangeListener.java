@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.listeners;
 
 
+import com.github.dsh105.echopet.data.PetHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,8 +34,8 @@ public class WorldChangeListener implements Listener {
 			p.sendMessage(Lang.DIMENSION_CHANGE.toString());
 			//pi.getPet().travelDimension();
 		}
-		
-		PetOwnerListener.loadPets(p, false);
+
+		PetHandler.getInstance().loadPets(p, true, false);
 	}
 	
 	// Pets used to be able to enter portals.

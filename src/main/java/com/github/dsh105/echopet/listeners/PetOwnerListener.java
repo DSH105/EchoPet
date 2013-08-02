@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.listeners;
 
 import com.github.dsh105.echopet.api.event.PetInteractEvent;
+import com.github.dsh105.echopet.data.PetHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -59,7 +60,7 @@ public class PetOwnerListener implements Listener {
 			else {
 				ec.PH.removePets(p); // Safeguard for Multiworld travel
 				p.sendMessage(Lang.DIMENSION_CHANGE.toString());
-				loadPets(p, false);
+				PetHandler.getInstance().loadPets(p, true, false);
 			}
 		}
 	}
@@ -86,56 +87,12 @@ public class PetOwnerListener implements Listener {
 		new BukkitRunnable() {
 			
 			public void run() {
-				loadPets(p, true);
+				PetHandler.getInstance().loadPets(p, true, true);
 			}
 			
 		}.runTaskLater(ec, 20);
 	}
-	
-	public static void loadPets(Player p, boolean sendMessage) {
-		EchoPet ec = EchoPet.getPluginInstance();
-		if (ec.DO.sqlOverride()) {
-			Pet pet = ec.SPH.createPetFromDatabase(p);
-			if (pet == null) {
-				return;
-			}
-			else {
-				if (sendMessage) {
-					p.sendMessage(Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
-				}
-			}
-			return;
-		}
-		
-		if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null) {
-			Pet pi = ec.PH.createPetFromFile("default", p);
-			if (pi == null) {
-				return;
-			}
-			else {
-				if (sendMessage) {
-					p.sendMessage(Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
-				}
-			}
-			return;
-		}
-		
-		if (ec.DO.autoLoadPets(p)) {
-			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
-				Pet pi = ec.PH.createPetFromFile("autosave", p);
-				if (pi == null) {
-					return;
-				}
-				else {
-					if (sendMessage) {
-						p.sendMessage(Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
-					}
-				}
-				return;
-			}
-		}
-	}
-	
+
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player p = event.getEntity();
@@ -153,7 +110,7 @@ public class PetOwnerListener implements Listener {
 		Player p = event.getPlayer();
 		Pet pet = ec.PH.getPet(p);
 		if (pet != null) {
-			loadPets(p, false);
+			PetHandler.getInstance().loadPets(p, true, false);
 		}
 	}
 }
