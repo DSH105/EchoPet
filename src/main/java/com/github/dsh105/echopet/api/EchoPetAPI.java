@@ -212,13 +212,63 @@ public class EchoPetAPI {
 	}
 
 	/**
+	 * Remove a goal from a {@link Pet}'s AI
+	 *
+	 * @param pet {@link Pet} to remove the goal from
+	 * @param goalType type of goal (enum)
+	 */
+	public void removeGoal(Pet pet, GoalType goalType) {
+		if (pet == null) {
+			return;
+		}
+		pet.getEntityPet().petGoalSelector.removeGoal(goalType.getGoalString());
+	}
+
+	/**
+	 * Remove a goal from a {@link Pet}'s AI
+	 * <p>
+	 * The goal is identified using a string, initiated when the goal is added to the Pet
+	 *
+	 * @param pet {@link Pet} to remove the goal from
+	 * @param identifier String that identifies a {@link PetGoal}
+	 */
+	public void removeGoal(Pet pet, String identifier) {
+		if (pet == null) {
+			return;
+		}
+		pet.getEntityPet().petGoalSelector.removeGoal(identifier);
+	}
+
+	/**
+	 * Remove a goal from a {@link Pet}'s AI
+	 *
+	 * @param pet {@link Pet} to remove the goal from
+	 * @param petGoal {@link PetGoal} to remove
+	 */
+	public void removeGoal(Pet pet, PetGoal petGoal) {
+		if (pet == null) {
+			return;
+		}
+		pet.getEntityPet().petGoalSelector.removeGoal(petGoal);
+	}
+
+	/**
 	 * {@link Enum} of predefined {@link PetGoal}s
 	 */
 	public enum GoalType {
-		ATTACK,
-		FLOAT,
-		FOLLOW_OWNER,
-		LOOK_AT_PLAYER;
+		ATTACK("Attack"),
+		FLOAT("Float"),
+		FOLLOW_OWNER("Float"),
+		LOOK_AT_PLAYER("LookAtPlayer");
+
+		private String goalString;
+		GoalType(String goalString) {
+			this.goalString = goalString;
+		}
+
+		public String getGoalString() {
+			return this.goalString;
+		}
 	}
 }
 

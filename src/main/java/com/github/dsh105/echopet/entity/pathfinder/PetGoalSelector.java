@@ -41,6 +41,24 @@ public class PetGoalSelector {
 			this.activeGoalList.remove(goalItem);
 		}
 	}
+
+	public void removeGoal(PetGoal petGoal) {
+		if (goalList.isEmpty()) {
+			return;
+		}
+		ListIterator<PetGoalSelectorItem> i = goalList.listIterator();
+		while (i.hasNext()) {
+			PetGoalSelectorItem goalItem = i.next();
+			if (goalItem.a == petGoal) {
+				i.remove();
+				this.goalMap.remove(goalItem);
+				if (this.activeGoalList.contains(goalItem)) {
+					petGoal.finish();
+				}
+				this.activeGoalList.remove(goalItem);
+			}
+		}
+	}
 	
 	public PetGoal getGoal(String s) {
 		PetGoalSelectorItem goalItem = this.goalMap.get(s);
