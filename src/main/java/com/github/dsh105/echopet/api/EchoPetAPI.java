@@ -96,6 +96,9 @@ public class EchoPetAPI {
 	 * @return success of teleportation
 	 */
 	public boolean teleportPet(Pet pet, Location location) {
+		if (pet == null) {
+			return false;
+		}
 		if (pet.isPetHat() || pet.isOwnerRiding()) {
 			return false;
 		}
@@ -109,6 +112,9 @@ public class EchoPetAPI {
 	 * @param petData {@link PetData} to add to the {@link Pet}
 	 */
 	public void addData(Pet pet, PetData petData) {
+		if (pet == null) {
+			return;
+		}
 		EchoPet.getPluginInstance().PH.setData(pet, new PetData[] {petData}, true);
 	}
 
@@ -119,6 +125,9 @@ public class EchoPetAPI {
 	 * @param petData {@link PetData} to remove to the {@link Pet}
 	 */
 	public void removeData(Pet pet, PetData petData) {
+		if (pet == null) {
+			return;
+		}
 		EchoPet.getPluginInstance().PH.setData(pet, new PetData[] {petData}, false);
 	}
 
@@ -130,6 +139,9 @@ public class EchoPetAPI {
 	 * @return true if the {@link Pet} has the specified {@link PetData}
 	 */
 	public boolean hasData(Pet pet, PetData petData) {
+		if (pet == null) {
+			return false;
+		}
 		return pet.getAllData(true).contains(petData);
 	}
 
@@ -140,6 +152,9 @@ public class EchoPetAPI {
 	 * @param target the {@link LivingEntity} for the {@link Pet} to attack
 	 */
 	public void setAttackTarget(Pet pet, LivingEntity target) {
+		if (pet == null) {
+			return;
+		}
 		if (pet.getEntityPet().petGoalSelector.getGoal(PetGoalAttack.class) != null) {
 			pet.getCraftPet().setTarget(target);
 		}
@@ -152,6 +167,9 @@ public class EchoPetAPI {
 	 * @return {@link LivingEntity} being attacked, null if none
 	 */
 	public LivingEntity getAttackTarget(Pet pet) {
+		if (pet == null) {
+			return null;
+		}
 		return pet.getCraftPet().getTarget();
 	}
 
@@ -187,6 +205,9 @@ public class EchoPetAPI {
 	 * @param identifier a {@link String} to identify the goal
 	 */
 	public void addGoal(Pet pet, PetGoal goal, String identifier) {
+		if (pet == null) {
+			return;
+		}
 		pet.getEntityPet().petGoalSelector.addGoal(identifier, goal);
 	}
 
