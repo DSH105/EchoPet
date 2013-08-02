@@ -18,6 +18,9 @@ public enum Lang {
 	DATABASE_PET_LOAD("sql_pet_load", "&eYour Saved Pet (&6%petname%&e) now follows close behind you."),
 	
 	NO_PET("no_pet", "&eYou don't currently have a pet."),
+	NO_HIDDEN_PET("no_hidden_pet", "&eYour Pet is not currently hidden."),
+	SHOW_PET("show_pet", "&eYour hidden Pet magically reappears!"),
+	HIDE_PET("hide_pet", "&eYour Pet has been hidden."),
 	NO_MOUNT("no_mount", "&eYour pet does not have a mount."),
 	PET_NAME_TOO_LONG("name_length", "&ePet names cannot be longer than &632 &echaracters."),
 	NAME_MOUNT("name_mount", "&eYour &6%type%&e's mount has been named to &r%name%&e."),

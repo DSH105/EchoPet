@@ -2,6 +2,7 @@ package com.github.dsh105.echopet.commands;
 
 import java.util.ArrayList;
 
+import com.github.dsh105.echopet.data.PetHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -118,6 +119,35 @@ public class PetCommand implements CommandExecutor {
 		
 		
 		if (args.length == 1) {
+
+			if (args[0].equalsIgnoreCase("hide")) {
+				if (StringUtil.hpp("echopet.pet", "hide", sender, false)) {
+					Player player = (Player) sender;
+					Pet pet = ec.PH.getPet(player);
+					if (pet == null) {
+						sender.sendMessage(Lang.NO_PET.toString());
+						return true;
+					}
+					ec.PH.saveFileData("autosave", pet);
+					ec.SPH.saveToDatabase(pet, false);
+					ec.PH.removePet(pet);
+					sender.sendMessage(Lang.HIDE_PET.toString());
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("show")) {
+				if (StringUtil.hpp("echopet.pet", "show", sender, false)) {
+					Player player = (Player) sender;
+					Pet pet = PetHandler.getInstance().loadPets(player, false, false);
+					if (pet == null) {
+						player.sendMessage(Lang.NO_HIDDEN_PET.toString());
+						return true;
+					}
+					player.sendMessage(Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+					return true;
+				} else sendError = false;
+			}
 			
 			if (args[0].equalsIgnoreCase("menu")) {
 				if (StringUtil.hpp("echopet.pet", "menu", sender, false)) {
