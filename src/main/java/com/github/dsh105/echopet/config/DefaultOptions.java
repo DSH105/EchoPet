@@ -98,7 +98,7 @@ public class DefaultOptions {
 			config.set("petMenuOnInteract", config.getBoolean("petMenuOnInteract", true), "Boolean value defining whether to allow", "the PetMenu to be opened by interaction (right click)");
 			config.set("startWalkDistance", config.getInt("startWalkDistance", 12), "Distance away from the player before their starts walking.");
 			config.set("stopWalkDistance", config.getInt("stopWalkDistance", 8), "Distance away from the player before their stops walking.");
-			config.set("teleportDistance", config.getInt("teleportDistance", 30), "Distance away from the player before their pet teleports.");
+			config.set("teleportDistance", config.getInt("teleportDistance", 50), "Distance away from the player before their pet teleports.");
 			config.set("flyTeleport", config.getBoolean("flyTeleport", false), "If set to true, when the player is flying, their pet will", "continually teleport towards them.");
 			config.set("canAttackPlayers", config.get("canAttackPlayers", false), "If true, Pets can damage players.");
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session", "If set to false, pets will still be loaded for players", "with the -echopet.override- permission");

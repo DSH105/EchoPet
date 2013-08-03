@@ -17,7 +17,7 @@ public enum SizeCategory {
 		this.mod = modifier;
 		start = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("startWalkDistance", 12);
 		stop = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("stopWalkDistance", 8);
-		tele = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("teleportDistance", 30);
+		tele = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("teleportDistance", 50);
 	}
 	
 	public float getStartWalk() {
