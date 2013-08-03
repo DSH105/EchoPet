@@ -239,8 +239,7 @@ public class PetHandler {
 	
 	public Pet createPetFromFile(String type, Player p) {
 		if (ec.DO.autoLoadPets(p)) {
-			String w = p.getWorld().getName();
-			String path = type + "." + w + "." + p.getName();
+			String path = type + "." + p.getName();
 			if (ec.getPetConfig().get(path) != null) {
 				PetType petType = PetType.valueOf(ec.getPetConfig().getString(path + ".pet.type"));
 				String name = ec.getPetConfig().getString(path + ".pet.name");
