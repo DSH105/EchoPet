@@ -44,6 +44,9 @@ public class PetGoalFollowOwner extends PetGoal {
 		else if (this.pet.e(this.owner) < this.startDistance) {
 			return false;
 		}
+		else if (this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive()) {
+			return false;
+		}
 		else {
 			return true;
 		}
@@ -60,6 +63,9 @@ public class PetGoalFollowOwner extends PetGoal {
 			return true;
 		}
 		else if (this.pet.e(this.owner) <= this.stopDistance) {
+			return true;
+		}
+		else if (this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive()) {
 			return true;
 		}
 		else {
@@ -99,7 +105,7 @@ public class PetGoalFollowOwner extends PetGoal {
 				return;
 			}
 			Location to = moveEvent.getTo();
-			if ((!this.pet.getOwner().isFlying() && this.pet.e(this.owner) > this.teleportDistance) || (this.pet.getOwner().isFlying() && this.pet.e(this.owner) > 50)) {
+			if ((!this.pet.getOwner().isFlying() && this.pet.e(this.owner) > this.teleportDistance) || (this.pet.getOwner().isFlying() && this.pet.e(this.owner) > (this.teleportDistance * this.teleportDistance))) {
 				this.pet.getPet().teleport(this.pet.getOwner().getLocation());
 			}
 			else if (!this.nav.a(to.getX(), to.getY(), to.getZ(), speed)) {
