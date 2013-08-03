@@ -26,20 +26,21 @@ import com.github.dsh105.echopet.util.StringUtil;
 public class Pet {
 
 	private boolean isMount = false;
-	
+	public boolean ownerIsMounting = false;
+
 	private Player owner;
 	private EntityPet pet;
 	private PetType petType;
 	private Pet mount;
 	private CraftPet craftPet;
-	
+
 	private boolean ownerIsRiding = false;
 	private boolean isHat = false;
-	
+
 	private String name;
 	public ArrayList<PetData> dataTrue = new ArrayList<PetData>();
 	public ArrayList<PetData> dataFalse = new ArrayList<PetData>();
-	
+
 	public Pet(Player owner, PetType petType) {
 		this.owner = owner;
 		this.petType = petType;
@@ -72,6 +73,7 @@ public class Pet {
 	 * @param flag true if your wish for the owner to ride their {@link Pet}
 	 */
 	public void ownerRidePet(boolean flag) {
+		this.ownerIsMounting = true;
 		if (this.isHat) {
 			this.setAsHat(false);
 		}
@@ -85,8 +87,9 @@ public class Pet {
 			new BukkitRunnable() {
 				public void run() {
 					((CraftPlayer) owner).getHandle().mount(pet);
+					ownerIsMounting = false;
 				}
-			}.runTaskLater(EchoPet.getPluginInstance(), 5L);
+			}.runTaskLater(EchoPet.getPluginInstance(), 1L);
 		}
 		this.ownerIsRiding = flag;
 		try {

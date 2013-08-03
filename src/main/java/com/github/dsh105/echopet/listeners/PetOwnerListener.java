@@ -2,7 +2,9 @@ package com.github.dsh105.echopet.listeners;
 
 import com.github.dsh105.echopet.api.event.PetInteractEvent;
 import com.github.dsh105.echopet.data.PetHandler;
+import com.github.dsh105.echopet.mysql.SQLPetHandler;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -42,20 +44,23 @@ public class PetOwnerListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		Player p = event.getPlayer();
+	public void onPlayerTeleport(final PlayerTeleportEvent event) {
+		final Player p = event.getPlayer();
 		final Pet pi = ec.PH.getPet(p);
 		if (pi != null) {
+			if (pi.ownerIsMounting) return;
 			if (event.getFrom().getWorld() == event.getTo().getWorld()) {
+				PetHandler.getInstance().saveFileData("autosave", pi);
+				SQLPetHandler.getInstance().saveToDatabase(pi, false);
+				PetHandler.getInstance().removePet(pi);
 				new BukkitRunnable() {
 
 					@Override
 					public void run() {
-						pi.teleportToOwner();
+						PetHandler.getInstance().loadPets(p, false, false);
 					}
 
-				}.runTaskLater(EchoPet.getPluginInstance(), 5L);
-				pi.teleportToOwner();
+				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
 			else {
 				ec.PH.removePets(p); // Safeguard for Multiworld travel
