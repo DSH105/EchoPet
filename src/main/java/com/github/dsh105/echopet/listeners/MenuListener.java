@@ -56,7 +56,7 @@ public class MenuListener implements Listener {
 		Inventory inv = event.getInventory();
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
-		int size = (title.equals("EchoPet DataMenu - Color")) ? 17 : 8;
+		int size = (title.equals("EchoPet DataMenu - Color") || pet.getPetType() == PetType.HORSE) ? 18 : 9;
 		try {
 			if (slot < 0) {
 				return;
