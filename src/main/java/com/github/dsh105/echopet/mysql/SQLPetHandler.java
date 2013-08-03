@@ -18,6 +18,10 @@ import com.github.dsh105.echopet.entity.pet.Pet;
 
 public class SQLPetHandler {
 
+	public static SQLPetHandler getInstance() {
+		return EchoPet.getPluginInstance().SPH;
+	}
+
 	public void updateDatabase(Player player, ArrayList<PetData> list, Boolean result, boolean isMount) {
 		if (EchoPet.getPluginInstance().DO.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
