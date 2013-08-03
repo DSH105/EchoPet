@@ -44,11 +44,6 @@ public class DefaultOptions {
 		return ec.getMainConfig().get(s, def);
 	}
 	
-	public boolean autoLoadPets(Player p) {
-		if (p.hasPermission("echopet.override")) return true;
-		return ec.getMainConfig().getBoolean("autoLoadSavedPets", true);
-	}
-	
 	public boolean shouldHaveEquipment(PetType petType) {
 		if (petType == PetType.PIGZOMBIE || petType == PetType.SKELETON || petType == PetType.ZOMBIE) {
 			return ec.getMainConfig().getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".hasEquipment", true);

@@ -85,7 +85,7 @@ public class PetHandler {
 			return pi;
 		}
 
-		if (ec.DO.autoLoadPets(p)) {
+		if ((Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
 			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
@@ -238,7 +238,7 @@ public class PetHandler {
 	}
 	
 	public Pet createPetFromFile(String type, Player p) {
-		if (ec.DO.autoLoadPets(p)) {
+		if ((Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
 			String path = type + "." + p.getName();
 			if (ec.getPetConfig().get(path) != null) {
 				PetType petType = PetType.valueOf(ec.getPetConfig().getString(path + ".pet.type"));
