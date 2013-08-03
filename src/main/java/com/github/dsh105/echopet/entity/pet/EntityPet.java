@@ -219,6 +219,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	
 	public void remove() {
 		bukkitEntity.remove();
+		makeSound(this.aO(), 1.0F, 1.0F);
 	}
 	
 	@Override
