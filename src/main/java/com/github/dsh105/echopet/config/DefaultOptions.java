@@ -102,7 +102,7 @@ public class DefaultOptions {
 			config.set("flyTeleport", config.getBoolean("flyTeleport", false), "If set to true, when the player is flying, their pet will", "continually teleport towards them.");
 			config.set("canAttackPlayers", config.get("canAttackPlayers", false), "If true, Pets can damage players.");
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session");
-			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true: If -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
+			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, If -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 			config.set("autoLoadDefaultPets", config.getBoolean("autoLoadDefaultPets", true), "If false, default pets will not be loaded for players");
 			config.set("rideSpeed", config.getDouble("rideSpeed", 0.35D), "The speed the pet travels when ridden by players.");
 			config.set("rideJump", config.getDouble("rideJump", 0.5D), "Jump height for ridden pets.");
