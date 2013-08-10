@@ -153,7 +153,7 @@ public class PetCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("show")) {
 				if (StringUtil.hpp("echopet.pet", "show", sender, false)) {
 					Player player = (Player) sender;
-					Pet pet = PetHandler.getInstance().loadPets(player, false, false);
+					Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
 					if (pet == null) {
 						player.sendMessage(Lang.NO_HIDDEN_PET.toString());
 						return true;

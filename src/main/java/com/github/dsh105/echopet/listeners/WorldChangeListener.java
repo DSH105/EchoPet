@@ -35,7 +35,7 @@ public class WorldChangeListener implements Listener {
 			//pi.getPet().travelDimension();
 		}
 
-		PetHandler.getInstance().loadPets(p, true, false);
+		PetHandler.getInstance().loadPets(p, true, false, true);
 	}
 	
 	// Pets used to be able to enter portals.

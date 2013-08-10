@@ -57,16 +57,16 @@ public class PetOwnerListener implements Listener {
 
 					@Override
 					public void run() {
-						PetHandler.getInstance().loadPets(p, false, false);
+						PetHandler.getInstance().loadPets(p, false, false, false);
 					}
 
 				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
-			else {
+			/*else {
 				ec.PH.removePets(p); // Safeguard for Multiworld travel
 				p.sendMessage(Lang.DIMENSION_CHANGE.toString());
-				PetHandler.getInstance().loadPets(p, true, false);
-			}
+				PetHandler.getInstance().loadPets(p, true, false, true);
+			}*/
 		}
 	}
 	
@@ -92,7 +92,7 @@ public class PetOwnerListener implements Listener {
 		new BukkitRunnable() {
 			
 			public void run() {
-				PetHandler.getInstance().loadPets(p, true, true);
+				PetHandler.getInstance().loadPets(p, true, true, false);
 			}
 			
 		}.runTaskLater(ec, 20);
@@ -115,7 +115,7 @@ public class PetOwnerListener implements Listener {
 		Player p = event.getPlayer();
 		Pet pet = ec.PH.getPet(p);
 		if (pet != null) {
-			PetHandler.getInstance().loadPets(p, true, false);
+			PetHandler.getInstance().loadPets(p, true, false, true);
 		}
 	}
 }

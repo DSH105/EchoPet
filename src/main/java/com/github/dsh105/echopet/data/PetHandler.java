@@ -57,7 +57,7 @@ public class PetHandler {
 		return pets;
 	}
 
-	public Pet loadPets(Player p, boolean findDefault, boolean sendMessage) {
+	public Pet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
 		EchoPet ec = EchoPet.getPluginInstance();
 		if (ec.DO.sqlOverride()) {
 			Pet pet = ec.SPH.createPetFromDatabase(p);
@@ -85,7 +85,7 @@ public class PetHandler {
 			return pi;
 		}
 
-		if ((Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
+		if ((checkWorldOverride && (Boolean) ec.DO.getConfigOption("multiworldSaveLoadOverride", true)) || (Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
 			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
