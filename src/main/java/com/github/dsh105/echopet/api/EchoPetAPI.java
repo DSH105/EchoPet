@@ -184,7 +184,7 @@ public class EchoPetAPI {
 			return;
 		}
 		if (goalType == GoalType.ATTACK) {
-			pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getPluginInstance().DO.getConfigOption("", 0.0D), (Integer) EchoPet.getPluginInstance().DO.getConfigOption("", 0)));
+			pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getPluginInstance().DO.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPet.getPluginInstance().DO.getConfigOption("attack.ticksBetweenAttacks", 20)));
 		}
 		else if (goalType == GoalType.FLOAT) {
 			pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));

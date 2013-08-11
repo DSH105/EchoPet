@@ -100,7 +100,9 @@ public class DefaultOptions {
 			config.set("stopWalkDistance", config.getInt("stopWalkDistance", 8), "Distance away from the player before their stops walking.");
 			config.set("teleportDistance", config.getInt("teleportDistance", 50), "Distance away from the player before their pet teleports.");
 			config.set("flyTeleport", config.getBoolean("flyTeleport", false), "If set to true, when the player is flying, their pet will", "continually teleport towards them.");
-			config.set("canAttackPlayers", config.get("canAttackPlayers", false), "If true, Pets can damage players.");
+			config.set("attack.canAttackPlayers", config.get("attack.canAttackPlayers", false), "If true, Pets can damage players.");
+			config.set("attack.attack.lockRange", config.get("attack.lockRange", 10), "Distance away a target can be before a Pet locks on.");
+			config.set("attack.ticksBetweenAttacks", config.get("attack.ticksBetweenAttacks", 20), "Time in ticks between each attack.");
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session");
 			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, If -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 			config.set("autoLoadDefaultPets", config.getBoolean("autoLoadDefaultPets", true), "If false, default pets will not be loaded for players");
