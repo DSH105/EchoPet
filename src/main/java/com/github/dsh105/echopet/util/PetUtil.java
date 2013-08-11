@@ -2,6 +2,7 @@ package com.github.dsh105.echopet.util;
 
 import java.util.ArrayList;
 
+import com.github.dsh105.echopet.entity.pet.pig.PigPet;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -281,6 +282,10 @@ public class PetUtil {
 			oType = ((OcelotPet) pt).getCatType() == null ? "Default" : StringUtil.capitalise(((OcelotPet) pt).getCatType().toString().replace("_", " "));
 			info.add(ChatColor.GOLD + " - Ocelot Type: " + ChatColor.YELLOW + oType);
 		}
+
+		if (pt.getPetType() == PetType.PIG) {
+			info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((PigPet) pt).hasSaddle());
+		}
 		
 		if (pt.getPetType() == PetType.SLIME) {
 			String size = "";
@@ -324,6 +329,7 @@ public class PetUtil {
 		}
 		if (pt.getPetType() == PetType.HORSE) {
 			HorseType ht = ((HorsePet) pt).getHorseType();
+			info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((HorsePet) pt).isSaddled());
 			info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + StringUtil.capitalise(ht.toString().replace("_", " ")));
 			if (ht == HorseType.NORMAL) {
 				info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(((HorsePet) pt).getVariant().toString().replace("_", " ")));
