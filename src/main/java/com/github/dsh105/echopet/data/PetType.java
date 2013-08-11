@@ -3,6 +3,8 @@ package com.github.dsh105.echopet.data;
 import java.util.Arrays;
 import java.util.List;
 
+import com.github.dsh105.echopet.entity.pet.enderdragon.EnderDragonPet;
+import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.human.EntityHumanPet;
 import com.github.dsh105.echopet.entity.pet.human.HumanPet;
 import net.minecraft.server.v1_6_R2.World;
@@ -79,6 +81,7 @@ public enum PetType {
 	BLAZE(EntityBlazePet.class, BlazePet.class, "Blaze Pet", 20, 2D, EntityType.BLAZE, PetData.FIRE),
 	CAVESPIDER(EntityCaveSpiderPet.class, CaveSpiderPet.class, "Cave Spider Pet", 12, 2D, EntityType.CAVE_SPIDER),
 	CREEPER(EntityCreeperPet.class, CreeperPet.class, "Creeper Pet", 20, 2D, EntityType.CREEPER, PetData.POWER),
+	//ENDERDRAGON(EntityEnderDragonPet.class, EnderDragonPet.class, "EnderDragon Pet", 200, 2D, EntityType.ENDER_DRAGON),
 	ENDERMAN(EntityEndermanPet.class, EndermanPet.class, "Enderman Pet", 40, 2D, EntityType.ENDERMAN, PetData.SCREAMING),
 	GHAST(EntityGhastPet.class, GhastPet.class, "Ghast Pet", 10, 2D, EntityType.GHAST),
 	MAGMACUBE(EntityMagmaCubePet.class, MagmaCubePet.class, "Magma Cube Pet", 20, 2D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),

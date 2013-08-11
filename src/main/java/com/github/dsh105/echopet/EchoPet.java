@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
+import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.listeners.*;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.*;
@@ -184,6 +185,8 @@ public class EchoPet extends JavaPlugin {
 			a.invoke(a, EntityCow.class, "Cow", 92);
 			a.invoke(a, EntityCreeperPet.class, "CreeperPet", 50);
 			a.invoke(a, EntityCreeper.class, "Creeper", 50);
+			//a.invoke(a, EntityEnderDragonPet.class, "EnderDragonPet", 63);
+			//a.invoke(a, EntityEnderDragon.class, "EnderDragon", 63);
 			a.invoke(a, EntityEndermanPet.class, "EndermanPet", 58);
 			a.invoke(a, EntityEnderman.class, "Enderman", 58);
 			a.invoke(a, EntityGhastPet.class, "GhastPet", 56);
