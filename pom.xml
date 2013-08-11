@@ -4,7 +4,7 @@
   <artifactId>EchoPet</artifactId>
   <name>EchoPet</name>
   <properties>
-  	<echopet.version>2.0.7</echopet.version>
+  	<echopet.version>2.0.8-SNAPSHOT</echopet.version>
   	<minecraft.version>1.6.2</minecraft.version>
   	<craftbukkit.version>R0.2</craftbukkit.version>
   	<cb_package>v1_6_R2</cb_package>
