@@ -101,10 +101,10 @@ public class DefaultOptions {
 			config.set("teleportDistance", config.getInt("teleportDistance", 50), "Distance away from the player before their pet teleports.");
 			config.set("flyTeleport", config.getBoolean("flyTeleport", false), "If set to true, when the player is flying, their pet will", "continually teleport towards them.");
 			config.set("attack.canAttackPlayers", config.get("attack.canAttackPlayers", false), "If true, Pets can damage players.");
-			config.set("attack.attack.lockRange", config.get("attack.lockRange", 10), "Distance away a target can be before a Pet locks on.");
+			config.set("attack.lockRange", config.get("attack.lockRange", 10), "Distance away a target can be before a Pet locks on.");
 			config.set("attack.ticksBetweenAttacks", config.get("attack.ticksBetweenAttacks", 20), "Time in ticks between each attack.");
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session");
-			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, If -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
+			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, if -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 			config.set("autoLoadDefaultPets", config.getBoolean("autoLoadDefaultPets", true), "If false, default pets will not be loaded for players");
 			config.set("rideSpeed", config.getDouble("rideSpeed", 0.35D), "The speed the pet travels when ridden by players.");
 			config.set("rideJump", config.getDouble("rideJump", 0.5D), "Jump height for ridden pets.");
