@@ -65,17 +65,19 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		}
 	}
 
-	public void attack(Entity entity) {
+	public boolean attack(Entity entity) {
 		PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), this.getPet().getPetType().getAttackDamage());
 		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
 		if (!attackEvent.isCancelled()) {
 			if (entity instanceof EntityPlayer) {
 				if (!((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("canAttackPlayers", false))) {
-					return;
+					return false;
 				}
 			}
 			entity.damageEntity(DamageSource.mobAttack(this), (float) attackEvent.getDamage());
+			return true;
 		}
+		return false;
 	}
 	
 	public void setPathfinding() {
