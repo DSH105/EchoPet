@@ -163,7 +163,7 @@ public enum PetType {
 	}
 
 	public double getAttackDamage() {
-		return this.attackDamage;
+		return EchoPet.getPluginInstance().getMainConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", " ") + ".attackDamage", this.attackDamage);
 	}
 	
 	public EntityType getEntityType() {
