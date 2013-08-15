@@ -3,6 +3,7 @@ package com.github.dsh105.echopet.listeners;
 import com.github.dsh105.echopet.api.event.PetAttackEvent;
 import com.github.dsh105.echopet.api.event.PetDamageEvent;
 import com.github.dsh105.echopet.api.event.PetInteractEvent;
+import net.minecraft.server.v1_6_R2.DamageSource;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -68,7 +69,7 @@ public class PetEntityListener implements Listener {
 		}
 		else if (event.getDamager() instanceof CraftPet) {
 			CraftPet craftPet = (CraftPet) event.getDamager();
-			PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, event.getDamage());
+			PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, DamageSource.mobAttack(craftPet.getPet().getEntityPet()), event.getDamage());
 			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
 			event.setDamage(attackEvent.getDamage());
 			event.setCancelled(attackEvent.isCancelled());

@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.api.event;
 
 import com.github.dsh105.echopet.entity.pet.Pet;
+import net.minecraft.server.v1_6_R2.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -14,12 +15,14 @@ public class PetAttackEvent extends Event implements Cancellable {
 
 	private Pet pet;
 	private Entity attacked;
+	public DamageSource damageSource;
 	private double damage;
 
-	public PetAttackEvent(Pet pet, Entity attacked, final double damage) {
+	public PetAttackEvent(Pet pet, Entity attacked, DamageSource damageSource, final double damage) {
 		this.pet = pet;
 		this.attacked = attacked;
 		this.damage = damage;
+		this.damageSource = damageSource;
 	}
 
 	/**

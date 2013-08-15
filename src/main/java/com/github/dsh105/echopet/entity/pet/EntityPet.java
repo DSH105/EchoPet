@@ -66,7 +66,15 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	}
 
 	public boolean attack(Entity entity) {
-		PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), this.getPet().getPetType().getAttackDamage());
+		return this.attack(entity, (float) this.getPet().getPetType().getAttackDamage());
+	}
+
+	public boolean attack(Entity entity, float f) {
+		return this.attack(entity, DamageSource.mobAttack(this), f);
+	}
+
+	public boolean attack(Entity entity, DamageSource damageSource, float f) {
+		PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), damageSource, f);
 		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
 		if (!attackEvent.isCancelled()) {
 			if (entity instanceof EntityPlayer) {
@@ -74,8 +82,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 					return false;
 				}
 			}
-			entity.damageEntity(DamageSource.mobAttack(this), (float) attackEvent.getDamage());
-			return true;
+			return entity.damageEntity(damageSource, (float) attackEvent.getDamage());
 		}
 		return false;
 	}
@@ -111,13 +118,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	public Location getLocation() {
 		//return new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
 		return this.pet.getLocation();
-	}
-
-	//getMaxHealth() - 1.5.2
-	//ax() - 1.6.1
-	@Override
-	protected void ay() {
-		super.ay();
 	}
 	
 	@Override
