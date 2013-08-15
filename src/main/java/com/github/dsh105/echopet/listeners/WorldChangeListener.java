@@ -33,9 +33,8 @@ public class WorldChangeListener implements Listener {
 			ec.PH.removePets(p); // Safeguard for Multiworld travel
 			p.sendMessage(Lang.DIMENSION_CHANGE.toString());
 			//pi.getPet().travelDimension();
+			PetHandler.getInstance().loadPets(p, true, false, true);
 		}
-
-		PetHandler.getInstance().loadPets(p, true, false, true);
 	}
 	
 	// Pets used to be able to enter portals.
