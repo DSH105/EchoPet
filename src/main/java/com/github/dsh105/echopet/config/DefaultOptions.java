@@ -55,12 +55,12 @@ public class DefaultOptions {
 		return ec.getMainConfig().getString("commandString", "pet");
 	}
 	
-	public float getRideSpeed() {
-		return (float) ec.getMainConfig().getDouble("rideSpeed", 0.35D);
+	public float getRideSpeed(PetType petType) {
+		return (float) ec.getMainConfig().getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.35D);
 	}
 
-	public double getRideJumpHeight() {
-		return ec.getMainConfig().getDouble("rideJump", 0.5D);
+	public double getRideJumpHeight(PetType petType) {
+		return ec.getMainConfig().getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 0.5D);
 	}
 	
 	public boolean useSql() {
@@ -106,13 +106,13 @@ public class DefaultOptions {
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session");
 			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, if -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 			config.set("autoLoadDefaultPets", config.getBoolean("autoLoadDefaultPets", true), "If false, default pets will not be loaded for players");
-			config.set("rideSpeed", config.getDouble("rideSpeed", 0.35D), "The speed the pet travels when ridden by players.");
-			config.set("rideJump", config.getDouble("rideJump", 0.5D), "Jump height for ridden pets.");
 			config.set("sendForceMessage", config.getBoolean("sendForceMessage", true), "For all values forced (below), EchoPet will notify the player", "(if set to true).");
 			for (PetType petType : PetType.values()) {
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", config.getString("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", petType.getDefaultName()));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", petType.getAttackDamage()));
+				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.35D));
+				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 1.5D));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true));
 				for (PetData dataType : PetData.values()) {
 					if (petType.isDataAllowed(dataType)) {

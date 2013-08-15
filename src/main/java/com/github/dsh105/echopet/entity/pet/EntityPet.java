@@ -54,8 +54,8 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			this.pet = pet;
 			((LivingEntity) this.getBukkitEntity()).setMaxHealth(pet.getPetType().getMaxHealth());
 			this.setHealth(pet.getPetType().getMaxHealth());
-			this.jumpHeight = EchoPet.getPluginInstance().DO.getRideJumpHeight();
-			this.rideSpeed = EchoPet.getPluginInstance().DO.getRideSpeed();
+			this.jumpHeight = EchoPet.getPluginInstance().DO.getRideJumpHeight(this.getPet().getPetType());
+			this.rideSpeed = EchoPet.getPluginInstance().DO.getRideSpeed(this.getPet().getPetType());
 			this.jump = EntityLiving.class.getDeclaredField("bd");
 	        this.jump.setAccessible(true);
 			setPathfinding();
