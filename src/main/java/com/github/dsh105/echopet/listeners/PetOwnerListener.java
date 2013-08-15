@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,6 +40,19 @@ public class PetOwnerListener implements Listener {
 			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
 			if (!iEvent.isCancelled()) {
 				pet.getEntityPet().a(((CraftPlayer) p).getHandle());
+			}
+		}
+	}
+
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent event) {
+		if (event.getEntity() instanceof Player) {
+			Player p = (Player) event.getEntity();
+			if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+				Pet pet = PetHandler.getInstance().getPet(p);
+				if (pet != null && pet.isOwnerRiding()) {
+					event.setCancelled(true);
+				}
 			}
 		}
 	}
