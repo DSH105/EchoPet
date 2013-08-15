@@ -106,7 +106,7 @@ public class EchoPet extends JavaPlugin {
 		}
 
 		this.api = new EchoPetAPI();
-
+		
 		PluginManager manager = getServer().getPluginManager();
 		DO = new DefaultOptions(this);
 		
