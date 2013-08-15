@@ -1,19 +1,23 @@
 package com.github.dsh105.echopet.entity.pet.enderdragon;
 
-import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 import net.minecraft.server.v1_6_R2.*;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntityEnderDragonPet extends EntityPet implements IComplex{
+public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonster {
 
 	private double i;
 	private double h;
 	private double j;
+	public int bo = -1;
 	public double[][] bn = new double[64][3];
 	private EntityComplexPart[] children;
 	private EntityComplexPart head;
@@ -28,6 +32,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 	private boolean bz;
 	private boolean bA;
 	private int bB;
+	private Entity bD;
 
 	public EntityEnderDragonPet(World world, Pet pet) {
 		super(world, pet);
@@ -82,7 +87,9 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 			f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
 			this.world.addParticle("largeexplode", this.locX + (double) f, this.locY + 2.0D + (double) f1, this.locZ + (double) f2, 0.0D, 0.0D, 0.0D);
 		} else {
-			this.bJ();
+			// For EnderCrystals
+			//this.bJ();
+
 			f = 0.2F / (MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 10.0F + 1.0F);
 			f *= (float) Math.pow(2.0D, this.motY);
 			if (this.bA) {
@@ -129,8 +136,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 				d2 = this.j - this.locZ;
 				d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
-				// Who needs target players anyway...
-				/*if (this.bD != null) {
+				if (this.bD != null) {
 					this.h = this.bD.locX;
 					this.j = this.bD.locZ;
 					double d4 = this.h - this.locX;
@@ -143,13 +149,13 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 					}
 
 					this.i = this.bD.boundingBox.b + d7;
-				} else {*/
+				} else {
 					this.h += this.random.nextGaussian() * 2.0D;
 					this.j += this.random.nextGaussian() * 2.0D;
-				//}
+				}
 
 				if (this.bz || d3 < 100.0D || d3 > 22500.0D || this.positionChanged || this.H) {
-					this.bK();
+					this.target();
 				}
 
 				d1 /= (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
@@ -238,9 +244,12 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 			this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
 
 			if (!this.world.isStatic && this.hurtTicks == 0) {
-				this.launchEntities(this.world.getEntities(this, this.wing1.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
-				this.launchEntities(this.world.getEntities(this, this.wing2.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
-				this.damageEntities(this.world.getEntities(this, this.head.boundingBox.grow(1.0D, 1.0D, 1.0D)));
+				PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
+				if (attackGoal != null && attackGoal.isActive) {
+					this.launchEntities(this.world.getEntities(this, this.wing1.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
+					this.launchEntities(this.world.getEntities(this, this.wing2.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
+					this.damageEntities(this.world.getEntities(this, this.head.boundingBox.grow(1.0D, 1.0D, 1.0D)));
+				}
 			}
 
 			double[] adouble = this.b(5, 1.0F);
@@ -285,6 +294,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 		}
 	}
 
+	//a(List)
 	private void launchEntities(List list) {
 		double d0 = (this.body.boundingBox.a + this.body.boundingBox.d) / 2.0D;
 		double d1 = (this.body.boundingBox.c + this.body.boundingBox.f) / 2.0D;
@@ -303,6 +313,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 		}
 	}
 
+	//b(List)
 	private void damageEntities(List list) {
 		for (int i = 0; i < list.size(); ++i) {
 			Entity entity = (Entity) list.get(i);
@@ -313,14 +324,60 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex{
 		}
 	}
 
-	@Override
-	public World b() {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
+	//bK() EntityEnderDragon
+	protected void target() {
+		this.bz = false;
+		if (this.random.nextInt(2) == 0 && !this.world.players.isEmpty()) {
+			if (this.random.nextInt(50) <= 40) {
+				this.bD = ((CraftPlayer) this.getOwner()).getHandle();
+			}
+			else {
+				this.bD = (Entity) this.world.players.get(this.random.nextInt(this.world.players.size()));
+			}
+		} else {
+			boolean flag = false;
+
+			do {
+				this.h = 0.0D;
+				this.i = (double) (70.0F + this.random.nextFloat() * 50.0F);
+				this.j = 0.0D;
+				this.h += (double) (this.random.nextFloat() * 120.0F - 60.0F);
+				this.j += (double) (this.random.nextFloat() * 120.0F - 60.0F);
+				double d0 = this.locX - this.h;
+				double d1 = this.locY - this.i;
+				double d2 = this.locZ - this.j;
+
+				flag = d0 * d0 + d1 * d1 + d2 * d2 > 100.0D;
+			} while (!flag);
+
+			this.bD = null;
+		}
 	}
 
 	@Override
-	public boolean a(EntityComplexPart entityComplexPart, DamageSource damageSource, float v) {
-		return false;  //To change body of implemented methods use File | Settings | File Templates.
+	public World b() {
+		return this.world;
+	}
+
+	@Override
+	public boolean a(EntityComplexPart entityComplexPart, DamageSource damageSource, float f) {
+		if (entityComplexPart != this.head) {
+			f = f / 4.0F + 1.0F;
+		}
+
+		float f1 = this.yaw * 3.1415927F / 180.0F;
+		float f2 = MathHelper.sin(f1);
+		float f3 = MathHelper.cos(f1);
+
+		this.h = this.locX + (double) (f2 * 5.0F) + (double) ((this.random.nextFloat() - 0.5F) * 2.0F);
+		this.i = this.locY + (double) (this.random.nextFloat() * 3.0F) + 1.0D;
+		this.j = this.locZ - (double) (f3 * 5.0F) + (double) ((this.random.nextFloat() - 0.5F) * 2.0F);
+		this.bD = null;
+		if (damageSource.getEntity() instanceof EntityHuman || damageSource.c()) {
+			this.attack(damageSource.getEntity(), f);
+		}
+
+		return true;
 	}
 
 	@Override

@@ -185,8 +185,8 @@ public class EchoPet extends JavaPlugin {
 			a.invoke(a, EntityCow.class, "Cow", 92);
 			a.invoke(a, EntityCreeperPet.class, "CreeperPet", 50);
 			a.invoke(a, EntityCreeper.class, "Creeper", 50);
-			//a.invoke(a, EntityEnderDragonPet.class, "EnderDragonPet", 63);
-			//a.invoke(a, EntityEnderDragon.class, "EnderDragon", 63);
+			a.invoke(a, EntityEnderDragonPet.class, "EnderDragonPet", 63);
+			a.invoke(a, EntityEnderDragon.class, "EnderDragon", 63);
 			a.invoke(a, EntityEndermanPet.class, "EndermanPet", 58);
 			a.invoke(a, EntityEnderman.class, "Enderman", 58);
 			a.invoke(a, EntityGhastPet.class, "GhastPet", 56);

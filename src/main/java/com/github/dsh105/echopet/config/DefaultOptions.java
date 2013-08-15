@@ -22,6 +22,9 @@ public class DefaultOptions {
 	}
 	
 	public boolean allowMounts(PetType petType) {
+		if (petType == PetType.ENDERDRAGON) {
+			return false;
+		}
 		return ec.getMainConfig().getBoolean("pets."
 				+ petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true);
 	}
@@ -113,7 +116,9 @@ public class DefaultOptions {
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", petType.getAttackDamage()));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.35D));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 1.5D));
-				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true));
+				if (petType != PetType.ENDERDRAGON) {
+					config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true));
+				}
 				for (PetData dataType : PetData.values()) {
 					if (petType.isDataAllowed(dataType)) {
 						config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow."
