@@ -18,7 +18,6 @@ public class EntityWitherPet extends EntityPet {
 
 	protected void a() {
 		super.a();
-		this.datawatcher.a(16, new Integer(300));
 		this.datawatcher.a(17, new Integer(0));
 		this.datawatcher.a(18, new Integer(0));
 		this.datawatcher.a(19, new Integer(0));
@@ -26,7 +25,8 @@ public class EntityWitherPet extends EntityPet {
 	}
 	
 	public void setShielded(boolean flag) {
-		this.datawatcher.watch(16, new Integer((flag ? 150 : 300)));
+		this.datawatcher.watch(20, new Integer((flag ? 1 : 0)));
+		this.setHealth((float) (flag ? 150 : 300));
 		((WitherPet) pet).shield = flag;
 	}
 
