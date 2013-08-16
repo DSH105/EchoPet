@@ -51,14 +51,6 @@ public class EntityBatPet extends EntityPet {
 			this.motY *= 0.6000000238418579D;
 		}
 	}
-
-	public void c() {
-		super.c();
-
-		if (!this.onGround && this.motY < 0.0D) {
-			this.motY *= 0.6D;
-		}
-	}
 	
 	@Override
 	protected String aO() {
