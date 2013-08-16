@@ -51,5 +51,8 @@ public class EntityBlazePet extends EntityPet {
 				EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
 			}
 		}
+		for (int i = 0; i < 2; ++i) {
+			this.world.addParticle("largesmoke", this.locX + (this.random.nextDouble() - 0.5D) * (double) this.width, this.locY + this.random.nextDouble() * (double) this.length, this.locZ + (this.random.nextDouble() - 0.5D) * (double) this.width, 0.0D, 0.0D, 0.0D);
+		}
 	}
 }
