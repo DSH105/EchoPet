@@ -290,7 +290,7 @@ public class PetHandler {
 		}
 		return null;
 	}
-	
+
 	public void removePets(Player player) {
 		Iterator<Pet> i = pets.listIterator();
 		while (i.hasNext()) {

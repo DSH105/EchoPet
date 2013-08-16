@@ -76,11 +76,11 @@ public class PetOwnerListener implements Listener {
 
 				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
-			/*else {
-				ec.PH.removePets(p); // Safeguard for Multiworld travel
+			else {
+				ec.PH.removePet(pi);
 				p.sendMessage(Lang.DIMENSION_CHANGE.toString());
 				PetHandler.getInstance().loadPets(p, true, false, true);
-			}*/
+			}
 		}
 	}
 	

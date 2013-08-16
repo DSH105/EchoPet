@@ -30,7 +30,7 @@ public class WorldChangeListener implements Listener {
 		final Player p = event.getPlayer();
 		Pet pi = ec.PH.getPet(p);
 		if (pi != null) {
-			ec.PH.removePets(p); // Safeguard for Multiworld travel
+			ec.PH.removePet(pi); // Safeguard for Multiworld travel
 			p.sendMessage(Lang.DIMENSION_CHANGE.toString());
 			//pi.getPet().travelDimension();
 			PetHandler.getInstance().loadPets(p, true, false, true);
