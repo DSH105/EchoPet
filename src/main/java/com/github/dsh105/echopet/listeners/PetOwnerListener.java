@@ -77,9 +77,18 @@ public class PetOwnerListener implements Listener {
 				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
 			else {
+				PetHandler.getInstance().saveFileData("autosave", pi);
+				SQLPetHandler.getInstance().saveToDatabase(pi, false);
 				ec.PH.removePet(pi);
 				p.sendMessage(Lang.DIMENSION_CHANGE.toString());
-				PetHandler.getInstance().loadPets(p, true, false, true);
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						PetHandler.getInstance().loadPets(p, false, false, false);
+					}
+
+				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
 		}
 	}

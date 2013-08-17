@@ -23,20 +23,6 @@ public class WorldChangeListener implements Listener {
 		this.ec = ec;
 	}
 	
-	// Multi-World Transportation previously resulted in the 'lost entity' error
-	// Removing the pet before that happens seems to fix the issue
-	@EventHandler
-	public void onWorldChange(PlayerChangedWorldEvent event) {
-		final Player p = event.getPlayer();
-		Pet pi = ec.PH.getPet(p);
-		if (pi != null) {
-			ec.PH.removePet(pi); // Safeguard for Multiworld travel
-			p.sendMessage(Lang.DIMENSION_CHANGE.toString());
-			//pi.getPet().travelDimension();
-			PetHandler.getInstance().loadPets(p, true, false, true);
-		}
-	}
-	
 	// Pets used to be able to enter portals.
 	// Not very handy seeing as world to world teleportation isn't supported as of yet
 	@EventHandler
