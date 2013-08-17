@@ -244,7 +244,7 @@ public class PetHandler {
 				PetType petType = PetType.valueOf(ec.getPetConfig().getString(path + ".pet.type"));
 				String name = ec.getPetConfig().getString(path + ".pet.name");
 				if (name.equalsIgnoreCase("") || name == null) {
-					name = petType.getDefaultName(name);
+					name = petType.getDefaultName(p.getName());
 				}
 				if (petType == null) return null;
 				if (!ec.DO.allowPetType(petType)) {
@@ -280,6 +280,46 @@ public class PetHandler {
 				}
 				if (!listFalse.isEmpty()) {
 					setData(pi, listFalse.toArray(new PetData[listFalse.size()]), false);
+				}
+
+				if (ec.getPetConfig().get(path + ".mount.type") != null) {
+					PetType mountPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".mount.type"));
+					String mountName = ec.getPetConfig().getString(path + ".mount.name");
+					if (mountName.equalsIgnoreCase("") || mountName == null) {
+						mountName = mountPetType.getDefaultName(p.getName());
+					}
+					if (mountPetType == null) return null;
+					if (ec.DO.allowMounts(petType)) {
+						Pet mount = pi.createMount(mountPetType, true);
+						if (mount != null) {
+							mount.setName(mountName);
+							ArrayList<PetData> mountListTrue = new ArrayList<PetData>();
+							ArrayList<PetData> mountListFalse = new ArrayList<PetData>();
+							ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
+							if (mcs != null) {
+								for (String key : mcs.getKeys(false)) {
+									if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+										PetData pd = PetData.valueOf(key.toUpperCase());
+										if (pd.isType(Type.BOOLEAN) && !ec.getPetConfig().getBoolean(path + ".mount.data." + key)) {
+											mountListFalse.add(pd);
+										}
+										else {
+											mountListTrue.add(pd);
+										}
+									}
+									else {
+										ec.log(ChatColor.RED + "Error whilst loading data Pet Mount Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key);
+									}
+								}
+							}
+							if (!mountListTrue.isEmpty()) {
+								setData(mount, mountListTrue.toArray(new PetData[mountListTrue.size()]), true);
+							}
+							if (!mountListFalse.isEmpty()) {
+								setData(mount, mountListFalse.toArray(new PetData[mountListFalse.size()]), false);
+							}
+						}
+					}
 				}
 				
 				forceAllValidData(pi);

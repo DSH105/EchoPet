@@ -456,7 +456,7 @@ public class PetCommand implements CommandExecutor {
 						ec.PH.setData(pi.getMount(), mountDataList.toArray(new PetData[mountDataList.size()]), true);
 					}
 					if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
-						pi.getMount().setName(UPD.petName);
+						pi.getMount().setName(UMD.petName);
 					}
 					ec.PH.saveFileData("autosave", pi);
 					ec.SPH.saveToDatabase(pi, false);
