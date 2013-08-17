@@ -1,10 +1,15 @@
 package com.github.dsh105.echopet.entity.pet.enderdragon;
 
+import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
+import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
+import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 import net.minecraft.server.v1_6_R2.*;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 
 import java.lang.reflect.InvocationTargetException;
@@ -69,6 +74,56 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 	public void c() {
 		float f;
 		float f1;
+
+		if (this.passenger != null && (this.passenger instanceof EntityHuman)) {
+			EntityHuman human = (EntityHuman) this.passenger;
+			if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
+				this.lastYaw = this.yaw = this.passenger.yaw - 128;
+				this.pitch = this.passenger.pitch * 0.5F;
+				this.b(this.yaw, this.pitch);
+				this.aP = this.aN = this.yaw;
+
+				float sideMot = ((EntityLiving) this.passenger).be * 0.5F;
+				float forMot = ((EntityLiving) this.passenger).bf;
+
+				if (forMot <= 0.0F) {
+					forMot *= 0.25F;
+				}
+				sideMot *= 0.75F;
+
+				PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot *= 2, sideMot *= 2);
+				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+				if (moveEvent.isCancelled()) {
+					return;
+				}
+
+				this.i(this.rideSpeed * this.rideSpeed);
+				super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
+
+				PetType pt = this.getPet().getPetType();
+				if (this.jump != null) {
+					try {
+						if (this.jump.getBoolean(this.passenger)) {
+							PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+							EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+							if (!rideEvent.isCancelled()) {
+								this.motY = 0.8F;
+							}
+						}
+						else {
+							if (((EntityLiving) this.passenger).pitch <= 50) {
+								this.motY = 0;
+							} else {
+								this.motY *= 0.5;
+							}
+						}
+					} catch (Exception e) {
+						EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.");
+					}
+				}
+				return;
+			}
+		}
 
 		if (this.world.isStatic) {
 			f = MathHelper.cos(this.by * 3.1415927F * 2.0F);
@@ -311,6 +366,38 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 				entity.g(d2 / d4 * 4.0D, 0.20000000298023224D, d3 / d4 * 4.0D);
 			}
 		}
+	}
+
+	public void setPosition(double d0, double d1, double d2) {
+		this.locX = d0;
+		this.locY = d1;
+		this.locZ = d2;
+		float f = this.width / 2.0F;
+		float f1 = this.length;
+
+		this.boundingBox.b(d0 - (double) f, d1 - (double) this.height + (double) this.X, d2 - (double) f, d0 + (double) f, d1 - (double) this.height + (double) this.X + (double) f1, d2 + (double) f);
+	}
+
+	protected boolean checkCollisions(EntityComplexPart entityComplexPart) {
+		int i = MathHelper.floor(entityComplexPart.boundingBox.a + 0.001D);
+		int j = MathHelper.floor(entityComplexPart.boundingBox.b + 0.001D);
+		int k = MathHelper.floor(entityComplexPart.boundingBox.c + 0.001D);
+		int l = MathHelper.floor(entityComplexPart.boundingBox.d - 0.001D);
+		int i1 = MathHelper.floor(entityComplexPart.boundingBox.e - 0.001D);
+		int j1 = MathHelper.floor(entityComplexPart.boundingBox.f - 0.001D);
+
+		if (this.world.e(i, j, k, l, i1, j1)) {
+			for (int k1 = i; k1 <= l; ++k1) {
+				for (int l1 = j; l1 <= i1; ++l1) {
+					for (int i2 = k; i2 <= j1; ++i2) {
+						if (world.getWorld().getBlockAt(k1, l1, i2).getType().isSolid()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	//b(List)
