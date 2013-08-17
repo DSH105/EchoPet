@@ -34,9 +34,9 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	protected int particle = 0;
 	protected int particleCounter = 0;
 	
-	private Field jump = null;
-	private double jumpHeight;
-	private float rideSpeed;
+	protected Field jump = null;
+	protected double jumpHeight;
+	protected float rideSpeed;
 	
 	public PetGoalSelector petGoalSelector;
 	
@@ -242,15 +242,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			return;
 		}
 
-		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), f1, f);
-		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
-		if (moveEvent.isCancelled()) {
-			return;
-		}
-
-		float forMot = moveEvent.getForwardMotionSpeed();
-		float sideMot = moveEvent.getSidewardMotionSpeed();
-
 		this.Y = 1.0F;
 		
 		this.lastYaw = this.yaw = this.passenger.yaw;
@@ -258,16 +249,22 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         this.b(this.yaw, this.pitch);
         this.aP = this.aN = this.yaw;
         
-        sideMot = ((EntityLiving) this.passenger).be * 0.5F;
-        forMot = ((EntityLiving) this.passenger).bf;
+        f = ((EntityLiving) this.passenger).be * 0.5F;
+        f1 = ((EntityLiving) this.passenger).bf;
         
-        if (forMot <= 0.0F) {
-            forMot *= 0.25F;
+        if (f1 <= 0.0F) {
+            f1 *= 0.25F;
         }
-        sideMot *= 0.75F;
-        
+        f *= 0.75F;
+
+		PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), f1, f);
+		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+		if (moveEvent.isCancelled()) {
+			return;
+		}
+
         this.i(this.rideSpeed);
-        super.e(sideMot, forMot);
+        super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
 
