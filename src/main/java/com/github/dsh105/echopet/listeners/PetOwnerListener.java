@@ -136,9 +136,6 @@ public class PetOwnerListener implements Listener {
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		Player p = event.getPlayer();
-		Pet pet = ec.PH.getPet(p);
-		if (pet != null) {
-			PetHandler.getInstance().loadPets(p, true, false, true);
-		}
+		PetHandler.getInstance().loadPets(p, true, false, true);
 	}
 }
