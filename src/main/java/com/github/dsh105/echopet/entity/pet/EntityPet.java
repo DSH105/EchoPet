@@ -269,31 +269,33 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
 
 		PetType pt = this.getPet().getPetType();
-        if (jump != null && pt == PetType.SQUID || pt == PetType.BAT || pt == PetType.BLAZE || pt == PetType.ENDERDRAGON || pt == PetType.GHAST || pt == PetType.WITHER) {
-	        try {
-		        if (jump.getBoolean(this.passenger)) {
-			        PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-			        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
-			        if (!rideEvent.isCancelled()) {
-				        this.motY = 0.5F;
+        if (jump != null) {
+	        if (EchoPet.getPluginInstance().DO.canFly(pt)) {
+		        try {
+			        if (jump.getBoolean(this.passenger)) {
+				        PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+				        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+				        if (!rideEvent.isCancelled()) {
+					        this.motY = 0.5F;
+				        }
 			        }
+		        } catch (Exception e) {
+			        EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.");
 		        }
-	        } catch (Exception e) {
-		        EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.");
 	        }
-        }
-		else if (jump != null && this.onGround) {
-        	try {
-    			if (jump.getBoolean(this.passenger)) {
-				    PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-				    EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
-				    if (!rideEvent.isCancelled()) {
-					    this.motY = rideEvent.getJumpHeight();
-				    }
-    			}
-    		} catch (Exception e) {
-    			EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.");
-    		}
+	        else if (this.onGround) {
+		        try {
+			        if (jump.getBoolean(this.passenger)) {
+				        PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
+				        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+				        if (!rideEvent.isCancelled()) {
+					        this.motY = rideEvent.getJumpHeight();
+				        }
+			        }
+		        } catch (Exception e) {
+			        EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.");
+		        }
+	        }
         }
 	}
 

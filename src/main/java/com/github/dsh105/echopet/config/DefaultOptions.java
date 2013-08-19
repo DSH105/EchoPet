@@ -38,6 +38,11 @@ public class DefaultOptions {
 		return ec.getMainConfig().getBoolean("pets." + type.toString().toLowerCase().replace("_", " ")
 				+ ".force." + data.getConfigOptionString(), false);
 	}
+
+	public boolean canFly(PetType petType) {
+		return ec.getMainConfig().getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ")
+				+ ".canRideFly");
+	}
 	
 	public Object getConfigOption(String s) {
 		return ec.getMainConfig().get(s);
@@ -117,6 +122,8 @@ public class DefaultOptions {
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.35D));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 0.6D));
 				if (petType != PetType.ENDERDRAGON) {
+					boolean canFly = (petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER);
+					config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".canRideFly", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".canRideFly", canFly));
 					config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true));
 				}
 				for (PetData dataType : PetData.values()) {
