@@ -10,13 +10,24 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import net.minecraft.server.v1_6_R2.*;
-import org.bukkit.craftbukkit.v1_6_R2.*;
 
 public class EntityHumanPet extends EntityPet {
-	
+
+	private String name;
+
 	public EntityHumanPet(World world, Pet pet) {
 		super(world, pet);
 		this.fireProof = true;
+		this.a(0.6F, 0.9F);
+		this.getNavigation().e(true);
+		this.name = this.getPet().getPetName();
+	}
+
+	protected void a() {
+		super.a();
+		this.datawatcher.a(16, Byte.valueOf((byte) 0));
+		this.datawatcher.a(17, Float.valueOf(0.0F));
+		this.datawatcher.a(18, Integer.valueOf(0));
 	}
 
 	protected void a(int i, int j, int k, int l) {
@@ -46,6 +57,48 @@ public class EntityHumanPet extends EntityPet {
 		else {
 			this.makeSound("step.grass", 0.15F, 1.0F);
 		}
+	}
+
+	protected void a(int i, boolean flag) {
+		byte b0 = this.datawatcher.getByte(0);
+
+		if (flag) {
+			this.datawatcher.watch(0, Byte.valueOf((byte) (b0 | 1 << i)));
+		} else {
+			this.datawatcher.watch(0, Byte.valueOf((byte) (b0 & ~(1 << i))));
+		}
+	}
+
+	protected boolean f(int i) {
+		return (this.datawatcher.getByte(0) & 1 << i) != 0;
+	}
+
+	public boolean isSneaking() {
+		return this.f(1);
+	}
+
+	public void setSneaking(boolean flag) {
+		this.a(1, flag);
+	}
+
+	public boolean isSprinting() {
+		return this.f(3);
+	}
+
+	public void setSprinting(boolean flag) {
+		this.a(3, flag);
+	}
+
+	public void setInvisible(boolean flag) {
+		this.a(5, flag);
+	}
+
+	public boolean isInvisible() {
+		return this.f(5);
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	@Override

@@ -129,7 +129,7 @@ public enum PetType {
 	 * It is currently undecided whether to include Human Pets.
 	 */
 
-	//HUMAN(EntityHumanPet.class, HumanPet.class, "Human Pet", 20, EntityType.UNKNOWN)
+	//HUMAN(EntityHumanPet.class, HumanPet.class, "Human Pet", 20, 2D, EntityType.UNKNOWN)
 	;
 	
 	private Class<? extends EntityPet> entityClass;
