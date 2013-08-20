@@ -82,20 +82,19 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 		if (this.passenger != null && (this.passenger instanceof EntityHuman)) {
 			EntityHuman human = (EntityHuman) this.passenger;
 			if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
-				this.lastYaw = this.yaw = this.passenger.yaw - 128;
+				this.lastYaw = this.yaw = this.passenger.yaw;
 				this.pitch = this.passenger.pitch * 0.5F;
 				this.b(this.yaw, this.pitch);
 				this.aP = this.aN = this.yaw;
 
-				float sideMot = ((EntityLiving) this.passenger).be * 0.5F;
-				float forMot = ((EntityLiving) this.passenger).bf;
+				float sideMot = ((EntityLiving) this.passenger).be *= 100;
+				float forMot = ((EntityLiving) this.passenger).bf *= 100;
 
 				if (forMot <= 0.0F) {
 					forMot *= 0.25F;
 				}
-				sideMot *= 0.75F;
 
-				PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot *= 2, sideMot *= 2);
+				PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot * forMot, sideMot * sideMot);
 				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
 				if (moveEvent.isCancelled()) {
 					return;
@@ -118,7 +117,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 							if (((EntityLiving) this.passenger).pitch <= 50) {
 								this.motY = 0;
 							} else {
-								this.motY *= 0.5;
+								this.motY *= 0.7;
 							}
 						}
 					} catch (Exception e) {
@@ -382,13 +381,13 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 		this.boundingBox.b(d0 - (double) f, d1 - (double) this.height + (double) this.X, d2 - (double) f, d0 + (double) f, d1 - (double) this.height + (double) this.X + (double) f1, d2 + (double) f);
 	}
 
-	protected boolean checkCollisions(EntityComplexPart entityComplexPart) {
-		int i = MathHelper.floor(entityComplexPart.boundingBox.a + 0.001D);
-		int j = MathHelper.floor(entityComplexPart.boundingBox.b + 0.001D);
-		int k = MathHelper.floor(entityComplexPart.boundingBox.c + 0.001D);
-		int l = MathHelper.floor(entityComplexPart.boundingBox.d - 0.001D);
-		int i1 = MathHelper.floor(entityComplexPart.boundingBox.e - 0.001D);
-		int j1 = MathHelper.floor(entityComplexPart.boundingBox.f - 0.001D);
+	protected boolean checkCollisions(EntityComplexPart entityComplexPart, int modifier) {
+		int i = MathHelper.floor(entityComplexPart.boundingBox.a + 0.001D + modifier);
+		int j = MathHelper.floor(entityComplexPart.boundingBox.b + 0.001D + modifier);
+		int k = MathHelper.floor(entityComplexPart.boundingBox.c + 0.001D + modifier);
+		int l = MathHelper.floor(entityComplexPart.boundingBox.d - 0.001D + modifier);
+		int i1 = MathHelper.floor(entityComplexPart.boundingBox.e - 0.001D + modifier);
+		int j1 = MathHelper.floor(entityComplexPart.boundingBox.f - 0.001D + modifier);
 
 		if (this.world.e(i, j, k, l, i1, j1)) {
 			for (int k1 = i; k1 <= l; ++k1) {
@@ -402,6 +401,10 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 			}
 		}
 		return false;
+	}
+
+	protected boolean checkCollisions(EntityComplexPart entityComplexPart) {
+		return this.checkCollisions(entityComplexPart, 0);
 	}
 
 	//b(List)
