@@ -119,6 +119,7 @@ public class DefaultOptions {
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", config.getString("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", petType.getDefaultName()));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attackDamage", petType.getAttackDamage()));
+				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".health", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".health", petType.getMaxHealth()));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.35D));
 				config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 0.6D));
 				if (petType != PetType.ENDERDRAGON) {
