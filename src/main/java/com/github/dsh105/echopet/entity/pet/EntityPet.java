@@ -40,10 +40,10 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	
 	public PetGoalSelector petGoalSelector;
 	
-	/*public EntityPet(World world) {
+	public EntityPet(World world) {
 		super(world);
-		this.die();
-	}*/
+		this.remove();
+	}
 	
 	public EntityPet(World world, Pet pet) {
 		super(world);

@@ -13,6 +13,10 @@ import com.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntitySkeletonPet extends EntityPet {
 
+	public EntitySkeletonPet(World world) {
+		super(world);
+	}
+
 	public EntitySkeletonPet(World world, Pet pet) {
 		super(world, pet);
 		this.a(0.6F, 0.6F);

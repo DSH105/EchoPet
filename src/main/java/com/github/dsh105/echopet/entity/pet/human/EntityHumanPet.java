@@ -15,6 +15,10 @@ public class EntityHumanPet extends EntityPet {
 
 	private String name;
 
+	public EntityHumanPet(World world) {
+		super(world);
+	}
+
 	public EntityHumanPet(World world, Pet pet) {
 		super(world, pet);
 		this.fireProof = true;

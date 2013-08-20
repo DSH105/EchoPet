@@ -8,6 +8,10 @@ import com.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntitySlimePet extends EntityPet {
 
+	public EntitySlimePet(World world) {
+		super(world);
+	}
+
 	int jumpDelay;
 	
 	public EntitySlimePet(World world, Pet pet) {

@@ -3,7 +3,11 @@ package com.github.dsh105.echopet.entity.pet;
 import net.minecraft.server.v1_6_R2.World;
 
 public abstract class EntityAgeablePet extends EntityPet {
-	
+
+	public EntityAgeablePet(World world) {
+		super(world);
+	}
+
 	public EntityAgeablePet(World world, Pet pet) {
 		super(world, pet);
 	}

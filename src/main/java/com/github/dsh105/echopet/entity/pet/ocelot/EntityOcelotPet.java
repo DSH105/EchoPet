@@ -8,7 +8,11 @@ import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 
 public class EntityOcelotPet extends EntityAgeablePet {
-	
+
+	public EntityOcelotPet(World world) {
+		super(world);
+	}
+
 	public EntityOcelotPet(World world, Pet pet) {
 		super(world, pet);
 		this.a(0.9F, 0.9F);

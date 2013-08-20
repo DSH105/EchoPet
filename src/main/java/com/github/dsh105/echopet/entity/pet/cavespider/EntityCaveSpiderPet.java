@@ -9,7 +9,11 @@ import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntityCaveSpiderPet extends EntityPet {
-	
+
+	EntityCaveSpiderPet(World world) {
+		super(world);
+	}
+
 	public EntityCaveSpiderPet(World world, Pet pet) {
 		super(world, pet);
 		this.a(0.7F, 0.5F);

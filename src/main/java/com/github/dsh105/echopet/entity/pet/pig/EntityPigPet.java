@@ -7,6 +7,10 @@ import com.github.dsh105.echopet.entity.pet.Pet;
 
 public class EntityPigPet extends EntityAgeablePet {
 
+	public EntityPigPet(World world) {
+		super(world);
+	}
+
 	public EntityPigPet(World world, Pet pet) {
 		super(world, pet);
 		this.a(0.9F, 0.9F);

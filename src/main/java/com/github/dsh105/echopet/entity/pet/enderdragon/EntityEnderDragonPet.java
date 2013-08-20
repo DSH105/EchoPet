@@ -39,6 +39,10 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 	private int bB;
 	private Entity bD;
 
+	public EntityEnderDragonPet(World world) {
+		super(world);
+	}
+
 	public EntityEnderDragonPet(World world, Pet pet) {
 		super(world, pet);
 		this.children = new EntityComplexPart[] { this.head = new EntityComplexPart(this, "head", 6.0F, 6.0F), this.body = new EntityComplexPart(this, "body", 8.0F, 8.0F), this.tail1 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail2 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail3 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.wing1 = new EntityComplexPart(this, "wing", 4.0F, 4.0F), this.wing2 = new EntityComplexPart(this, "wing", 4.0F, 4.0F)};

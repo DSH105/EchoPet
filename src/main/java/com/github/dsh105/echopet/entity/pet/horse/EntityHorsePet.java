@@ -12,6 +12,10 @@ public class EntityHorsePet extends EntityAgeablePet {
 	
 	int bP = 0;
 
+	public EntityHorsePet(World world) {
+		super(world);
+	}
+
 	public EntityHorsePet(World world, Pet pet) {
 		super(world, pet);
 		this.a(1.4F, 1.6F);

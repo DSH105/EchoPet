@@ -7,7 +7,11 @@ import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntityIronGolemPet extends EntityPet {
-	
+
+	public EntityIronGolemPet(World world) {
+		super(world);
+	}
+
 	public EntityIronGolemPet(World world, Pet pet) {
 		super(world, pet);
 		this.a(1.4F, 1.9F);

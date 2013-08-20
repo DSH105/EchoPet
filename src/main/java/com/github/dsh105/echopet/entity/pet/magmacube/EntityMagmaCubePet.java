@@ -11,7 +11,11 @@ import com.github.dsh105.echopet.entity.pet.SizeCategory;
 public class EntityMagmaCubePet extends EntityPet {
 	
 	int jumpDelay;
-	
+
+	public EntityMagmaCubePet(World world) {
+		super(world);
+	}
+
 	public EntityMagmaCubePet(World world, Pet pet) {
 		super(world, pet);
 		this.fireProof = true;
