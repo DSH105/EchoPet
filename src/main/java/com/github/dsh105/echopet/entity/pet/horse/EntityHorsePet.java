@@ -122,7 +122,14 @@ public class EntityHorsePet extends EntityAgeablePet {
 			}
 		}
 	}
-	
+
+	@Override
+	public void e(float f, float f1) {
+		if (f1 <= 0.0F) {
+			this.bP = 0;
+		}
+	}
+
 	@Override
 	protected String aO() {
 		int i = this.getType();
