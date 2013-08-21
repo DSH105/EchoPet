@@ -17,7 +17,7 @@ public enum DataMenuItem {
 	BOOLEAN_FALSE(DataMenuType.BOOLEAN, null, Material.getMaterial(75), 1, (short) 0, "False", "Turns the feature off."),
 	
 	BLACK_CAT(DataMenuType.CAT_TYPE, PetData.BLACK, Material.getMaterial(351), 1, (short) 0, "Black", "Cat Type"),
-	RED_CAT(DataMenuType.CAT_TYPE, PetData.RED, Material.getMaterial(351), 1, (short) 1, "Black", "Cat Type"),
+	RED_CAT(DataMenuType.CAT_TYPE, PetData.RED, Material.getMaterial(351), 1, (short) 1, "Red", "Cat Type"),
 	SIAMESE_CAT(DataMenuType.CAT_TYPE, PetData.SIAMESE, Material.getMaterial(351), 1, (short) 7, "Siamese", "Cat Type"),
 	WILD_CAT(DataMenuType.CAT_TYPE, PetData.WILD, Material.getMaterial(351), 1, (short) 14, "Wild", "Cat Type"),
 	
