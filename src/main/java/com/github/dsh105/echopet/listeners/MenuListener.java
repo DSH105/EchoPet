@@ -57,6 +57,12 @@ public class MenuListener implements Listener {
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
 		int size = (title.equals("EchoPet DataMenu - Color") || pet.getPetType() == PetType.HORSE) ? 18 : 9;
+
+		WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
+		if (wmd == null) {
+			wmd = new WaitingMenuData(pet);
+		}
+
 		try {
 			if (slot < 0) {
 				return;
@@ -70,14 +76,57 @@ public class MenuListener implements Listener {
 					return;
 				}
 				for (final MenuItem mi : MenuItem.values()) {
-					if (inv.getItem(slot).equals(mi.getItem())) {
-						player.closeInventory();
-						new BukkitRunnable() {
-							public void run() {
-								DataMenu dm = new DataMenu(mi, pet);
-								dm.open(false);
+					if (inv.getItem(slot).equals(mi.getItem()) || inv.getItem(slot).equals(mi.getBoolean(true)) || inv.getItem(slot).equals(mi.getBoolean(false))) {
+						EchoPet.getPluginInstance().log("test1");
+						if (mi.getMenuType() == DataMenuType.BOOLEAN) {
+							EchoPet.getPluginInstance().log("test2");
+							if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
+								PetData pd = PetData.valueOf(mi.toString());
+								if (pet.getAllData(true).contains(pd)) {
+									wmd.petDataFalse.add(pd);
+								}
+								else {
+									wmd.petDataTrue.add(pd);
+								}
 							}
-						}.runTaskLater(ec, 1L);
+							else {
+								if (mi.toString().equals("HAT")) {
+									if (StringUtil.hpp("echopet.pet", "hat", player)) {
+										if (!pet.isPetHat()) {
+											pet.setAsHat(true);
+											pet.getOwner().sendMessage(Lang.HAT_PET_ON.toString());
+										}
+										else {
+											pet.setAsHat(false);
+											pet.getOwner().sendMessage(Lang.HAT_PET_OFF.toString());
+										}
+									}
+								}
+								if (mi.toString().equals("RIDE")) {
+									if (StringUtil.hpp("echopet.pet", "ride", player)) {
+										if (!pet.isOwnerRiding()) {
+											pet.ownerRidePet(true);
+											inv.setItem(slot, mi.getBoolean(false));
+											pet.getOwner().sendMessage(Lang.RIDE_PET_ON.toString());
+										}
+										else {
+											pet.ownerRidePet(false);
+											inv.setItem(slot, mi.getBoolean(true));
+											pet.getOwner().sendMessage(Lang.RIDE_PET_OFF.toString());
+										}
+									}
+								}
+							}
+						}
+						else {
+							player.closeInventory();
+							new BukkitRunnable() {
+								public void run() {
+									DataMenu dm = new DataMenu(mi, pet);
+									dm.open(false);
+								}
+							}.runTaskLater(ec, 1L);
+						}
 					}
 				}
 				event.setCancelled(true);
@@ -95,61 +144,10 @@ public class MenuListener implements Listener {
 					event.setCancelled(true);
 					return;
 				}
-
-				String[] split = title.split(" - ");
-				WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
-				if (wmd == null) {
-					wmd = new WaitingMenuData(pet);
-				}
-				try {
-					if (split[1].equalsIgnoreCase("ride")) {
-						if (StringUtil.hpp("echopet.pet", "ride", player)) {
-							if (!pet.isOwnerRiding() && inv.getItem(slot).equals(DataMenuItem.BOOLEAN_TRUE.getItem())) {
-								pet.ownerRidePet(true);
-								pet.getOwner().sendMessage(Lang.RIDE_PET_ON.toString());
-							}
-							else if (pet.isOwnerRiding() && inv.getItem(slot).equals(DataMenuItem.BOOLEAN_FALSE.getItem())) {
-								pet.ownerRidePet(false);
-								pet.getOwner().sendMessage(Lang.RIDE_PET_OFF.toString());
-							}
-						}
+				for (DataMenuItem dmi : DataMenuItem.values()) {
+					if (inv.getItem(slot).equals(dmi.getItem())) {
+						wmd.petDataTrue.add(dmi.getDataLink());
 					}
-					else if (split[1].equalsIgnoreCase("hat")) {
-						if (StringUtil.hpp("echopet.pet", "hat", player)) {
-							if (!pet.isPetHat() && inv.getItem(slot).equals(DataMenuItem.BOOLEAN_TRUE.getItem())) {
-								pet.setAsHat(true);
-								pet.getOwner().sendMessage(Lang.HAT_PET_ON.toString());
-							}
-							else if (pet.isPetHat() && inv.getItem(slot).equals(DataMenuItem.BOOLEAN_FALSE.getItem())) {
-								pet.setAsHat(false);
-								pet.getOwner().sendMessage(Lang.HAT_PET_OFF.toString());
-							}
-						}
-					}
-					else if (EnumUtil.isEnumType(PetData.class, split[1].toUpperCase())) {
-						PetData pd = PetData.valueOf(split[1].toUpperCase());
-						for (DataMenuItem dmi : DataMenuItem.values()) {
-							if (inv.getItem(slot).equals(dmi.getItem())) {
-								if (dmi.getType() == DataMenuType.BOOLEAN) {
-									if (dmi == DataMenuItem.BOOLEAN_TRUE) {
-										wmd.petDataTrue.add(pd);
-									}
-									else if (dmi == DataMenuItem.BOOLEAN_FALSE) {
-										wmd.petDataFalse.add(pd);
-									}
-								}
-							}
-						}
-					}
-					else {
-						for (DataMenuItem dmi : DataMenuItem.values()) {
-							if (inv.getItem(slot).equals(dmi.getItem())) {
-								wmd.petDataTrue.add(dmi.getDataLink());
-							}
-						}
-					}
-				} catch (Exception e) {
-					EchoPet.getPluginInstance().debug(e, "Encountered error whilst handling InventoryClick event for EchoPet DataMenu (" + player.getName() + ")");
 				}
 				event.setCancelled(true);
 			}
@@ -204,6 +202,8 @@ public class MenuListener implements Listener {
 					ec.debug(e, "Particle Effect failed.");
 				}
 			}
+
+			WaitingMenuData.waiting.remove(wmd);
 		}
 		
 	}

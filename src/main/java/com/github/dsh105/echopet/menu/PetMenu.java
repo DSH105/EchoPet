@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.api.event.PetMenuOpenEvent;
+import com.github.dsh105.echopet.data.PetData;
+import com.github.dsh105.echopet.util.EnumUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
@@ -25,7 +27,39 @@ public class PetMenu implements Menu {
 		this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu");
 		this.options = options;
 		for (MenuOption o : this.options) {
-			this.inv.setItem(o.position, o.item.getItem());
+			if (o.item.getMenuType() == DataMenu.DataMenuType.BOOLEAN) {
+				MenuItem mi = o.item;
+				if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
+					PetData pd = PetData.valueOf(mi.toString());
+					if (pet.getAllData(true).contains(pd)) {
+						this.inv.setItem(o.position, o.item.getBoolean(false));
+					}
+					else {
+						this.inv.setItem(o.position, o.item.getBoolean(true));
+					}
+				}
+				else {
+					if (mi.toString().equals("HAT")) {
+						if (pet.isPetHat()) {
+							this.inv.setItem(o.position, o.item.getBoolean(false));
+						}
+						else {
+							this.inv.setItem(o.position, o.item.getBoolean(true));
+						}
+					}
+					if (mi.toString().equals("RIDE")) {
+						if (pet.isOwnerRiding()) {
+							this.inv.setItem(o.position, o.item.getBoolean(false));
+						}
+						else {
+							this.inv.setItem(o.position, o.item.getBoolean(true));
+						}
+					}
+				}
+			}
+			else {
+				this.inv.setItem(o.position, o.item.getItem());
+			}
 		}
 		int book = size - 1;
 		this.inv.setItem(book, DataMenuItem.CLOSE.getItem());

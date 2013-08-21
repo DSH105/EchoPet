@@ -61,6 +61,15 @@ public enum MenuItem {
 		i.setItemMeta(meta);
 		return i;
 	}
+
+	public ItemStack getBoolean(boolean flag) {
+		ItemStack i = new ItemStack(this.mat, 1, this.data);
+		ItemMeta meta = i.getItemMeta();
+		meta.setDisplayName(ChatColor.RED + this.name + (flag ? ChatColor.GREEN + " [TOGGLE ON]" : ChatColor.YELLOW + " [TOGGLE OFF]"));
+		meta.setLore(this.lore);
+		i.setItemMeta(meta);
+		return i;
+	}
 	
 	public DataMenuType getMenuType() {
 		return this.menuType;
