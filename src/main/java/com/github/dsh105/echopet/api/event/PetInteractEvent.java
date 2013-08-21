@@ -82,6 +82,10 @@ public class PetInteractEvent extends Event implements Cancellable {
 		return handlers;
 	}
 
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
 	public enum Action {
 		/**
 		 * Left clicking a Pet

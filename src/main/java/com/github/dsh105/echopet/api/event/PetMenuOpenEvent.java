@@ -63,6 +63,10 @@ public class PetMenuOpenEvent extends Event implements Cancellable {
 		return this.handlers;
 	}
 
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
 	public enum MenuType {
 		MAIN,
 		DATA;

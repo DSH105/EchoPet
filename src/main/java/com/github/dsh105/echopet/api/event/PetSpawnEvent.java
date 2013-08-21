@@ -50,10 +50,6 @@ public class PetSpawnEvent extends Event implements Cancellable {
 		this.spawnLocation = spawnLocation;
 	}
 
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
 	/**
 	 * Gets the cancellation state of this event. A cancelled event will not
 	 * be executed in the server, but will still pass to other plugins
@@ -74,5 +70,13 @@ public class PetSpawnEvent extends Event implements Cancellable {
 	@Override
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;
+	}
+
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

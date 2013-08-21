@@ -39,4 +39,8 @@ public class PetTeleportEvent extends PetMoveEvent {
 	public HandlerList getHandlers() {
 		return this.handlers;
 	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }
