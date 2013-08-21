@@ -18,6 +18,7 @@ public class PetInteractEvent extends Event implements Cancellable {
 	public PetInteractEvent(Pet pet, Player player, Action action, boolean cancelledByDefault) {
 		this.pet = pet;
 		this.action = action;
+		this.player = player;
 		this.cancelled = cancelledByDefault;
 	}
 
