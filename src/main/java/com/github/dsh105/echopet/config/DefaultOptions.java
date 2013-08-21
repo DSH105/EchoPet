@@ -112,7 +112,8 @@ public class DefaultOptions {
 			config.set("attack.lockRange", config.get("attack.lockRange", 10), "Distance away a target can be before a Pet locks on.");
 			config.set("attack.ticksBetweenAttacks", config.get("attack.ticksBetweenAttacks", 20), "Time in ticks between each attack.");
 			config.set("autoLoadSavedPets", config.getBoolean("autoLoadSavedPets", true), "Auto-load pets from last session");
-			config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, if -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
+            config.set("sendPetLoadMessage", config.getBoolean("sendPetLoadMessage", true), "Send message that pet was loaded if -autoLoadSavedPets- is true");
+            config.set("multiworldSaveLoadOverride", config.getBoolean("multiworldSaveLoadOverride", true), "When true, if -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 			config.set("autoLoadDefaultPets", config.getBoolean("autoLoadDefaultPets", true), "If false, default pets will not be loaded for players");
 			config.set("sendForceMessage", config.getBoolean("sendForceMessage", true), "For all values forced (below), EchoPet will notify the player", "(if set to true).");
 			for (PetType petType : PetType.values()) {
