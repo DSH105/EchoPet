@@ -77,9 +77,7 @@ public class MenuListener implements Listener {
 				}
 				for (final MenuItem mi : MenuItem.values()) {
 					if (inv.getItem(slot).equals(mi.getItem()) || inv.getItem(slot).equals(mi.getBoolean(true)) || inv.getItem(slot).equals(mi.getBoolean(false))) {
-						EchoPet.getPluginInstance().log("test1");
 						if (mi.getMenuType() == DataMenuType.BOOLEAN) {
-							EchoPet.getPluginInstance().log("test2");
 							if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
 								PetData pd = PetData.valueOf(mi.toString());
 								if (pet.getAllData(true).contains(pd)) {
