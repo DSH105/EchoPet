@@ -314,7 +314,7 @@ public class EchoPet extends JavaPlugin {
 			field_e.setAccessible(true);
 
 			Map<Class, String> c = (Map) field_c.get(field_c);
-			Map<Class, String> e = (Map) field_e.get(field_e);
+			Map<Class, Integer> e = (Map) field_e.get(field_e);
 
 			Iterator i = c.keySet().iterator();
 			while (i.hasNext()) {
