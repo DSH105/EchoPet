@@ -5,8 +5,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
+import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.human.EntityHumanPet;
 import com.github.dsh105.echopet.listeners.*;
@@ -170,73 +173,35 @@ public class EchoPet extends JavaPlugin {
 		}
 
 		// Register custom entities
-		try {
-			Method a = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, Integer.TYPE);
-			a.setAccessible(true);
-
-			a.invoke(a, EntityBatPet.class, "BatPet", 65);
-			a.invoke(a, EntityBat.class, "Bat", 65);
-			a.invoke(a, EntityBlazePet.class, "BlazePet", 61);
-			a.invoke(a, EntityBlaze.class, "Blaze", 61);
-			a.invoke(a, EntityCaveSpiderPet.class, "CaveSpiderPet", 59);
-			a.invoke(a, EntityCaveSpider.class, "CaveSpider", 59);
-			a.invoke(a, EntityChickenPet.class, "ChickenPet", 93);
-			a.invoke(a, EntityChicken.class, "Chicken", 93);
-			a.invoke(a, EntityCowPet.class, "CowPet", 92);
-			a.invoke(a, EntityCow.class, "Cow", 92);
-			a.invoke(a, EntityCreeperPet.class, "CreeperPet", 50);
-			a.invoke(a, EntityCreeper.class, "Creeper", 50);
-			a.invoke(a, EntityEnderDragonPet.class, "EnderDragonPet", 63);
-			a.invoke(a, EntityEnderDragon.class, "EnderDragon", 63);
-			a.invoke(a, EntityEndermanPet.class, "EndermanPet", 58);
-			a.invoke(a, EntityEnderman.class, "Enderman", 58);
-			a.invoke(a, EntityGhastPet.class, "GhastPet", 56);
-			a.invoke(a, EntityGhast.class, "Ghast", 56);
-			a.invoke(a, EntityHorsePet.class, "HorsePet", 100);
-			a.invoke(a, EntityHorse.class, "Horse", 100);
-			//a.invoke(a, EntityHumanPet.class, "HumanPet", 49);
-			//a.invoke(a, EntityHuman.class, "Monster", 49);
-			a.invoke(a, EntityIronGolemPet.class, "IronGolemPet", 99);
-			a.invoke(a, EntityIronGolem.class, "VillagerGolem", 99);
-			a.invoke(a, EntityMagmaCubePet.class, "MagmaCubePet", 62);
-			a.invoke(a, EntityMagmaCube.class, "LavaSlim", 62);
-			a.invoke(a, EntityMushroomCowPet.class, "MushroomCowPet", 96);
-			a.invoke(a, EntityMushroomCow.class, "MushroomCow", 96);
-			a.invoke(a, EntityOcelotPet.class, "OcelotPet", 98);
-			a.invoke(a, EntityOcelot.class, "Ozelot", 98);
-			a.invoke(a, EntityPigPet.class, "PigPet", 90);
-			a.invoke(a, EntityPig.class, "Pig", 90);
-			a.invoke(a, EntityPigZombiePet.class, "PigZombiePet", 57);
-			a.invoke(a, EntityPigZombie.class, "PigZombie", 57);
-			a.invoke(a, EntitySheepPet.class, "SheepPet", 91);
-			a.invoke(a, EntitySheep.class, "Sheep", 91);
-			a.invoke(a, EntitySilverfishPet.class, "SilverfishPet", 60);
-			a.invoke(a, EntitySilverfish.class, "Silverfish", 60);
-			a.invoke(a, EntitySkeletonPet.class, "SkeletonPet", 51);
-			a.invoke(a, EntitySkeleton.class, "Skeleton", 51);
-			a.invoke(a, EntitySlimePet.class, "SlimePet", 55);
-			a.invoke(a, EntitySlime.class, "Slime", 55);
-			a.invoke(a, EntitySnowmanPet.class, "SnowManPet", 97);
-			a.invoke(a, EntitySnowman.class, "SnowMan", 97);
-			a.invoke(a, EntitySpiderPet.class, "SpiderPet", 52);
-			a.invoke(a, EntitySpider.class, "Spider", 52);
-			a.invoke(a, EntitySquidPet.class, "SquidPet", 94);
-			a.invoke(a, EntitySquid.class, "Squid", 94);
-			a.invoke(a, EntityVillagerPet.class, "VillagerPet", 120);
-			a.invoke(a, EntityVillager.class, "Villager", 120);
-			a.invoke(a, EntityWitchPet.class, "WitchPet", 66);
-			a.invoke(a, EntityWitch.class, "Witch", 66);
-			a.invoke(a, EntityWitherPet.class, "WitherPet", 64);
-			a.invoke(a, EntityWither.class, "WitherBoss", 64);
-			a.invoke(a, EntityWolfPet.class, "WolfPet", 95);
-			a.invoke(a, EntityWolf.class, "Wolf", 95);
-			a.invoke(a, EntityZombiePet.class, "ZombiePet", 54);
-			a.invoke(a, EntityZombie.class, "Zombie", 54);
-
-		} catch (Exception e) {
-			this.log(ChatColor.RED + "Error registering Pet entities. Please report to developer.");
-			this.log(ChatColor.RED + "" + e.getStackTrace());
-		}
+		this.registerEntity(EntityBatPet.class, "BatPet", 65);
+		this.registerEntity(EntityBlazePet.class, "BlazePet", 61);
+		this.registerEntity(EntityCaveSpiderPet.class, "CaveSpiderPet", 59);
+		this.registerEntity(EntityChickenPet.class, "ChickenPet", 93);
+		this.registerEntity(EntityCowPet.class, "CowPet", 92);
+		this.registerEntity(EntityCreeperPet.class, "CreeperPet", 50);
+		this.registerEntity(EntityEnderDragonPet.class, "EnderDragonPet", 63);
+		this.registerEntity(EntityEndermanPet.class, "EndermanPet", 58);
+		this.registerEntity(EntityGhastPet.class, "GhastPet", 56);
+		this.registerEntity(EntityHorsePet.class, "HorsePet", 100);
+		//this.registerEntity(EntityHumanPet.class, "HumanPet", 49);
+		this.registerEntity(EntityIronGolemPet.class, "IronGolemPet", 99);
+		this.registerEntity(EntityMagmaCubePet.class, "MagmaCubePet", 62);
+		this.registerEntity(EntityMushroomCowPet.class, "MushroomCowPet", 96);
+		this.registerEntity(EntityOcelotPet.class, "OcelotPet", 98);
+		this.registerEntity(EntityPigPet.class, "PigPet", 90);
+		this.registerEntity(EntityPigZombiePet.class, "PigZombiePet", 57);
+		this.registerEntity(EntitySheepPet.class, "SheepPet", 91);
+		this.registerEntity(EntitySilverfishPet.class, "SilverfishPet", 60);
+		this.registerEntity(EntitySkeletonPet.class, "SkeletonPet", 51);
+		this.registerEntity(EntitySlimePet.class, "SlimePet", 55);
+		this.registerEntity(EntitySnowmanPet.class, "SnowManPet", 97);
+		this.registerEntity(EntitySpiderPet.class, "SpiderPet", 52);
+		this.registerEntity(EntitySquidPet.class, "SquidPet", 94);
+		this.registerEntity(EntityVillagerPet.class, "VillagerPet", 120);
+		this.registerEntity(EntityWitchPet.class, "WitchPet", 66);
+		this.registerEntity(EntityWitherPet.class, "WitherPet", 64);
+		this.registerEntity(EntityWolfPet.class, "WolfPet", 95);
+		this.registerEntity(EntityZombiePet.class, "ZombiePet", 54);
 
 		// Check whether to start AutoSave
 		if (getMainConfig().getBoolean("autoSave")) {
@@ -338,6 +303,41 @@ public class EchoPet extends JavaPlugin {
 			}
 		}
 		return false;
+	}
+
+	public void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
+		Field field_c = null;
+		try {
+			field_c = EntityTypes.class.getDeclaredField("c");
+			Field field_e = EntityTypes.class.getDeclaredField("e");
+			field_c.setAccessible(true);
+			field_e.setAccessible(true);
+
+			Map<Class, String> c = (Map) field_c.get(field_c);
+			Map<Class, String> e = (Map) field_e.get(field_e);
+
+			Iterator i = c.keySet().iterator();
+			while (i.hasNext()) {
+				Class cl = (Class) i.next();
+				if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
+					i.remove();
+				}
+			}
+
+			Iterator i2 = e.keySet().iterator();
+			while (i.hasNext()) {
+				Class cl = (Class) i.next();
+				if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
+					i.remove();
+				}
+			}
+
+			c.put(clazz, name);
+			e.put(clazz, id);
+
+		} catch (Exception e) {
+			this.severe(e, "Failed to register pet entity.");
+		}
 	}
 
 	public EchoPetAPI getAPI() {
