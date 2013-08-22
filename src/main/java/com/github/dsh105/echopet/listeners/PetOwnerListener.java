@@ -112,10 +112,12 @@ public class PetOwnerListener implements Listener {
 			p.sendMessage(ec.prefix + ChatColor.GOLD + "An update is available: " + ec.name + " (" + ec.size + " bytes).");
 			p.sendMessage(ec.prefix + ChatColor.GOLD + "Type /ecupdate to update.");
 		}
-		new BukkitRunnable() {
+        final boolean sendMessage = ((Boolean) ec.DO.getConfigOption("sendPetLoadMessage", true));
+
+            new BukkitRunnable() {
 			
 			public void run() {
-				PetHandler.getInstance().loadPets(p, true, true, false);
+				PetHandler.getInstance().loadPets(p, true, sendMessage, false);
 			}
 			
 		}.runTaskLater(ec, 20);
