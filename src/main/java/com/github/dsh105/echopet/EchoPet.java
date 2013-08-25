@@ -2,16 +2,15 @@ package com.github.dsh105.echopet;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
+import com.github.dsh105.echopet.config.DefaultOptions;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
-import com.github.dsh105.echopet.entity.pet.human.EntityHumanPet;
 import com.github.dsh105.echopet.listeners.*;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.*;
@@ -28,7 +27,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.github.dsh105.echopet.commands.CustomCommand;
 import com.github.dsh105.echopet.commands.PetAdminCommand;
 import com.github.dsh105.echopet.commands.PetCommand;
-import com.github.dsh105.echopet.config.DefaultOptions;
 import com.github.dsh105.echopet.config.YAMLConfig;
 import com.github.dsh105.echopet.config.YAMLConfigManager;
 import com.github.dsh105.echopet.data.AutoSave;
