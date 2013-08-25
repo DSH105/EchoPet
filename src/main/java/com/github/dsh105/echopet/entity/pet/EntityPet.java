@@ -12,19 +12,19 @@ import net.minecraft.server.v1_6_R2.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.entity.pathfinder.PetGoalSelector;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFly;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalRandomLookaround;
 import com.github.dsh105.echopet.menu.MenuOption;
 import com.github.dsh105.echopet.menu.PetMenu;
 import com.github.dsh105.echopet.util.MenuUtil;
+import org.bukkit.util.Vector;
 
 public abstract class EntityPet extends EntityCreature implements IMonster {
 	
@@ -97,10 +97,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(), this.getSizeCategory().getStopWalk(), this.getSizeCategory().getTeleport()));
 			petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
 			//petGoalSelector.addGoal("RandomLookAround", new PetGoalRandomLookaround(this));
-			
-			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("flyTeleport", false)) {
-				petGoalSelector.addGoal("Fly", new PetGoalFly(this));
-			}
 			
 		} catch (Exception e) {
 			EchoPet.getPluginInstance().severe(e, "Error creating new pet entity.");
@@ -299,6 +295,9 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         }
 	}
 
+	private int targetTime;
+	private int a;
+
 	@Override
 	public void l_() {
 		super.l_();
@@ -308,6 +307,36 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		}
 		else {
 			this.particle++;
+		}
+
+		if (this.getOwner().isFlying() && EchoPet.getPluginInstance().DO.canFly(this.getPet().getPetType())) {
+			Location petLoc = this.getLocation();
+			Location ownerLoc = this.getOwner().getLocation();
+			Vector v = petLoc.toVector().subtract(ownerLoc.toVector());
+
+			double x = v.getX() - (v.getX() * 2);
+			double y = v.getY() - (v.getY() * 2);
+			double z = v.getZ() - (v.getZ() * 2);
+
+			Vector vo = this.getOwner().getLocation().getDirection();
+			if (vo.getX() > 0) {
+				x = x - 1.5;
+			} else if (vo.getX() < 0) {
+				x = x + 1.5;
+			}
+			if (vo.getZ() > 0) {
+				z = z - 1.5;
+			} else if (vo.getZ() < 0) {
+				z = z + 1.5;
+			}
+
+			this.motX = x;
+			this.motY = y;
+			this.motZ = z;
+
+			this.motX *= 0.7;
+			this.motY *= 0.7;
+			this.motZ *= 0.7;
 		}
 	}
 }
