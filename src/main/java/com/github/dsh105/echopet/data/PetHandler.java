@@ -535,7 +535,7 @@ public class PetHandler {
 				
 				if (pd.isType(Type.CAT) && petType == PetType.OCELOT) {
 					try {
-						org.bukkit.entity.Ocelot.Type t = org.bukkit.entity.Ocelot.Type.valueOf(pd.toString() + "_CAT"); 
+						org.bukkit.entity.Ocelot.Type t = org.bukkit.entity.Ocelot.Type.valueOf(pd.toString() + (pd == PetData.WILD ? "_OCELOT" : "_CAT"));
 						if (t != null) {
 							((OcelotPet) pet).setCatType(t);
 						}
