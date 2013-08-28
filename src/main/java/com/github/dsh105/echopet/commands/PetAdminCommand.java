@@ -3,6 +3,10 @@ package com.github.dsh105.echopet.commands;
 import com.github.dsh105.echopet.data.PetData;
 import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.data.UnorganisedPetData;
+import com.github.dsh105.echopet.menu.main.MenuOption;
+import com.github.dsh105.echopet.menu.main.PetMenu;
+import com.github.dsh105.echopet.menu.selector.PetSelector;
+import com.github.dsh105.echopet.menu.selector.SelectorItem;
 import com.github.dsh105.echopet.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -70,6 +74,121 @@ public class PetAdminCommand implements CommandExecutor {
 		}
 		
 		if (args.length == 2) {
+
+			if (args[0].equalsIgnoreCase("menu")) {
+				if (StringUtil.hpp("echopet.petadmin", "menu", sender, false)) {
+					Player target = Bukkit.getPlayer(args[1]);
+					if (target == null) {
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+						return true;
+					}
+					Pet pet = PetHandler.getInstance().getPet(target);
+
+					if (pet == null) {
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
+						return true;
+					}
+					ArrayList<MenuOption> options = MenuUtil.createOptionList(pet.getPetType());
+					int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
+					PetMenu menu = new PetMenu(pet, options, size);
+					menu.open(true);
+					sender.sendMessage(Lang.ADMIN_OPEN_MENU.toString()
+							.replace("%player%", target.getName())
+							.replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("call")) {
+				if (StringUtil.hpp("echopet.petadmin", "call", sender, false)) {
+					Player target = Bukkit.getPlayer(args[1]);
+					if (target == null) {
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+						return true;
+					}
+					Pet pet = PetHandler.getInstance().getPet(target);
+
+					if (pet == null) {
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
+						return true;
+					}
+					pet.teleport(target.getLocation());
+					target.sendMessage(Lang.PET_CALL.toString());
+					sender.sendMessage(Lang.ADMIN_PET_CALL.toString().replace("%player%", target.getName()));
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("show")) {
+				if (StringUtil.hpp("echopet.petadmin", "show", sender, false)) {
+					Player target = Bukkit.getPlayer(args[1]);
+					if (target == null) {
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+						return true;
+					}
+					Pet pet = PetHandler.getInstance().getPet(target);
+
+					if (pet == null) {
+						sender.sendMessage(Lang.ADMIN_NO_HIDDEN_PET.toString());
+						return true;
+					}
+					sender.sendMessage(Lang.ADMIN_SHOW_PET.toString()
+							.replace("%player%", target.getName())
+							.replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+					target.sendMessage(Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("hide")) {
+				if (StringUtil.hpp("echopet.petadmin", "hide", sender, false)) {
+					Player target = Bukkit.getPlayer(args[1]);
+					if (target == null) {
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+						return true;
+					}
+					Pet pet = PetHandler.getInstance().getPet(target);
+
+					if (pet == null) {
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
+						return true;
+					}
+					ec.PH.saveFileData("autosave", pet);
+					ec.SPH.saveToDatabase(pet, false);
+					ec.PH.removePet(pet);
+					target.sendMessage(Lang.HIDE_PET.toString());
+					sender.sendMessage(Lang.ADMIN_HIDE_PET.toString().replace("%player%", target.getName()));
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("select")) {
+				if (StringUtil.hpp("echopet.petadmin", "select", sender, false)) {
+					Player target = Bukkit.getPlayer(args[1]);
+					if (target == null) {
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+						return true;
+					}
+					PetSelector petSelector = new PetSelector(45, target);
+					petSelector.open(false);
+					sender.sendMessage(Lang.ADMIN_OPEN_SELECTOR.toString().replace("%player%", target.getName()));
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("select")) {
+				if (StringUtil.hpp("echopet.petadmin", "select", sender, false)) {
+					Player target = Bukkit.getPlayer(args[1]);
+					if (target == null) {
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+						return true;
+					}
+					target.getInventory().addItem(SelectorItem.SELECTOR.getItem());
+					target.sendMessage(Lang.ADD_SELECTOR.toString());
+					sender.sendMessage(Lang.ADMIN_ADD_SELECTOR.toString().replace("%player%", target.getName()));
+					return true;
+				} else sendError = false;
+			}
 
 			if (args[0].equalsIgnoreCase("info")) {
 				if (StringUtil.hpp("echopet.petadmin", "info", sender, false)) {

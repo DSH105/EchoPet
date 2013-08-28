@@ -73,6 +73,13 @@ public enum Lang {
 	ADMIN_NAME_PET("admin_name_pet", "&6%player%&e's &6%type% &ehas been named &r%name%&e."),
 	ADMIN_NO_MOUNT("admin_no_mount", "&6%player%&e's &ePet does not have a mount."),
 	ADMIN_NO_PET("admin_has_no_pet", "&6%player% &edoes not currently have a Pet."),
+	ADMIN_OPEN_MENU("admin_open_menu", "&eOpening Data Menu for &6%player%&e's &6%type%&e..."),
+	ADMIN_PET_CALL("admin_pet_call", "&6%player%&e's Pet has been called to their side."),
+	ADMIN_NO_HIDDEN_PET("admin_no_hidden_pet", "&6%player%&e's Pet is not currently hidden."),
+	ADMIN_SHOW_PET("admin_show_pet", "&6%player%&e's hidden Pet magically reappears!"),
+	ADMIN_HIDE_PET("admin_hide_pet", "&6%player%&e's Pet has been hidden."),
+	ADMIN_ADD_SELECTOR("admin_add_selector", "&eThe &6Pet Selector &ehas been added to &6%player%&e's inventory."),
+	ADMIN_OPEN_SELECTOR("admin_add_selector", "&eThe &6Pet Selector &eMenu has been opened for &6%player%.");
 	
 	private String path;
 	private String def;
