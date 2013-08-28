@@ -89,7 +89,7 @@ public class Pet {
 					((CraftPlayer) owner).getHandle().mount(pet);
 					ownerIsMounting = false;
 				}
-			}.runTaskLater(EchoPet.getPluginInstance(), 1L);
+			}.runTaskLater(EchoPet.getPluginInstance(), 5L);
 		}
 		this.ownerIsRiding = flag;
 		try {
