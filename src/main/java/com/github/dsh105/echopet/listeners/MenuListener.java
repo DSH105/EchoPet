@@ -8,6 +8,7 @@ import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.menu.main.*;
 import com.github.dsh105.echopet.menu.selector.PetItem;
 import com.github.dsh105.echopet.menu.selector.SelectorItem;
+import com.github.dsh105.echopet.util.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,11 +23,6 @@ import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.data.PetData;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
-import com.github.dsh105.echopet.util.EnumUtil;
-import com.github.dsh105.echopet.util.Lang;
-import com.github.dsh105.echopet.util.MenuUtil;
-import com.github.dsh105.echopet.util.Particle;
-import com.github.dsh105.echopet.util.StringUtil;
 
 public class MenuListener implements Listener {
 	
@@ -83,13 +79,19 @@ public class MenuListener implements Listener {
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
-					if (StringUtil.hpp("echopet.pet", "ride", player)) {
-						player.performCommand("pet ride");
+					Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+					if (pet != null) {
+						if (player.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pet.getPetType()), player)) {
+							player.performCommand("pet ride");
+						}
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.HAT.getItem())) {
-					if (StringUtil.hpp("echopet.pet", "hat", player)) {
-						player.performCommand("pet hat");
+					Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+					if (pet != null) {
+						if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
+							player.performCommand("pet hat");
+						}
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.MENU.getItem())) {
@@ -99,7 +101,7 @@ public class MenuListener implements Listener {
 				}
 				for (PetItem i : PetItem.values()) {
 					if (inv.getItem(slot).equals(i.getItem(player))) {
-						if (player.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + StringUtil.capitalise(i.petType.toString()), player)) {
+						if (player.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(i.petType), player)) {
 							PetHandler.getInstance().createPet(player, i.petType, true);
 							player.sendMessage(Lang.CREATE_PET.toString()
 									.replace("%type%", StringUtil.capitalise(i.petType.toString().replace("_", ""))));
@@ -144,7 +146,7 @@ public class MenuListener implements Listener {
 							}
 							else {
 								if (mi.toString().equals("HAT")) {
-									if (StringUtil.hpp("echopet.pet", "hat", player)) {
+									if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
 										if (!pet.isPetHat()) {
 											pet.setAsHat(true);
 											pet.getOwner().sendMessage(Lang.HAT_PET_ON.toString());
@@ -156,7 +158,7 @@ public class MenuListener implements Listener {
 									}
 								}
 								if (mi.toString().equals("RIDE")) {
-									if (StringUtil.hpp("echopet.pet", "ride", player)) {
+									if (player.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pet.getPetType()), player)) {
 										if (!pet.isOwnerRiding()) {
 											pet.ownerRidePet(true);
 											inv.setItem(slot, mi.getBoolean(false));

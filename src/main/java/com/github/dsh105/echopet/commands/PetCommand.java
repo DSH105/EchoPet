@@ -200,41 +200,45 @@ public class PetCommand implements CommandExecutor {
 			}
 			
 			if (args[0].equalsIgnoreCase("hat")) {
-				if (StringUtil.hpp("echopet.pet", "hat", sender, false)) {
+				if (sender instanceof Player) {
 					Player p = (Player) sender;
 					Pet pi = ec.PH.getPet(p);
 					if (pi == null) {
 						sender.sendMessage(Lang.NO_PET.toString());
 						return true;
 					}
-					pi.setAsHat(!pi.isPetHat());
-					if (pi.isPetHat()) {
-						sender.sendMessage(Lang.HAT_PET_ON.toString());
-					}
-					else {
-						sender.sendMessage(Lang.HAT_PET_OFF.toString());
-					}
-					return true;
-				} else sendError = false;
+					if (p.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pi.getPetType()), sender, false)) {
+						pi.setAsHat(!pi.isPetHat());
+						if (pi.isPetHat()) {
+							sender.sendMessage(Lang.HAT_PET_ON.toString());
+						}
+						else {
+							sender.sendMessage(Lang.HAT_PET_OFF.toString());
+						}
+						return true;
+					} else sendError = false;
+				}
 			}
-			
+
 			if (args[0].equalsIgnoreCase("ride")) {
-				if (StringUtil.hpp("echopet.pet", "ride", sender, false)) {
+				if (sender instanceof Player) {
 					Player p = (Player) sender;
 					Pet pi = ec.PH.getPet(p);
 					if (pi == null) {
 						sender.sendMessage(Lang.NO_PET.toString());
 						return true;
 					}
-					pi.ownerRidePet(!pi.isOwnerRiding());
-					if (pi.isOwnerRiding()) {
-						sender.sendMessage(Lang.RIDE_PET_ON.toString());
-					}
-					else {
-						sender.sendMessage(Lang.RIDE_PET_OFF.toString());
-					}
-					return true;
-				} else sendError = false;
+					if (p.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pi.getPetType()), sender, false)) {
+						pi.ownerRidePet(!pi.isOwnerRiding());
+						if (pi.isOwnerRiding()) {
+							sender.sendMessage(Lang.RIDE_PET_ON.toString());
+						}
+						else {
+							sender.sendMessage(Lang.RIDE_PET_OFF.toString());
+						}
+						return true;
+					} else sendError = false;
+				}
 			}
 			
 			// Help page 1

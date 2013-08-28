@@ -146,19 +146,18 @@ public class PetAdminCommand implements CommandExecutor {
 			}
 
 			if (args[0].equalsIgnoreCase("hat")) {
-				if (StringUtil.hpp("echopet.petadmin", "hat", sender, true)) {
-					Player target = Bukkit.getPlayer(args[1]);
-					if (target == null) {
-						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
-						return true;
-					}
-					Pet pet = PetHandler.getInstance().getPet(target);
+				Player target = Bukkit.getPlayer(args[1]);
+				if (target == null) {
+					sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+					return true;
+				}
+				Pet pet = PetHandler.getInstance().getPet(target);
 
-					if (pet == null) {
-						sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
-						return true;
-					}
-
+				if (pet == null) {
+					sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+					return true;
+				}
+				if (sender.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.petadmin", "hat." + PetUtil.getPetPerm(pet.getPetType()), sender, true)) {
 					pet.setAsHat(!pet.isPetHat());
 					if (pet.isPetHat()) {
 						target.sendMessage(Lang.HAT_PET_ON.toString());
@@ -173,19 +172,18 @@ public class PetAdminCommand implements CommandExecutor {
 			}
 
 			if (args[0].equalsIgnoreCase("ride")) {
-				if (StringUtil.hpp("echopet.petadmin", "ride", sender, true)) {
-					Player target = Bukkit.getPlayer(args[1]);
-					if (target == null) {
-						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
-						return true;
-					}
-					Pet pet = PetHandler.getInstance().getPet(target);
+				Player target = Bukkit.getPlayer(args[1]);
+				if (target == null) {
+					sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+					return true;
+				}
+				Pet pet = PetHandler.getInstance().getPet(target);
 
-					if (pet == null) {
-						sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
-						return true;
-					}
-
+				if (pet == null) {
+					sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+					return true;
+				}
+				if (sender.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.petadmin", "ride." + PetUtil.getPetPerm(pet.getPetType()), sender, true)) {
 					pet.ownerRidePet(!pet.isOwnerRiding());
 					if (pet.isOwnerRiding()) {
 						target.sendMessage(Lang.RIDE_PET_ON.toString());
