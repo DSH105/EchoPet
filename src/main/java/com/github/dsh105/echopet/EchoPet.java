@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
+import com.github.dsh105.echopet.commands.CommandComplete;
 import com.github.dsh105.echopet.config.DefaultOptions;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
@@ -233,6 +234,7 @@ public class EchoPet extends JavaPlugin {
 		CustomCommand petCmd = new CustomCommand(cmdString);
 		CM.register("ec", petCmd);
 		petCmd.setExecutor(new PetCommand(this, cmdString));
+		petCmd.setTabCompleter(new CommandComplete());
 		this.cmdString = cmdString;
 		
 		CustomCommand petAdminCmd = new CustomCommand(adminCmdString);
