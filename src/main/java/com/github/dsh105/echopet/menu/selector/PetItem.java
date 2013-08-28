@@ -2,6 +2,7 @@ package com.github.dsh105.echopet.menu.selector;
 
 import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.util.ItemUtil;
+import com.github.dsh105.echopet.util.PetUtil;
 import com.github.dsh105.echopet.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -62,7 +63,7 @@ public enum PetItem {
 	public ItemStack getItem(Player p) {
 		ItemStack i = new ItemStack(this.mat, this.amount, this.data);
 		ItemMeta meta = i.getItemMeta();
-		boolean hasPerm = p.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + StringUtil.capitalise(this.petType.toString()), p);
+		boolean hasPerm = p.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(this.petType), p);
 		meta.setDisplayName((hasPerm ? ChatColor.GREEN : ChatColor.RED) + this.name);
 		//meta.setLore(this.lore);
 		i.setItemMeta(meta);
