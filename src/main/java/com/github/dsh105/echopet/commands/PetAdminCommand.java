@@ -75,13 +75,13 @@ public class PetAdminCommand implements CommandExecutor {
 				if (StringUtil.hpp("echopet.petadmin", "info", sender, false)) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target == null) {
-						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 						return true;
 					}
 					Pet pet = PetHandler.getInstance().getPet(target);
 
 					if (pet == null) {
-						sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 						return true;
 					}
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet Info ------------");
@@ -116,13 +116,13 @@ public class PetAdminCommand implements CommandExecutor {
 					if (p == null) {
 						String path =  "autosave." + "." + args[1];
 						if (ec.getPetConfig().get(path + ".pet.type") == null) {
-							sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+							sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 							return true;
 						}
 						else {
 							PetHandler.getInstance().clearFileData("autosave", args[1]);
 							EchoPet.getPluginInstance().SPH.clearFromDatabase(args[1]);
-							sender.sendMessage(Lang.PLAYER_PET_REMOVED.toString().replace("%player%", p.getName()));
+							sender.sendMessage(Lang.ADMIN_PET_REMOVED.toString().replace("%player%", p.getName()));
 							return true;
 						}
 					}
@@ -130,7 +130,7 @@ public class PetAdminCommand implements CommandExecutor {
 						Pet pet = PetHandler.getInstance().getPet(p);
 
 						if (pet == null) {
-							sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", p.getName()));
+							sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", p.getName()));
 							return true;
 						}
 
@@ -138,7 +138,7 @@ public class PetAdminCommand implements CommandExecutor {
 						ec.SPH.clearFromDatabase(p);
 						ec.PH.removePet(pet);
 
-						sender.sendMessage(Lang.PLAYER_PET_REMOVED.toString().replace("%player%", p.getName()));
+						sender.sendMessage(Lang.ADMIN_PET_REMOVED.toString().replace("%player%", p.getName()));
 						p.sendMessage(Lang.REMOVE_PET.toString());
 						return true;
 					}
@@ -148,24 +148,24 @@ public class PetAdminCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("hat")) {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
-					sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+					sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 					return true;
 				}
 				Pet pet = PetHandler.getInstance().getPet(target);
 
 				if (pet == null) {
-					sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+					sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 					return true;
 				}
 				if (sender.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.petadmin", "hat." + PetUtil.getPetPerm(pet.getPetType()), sender, true)) {
 					pet.setAsHat(!pet.isPetHat());
 					if (pet.isPetHat()) {
 						target.sendMessage(Lang.HAT_PET_ON.toString());
-						sender.sendMessage(Lang.PLAYER_HAT_PET_ON.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_HAT_PET_ON.toString().replace("%player%", target.getName()));
 					}
 					else {
 						target.sendMessage(Lang.HAT_PET_OFF.toString());
-						sender.sendMessage(Lang.PLAYER_HAT_PET_OFF.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_HAT_PET_OFF.toString().replace("%player%", target.getName()));
 					}
 					return true;
 				} else sendError = false;
@@ -174,24 +174,24 @@ public class PetAdminCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("ride")) {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
-					sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+					sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 					return true;
 				}
 				Pet pet = PetHandler.getInstance().getPet(target);
 
 				if (pet == null) {
-					sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+					sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 					return true;
 				}
 				if (sender.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.petadmin", "ride." + PetUtil.getPetPerm(pet.getPetType()), sender, true)) {
 					pet.ownerRidePet(!pet.isOwnerRiding());
 					if (pet.isOwnerRiding()) {
 						target.sendMessage(Lang.RIDE_PET_ON.toString());
-						sender.sendMessage(Lang.PLAYER_RIDE_PET_ON.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_RIDE_PET_ON.toString().replace("%player%", target.getName()));
 					}
 					else {
 						target.sendMessage(Lang.RIDE_PET_OFF.toString());
-						sender.sendMessage(Lang.PLAYER_RIDE_PET_OFF.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_RIDE_PET_OFF.toString().replace("%player%", target.getName()));
 					}
 					return true;
 				} else sendError = false;
@@ -200,7 +200,7 @@ public class PetAdminCommand implements CommandExecutor {
 			else if (sendError) {
 				Player target = Bukkit.getPlayer(args[0]);
 				if (target == null) {
-					sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+					sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 					return true;
 				}
 				UnorganisedPetData UPD = PetUtil.formPetFromArgs(ec, sender, args[1], true);
@@ -229,7 +229,7 @@ public class PetAdminCommand implements CommandExecutor {
 					ec.SPH.saveToDatabase(pet, false);
 					target.sendMessage(Lang.CREATE_PET.toString()
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
-					sender.sendMessage(Lang.PLAYER_CREATE_PET.toString()
+					sender.sendMessage(Lang.ADMIN_CREATE_PET.toString()
 							.replace("%player%", target.getName())
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 					return true;
@@ -247,13 +247,13 @@ public class PetAdminCommand implements CommandExecutor {
 					}
 					String path = "default." + name + ".";
 					if (ec.getPetConfig().get(path + "pet.type") == null) {
-						sender.sendMessage(Lang.PLAYER_NO_DEFAULT.toString().replace("%player%", name));
+						sender.sendMessage(Lang.ADMIN_NO_DEFAULT.toString().replace("%player%", name));
 						return true;
 					}
 
 					ec.PH.clearFileData("default", name);
 					ec.SPH.clearFromDatabase(name);
-					sender.sendMessage(Lang.PLAYER_REMOVE_DEFAULT.toString().replace("%player%", name));
+					sender.sendMessage(Lang.ADMIN_REMOVE_DEFAULT.toString().replace("%player%", name));
 					return true;
 				} else sendError = false;
 			}
@@ -263,18 +263,18 @@ public class PetAdminCommand implements CommandExecutor {
 					if (StringUtil.hpp("echopet.petadmin", "default.set.current", sender, false) || (sender.hasPermission("echopet.petadmin.default.*") && sender instanceof Player)) {
 						Player target = Bukkit.getPlayer(args[1]);
 						if (target == null) {
-							sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+							sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 							return true;
 						}
 						Pet pet = PetHandler.getInstance().getPet(target);
 
 						if (pet == null) {
-							sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+							sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 							return true;
 						}
 
 						ec.PH.saveFileData("default", pet);
-						sender.sendMessage(Lang.PLAYER_SET_DEFAULT_TO_CURRENT.toString().replace("%player%", args[2]));
+						sender.sendMessage(Lang.ADMIN_SET_DEFAULT_TO_CURRENT.toString().replace("%player%", args[2]));
 						return true;
 					} else sendError = false;
 				}
@@ -298,7 +298,7 @@ public class PetAdminCommand implements CommandExecutor {
 					if ((sender.hasPermission("echopet.petadmin.default.set.type.*") && sender instanceof Player) || StringUtil.hpp("echopet.petadmin", "default.set.type" + PetUtil.getPetPerm(petType), sender, false)
 							|| (sender.hasPermission("echopet.petadmin.default.*") && sender instanceof Player)) {
 						PetHandler.getInstance().saveFileData("default", name, UPD);
-						sender.sendMessage(Lang.PLAYER_SET_DEFAULT.toString()
+						sender.sendMessage(Lang.ADMIN_SET_DEFAULT.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
 								.replace("%player%", name));
 						return true;
@@ -335,7 +335,7 @@ public class PetAdminCommand implements CommandExecutor {
 						|| (sender.hasPermission("echopet.petadmin.default.*") && sender instanceof Player)
 						|| (sender.hasPermission("echopet.petadmin.default.set.type.*") && sender instanceof Player)) {
 					PetHandler.getInstance().saveFileData("default", name, UPD, UMD);
-					sender.sendMessage(Lang.PLAYER_SET_DEFAULT_WITH_MOUNT.toString()
+					sender.sendMessage(Lang.ADMIN_SET_DEFAULT_WITH_MOUNT.toString()
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
 							.replace("%mtype%", StringUtil.capitalise(mountType.toString().replace("_", "")))
 							.replace("%player%", name));
@@ -353,7 +353,7 @@ public class PetAdminCommand implements CommandExecutor {
 						if (p == null) {
 							String path =  "autosave." + "." + args[2];
 							if (ec.getPetConfig().get(path + ".mount.type") == null) {
-								sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[2]));
+								sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[2]));
 								return true;
 							}
 							else {
@@ -362,7 +362,7 @@ public class PetAdminCommand implements CommandExecutor {
 								}
 
 								EchoPet.getPluginInstance().SPH.clearMountFromDatabase(args[2]);
-								sender.sendMessage(Lang.PLAYER_REMOVE_MOUNT.toString().replace("%player%", p.getName()));
+								sender.sendMessage(Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", p.getName()));
 								return true;
 							}
 						}
@@ -370,12 +370,12 @@ public class PetAdminCommand implements CommandExecutor {
 							Pet pet = PetHandler.getInstance().getPet(p);
 
 							if (pet == null) {
-								sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", p.getName()));
+								sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", p.getName()));
 								return true;
 							}
 
 							if (pet.getMount() == null) {
-								sender.sendMessage(Lang.PLAYER_NO_MOUNT.toString().replace("%player%", p.getName()));
+								sender.sendMessage(Lang.ADMIN_NO_MOUNT.toString().replace("%player%", p.getName()));
 								return true;
 							}
 
@@ -383,7 +383,7 @@ public class PetAdminCommand implements CommandExecutor {
 							ec.SPH.clearFromDatabase(p);
 							ec.PH.removePet(pet);
 
-							sender.sendMessage(Lang.PLAYER_REMOVE_MOUNT.toString().replace("%player%", p.getName()));
+							sender.sendMessage(Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", p.getName()));
 							p.sendMessage(Lang.REMOVE_MOUNT.toString());
 							return true;
 						}
@@ -392,13 +392,13 @@ public class PetAdminCommand implements CommandExecutor {
 				else if (sendError) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target == null) {
-						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 						return true;
 					}
 					Pet pet = PetHandler.getInstance().getPet(target);
 
 					if (pet == null) {
-						sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 						return true;
 					}
 
@@ -434,7 +434,7 @@ public class PetAdminCommand implements CommandExecutor {
 						ec.SPH.saveToDatabase(pet, false);
 						target.sendMessage(Lang.CHANGE_MOUNT.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
-						sender.sendMessage(Lang.PLAYER_CHANGE_MOUNT.toString()
+						sender.sendMessage(Lang.ADMIN_CHANGE_MOUNT.toString()
 								.replace("%player%", target.getName())
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 						return true;
@@ -445,7 +445,7 @@ public class PetAdminCommand implements CommandExecutor {
 			else if (sendError) {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
-					sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[0]));
+					sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[0]));
 					return true;
 				}
 
@@ -490,7 +490,7 @@ public class PetAdminCommand implements CommandExecutor {
 					target.sendMessage(Lang.CREATE_PET_WITH_MOUNT.toString()
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
 							.replace("%mtype%", StringUtil.capitalise(mountType.toString().replace("_", ""))));
-					sender.sendMessage(Lang.PLAYER_CREATE_PET_WITH_MOUNT.toString()
+					sender.sendMessage(Lang.ADMIN_CREATE_PET_WITH_MOUNT.toString()
 							.replace("%player%", target.getName())
 							.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
 							.replace("%mtype%", StringUtil.capitalise(mountType.toString().replace("_", ""))));
@@ -516,18 +516,18 @@ public class PetAdminCommand implements CommandExecutor {
 				if (args.length >= 3 && args[1].equalsIgnoreCase("mount")) {
 					Player target = Bukkit.getPlayer(args[2]);
 					if (target == null) {
-						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[2]));
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[2]));
 						return true;
 					}
 					
 					Pet pet = ec.PH.getPet(target);
 					if (pet == null) {
-						sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 						return true;
 					}
 					
 					if (pet.getMount() == null) {
-						sender.sendMessage(Lang.PLAYER_NO_MOUNT.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_NO_MOUNT.toString().replace("%player%", target.getName()));
 						return true;
 					}
 					
@@ -537,7 +537,7 @@ public class PetAdminCommand implements CommandExecutor {
 						return true;
 					}
 					pet.getMount().setName(name);
-					sender.sendMessage(Lang.PLAYER_NAME_MOUNT.toString()
+					sender.sendMessage(Lang.ADMIN_NAME_MOUNT.toString()
 							.replace("%player%", target.getName())
 							.replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
 							.replace("%name%", name));
@@ -549,13 +549,13 @@ public class PetAdminCommand implements CommandExecutor {
 				else if (args.length >= 2) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target == null) {
-						sender.sendMessage(Lang.NULL_PLAYER.toString().replace("%player%", args[1]));
+						sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 						return true;
 					}
 					
 					Pet pet = ec.PH.getPet(target);
 					if (pet == null) {
-						sender.sendMessage(Lang.PLAYER_NO_PET.toString().replace("%player%", target.getName()));
+						sender.sendMessage(Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
 						return true;
 					}
 					
@@ -565,7 +565,7 @@ public class PetAdminCommand implements CommandExecutor {
 						return true;
 					}
 					pet.setName(name);
-					sender.sendMessage(Lang.PLAYER_NAME_PET.toString()
+					sender.sendMessage(Lang.ADMIN_NAME_PET.toString()
 							.replace("%player%", target.getName())
 							.replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
 							.replace("%name%", name));
