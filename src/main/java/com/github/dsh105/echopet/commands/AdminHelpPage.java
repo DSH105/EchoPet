@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.util;
+package com.github.dsh105.echopet.commands;
 
 import com.github.dsh105.echopet.EchoPet;
 import org.bukkit.ChatColor;

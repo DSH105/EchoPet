@@ -19,7 +19,6 @@ import com.github.dsh105.echopet.data.UnorganisedPetData;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.menu.main.MenuOption;
 import com.github.dsh105.echopet.menu.main.PetMenu;
-import com.github.dsh105.echopet.util.HelpPage;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.MenuUtil;
 import com.github.dsh105.echopet.util.PetUtil;
@@ -34,7 +33,7 @@ public class PetCommand implements CommandExecutor {
 		this.ec = ec;
 		this.cmdLabel = commandLabel;
 	}
-	
+
 	//public static HashMap<String, Menu> openMenus = new HashMap<String, Menu>();
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {
