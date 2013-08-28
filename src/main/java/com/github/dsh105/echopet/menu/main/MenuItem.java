@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.menu;
+package com.github.dsh105.echopet.menu.main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.dsh105.echopet.menu.DataMenu.DataMenuType;
+import com.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 
 public enum MenuItem {
 	
@@ -32,12 +32,13 @@ public enum MenuItem {
 	WITHER(Material.getMaterial(397), 1, (short) 1, DataMenuType.BOOLEAN, "Wither", "Skeleton"),
 	VILLAGER(Material.EMERALD, 1, (short) 0, DataMenuType.BOOLEAN, "Villager", "Zombie", "PigZombie"),
 	COLOR(Material.WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf"),
-	PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Proffession", "Villager"),
+	PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Profession", "Villager"),
 	RIDE(Material.CARROT_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet."),
 	HAT(Material.IRON_HELMET, 1, (short) 0, DataMenuType.BOOLEAN, "Hat Pet", "Wear your pet on your head.");
 	
 	private Material mat;
 	private String name;
+	private int amount;
 	private List<String> lore;
 	private short data;
 	DataMenuType menuType;
@@ -45,6 +46,8 @@ public enum MenuItem {
 	MenuItem(Material mat, int amount, short data, DataMenuType menuType, String name, String... lore) {
 		this.mat = mat;
 		this.name = name;
+		this.amount = amount;
+		this.data = data;
 		List<String> list = new ArrayList<String>();
 		for (String s : lore) {
 			list.add(s);
@@ -54,7 +57,7 @@ public enum MenuItem {
 	}
 	
 	public ItemStack getItem() {
-		ItemStack i = new ItemStack(this.mat, 1, this.data);
+		ItemStack i = new ItemStack(this.mat, this.amount, this.data);
 		ItemMeta meta = i.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + this.name);
 		meta.setLore(this.lore);
@@ -63,7 +66,7 @@ public enum MenuItem {
 	}
 
 	public ItemStack getBoolean(boolean flag) {
-		ItemStack i = new ItemStack(this.mat, 1, this.data);
+		ItemStack i = new ItemStack(this.mat, this.amount, this.data);
 		ItemMeta meta = i.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + this.name + (flag ? ChatColor.GREEN + " [TOGGLE ON]" : ChatColor.YELLOW + " [TOGGLE OFF]"));
 		meta.setLore(this.lore);

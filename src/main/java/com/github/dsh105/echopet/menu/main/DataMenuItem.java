@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.menu;
+package com.github.dsh105.echopet.menu.main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.menu.DataMenu.DataMenuType;
+import com.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 
 public enum DataMenuItem {
 	BOOLEAN_TRUE(DataMenuType.BOOLEAN, null, Material.getMaterial(76), 1, (short) 0, "True", "Turns the feature on."),

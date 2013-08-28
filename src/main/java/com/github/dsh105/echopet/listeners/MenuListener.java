@@ -1,8 +1,13 @@
 package com.github.dsh105.echopet.listeners;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.data.PetType;
+import com.github.dsh105.echopet.menu.main.*;
+import com.github.dsh105.echopet.menu.selector.PetItem;
+import com.github.dsh105.echopet.menu.selector.SelectorItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,12 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.data.PetData;
 import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.menu.DataMenu;
-import com.github.dsh105.echopet.menu.DataMenu.DataMenuType;
-import com.github.dsh105.echopet.menu.DataMenuItem;
-import com.github.dsh105.echopet.menu.MenuItem;
-import com.github.dsh105.echopet.menu.PetMenu;
-import com.github.dsh105.echopet.menu.WaitingMenuData;
+import com.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 import com.github.dsh105.echopet.util.EnumUtil;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.MenuUtil;
@@ -48,14 +48,74 @@ public class MenuListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInventoryClick(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
+
+		Inventory inv = event.getInventory();
+		String title = event.getView().getTitle();
+		int slot = event.getRawSlot();
+
+		try {
+			if (slot < 0) {
+				return;
+			}
+		} catch (Exception e) {return;}
+
+		if (title.equals("Pet Selector")) {
+			if (slot <= 44 && inv.getItem(slot) != null) {
+				if (inv.getItem(slot).equals(SelectorItem.CLOSE.getItem())) {
+					player.closeInventory();
+				}
+				if (inv.getItem(slot).equals(SelectorItem.TOGGLE.getItem())) {
+					Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+					if (pet != null) {
+						if (StringUtil.hpp("echopet.pet", "hide", player)) {
+							player.performCommand("pet hide");
+						}
+					}
+					else {
+						if (StringUtil.hpp("echopet.pet", "show", player)) {
+							player.performCommand("pet show");
+						}
+					}
+				}
+				if (inv.getItem(slot).equals(SelectorItem.CALL.getItem())) {
+					if (StringUtil.hpp("echopet.pet", "call", player)) {
+						player.performCommand("pet call");
+					}
+				}
+				if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
+					if (StringUtil.hpp("echopet.pet", "ride", player)) {
+						player.performCommand("pet ride");
+					}
+				}
+				if (inv.getItem(slot).equals(SelectorItem.HAT.getItem())) {
+					if (StringUtil.hpp("echopet.pet", "hat", player)) {
+						player.performCommand("pet hat");
+					}
+				}
+				if (inv.getItem(slot).equals(SelectorItem.MENU.getItem())) {
+					if (StringUtil.hpp("echopet.pet", "menu", player)) {
+						player.performCommand("pet menu");
+					}
+				}
+				for (PetItem i : PetItem.values()) {
+					if (inv.getItem(slot).equals(i.getItem(player))) {
+						if (player.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + StringUtil.capitalise(i.petType.toString()), player)) {
+							PetHandler.getInstance().createPet(player, i.petType, true);
+							player.sendMessage(Lang.CREATE_PET.toString()
+									.replace("%type%", StringUtil.capitalise(i.petType.toString().replace("_", ""))));
+							player.closeInventory();
+						}
+					}
+				}
+				event.setCancelled(true);
+			}
+		}
+
 		final Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
 		if (pet == null) {
 			return;
 		}
-		
-		Inventory inv = event.getInventory();
-		String title = event.getView().getTitle();
-		int slot = event.getRawSlot();
+
 		int size = (title.equals("EchoPet DataMenu - Color") || pet.getPetType() == PetType.HORSE) ? 18 : 9;
 
 		WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
@@ -63,11 +123,6 @@ public class MenuListener implements Listener {
 			wmd = new WaitingMenuData(pet);
 		}
 
-		try {
-			if (slot < 0) {
-				return;
-			}
-		} catch (Exception e) {}
 		if (slot <= size && inv.getItem(slot) != null) {
 			if (title.equals("EchoPet DataMenu")) {
 				if (inv.getItem(slot).equals(DataMenuItem.CLOSE.getItem())) {

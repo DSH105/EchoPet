@@ -98,6 +98,10 @@ public class DefaultOptions {
 			config.set("sql.username", config.getString("sql.username", "none"));
 			config.set("sql.password", config.getString("sql.password", "none"));
 
+			config.set("petSelector.giveOnJoin", config.getBoolean("petSelector.giveOnJoin", true), "Options regarding the Pet Selector menu");
+			config.set("petSelector.slot", config.getInt("petSelector.slot", 8));
+			config.set("petSelector.clearInvOnJoin", config.getBoolean("petSelector.clearInvOnJoin", false));
+
 			config.set("debug", config.getBoolean("debug", false), "If true, EchoPet will print errors to the console. Useful for", "debugging certain aspects of the plugin.");
 			config.set("autoSave", config.getBoolean("autoSave", true), "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
 			config.set("autoSaveTimer", config.getInt("autoSaveTimer", 180), "Interval between autosave of pet data (in seconds).");

@@ -1,10 +1,11 @@
-package com.github.dsh105.echopet.menu;
+package com.github.dsh105.echopet.menu.main;
 
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.api.event.PetMenuOpenEvent;
 import com.github.dsh105.echopet.data.PetData;
+import com.github.dsh105.echopet.menu.Menu;
 import com.github.dsh105.echopet.util.EnumUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;

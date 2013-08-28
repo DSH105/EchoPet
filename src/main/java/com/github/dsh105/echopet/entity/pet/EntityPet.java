@@ -12,7 +12,6 @@ import net.minecraft.server.v1_6_R2.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -21,8 +20,8 @@ import com.github.dsh105.echopet.entity.pathfinder.PetGoalSelector;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
-import com.github.dsh105.echopet.menu.MenuOption;
-import com.github.dsh105.echopet.menu.PetMenu;
+import com.github.dsh105.echopet.menu.main.MenuOption;
+import com.github.dsh105.echopet.menu.main.PetMenu;
 import com.github.dsh105.echopet.util.MenuUtil;
 import org.bukkit.util.Vector;
 

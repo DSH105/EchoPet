@@ -3,8 +3,8 @@ package com.github.dsh105.echopet.util;
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.menu.MenuItem;
-import com.github.dsh105.echopet.menu.MenuOption;
+import com.github.dsh105.echopet.menu.main.MenuItem;
+import com.github.dsh105.echopet.menu.main.MenuOption;
 
 
 public class MenuUtil {

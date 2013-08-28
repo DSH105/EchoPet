@@ -37,7 +37,8 @@ public enum Lang {
 	HAT_PET_ON("hat_pet_on", "&eYour pet now rides on your head."),
 	HAT_PET_OFF("hat_pet_off", "&eYour pet no longer rides on your head."),
 	OPEN_MENU("open_menu", "&eOpening Data Menu for your &6%type%&e..."),
-	
+	ADD_SELECTOR("add_selector", "&eThe &6Pet Selector &ehas been added to your inventory."),
+
 	DATA_FORCE_MESSAGE("data_force_message", "&eThe following data types have been forced by the server: &6%data%"),
 	
 	MOUNTS_DISABLED("mounts_disabled", "&eMounts are disabled for &6%type%"),

@@ -3,6 +3,8 @@ package com.github.dsh105.echopet.commands;
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.data.PetHandler;
+import com.github.dsh105.echopet.menu.selector.PetSelector;
+import com.github.dsh105.echopet.menu.selector.SelectorItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,8 +17,8 @@ import com.github.dsh105.echopet.data.PetData;
 import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.data.UnorganisedPetData;
 import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.menu.MenuOption;
-import com.github.dsh105.echopet.menu.PetMenu;
+import com.github.dsh105.echopet.menu.main.MenuOption;
+import com.github.dsh105.echopet.menu.main.PetMenu;
 import com.github.dsh105.echopet.util.HelpPage;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.MenuUtil;
@@ -119,6 +121,24 @@ public class PetCommand implements CommandExecutor {
 		
 		
 		if (args.length == 1) {
+
+			if (args[0].equalsIgnoreCase("select")) {
+				if (StringUtil.hpp("echopet.pet", "select", sender, false)) {
+					Player p = (Player) sender;
+					PetSelector petSelector = new PetSelector(45, p);
+					petSelector.open(false);
+					return true;
+				} else sendError = false;
+			}
+
+			if (args[0].equalsIgnoreCase("selector")) {
+				if (StringUtil.hpp("echopet.pet", "select", sender, false)) {
+					Player p = (Player) sender;
+					p.getInventory().addItem(SelectorItem.SELECTOR.getItem());
+					sender.sendMessage(Lang.ADD_SELECTOR.toString());
+					return true;
+				} else sendError = false;
+			}
 
 			if (args[0].equalsIgnoreCase("call")) {
 				if (StringUtil.hpp("echopet.pet", "call", sender, false)) {
