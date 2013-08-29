@@ -233,7 +233,7 @@ public class PetAdminCommand implements CommandExecutor {
 				if (StringUtil.hpp("echopet.petadmin", "remove", sender, true)) {
 					Player p = Bukkit.getPlayer(args[1]);
 					if (p == null) {
-						String path =  "autosave." + "." + args[1];
+						String path =  "autosave." + args[1];
 						if (ec.getPetConfig().get(path + ".pet.type") == null) {
 							sender.sendMessage(Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
 							return true;
