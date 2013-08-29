@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -46,6 +47,10 @@ public class MenuListener implements Listener {
 		Player player = (Player) event.getWhoClicked();
 
 		Inventory inv = event.getInventory();
+
+		if (inv.getType() != InventoryType.PLAYER) {
+			return;
+		}
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
 
