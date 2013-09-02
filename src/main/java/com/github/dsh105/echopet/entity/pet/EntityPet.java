@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.github.dsh105.echopet.api.event.PetAttackEvent;
 import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
+import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.data.PetType;
 import net.minecraft.server.v1_6_R2.*;
 
@@ -297,6 +298,11 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	@Override
 	public void l_() {
 		super.l_();
+
+		if (this.getOwner() == null) {
+			PetHandler.getInstance().removePet(this.getPet());
+		}
+
 		if (this.particle == this.particleCounter) {
 			this.particle = 0;
 			this.particleCounter = this.random.nextInt(50);
