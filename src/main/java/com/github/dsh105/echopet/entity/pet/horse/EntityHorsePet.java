@@ -89,7 +89,7 @@ public class EntityHorsePet extends EntityAgeablePet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		int i = this.getType();
 
 		return i == 3 ? "mob.horse.zombie.idle" : (i == 4 ? "mob.horse.skeleton.idle" : (i != 1 && i != 2 ? "mob.horse.idle" : "mob.horse.donkey.idle"));
@@ -131,7 +131,7 @@ public class EntityHorsePet extends EntityAgeablePet {
 	}
 
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		int i = this.getType();
 		return i == 3 ? "mob.horse.zombie.death" : (i == 4 ? "mob.horse.skeleton.death" : (i != 1 && i != 2 ? "mob.horse.death" : "mob.horse.donkey.death"));
 	}

@@ -28,12 +28,12 @@ public class EntityIronGolemPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "none";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.irongolem.death";
 	}
 	

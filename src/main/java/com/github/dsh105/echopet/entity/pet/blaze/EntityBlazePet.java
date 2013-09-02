@@ -31,12 +31,12 @@ public class EntityBlazePet extends EntityPet {
     }
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
         return "mob.blaze.breathe";
     }
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.blaze.death";
 	}
 	

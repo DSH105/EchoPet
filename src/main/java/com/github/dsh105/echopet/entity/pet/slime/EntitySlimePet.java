@@ -48,11 +48,11 @@ public class EntitySlimePet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "";
 	}
 	
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.slime." + (this.getSize() > 1 ? "big" : "small");
 	}
 	

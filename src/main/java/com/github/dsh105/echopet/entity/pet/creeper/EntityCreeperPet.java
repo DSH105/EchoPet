@@ -34,12 +34,12 @@ public class EntityCreeperPet extends EntityPet {
 	}
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "";
     }
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.creeper.death";
 	}
 	

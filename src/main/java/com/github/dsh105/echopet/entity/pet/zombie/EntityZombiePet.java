@@ -46,7 +46,7 @@ public class EntityZombiePet extends EntityPet {
 	}
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
         return "mob.zombie.say";
     }
 
@@ -55,7 +55,7 @@ public class EntityZombiePet extends EntityPet {
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.zombie.death";
 	}
 	

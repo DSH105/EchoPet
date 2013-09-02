@@ -475,12 +475,12 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 	}
 
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "";
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.enderdragon.growl";
 	}
 

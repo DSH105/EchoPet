@@ -30,7 +30,7 @@ public class EntitySpiderPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.spider.say";
 	}
 
@@ -47,7 +47,7 @@ public class EntitySpiderPet extends EntityPet {
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.spider.death";
 	}
 	

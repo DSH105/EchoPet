@@ -65,12 +65,12 @@ public class EntitySheepPet extends EntityAgeablePet {
     }
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.sheep.say";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.sheep.say";
 	}
 }

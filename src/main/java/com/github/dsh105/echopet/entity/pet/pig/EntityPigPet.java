@@ -50,12 +50,12 @@ public class EntityPigPet extends EntityAgeablePet {
 	}
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.pig.say";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.pig.death";
 	}
 }

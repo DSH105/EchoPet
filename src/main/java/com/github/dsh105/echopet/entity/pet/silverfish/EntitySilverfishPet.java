@@ -23,12 +23,12 @@ public class EntitySilverfishPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.silverfish.say";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.silverfish.kill";
 	}
 	

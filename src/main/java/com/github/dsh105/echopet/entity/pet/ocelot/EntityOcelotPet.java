@@ -50,12 +50,12 @@ public class EntityOcelotPet extends EntityAgeablePet {
 	}
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return (this.random.nextInt(4) == 0 ? "mob.cat.purreow" : "mob.cat.meow");
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.cat.hitt";
 	}
 }

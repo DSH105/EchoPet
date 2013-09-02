@@ -49,7 +49,7 @@ public class EntitySkeletonPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.skeleton.say";
 	}
 
@@ -58,7 +58,7 @@ public class EntitySkeletonPet extends EntityPet {
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.skeleton.death";
 	}
 	

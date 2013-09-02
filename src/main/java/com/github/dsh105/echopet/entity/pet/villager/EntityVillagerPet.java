@@ -36,12 +36,12 @@ public class EntityVillagerPet extends EntityAgeablePet {
 	}
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return /*this.bS() ? "mob.villager.haggle" :*/ "mob.villager.idle";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.villager.death";
 	}
 

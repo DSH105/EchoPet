@@ -20,12 +20,12 @@ public class EntityWitchPet extends EntityPet {
 		this.fireProof = true;
 	}
 
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.witch.idle";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.witch.death";
 	}
 	

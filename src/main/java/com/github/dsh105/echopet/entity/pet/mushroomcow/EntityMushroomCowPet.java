@@ -37,12 +37,12 @@ public class EntityMushroomCowPet extends EntityAgeablePet {
     }
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.cow.say";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.cow.death";
 	}
 }

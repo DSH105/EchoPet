@@ -67,12 +67,12 @@ public class EntityWolfPet extends EntityAgeablePet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return this.isAngry() ? "mob.wolf.growl" : (this.random.nextInt(3) == 0 ? (this.isTamed() && this.datawatcher.getFloat(18) < 10 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.wolf.death";
 	}
 	

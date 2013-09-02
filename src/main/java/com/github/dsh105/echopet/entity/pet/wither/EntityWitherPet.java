@@ -35,12 +35,12 @@ public class EntityWitherPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.wither.idle";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.wither.death";
 	}
 	

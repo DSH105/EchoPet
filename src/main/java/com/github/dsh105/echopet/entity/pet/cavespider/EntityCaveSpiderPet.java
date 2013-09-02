@@ -30,12 +30,12 @@ public class EntityCaveSpiderPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.spider.say";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.spider.death";
 	}
 	

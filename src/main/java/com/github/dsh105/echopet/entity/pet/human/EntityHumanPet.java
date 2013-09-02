@@ -106,12 +106,12 @@ public class EntityHumanPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "random.breath";
 	}
 
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "";
 	}
 

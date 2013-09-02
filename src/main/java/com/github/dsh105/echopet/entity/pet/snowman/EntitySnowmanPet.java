@@ -21,12 +21,12 @@ public class EntitySnowmanPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "none";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "none";
 	}
 	

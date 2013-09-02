@@ -35,7 +35,7 @@ public class EntityEndermanPet extends EntityPet {
     }
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return this.bT() ? "mob.endermen.scream" : "mob.endermen.idle";
     }
 	public boolean bT() { //1.5.2 - q()
@@ -43,7 +43,7 @@ public class EntityEndermanPet extends EntityPet {
     }
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.enderman.death";
 	}
 	

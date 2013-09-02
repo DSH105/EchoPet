@@ -19,12 +19,12 @@ public class EntityGhastPet extends EntityPet {
 	}
 
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.ghast.moan";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.ghast.death";
 	}
 	

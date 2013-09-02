@@ -45,12 +45,12 @@ public class EntityPigZombiePet extends EntityPet {
 	}
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
 		return "mob.zombiepig.zpig";
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.zombiepig.zpigdeath";
 	}
 	

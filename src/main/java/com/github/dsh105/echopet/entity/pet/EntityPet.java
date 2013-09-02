@@ -127,12 +127,22 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	//bb() - 1.6.1
 	@Override
 	public boolean be() {return true;}
+
+	@Override
+	protected String r() {
+		return this.getIdleSound();
+	}
+
+	@Override
+	protected String aO() {
+		return this.getDeathSound();
+	}
 	
 	//bb() - 1.5.2
-	protected abstract String r(); //idle sound
+	protected abstract String getIdleSound(); //idle sound
 	
 	//aL() - 1.6.1
-	protected abstract String aO(); //death sound
+	protected abstract String getDeathSound(); //death sound
 	
 	public abstract SizeCategory getSizeCategory();
 	

@@ -41,7 +41,7 @@ public class EntityBatPet extends EntityPet {
     }
 	
 	@Override
-	protected String r() {
+	protected String getIdleSound() {
         return this.bJ() //(1.6.1 - bF()) (1.5.2 - this.h())
         		&& this.random.nextInt(4) != 0 ? null : "mob.bat.idle";
     }
@@ -57,7 +57,7 @@ public class EntityBatPet extends EntityPet {
 	}
 	
 	@Override
-	protected String aO() {
+	protected String getDeathSound() {
 		return "mob.bat.death";
 	}
 	
