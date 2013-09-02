@@ -294,9 +294,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         }
 	}
 
-	private int targetTime;
-	private int a;
-
 	@Override
 	public void l_() {
 		super.l_();
