@@ -34,28 +34,16 @@ public class MenuListener implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onInventoryOpen(InventoryOpenEvent event) {
-		Player player = (Player) event.getPlayer();
-		final Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
-		if (pet == null) {
-			return;
-		}
-	}
-	
-	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInventoryClick(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
 
 		Inventory inv = event.getInventory();
 
-		if (inv.getType() != InventoryType.PLAYER) {
-			return;
-		}
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
 
 		try {
-			if (slot < 0) {
+			if (slot < 0 || slot > inv.getSize()) {
 				return;
 			}
 		} catch (Exception e) {return;}
