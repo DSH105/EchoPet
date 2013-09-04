@@ -638,7 +638,7 @@ public class PetHandler {
 								hv = v;
 							}
 						} catch (Exception e) {
-							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
+							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Variant");
 						}
 					}
 					
@@ -661,7 +661,7 @@ public class PetHandler {
 								hm = m;
 							}
 						} catch (Exception e) {
-							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
+							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Marking");
 						}
 					}
 					
@@ -677,7 +677,7 @@ public class PetHandler {
 								}
 							}
 						} catch(Exception e) {
-							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
+							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Armour");
 						}
 					}
 				}
