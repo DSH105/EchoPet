@@ -324,11 +324,11 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		if (this.getOwner().isFlying() && EchoPet.getPluginInstance().DO.canFly(this.getPet().getPetType())) {
 			Location petLoc = this.getLocation();
 			Location ownerLoc = this.getOwner().getLocation();
-			Vector v = petLoc.toVector().subtract(ownerLoc.toVector());
+			Vector v = ownerLoc.toVector().subtract(petLoc.toVector());
 
-			double x = v.getX() - (v.getX() * 2);
-			double y = v.getY() - (v.getY() * 2);
-			double z = v.getZ() - (v.getZ() * 2);
+			double x = v.getX();
+			double y = v.getY();
+			double z = v.getZ();
 
 			Vector vo = this.getOwner().getLocation().getDirection();
 			if (vo.getX() > 0) {
