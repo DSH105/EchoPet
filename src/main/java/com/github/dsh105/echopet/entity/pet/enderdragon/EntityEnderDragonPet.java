@@ -3,6 +3,7 @@ package com.github.dsh105.echopet.entity.pet.enderdragon;
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
+import com.github.dsh105.echopet.entity.pet.EntityNoClipPet;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
@@ -12,7 +13,7 @@ import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonster {
+public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, IMonster {
 
 	private double i;
 	private double h;
@@ -67,10 +68,6 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 		adouble[1] = d0 + d1 * (double) f;
 		adouble[2] = this.bn[j][2] + (this.bn[k][2] - this.bn[j][2]) * (double) f;
 		return adouble;
-	}
-
-	public void noClip(boolean b) {
-		this.Z = b;
 	}
 
 	@Override

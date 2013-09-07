@@ -81,8 +81,8 @@ public class Pet {
 		this.teleportToOwner();
 		if (!flag) {
 			((CraftPlayer) this.owner).getHandle().mount(null);
-			if (this.getEntityPet() instanceof EntityEnderDragonPet) {
-				((EntityEnderDragonPet) this.getEntityPet()).noClip(true);
+			if (this.getEntityPet() instanceof EntityNoClipPet) {
+				((EntityNoClipPet) this.getEntityPet()).noClip(true);
 			}
 		}
 		else {
@@ -93,8 +93,8 @@ public class Pet {
 				public void run() {
 					((CraftPlayer) owner).getHandle().mount(pet);
 					ownerIsMounting = false;
-					if (getEntityPet() instanceof EntityEnderDragonPet) {
-						((EntityEnderDragonPet) getEntityPet()).noClip(false);
+					if (getEntityPet() instanceof EntityNoClipPet) {
+						((EntityNoClipPet) getEntityPet()).noClip(false);
 					}
 				}
 			}.runTaskLater(EchoPet.getPluginInstance(), 5L);
