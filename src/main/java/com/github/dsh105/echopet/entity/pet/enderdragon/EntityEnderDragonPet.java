@@ -91,12 +91,16 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 				this.b(this.yaw, this.pitch);
 				this.aP = this.aN = this.yaw;
 
-				float sideMot = ((EntityLiving) this.passenger).be *= 100;
-				float forMot = ((EntityLiving) this.passenger).bf *= 100;
+				float side = ((EntityLiving) this.passenger).be;
+				float forw = ((EntityLiving) this.passenger).bf;
 
-				if (forMot <= 0.0F) {
+				float sideMot = (float) Math.pow(side, 20);
+				float forMot = (float) Math.pow(forw, 20);
+
+				/*if (forMot <= 0.0F) {
 					forMot *= 0.25F;
-				}
+				}*/
+
 
 				PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot * forMot, sideMot * sideMot);
 				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
@@ -107,7 +111,6 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 				this.i(this.rideSpeed * this.rideSpeed);
 				super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
-				PetType pt = this.getPet().getPetType();
 				if (this.jump != null) {
 					try {
 						if (this.jump.getBoolean(this.passenger)) {
@@ -121,7 +124,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 							if (((EntityLiving) this.passenger).pitch <= 50) {
 								this.motY = 0;
 							} else {
-								this.motY *= 0.7;
+								this.motY *= 0.6;
 							}
 						}
 					} catch (Exception e) {
