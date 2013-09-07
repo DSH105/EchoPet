@@ -27,7 +27,7 @@ public class StringUtil {
 			}
 			boolean b = true;
 			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("requireDefaultPerm", false)) {
-				if (!sender.hasPermission("echopet.pet.echopet")) {
+				if (!sender.hasPermission("echopet.echopet")) {
 					b = false;
 				}
 			}
@@ -56,7 +56,7 @@ public class StringUtil {
 			}
 			boolean b = true;
 			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("requireDefaultPerm", false)) {
-				if (!sender.hasPermission("echopet.pet.echopet")) {
+				if (!sender.hasPermission("echopet.echopet")) {
 					b = false;
 				}
 			}
@@ -84,7 +84,7 @@ public class StringUtil {
 		}
 		boolean b = true;
 		if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("requireDefaultPerm", false)) {
-			if (!sender.hasPermission("echopet.pet.echopet")) {
+			if (!sender.hasPermission("echopet.echopet")) {
 				b = false;
 			}
 		}
