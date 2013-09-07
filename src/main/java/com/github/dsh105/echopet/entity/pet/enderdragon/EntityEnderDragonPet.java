@@ -3,17 +3,12 @@ package com.github.dsh105.echopet.entity.pet.enderdragon;
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 import net.minecraft.server.v1_6_R2.*;
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
