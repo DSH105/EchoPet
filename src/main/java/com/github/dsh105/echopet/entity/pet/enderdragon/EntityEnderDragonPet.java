@@ -46,7 +46,7 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 	public EntityEnderDragonPet(World world, Pet pet) {
 		super(world, pet);
 		this.children = new EntityComplexPart[] { this.head = new EntityComplexPart(this, "head", 6.0F, 6.0F), this.body = new EntityComplexPart(this, "body", 8.0F, 8.0F), this.tail1 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail2 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail3 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.wing1 = new EntityComplexPart(this, "wing", 4.0F, 4.0F), this.wing2 = new EntityComplexPart(this, "wing", 4.0F, 4.0F)};
-		this.a(16.0F, 8.0F);
+		this.a(8.0F, 4.0F);
 		this.setHealth(this.getMaxHealth());
 		this.fireProof = true;
 		this.Z = true;
@@ -72,6 +72,10 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 		adouble[1] = d0 + d1 * (double) f;
 		adouble[2] = this.bn[j][2] + (this.bn[k][2] - this.bn[j][2]) * (double) f;
 		return adouble;
+	}
+
+	public void noClip(boolean b) {
+		this.Z = b;
 	}
 
 	@Override
@@ -379,32 +383,6 @@ public class EntityEnderDragonPet extends EntityPet implements IComplex, IMonste
 		float f1 = this.length;
 
 		this.boundingBox.b(d0 - (double) f, d1 - (double) this.height + (double) this.X, d2 - (double) f, d0 + (double) f, d1 - (double) this.height + (double) this.X + (double) f1, d2 + (double) f);
-	}
-
-	protected boolean checkCollisions(EntityComplexPart entityComplexPart, int modifier) {
-		int i = MathHelper.floor(entityComplexPart.boundingBox.a + 0.001D + modifier);
-		int j = MathHelper.floor(entityComplexPart.boundingBox.b + 0.001D + modifier);
-		int k = MathHelper.floor(entityComplexPart.boundingBox.c + 0.001D + modifier);
-		int l = MathHelper.floor(entityComplexPart.boundingBox.d - 0.001D + modifier);
-		int i1 = MathHelper.floor(entityComplexPart.boundingBox.e - 0.001D + modifier);
-		int j1 = MathHelper.floor(entityComplexPart.boundingBox.f - 0.001D + modifier);
-
-		if (this.world.e(i, j, k, l, i1, j1)) {
-			for (int k1 = i; k1 <= l; ++k1) {
-				for (int l1 = j; l1 <= i1; ++l1) {
-					for (int i2 = k; i2 <= j1; ++i2) {
-						if (world.getWorld().getBlockAt(k1, l1, i2).getType().isSolid()) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	protected boolean checkCollisions(EntityComplexPart entityComplexPart) {
-		return this.checkCollisions(entityComplexPart, 0);
 	}
 
 	//b(List)

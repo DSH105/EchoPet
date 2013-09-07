@@ -3,6 +3,7 @@ package com.github.dsh105.echopet.entity.pet;
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.api.event.PetTeleportEvent;
+import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_6_R2.*;
 import org.bukkit.craftbukkit.v1_6_R2.*;
@@ -77,8 +78,12 @@ public class Pet {
 		if (this.isHat) {
 			this.setAsHat(false);
 		}
+		this.teleportToOwner();
 		if (!flag) {
 			((CraftPlayer) this.owner).getHandle().mount(null);
+			if (this.getEntityPet() instanceof EntityEnderDragonPet) {
+				((EntityEnderDragonPet) this.getEntityPet()).noClip(true);
+			}
 		}
 		else {
 			if (this.mount != null) {
@@ -88,6 +93,9 @@ public class Pet {
 				public void run() {
 					((CraftPlayer) owner).getHandle().mount(pet);
 					ownerIsMounting = false;
+					if (getEntityPet() instanceof EntityEnderDragonPet) {
+						((EntityEnderDragonPet) getEntityPet()).noClip(false);
+					}
 				}
 			}.runTaskLater(EchoPet.getPluginInstance(), 5L);
 		}
@@ -108,6 +116,7 @@ public class Pet {
 		if (this.ownerIsRiding) {
 			this.ownerRidePet(false);
 		}
+		this.teleportToOwner();
 		if (!flag) {
 			if (this.mount != null) {
 				this.mount.getCraftPet().getHandle().mount(null);
