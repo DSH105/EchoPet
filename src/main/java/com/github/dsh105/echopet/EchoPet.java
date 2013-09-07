@@ -12,6 +12,7 @@ import com.github.dsh105.echopet.commands.CommandComplete;
 import com.github.dsh105.echopet.config.DefaultOptions;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
+import com.github.dsh105.echopet.entity.pet.giant.EntityGiantPet;
 import com.github.dsh105.echopet.listeners.*;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R2.*;
@@ -181,6 +182,7 @@ public class EchoPet extends JavaPlugin {
 		this.registerEntity(EntityEnderDragonPet.class, "EnderDragonPet", 63);
 		this.registerEntity(EntityEndermanPet.class, "EndermanPet", 58);
 		this.registerEntity(EntityGhastPet.class, "GhastPet", 56);
+		this.registerEntity(EntityGiantPet.class, "GiantPet", 53);
 		this.registerEntity(EntityHorsePet.class, "HorsePet", 100);
 		//this.registerEntity(EntityHumanPet.class, "HumanPet", 49);
 		this.registerEntity(EntityIronGolemPet.class, "IronGolemPet", 99);

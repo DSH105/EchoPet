@@ -25,6 +25,7 @@ public enum PetItem {
 	ENDERDRAGON(PetType.ENDERDRAGON, Material.getMaterial(122), 1, (short) 0, true, "EnderDragon Pet"),
 	ENDERMAN(PetType.ENDERMAN, Material.getMaterial(383), 1, (short) 58, true, "Enderman Pet"),
 	GHAST(PetType.GHAST, Material.getMaterial(383), 1, (short) 56, true, "Ghast Pet"),
+	GIANT(PetType.GIANT, Material.getMaterial(383), 1, (short) 54, true, "Giant Pet"),
 	HORSE(PetType.HORSE, Material.getMaterial(383), 1, (short) 100, true, "Horse Pet"),
 	MAGMACUBE(PetType.MAGMACUBE, Material.getMaterial(383), 1, (short) 62, true, "Magma Cube Pet"),
 	MUSHROOMCOW(PetType.MUSHROOMCOW, Material.getMaterial(383), 1, (short) 96, true, "Mushroom Cow Pet"),

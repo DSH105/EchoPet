@@ -7,7 +7,8 @@ public enum SizeCategory {
 	TINY(1),
 	REGULAR(1),
 	LARGE(3),
-	GIANT(4);
+	GIANT(4),
+	OVERSIZE(10);
 	
 	private int mod;
 	private float start;

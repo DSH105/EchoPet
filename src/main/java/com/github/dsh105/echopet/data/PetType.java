@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.github.dsh105.echopet.entity.pet.enderdragon.EnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
+import com.github.dsh105.echopet.entity.pet.giant.EntityGiantPet;
+import com.github.dsh105.echopet.entity.pet.giant.GiantPet;
 import com.github.dsh105.echopet.entity.pet.human.EntityHumanPet;
 import com.github.dsh105.echopet.entity.pet.human.HumanPet;
 import net.minecraft.server.v1_6_R2.World;
@@ -84,6 +86,7 @@ public enum PetType {
 	ENDERDRAGON(EntityEnderDragonPet.class, EnderDragonPet.class, "EnderDragon Pet", 200, 0D, EntityType.ENDER_DRAGON),
 	ENDERMAN(EntityEndermanPet.class, EndermanPet.class, "Enderman Pet", 40, 6D, EntityType.ENDERMAN, PetData.SCREAMING),
 	GHAST(EntityGhastPet.class, GhastPet.class, "Ghast Pet", 10, 7D, EntityType.GHAST),
+	GIANT(EntityGiantPet.class, GiantPet.class, "Giant Pet", 100, 0D, EntityType.GIANT),
 	MAGMACUBE(EntityMagmaCubePet.class, MagmaCubePet.class, "Magma Cube Pet", 20, 5D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
 	PIGZOMBIE(EntityPigZombiePet.class, PigZombiePet.class, "Pig Zombie Pet", 20, 6D, EntityType.PIG_ZOMBIE, PetData.BABY, PetData.VILLAGER),
 	SILVERFISH(EntitySilverfishPet.class, SilverfishPet.class, "Silverfish Pet", 8, 4D, EntityType.SILVERFISH),
