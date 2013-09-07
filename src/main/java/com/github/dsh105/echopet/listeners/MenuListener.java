@@ -58,17 +58,20 @@ public class MenuListener implements Listener {
 					if (pet != null) {
 						if (StringUtil.hpp("echopet.pet", "hide", player)) {
 							player.performCommand("pet hide");
+							player.closeInventory();
 						}
 					}
 					else {
 						if (StringUtil.hpp("echopet.pet", "show", player)) {
 							player.performCommand("pet show");
+							player.closeInventory();
 						}
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.CALL.getItem())) {
 					if (StringUtil.hpp("echopet.pet", "call", player)) {
 						player.performCommand("pet call");
+						player.closeInventory();
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
@@ -76,6 +79,7 @@ public class MenuListener implements Listener {
 					if (pet != null) {
 						if (player.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pet.getPetType()), player)) {
 							player.performCommand("pet ride");
+							player.closeInventory();
 						}
 					}
 				}
@@ -84,12 +88,14 @@ public class MenuListener implements Listener {
 					if (pet != null) {
 						if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
 							player.performCommand("pet hat");
+							player.closeInventory();
 						}
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.MENU.getItem())) {
 					if (StringUtil.hpp("echopet.pet", "menu", player)) {
 						player.performCommand("pet menu");
+						player.closeInventory();
 					}
 				}
 				for (PetItem i : PetItem.values()) {
