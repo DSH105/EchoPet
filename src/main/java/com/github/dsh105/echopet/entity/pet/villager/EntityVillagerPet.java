@@ -37,7 +37,7 @@ public class EntityVillagerPet extends EntityAgeablePet {
 	
 	@Override
 	protected String getIdleSound() {
-		return /*this.bS() ? "mob.villager.haggle" :*/ "mob.villager.idle";
+		return this.random.nextBoolean() ? "mob.villager.haggle" : "mob.villager.idle";
 	}
 	
 	@Override
