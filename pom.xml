@@ -6,7 +6,7 @@
   <properties>
   	<echopet.version>2.0.8-SNAPSHOT</echopet.version>
   	<minecraft.version>1.6.2</minecraft.version>
-  	<craftbukkit.version>R0.1</craftbukkit.version>
+  	<craftbukkit.version>R1.1</craftbukkit.version>
   	<cb_package>v1_6_R2</cb_package>
   	<main.class>com.github.dsh105.echopet.EchoPet</main.class>
   </properties>
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>${minecraft.version}-${craftbukkit.version}</version>
+            <version>${minecraft.version}-${craftbukkit.version}-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
