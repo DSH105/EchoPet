@@ -176,7 +176,7 @@ public class PetAdminCommand implements CommandExecutor {
 				} else sendError = false;
 			}
 
-			if (args[0].equalsIgnoreCase("select")) {
+			if (args[0].equalsIgnoreCase("selector")) {
 				if (StringUtil.hpp("echopet.petadmin", "select", sender, false)) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target == null) {
