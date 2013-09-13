@@ -8,7 +8,9 @@ import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 import net.minecraft.server.v1_6_R2.*;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.util.Vector;
 
 import java.util.Iterator;
 import java.util.List;
@@ -78,30 +80,54 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 		if (this.passenger != null && (this.passenger instanceof EntityHuman)) {
 			EntityHuman human = (EntityHuman) this.passenger;
 			if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
-				this.lastYaw = this.yaw = this.passenger.yaw;
+				/*this.lastYaw = this.yaw = this.passenger.yaw - 180.0F;
 				this.pitch = this.passenger.pitch * 0.5F;
 				this.b(this.yaw, this.pitch);
-				this.aP = this.aN = this.yaw;
+				this.aP = this.aN = this.yaw;*/
 
 				float side = ((EntityLiving) this.passenger).be;
 				float forw = ((EntityLiving) this.passenger).bf;
 
-				float sideMot = (float) Math.pow(side, 20);
-				float forMot = (float) Math.pow(forw, 20);
+				/*float sideMot = (float) Math.pow(side, side);
+				float forMot = (float) Math.pow(forw, forw);*/
 
 				/*if (forMot <= 0.0F) {
 					forMot *= 0.25F;
 				}*/
 
 
-				PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot * forMot, sideMot * sideMot);
+				/*PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot, sideMot);
 				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
 				if (moveEvent.isCancelled()) {
 					return;
+				}*/
+
+				//this.i(this.rideSpeed * this.rideSpeed);
+				//super.e(moveEvent.getSidewardMotionSpeed(),moveEvent.getForwardMotionSpeed());
+
+				Vector v = new Vector();
+				Location l = new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
+
+				if (side < 0.0F) {
+					l.setYaw(this.passenger.yaw + 90);
+					v.add(l.getDirection().normalize().multiply(-0.5));
+				} else if (side > 0.0F) {
+					l.setYaw(this.passenger.yaw - 90);
+					v.add(l.getDirection().normalize().multiply(-0.5));
 				}
 
-				this.i(this.rideSpeed * this.rideSpeed);
-				super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
+				if (forw < 0.0F) {
+					l.setYaw(this.passenger.yaw);
+					v.add(l.getDirection().normalize().multiply(-1.6));
+				} else if (forw > 0.0F) {
+					l.setYaw(this.passenger.yaw);
+					v.add(l.getDirection().normalize().multiply(0.5));
+				}
+
+				this.lastYaw = this.yaw = this.passenger.yaw - 180;
+				this.pitch = this.passenger.pitch * 0.5F;
+				this.b(this.yaw, this.pitch);
+				this.aP = this.aN = this.yaw;
 
 				if (this.jump != null) {
 					try {
@@ -109,20 +135,22 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 							PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
 							EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
 							if (!rideEvent.isCancelled()) {
-								this.motY = 0.8F;
+								v.setY(0.5F);
 							}
 						}
 						else {
-							if (((EntityLiving) this.passenger).pitch <= 50) {
-								this.motY = 0;
-							} else {
-								this.motY *= 0.6;
+							if (((EntityLiving) this.passenger).pitch >= 50) {
+								v.setY(-0.4F);
 							}
 						}
 					} catch (Exception e) {
 						EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.");
 					}
 				}
+
+				l.add(v.multiply(Math.pow(this.rideSpeed, this.rideSpeed)));
+				this.setPos(l.getX(), l.getY(), l.getZ());
+				this.updateComplexParts();
 				return;
 			}
 		}
@@ -275,79 +303,94 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				this.motY *= 0.9100000262260437D;
 			}
 
-			this.aN = this.yaw;
-			this.head.width = this.head.length = 3.0F;
-			this.tail1.width = this.tail1.length = 2.0F;
-			this.tail2.width = this.tail2.length = 2.0F;
-			this.tail3.width = this.tail3.length = 2.0F;
-			this.body.length = 3.0F;
-			this.body.width = 5.0F;
-			this.wing1.length = 2.0F;
-			this.wing1.width = 4.0F;
-			this.wing2.length = 3.0F;
-			this.wing2.width = 4.0F;
-			f1 = (float) (this.b(5, 1.0F)[1] - this.b(10, 1.0F)[1]) * 10.0F / 180.0F * 3.1415927F;
-			f2 = MathHelper.cos(f1);
-			float f9 = -MathHelper.sin(f1);
-			float f10 = this.yaw * 3.1415927F / 180.0F;
-			float f11 = MathHelper.sin(f10);
-			float f12 = MathHelper.cos(f10);
-
-			this.body.l_();
-			this.body.setPositionRotation(this.locX + (double) (f11 * 0.5F), this.locY, this.locZ - (double) (f12 * 0.5F), 0.0F, 0.0F);
-			this.wing1.l_();
-			this.wing1.setPositionRotation(this.locX + (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ + (double) (f11 * 4.5F), 0.0F, 0.0F);
-			this.wing2.l_();
-			this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
-
-			if (!this.world.isStatic && this.hurtTicks == 0) {
-				/*PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
-				if (attackGoal != null && attackGoal.isActive) {
-					this.launchEntities(this.world.getEntities(this, this.wing1.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
-					this.launchEntities(this.world.getEntities(this, this.wing2.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
-					this.damageEntities(this.world.getEntities(this, this.head.boundingBox.grow(1.0D, 1.0D, 1.0D)));
-				}*/
-			}
-
-			double[] adouble = this.b(5, 1.0F);
-			double[] adouble1 = this.b(0, 1.0F);
-
-			f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
-			float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
-
-			this.head.l_();
-			this.head.setPositionRotation(this.locX + (double) (f3 * 5.5F * f2), this.locY + (adouble1[1] - adouble[1]) * 1.0D + (double) (f9 * 5.5F), this.locZ - (double) (f13 * 5.5F * f2), 0.0F, 0.0F);
-
-			for (int j = 0; j < 3; ++j) {
-				EntityComplexPart entitycomplexpart = null;
-
-				if (j == 0) {
-					entitycomplexpart = this.tail1;
-				}
-
-				if (j == 1) {
-					entitycomplexpart = this.tail2;
-				}
-
-				if (j == 2) {
-					entitycomplexpart = this.tail3;
-				}
-
-				double[] adouble2 = this.b(12 + j * 2, 1.0F);
-				float f14 = this.yaw * 3.1415927F / 180.0F + (float) MathHelper.g(adouble2[0] - adouble[0]) * 3.1415927F / 180.0F * 1.0F;
-				float f15 = MathHelper.sin(f14);
-				float f16 = MathHelper.cos(f14);
-				float f17 = 1.5F;
-				float f18 = (float) (j + 1) * 2.0F;
-
-				entitycomplexpart.l_();
-				entitycomplexpart.setPositionRotation(this.locX - (double) ((f11 * f17 + f15 * f18) * f2), this.locY + (adouble2[1] - adouble[1]) * 1.0D - (double) ((f18 + f17) * f9) + 1.5D, this.locZ + (double) ((f12 * f17 + f16 * f18) * f2), 0.0F, 0.0F);
-			}
+			this.updateComplexParts();
 
 			//Nope, absolutely no destruction
 			/*if (!this.world.isStatic) {
 				this.bA = this.a(this.head.boundingBox) | this.a(this.body.boundingBox);
 			}*/
+		}
+	}
+
+	private void setPos(double x, double y, double z) {
+		double[] d0 = new double[] {x, y, z};
+		double[] d1 = new double[] {this.locX, this.locY, this.locZ};
+		for (int i = 0; i < 3; i++) {
+			if (this.world.getWorld().getBlockAt((int) x, (int) y, (int) z).getType().isSolid()) {
+				d0[i] = d1[i];
+			}
+		}
+		this.setPosition(d0[0], d0[1], d0[2]);
+	}
+
+	private void updateComplexParts() {
+		this.aN = this.yaw;
+		this.head.width = this.head.length = 3.0F;
+		this.tail1.width = this.tail1.length = 2.0F;
+		this.tail2.width = this.tail2.length = 2.0F;
+		this.tail3.width = this.tail3.length = 2.0F;
+		this.body.length = 3.0F;
+		this.body.width = 5.0F;
+		this.wing1.length = 2.0F;
+		this.wing1.width = 4.0F;
+		this.wing2.length = 3.0F;
+		this.wing2.width = 4.0F;
+		float f1 = (float) (this.b(5, 1.0F)[1] - this.b(10, 1.0F)[1]) * 10.0F / 180.0F * 3.1415927F;
+		float f2 = MathHelper.cos(f1);
+		float f9 = -MathHelper.sin(f1);
+		float f10 = this.yaw * 3.1415927F / 180.0F;
+		float f11 = MathHelper.sin(f10);
+		float f12 = MathHelper.cos(f10);
+
+		this.body.l_();
+		this.body.setPositionRotation(this.locX + (double) (f11 * 0.5F), this.locY, this.locZ - (double) (f12 * 0.5F), 0.0F, 0.0F);
+		this.wing1.l_();
+		this.wing1.setPositionRotation(this.locX + (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ + (double) (f11 * 4.5F), 0.0F, 0.0F);
+		this.wing2.l_();
+		this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
+
+		/*if (!this.world.isStatic && this.hurtTicks == 0) {
+				PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
+				if (attackGoal != null && attackGoal.isActive) {
+					this.launchEntities(this.world.getEntities(this, this.wing1.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
+					this.launchEntities(this.world.getEntities(this, this.wing2.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
+					this.damageEntities(this.world.getEntities(this, this.head.boundingBox.grow(1.0D, 1.0D, 1.0D)));
+				}
+		}*/
+
+		double[] adouble = this.b(5, 1.0F);
+		double[] adouble1 = this.b(0, 1.0F);
+
+		float f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
+		float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
+
+		this.head.l_();
+		this.head.setPositionRotation(this.locX + (double) (f3 * 5.5F * f2), this.locY + (adouble1[1] - adouble[1]) * 1.0D + (double) (f9 * 5.5F), this.locZ - (double) (f13 * 5.5F * f2), 0.0F, 0.0F);
+
+		for (int j = 0; j < 3; ++j) {
+			EntityComplexPart entitycomplexpart = null;
+
+			if (j == 0) {
+				entitycomplexpart = this.tail1;
+			}
+
+			if (j == 1) {
+				entitycomplexpart = this.tail2;
+			}
+
+			if (j == 2) {
+				entitycomplexpart = this.tail3;
+			}
+
+			double[] adouble2 = this.b(12 + j * 2, 1.0F);
+			float f14 = this.yaw * 3.1415927F / 180.0F + (float) MathHelper.g(adouble2[0] - adouble[0]) * 3.1415927F / 180.0F * 1.0F;
+			float f15 = MathHelper.sin(f14);
+			float f16 = MathHelper.cos(f14);
+			float f17 = 1.5F;
+			float f18 = (float) (j + 1) * 2.0F;
+
+			entitycomplexpart.l_();
+			entitycomplexpart.setPositionRotation(this.locX - (double) ((f11 * f17 + f15 * f18) * f2), this.locY + (adouble2[1] - adouble[1]) * 1.0D - (double) ((f18 + f17) * f9) + 1.5D, this.locZ + (double) ((f12 * f17 + f16 * f18) * f2), 0.0F, 0.0F);
 		}
 	}
 
