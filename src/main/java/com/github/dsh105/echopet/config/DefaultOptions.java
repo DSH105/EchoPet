@@ -100,7 +100,7 @@ public class DefaultOptions {
 
 			config.set("petSelector.giveOnJoin.enable", config.getBoolean("petSelector.giveOnJoin.enable", true));
 			config.set("petSelector.giveOnJoin.usePerm", config.getBoolean("petSelector.giveOnJoin.usePerm", false));
-			config.set("petSelector.giveOnJoin.usePerm", config.getString("petSelector.giveOnJoin.perm", "echopet.selector.join"));
+			config.set("petSelector.giveOnJoin.perm", config.getString("petSelector.giveOnJoin.perm", "echopet.selector.join"));
 			config.set("petSelector.slot", config.getInt("petSelector.slot", 8));
 			config.set("petSelector.clearInvOnJoin", config.getBoolean("petSelector.clearInvOnJoin", false));
 
