@@ -64,7 +64,7 @@ public enum PetItem {
 	public ItemStack getItem(Player p) {
 		ItemStack i = new ItemStack(this.mat, this.amount, this.data);
 		ItemMeta meta = i.getItemMeta();
-		boolean hasPerm = p.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(this.petType), p);
+		boolean hasPerm = p.hasPermission("echopet.*") || p.hasPermission("echopet.pet.*") || p.hasPermission("echopet.pet.type.*") || p.hasPermission("echopet.pet.type." + PetUtil.getPetPerm(this.petType));
 		meta.setDisplayName((hasPerm ? ChatColor.GREEN : ChatColor.RED) + this.name);
 		//meta.setLore(this.lore);
 		i.setItemMeta(meta);
