@@ -131,7 +131,7 @@ public class PetCommand implements CommandExecutor {
 			}
 
 			if (args[0].equalsIgnoreCase("selector")) {
-				if (StringUtil.hpp("echopet.pet", "select", sender, false)) {
+				if (StringUtil.hpp("echopet.pet", "selector", sender, false)) {
 					Player p = (Player) sender;
 					p.getInventory().addItem(SelectorItem.SELECTOR.getItem());
 					sender.sendMessage(Lang.ADD_SELECTOR.toString());
