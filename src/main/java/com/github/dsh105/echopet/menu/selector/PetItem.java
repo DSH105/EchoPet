@@ -27,6 +27,7 @@ public enum PetItem {
 	GHAST(PetType.GHAST, Material.getMaterial(383), 1, (short) 56, true, "Ghast Pet"),
 	GIANT(PetType.GIANT, Material.getMaterial(383), 1, (short) 54, true, "Giant Pet"),
 	HORSE(PetType.HORSE, Material.getMaterial(383), 1, (short) 100, true, "Horse Pet"),
+	IRONGOLEM(PetType.IRONGOLEM, Material.getMaterial(86), 1, (short) 0, true, "Iron Golem Pet"),
 	MAGMACUBE(PetType.MAGMACUBE, Material.getMaterial(383), 1, (short) 62, true, "Magma Cube Pet"),
 	MUSHROOMCOW(PetType.MUSHROOMCOW, Material.getMaterial(383), 1, (short) 96, true, "Mushroom Cow Pet"),
 	OCELOT(PetType.OCELOT, Material.getMaterial(383), 1, (short) 98, true, "Ocelot Pet"),
