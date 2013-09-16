@@ -32,9 +32,7 @@ public class StringUtil {
 				}
 			}
 			if (!(sender.hasPermission(perm) && b)) {
-				sender.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "" + ChatColor.ITALIC
-						+ "Action denied. " + ChatColor.GOLD + perm
-						+ ChatColor.YELLOW + " permission needed.");
+				sender.sendMessage(Lang.NO_PERMISSION.toString().replace("%perm%", perm));
 			}
 			return sender.hasPermission(perm) && b;
 		} else {
@@ -61,9 +59,7 @@ public class StringUtil {
 				}
 			}
 			if (!(sender.hasPermission(fullPerm) && b)) {
-				sender.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "" + ChatColor.ITALIC
-						+ "Action denied. " + ChatColor.GOLD + fullPerm
-						+ ChatColor.YELLOW + " permission needed.");
+				sender.sendMessage(Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
 			}
 			return sender.hasPermission(fullPerm) && b;
 		} else {
@@ -89,9 +85,7 @@ public class StringUtil {
 			}
 		}
 		if (!(sender.hasPermission(fullPerm) && b)) {
-			sender.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "" + ChatColor.ITALIC
-					+ "Action denied. " + ChatColor.GOLD + fullPerm
-					+ ChatColor.YELLOW + " permission needed.");
+			sender.sendMessage(Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
 		}
 		return sender.hasPermission(fullPerm) && b;
 	}
