@@ -74,7 +74,7 @@ public class PetMenu implements Menu {
 		}
 		this.pet.getOwner().openInventory(this.inv);
 		if (sendMessage) {
-			this.pet.getOwner().sendMessage(Lang.OPEN_MENU.toString().replace("%type%", StringUtil.capitalise(this.pet.getPetType().toString().replace("_", " "))));
+			Lang.sendTo(this.pet.getOwner(), Lang.OPEN_MENU.toString().replace("%type%", StringUtil.capitalise(this.pet.getPetType().toString().replace("_", " "))));
 		}
 	}
 }

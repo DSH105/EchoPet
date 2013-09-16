@@ -93,7 +93,7 @@ public class PetOwnerListener implements Listener {
 				PetHandler.getInstance().saveFileData("autosave", pi);
 				SQLPetHandler.getInstance().saveToDatabase(pi, false);
 				ec.PH.removePet(pi);
-				p.sendMessage(Lang.DIMENSION_CHANGE.toString());
+				Lang.sendTo(p, Lang.DIMENSION_CHANGE.toString());
 				new BukkitRunnable() {
 
 					@Override

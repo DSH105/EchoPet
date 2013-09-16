@@ -102,7 +102,7 @@ public class MenuListener implements Listener {
 					if (inv.getItem(slot).equals(i.getItem(player))) {
 						if (player.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(i.petType), player)) {
 							PetHandler.getInstance().createPet(player, i.petType, true);
-							player.sendMessage(Lang.CREATE_PET.toString()
+							Lang.sendTo(player, Lang.CREATE_PET.toString()
 									.replace("%type%", StringUtil.capitalise(i.petType.toString().replace("_", ""))));
 							player.closeInventory();
 						}
@@ -148,11 +148,11 @@ public class MenuListener implements Listener {
 									if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
 										if (!pet.isPetHat()) {
 											pet.setAsHat(true);
-											pet.getOwner().sendMessage(Lang.HAT_PET_ON.toString());
+											Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
 										}
 										else {
 											pet.setAsHat(false);
-											pet.getOwner().sendMessage(Lang.HAT_PET_OFF.toString());
+											Lang.sendTo(pet.getOwner(), Lang.HAT_PET_OFF.toString());
 										}
 									}
 								}
@@ -161,12 +161,12 @@ public class MenuListener implements Listener {
 										if (!pet.isOwnerRiding()) {
 											pet.ownerRidePet(true);
 											inv.setItem(slot, mi.getBoolean(false));
-											pet.getOwner().sendMessage(Lang.RIDE_PET_ON.toString());
+											Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_ON.toString());
 										}
 										else {
 											pet.ownerRidePet(false);
 											inv.setItem(slot, mi.getBoolean(true));
-											pet.getOwner().sendMessage(Lang.RIDE_PET_OFF.toString());
+											Lang.sendTo(pet.getOwner(), Lang.RIDE_PET_OFF.toString());
 										}
 									}
 								}

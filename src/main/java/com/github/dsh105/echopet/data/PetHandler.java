@@ -66,7 +66,7 @@ public class PetHandler {
 			}
 			else {
 				if (sendMessage) {
-					p.sendMessage(Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
+					Lang.sendTo(p, Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
 				}
 			}
 			return pet;
@@ -79,7 +79,7 @@ public class PetHandler {
 			}
 			else {
 				if (sendMessage) {
-					p.sendMessage(Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+					Lang.sendTo(p, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
 				}
 			}
 			return pi;
@@ -93,7 +93,7 @@ public class PetHandler {
 				}
 				else {
 					if (sendMessage) {
-						p.sendMessage(Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+						Lang.sendTo(p, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
 					}
 				}
 				return pi;
@@ -119,7 +119,7 @@ public class PetHandler {
 		}
 		if (!ec.DO.allowPetType(petType)) {
 			if (sendMessageOnFail) {
-				owner.sendMessage(Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
+				Lang.sendTo(owner, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			}
 			return null;
 		}
@@ -138,7 +138,7 @@ public class PetHandler {
 		}
 		if (!ec.DO.allowPetType(petType)) {
 			if (sendFailMessage) {
-				owner.sendMessage(Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
+				Lang.sendTo(owner, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			}
 			return null;
 		}
@@ -221,8 +221,7 @@ public class PetHandler {
 				dataToString = StringUtil.dataToString(tempData, tempMountData);
 			}
 			if (dataToString != " ") {
-				pi.getOwner().sendMessage(Lang.DATA_FORCE_MESSAGE.toString()
-						.replace("%data%", dataToString));
+				Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
 			}
 		}
 	}

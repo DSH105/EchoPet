@@ -4,6 +4,8 @@ package com.github.dsh105.echopet.util;
 import org.bukkit.ChatColor;
 
 import com.github.dsh105.echopet.EchoPet;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public enum Lang {
 
@@ -98,6 +100,18 @@ public enum Lang {
 	
 	public String getPath() {
 		return this.path;
+	}
+
+	public static void sendTo(CommandSender sender, String msg) {
+		if (!msg.equalsIgnoreCase("")) {
+			sender.sendMessage(msg);
+		}
+	}
+
+	public static void sendTo(Player p, String msg) {
+		if (!msg.equalsIgnoreCase("")) {
+			p.sendMessage(msg);
+		}
 	}
 	
 	@Override

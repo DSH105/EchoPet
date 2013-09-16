@@ -329,7 +329,7 @@ public class Pet {
 	public Pet createMount(final PetType pt, boolean sendFailMessage) {
 		if (!EchoPet.getPluginInstance().DO.allowMounts(this.petType)) {
 			if (sendFailMessage) {
-				this.owner.sendMessage(Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.petType.toString())));
+				Lang.sendTo(this.owner, Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.petType.toString())));
 			}
 			return null;
 		}

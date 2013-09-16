@@ -32,7 +32,7 @@ public class StringUtil {
 				}
 			}
 			if (!(sender.hasPermission(perm) && b)) {
-				sender.sendMessage(Lang.NO_PERMISSION.toString().replace("%perm%", perm));
+				Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
 			}
 			return sender.hasPermission(perm) && b;
 		} else {
@@ -59,7 +59,7 @@ public class StringUtil {
 				}
 			}
 			if (!(sender.hasPermission(fullPerm) && b)) {
-				sender.sendMessage(Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
+				Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
 			}
 			return sender.hasPermission(fullPerm) && b;
 		} else {
@@ -85,7 +85,7 @@ public class StringUtil {
 			}
 		}
 		if (!(sender.hasPermission(fullPerm) && b)) {
-			sender.sendMessage(Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
+			Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
 		}
 		return sender.hasPermission(fullPerm) && b;
 	}

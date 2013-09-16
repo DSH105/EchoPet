@@ -46,7 +46,7 @@ public class PetUtil {
 			if (split[0].contains(":")) {
 				String[] splitt = split[0].split(":");
 				if (splitt.length <= 1) {
-					sender.sendMessage(Lang.STRING_ERROR.toString().replace("%string%", split[0]));
+					Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", split[0]));
 					return null;
 				}
 				petString = splitt[0].toLowerCase();
@@ -59,13 +59,13 @@ public class PetUtil {
 							singlePetData = PetData.valueOf(dataString.toUpperCase() + "_");
 						}
 						if (singlePetData == null) {
-							sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+							Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 									.replace("%data%", StringUtil.capitalise(dataString)));
 							return null;
 						}
 					}
 					else {
-						sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 								.replace("%data%", StringUtil.capitalise(dataString)));
 						return null;
 					}
@@ -74,7 +74,7 @@ public class PetUtil {
 			else if (split[1].contains(":")) {
 				String[] splitt = split[1].split(":");
 				if (splitt.length <= 1) {
-					sender.sendMessage(Lang.STRING_ERROR.toString().replace("%string%", split[1]));
+					Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", split[1]));
 					return null;
 				}
 				petString = split[0].toLowerCase();
@@ -87,13 +87,13 @@ public class PetUtil {
 							singlePetData = PetData.valueOf(dataString.toUpperCase() + "_");
 						}
 						if (singlePetData == null) {
-							sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+							Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 									.replace("%data%", StringUtil.capitalise(dataString)));
 							return null;
 						}
 					}
 					else {
-						sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 								.replace("%data%", StringUtil.capitalise(dataString)));
 						return null;
 					}
@@ -107,7 +107,7 @@ public class PetUtil {
 		else if (s.contains(":")) {
 			String[] split = s.split(":");
 			if (split.length <= 1) {
-				sender.sendMessage(Lang.STRING_ERROR.toString().replace("%string%", s));
+				Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", s));
 				return null;
 			}
 			petString = split[0].toLowerCase();
@@ -119,13 +119,13 @@ public class PetUtil {
 						singlePetData = PetData.valueOf(dataString.toUpperCase() + "_");
 					}
 					if (singlePetData == null) {
-						sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 								.replace("%data%", StringUtil.capitalise(dataString)));
 						return null;
 					}
 				}
 				else {
-					sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 							.replace("%data%", StringUtil.capitalise(dataString)));
 					return null;
 				}
@@ -138,7 +138,7 @@ public class PetUtil {
 			petType = PetType.valueOf(petString.toUpperCase());
 		}
 		if (petType == null) {
-			sender.sendMessage(Lang.INVALID_PET_TYPE.toString()
+			Lang.sendTo(sender, Lang.INVALID_PET_TYPE.toString()
 					.replace("%type%", StringUtil.capitalise(petString)));
 			return null;
 		}
@@ -151,12 +151,12 @@ public class PetUtil {
 						petDataList.add(dataTemp);
 					}
 					else {
-						sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 								.replace("%data%", StringUtil.capitalise(dataTypeString)));
 					}
 				}
 				else {
-					sender.sendMessage(Lang.INVALID_PET_DATA_TYPE.toString()
+					Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE.toString()
 							.replace("%data%", StringUtil.capitalise(dataTypeString)));
 					return null;
 				}
@@ -172,13 +172,13 @@ public class PetUtil {
 			for (PetData dataTemp : petDataList) {
 				if (dataTemp != null) {
 					if (!petType.isDataAllowed(dataTemp)) {
-						sender.sendMessage(Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString()
+						Lang.sendTo(sender, Lang.INVALID_PET_DATA_TYPE_FOR_PET.toString()
 								.replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", "")))
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return null;
 					}
 					if (!ec.DO.allowData(petType, dataTemp)) {
-						sender.sendMessage(Lang.DATA_TYPE_DISABLED.toString()
+						Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString()
 								.replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
 						return null;
 					}
@@ -187,7 +187,7 @@ public class PetUtil {
 		}
 		
 		if (!ec.DO.allowPetType(petType)) {
-			sender.sendMessage(Lang.PET_TYPE_DISABLED.toString()
+			Lang.sendTo(sender, Lang.PET_TYPE_DISABLED.toString()
 					.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 			return null;
 		}
