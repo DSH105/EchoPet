@@ -32,10 +32,11 @@ public class MenuListener implements Listener {
 	public MenuListener(EchoPet ec) {
 		this.ec = ec;
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInventoryClick(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
+
 
 		Inventory inv = event.getInventory();
 
@@ -47,6 +48,16 @@ public class MenuListener implements Listener {
 				return;
 			}
 		} catch (Exception e) {return;}
+
+		if (event.getSlotType() == InventoryType.SlotType.RESULT || event.getSlotType() == InventoryType.SlotType.FUEL) {
+			for (int i = 1; i <= 4; i++) {
+				if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).equals(SelectorItem.SELECTOR.getItem())) {
+					player.updateInventory();
+					event.setCancelled(true);
+					break;
+				}
+			}
+		}
 
 		if (title.equals("Pet Selector")) {
 			if (slot <= 44 && inv.getItem(slot) != null) {
