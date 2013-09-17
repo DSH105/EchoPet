@@ -231,7 +231,7 @@ public class EchoPet extends JavaPlugin {
 		}
 		String adminCmdString = DO.getCommandString() + "admin";
 		if (CM.getCommand(adminCmdString) != null) {
-			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Pet Admin Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
+			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + adminCmdString + ChatColor.YELLOW + " already exists. Pet Admin Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
 		}
 		CustomCommand petCmd = new CustomCommand(cmdString);
 		CM.register("ec", petCmd);
@@ -295,12 +295,12 @@ public class EchoPet extends JavaPlugin {
 					return true;
 				}
 				else {
-					sender.sendMessage(ChatColor.RED + "[EchoPet]" + ChatColor.GOLD + " An update is not available.");
+					sender.sendMessage(this.prefix + ChatColor.GOLD + " An update is not available.");
 					return true;
 				}
 			}
 			else {
-				sender.sendMessage(ChatColor.RED + "[EchoPet] " + ChatColor.GOLD + "echopet.update " + ChatColor.DARK_GREEN + "permission needed.");
+				Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.update"));
 				return true;
 			}
 		}
