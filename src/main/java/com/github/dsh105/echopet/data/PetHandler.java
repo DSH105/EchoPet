@@ -573,7 +573,7 @@ public class PetHandler {
 					}
 				}
 				
-				if (pd.isType(Type.COLOR) && (petType == PetType.SHEEP || petType == PetType.WOLF)) {
+				if (pd.isType(Type.COLOUR) && (petType == PetType.SHEEP || petType == PetType.WOLF)) {
 					String s = pd == PetData.LIGHTBLUE ? "LIGHT_BLUE" : pd.toString();
 					try { 
 						DyeColor dc = DyeColor.valueOf(s);
