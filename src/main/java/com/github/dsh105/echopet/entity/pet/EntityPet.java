@@ -278,6 +278,9 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
         if (jump != null) {
 	        if (EchoPet.getPluginInstance().DO.canFly(pt)) {
 		        try {
+			        if (((Player) (human.getBukkitEntity())).isFlying()) {
+				        ((Player) (human.getBukkitEntity())).setFlying(false);
+			        }
 			        if (jump.getBoolean(this.passenger)) {
 				        PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
 				        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
