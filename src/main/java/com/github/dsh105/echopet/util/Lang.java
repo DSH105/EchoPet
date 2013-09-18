@@ -104,21 +104,26 @@ public enum Lang {
 	}
 
 	public static void sendTo(CommandSender sender, String msg) {
-		if (!msg.equalsIgnoreCase("")) {
-			sender.sendMessage(msg);
+		if (msg != null || !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
+			sender.sendMessage(EchoPet.getPluginInstance().prefix + msg);
 		}
 	}
 
 	public static void sendTo(Player p, String msg) {
-		if (!msg.equalsIgnoreCase("")) {
-			p.sendMessage(msg);
+		if (msg != null && !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !(msg.equalsIgnoreCase("none"))) {
+			p.sendMessage(EchoPet.getPluginInstance().prefix + msg);
 		}
 	}
 	
 	@Override
 	public String toString() {
-		return EchoPet.getPluginInstance().prefix + ChatColor.translateAlternateColorCodes('&',
-				EchoPet.getPluginInstance().getLangConfig().getString(this.path, this.def));
+		String result = EchoPet.getPluginInstance().getLangConfig().getString(this.path, this.def);
+		if (result != null && result != "" && result != "none") {
+			return ChatColor.translateAlternateColorCodes('&', EchoPet.getPluginInstance().getLangConfig().getString(this.path, this.def));
+		}
+		else {
+			return "";
+		}
 	}
 	
 	public String toString_() {
