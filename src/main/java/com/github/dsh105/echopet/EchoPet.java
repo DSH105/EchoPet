@@ -84,7 +84,7 @@ public class EchoPet extends JavaPlugin {
 	public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
 	private EchoPetAPI api;
-	
+
 	public String cmdString = "pet";
 	public String adminCmdString = "petadmin";
 	
@@ -209,7 +209,6 @@ public class EchoPet extends JavaPlugin {
 			AS = new AutoSave(getMainConfig().getInt("autoSaveTimer"));
 		}
 
-
 		// Register custom commands
 		// Command string based off the string defined in config.yml
 		// By default, set to 'pet'
@@ -248,7 +247,6 @@ public class EchoPet extends JavaPlugin {
 		manager.registerEvents(new MenuListener(this), this);
 		manager.registerEvents(new PetEntityListener(this), this);
 		manager.registerEvents(new PetOwnerListener(this), this);
-		manager.registerEvents(new WorldChangeListener(this), this);
 		
 		
 		try {
