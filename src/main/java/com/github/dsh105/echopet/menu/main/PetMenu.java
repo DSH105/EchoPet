@@ -32,7 +32,7 @@ public class PetMenu implements Menu {
 				MenuItem mi = o.item;
 				if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
 					PetData pd = PetData.valueOf(mi.toString());
-					if (pet.getAllData(true).contains(pd)) {
+					if (pet.getActiveData().contains(pd)) {
 						this.inv.setItem(o.position, o.item.getBoolean(false));
 					}
 					else {

@@ -269,19 +269,13 @@ public class PetHandler {
 				
 				pi.setName(name);
 				
-				ArrayList<PetData> listTrue = new ArrayList<PetData>();
-				ArrayList<PetData> listFalse = new ArrayList<PetData>();
+				ArrayList<PetData> data = new ArrayList<PetData>();
 				ConfigurationSection cs = ec.getPetConfig().getConfigurationSection(path + ".pet.data");
 				if (cs != null) {
 					for (String key : cs.getKeys(false)) {
 						if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
 							PetData pd = PetData.valueOf(key.toUpperCase());
-							if (pd.isType(Type.BOOLEAN) && !ec.getPetConfig().getBoolean(path + ".pet.data." + key)) {
-								listFalse.add(pd);
-							}
-							else {
-								listTrue.add(pd);
-							}
+							data.add(pd);
 						}
 						else {
 							ec.log(ChatColor.RED + "Error whilst loading data Pet Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key);
@@ -289,11 +283,8 @@ public class PetHandler {
 					}
 				}
 				
-				if (!listTrue.isEmpty()) {
-					setData(pi, listTrue.toArray(new PetData[listTrue.size()]), true);
-				}
-				if (!listFalse.isEmpty()) {
-					setData(pi, listFalse.toArray(new PetData[listFalse.size()]), false);
+				if (!data.isEmpty()) {
+					setData(pi, data.toArray(new PetData[data.size()]), true);
 				}
 
 				if (ec.getPetConfig().get(path + ".mount.type") != null) {
@@ -307,30 +298,21 @@ public class PetHandler {
 						Pet mount = pi.createMount(mountPetType, true);
 						if (mount != null) {
 							mount.setName(mountName);
-							ArrayList<PetData> mountListTrue = new ArrayList<PetData>();
-							ArrayList<PetData> mountListFalse = new ArrayList<PetData>();
+							ArrayList<PetData> mountData = new ArrayList<PetData>();
 							ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
 							if (mcs != null) {
 								for (String key : mcs.getKeys(false)) {
 									if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
 										PetData pd = PetData.valueOf(key.toUpperCase());
-										if (pd.isType(Type.BOOLEAN) && !ec.getPetConfig().getBoolean(path + ".mount.data." + key)) {
-											mountListFalse.add(pd);
-										}
-										else {
-											mountListTrue.add(pd);
-										}
+										data.add(pd);
 									}
 									else {
 										ec.log(ChatColor.RED + "Error whilst loading data Pet Mount Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key);
 									}
 								}
 							}
-							if (!mountListTrue.isEmpty()) {
-								setData(mount, mountListTrue.toArray(new PetData[mountListTrue.size()]), true);
-							}
-							if (!mountListFalse.isEmpty()) {
-								setData(mount, mountListFalse.toArray(new PetData[mountListFalse.size()]), false);
+							if (!mountData.isEmpty()) {
+								setData(pi, mountData.toArray(new PetData[mountData.size()]), true);
 							}
 						}
 					}
@@ -374,16 +356,8 @@ public class PetHandler {
 			ec.getPetConfig().set(path + ".pet.type", petType.toString());
 			ec.getPetConfig().set(path + ".pet.name", pi.getNameToString());
 			
-			for (PetData pd : pi.getAllData(true)) {
+			for (PetData pd : pi.getActiveData()) {
 				ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), true);
-			}
-			for (PetData pd : pi.getAllData(false)) {
-				if (pd.isType(Type.BOOLEAN)) {
-					ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), false);
-				}
-				else {
-					ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), true);
-				}
 			}
 			
 			if (pi.getMount() != null) {
@@ -391,16 +365,8 @@ public class PetHandler {
 				
 				ec.getPetConfig().set(path + ".mount.type", mountType.toString());
 				ec.getPetConfig().set(path + ".mount.name", pi.getMount().getNameToString());
-				for (PetData pd : pi.getMount().getAllData(true)) {
+				for (PetData pd : pi.getMount().getActiveData()) {
 					ec.getPetConfig().set(path + ".mount.data." + pd.toString().toLowerCase(), true);
-				}
-				for (PetData pd : pi.getMount().getAllData(false)) {
-					if (pd.isType(Type.BOOLEAN)) {
-						ec.getPetConfig().set(path + ".mount.data." + pd.toString().toLowerCase(), false);
-					}
-					else {
-						ec.getPetConfig().set(path + ".mount.data." + pd.toString().toLowerCase(), true);
-					}
 				}
 			}
 		} catch (Exception e) {}
@@ -505,14 +471,7 @@ public class PetHandler {
 	}
 	
 	public void setData(Pet pet, PetData[] data, boolean b) {
-		ArrayList<PetData> list = new ArrayList<PetData>();
 		PetType petType = pet.getPetType();
-		
-		HorseType ht = HorseType.NORMAL;
-		HorseVariant hv = HorseVariant.WHITE;
-		HorseMarking hm = HorseMarking.NONE;
-		HorseArmour ha = HorseArmour.NONE;
-		
 		for (PetData pd : data) {
 			if (petType.isDataAllowed(pd)) {
 				if (pd == PetData.BABY) {
@@ -638,7 +597,7 @@ public class PetHandler {
 						try { 
 							HorseType h = HorseType.valueOf(pd.toString());
 							if (h != null) {
-								ht = h;
+								((HorsePet) pet).setHorseType(h);
 							}
 						} catch (Exception e) {
 							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
@@ -649,7 +608,7 @@ public class PetHandler {
 						try { 
 							HorseVariant v = HorseVariant.valueOf(pd.toString());
 							if (v != null) {
-								hv = v;
+								((HorsePet) pet).setVariant(v, ((HorsePet) pet).getMarking());
 							}
 						} catch (Exception e) {
 							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Variant");
@@ -672,7 +631,7 @@ public class PetHandler {
 								m = HorseMarking.valueOf(pd.toString());
 							}
 							if (m != null) {
-								hm = m;
+								((HorsePet) pet).setVariant(((HorsePet) pet).getVariant(), m);
 							}
 						} catch (Exception e) {
 							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Marking");
@@ -681,55 +640,41 @@ public class PetHandler {
 					
 					if (pd.isType(Type.HORSE_ARMOUR)) {
 						try {
+							HorseArmour a;
 							if (pd == PetData.NOARMOUR) {
-								ha = HorseArmour.NONE;
+								a = HorseArmour.NONE;
 							}
 							else {
-								HorseArmour a = HorseArmour.valueOf(pd.toString());
-								if (a != null) {
-									ha = a;
-								}
+								a = HorseArmour.valueOf(pd.toString());
+							}
+							if (a != null) {
+								((HorsePet) pet).setArmour(a);
 							}
 						} catch(Exception e) {
 							EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Armour");
 						}
 					}
 				}
-				
-				list.add(pd);
-			}
-		}
-		if (petType == PetType.HORSE) {
-			HorsePet hp = (HorsePet) pet;
-			hp.setHorseType(ht);
-			hp.setVariant(hv, hm);
-			hp.setArmour(ha);
-		}
-		
-		if (b) {
-			if (!list.isEmpty()) {
-				for (PetData d : list) {
-					if (pet.dataFalse.contains(d)) {
-						pet.dataFalse.remove(d);
-					}
-					if (!pet.dataTrue.contains(d)) {
-						pet.dataTrue.add(d);
+				ListIterator<PetData> i = pet.getActiveData().listIterator();
+				while (i.hasNext()) {
+					PetData petData = i.next();
+					if (petData != pd) {
+						for (PetData.Type type : pd.getTypes()) {
+							if (petData.isType(type)) {
+								i.remove();
+							}
+						}
 					}
 				}
-				//this.updateFileData("autosave", pet, list, true);
-			}
-		}
-		else {
-			if (!list.isEmpty()) {
-				for (PetData d : list) {
-					if (pet.dataTrue.contains(d)) {
-						pet.dataTrue.remove(d);
-					}
-					if (!pet.dataFalse.contains(d)) {
-						pet.dataFalse.add(d);
+
+				if (b) {
+					pet.getActiveData().add(pd);
+				}
+				else {
+					if (pet.getActiveData().contains(pd)) {
+						pet.getActiveData().remove(pd);
 					}
 				}
-				//this.updateFileData("autosave", pet, list, false);
 			}
 		}
 	}

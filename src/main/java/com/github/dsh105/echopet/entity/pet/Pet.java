@@ -40,7 +40,6 @@ public class Pet {
 
 	private String name;
 	public ArrayList<PetData> dataTrue = new ArrayList<PetData>();
-	public ArrayList<PetData> dataFalse = new ArrayList<PetData>();
 
 	public Pet(Player owner, PetType petType) {
 		this.owner = owner;
@@ -312,11 +311,10 @@ public class Pet {
 	/**
 	 * Get active {@link PetData} for this {@link Pet}
 	 *
-	 * @param b get data on (true) or off (false)
 	 * @return An {@link ArrayList} of {@link PetData} for this {@link Pet}
 	 */
-	public ArrayList<PetData> getAllData(boolean b) {
-		return b ? this.dataTrue : this.dataFalse;
+	public ArrayList<PetData> getActiveData() {
+		return this.dataTrue;
 	}
 
 	/**

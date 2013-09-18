@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class SQLUtil {
 	
-	public static String serialise(PetData[] data, boolean b) {
+	public static String serialise(PetData[] data, boolean mount) {
 		String s = "";
 		for (PetData pd : data) {
 			if (!s.equalsIgnoreCase("")) {
 				s = s + " varchar(255), ";
 			}
-			if (b) {
+			if (mount) {
 				s = s + "Mount" + pd.toString();
 			}
 			else {
@@ -23,13 +23,13 @@ public class SQLUtil {
 		return s;
 	}
 
-	public static String serialiseDataList(ArrayList<PetData> data, boolean b) {
+	public static String serialiseDataList(ArrayList<PetData> data, boolean mount) {
 		String s = "";
 		for (PetData pd : data) {
 			if (!s.equalsIgnoreCase("")) {
 				s = s + ", ";
 			}
-			if (b) {
+			if (mount) {
 				s = s + "Mount" + pd.toString();
 			}
 			else {

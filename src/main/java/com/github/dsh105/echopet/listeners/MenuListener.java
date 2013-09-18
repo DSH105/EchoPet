@@ -152,7 +152,7 @@ public class MenuListener implements Listener {
 						if (mi.getMenuType() == DataMenuType.BOOLEAN) {
 							if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
 								PetData pd = PetData.valueOf(mi.toString());
-								if (pet.getAllData(true).contains(pd)) {
+								if (pet.getActiveData().contains(pd)) {
 									wmd.petDataFalse.add(pd);
 								}
 								else {

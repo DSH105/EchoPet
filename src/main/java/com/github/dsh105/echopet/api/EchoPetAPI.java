@@ -142,7 +142,7 @@ public class EchoPetAPI {
 		if (pet == null) {
 			return false;
 		}
-		return pet.getAllData(true).contains(petData);
+		return pet.getActiveData().contains(petData);
 	}
 
 	/**
