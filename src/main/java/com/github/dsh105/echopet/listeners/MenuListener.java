@@ -64,24 +64,25 @@ public class MenuListener implements Listener {
 				if (inv.getItem(slot).equals(SelectorItem.CLOSE.getItem())) {
 					player.closeInventory();
 				}
+				String cmd = EchoPet.getPluginInstance().cmdString;
 				if (inv.getItem(slot).equals(SelectorItem.TOGGLE.getItem())) {
 					Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
 					if (pet != null) {
 						if (StringUtil.hpp("echopet.pet", "hide", player)) {
-							player.performCommand("pet hide");
+							player.performCommand(cmd + " hide");
 							player.closeInventory();
 						}
 					}
 					else {
 						if (StringUtil.hpp("echopet.pet", "show", player)) {
-							player.performCommand("pet show");
+							player.performCommand(cmd + " show");
 							player.closeInventory();
 						}
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.CALL.getItem())) {
 					if (StringUtil.hpp("echopet.pet", "call", player)) {
-						player.performCommand("pet call");
+						player.performCommand(cmd + " call");
 						player.closeInventory();
 					}
 				}
@@ -89,7 +90,7 @@ public class MenuListener implements Listener {
 					Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
 					if (pet != null) {
 						if (player.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pet.getPetType()), player)) {
-							player.performCommand("pet ride");
+							player.performCommand(cmd + " ride");
 							player.closeInventory();
 						}
 					}
@@ -98,14 +99,14 @@ public class MenuListener implements Listener {
 					Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
 					if (pet != null) {
 						if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
-							player.performCommand("pet hat");
+							player.performCommand(cmd + " hat");
 							player.closeInventory();
 						}
 					}
 				}
 				if (inv.getItem(slot).equals(SelectorItem.MENU.getItem())) {
 					if (StringUtil.hpp("echopet.pet", "menu", player)) {
-						player.performCommand("pet menu");
+						player.performCommand(cmd + " menu");
 						player.closeInventory();
 					}
 				}
