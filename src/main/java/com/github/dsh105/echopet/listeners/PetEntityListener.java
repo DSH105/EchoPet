@@ -10,10 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.entity.*;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.entity.pet.CraftPet;
@@ -41,6 +38,14 @@ public class PetEntityListener implements Listener {
 			if (event.isCancelled()) {
 				event.setCancelled(false);
 			}
+		}
+	}
+
+	@EventHandler
+	public void onPetEnterPortal(EntityPortalEvent event) {
+		Entity e = event.getEntity();
+		if (e instanceof CraftPet) {
+			event.setCancelled(true);
 		}
 	}
 
