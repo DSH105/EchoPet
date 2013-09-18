@@ -1,11 +1,10 @@
 package com.github.dsh105.echopet.config;
 
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.data.PetData;
 import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.util.StringUtil;
 
 
 public class DefaultOptions {
@@ -151,6 +150,10 @@ public class DefaultOptions {
 							config.get("pets." + petType.toString().toLowerCase().replace("_", " ") + ".hasEquipment", true));
 				}
 			}
+
+			String worldPath = "worlds." + Bukkit.getWorlds().get(0).getName();
+			config.set(worldPath, config.getBoolean(worldPath, true));
+			config.set("worlds.enableWorldsByDefault", config.get("worlds.enableWorldsByDefault", true));
 			config.saveConfig();
 		} catch (Exception e) {ec.debug(e, "Failed to generate default Configuration File.");}
 	}

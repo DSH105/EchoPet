@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.menu.selector.PetSelector;
 import com.github.dsh105.echopet.menu.selector.SelectorItem;
+import com.github.dsh105.echopet.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,10 +20,6 @@ import com.github.dsh105.echopet.data.UnorganisedPetData;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.menu.main.MenuOption;
 import com.github.dsh105.echopet.menu.main.PetMenu;
-import com.github.dsh105.echopet.util.Lang;
-import com.github.dsh105.echopet.util.MenuUtil;
-import com.github.dsh105.echopet.util.PetUtil;
-import com.github.dsh105.echopet.util.StringUtil;
 
 public class PetCommand implements CommandExecutor {
 
@@ -178,7 +175,9 @@ public class PetCommand implements CommandExecutor {
 					}
 					Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
 					if (pet == null) {
-						Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
+						if (WorldUtil.allowPets(player.getWorld().getName())) {
+							Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
+						}
 						return true;
 					}
 					Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));

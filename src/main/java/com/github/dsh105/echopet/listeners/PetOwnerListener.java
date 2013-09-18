@@ -5,6 +5,8 @@ import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.menu.selector.PetSelector;
 import com.github.dsh105.echopet.menu.selector.SelectorItem;
 import com.github.dsh105.echopet.mysql.SQLPetHandler;
+import com.github.dsh105.echopet.util.StringUtil;
+import com.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -90,6 +92,10 @@ public class PetOwnerListener implements Listener {
 				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
 			else {
+				if (!WorldUtil.allowPets(event.getTo().getWorld().getName())) {
+					Lang.sendTo(p, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
+					return;
+				}
 				PetHandler.getInstance().saveFileData("autosave", pi);
 				SQLPetHandler.getInstance().saveToDatabase(pi, false);
 				ec.PH.removePet(pi);

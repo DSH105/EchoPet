@@ -3,7 +3,9 @@ package com.github.dsh105.echopet.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
+import com.github.dsh105.echopet.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -34,9 +36,6 @@ import com.github.dsh105.echopet.entity.pet.villager.VillagerPet;
 import com.github.dsh105.echopet.entity.pet.wither.WitherPet;
 import com.github.dsh105.echopet.entity.pet.wolf.WolfPet;
 import com.github.dsh105.echopet.entity.pet.zombie.ZombiePet;
-import com.github.dsh105.echopet.util.EnumUtil;
-import com.github.dsh105.echopet.util.Lang;
-import com.github.dsh105.echopet.util.StringUtil;
 
 
 public class PetHandler {
@@ -114,6 +113,12 @@ public class PetHandler {
     }
 	
 	public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
+		if (!WorldUtil.allowPets(owner.getWorld().getName())) {
+			if (sendMessageOnFail) {
+				Lang.sendTo(owner, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
+			}
+			return null;
+		}
 		if (getPet(owner) != null) {
 			removePets(owner);
 		}
@@ -133,6 +138,12 @@ public class PetHandler {
 	}
 	
 	public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
+		if (!WorldUtil.allowPets(owner.getWorld().getName())) {
+			if (sendFailMessage) {
+				Lang.sendTo(owner, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
+			}
+			return null;
+		}
 		if (getPet(owner) != null) {
 			removePets(owner);
 		}
@@ -249,7 +260,11 @@ public class PetHandler {
 				if (!ec.DO.allowPetType(petType)) {
 					return null;
 				}
-				Pet pi = petType.getNewPetInstance(p, petType);
+				Pet pi = this.createPet(p, petType, true);
+				if (pi == null) {
+					return null;
+				}
+				//Pet pi = petType.getNewPetInstance(p, petType);
 				//Pet pi = new Pet(p, petType);
 				
 				pi.setName(name);
