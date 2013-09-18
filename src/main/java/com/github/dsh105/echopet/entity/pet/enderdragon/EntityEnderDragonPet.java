@@ -109,10 +109,10 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				Location l = new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
 
 				if (side < 0.0F) {
-					l.setYaw(this.passenger.yaw + 90);
+					l.setYaw(this.passenger.yaw - 90);
 					v.add(l.getDirection().normalize().multiply(-0.5));
 				} else if (side > 0.0F) {
-					l.setYaw(this.passenger.yaw - 90);
+					l.setYaw(this.passenger.yaw + 90);
 					v.add(l.getDirection().normalize().multiply(-0.5));
 				}
 
