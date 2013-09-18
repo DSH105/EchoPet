@@ -113,9 +113,13 @@ public class MenuListener implements Listener {
 				for (PetItem i : PetItem.values()) {
 					if (inv.getItem(slot).equals(i.getItem(player))) {
 						if (player.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(i.petType), player)) {
-							PetHandler.getInstance().createPet(player, i.petType, true);
-							Lang.sendTo(player, Lang.CREATE_PET.toString()
-									.replace("%type%", StringUtil.capitalise(i.petType.toString().replace("_", ""))));
+							Pet pet = PetHandler.getInstance().createPet(player, i.petType, true);
+							if (pet != null) {
+								ec.PH.saveFileData("autosave", pet);
+								ec.SPH.saveToDatabase(pet, false);
+								Lang.sendTo(player, Lang.CREATE_PET.toString()
+										.replace("%type%", StringUtil.capitalise(i.petType.toString().replace("_", ""))));
+							}
 							player.closeInventory();
 						}
 					}
