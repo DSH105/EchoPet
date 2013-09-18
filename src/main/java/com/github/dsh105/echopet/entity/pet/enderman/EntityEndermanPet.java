@@ -55,7 +55,7 @@ public class EntityEndermanPet extends EntityPet {
 	@Override
 	public void l_() {
 		super.l_();
-		if (this.random.nextBoolean() && particle <= 0) {
+		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
 			try {
 				Particle.PORTAL.sendToLocation(pet.getLocation());
 			} catch (Exception e) {

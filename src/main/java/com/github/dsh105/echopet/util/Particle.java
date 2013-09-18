@@ -2,9 +2,12 @@ package com.github.dsh105.echopet.util;
 
 import java.util.Random;
 
+import net.minecraft.server.v1_6_R2.Packet;
 import net.minecraft.server.v1_6_R2.Packet63WorldParticles;
 
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 public enum Particle {
 	
@@ -21,11 +24,13 @@ public enum Particle {
 	CLOUD("explode", 0.1f, 10, "death_cloud", false),
 	CRITICAL("crit", 0.1f, 100, "critical", false),
 	MAGIC_CRITIAL("magicCrit", 0.1f, 100, "magic_critical", false),
+	MAGIC_CRITIAL_SMALL("magicCrit", 0.01f, 20, "magic_critical", false),
 	ANGRY_VILLAGER("angryVillager", 0f, 20, "angry_sparkle", false),
 	SPARKLE("happyVillager", 0f, 20, "sparkle", false),
 	WATER_DRIP("dripWater", 0f, 100, "water_drip", false),
 	LAVA_DRIP("dripLava", 0f, 100, "lava_drip", false),
 	WITCH_MAGIC("witchMagic", 1f, 20, "witch_magic", false),
+	WITCH_MAGIC_SMALL("witchMagic", 0.1f, 5, "witch_magic", false),
 	
 	SNOWBALL("snowballpoof", 1f, 20, "snowball", false),
 	SNOW_SHOVEL("snowshovel", 0.02f, 30, "snow", false),
@@ -88,6 +93,22 @@ public enum Particle {
 		ReflectionUtil.setValue(packet, "h", defaultSpeed);
 		ReflectionUtil.setValue(packet, "i", particleAmount);
 		ReflectionUtil.sendPacketToLocation(l, packet);
+	}
+
+	public void sendToPlayer(Location l, Player p) throws Exception {
+		Object packet = Class.forName(
+				"net.minecraft.server." + ReflectionUtil.getVersionString()
+						+ ".Packet63WorldParticles").getConstructors()[0].newInstance();
+		ReflectionUtil.setValue(packet, "a", particleName);
+		ReflectionUtil.setValue(packet, "b", (float) l.getX());
+		ReflectionUtil.setValue(packet, "c", (float) l.getY());
+		ReflectionUtil.setValue(packet, "d", (float) l.getZ());
+		ReflectionUtil.setValue(packet, "e", new Random().nextFloat());
+		ReflectionUtil.setValue(packet, "f", new Random().nextFloat());
+		ReflectionUtil.setValue(packet, "g", new Random().nextFloat());
+		ReflectionUtil.setValue(packet, "h", defaultSpeed);
+		ReflectionUtil.setValue(packet, "i", particleAmount);
+		((CraftPlayer) p).getHandle().playerConnection.sendPacket((Packet) packet);
 	}
 	
 	public void sendToLocation(Packet63WorldParticles packet, Location l) throws Exception {

@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.entity.pet;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.api.event.PetAttackEvent;
@@ -8,11 +9,14 @@ import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.data.PetType;
+import com.github.dsh105.echopet.util.Particle;
+import com.github.dsh105.echopet.util.ReflectionUtil;
 import net.minecraft.server.v1_6_R2.*;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -24,6 +28,8 @@ import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import com.github.dsh105.echopet.menu.main.MenuOption;
 import com.github.dsh105.echopet.menu.main.PetMenu;
 import com.github.dsh105.echopet.util.MenuUtil;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public abstract class EntityPet extends EntityCreature implements IMonster {
@@ -314,6 +320,17 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 
 		if (this.getOwner() == null) {
 			PetHandler.getInstance().removePet(this.getPet());
+		}
+
+		if ((this.getOwner().isSneaking() && !this.getOwner().isFlying()) || ((CraftPlayer) this.getOwner()).getHandle().isInvisible()) {
+			this.setInvisible(true);
+			try {
+				Particle.MAGIC_CRITIAL_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
+				Particle.WITCH_MAGIC_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
+			} catch (Exception e) {}
+		}
+		else if (this.isInvisible()) {
+			this.setInvisible(false);
 		}
 
 		if (this.particle == this.particleCounter) {
