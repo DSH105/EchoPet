@@ -100,7 +100,7 @@ public class DefaultOptions {
 			config.set("petSelector.giveOnJoin.enable", config.getBoolean("petSelector.giveOnJoin.enable", true));
 			config.set("petSelector.giveOnJoin.usePerm", config.getBoolean("petSelector.giveOnJoin.usePerm", false));
 			config.set("petSelector.giveOnJoin.perm", config.getString("petSelector.giveOnJoin.perm", "echopet.selector.join"));
-			config.set("petSelector.slot", config.getInt("petSelector.slot", 8));
+			config.set("petSelector.giveOnJoin.slot", config.getInt("petSelector.giveOnJoin.slot", 9));
 			config.set("petSelector.clearInvOnJoin", config.getBoolean("petSelector.clearInvOnJoin", false));
 
 			config.set("debug", config.getBoolean("debug", false), "If true, EchoPet will print errors to the console. Useful for", "debugging certain aspects of the plugin.");
