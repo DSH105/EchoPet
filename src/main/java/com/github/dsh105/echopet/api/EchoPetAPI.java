@@ -2,11 +2,13 @@ package com.github.dsh105.echopet.api;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.data.PetData;
+import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
+import com.github.dsh105.echopet.mysql.SQLPetHandler;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.StringUtil;
 import net.minecraft.server.v1_6_R2.EntityHuman;
@@ -53,8 +55,14 @@ public class EchoPetAPI {
 	 * @param player the {@link Player} to remove their Pet from
 	 * @param sendMessage defines if the plugin sends a message to the target {@link Player}
 	 */
-	public void removePet(Player player, boolean sendMessage) {
+	public void removePet(Player player, boolean sendMessage, boolean save) {
 		EchoPet.getPluginInstance().PH.removePets(player);
+		if (save) {
+			if (hasPet(player)) {
+				PetHandler.getInstance().saveFileData("autosave", PetHandler.getInstance().getPet(player));
+				SQLPetHandler.getInstance().saveToDatabase(PetHandler.getInstance().getPet(player), false);
+			}
+		}
 	}
 
 	/**
