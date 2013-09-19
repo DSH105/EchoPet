@@ -332,8 +332,8 @@ public class PetHandler {
 		while (i.hasNext()) {
 			Pet p = i.next();
 			if (p.getOwner() == player) {
-				saveFileData("autosave", p);
-				ec.SPH.saveToDatabase(p, false);
+				/*saveFileData("autosave", p);
+				ec.SPH.saveToDatabase(p, false);*/
 				p.removePet();
 				i.remove();
 			}
@@ -342,8 +342,9 @@ public class PetHandler {
 	
 	public void removePet(Pet pi) {
 		//saveFileData("autosave", pi);
-		pi.removePet();
-		pets.remove(pi);
+		/*pi.removePet();
+		pets.remove(pi);*/
+		removePets(pi.getOwner());
 	}
 	
 	public void saveFileData(String type, Pet pi) {
@@ -451,7 +452,8 @@ public class PetHandler {
 
 	public void clearFileData(String type, String pName) {
 		String path = type + "." + pName;
-		if (ec.getPetConfig().get(path + ".pet.type") != null) {
+		ec.getPetConfig().set(path, null);
+		/*if (ec.getPetConfig().get(path + ".pet.type") != null) {
 			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
 				for (String key1 : ec.getPetConfig().getConfigurationSection(path + "." + key).getKeys(false)) {
 					if (ec.getPetConfig().get(path + "." + key + "." + key1) != null) {
@@ -462,7 +464,7 @@ public class PetHandler {
 					ec.getPetConfig().set(path + "." + key, null);
 				}
 			}
-		}
+		}*/
 		ec.getPetConfig().saveConfig();
 	}
 	

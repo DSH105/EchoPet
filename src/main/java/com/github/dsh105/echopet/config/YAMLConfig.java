@@ -134,7 +134,7 @@ public class YAMLConfig {
     public void saveConfig() {
         String config = this.config.saveToString();
         manager.saveConfig(config, this.file);
- 
+        this.reloadConfig();
     }
  
     public Set<String> getKeys(boolean deep) {
