@@ -339,15 +339,20 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			PetHandler.getInstance().removePet(this.getPet());
 		}
 
-		if ((this.getOwner().isSneaking() && !this.getOwner().isFlying()) || ((CraftPlayer) this.getOwner()).getHandle().isInvisible()) {
-			this.setInvisible(true);
+		if (EchoPet.getPluginInstance().DO.invisOnShift(this.getPet().getPetType())) {
+			if ((this.getOwner().isSneaking() && !this.getOwner().isFlying()) || ((CraftPlayer) this.getOwner()).getHandle().isInvisible()) {
+				this.setInvisible(true);
+			}
+			else if (this.isInvisible()) {
+				this.setInvisible(false);
+			}
+		}
+
+		if (this.isInvisible()) {
 			try {
 				Particle.MAGIC_CRITIAL_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
 				Particle.WITCH_MAGIC_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
 			} catch (Exception e) {}
-		}
-		else if (this.isInvisible()) {
-			this.setInvisible(false);
 		}
 
 		if (this.particle == this.particleCounter) {

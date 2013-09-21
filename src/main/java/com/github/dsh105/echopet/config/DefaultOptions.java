@@ -40,7 +40,12 @@ public class DefaultOptions {
 
 	public boolean canFly(PetType petType) {
 		return ec.getMainConfig().getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ")
-				+ ".canRideFly");
+				+ ".canRideFly", false);
+	}
+
+	public boolean invisOnShift(PetType petType) {
+		return ec.getMainConfig().getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ")
+				+ ".invisibleOnShift", true);
 	}
 
 	public Object getConfigOption(String s) {
@@ -143,6 +148,8 @@ public class DefaultOptions {
 								+ dataType.getConfigOptionString(),
 								config.get("pets." + petType.toString().toLowerCase().replace("_", " ") + ".force."
 										+ dataType.getConfigOptionString(), false));
+						config.set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".invisibleOnShift",
+								config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ") + ".invisibleOnShift", true));
 					}
 				}
 				if (petType == PetType.PIGZOMBIE || petType == PetType.SKELETON || petType == PetType.ZOMBIE) {
