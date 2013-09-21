@@ -1,6 +1,5 @@
 package com.github.dsh105.echopet.menu.selector;
 
-import com.github.dsh105.echopet.util.ItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -40,9 +39,6 @@ public enum SelectorItem {
 		meta.setDisplayName(this.name);
 		//meta.setLore(this.lore);
 		i.setItemMeta(meta);
-		if (this.glow) {
-			ItemUtil.addEnchantmentGlow(i);
-		}
 		return i;
 	}
 
@@ -52,9 +48,6 @@ public enum SelectorItem {
 		meta.setDisplayName(this.name);
 		//meta.setLore(this.lore);
 		i.setItemMeta(meta);
-		if (this.glow) {
-			ItemUtil.addEnchantmentGlow(i);
-		}
 		return i;
 	}
 }
