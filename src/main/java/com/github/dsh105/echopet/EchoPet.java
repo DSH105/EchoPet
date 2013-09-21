@@ -105,7 +105,6 @@ public class EchoPet extends JavaPlugin {
 					+ " is only compatible with:");
 			this.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
 			this.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
-			this.checkUpdates();
 			return;
 		}
 
