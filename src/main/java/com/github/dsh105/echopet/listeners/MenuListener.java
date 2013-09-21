@@ -135,11 +135,6 @@ public class MenuListener implements Listener {
 
 		int size = (title.equals("EchoPet DataMenu - Color") || pet.getPetType() == PetType.HORSE) ? 18 : 9;
 
-		WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
-		if (wmd == null) {
-			wmd = new WaitingMenuData(pet);
-		}
-
 		if (slot <= size && inv.getItem(slot) != null) {
 			if (title.equals("EchoPet DataMenu")) {
 				if (inv.getItem(slot).equals(DataMenuItem.CLOSE.getItem())) {
@@ -152,11 +147,19 @@ public class MenuListener implements Listener {
 						if (mi.getMenuType() == DataMenuType.BOOLEAN) {
 							if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
 								PetData pd = PetData.valueOf(mi.toString());
-								if (pet.getActiveData().contains(pd)) {
-									wmd.petDataFalse.add(pd);
-								}
-								else {
-									wmd.petDataTrue.add(pd);
+								if (StringUtil.hpp("echopet.pet.data", pd.getConfigOptionString().toLowerCase(), player)) {
+									if (pet.getActiveData().contains(pd)) {
+										PetHandler.getInstance().setData(pet, pd, false);
+										try {
+											Particle.RED_SMOKE.sendToLocation(pet.getLocation());
+										} catch (Exception e) {}
+									}
+									else {
+										PetHandler.getInstance().setData(pet, pd, true);
+										try {
+											Particle.SPARKLE.sendToLocation(pet.getLocation());
+										} catch (Exception e) {}
+									}
 								}
 							}
 							else {
@@ -216,65 +219,14 @@ public class MenuListener implements Listener {
 				}
 				for (DataMenuItem dmi : DataMenuItem.values()) {
 					if (inv.getItem(slot).equals(dmi.getItem())) {
-						wmd.petDataTrue.add(dmi.getDataLink());
+						PetData pd = dmi.getDataLink();
+						if (StringUtil.hpp("echopet.pet.data", pd.getConfigOptionString().toLowerCase(), player)) {
+							PetHandler.getInstance().setData(pet, pd, true);
+						}
 					}
 				}
 				event.setCancelled(true);
 			}
 		}
-	}
-	
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onInventoryClose(InventoryCloseEvent event) {
-		Player player = (Player) event.getPlayer();
-		Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
-		if (pet == null) {
-			return;
-		}
-		
-		if (!event.getView().getTitle().contains("EchoPet DataMenu")) {
-			return;
-		}
-		
-		WaitingMenuData wmd = WaitingMenuData.waiting.get(pet);
-		
-		if (wmd != null) {
-			if (!wmd.petDataTrue.isEmpty()) {
-				Iterator<PetData> i = wmd.petDataTrue.listIterator();
-				while (i.hasNext()) {
-					PetData dataTemp = i.next();
-					if (!StringUtil.hpp("echopet.pet.data", dataTemp.getConfigOptionString().toLowerCase(), player)) {
-						i.remove();
-					}
-				}
-
-				ec.PH.setData(pet, wmd.petDataTrue.toArray(new PetData[wmd.petDataTrue.size()]), true);
-				try {
-					Particle.FIRE.sendToLocation(pet.getLocation());
-				} catch (Exception e) {
-					ec.debug(e, "Particle Effect failed.");
-				}
-			}
-			
-			if (!wmd.petDataFalse.isEmpty()) {
-				Iterator<PetData> i2 = wmd.petDataFalse.listIterator();
-				while (i2.hasNext()) {
-					PetData dataTemp = i2.next();
-					if (!StringUtil.hpp("echopet.pet.data", dataTemp.getConfigOptionString().toLowerCase(), player)) {
-						i2.remove();
-					}
-				}
-
-				ec.PH.setData(pet, wmd.petDataFalse.toArray(new PetData[wmd.petDataFalse.size()]), false);
-				try {
-					Particle.RAINBOW_SMOKE.sendToLocation(pet.getLocation());
-				} catch (Exception e) {
-					ec.debug(e, "Particle Effect failed.");
-				}
-			}
-
-			WaitingMenuData.waiting.remove(wmd);
-		}
-		
 	}
 }
