@@ -1,6 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.sheep;
 
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -55,12 +55,14 @@ public class EntitySheepPet extends EntityAgeablePet {
         ((SheepPet) pet).sheared = flag;
     }
 
-	protected void a() {
-		super.a();
+	@Override
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, new Byte((byte) 0));
 	}
-	
-	protected void a(int i, int j, int k, int l) {
+
+	@Override
+	protected void makeStepSound() {
         this.makeSound("mob.sheep.step", 0.15F, 1.0F);
     }
 

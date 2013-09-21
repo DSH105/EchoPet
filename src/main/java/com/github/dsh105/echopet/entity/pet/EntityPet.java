@@ -1,7 +1,6 @@
 package com.github.dsh105.echopet.entity.pet;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.api.event.PetAttackEvent;
@@ -10,13 +9,12 @@ import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.data.PetType;
 import com.github.dsh105.echopet.util.Particle;
-import com.github.dsh105.echopet.util.ReflectionUtil;
-import net.minecraft.server.v1_6_R2.*;
+import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -28,8 +26,6 @@ import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import com.github.dsh105.echopet.menu.main.MenuOption;
 import com.github.dsh105.echopet.menu.main.PetMenu;
 import com.github.dsh105.echopet.util.MenuUtil;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public abstract class EntityPet extends EntityCreature implements IMonster {
@@ -55,8 +51,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		super(world);
 		try {
 			pet.setCraftPet(new CraftPet(world.getServer(), this));
-			//pet.setCraftPet(pet.getPetType().getNewCraftInstance(this));
-			//setPet(pet);
 			this.pet = pet;
 			((LivingEntity) this.getBukkitEntity()).setMaxHealth(pet.getPetType().getMaxHealth());
 			this.setHealth(pet.getPetType().getMaxHealth());
@@ -121,6 +115,10 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		//return new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
 		return this.pet.getLocation();
 	}
+
+	public boolean bf() {
+		return true;
+	}
 	
 	@Override
 	public CraftEntity getBukkitEntity() {
@@ -129,10 +127,6 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		}
 		return this.bukkitEntity;
 	}
-	
-	//bb() - 1.6.1
-	@Override
-	public boolean be() {return true;}
 
 	@Override
 	protected String r() {
@@ -140,32 +134,27 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	}
 
 	@Override
-	protected String aO() {
+	protected String aP() {
 		return this.getDeathSound();
 	}
-	
-	//bb() - 1.5.2
+
 	protected abstract String getIdleSound(); //idle sound
-	
-	//aL() - 1.6.1
+
 	protected abstract String getDeathSound(); //death sound
 	
 	public abstract SizeCategory getSizeCategory();
 	
 	// Overriden from EntityLiving - Most importantly overrides pathfinding selectors
-	//1.6.1 - EntityInsentient
-	//be() - 1.6.1
 	@Override
-	protected void bh() {
-		//++this.bC; - 1.5.2 age
-		++this.aV; //1.6 age
+	protected void bi() {
+		++this.aV;
 		//this.world.methodProfiler.a("checkDespawn");
 		
-		this.bo(); //bo() - 1.6.1
+		this.u();
 		//this.world.methodProfiler.b();
 		
 		//this.world.methodProfiler.a("sensing");
-		this.getEntitySenses().a(); // Gets the field 'bP', as in EntityLiving class
+		this.getEntitySenses().a();
 		//this.bq.a() - 1.6
 		//this.world.methodProfiler.b();
 		
@@ -185,7 +174,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		
 		//this.world.methodProfiler.a("mob tick");
 		//this.bp(); - 1.5.2
-		this.bj(); //bg() - 1.6.1
+		this.bk(); //bg() - 1.6.1
 		//this.world.methodProfiler.b();
 		
 		//this.world.methodProfiler.a("controls");
@@ -233,7 +222,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	
 	public void remove() {
 		bukkitEntity.remove();
-		makeSound(this.aO(), 1.0F, 1.0F);
+		makeSound(this.aP(), 1.0F, 1.0F);
 	}
 	
 	@Override
@@ -317,7 +306,35 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	@Override
 	public void l_() {
 		super.l_();
+		try {
+			onLive();
+		} catch (Exception e) {}
+	}
 
+	@Override
+	protected void a() {
+		super.a();
+		try {
+			initDatawatcher();
+		} catch(Exception e) {}
+	}
+
+	@Override
+	protected void a(int i, int j, int k, int l) {
+		super.a(i, j, k, l);
+		try {
+			makeStepSound(i, j, k, l);
+		} catch (Exception e) {}
+	}
+
+	protected void makeStepSound(int i, int j, int k, int l) {
+		this.makeStepSound();
+	}
+
+	protected void initDatawatcher() {}
+	protected void makeStepSound() {}
+
+	public void onLive() {
 		if (this.getOwner() == null) {
 			PetHandler.getInstance().removePet(this.getPet());
 		}

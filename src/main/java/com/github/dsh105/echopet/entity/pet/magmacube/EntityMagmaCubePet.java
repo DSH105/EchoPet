@@ -2,51 +2,43 @@ package com.github.dsh105.echopet.entity.pet.magmacube;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntityMagmaCubePet extends EntityPet {
-	
-	int jumpDelay;
 
 	public EntityMagmaCubePet(World world) {
 		super(world);
 	}
 
+	int jumpDelay;
+
 	public EntityMagmaCubePet(World world, Pet pet) {
 		super(world, pet);
 		this.fireProof = true;
 		int i = 1 << this.random.nextInt(3);
-		this.height = 0.0F;
-		this.jumpDelay = this.random.nextInt(15) + 10;
 		this.setSize(i);
-		this.aO = 0.2F;
+		this.jumpDelay = this.random.nextInt(15) + 10;
 	}
-	
-	/*@Override
-	public int ax() {
-		int i = this.getSize();
-		return i * i;
-	}*/
-	
-	protected void setSize(int i) {
+
+	public void setSize(int i) {
 		this.datawatcher.watch(16, new Byte((byte) i));
-        this.a(0.6F * (float) i, 0.6F * (float) i);
-        this.setPosition(this.locX, this.locY, this.locZ);
-        this.setHealth(this.getMaxHealth());
-        //this.be = i; //removed 1.5.2
-        ((MagmaCubePet) pet).size = i;
+		this.a(0.6F * (float) i, 0.6F * (float) i);
+		this.setPosition(this.locX, this.locY, this.locZ);
+		this.setHealth(this.getMaxHealth());
+		((MagmaCubePet) pet).size = i;
 	}
 
 	public int getSize() {
 		return this.datawatcher.getByte(16);
 	}
 
-	protected void a() {
-		super.a();
+	@Override
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, new Byte((byte) 1));
 	}
 
@@ -55,18 +47,18 @@ public class EntityMagmaCubePet extends EntityPet {
 		return "";
 	}
 
+	@Override
 	protected String getDeathSound() {
 		return "mob.slime." + (this.getSize() > 1 ? "big" : "small");
 	}
-	
-	public void l_() {
-		super.l_();
-		
+
+	@Override
+	public void onLive() {
+		super.onLive();
+
 		if (this.onGround && this.jumpDelay-- <= 0) {
-			this.jumpDelay = this.bL();
-			if (this.bO()) {
-				this.makeSound(this.aO(), this.aZ(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
-			}
+			this.jumpDelay = this.random.nextInt(15) + 10;
+			this.makeSound("mob.magmacube." + (getSize() > 1 ? "big" : "small"), ba(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
 			getControllerJump().a();
 		}
 
@@ -79,22 +71,6 @@ public class EntityMagmaCubePet extends EntityPet {
 		}
 	}
 
-	//q() - 1.5.2
-	public boolean bO() {
-		return this.getSize() > 0;
-	}
-
-	//j() - 1.5.2
-	//bH() - 1.6.2
-	protected int bL() {
-		return this.random.nextInt(15) + 10;
-	}
-	
-	@Override
-	protected float aZ() {
-		return 0.4F * (float) this.getSize();
-	}
-	
 	@Override
 	public SizeCategory getSizeCategory() {
 		if (this.getSize() == 1) {

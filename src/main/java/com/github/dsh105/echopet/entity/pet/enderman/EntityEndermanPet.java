@@ -2,7 +2,7 @@ package com.github.dsh105.echopet.entity.pet.enderman;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -24,11 +24,10 @@ public class EntityEndermanPet extends EntityPet {
 		this.datawatcher.watch(18, Byte.valueOf((byte) (flag ? 1 : 0)));
 		((EndermanPet) pet).scream = flag;
 	}
-	
-	//Obfuscated...
-	
-	protected void a() {
-        super.a();
+
+	@Override
+	protected void initDatawatcher() {
+        super.initDatawatcher();
         this.datawatcher.a(16, new Byte((byte) 0));
         this.datawatcher.a(17, new Byte((byte) 0));
         this.datawatcher.a(18, new Byte((byte) 0));
@@ -36,9 +35,10 @@ public class EntityEndermanPet extends EntityPet {
 	
 	@Override
 	protected String getIdleSound() {
-		return this.bT() ? "mob.endermen.scream" : "mob.endermen.idle";
+		return this.isScreaming() ? "mob.endermen.scream" : "mob.endermen.idle";
     }
-	public boolean bT() { //1.5.2 - q()
+
+	public boolean isScreaming() {
         return this.datawatcher.getByte(18) > 0;
     }
 	
@@ -53,8 +53,8 @@ public class EntityEndermanPet extends EntityPet {
 	}
 
 	@Override
-	public void l_() {
-		super.l_();
+	public void onLive() {
+		super.onLive();
 		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
 			try {
 				Particle.PORTAL.sendToLocation(pet.getLocation());

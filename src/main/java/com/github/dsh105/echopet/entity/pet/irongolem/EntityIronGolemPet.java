@@ -1,6 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.irongolem;
 
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -18,12 +18,11 @@ public class EntityIronGolemPet extends EntityPet {
 		this.fireProof = true;
 	}
 
-	protected void a() {
-		super.a();
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, Byte.valueOf((byte) 0));
 	}
 
-	protected void a(int i, int j, int k, int l) {
 	@Override
 	public boolean attack(Entity entity) {
 		boolean flag = super.attack(entity);
@@ -34,6 +33,9 @@ public class EntityIronGolemPet extends EntityPet {
 		}
 		return flag;
 	}
+
+	@Override
+	protected void makeStepSound() {
 		this.makeSound("mob.irongolem.walk", 1.0F, 1.0F);
 	}
 

@@ -1,6 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.ocelot;
 
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.entity.Ocelot.Type;
 
@@ -38,14 +38,14 @@ public class EntityOcelotPet extends EntityAgeablePet {
 	}
 	
 	@Override
-	protected void a() {
-		super.a();
-		//this.datawatcher.a(12, new Integer(0));
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, new Byte((byte) 0));
 		this.datawatcher.a(18, new Byte((byte) 0));
 	}
-	
-	protected void a(int i, int j, int k, int l) {
+
+	@Override
+	protected void makeStepSound() {
 		this.makeSound("mob.ozelot.step", 0.15F, 1.0F);
 	}
 	

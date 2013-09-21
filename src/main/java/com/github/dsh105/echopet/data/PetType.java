@@ -7,9 +7,7 @@ import com.github.dsh105.echopet.entity.pet.enderdragon.EnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.giant.EntityGiantPet;
 import com.github.dsh105.echopet.entity.pet.giant.GiantPet;
-import com.github.dsh105.echopet.entity.pet.human.EntityHumanPet;
-import com.github.dsh105.echopet.entity.pet.human.HumanPet;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.World;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

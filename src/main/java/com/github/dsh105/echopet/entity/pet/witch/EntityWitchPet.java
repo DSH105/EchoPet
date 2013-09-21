@@ -2,7 +2,7 @@ package com.github.dsh105.echopet.entity.pet.witch;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -20,6 +20,7 @@ public class EntityWitchPet extends EntityPet {
 		this.fireProof = true;
 	}
 
+	@Override
 	protected String getIdleSound() {
 		return "mob.witch.idle";
 	}
@@ -35,8 +36,8 @@ public class EntityWitchPet extends EntityPet {
 	}
 
 	@Override
-	public void l_() {
-		super.l_();
+	public void onLive() {
+		super.onLive();
 		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
 			try {
 				Particle.WITCH_MAGIC.sendToLocation(pet.getLocation());

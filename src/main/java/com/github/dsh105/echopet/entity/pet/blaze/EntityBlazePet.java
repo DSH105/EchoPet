@@ -2,7 +2,7 @@ package com.github.dsh105.echopet.entity.pet.blaze;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R2.*;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -24,9 +24,10 @@ public class EntityBlazePet extends EntityPet {
 		this.datawatcher.watch(16, (byte) (flag ? 1 : 0));
 		((BlazePet) pet).onFire = flag;
 	}
-	
-	protected void a() {
-        super.a();
+
+	@Override
+	protected void initDatawatcher() {
+        super.initDatawatcher();
         this.datawatcher.a(16, new Byte((byte) 0));
     }
 	
@@ -46,8 +47,8 @@ public class EntityBlazePet extends EntityPet {
 	}
 
 	@Override
-	public void l_() {
-		super.l_();
+	public void onLive() {
+		super.onLive();
 		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
 			try {
 				Particle.FIRE.sendToLocation(pet.getLocation());

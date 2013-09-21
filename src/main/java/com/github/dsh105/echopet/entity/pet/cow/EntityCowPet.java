@@ -1,6 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.cow;
 
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -26,13 +26,9 @@ public class EntityCowPet extends EntityAgeablePet {
 		}
 		((CowPet) pet).baby = flag;
 	}
-	
-	protected void a() {
-		super.a();
-		//this.datawatcher.a(12, new Integer(0));
-	}
-	
-	protected void a(int i, int j, int k, int l) {
+
+	@Override
+	protected void makeStepSound() {
         this.makeSound("mob.cow.step", 0.15F, 1.0F);
     }
 

@@ -1,12 +1,11 @@
 package com.github.dsh105.echopet.entity.pathfinder.goals;
 
-import net.minecraft.server.v1_6_R2.Entity;
-import net.minecraft.server.v1_6_R2.EntityHuman;
+import net.minecraft.server.v1_6_R3.Entity;
+import net.minecraft.server.v1_6_R3.EntityHuman;
 
 import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 
-@SuppressWarnings("rawtypes")
 public class PetGoalLookAtPlayer extends PetGoal {
 	
 	private EntityPet pet;
@@ -32,9 +31,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 	
 	@Override
 	public boolean shouldStart() {
-		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalLookAtPlayer.java#L29
-		//a.aB() - 1.6.1
-		if (this.pet.aC().nextFloat() >= this.chance) {
+		if (this.pet.aD().nextFloat() >= this.chance) {
 			return false;
 		}
 		else if (this.pet.passenger != null) {
@@ -57,7 +54,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 	}
 	
 	public void c() {
-		this.ticksLeft = 40 + this.pet.aC().nextInt(40);
+		this.ticksLeft = 40 + this.pet.aD().nextInt(40);
 	}
 
 	public void d() {
@@ -65,8 +62,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 	}
 
 	public void e() {
-		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalLookAtPlayer.java#L59
-		this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
+		this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.bp());
 		--this.ticksLeft;
 	}
 }

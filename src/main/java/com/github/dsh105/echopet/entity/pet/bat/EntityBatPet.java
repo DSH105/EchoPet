@@ -1,7 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.bat;
 
-import net.minecraft.server.v1_6_R2.MathHelper;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -29,26 +28,23 @@ public class EntityBatPet extends EntityPet {
 		}
 		((BatPet) pet).hanging = flag;
 	}
-	
-	protected void a() {
-        super.a();
+
+	@Override
+	protected void initDatawatcher() {
+        super.initDatawatcher();
         this.datawatcher.a(16, new Byte((byte) 0));
-    }
-	
-	//aX() - 1.6.1
-	protected float ba() {
-        return super.ba() * 0.95F;
     }
 	
 	@Override
 	protected String getIdleSound() {
-        return this.bJ() //(1.6.1 - bF()) (1.5.2 - this.h())
+        return this.bJ()
         		&& this.random.nextInt(4) != 0 ? null : "mob.bat.idle";
     }
-	
-	public void l_() {
-		super.l_();
-		if (this.bJ()) { //bF() - 1.6.1
+
+	@Override
+	public void onLive() {
+		super.onLive();
+		if (this.bJ()) {
 			this.motX = this.motY = this.motZ = 0.0D;
 			this.locY = (double) MathHelper.floor(this.locY) + 1.0D - (double) this.length;
 		} else {

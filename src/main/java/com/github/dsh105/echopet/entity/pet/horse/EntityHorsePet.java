@@ -1,8 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.horse;
 
-import net.minecraft.server.v1_6_R2.Block;
-import net.minecraft.server.v1_6_R2.StepSound;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -100,8 +98,8 @@ public class EntityHorsePet extends EntityAgeablePet {
 		return this.datawatcher.getByte(19);
 	}
 
-	protected void a() {
-		super.a();
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, Integer.valueOf(0));
 		this.datawatcher.a(19, Byte.valueOf((byte) 0));
 		this.datawatcher.a(20, Integer.valueOf(0));
@@ -116,7 +114,8 @@ public class EntityHorsePet extends EntityAgeablePet {
 		return i == 3 ? "mob.horse.zombie.idle" : (i == 4 ? "mob.horse.skeleton.idle" : (i != 1 && i != 2 ? "mob.horse.idle" : "mob.horse.donkey.idle"));
 	}
 
-	protected void a(int i, int j, int k, int l) {
+	@Override
+	protected void makeStepSound(int i, int j, int k, int l) {
 		StepSound stepsound = Block.byId[l].stepSound;
 
 		if (this.world.getTypeId(i, j + 1, k) == Block.SNOW.id) {

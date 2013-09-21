@@ -2,7 +2,7 @@ package com.github.dsh105.echopet.entity.pet.spider;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
@@ -20,12 +20,14 @@ public class EntitySpiderPet extends EntityPet {
 		this.fireProof = true;
 	}
 
-	protected void a() {
-		super.a();
+	@Override
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, new Byte((byte) 0));
 	}
 
-	protected void a(int i, int j, int k, int l) {
+	@Override
+	protected void makeStepSound() {
 		makeSound("mob.spider.step", 0.15F, 1.0F);
 	}
 
@@ -57,8 +59,8 @@ public class EntitySpiderPet extends EntityPet {
 	}
 
 	@Override
-	public void l_() {
-		super.l_();
+	public void onLive() {
+		super.onLive();
 		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
 			try {
 				Particle.SPELL_AMBIENT.sendToLocation(pet.getLocation());

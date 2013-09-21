@@ -3,19 +3,17 @@ package com.github.dsh105.echopet.entity.pathfinder.goals;
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
-import net.minecraft.server.v1_6_R2.EntityLiving;
-import net.minecraft.server.v1_6_R2.World;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import net.minecraft.server.v1_6_R3.EntityLiving;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 
 public class PetGoalAttack extends PetGoal {
 
 	EntityLiving target;
-	//double d; //range
-	EntityPet pet; //pet
+	EntityPet pet;
 	int ticksBetweenAttack;
-	int ticksUntilAttack; //ticks until next hit
-	double lockRange; //lock onto range
-	int navUpdate; //navUpdate
+	int ticksUntilAttack;
+	double lockRange;
+	int navUpdate;
 
 	public boolean isActive;
 
@@ -39,8 +37,6 @@ public class PetGoalAttack extends PetGoal {
 		}
 		this.target = entityLiving;
 
-		//https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalMeleeAttack.java#L61
-		//canSee()
 		return this.pet.getEntitySenses().canSee(entityLiving);
 	}
 
@@ -77,7 +73,7 @@ public class PetGoalAttack extends PetGoal {
 	public void tick() {
 		this.pet.getControllerLook().a(this.target, 30.0F, 30.0F);
 		if (this.pet.getEntitySenses().canSee(this.target) && --this.navUpdate <= 0) {
-			this.navUpdate = 4 + this.pet.aC().nextInt(7);
+			this.navUpdate = 4 + this.pet.aD().nextInt(7);
 			this.pet.getNavigation().a(this.target);
 		}
 
@@ -89,8 +85,8 @@ public class PetGoalAttack extends PetGoal {
 				this.ticksUntilAttack = this.ticksBetweenAttack;
 
 				// Arm animation
-				if (this.pet.aY() != null) {
-					this.pet.aU();
+				if (this.pet.aZ() != null) {
+					this.pet.aV();
 				}
 				this.pet.attack(this.target);
 			}

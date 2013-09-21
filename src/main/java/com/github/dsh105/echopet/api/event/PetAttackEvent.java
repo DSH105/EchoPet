@@ -1,12 +1,11 @@
 package com.github.dsh105.echopet.api.event;
 
 import com.github.dsh105.echopet.entity.pet.Pet;
-import net.minecraft.server.v1_6_R2.DamageSource;
+import net.minecraft.server.v1_6_R3.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public class PetAttackEvent extends Event implements Cancellable {
 

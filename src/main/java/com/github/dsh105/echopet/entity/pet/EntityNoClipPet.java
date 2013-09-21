@@ -1,6 +1,6 @@
 package com.github.dsh105.echopet.entity.pet;
 
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.World;
 
 /**
  * Project by DSH105

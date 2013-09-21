@@ -1,8 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.pigzombie;
 
-import net.minecraft.server.v1_6_R2.Item;
-import net.minecraft.server.v1_6_R2.ItemStack;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -38,8 +36,9 @@ public class EntityPigZombiePet extends EntityPet {
 		((PigZombiePet) pet).villager = flag;
 	}
 
-	protected void a() {
-		super.a();
+	@Override
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(12, new Byte((byte) 0));
 		this.datawatcher.a(13, new Byte((byte) 0));
 	}

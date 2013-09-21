@@ -2,12 +2,11 @@ package com.github.dsh105.echopet.entity.pathfinder.goals;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.api.event.PetMoveEvent;
-import com.github.dsh105.echopet.api.event.PetTeleportEvent;
-import net.minecraft.server.v1_6_R2.EntityPlayer;
-import net.minecraft.server.v1_6_R2.Navigation;
+import net.minecraft.server.v1_6_R3.EntityPlayer;
+import net.minecraft.server.v1_6_R3.Navigation;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 
 import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import com.github.dsh105.echopet.entity.pet.EntityPet;

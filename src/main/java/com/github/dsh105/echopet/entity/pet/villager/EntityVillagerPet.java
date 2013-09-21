@@ -2,7 +2,7 @@ package com.github.dsh105.echopet.entity.pet.villager;
 
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.entity.Villager.Profession;
 
@@ -45,15 +45,15 @@ public class EntityVillagerPet extends EntityAgeablePet {
 		return "mob.villager.death";
 	}
 
-	public void a() {
-		super.a();
+	@Override
+	public void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(16, new Integer(0));
-		//this.datawatcher.a(12, new Integer(0));
 	}
 
 	@Override
-	public void l_() {
-		super.l_();
+	public void onLive() {
+		super.onLive();
 		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
 			try {
 				Particle.SPARKLE.sendToLocation(pet.getLocation());

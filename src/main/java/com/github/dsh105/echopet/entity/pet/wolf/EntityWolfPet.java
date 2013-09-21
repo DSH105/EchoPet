@@ -1,7 +1,7 @@
 package com.github.dsh105.echopet.entity.pet.wolf;
 
-import net.minecraft.server.v1_6_R2.BlockCloth;
-import net.minecraft.server.v1_6_R2.World;
+import com.github.dsh105.echopet.data.PetData;
+import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.DyeColor;
 
@@ -85,13 +85,12 @@ public class EntityWolfPet extends EntityAgeablePet {
 	}
 	
 	@Override
-	protected void a() {
-		super.a();
+	protected void initDatawatcher() {
+		super.initDatawatcher();
 		this.datawatcher.a(17, "");
 		this.datawatcher.a(16, new Byte((byte) 0));
 		this.datawatcher.a(18, new Float(this.getHealth()));
 		this.datawatcher.a(19, new Byte((byte) 0));
-		this.datawatcher.a(20, new Byte((byte) BlockCloth.j_(1))); //1.5.2 - g_()
-		//this.datawatcher.a(12, new Integer(0));
+		this.datawatcher.a(20, new Byte((byte) BlockCloth.j_(1)));
 	}
 }

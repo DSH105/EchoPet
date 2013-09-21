@@ -1,8 +1,6 @@
 package com.github.dsh105.echopet.entity.pet.zombie;
 
-import net.minecraft.server.v1_6_R2.Item;
-import net.minecraft.server.v1_6_R2.ItemStack;
-import net.minecraft.server.v1_6_R2.World;
+import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -42,7 +40,6 @@ public class EntityZombiePet extends EntityPet {
 		super.a();
 		this.datawatcher.a(12, new Byte((byte) 0));
 		this.datawatcher.a(13, new Byte((byte) 0));
-		//this.datawatcher.a(14, Byte.valueOf((byte) 0));
 	}
 	
 	@Override
@@ -50,7 +47,8 @@ public class EntityZombiePet extends EntityPet {
         return "mob.zombie.say";
     }
 
-	protected void a(int i, int j, int k, int l) {
+	@Override
+	protected void makeStepSound() {
 		this.makeSound("mob.zombie.step", 0.15F, 1.0F);
 	}
 	
