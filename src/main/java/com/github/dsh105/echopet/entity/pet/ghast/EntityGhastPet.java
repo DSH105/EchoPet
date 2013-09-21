@@ -30,6 +30,6 @@ public class EntityGhastPet extends EntityPet {
 	
 	@Override
 	public SizeCategory getSizeCategory() {
-		return SizeCategory.GIANT;
+		return SizeCategory.OVERSIZE;
 	}
 }
