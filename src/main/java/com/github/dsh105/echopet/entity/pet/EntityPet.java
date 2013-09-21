@@ -340,7 +340,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		}
 
 		if (EchoPet.getPluginInstance().DO.invisOnShift(this.getPet().getPetType())) {
-			if ((this.getOwner().isSneaking() && !this.getOwner().isFlying()) || ((CraftPlayer) this.getOwner()).getHandle().isInvisible()) {
+			if (((this.getOwner().isSneaking() && !this.getOwner().isFlying()) || ((CraftPlayer) this.getOwner()).getHandle().isInvisible()) && !this.getPet().isPetHat()) {
 				this.setInvisible(true);
 			}
 			else if (this.isInvisible()) {
@@ -353,6 +353,11 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 				Particle.MAGIC_CRITIAL_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
 				Particle.WITCH_MAGIC_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
 			} catch (Exception e) {}
+		}
+
+		if (this.getPet().isPetHat()) {
+
+			this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getOwner().getLocation().getYaw() - 180 : this.getOwner().getLocation().getYaw());
 		}
 
 		if (this.particle == this.particleCounter) {
