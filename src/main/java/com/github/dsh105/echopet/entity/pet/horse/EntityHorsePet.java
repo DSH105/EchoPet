@@ -36,7 +36,7 @@ public class EntityHorsePet extends EntityAgeablePet {
 	}
 
 	public void setSaddled(boolean flag) {
-		this.b(4, flag);
+		this.horseVisual(4, flag);
 		((HorsePet) pet).saddle = flag;
 	}
 
@@ -62,10 +62,31 @@ public class EntityHorsePet extends EntityAgeablePet {
 	}
 
 	public void setChested(boolean flag) {
-		this.b(8, flag);
+		this.horseVisual(8, flag);
 	}
 
-	private void b(int i, boolean flag) {
+	@Override
+	public boolean attack(Entity entity) {
+		boolean flag = super.attack(entity);
+		if (flag) {
+			horseVisual(64, true);
+			if (getType() == 0) {
+				this.makeSound("mob.horse.angry", 1.0F, 1.0F);
+			} else if (getType() == 2 || getType() == 3) {
+				this.makeSound("mob.horse.donkey.angry", 1.0F, 1.0F);
+			}
+		}
+		return flag;
+	}
+
+	/*
+		 * 4 = saddle
+		 * 8 = chest
+		 * 32 = head down
+		 * 64 = rear
+		 * 128 = mouth open
+		 */
+	private void horseVisual(int i, boolean flag) {
 		int j = this.datawatcher.getInt(16);
 
 		if (flag) {

@@ -24,6 +24,16 @@ public class EntityIronGolemPet extends EntityPet {
 	}
 
 	protected void a(int i, int j, int k, int l) {
+	@Override
+	public boolean attack(Entity entity) {
+		boolean flag = super.attack(entity);
+		if (flag) {
+			this.world.broadcastEntityEffect(this, (byte) 4);
+			entity.motY = 0.4000000059604645D;
+			this.makeSound("mob.irongolem.throw", 1.0F, 1.0F);
+		}
+		return flag;
+	}
 		this.makeSound("mob.irongolem.walk", 1.0F, 1.0F);
 	}
 
