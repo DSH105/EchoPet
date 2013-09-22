@@ -175,12 +175,15 @@ public class PetCommand implements CommandExecutor {
 					}
 					Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
 					if (pet == null) {
-						if (WorldUtil.allowPets(player.getWorld().getName())) {
-							Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
-						}
+						Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
 						return true;
 					}
-					Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+					if (WorldUtil.allowPets(player.getWorld().getName())) {
+						Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+					}
+					else {
+						Lang.sendTo(sender, Lang.WORLD_DISABLED.toString().replace("%world%", player.getWorld().getName()));
+					}
 					return true;
 				} else sendError = false;
 			}

@@ -13,6 +13,8 @@ public class WorldUtil {
 		if (b != null) {
 			return b;
 		}
-		else return EchoPet.getPluginInstance().getMainConfig().getBoolean("worlds.enableWorldsByDefault", true);
+		else {
+			return EchoPet.getPluginInstance().getMainConfig().getBoolean("worlds.enableWorldsByDefault", true);
+		}
 	}
 }
