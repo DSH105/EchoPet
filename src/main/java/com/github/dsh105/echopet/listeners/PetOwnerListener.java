@@ -140,13 +140,13 @@ public class PetOwnerListener implements Listener {
 			}
 		}
 
-		if ((Boolean) ec.DO.getConfigOption("petSelector.onJoin.clear", false)) {
+		if ((Boolean) ec.DO.getConfigOption("petSelector.clearInvOnJoin", false)) {
 			inv.clear();
 		}
-		if ((Boolean) ec.DO.getConfigOption("petSelector.onJoin.give.enable", true)
+		if ((Boolean) ec.DO.getConfigOption("petSelector.giveOnJoin.enable", true)
 				&& (((Boolean) ec.DO.getConfigOption("petSelector.giveOnJoin.usePerm", false) && p.hasPermission((String) ec.DO.getConfigOption("petSelector.onJoin.give.perm", "echopet.selector.join")))
-				|| !((Boolean) ec.DO.getConfigOption("petSelector.onJoin.give.usePerm", false)))) {
-			int slot = ((Integer) ec.DO.getConfigOption("petSelector.onJoin.give.slot", 9)) - 1;
+				|| !((Boolean) ec.DO.getConfigOption("petSelector.giveOnJoin.usePerm", false)))) {
+			int slot = ((Integer) ec.DO.getConfigOption("petSelector.giveOnJoin.slot", 9)) - 1;
 			ItemStack i = inv.getItem(slot);
 			ItemStack selector = SelectorItem.SELECTOR.getItem();
 			if (i != null) {
