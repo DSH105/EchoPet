@@ -169,7 +169,7 @@ public class PetHandler {
 	
 	public Pet getPet(Player player) {
 		for (Pet pi : pets) {
-			if (pi.getOwner() == player) {
+			if (pi.getOwner().getName().equals(player.getName())) {
 				return pi;
 			}
 		}
