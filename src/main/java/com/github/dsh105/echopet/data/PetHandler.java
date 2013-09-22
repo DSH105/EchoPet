@@ -178,10 +178,10 @@ public class PetHandler {
 	
 	public Pet getPet(Entity pet) {
 		for (Pet pi : pets) {
-			if (pi.getEntityPet() == pet || pi.getMount().getEntityPet() == pet) {
+			if (pi.getEntityPet().equals(pet) || pi.getMount().getEntityPet().equals(pet)) {
 				return pi;
 			}
-			if (pi.getCraftPet() == pet || pi.getMount().getCraftPet() == pet) {
+			if (pi.getCraftPet().equals(pet) || pi.getMount().getCraftPet().equals(pet)) {
 				return pi;
 			}
 		}
@@ -331,7 +331,7 @@ public class PetHandler {
 		Iterator<Pet> i = pets.listIterator();
 		while (i.hasNext()) {
 			Pet p = i.next();
-			if (p.getOwner() == player) {
+			if (p.getOwner().getName().equals(player.getName())) {
 				/*saveFileData("autosave", p);
 				ec.SPH.saveToDatabase(p, false);*/
 				p.removePet();
