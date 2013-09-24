@@ -8,6 +8,8 @@ import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.data.PetType;
+import com.github.dsh105.echopet.mysql.SQLPetHandler;
+import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R3.*;
 
@@ -335,7 +337,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	protected void makeStepSound() {}
 
 	public void onLive() {
-		if (this.getOwner() == null) {
+		if (this.getOwner() == null || !this.getOwner().isOnline()) {
 			PetHandler.getInstance().removePet(this.getPet());
 		}
 

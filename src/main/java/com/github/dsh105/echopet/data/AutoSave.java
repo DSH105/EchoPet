@@ -12,7 +12,7 @@ public class AutoSave {
 		new BukkitRunnable() {
 			public void run() {
 				EchoPet ec = EchoPet.getPluginInstance();
-				for (Pet pi : ec.PH.getAllPetData()) {
+				for (Pet pi : ec.PH.getPets()) {
 					ec.PH.saveFileData("autosave", pi);
 					ec.SPH.saveToDatabase(pi, false);
 				}

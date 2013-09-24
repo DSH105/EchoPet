@@ -71,7 +71,7 @@ public class PetHandler {
 			return pet;
 		}
 
-		if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null && findDefault) {
+		else if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null && findDefault) {
 			Pet pi = ec.PH.createPetFromFile("default", p);
 			if (pi == null) {
 				return null;
@@ -84,7 +84,7 @@ public class PetHandler {
 			return pi;
 		}
 
-		if ((checkWorldOverride && (Boolean) ec.DO.getConfigOption("multiworldSaveLoadOverride", true)) || (Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
+		else if ((checkWorldOverride && (Boolean) ec.DO.getConfigOption("multiworldSaveLoadOverride", true)) || (Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
 			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
@@ -113,14 +113,12 @@ public class PetHandler {
     }
 	
 	public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
+		removePets(owner);
 		if (!WorldUtil.allowPets(owner.getWorld().getName())) {
 			if (sendMessageOnFail) {
 				Lang.sendTo(owner, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
 			}
 			return null;
-		}
-		if (getPet(owner) != null) {
-			removePets(owner);
 		}
 		if (!ec.DO.allowPetType(petType)) {
 			if (sendMessageOnFail) {
@@ -138,14 +136,12 @@ public class PetHandler {
 	}
 	
 	public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
+		removePets(owner);
 		if (!WorldUtil.allowPets(owner.getWorld().getName())) {
 			if (sendFailMessage) {
 				Lang.sendTo(owner, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
 			}
 			return null;
-		}
-		if (getPet(owner) != null) {
-			removePets(owner);
 		}
 		if (!ec.DO.allowPetType(petType)) {
 			if (sendFailMessage) {
@@ -161,10 +157,6 @@ public class PetHandler {
 		//saveFileData("autosave", pi);
 		//ec.SPH.saveToDatabase(pi, false);
 		return pi;
-	}
-	
-	public List<Pet> getAllPetData() {
-		return pets;
 	}
 	
 	public Pet getPet(Player player) {
@@ -319,8 +311,6 @@ public class PetHandler {
 				}
 				
 				forceAllValidData(pi);
-				
-				pets.add(pi);
 				return pi;
 			}
 		}
