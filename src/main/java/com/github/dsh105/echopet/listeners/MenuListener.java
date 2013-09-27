@@ -37,19 +37,18 @@ public class MenuListener implements Listener {
 	public void onInventoryClick(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
 
-
 		Inventory inv = event.getInventory();
 
 		String title = event.getView().getTitle();
 		int slot = event.getRawSlot();
 
 		try {
-			if (slot < 0 || slot > inv.getSize()) {
+			if (slot < 0 || slot >= inv.getSize()) {
 				return;
 			}
 		} catch (Exception e) {return;}
 
-		if (event.getSlotType() == InventoryType.SlotType.RESULT || event.getSlotType() == InventoryType.SlotType.FUEL) {
+		if (event.getSlotType() == InventoryType.SlotType.RESULT) {
 			for (int i = 1; i <= 4; i++) {
 				if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).equals(SelectorItem.SELECTOR.getItem())) {
 					player.updateInventory();
