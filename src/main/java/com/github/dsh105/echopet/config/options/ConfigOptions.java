@@ -90,6 +90,7 @@ public class ConfigOptions extends Options{
 		set("sql.use", false);
 		set("sql.host", "localhost");
 		set("sql.port", 3306);
+		set("sql.database", "EchoPet");
 		set("sql.username", "none");
 		set("sql.password", "none");
 
