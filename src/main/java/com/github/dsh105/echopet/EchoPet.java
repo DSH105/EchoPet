@@ -358,29 +358,7 @@ public class EchoPet extends JavaPlugin {
 	public static EchoPet getPluginInstance() {
 		return plugin;
 	}
-	
-	/*public void log(String msg) {
-		getServer().getConsoleSender().sendMessage("[EchoPet] " + msg);
-	}*/
-	
-	/*public void severe(Exception e, String msg) {
-		log(ChatColor.RED + msg);
-		e.printStackTrace();
-	}
-	
-	public void debug(Exception e, String msg) {
-		if (getConfig().getBoolean("debug")) {
-			log(ChatColor.RED + msg);
-			e.printStackTrace();
-		}
-	}
-	
-	/*public void debug(String msg) {
-		if (getConfig().getBoolean("debug")) {
-			log(ChatColor.RED + msg);
-		}
-	}*/
-	
+
 	public Connection getSqlCon() {
 		return this.sqlCon.getConnection();
 	}
