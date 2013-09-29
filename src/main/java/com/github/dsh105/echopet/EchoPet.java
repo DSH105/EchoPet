@@ -95,11 +95,14 @@ public class EchoPet extends JavaPlugin {
 	public String name = "";
 	public long size = 0;
 	public boolean updateCheck = false;
-	
+
 	public CommandMap CM;
 	
 	public void onEnable() {
 		plugin = this;
+		Logger.initiate();
+		ConsoleLogger.initiate();
+
 		// Make sure that the plugin is running under the correct version to prevent errors
 		if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString())) {
 			ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
