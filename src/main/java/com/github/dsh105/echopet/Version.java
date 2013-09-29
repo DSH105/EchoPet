@@ -1,5 +1,7 @@
 package com.github.dsh105.echopet;
 
+import com.github.dsh105.echopet.logger.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.jar.Attributes;
@@ -32,7 +34,7 @@ public class Version {
 				NMS_PACKAGE = a.getValue("NMS-Package");
 			}
 		} catch (Exception e) {
-			EchoPet.getPluginInstance().severe(e, "Failed to obtain EchoPet and Minecraft Server version.");
+			Logger.log(Logger.LogLevel.SEVERE, "Failed to obtain EchoPet and Minecraft Server version.", e, true);
 		}
 	}
 	
