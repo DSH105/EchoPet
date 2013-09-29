@@ -138,7 +138,7 @@ public class ConfigOptions extends Options{
 			for (PetData pd : PetData.values()) {
 				if (petType.isDataAllowed(pd)) {
 					set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow." + pd.getConfigOptionString(), true);
-					set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".force." + pd.getConfigOptionString(), true);
+					set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".force." + pd.getConfigOptionString(), false);
 				}
 			}
 		}
