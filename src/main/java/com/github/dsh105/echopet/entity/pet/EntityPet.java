@@ -340,11 +340,8 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			PetHandler.getInstance().removePet(this.getPet());
 		}
 
-		if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() && !this.getPet().isPetHat()) {
-			this.setInvisible(true);
-		}
-		else if (this.isInvisible()) {
-			this.setInvisible(false);
+		if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible()) {
+			this.setInvisible(!this.isInvisible());
 		}
 
 		if (this.isInvisible()) {
