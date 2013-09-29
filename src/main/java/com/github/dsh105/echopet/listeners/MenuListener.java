@@ -43,18 +43,22 @@ public class MenuListener implements Listener {
 		int slot = event.getRawSlot();
 
 		try {
-			if (slot < 0 || slot >= inv.getSize()) {
+			if (slot < 0 || slot >= inv.getSize() || inv.getItem(slot) == null) {
 				return;
 			}
 		} catch (Exception e) {return;}
 
 		if (event.getSlotType() == InventoryType.SlotType.RESULT) {
-			for (int i = 1; i <= 4; i++) {
-				if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).equals(SelectorItem.SELECTOR.getItem())) {
-					player.updateInventory();
-					event.setCancelled(true);
-					break;
+			try {
+				for (int i = 1; i <= 4; i++) {
+					if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).equals(SelectorItem.SELECTOR.getItem())) {
+						player.updateInventory();
+						event.setCancelled(true);
+						break;
+					}
 				}
+			} catch (Exception e) {
+				return;
 			}
 		}
 
