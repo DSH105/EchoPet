@@ -45,7 +45,7 @@ public class CommandComplete implements TabCompleter {
 						"enderman", "ghast", "horse", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig",
 						"pigzombie", "sheep", "silverfish", "skeleton", "slime", "snowman", "spider", "squid",
 						"villager", "witch", "wither", "wolf", "zombie", "name", "mount", "list", "info", "default",
-						"ride", "hat", "call", "show", "hide", "menu", "select"};
+						"ride", "hat", "call", "show", "hide", "menu", "select", "remove"};
 		}
 		return new String[0];
 	}
