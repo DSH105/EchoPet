@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.github.dsh105.echopet.logger.ConsoleLogger;
 import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
@@ -69,61 +70,28 @@ public class SQLPetHandler {
 					}
 
 					String dataList = SQLUtil.serialiseDataList(p.getActiveData(), isMount);
-					//String dataList2 = SQLUtil.serialiseDataList(p.getAllData(false), isMount);
 					String data1 = SQLUtil.serialiseDataListBooleans(p.getActiveData(), true);
-					//String data2 = SQLUtil.serialiseDataListBooleans(p.getAllData(false), false);
 
-					boolean b = false;
-					boolean bb = false;
 					String sql;
-
-					/*if ((!dataList.equalsIgnoreCase("") && !data1.equalsIgnoreCase(""))) {
-						sql = "INSERT INTO Pets (OwnerName, " + mountPrefix + "PetType, " + mountPrefix + "PetName, " + dataList + ", " + dataList2 + ")" +
-								"VALUES (?)";
-						b = true;
-						bb = true;
-					}
-					else */if ((!dataList.equalsIgnoreCase("") && !data1.equalsIgnoreCase(""))) {
+					if ((!dataList.equalsIgnoreCase("") && !data1.equalsIgnoreCase(""))) {
 						sql = "INSERT INTO Pets (OwnerName, " + mountPrefix + "PetType, " + mountPrefix + "PetName, " + dataList + ") " +
 								"VALUES (?)";
-						b = true;
-						bb = false;
 					}
-					/*else if ((!dataList2.equalsIgnoreCase("") && !data2.equalsIgnoreCase(""))) {
-						sql = "INSERT INTO Pets (OwnerName, " + mountPrefix + "PetType, " + mountPrefix + "PetName, " + dataList2 + ") " +
-								"VALUES (?)";
-						b = false;
-						bb = true;
-					}*/
 					else {
 						sql = "INSERT INTO Pets (OwnerName, " + mountPrefix + "PetType, " + mountPrefix + "PetName) " +
 								"VALUES (?)";
 					}
 
-					/*boolean case1 = b && bb;
-					boolean case2 = b && !bb;
-					boolean case3 = !b && bb;*/
-
 					String duplicate = "ON DUPLICATE KEY UPDATE " + mountPrefix + "PetType='" + p.getPetType().toString() + "', " + mountPrefix + "PetName='" + p.getNameToString() + "'";
 
 					//PreparedStatement ps = con.prepareStatement(sql);
 					String state = "'" + p.getOwner().getName() + "', '" + p.getPetType().toString() + "', '" + p.getNameToString() + "'";
-					/*if (case1) {
-						state = state + ", " + data1 + ", " + data2;
-						duplicate = duplicate + ", " + SQLUtil.serialiseUpdate(p.getAllData(true), true, isMount);
-						duplicate = duplicate + ", " + SQLUtil.serialiseUpdate(p.getAllData(false), false, isMount);
-					}
-					else if (case2) {*/
-						state = state + ", " + data1;
-						duplicate = duplicate + ", " + SQLUtil.serialiseUpdate(p.getActiveData(), true, isMount);
-					/*}
-					else if (case3) {
-						state = state + ", " + data2;
-						duplicate = duplicate + ", " + SQLUtil.serialiseUpdate(p.getAllData(false), false, isMount);
-					}*/
+
+					state = state + (data1.equalsIgnoreCase("") ? "" : ", " + data1);
+					duplicate = duplicate + SQLUtil.serialiseUpdate(p.getActiveData(), true, isMount);
+
 					con.createStatement().executeUpdate(sql.replace("?", state) + " " + duplicate + ";");
-					//ps.setString(1, state);
-					//ps.executeUpdate();
+
 
 					this.saveToDatabase(p.getMount(), true);
 
