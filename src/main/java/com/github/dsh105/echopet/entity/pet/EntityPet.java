@@ -8,11 +8,11 @@ import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import com.github.dsh105.echopet.data.PetHandler;
 import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.mysql.SQLPetHandler;
-import com.github.dsh105.echopet.util.Lang;
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R3.*;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity;
@@ -56,13 +56,13 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			this.pet = pet;
 			((LivingEntity) this.getBukkitEntity()).setMaxHealth(pet.getPetType().getMaxHealth());
 			this.setHealth(pet.getPetType().getMaxHealth());
-			this.jumpHeight = EchoPet.getPluginInstance().DO.getRideJumpHeight(this.getPet().getPetType());
-			this.rideSpeed = EchoPet.getPluginInstance().DO.getRideSpeed(this.getPet().getPetType());
+			this.jumpHeight = EchoPet.getPluginInstance().options.getRideJumpHeight(this.getPet().getPetType());
+			this.rideSpeed = EchoPet.getPluginInstance().options.getRideSpeed(this.getPet().getPetType());
 			this.jump = EntityLiving.class.getDeclaredField("bd");
 	        this.jump.setAccessible(true);
 			setPathfinding();
 		} catch (Exception e) {
-			EchoPet.getPluginInstance().severe(e, "Error creating new pet entity.");
+			Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityPet.", e, true);
 			this.remove();
 		}
 	}
@@ -80,7 +80,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
 		if (!attackEvent.isCancelled()) {
 			if (entity instanceof EntityPlayer) {
-				if (!((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("canAttackPlayers", false))) {
+				if (!((Boolean) EchoPet.getPluginInstance().options.getConfigOption("canAttackPlayers", false))) {
 					return false;
 				}
 			}
@@ -96,12 +96,11 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			
 			petGoalSelector.addGoal("Float", new PetGoalFloat(this));
 
-			petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(), this.getSizeCategory().getStopWalk(), this.getSizeCategory().getTeleport()));
+			petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())));
 			petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
-			//petGoalSelector.addGoal("RandomLookAround", new PetGoalRandomLookaround(this));
 			
 		} catch (Exception e) {
-			EchoPet.getPluginInstance().severe(e, "Error creating new pet entity.");
+			Logger.log(Logger.LogLevel.WARNING, "Could not add PetGoals to EntityPet AI.", e, true);
 		}
 	}
 
@@ -202,7 +201,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 		}*/
 		
 		if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
-			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("petMenuOnInteract", true)) {
+			if ((Boolean) EchoPet.getPluginInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
 				ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
 				int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
 				PetMenu menu = new PetMenu(getPet(), options, size);
@@ -273,7 +272,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 
 		PetType pt = this.getPet().getPetType();
         if (jump != null) {
-	        if (EchoPet.getPluginInstance().DO.canFly(pt)) {
+	        if (EchoPet.getPluginInstance().options.canFly(pt)) {
 		        try {
 			        if (((Player) (human.getBukkitEntity())).isFlying()) {
 				        ((Player) (human.getBukkitEntity())).setFlying(false);
@@ -286,7 +285,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 				        }
 			        }
 		        } catch (Exception e) {
-			        EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.");
+			        Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.", e, true);
 		        }
 	        }
 	        else if (this.onGround) {
@@ -299,7 +298,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 				        }
 			        }
 		        } catch (Exception e) {
-			        EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.");
+			        Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getOwner().getName() + "'s Pet.", e, true);
 		        }
 	        }
         }
@@ -337,17 +336,15 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 	protected void makeStepSound() {}
 
 	public void onLive() {
-		if (this.getOwner() == null || !this.getOwner().isOnline()) {
+		if (this.getOwner() == null || !this.getOwner().isOnline() || Bukkit.getPlayerExact(this.getOwner().getName()) == null) {
 			PetHandler.getInstance().removePet(this.getPet());
 		}
 
-		if (EchoPet.getPluginInstance().DO.invisOnShift(this.getPet().getPetType())) {
-			if (((this.getOwner().isSneaking() && !this.getOwner().isFlying()) || ((CraftPlayer) this.getOwner()).getHandle().isInvisible()) && !this.getPet().isPetHat()) {
-				this.setInvisible(true);
-			}
-			else if (this.isInvisible()) {
-				this.setInvisible(false);
-			}
+		if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() && !this.getPet().isPetHat()) {
+			this.setInvisible(true);
+		}
+		else if (this.isInvisible()) {
+			this.setInvisible(false);
 		}
 
 		if (this.isInvisible()) {
@@ -370,7 +367,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			this.particle++;
 		}
 
-		if (this.getOwner().isFlying() && EchoPet.getPluginInstance().DO.canFly(this.getPet().getPetType())) {
+		if (this.getOwner().isFlying() && EchoPet.getPluginInstance().options.canFly(this.getPet().getPetType())) {
 			Location petLoc = this.getLocation();
 			Location ownerLoc = this.getOwner().getLocation();
 			Vector v = ownerLoc.toVector().subtract(petLoc.toVector());

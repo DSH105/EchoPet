@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.entity.pet.witch;
 
 import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R3.*;
 
@@ -42,7 +43,7 @@ public class EntityWitchPet extends EntityPet {
 			try {
 				Particle.WITCH_MAGIC.sendToLocation(pet.getLocation());
 			} catch (Exception e) {
-				EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+				Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.github.dsh105.echopet.logger.Logger;
 import org.bukkit.ChatColor;
 
 import com.github.dsh105.echopet.EchoPet;
@@ -41,7 +42,7 @@ public class SQLConnection {
 				return true;
 			}
 		} catch (SQLException e) {
-			EchoPet.getPluginInstance().severe(e, "Closing Connection to MySQL Database failed.");
+			Logger.log(Logger.LogLevel.SEVERE, "Could not close Connection to MySQL Database.", e, true);
 		}
 		return false;
 	}
@@ -51,7 +52,7 @@ public class SQLConnection {
 			this.con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db, user, pass);
 			return this.con;
 		} catch (SQLException e) {
-			EchoPet.getPluginInstance().severe(e, "Failed to connect to SQL Database: ");
+			Logger.log(Logger.LogLevel.SEVERE, "Could not connect Connection to MySQL Database.", e, true);
 		}
 		return null;
 	}

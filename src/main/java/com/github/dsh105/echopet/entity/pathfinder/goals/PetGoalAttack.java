@@ -50,7 +50,7 @@ public class PetGoalAttack extends PetGoal {
 		else if (!entityliving.isAlive()) {
 			return true;
 		}
-		else if (this.pet.e(((CraftPlayer) this.pet.getOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport()) {
+		else if (this.pet.e(((CraftPlayer) this.pet.getOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport(this.pet.getPet().getPetType())) {
 			return true;
 		}
 		return false;

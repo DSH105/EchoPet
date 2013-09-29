@@ -532,7 +532,7 @@ public class PetAdminCommand implements CommandExecutor {
 						return true;
 					}
 
-					if (!ec.DO.allowMounts(petType)) {
+					if (!ec.options.allowMounts(petType)) {
 						Lang.sendTo(sender, Lang.MOUNTS_DISABLED.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return true;
@@ -562,7 +562,7 @@ public class PetAdminCommand implements CommandExecutor {
 			}
 
 			else if (sendError) {
-				Player target = Bukkit.getPlayer(args[1]);
+				Player target = Bukkit.getPlayer(args[0]);
 				if (target == null) {
 					Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[0]));
 					return true;

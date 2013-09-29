@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.log;
+package com.github.dsh105.echopet.logger;
 
 import com.github.dsh105.echopet.EchoPet;
 import org.bukkit.ChatColor;
@@ -16,26 +16,29 @@ public class Logger {
 	private static boolean enabled = false;
 
 	public static void initiate() {
-		EchoPet ec = EchoPet.getPluginInstance();
-		File folder = ec.getDataFolder();
+		EchoPet plugin = EchoPet.getPluginInstance();
+		File folder = plugin.getDataFolder();
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
 
-		File log = new File(ec.getDataFolder(), "EchoPet.log");
+		File log = new File(plugin.getDataFolder(), "EchoPet.log");
 		if (!log.exists()) {
 			try {
 				log.createNewFile();
-				logFile = log;
-				enabled = true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		logFile = log;
+		enabled = true;
 	}
 
-	public static void log(LogLevel logLevel, String message) {
+	public static void log(LogLevel logLevel, String message, boolean logToConsole) {
 		if (enabled) {
+			if (logToConsole) {
+				ConsoleLogger.log(logLevel, message);
+			}
 			FileWriter fw = null;
 			try {
 				fw = new FileWriter(logFile, true);
@@ -44,7 +47,31 @@ public class Logger {
 			}
 			PrintWriter pw = new PrintWriter(fw);
 			String date = new SimpleDateFormat("[dd/MM/yyyy]---[HH:mm:ss]").format(new Date());
-			pw.println(date + logLevel.getPrefix() + " " + message);
+			pw.println("\n" + date + logLevel.getPrefix() + " " + message + "\n");
+			pw.flush();
+			pw.close();
+		}
+	}
+
+	public static void log(LogLevel logLevel, String message, Exception e, boolean logToConsole) {
+		if (enabled) {
+			if (logToConsole) {
+				ConsoleLogger.stackTraceAlert(logLevel, message);
+			}
+			FileWriter fw = null;
+			try {
+				fw = new FileWriter(logFile, true);
+			} catch (IOException ioe) {
+				e.printStackTrace();
+			}
+			PrintWriter pw = new PrintWriter(fw);
+			String date = new SimpleDateFormat("[dd/MM/yyyy]---[HH:mm:ss]").format(new Date());
+			pw.println("\n" + date + logLevel.getPrefix() + " " + message);
+
+			e.printStackTrace(pw);
+
+			pw.println("\n");
+
 			pw.flush();
 			pw.close();
 		}

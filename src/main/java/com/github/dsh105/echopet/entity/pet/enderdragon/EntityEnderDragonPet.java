@@ -7,6 +7,7 @@ import com.github.dsh105.echopet.entity.pet.EntityNoClipPet;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.Pet;
 import com.github.dsh105.echopet.entity.pet.SizeCategory;
+import com.github.dsh105.echopet.logger.Logger;
 import net.minecraft.server.v1_6_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
@@ -144,7 +145,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 							}
 						}
 					} catch (Exception e) {
-						EchoPet.getPluginInstance().severe(e, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.");
+						Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getOwner().getName() + "'s Pet.", e, true);
 					}
 				}
 

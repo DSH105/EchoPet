@@ -2,9 +2,9 @@ package com.github.dsh105.echopet.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -58,7 +58,7 @@ public class PetHandler {
 
 	public Pet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
 		EchoPet ec = EchoPet.getPluginInstance();
-		if (ec.DO.sqlOverride()) {
+		if (ec.options.sqlOverride()) {
 			Pet pet = ec.SPH.createPetFromDatabase(p);
 			if (pet == null) {
 				return null;
@@ -84,7 +84,7 @@ public class PetHandler {
 			return pi;
 		}
 
-		else if ((checkWorldOverride && (Boolean) ec.DO.getConfigOption("multiworldSaveLoadOverride", true)) || (Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
+		else if ((checkWorldOverride && (Boolean) ec.options.getConfigOption("multiworldLoadOverride", true)) || (Boolean) ec.options.getConfigOption("loadSavedPets", true)) {
 			if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
 				Pet pi = ec.PH.createPetFromFile("autosave", p);
 				if (pi == null) {
@@ -120,7 +120,7 @@ public class PetHandler {
 			}
 			return null;
 		}
-		if (!ec.DO.allowPetType(petType)) {
+		if (!ec.options.allowPetType(petType)) {
 			if (sendMessageOnFail) {
 				Lang.sendTo(owner, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			}
@@ -143,7 +143,7 @@ public class PetHandler {
 			}
 			return null;
 		}
-		if (!ec.DO.allowPetType(petType)) {
+		if (!ec.options.allowPetType(petType)) {
 			if (sendFailMessage) {
 				Lang.sendTo(owner, Lang.PET_TYPE_DISABLED.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
 			}
@@ -199,7 +199,7 @@ public class PetHandler {
 	public void forceAllValidData(Pet pi) {
 		ArrayList<PetData> tempData = new ArrayList<PetData>();
 		for (PetData data : PetData.values()) {
-			if (ec.DO.forceData(pi.getPetType(), data)) {
+			if (ec.options.forceData(pi.getPetType(), data)) {
 				tempData.add(data);
 			}
 		}
@@ -208,14 +208,14 @@ public class PetHandler {
 		ArrayList<PetData> tempMountData = new ArrayList<PetData>();
 		if (pi.getMount() != null) {
 			for (PetData data : PetData.values()) {
-				if (ec.DO.forceData(pi.getPetType(), data)) {
+				if (ec.options.forceData(pi.getPetType(), data)) {
 					tempMountData.add(data);
 				}
 			}
 			setData(pi.getMount(), tempMountData.toArray(new PetData[tempData.size()]), true);
 		}
 		
-		if ((Boolean) ec.DO.getConfigOption("sendForceMessage", true)) {
+		if ((Boolean) ec.options.getConfigOption("sendForceMessage", true)) {
 			String dataToString = " ";
 			if (!tempMountData.isEmpty()) {
 				dataToString = StringUtil.dataToString(tempData);
@@ -240,7 +240,7 @@ public class PetHandler {
 	}
 	
 	public Pet createPetFromFile(String type, Player p) {
-		if ((Boolean) ec.DO.getConfigOption("autoLoadSavedPets", true)) {
+		if ((Boolean) ec.options.getConfigOption("loadSavedPets", true)) {
 			String path = type + "." + p.getName();
 			if (ec.getPetConfig().get(path) != null) {
 				PetType petType = PetType.valueOf(ec.getPetConfig().getString(path + ".pet.type"));
@@ -249,7 +249,7 @@ public class PetHandler {
 					name = petType.getDefaultName(p.getName());
 				}
 				if (petType == null) return null;
-				if (!ec.DO.allowPetType(petType)) {
+				if (!ec.options.allowPetType(petType)) {
 					return null;
 				}
 				Pet pi = this.createPet(p, petType, true);
@@ -270,7 +270,7 @@ public class PetHandler {
 							data.add(pd);
 						}
 						else {
-							ec.log(ChatColor.RED + "Error whilst loading data Pet Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key);
+							Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key + ".", true);
 						}
 					}
 				}
@@ -286,7 +286,7 @@ public class PetHandler {
 						mountName = mountPetType.getDefaultName(p.getName());
 					}
 					if (mountPetType == null) return null;
-					if (ec.DO.allowMounts(petType)) {
+					if (ec.options.allowMounts(petType)) {
 						Pet mount = pi.createMount(mountPetType, true);
 						if (mount != null) {
 							mount.setName(mountName);
@@ -299,7 +299,7 @@ public class PetHandler {
 										data.add(pd);
 									}
 									else {
-										ec.log(ChatColor.RED + "Error whilst loading data Pet Mount Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key);
+										Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Mount Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key + ".", true);
 									}
 								}
 							}
@@ -511,7 +511,7 @@ public class PetHandler {
 						((OcelotPet) pet).setCatType(t);
 					}
 				} catch (Exception e) {
-					EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
+					Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to Ocelot.Type.", e, true);
 				}
 			}
 
@@ -543,7 +543,7 @@ public class PetHandler {
 						}
 					}
 				} catch (Exception e) {
-					EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to DyeColor");
+					Logger.log(Logger.LogLevel.SEVERE, "Encountered exception whilst attempting to convert PetData to DyeColor.", e, true);
 				}
 			}
 
@@ -598,7 +598,7 @@ public class PetHandler {
 							((HorsePet) pet).setHorseType(h);
 						}
 					} catch (Exception e) {
-						EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Ocelot.Type");
+						Logger.log(Logger.LogLevel.WARNING, "Encountered exception whilst attempting to convert PetData to Horse.Type.", e, true);
 					}
 				}
 
@@ -613,7 +613,7 @@ public class PetHandler {
 							((HorsePet) pet).setVariant(v, m);
 						}
 					} catch (Exception e) {
-						EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Variant");
+						Logger.log(Logger.LogLevel.WARNING, "Encountered exception whilst attempting to convert PetData to Horse.Variant.", e, true);
 					}
 				}
 
@@ -640,7 +640,7 @@ public class PetHandler {
 							((HorsePet) pet).setVariant(v, m);
 						}
 					} catch (Exception e) {
-						EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Marking");
+						Logger.log(Logger.LogLevel.WARNING, "Encountered exception whilst attempting to convert PetData to Horse.Marking.", e, true);
 					}
 				}
 
@@ -657,7 +657,7 @@ public class PetHandler {
 							((HorsePet) pet).setArmour(a);
 						}
 					} catch(Exception e) {
-						EchoPet.getPluginInstance().debug(e, "Encountered exception whilst attempting to convert PetData to Horse.Armour");
+						Logger.log(Logger.LogLevel.WARNING, "Encountered exception whilst attempting to convert PetData to Horse.Armour.", e, true);
 					}
 				}
 			}
@@ -668,7 +668,6 @@ public class PetHandler {
 					for (PetData.Type type : pd.getTypes()) {
 						if (type != Type.BOOLEAN) {
 							if (petData.isType(type)) {
-								EchoPet.getPluginInstance().log("removed " + type);
 								i.remove();
 							}
 						}

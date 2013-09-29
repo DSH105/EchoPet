@@ -18,28 +18,7 @@ public class StringUtil {
 			return true;
 		} catch (NumberFormatException e) {return false;}
 	}
-	
-	// Permission handler and blocking of Console
-	public static boolean hp(String perm, CommandSender sender, boolean allowConsole) {
-		if (sender instanceof Player) {
-			if (sender.hasPermission("echopet.*")) {
-				return true;
-			}
-			boolean b = true;
-			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("requireDefaultPerm", false)) {
-				if (!sender.hasPermission("echopet.echopet")) {
-					b = false;
-				}
-			}
-			if (!(sender.hasPermission(perm) && b)) {
-				Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
-			}
-			return sender.hasPermission(perm) && b;
-		} else {
-			return allowConsole ? true : false;
-		}
-	}
-	
+
 	public static boolean hpp(String start, String perm, CommandSender sender, boolean allowConsole) {
 		String fullPerm;
 		if (perm.equalsIgnoreCase("")) {
@@ -52,16 +31,10 @@ public class StringUtil {
 			if (sender.hasPermission("echopet.*") || sender.hasPermission(start + ".*")) {
 				return true;
 			}
-			boolean b = true;
-			if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("requireDefaultPerm", false)) {
-				if (!sender.hasPermission("echopet.echopet")) {
-					b = false;
-				}
-			}
-			if (!(sender.hasPermission(fullPerm) && b)) {
+			if (!sender.hasPermission(fullPerm)) {
 				Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
 			}
-			return sender.hasPermission(fullPerm) && b;
+			return sender.hasPermission(fullPerm);
 		} else {
 			return allowConsole ? true : false;
 		}
@@ -78,16 +51,10 @@ public class StringUtil {
 		if (sender.hasPermission("echopet.*") || sender.hasPermission(start + ".*")) {
 			return true;
 		}
-		boolean b = true;
-		if ((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("requireDefaultPerm", false)) {
-			if (!sender.hasPermission("echopet.echopet")) {
-				b = false;
-			}
-		}
-		if (!(sender.hasPermission(fullPerm) && b)) {
+		if (!sender.hasPermission(fullPerm)) {
 			Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
 		}
-		return sender.hasPermission(fullPerm) && b;
+		return sender.hasPermission(fullPerm);
 	}
 	
 	public static String capitalise(String s) {

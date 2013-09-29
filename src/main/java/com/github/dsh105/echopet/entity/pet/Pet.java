@@ -3,6 +3,7 @@ package com.github.dsh105.echopet.entity.pet;
 import java.util.ArrayList;
 
 import com.github.dsh105.echopet.api.event.PetTeleportEvent;
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_6_R3.*;
 import org.bukkit.craftbukkit.v1_6_R3.*;
@@ -100,7 +101,7 @@ public class Pet {
 		try {
 			Particle.PORTAL.sendToLocation(this.getLocation());
 		} catch (Exception e) {
-			EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+			Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
 		}
 	}
 
@@ -138,7 +139,7 @@ public class Pet {
 		try {
 			Particle.PORTAL.sendToLocation(this.getLocation());
 		} catch (Exception e) {
-			EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+			Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
 		}
 	}
 	
@@ -166,7 +167,7 @@ public class Pet {
 		try {
 			Particle.MAGIC_RUNES.sendToLocation(l);
 		} catch (Exception e) {
-			EchoPet.getPluginInstance().debug(e, "Particle effect failed.");
+			Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
 		}
 		return entityPet;
 	}
@@ -212,7 +213,7 @@ public class Pet {
 		name = s;
 		LivingEntity le = craftPet;
 		le.setCustomName(s);
-		le.setCustomNameVisible((Boolean) EchoPet.getPluginInstance().DO.getConfigOption("petTagVisible", true));
+		le.setCustomNameVisible((Boolean) EchoPet.getPluginInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
 	}
 
 	/**
@@ -323,7 +324,7 @@ public class Pet {
 	 * @return a new {@link Pet} object that is mounting this {@link Pet}
 	 */
 	public Pet createMount(final PetType pt, boolean sendFailMessage) {
-		if (!EchoPet.getPluginInstance().DO.allowMounts(this.petType)) {
+		if (!EchoPet.getPluginInstance().options.allowMounts(this.petType)) {
 			if (sendFailMessage) {
 				Lang.sendTo(this.owner, Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.petType.toString())));
 			}

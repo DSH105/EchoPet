@@ -140,13 +140,13 @@ public class PetOwnerListener implements Listener {
 			}
 		}
 
-		if ((Boolean) ec.DO.getConfigOption("petSelector.clearInvOnJoin", false)) {
+		if ((Boolean) ec.options.getConfigOption("petSelector.clearInvOnJoin", false)) {
 			inv.clear();
 		}
-		if ((Boolean) ec.DO.getConfigOption("petSelector.giveOnJoin.enable", true)
-				&& (((Boolean) ec.DO.getConfigOption("petSelector.giveOnJoin.usePerm", false) && p.hasPermission((String) ec.DO.getConfigOption("petSelector.onJoin.give.perm", "echopet.selector.join")))
-				|| !((Boolean) ec.DO.getConfigOption("petSelector.giveOnJoin.usePerm", false)))) {
-			int slot = ((Integer) ec.DO.getConfigOption("petSelector.giveOnJoin.slot", 9)) - 1;
+		if ((Boolean) ec.options.getConfigOption("petSelector.giveOnJoin.enable", true)
+				&& (((Boolean) ec.options.getConfigOption("petSelector.giveOnJoin.usePerm", false) && p.hasPermission((String) ec.options.getConfigOption("petSelector.giveOnJoin.perm", "echopet.selector.join")))
+				|| !((Boolean) ec.options.getConfigOption("petSelector.giveOnJoin.usePerm", false)))) {
+			int slot = ((Integer) ec.options.getConfigOption("petSelector.giveOnJoin.slot", 9)) - 1;
 			ItemStack i = inv.getItem(slot);
 			ItemStack selector = SelectorItem.SELECTOR.getItem();
 			if (i != null) {
@@ -158,7 +158,7 @@ public class PetOwnerListener implements Listener {
 				inv.setItem(slot, selector);
 			}
 		}
-        final boolean sendMessage = ((Boolean) ec.DO.getConfigOption("sendPetLoadMessage", true));
+        final boolean sendMessage = ((Boolean) ec.options.getConfigOption("sendLoadMessage", true));
 
             new BukkitRunnable() {
 			

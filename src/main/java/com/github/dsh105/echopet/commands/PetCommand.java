@@ -383,7 +383,7 @@ public class PetCommand implements CommandExecutor {
 						return true;
 					}
 					
-					if (!ec.DO.allowMounts(petType)) {
+					if (!ec.options.allowMounts(petType)) {
 						Lang.sendTo(sender, Lang.MOUNTS_DISABLED.toString()
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return true;

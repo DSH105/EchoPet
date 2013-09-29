@@ -8,6 +8,8 @@ import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
 import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
+import com.github.dsh105.echopet.logger.ConsoleLogger;
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.mysql.SQLPetHandler;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.StringUtil;
@@ -37,7 +39,7 @@ public class EchoPetAPI {
 		if (player != null && petType != null) {
 			Pet pet = EchoPet.getPluginInstance().PH.createPet(player, petType, sendMessage);
 			if (pet == null) {
-				EchoPet.getPluginInstance().log("[SEVERE] Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml.");
+				ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml?");
 				return null;
 			}
 			if (sendMessage) {
@@ -104,6 +106,7 @@ public class EchoPetAPI {
 	 */
 	public boolean teleportPet(Pet pet, Location location) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to teleport Pet to Location through the EchoPetAPI. Pet cannot be null.");
 			return false;
 		}
 		if (pet.isPetHat() || pet.isOwnerRiding()) {
@@ -120,6 +123,7 @@ public class EchoPetAPI {
 	 */
 	public void addData(Pet pet, PetData petData) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		EchoPet.getPluginInstance().PH.setData(pet, new PetData[] {petData}, true);
@@ -133,6 +137,7 @@ public class EchoPetAPI {
 	 */
 	public void removeData(Pet pet, PetData petData) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to remove PetData [" + petData.toString() + "] from Pet through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		EchoPet.getPluginInstance().PH.setData(pet, new PetData[] {petData}, false);
@@ -147,6 +152,7 @@ public class EchoPetAPI {
 	 */
 	public boolean hasData(Pet pet, PetData petData) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to check PetData [" + petData.toString() + "] of Pet through the EchoPetAPI. Pet cannot be null.");
 			return false;
 		}
 		return pet.getActiveData().contains(petData);
@@ -160,6 +166,11 @@ public class EchoPetAPI {
 	 */
 	public void setAttackTarget(Pet pet, LivingEntity target) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to set attack target for Pet through the EchoPetAPI. Pet cannot be null.");
+			return;
+		}
+		if (target == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to set attack target for Pet through the EchoPetAPI. Target cannot be null.");
 			return;
 		}
 		if (pet.getEntityPet().petGoalSelector.getGoal(PetGoalAttack.class) != null) {
@@ -175,7 +186,7 @@ public class EchoPetAPI {
 	 */
 	public LivingEntity getAttackTarget(Pet pet) {
 		if (pet == null) {
-			return null;
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to get attack target for Pet through the EchoPetAPI. Pet cannot be null.");
 		}
 		return pet.getCraftPet().getTarget();
 	}
@@ -188,16 +199,17 @@ public class EchoPetAPI {
 	 */
 	public void addGoal(Pet pet, GoalType goalType) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		if (goalType == GoalType.ATTACK) {
-			pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getPluginInstance().DO.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPet.getPluginInstance().DO.getConfigOption("attack.ticksBetweenAttacks", 20)));
+			pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getPluginInstance().options.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPet.getPluginInstance().options.getConfigOption("attack.ticksBetweenAttacks", 20)));
 		}
 		else if (goalType == GoalType.FLOAT) {
 			pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));
 		}
 		else if (goalType == GoalType.FOLLOW_OWNER) {
-			pet.getEntityPet().petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(), pet.getEntityPet().getSizeCategory().getStopWalk(), pet.getEntityPet().getSizeCategory().getTeleport()));
+			pet.getEntityPet().petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getStopWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getTeleport(pet.getPetType())));
 		}
 		else if (goalType == GoalType.LOOK_AT_PLAYER) {
 			pet.getEntityPet().petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(pet.getEntityPet(), EntityHuman.class, 8.0F));
@@ -213,6 +225,11 @@ public class EchoPetAPI {
 	 */
 	public void addGoal(Pet pet, PetGoal goal, String identifier) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
+			return;
+		}
+		if (goal == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to ad PetGoal to Pet AI through the EchoPetAPI. Goal cannot be null.");
 			return;
 		}
 		pet.getEntityPet().petGoalSelector.addGoal(identifier, goal);
@@ -226,6 +243,7 @@ public class EchoPetAPI {
 	 */
 	public void removeGoal(Pet pet, GoalType goalType) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		pet.getEntityPet().petGoalSelector.removeGoal(goalType.getGoalString());
@@ -241,6 +259,7 @@ public class EchoPetAPI {
 	 */
 	public void removeGoal(Pet pet, String identifier) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
 			return;
 		}
 		pet.getEntityPet().petGoalSelector.removeGoal(identifier);
@@ -254,6 +273,11 @@ public class EchoPetAPI {
 	 */
 	public void removeGoal(Pet pet, PetGoal petGoal) {
 		if (pet == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
+			return;
+		}
+		if (petGoal == null) {
+			ConsoleLogger.log(Logger.LogLevel.SEVERE,"Failed to remove PetGoal from Pet AI through the EchoPetAPI. Goal cannot be null.");
 			return;
 		}
 		pet.getEntityPet().petGoalSelector.removeGoal(petGoal);

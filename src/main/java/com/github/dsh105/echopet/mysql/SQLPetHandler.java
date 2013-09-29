@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.github.dsh105.echopet.EchoPet;
@@ -23,7 +23,7 @@ public class SQLPetHandler {
 	}
 
 	public void updateDatabase(Player player, ArrayList<PetData> list, Boolean result, boolean isMount) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
 
 			if (con != null) {
@@ -43,7 +43,7 @@ public class SQLPetHandler {
 					ps4.executeUpdate();
 				}*/
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to save Pet data for " + player.getName() + " to MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player.getName() + " to MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {
@@ -57,7 +57,7 @@ public class SQLPetHandler {
 	}
 
 	public void saveToDatabase(Pet p, boolean isMount) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
 			String mountPrefix = isMount ? "Mount" : "";
 
@@ -128,7 +128,7 @@ public class SQLPetHandler {
 					this.saveToDatabase(p.getMount(), true);
 
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to save Pet data for " + p.getOwner().getName() + " to MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getOwner().getName() + " to MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {
@@ -142,7 +142,7 @@ public class SQLPetHandler {
 	}
 	
 	public Pet createPetFromDatabase(Player p) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
 
 			Pet pet = null;
@@ -217,7 +217,7 @@ public class SQLPetHandler {
 						}
 					}
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to retrieve Pet data for " + p.getName() + " in MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + p.getName() + " in MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {
@@ -253,7 +253,7 @@ public class SQLPetHandler {
 	}
 
 	public void saveToDatabase(Player p, UnorganisedPetData UPD, UnorganisedPetData UMD) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			PetType pt = UPD.petType;
 			PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 			String petName = UPD.petName;
@@ -305,7 +305,7 @@ public class SQLPetHandler {
 						ps5.executeUpdate();
 					}
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to save Pet data for " + p.getName() + " to MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getName() + " to MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {
@@ -320,7 +320,7 @@ public class SQLPetHandler {
 	}
 	
 	public void saveToDatabase(Player p, UnorganisedPetData UPD) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			PetType pt = UPD.petType;
 			PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
 			String petName = UPD.petName;
@@ -351,7 +351,7 @@ public class SQLPetHandler {
 						ps3.executeUpdate();
 					}
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to save Pet data for " + p.getName() + " to MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getName() + " to MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {
@@ -369,7 +369,7 @@ public class SQLPetHandler {
 	}
 
 	public void clearFromDatabase(String name) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
 
 			if (con != null) {
@@ -378,7 +378,7 @@ public class SQLPetHandler {
 					ps1.setString(1, name);
 					ps1.executeUpdate();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to retrieve Pet data for " + name + " in MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + name + " in MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {
@@ -392,7 +392,7 @@ public class SQLPetHandler {
 	}
 
 	public void clearMountFromDatabase(String name) {
-		if (EchoPet.getPluginInstance().DO.useSql()) {
+		if (EchoPet.getPluginInstance().options.useSql()) {
 			Connection con = EchoPet.getPluginInstance().getSqlCon();
 
 			if (con != null) {
@@ -407,7 +407,7 @@ public class SQLPetHandler {
 					ps.setString(2, name);
 					ps.executeUpdate();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to retrieve Pet data for " + name + " in MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + name + " in MySQL Database", e, true);
 				} finally {
 					// Close the connection
 				/*try {

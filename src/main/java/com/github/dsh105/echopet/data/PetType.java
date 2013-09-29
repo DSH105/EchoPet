@@ -7,6 +7,7 @@ import com.github.dsh105.echopet.entity.pet.enderdragon.EnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.giant.EntityGiantPet;
 import com.github.dsh105.echopet.entity.pet.giant.GiantPet;
+import com.github.dsh105.echopet.logger.Logger;
 import net.minecraft.server.v1_6_R3.World;
 
 import org.bukkit.entity.EntityType;
@@ -187,7 +188,7 @@ public enum PetType {
 				ePet = (EntityPet) o;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
 		}
 		return ePet;
 	}
@@ -200,7 +201,7 @@ public enum PetType {
 				p = (Pet) o;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance [" + pt.toString() + "].", e, true);
 		}
 		return p;
 	}

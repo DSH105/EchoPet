@@ -14,7 +14,7 @@ public class PigZombiePet extends Pet {
 	
 	public PigZombiePet(Player owner, PetType petType) {
 		super(owner, petType);
-		//this.equipment = EchoPet.getPluginInstance().DO.shouldHaveEquipment(getPet().getPetType());
+		//this.equipment = EchoPet.getPluginInstance().options.shouldHaveEquipment(getPet().getPetType());
 	}
 	
 	public void setBaby(boolean flag) {

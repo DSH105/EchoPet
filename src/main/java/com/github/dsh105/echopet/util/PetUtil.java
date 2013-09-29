@@ -177,7 +177,7 @@ public class PetUtil {
 								.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
 						return null;
 					}
-					if (!ec.DO.allowData(petType, dataTemp)) {
+					if (!ec.options.allowData(petType, dataTemp)) {
 						Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString()
 								.replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
 						return null;
@@ -186,7 +186,7 @@ public class PetUtil {
 			}
 		}
 		
-		if (!ec.DO.allowPetType(petType)) {
+		if (!ec.options.allowPetType(petType)) {
 			Lang.sendTo(sender, Lang.PET_TYPE_DISABLED.toString()
 					.replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
 			return null;

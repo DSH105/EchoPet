@@ -9,11 +9,13 @@ import java.util.Map;
 
 import com.github.dsh105.echopet.api.EchoPetAPI;
 import com.github.dsh105.echopet.commands.CommandComplete;
-import com.github.dsh105.echopet.config.DefaultOptions;
+import com.github.dsh105.echopet.config.options.ConfigOptions;
 import com.github.dsh105.echopet.entity.pet.EntityPet;
 import com.github.dsh105.echopet.entity.pet.enderdragon.EntityEnderDragonPet;
 import com.github.dsh105.echopet.entity.pet.giant.EntityGiantPet;
 import com.github.dsh105.echopet.listeners.*;
+import com.github.dsh105.echopet.logger.ConsoleLogger;
+import com.github.dsh105.echopet.logger.Logger;
 import com.github.dsh105.echopet.mysql.SQLRefresh;
 import net.minecraft.server.v1_6_R3.*;
 
@@ -75,7 +77,7 @@ public class EchoPet extends JavaPlugin {
 	private YAMLConfig petConfig;
 	private YAMLConfig mainConfig;
 	private YAMLConfig langConfig;
-	public DefaultOptions DO;
+	public ConfigOptions options;
 	public AutoSave AS;
 	public PetHandler PH;
 	public SQLPetHandler SPH;
@@ -100,33 +102,39 @@ public class EchoPet extends JavaPlugin {
 		plugin = this;
 		// Make sure that the plugin is running under the correct version to prevent errors
 		if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString())) {
-			this.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
+			ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
 					+ this.getDescription().getVersion() + ChatColor.RED
 					+ " is only compatible with:");
-			this.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
-			this.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
+			ConsoleLogger.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
+			ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 			return;
 		}
 
 		this.api = new EchoPetAPI();
 
 		PluginManager manager = getServer().getPluginManager();
-		DO = new DefaultOptions(this);
-		
+
 		configManager = new YAMLConfigManager(this);
 		String[] header = { "EchoPet By DSH105", "---------------------",
 				"Configuration for EchoPet 2",
 				"See the EchoPet Wiki before editing this file" };
 		try {
 			mainConfig = configManager.getNewConfig("config.yml", header);
-			DO.setDefaultValues(mainConfig);
-		} catch (Exception e) {}
-		
+		} catch (Exception e) {
+			Logger.log(Logger.LogLevel.WARNING, "Configuration File [config.yml] generation failed.", e, true);
+		}
+
 		mainConfig.reloadConfig();
-		
-		petConfig = configManager.getNewConfig("pets.yml");
-		petConfig.reloadConfig();
-		
+
+		options = new ConfigOptions(mainConfig);
+
+		try {
+			petConfig = configManager.getNewConfig("pets.yml");
+			petConfig.reloadConfig();
+		} catch (Exception e) {
+			Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
+		}
+
 		String[] langHeader = { "EchoPet By DSH105", "---------------------",
 				"Language Configuration File"};
 		try {
@@ -137,15 +145,19 @@ public class EchoPet extends JavaPlugin {
 					langConfig.set(l.getPath(), langConfig.getString(l.getPath(), l.toString_()), desc);
 				}
 				langConfig.saveConfig();
-			} catch (Exception e) {this.debug(e, "Failed to generate default Language File.");}
+			} catch (Exception e) {
+				Logger.log(Logger.LogLevel.WARNING, "Configuration File [language.yml] generation failed.", e, true);
+			}
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			Logger.log(Logger.LogLevel.WARNING, "Configuration File [language.yml] generation failed.", e, true);
+		}
 		langConfig.reloadConfig();
 		
 		PH = new PetHandler(this);
 		SPH = new SQLPetHandler();
 		
-		if (DO.useSql()) {
+		if (options.useSql()) {
 			String host = mainConfig.getString("sql.host", "localhost");
 			int port = mainConfig.getInt("sql.port", 3306);
 			String db = mainConfig.getString("sql.database", "EchoPet");
@@ -165,7 +177,7 @@ public class EchoPet extends JavaPlugin {
 							", PRIMARY KEY (OwnerName)" +
 							");").executeUpdate();
 				} catch (SQLException e) {
-					this.severe(e, "Failed to create 'Pets' table in MySQL Database");
+					Logger.log(Logger.LogLevel.SEVERE, "`Pets` Table generation failed [MySQL DataBase: " + db + "].", e, true);
 				}
 				this.sqlRefresh = new SQLRefresh(getMainConfig().getInt("sql.timeout") * 20 * 60);
 			}
@@ -220,16 +232,16 @@ public class EchoPet extends JavaPlugin {
 			}
 		}
 		catch (Exception e) {
-			this.debug(e, "Failed to register Pet Command.");
+			Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
 		}
 		
-		String cmdString = DO.getCommandString();
+		String cmdString = options.getCommandString();
 		if (CM.getCommand(cmdString) != null) {
-			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Pet Command temporarily registered under " + ChatColor.RED + "/ec:" + cmdString);
+			ConsoleLogger.log(Logger.LogLevel.WARNING, "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Pet Command temporarily registered under " + ChatColor.RED + "/ec:" + cmdString);
 		}
-		String adminCmdString = DO.getCommandString() + "admin";
+		String adminCmdString = options.getCommandString() + "admin";
 		if (CM.getCommand(adminCmdString) != null) {
-			this.log(ChatColor.YELLOW + "A command under the name " + ChatColor.RED + "/" + adminCmdString + ChatColor.YELLOW + " already exists. Pet Admin Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
+			ConsoleLogger.log(Logger.LogLevel.WARNING, "A command under the name " + ChatColor.RED + "/" + adminCmdString + ChatColor.YELLOW + " already exists. Pet Admin Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
 		}
 		CustomCommand petCmd = new CustomCommand(cmdString);
 		CM.register("ec", petCmd);
@@ -269,8 +281,8 @@ public class EchoPet extends JavaPlugin {
 				if (this.update) {
 					name = updater.getLatestVersionString();
 					size = updater.getFileSize();
-					log(ChatColor.GOLD + "An update is available: " + this.name + " (" + this.size + " bytes).");
-					log(ChatColor.GOLD + "Type /ecupdate to update.");
+					ConsoleLogger.log(ChatColor.GOLD + "An update is available: " + this.name + " (" + this.size + " bytes).");
+					ConsoleLogger.log(ChatColor.GOLD + "Type /ecupdate to update.");
 					if (updateCheck == false) {
 						updateCheck = true;
 					}
@@ -335,7 +347,7 @@ public class EchoPet extends JavaPlugin {
 			e.put(clazz, id);
 
 		} catch (Exception e) {
-			this.severe(e, "Failed to register pet entity.");
+			Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
 		}
 	}
 
@@ -347,11 +359,11 @@ public class EchoPet extends JavaPlugin {
 		return plugin;
 	}
 	
-	public void log(String msg) {
+	/*public void log(String msg) {
 		getServer().getConsoleSender().sendMessage("[EchoPet] " + msg);
-	}
+	}*/
 	
-	public void severe(Exception e, String msg) {
+	/*public void severe(Exception e, String msg) {
 		log(ChatColor.RED + msg);
 		e.printStackTrace();
 	}

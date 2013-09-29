@@ -14,7 +14,7 @@ public class WorldUtil {
 			return b;
 		}
 		else {
-			return EchoPet.getPluginInstance().getMainConfig().getBoolean("worlds.enableWorldsByDefault", true);
+			return EchoPet.getPluginInstance().getMainConfig().getBoolean("worlds.enableByDefault", true);
 		}
 	}
 }

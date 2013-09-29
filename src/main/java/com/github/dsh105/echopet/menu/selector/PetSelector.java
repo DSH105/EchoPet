@@ -7,8 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.HashSet;
-
 /**
  * Project by DSH105
  */
@@ -30,7 +28,7 @@ public class PetSelector implements Menu {
 		int count = 0;
 		for (PetItem item : PetItem.values()) {
 
-			if (EchoPet.getPluginInstance().DO.allowPetType(item.petType)) {
+			if (EchoPet.getPluginInstance().options.allowPetType(item.petType)) {
 				this.inv.setItem(count, item.getItem(this.viewer));
 				count++;
 			}

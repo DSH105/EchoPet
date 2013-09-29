@@ -1,6 +1,7 @@
 package com.github.dsh105.echopet.entity.pet;
 
 import com.github.dsh105.echopet.EchoPet;
+import com.github.dsh105.echopet.data.PetType;
 
 public enum SizeCategory {
 	
@@ -11,25 +12,19 @@ public enum SizeCategory {
 	OVERSIZE(10);
 	
 	private int mod;
-	private float start;
-	private float stop;
-	private float tele;
 	SizeCategory(int modifier) {
 		this.mod = modifier;
-		start = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("startWalkDistance", 12);
-		stop = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("stopWalkDistance", 8);
-		tele = (Integer) EchoPet.getPluginInstance().DO.getConfigOption("teleportDistance", 50);
 	}
 	
-	public float getStartWalk() {
-		return this.start * this.mod;
+	public float getStartWalk(PetType petType) {
+		return ((Integer) (EchoPet.getPluginInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".startFollowDistance", 12))) * this.mod;
 	}
 	
-	public float getStopWalk() {
-		return this.stop * this.mod;
+	public float getStopWalk(PetType petType) {
+		return ((Integer) (EchoPet.getPluginInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 8))) * this.mod;
 	}
 	
-	public float getTeleport() {
-		return this.tele * this.mod;
+	public float getTeleport(PetType petType) {
+		return ((Integer) (EchoPet.getPluginInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 50))) * this.mod;
 	}
 }
