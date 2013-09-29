@@ -124,9 +124,9 @@ public class EchoPet extends JavaPlugin {
 			Logger.log(Logger.LogLevel.WARNING, "Configuration File [config.yml] generation failed.", e, true);
 		}
 
-		mainConfig.reloadConfig();
-
 		options = new ConfigOptions(mainConfig);
+
+		mainConfig.reloadConfig();
 
 		try {
 			petConfig = configManager.getNewConfig("pets.yml");
