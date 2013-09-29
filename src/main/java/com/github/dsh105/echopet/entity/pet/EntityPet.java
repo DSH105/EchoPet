@@ -29,9 +29,12 @@ import com.github.dsh105.echopet.menu.main.MenuOption;
 import com.github.dsh105.echopet.menu.main.PetMenu;
 import com.github.dsh105.echopet.util.MenuUtil;
 import org.bukkit.util.Vector;
+import org.kitteh.vanish.staticaccess.VanishNoPacket;
 
 public abstract class EntityPet extends EntityCreature implements IMonster {
-	
+
+	public boolean vnp;
+
 	public EntityLiving goalTarget = null;
 	protected Pet pet;
 
@@ -340,7 +343,7 @@ public abstract class EntityPet extends EntityCreature implements IMonster {
 			PetHandler.getInstance().removePet(this.getPet());
 		}
 
-		if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible()) {
+		if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible() && !this.vnp) {
 			this.setInvisible(!this.isInvisible());
 		}
 
