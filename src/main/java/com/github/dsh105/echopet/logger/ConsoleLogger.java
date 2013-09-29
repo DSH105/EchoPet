@@ -25,6 +25,6 @@ public class ConsoleLogger {
 
 	public static void stackTraceAlert(Logger.LogLevel logLevel, String message) {
 		console.sendMessage(logLevel.getPrefix() + " " + message);
-		console.sendMessage(logLevel.getPrefix() + " See the Log File for details [SparkTrail.log].");
+		console.sendMessage(logLevel.getPrefix() + " See the Log File for details [EchoPet.log].");
 	}
 }
