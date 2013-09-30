@@ -210,6 +210,7 @@ public class MenuListener implements Listener {
 			else if (title.startsWith("EchoPet DataMenu - ")) {
 				if (inv.getItem(slot).equals(DataMenuItem.BACK.getItem())) {
 					player.closeInventory();
+					event.setCancelled(true);
 					new BukkitRunnable() {
 						public void run() {
 							int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
@@ -217,7 +218,6 @@ public class MenuListener implements Listener {
 							menu.open(false);
 						}
 					}.runTaskLater(ec, 1L);
-					event.setCancelled(true);
 					return;
 				}
 				for (DataMenuItem dmi : DataMenuItem.values()) {
