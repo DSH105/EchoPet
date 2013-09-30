@@ -50,6 +50,14 @@ public class PetAdminCommand implements CommandExecutor {
 
 		if (args.length == 1) {
 
+			if (args[0].equalsIgnoreCase("reload")) {
+				if (StringUtil.hpp("echopet.petadmin", "reload", sender, true)) {
+					EchoPet.getPluginInstance().getMainConfig().reloadConfig();
+					Lang.sendTo(sender, Lang.ADMIN_RELOAD_CONFIG.toString());
+				} else sendError = false;
+				return true;
+			}
+
 			if (args[0].equalsIgnoreCase("help")) {
 				if (StringUtil.hpp("echopet.petadmin", "", sender, true)) {
 					sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help 1/4 ------------");
