@@ -665,11 +665,12 @@ public class PetHandler {
 			while (i.hasNext()) {
 				PetData petData = i.next();
 				if (petData != pd) {
-					for (PetData.Type type : pd.getTypes()) {
-						if (type != Type.BOOLEAN) {
-							if (petData.isType(type)) {
-								i.remove();
-							}
+					ListIterator<PetData.Type> i2 = pd.getTypes().listIterator();
+					while (i2.hasNext()) {
+						Type type = i2.next();
+						if (type != Type.BOOLEAN && petData.isType(type)) {
+							i.remove();
+							break;
 						}
 					}
 				}
