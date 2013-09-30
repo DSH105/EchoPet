@@ -71,7 +71,32 @@ public enum HelpPage {
 					ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " hat",
 					ChatColor.YELLOW + "    - Have your pet ride on your head.",
 					ChatColor.YELLOW + "    - Appears higher to the owner to prevent sight obstruction.",
-					ChatColor.DARK_RED + "    - Permission: echopet.pet.hat");
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.hat",
+
+					ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " call",
+					ChatColor.YELLOW + "    - Call your Pet to your side.",
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.call"),
+
+	OTHER(5,		ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " menu",
+					ChatColor.YELLOW + "    - Open the Data Menu GUI for your Pet",
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.menu",
+
+					ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " show",
+					ChatColor.YELLOW + "    - Show your hidden Pet.",
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.show",
+
+					ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " hide",
+					ChatColor.YELLOW + "    - Hide your currently active Pet.",
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.hide"),
+
+	SELECTOR(6,		ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " select",
+					ChatColor.YELLOW + "    - Open the Pet Selector GUI.",
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.select",
+
+					ChatColor.GOLD + "/" + EchoPet.getPluginInstance().cmdString + " selector",
+					ChatColor.YELLOW + "    - Give yourself the Pet Selector.",
+					ChatColor.DARK_RED + "    - Permission: echopet.pet.selector");
+
 	private int id;
 	private String[] lines;
 	HelpPage(int id, String... lines) {

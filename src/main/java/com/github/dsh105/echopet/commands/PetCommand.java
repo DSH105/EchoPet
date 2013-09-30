@@ -246,7 +246,7 @@ public class PetCommand implements CommandExecutor {
 			// Help page 1
 			if (args[0].equalsIgnoreCase("help")) {
 				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
-					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/3 ------------");
+					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
 					sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
 					for (String s : HelpPage.getHelpPage(1)) {
 						sender.sendMessage(s);
@@ -413,14 +413,14 @@ public class PetCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("help")) {
 				if (StringUtil.hpp("echopet.pet", "", sender, true)) {
 					if (StringUtil.isInt(args[1])) {
-						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/3 ------------");
+						sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
 						sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
 						for (String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))) {
 							sender.sendMessage(s);
 						}
 						return true;
 					}
-					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/4 ------------");
+					sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
 					sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
 					for (String s : HelpPage.getHelpPage(1)) {
 						sender.sendMessage(s);
