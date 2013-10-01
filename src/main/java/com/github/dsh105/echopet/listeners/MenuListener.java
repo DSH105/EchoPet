@@ -110,8 +110,8 @@ public class MenuListener implements Listener {
 					}
 					if (inv.getItem(slot).equals(SelectorItem.MENU.getItem())) {
 						if (StringUtil.hpp("echopet.pet", "menu", player)) {
-							player.performCommand(cmd + " menu");
 							player.closeInventory();
+							player.performCommand(cmd + " menu");
 						}
 					}
 					for (PetItem i : PetItem.values()) {
