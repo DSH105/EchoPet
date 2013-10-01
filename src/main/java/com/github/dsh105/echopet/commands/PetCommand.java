@@ -175,11 +175,11 @@ public class PetCommand implements CommandExecutor {
 						Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
 						return true;
 					}
-					if (WorldUtil.allowPets(player.getWorld().getName())) {
+					if (WorldUtil.allowPets(player.getLocation())) {
 						Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
 					}
 					else {
-						Lang.sendTo(sender, Lang.WORLD_DISABLED.toString().replace("%world%", player.getWorld().getName()));
+						Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
 					}
 					return true;
 				} else sendError = false;

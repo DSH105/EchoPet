@@ -92,8 +92,8 @@ public class PetOwnerListener implements Listener {
 				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
 			else {
-				if (!WorldUtil.allowPets(event.getTo().getWorld().getName())) {
-					Lang.sendTo(p, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
+				if (!WorldUtil.allowPets(event.getTo())) {
+					Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
 					return;
 				}
 				PetHandler.getInstance().saveFileData("autosave", pi);

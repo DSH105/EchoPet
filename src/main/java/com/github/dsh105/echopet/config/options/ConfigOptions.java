@@ -111,6 +111,12 @@ public class ConfigOptions extends Options{
 		set("worlds." + Bukkit.getWorlds().get(0).getName(), true);
 		set("worlds.enableByDefault", true);
 
+		if (config.getConfigurationSection("worldguard.regions") == null) {
+			set("worldguard.regions.echopet", true);
+		}
+		set("worldguard.regions.allowByDefault", true);
+		set("worldguard.regionEnterCheck", true);
+
 		for (PetType petType : PetType.values()) {
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".tagVisible", true);

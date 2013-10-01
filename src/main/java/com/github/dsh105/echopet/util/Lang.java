@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 public enum Lang {
 
 	NO_PERMISSION("no_permission", "&6%perm% &epermission needed to perform that action."),
-	WORLD_DISABLED("world_disabled", "&ePets are disabled in this world."),
+	PETS_DISABLED_HERE("pets_disabled_here", "&ePets are not allowed here."),
+	ENTER_PET_DISABLED_REGION("enter_pet_disabled_region", "&eEntering region that does not allow Pets. Yours has been hidden."),
 	ADMIN_COMMAND_ERROR("admin_cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getPluginInstance().adminCmdString + " for help"),
 	COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getPluginInstance().cmdString + " for help."),
 	IN_GAME_ONLY("in_game_only", "&6%cmd% &ecan only be used in-game."),

@@ -114,9 +114,9 @@ public class PetHandler {
 	
 	public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
 		removePets(owner);
-		if (!WorldUtil.allowPets(owner.getWorld().getName())) {
+		if (!WorldUtil.allowPets(owner.getLocation())) {
 			if (sendMessageOnFail) {
-				Lang.sendTo(owner, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
+				Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
 			}
 			return null;
 		}
@@ -137,9 +137,9 @@ public class PetHandler {
 	
 	public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
 		removePets(owner);
-		if (!WorldUtil.allowPets(owner.getWorld().getName())) {
+		if (!WorldUtil.allowPets(owner.getLocation())) {
 			if (sendFailMessage) {
-				Lang.sendTo(owner, Lang.WORLD_DISABLED.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
+				Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
 			}
 			return null;
 		}

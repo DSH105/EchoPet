@@ -25,7 +25,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -69,7 +68,6 @@ import com.github.dsh105.echopet.mysql.SQLPetHandler;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.ReflectionUtil;
 import com.github.dsh105.echopet.util.SQLUtil;
-import org.kitteh.vanish.VanishPlugin;
 
 public class EchoPet extends JavaPlugin {
 	
@@ -264,8 +262,12 @@ public class EchoPet extends JavaPlugin {
 		manager.registerEvents(new PetEntityListener(this), this);
 		manager.registerEvents(new PetOwnerListener(this), this);
 
-		if (this.getVNP() != null) {
+		if (Hook.getVNP() != null) {
 			manager.registerEvents(new VanishListener(), this);
+		}
+
+		if (Hook.getWorldGuard() != null && this.getMainConfig().getBoolean("worldguard.regionEnterCheck", true)) {
+			manager.registerEvents(new RegionListener(), this);
 		}
 		
 		
@@ -358,14 +360,6 @@ public class EchoPet extends JavaPlugin {
 		} catch (Exception e) {
 			Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
 		}
-	}
-
-	public VanishPlugin getVNP() {
-		Plugin plugin = this.getServer().getPluginManager().getPlugin("VanishNoPacket");
-		if (plugin == null || !(plugin instanceof VanishPlugin)) {
-			return null;
-		}
-		return (VanishPlugin) plugin;
 	}
 
 	public EchoPetAPI getAPI() {
