@@ -44,7 +44,7 @@ public class ConfigOptions extends Options{
 
 	public boolean canFly(PetType petType) {
 		return this.config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ")
-				+ ".canRideFly", false);
+				+ ".canFly", false);
 	}
 
 	public Object getConfigOption(String s) {
