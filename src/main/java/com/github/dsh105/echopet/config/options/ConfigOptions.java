@@ -103,7 +103,7 @@ public class ConfigOptions extends Options{
 		set("autoSave", true, "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
 		set("autoSaveTimer", 180, "Interval between autosave of pet data (in seconds).");
 		set("loadSavedPets", true, "Auto-load pets from last session");
-		set("multiworldLoadOverride", true, "When true, if -autoLoadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
+		set("multiworldLoadOverride", true, "When true, if -loadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 
 		set("sendLoadMessage", true, "Send message that pet was loaded if -loadSavedPets- is true");
 		set("sendForceMessage", true, "For all data values forced, EchoPet will notify the player", "(if set to true).");
