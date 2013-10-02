@@ -54,8 +54,8 @@ public class PetAdminCommand implements CommandExecutor {
 				if (StringUtil.hpp("echopet.petadmin", "reload", sender, true)) {
 					EchoPet.getPluginInstance().getMainConfig().reloadConfig();
 					Lang.sendTo(sender, Lang.ADMIN_RELOAD_CONFIG.toString());
+					return true;
 				} else sendError = false;
-				return true;
 			}
 
 			if (args[0].equalsIgnoreCase("help")) {
