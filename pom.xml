@@ -4,7 +4,7 @@
   <artifactId>EchoPet</artifactId>
   <name>EchoPet</name>
   <properties>
-      <echopet.version>2.0.11</echopet.version>
+      <echopet.version>2.0.12-SNAPSHOT</echopet.version>
       <vnp.version>3.18.4-SNAPSHOT</vnp.version>
       <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
       <worldedit.version>5.5.9-SNAPSHOT</worldedit.version>
@@ -76,22 +76,40 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>Vault</artifactId>
+            <version>${vault.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
             <version>${worldedit.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>${worldguard.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
-            <version>${vault.version}</version>
-            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <repositories>
@@ -110,6 +128,16 @@
         <repository>
             <id>vault-repo</id>
             <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
+        </repository>
+        <repository>
+            <id>zml-repo</id>
+            <url>http://files.zachsthings.com/repo/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 </project>
