@@ -6,8 +6,9 @@
   <properties>
       <echopet.version>2.0.11</echopet.version>
       <vnp.version>3.18.4-SNAPSHOT</vnp.version>
-      <worldguard.version>5.7.3</worldguard.version>
-      <worldedit.version>5.5.6</worldedit.version>
+      <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
+      <worldedit.version>5.5.9-SNAPSHOT</worldedit.version>
+      <vault.version>1.2.27</vault.version>
       <minecraft.version>1.6.4</minecraft.version>
       <craftbukkit.version>R0.1</craftbukkit.version>
       <cb_package>v1_6_R3</cb_package>
@@ -78,11 +79,19 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
             <version>${worldedit.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>${worldguard.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>Vault</artifactId>
+            <version>${vault.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <repositories>
@@ -97,6 +106,10 @@
         <repository>
             <id>kitteh-repo</id>
             <url>http://repo.kitteh.org/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>vault-repo</id>
+            <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
         </repository>
     </repositories>
 </project>
