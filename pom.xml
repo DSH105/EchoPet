@@ -112,15 +112,7 @@
             </exclusions>
         </dependency>
     </dependencies>
-    <ciManagement>
-        <system>jenkins</system>
-        <url>http://build.hawkfalcon.com</url>
-    </ciManagement>
     <repositories>
-        <repository>
-            <id>hawkfalcon-repo</id>
-            <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
-        </repository>
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
