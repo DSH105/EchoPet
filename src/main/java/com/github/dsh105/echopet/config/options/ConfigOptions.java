@@ -120,6 +120,7 @@ public class ConfigOptions extends Options{
 		for (PetType petType : PetType.values()) {
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".tagVisible", true);
+			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".defaultName", petType.getDefaultName());
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".interactMenu", true);
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".startFollowDistance", 12);
 			set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 8);
