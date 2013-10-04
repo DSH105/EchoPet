@@ -282,11 +282,11 @@ public class EchoPet extends JavaPlugin {
 	}
 	
 	public void checkUpdates() {
-		if (this.getMainConfig().getBoolean("autoUpdate", false) == true) {
+		if (this.getMainConfig().getBoolean("autoUpdate", false)) {
 			@SuppressWarnings("unused")
 			Updater updater = new Updater(this, "echopet", this.getFile(), Updater.UpdateType.DEFAULT, true);
 		} else {
-			if (this.getMainConfig().getBoolean("checkForUpdates", true) == true) {
+			if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
 				Updater updater = new Updater(this, "echopet", this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
 				update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
 				if (this.update) {
@@ -294,7 +294,7 @@ public class EchoPet extends JavaPlugin {
 					size = updater.getFileSize();
 					ConsoleLogger.log(ChatColor.GOLD + "An update is available: " + this.name + " (" + this.size + " bytes).");
 					ConsoleLogger.log(ChatColor.GOLD + "Type /ecupdate to update.");
-					if (updateCheck == false) {
+					if (!updateCheck) {
 						updateCheck = true;
 					}
 				}
@@ -309,7 +309,7 @@ public class EchoPet extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (commandLabel.equalsIgnoreCase("ecupdate")) {
 			if (sender.hasPermission("echopet.update")) {
-				if (updateCheck == true) {
+				if (updateCheck) {
 					@SuppressWarnings("unused")
 					Updater updater = new Updater(this, "echopet", this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
 					return true;
