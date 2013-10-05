@@ -42,42 +42,34 @@ public class CraftPet extends CraftCreature {
 		}
 	}
 
-	@Override
 	public void _INVALID_damage(int amount) {
 		damage((double) amount);
 	}
 
-	@Override
 	public void _INVALID_damage(int amount, Entity source) {
 		damage((double) amount, source);
 	}
 
-	@Override
 	public int _INVALID_getHealth() {
 		return (int) getHealth();
 	}
 
-	@Override
 	public int _INVALID_getLastDamage() {
 		return (int) getLastDamage();
 	}
 
-	@Override
 	public int _INVALID_getMaxHealth() {
 		return (int) getMaxHealth();
 	}
 
-	@Override
 	public void _INVALID_setHealth(int health) {
 		setHealth((double) health);
 	}
 
-	@Override
 	public void _INVALID_setLastDamage(int damage) {
 		setLastDamage((double) damage);
 	}
 
-	@Override
 	public void _INVALID_setMaxHealth(int health) {
 	}
 
