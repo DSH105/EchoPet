@@ -16,7 +16,6 @@ import com.github.dsh105.echopet.entity.pet.EntityPet;
 public class PetGoalFollowOwner extends PetGoal {
 
 	private EntityPet pet; //d
-	private float speed = 0.4F; //f
 	private Navigation nav; //g
 	private int timer = 0; //h
 	private double startDistance;
@@ -76,7 +75,9 @@ public class PetGoalFollowOwner extends PetGoal {
 	@Override
 	public void start() {
 		this.timer = 0;
-		//this.nav.a(false);
+		
+		//Set path fidning radius
+		pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance);
 	}
 	
 	@Override
@@ -94,15 +95,13 @@ public class PetGoalFollowOwner extends PetGoal {
 				//Dont move pet when owner flying
 				return;
 			}
-			if (this.pet.getOwner().isSprinting()) {
-				this.speed = 0.5F;
-			}
-			else if (this.pet.getOwner().isSneaking()) {
-				this.speed = 0.3F;
-			}
-			else {
-				this.speed = 0.4F;
-			}
+			
+			double speed = 1.6D;
+			if(owner.isSprinting()) {
+				speed = 2.0D;
+			} else if(owner.isSneaking())
+				speed = 1.2D;
+			
 			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
 			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
 			if (moveEvent.isCancelled()) {
