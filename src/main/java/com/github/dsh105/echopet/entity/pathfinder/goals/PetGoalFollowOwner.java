@@ -76,7 +76,7 @@ public class PetGoalFollowOwner extends PetGoal {
 	public void start() {
 		this.timer = 0;
 		
-		//Set path fidning radius
+		//Set pathfinding radius
 		pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance);
 	}
 	
@@ -92,7 +92,7 @@ public class PetGoalFollowOwner extends PetGoal {
 		if (--this.timer <= 0) {
 			this.timer = 10;
 			if(this.pet.getOwner().isFlying()) {
-				//Dont move pet when owner flying
+				//Don't move pet when owner flying
 				return;
 			}
 			
@@ -107,7 +107,7 @@ public class PetGoalFollowOwner extends PetGoal {
 			if (moveEvent.isCancelled()) {
 				return;
 			}
-			//Entity.e: get location squired between 2 entities, needs distance * distance
+			//Entity.e: get location squared between 2 entities, needs distance * distance
 			if (this.pet.e(this.owner) > (this.teleportDistance * this.teleportDistance)) {
 				this.pet.getPet().teleport(this.pet.getOwner().getLocation());
 			}
