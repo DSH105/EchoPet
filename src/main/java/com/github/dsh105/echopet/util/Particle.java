@@ -92,7 +92,7 @@ public enum Particle {
 		ReflectionUtil.setValue(packet, "g", new Random().nextFloat());
 		ReflectionUtil.setValue(packet, "h", defaultSpeed);
 		ReflectionUtil.setValue(packet, "i", particleAmount);
-		ReflectionUtil.sendPacketToLocation(l, packet);
+		ReflectionUtil.sendPacket(l, packet);
 	}
 
 	public void sendToPlayer(Location l, Player p) throws Exception {
@@ -108,7 +108,7 @@ public enum Particle {
 		ReflectionUtil.setValue(packet, "g", new Random().nextFloat());
 		ReflectionUtil.setValue(packet, "h", defaultSpeed);
 		ReflectionUtil.setValue(packet, "i", particleAmount);
-		((CraftPlayer) p).getHandle().playerConnection.sendPacket((Packet) packet);
+		ReflectionUtil.sendPacket(p, packet);
 	}
 	
 	public void sendToLocation(Packet63WorldParticles packet, Location l) throws Exception {
@@ -121,6 +121,6 @@ public enum Particle {
 		ReflectionUtil.setValue(packet, "g", new Random().nextFloat());
 		ReflectionUtil.setValue(packet, "h", defaultSpeed);
 		ReflectionUtil.setValue(packet, "i", particleAmount);
-		ReflectionUtil.sendPacketToLocation(l, packet);
+		ReflectionUtil.sendPacket(l, packet);
 	}
 }
