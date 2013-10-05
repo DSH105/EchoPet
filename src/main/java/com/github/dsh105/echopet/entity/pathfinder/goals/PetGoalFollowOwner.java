@@ -96,11 +96,11 @@ public class PetGoalFollowOwner extends PetGoal {
 				return;
 			}
 			
-			double speed = 1.6D;
+			double speed = 0.6F;
 			if(owner.isSprinting()) {
-				speed = 2.0D;
+				speed = 0.7F;
 			} else if(owner.isSneaking())
-				speed = 1.2D;
+				speed = 0.4F;
 			
 			PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
 			EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
