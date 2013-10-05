@@ -3,9 +3,10 @@ package com.github.dsh105.echopet.entity.pathfinder.goals;
 import com.github.dsh105.echopet.EchoPet;
 import com.github.dsh105.echopet.api.event.PetMoveEvent;
 import net.minecraft.server.v1_6_R3.EntityPlayer;
+import net.minecraft.server.v1_6_R3.GenericAttributes;
 import net.minecraft.server.v1_6_R3.Navigation;
+import net.minecraft.server.v1_6_R3.PathEntity;
 
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 
 import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
@@ -89,6 +90,10 @@ public class PetGoalFollowOwner extends PetGoal {
 		this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
 		if (--this.timer <= 0) {
 			this.timer = 10;
+			if(this.pet.getOwner().isFlying()) {
+				//Dont move pet when owner flying
+				return;
+			}
 			if (this.pet.getOwner().isSprinting()) {
 				this.speed = 0.5F;
 			}
@@ -103,14 +108,16 @@ public class PetGoalFollowOwner extends PetGoal {
 			if (moveEvent.isCancelled()) {
 				return;
 			}
-			Location to = moveEvent.getTo();
-			if ((!this.pet.getOwner().isFlying() && this.pet.e(this.owner) > this.teleportDistance) || (this.pet.getOwner().isFlying() && this.pet.e(this.owner) > (this.teleportDistance * this.teleportDistance))) {
+			//Entity.e: get location squired between 2 entities, needs distance * distance
+			if (this.pet.e(this.owner) > (this.teleportDistance * this.teleportDistance)) {
 				this.pet.getPet().teleport(this.pet.getOwner().getLocation());
 			}
-			else if (!this.nav.a(to.getX(), to.getY(), to.getZ(), speed)) {
+			else if (!this.nav.a(owner, speed)) {
 				if (owner.onGround && pet.goalTarget == null) {
-					this.pet.setPositionRotation(to.getX(), to.getY(), to.getZ(), this.pet.yaw, this.pet.pitch);
-					this.nav.a(to.getX(), to.getY(), to.getZ(), speed);
+					//Smooth path finding to entity instead of location
+					PathEntity path = pet.world.findPath(pet, owner, (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
+					pet.setPathEntity(path);
+					nav.a(path, speed);
 				}
 			}
 		}
