@@ -77,7 +77,7 @@ public class PetGoalFollowOwner extends PetGoal {
 		this.timer = 0;
 		
 		//Set pathfinding radius
-		pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance);
+		pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance * this.teleportDistance);
 	}
 	
 	@Override
