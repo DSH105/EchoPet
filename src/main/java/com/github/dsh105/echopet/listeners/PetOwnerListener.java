@@ -82,6 +82,10 @@ public class PetOwnerListener implements Listener {
 				PetHandler.getInstance().saveFileData("autosave", pi);
 				SQLPetHandler.getInstance().saveToDatabase(pi, false);
 				PetHandler.getInstance().removePet(pi);
+				if (!WorldUtil.allowPets(event.getTo())) {
+					Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
+					return;
+				}
 				new BukkitRunnable() {
 
 					@Override
@@ -92,13 +96,13 @@ public class PetOwnerListener implements Listener {
 				}.runTaskLater(EchoPet.getPluginInstance(), 20L);
 			}
 			else {
+				PetHandler.getInstance().saveFileData("autosave", pi);
+				SQLPetHandler.getInstance().saveToDatabase(pi, false);
+				ec.PH.removePet(pi);
 				if (!WorldUtil.allowPets(event.getTo())) {
 					Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
 					return;
 				}
-				PetHandler.getInstance().saveFileData("autosave", pi);
-				SQLPetHandler.getInstance().saveToDatabase(pi, false);
-				ec.PH.removePet(pi);
 				Lang.sendTo(p, Lang.DIMENSION_CHANGE.toString());
 				new BukkitRunnable() {
 
