@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.*;
 
 import com.github.dsh105.echopet.EchoPet;
@@ -82,6 +83,14 @@ public class PetEntityListener implements Listener {
 	
 	@EventHandler
 	public void onEntityInteract(EntityInteractEvent event) {
+		Entity e = event.getEntity();
+		if (e instanceof CraftPet) {
+			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onBlockForm(EntityBlockFormEvent event) {
 		Entity e = event.getEntity();
 		if (e instanceof CraftPet) {
 			event.setCancelled(true);
