@@ -1,5 +1,6 @@
 package com.github.dsh105.echopet;
 
+import com.github.dsh105.echopet.Updater.UpdateType;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -68,6 +69,7 @@ import com.github.dsh105.echopet.mysql.SQLPetHandler;
 import com.github.dsh105.echopet.util.Lang;
 import com.github.dsh105.echopet.util.ReflectionUtil;
 import com.github.dsh105.echopet.util.SQLUtil;
+import java.io.File;
 
 public class EchoPet extends JavaPlugin {
 	
@@ -89,7 +91,7 @@ public class EchoPet extends JavaPlugin {
 
 	public String cmdString = "pet";
 	public String adminCmdString = "petadmin";
-	
+
 	// Update data
 	public boolean update = false;
 	public String name = "";
@@ -97,7 +99,8 @@ public class EchoPet extends JavaPlugin {
 	public boolean updateCheck = false;
 
 	public CommandMap CM;
-	
+
+        @Override
 	public void onEnable() {
 		plugin = this;
 		Logger.initiate();
@@ -280,38 +283,38 @@ public class EchoPet extends JavaPlugin {
 
 		this.checkUpdates();
 	}
-	
-	public void checkUpdates() {
-		if (this.getMainConfig().getBoolean("autoUpdate", false)) {
-			@SuppressWarnings("unused")
-			Updater updater = new Updater(this, "echopet", this.getFile(), Updater.UpdateType.DEFAULT, true);
-		} else {
-			if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
-				Updater updater = new Updater(this, "echopet", this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
-				update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
-				if (this.update) {
-					name = updater.getLatestVersionString();
-					size = updater.getFileSize();
-					ConsoleLogger.log(ChatColor.GOLD + "An update is available: " + this.name + " (" + this.size + " bytes).");
-					ConsoleLogger.log(ChatColor.GOLD + "Type /ecupdate to update.");
-					if (!updateCheck) {
-						updateCheck = true;
-					}
-				}
-			}
-		}
-	}
-	
+
+	protected void checkUpdates() {
+            if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
+                final File file = this.getFile();
+                final Updater.UpdateType updateType = this.getMainConfig().getBoolean("autoUpdate", false) ? UpdateType.DEFAULT : UpdateType.NO_DOWNLOAD;
+                getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+                    @Override
+                    public void run() {
+                        Updater updater = new Updater(plugin, 67135, file, updateType, false);
+                        update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
+                        if(update) {
+                            name = updater.getLatestName();
+                            ConsoleLogger.log(ChatColor.GOLD + "An update is available: " + name);
+                            ConsoleLogger.log(ChatColor.GOLD + "Type /ecupdate to update.");
+                        }
+                    }
+                });
+            }
+        }
+
+        @Override
 	public void onDisable() {
 		PH.removeAllPets();
 	}
-	
+
+        @Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (commandLabel.equalsIgnoreCase("ecupdate")) {
 			if (sender.hasPermission("echopet.update")) {
 				if (updateCheck) {
 					@SuppressWarnings("unused")
-					Updater updater = new Updater(this, "echopet", this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+					Updater updater = new Updater(this, 67135, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
 					return true;
 				}
 				else {
@@ -365,7 +368,7 @@ public class EchoPet extends JavaPlugin {
 	public EchoPetAPI getAPI() {
 		return this.api;
 	}
-	
+
 	public static EchoPet getPluginInstance() {
 		return plugin;
 	}
@@ -373,15 +376,15 @@ public class EchoPet extends JavaPlugin {
 	public Connection getSqlCon() {
 		return this.sqlCon.getConnection();
 	}
-	
+
 	public YAMLConfig getPetConfig() {
 		return this.petConfig;
 	}
-	
+
 	public YAMLConfig getMainConfig() {
 		return mainConfig;
 	}
-	
+
 	public YAMLConfig getLangConfig() {
 		return langConfig;
 	}
