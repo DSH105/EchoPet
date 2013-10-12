@@ -1,9 +1,9 @@
-package com.github.dsh105.echopet.data;
+package io.github.dsh105.echopet.data;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 
 public class AutoSave {

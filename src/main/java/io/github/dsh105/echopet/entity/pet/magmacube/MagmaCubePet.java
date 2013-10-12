@@ -1,9 +1,9 @@
-package com.github.dsh105.echopet.entity.pet.magmacube;
+package io.github.dsh105.echopet.entity.pet.magmacube;
 
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 
 public class MagmaCubePet extends Pet {

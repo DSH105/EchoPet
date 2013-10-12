@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.entity.pathfinder;
+package io.github.dsh105.echopet.entity.pathfinder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

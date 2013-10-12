@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.config;
+package io.github.dsh105.echopet.config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import com.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPet;
 
 public class YAMLConfigManager {
 

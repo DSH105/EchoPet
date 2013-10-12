@@ -1,8 +1,8 @@
-package com.github.dsh105.echopet.entity.pathfinder.goals;
+package io.github.dsh105.echopet.entity.pathfinder.goals;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pet.EntityPet;
 import net.minecraft.server.v1_6_R3.EntityLiving;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 

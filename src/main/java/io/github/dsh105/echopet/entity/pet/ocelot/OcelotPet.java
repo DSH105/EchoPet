@@ -1,12 +1,12 @@
-package com.github.dsh105.echopet.entity.pet.ocelot;
+package io.github.dsh105.echopet.entity.pet.ocelot;
 
 
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.IAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.IAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class OcelotPet extends Pet implements IAgeablePet {
 	

@@ -1,11 +1,11 @@
-package com.github.dsh105.echopet.entity.pet.sheep;
+package io.github.dsh105.echopet.entity.pet.sheep;
 
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.IAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.IAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 
 public class SheepPet extends Pet implements IAgeablePet {

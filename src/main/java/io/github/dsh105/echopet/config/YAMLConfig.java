@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.config;
+package io.github.dsh105.echopet.config;
 
 import java.io.File;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPet;
  
 public class YAMLConfig {
     private int comments;

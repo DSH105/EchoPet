@@ -1,9 +1,9 @@
-package com.github.dsh105.echopet.entity.pet.irongolem;
+package io.github.dsh105.echopet.entity.pet.irongolem;
 
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 
 public class IronGolemPet extends Pet {

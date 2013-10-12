@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.menu.selector;
+package io.github.dsh105.echopet.menu.selector;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

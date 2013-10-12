@@ -1,13 +1,13 @@
-package com.github.dsh105.echopet.mysql;
+package io.github.dsh105.echopet.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.logger.Logger;
 import org.bukkit.ChatColor;
 
-import com.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPet;
 
 
 public class SQLConnection {

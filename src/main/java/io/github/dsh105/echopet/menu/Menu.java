@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.menu;
+package io.github.dsh105.echopet.menu;
 
 public interface Menu {
 	

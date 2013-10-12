@@ -1,25 +1,25 @@
-package com.github.dsh105.echopet.api;
+package io.github.dsh105.echopet.api;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
-import com.github.dsh105.echopet.logger.ConsoleLogger;
-import com.github.dsh105.echopet.logger.Logger;
-import com.github.dsh105.echopet.mysql.SQLPetHandler;
-import com.github.dsh105.echopet.util.Lang;
-import com.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
+import io.github.dsh105.echopet.logger.ConsoleLogger;
+import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.mysql.SQLPetHandler;
+import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.StringUtil;
 import net.minecraft.server.v1_6_R3.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 import java.util.ArrayList;
 

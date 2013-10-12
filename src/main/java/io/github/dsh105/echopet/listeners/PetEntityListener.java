@@ -1,8 +1,8 @@
-package com.github.dsh105.echopet.listeners;
+package io.github.dsh105.echopet.listeners;
 
-import com.github.dsh105.echopet.api.event.PetAttackEvent;
-import com.github.dsh105.echopet.api.event.PetDamageEvent;
-import com.github.dsh105.echopet.api.event.PetInteractEvent;
+import io.github.dsh105.echopet.api.event.PetAttackEvent;
+import io.github.dsh105.echopet.api.event.PetDamageEvent;
+import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import net.minecraft.server.v1_6_R3.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -12,8 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.*;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.entity.pet.CraftPet;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.entity.pet.CraftPet;
 
 public class PetEntityListener implements Listener {
 	

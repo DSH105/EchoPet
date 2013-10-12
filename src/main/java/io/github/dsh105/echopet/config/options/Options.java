@@ -1,6 +1,6 @@
-package com.github.dsh105.echopet.config.options;
+package io.github.dsh105.echopet.config.options;
 
-import com.github.dsh105.echopet.config.YAMLConfig;
+import io.github.dsh105.echopet.config.YAMLConfig;
 
 /**
  * Project by DSH105

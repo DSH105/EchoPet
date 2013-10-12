@@ -1,10 +1,10 @@
-package com.github.dsh105.echopet.util;
+package io.github.dsh105.echopet.util;
 
 import java.util.ArrayList;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.menu.main.MenuItem;
-import com.github.dsh105.echopet.menu.main.MenuOption;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.menu.main.MenuItem;
+import io.github.dsh105.echopet.menu.main.MenuOption;
 
 
 public class MenuUtil {

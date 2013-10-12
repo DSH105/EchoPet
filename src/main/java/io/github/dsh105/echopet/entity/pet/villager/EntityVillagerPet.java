@@ -1,14 +1,14 @@
-package com.github.dsh105.echopet.entity.pet.villager;
+package io.github.dsh105.echopet.entity.pet.villager;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.logger.Logger;
-import com.github.dsh105.echopet.util.Particle;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.entity.Villager.Profession;
 
-import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class EntityVillagerPet extends EntityAgeablePet {
 

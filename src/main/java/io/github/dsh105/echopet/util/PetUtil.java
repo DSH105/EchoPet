@@ -1,32 +1,32 @@
-package com.github.dsh105.echopet.util;
+package io.github.dsh105.echopet.util;
 
 import java.util.ArrayList;
 
-import com.github.dsh105.echopet.entity.pet.pig.PigPet;
+import io.github.dsh105.echopet.entity.pet.pig.PigPet;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.data.UnorganisedPetData;
-import com.github.dsh105.echopet.entity.pet.IAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.entity.pet.blaze.BlazePet;
-import com.github.dsh105.echopet.entity.pet.creeper.CreeperPet;
-import com.github.dsh105.echopet.entity.pet.enderman.EndermanPet;
-import com.github.dsh105.echopet.entity.pet.horse.HorsePet;
-import com.github.dsh105.echopet.entity.pet.horse.HorseType;
-import com.github.dsh105.echopet.entity.pet.magmacube.MagmaCubePet;
-import com.github.dsh105.echopet.entity.pet.ocelot.OcelotPet;
-import com.github.dsh105.echopet.entity.pet.pigzombie.PigZombiePet;
-import com.github.dsh105.echopet.entity.pet.sheep.SheepPet;
-import com.github.dsh105.echopet.entity.pet.skeleton.SkeletonPet;
-import com.github.dsh105.echopet.entity.pet.slime.SlimePet;
-import com.github.dsh105.echopet.entity.pet.villager.VillagerPet;
-import com.github.dsh105.echopet.entity.pet.wither.WitherPet;
-import com.github.dsh105.echopet.entity.pet.wolf.WolfPet;
-import com.github.dsh105.echopet.entity.pet.zombie.ZombiePet;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.data.UnorganisedPetData;
+import io.github.dsh105.echopet.entity.pet.IAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.blaze.BlazePet;
+import io.github.dsh105.echopet.entity.pet.creeper.CreeperPet;
+import io.github.dsh105.echopet.entity.pet.enderman.EndermanPet;
+import io.github.dsh105.echopet.entity.pet.horse.HorsePet;
+import io.github.dsh105.echopet.entity.pet.horse.HorseType;
+import io.github.dsh105.echopet.entity.pet.magmacube.MagmaCubePet;
+import io.github.dsh105.echopet.entity.pet.ocelot.OcelotPet;
+import io.github.dsh105.echopet.entity.pet.pigzombie.PigZombiePet;
+import io.github.dsh105.echopet.entity.pet.sheep.SheepPet;
+import io.github.dsh105.echopet.entity.pet.skeleton.SkeletonPet;
+import io.github.dsh105.echopet.entity.pet.slime.SlimePet;
+import io.github.dsh105.echopet.entity.pet.villager.VillagerPet;
+import io.github.dsh105.echopet.entity.pet.wither.WitherPet;
+import io.github.dsh105.echopet.entity.pet.wolf.WolfPet;
+import io.github.dsh105.echopet.entity.pet.zombie.ZombiePet;
 
 public class PetUtil {
 	

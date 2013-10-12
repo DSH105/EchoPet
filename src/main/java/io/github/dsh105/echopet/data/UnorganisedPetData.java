@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.data;
+package io.github.dsh105.echopet.data;
 
 import java.util.ArrayList;
 

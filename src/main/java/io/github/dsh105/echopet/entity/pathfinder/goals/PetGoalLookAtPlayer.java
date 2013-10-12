@@ -1,10 +1,10 @@
-package com.github.dsh105.echopet.entity.pathfinder.goals;
+package io.github.dsh105.echopet.entity.pathfinder.goals;
 
 import net.minecraft.server.v1_6_R3.Entity;
 import net.minecraft.server.v1_6_R3.EntityHuman;
 
-import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pet.EntityPet;
 
 public class PetGoalLookAtPlayer extends PetGoal {
 	

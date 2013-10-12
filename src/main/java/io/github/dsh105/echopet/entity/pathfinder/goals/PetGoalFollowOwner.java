@@ -1,7 +1,7 @@
-package com.github.dsh105.echopet.entity.pathfinder.goals;
+package io.github.dsh105.echopet.entity.pathfinder.goals;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.api.event.PetMoveEvent;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.api.event.PetMoveEvent;
 import net.minecraft.server.v1_6_R3.EntityPlayer;
 import net.minecraft.server.v1_6_R3.GenericAttributes;
 import net.minecraft.server.v1_6_R3.Navigation;
@@ -9,8 +9,8 @@ import net.minecraft.server.v1_6_R3.PathEntity;
 
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 
-import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pet.EntityPet;
 
 
 public class PetGoalFollowOwner extends PetGoal {

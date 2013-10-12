@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.util;
+package io.github.dsh105.echopet.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import com.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPet;
 
 public class ReflectionUtil {
 	

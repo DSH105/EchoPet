@@ -1,10 +1,10 @@
-package com.github.dsh105.echopet.entity.pet.cavespider;
+package io.github.dsh105.echopet.entity.pet.cavespider;
 
 
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class CaveSpiderPet extends Pet {
 

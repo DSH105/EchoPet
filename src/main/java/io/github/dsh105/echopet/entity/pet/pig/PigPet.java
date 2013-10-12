@@ -1,11 +1,11 @@
-package com.github.dsh105.echopet.entity.pet.pig;
+package io.github.dsh105.echopet.entity.pet.pig;
 
 
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.IAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.IAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class PigPet extends Pet implements IAgeablePet {
 	

@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.api.event;
+package io.github.dsh105.echopet.api.event;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

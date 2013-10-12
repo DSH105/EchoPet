@@ -1,15 +1,15 @@
-package com.github.dsh105.echopet.entity.pet;
+package io.github.dsh105.echopet.entity.pet;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import com.github.dsh105.echopet.api.event.PetAttackEvent;
-import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
-import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.logger.Logger;
-import com.github.dsh105.echopet.util.Particle;
+import io.github.dsh105.echopet.api.event.PetAttackEvent;
+import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
+import io.github.dsh105.echopet.api.event.PetRideMoveEvent;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.Bukkit;
@@ -20,14 +20,14 @@ import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.entity.pathfinder.PetGoalSelector;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
-import com.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
-import com.github.dsh105.echopet.menu.main.MenuOption;
-import com.github.dsh105.echopet.menu.main.PetMenu;
-import com.github.dsh105.echopet.util.MenuUtil;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoalSelector;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
+import io.github.dsh105.echopet.menu.main.MenuOption;
+import io.github.dsh105.echopet.menu.main.PetMenu;
+import io.github.dsh105.echopet.util.MenuUtil;
 import org.bukkit.util.Vector;
 import org.kitteh.vanish.staticaccess.VanishNoPacket;
 

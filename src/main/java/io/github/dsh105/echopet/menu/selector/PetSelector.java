@@ -1,8 +1,8 @@
-package com.github.dsh105.echopet.menu.selector;
+package io.github.dsh105.echopet.menu.selector;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.api.event.PetSelectMenuOpenEvent;
-import com.github.dsh105.echopet.menu.Menu;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.api.event.PetSelectMenuOpenEvent;
+import io.github.dsh105.echopet.menu.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

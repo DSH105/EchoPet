@@ -1,7 +1,7 @@
-package com.github.dsh105.echopet.menu.selector;
+package io.github.dsh105.echopet.menu.selector;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.util.PetUtil;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.util.PetUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

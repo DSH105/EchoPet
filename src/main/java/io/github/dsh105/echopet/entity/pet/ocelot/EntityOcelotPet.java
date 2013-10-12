@@ -1,11 +1,11 @@
-package com.github.dsh105.echopet.entity.pet.ocelot;
+package io.github.dsh105.echopet.entity.pet.ocelot;
 
 import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.entity.Ocelot.Type;
 
-import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class EntityOcelotPet extends EntityAgeablePet {
 

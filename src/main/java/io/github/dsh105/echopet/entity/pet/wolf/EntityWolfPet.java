@@ -1,12 +1,12 @@
-package com.github.dsh105.echopet.entity.pet.wolf;
+package io.github.dsh105.echopet.entity.pet.wolf;
 
-import com.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.data.PetData;
 import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.DyeColor;
 
-import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class EntityWolfPet extends EntityAgeablePet {
 

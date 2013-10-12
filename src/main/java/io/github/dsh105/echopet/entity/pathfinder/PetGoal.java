@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.entity.pathfinder;
+package io.github.dsh105.echopet.entity.pathfinder;
 
 public abstract class PetGoal {
 	

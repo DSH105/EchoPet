@@ -1,18 +1,18 @@
-package com.github.dsh105.echopet.menu.main;
+package io.github.dsh105.echopet.menu.main;
 
 import java.util.ArrayList;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.api.event.PetMenuOpenEvent;
-import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.menu.Menu;
-import com.github.dsh105.echopet.util.EnumUtil;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
+import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.menu.Menu;
+import io.github.dsh105.echopet.util.EnumUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
-import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.util.Lang;
-import com.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.StringUtil;
 
 
 public class PetMenu implements Menu {

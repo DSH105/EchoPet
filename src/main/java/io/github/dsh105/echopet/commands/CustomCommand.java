@@ -1,6 +1,6 @@
-package com.github.dsh105.echopet.commands;
+package io.github.dsh105.echopet.commands;
 
-import com.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPet;
 import org.apache.commons.lang.Validate;
 import org.bukkit.command.*;
 

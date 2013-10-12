@@ -1,13 +1,13 @@
-package com.github.dsh105.echopet.entity.pet.skeleton;
+package io.github.dsh105.echopet.entity.pet.skeleton;
 
 import net.minecraft.server.v1_6_R3.*;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
-import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.entity.pet.SizeCategory;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.entity.pet.EntityPet;
+import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.SizeCategory;
 
 public class EntitySkeletonPet extends EntityPet {
 

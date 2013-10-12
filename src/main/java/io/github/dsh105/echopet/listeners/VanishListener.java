@@ -1,7 +1,7 @@
-package com.github.dsh105.echopet.listeners;
+package io.github.dsh105.echopet.listeners;
 
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.entity.pet.Pet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

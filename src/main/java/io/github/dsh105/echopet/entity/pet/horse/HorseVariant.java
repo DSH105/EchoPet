@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.entity.pet.horse;
+package io.github.dsh105.echopet.entity.pet.horse;
 
 public enum HorseVariant {
 	

@@ -1,6 +1,6 @@
-package com.github.dsh105.echopet;
+package io.github.dsh105.echopet;
 
-import com.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;

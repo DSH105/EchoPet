@@ -1,12 +1,12 @@
-package com.github.dsh105.echopet.listeners;
+package io.github.dsh105.echopet.listeners;
 
-import com.github.dsh105.echopet.api.event.PetInteractEvent;
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.menu.selector.PetSelector;
-import com.github.dsh105.echopet.menu.selector.SelectorItem;
-import com.github.dsh105.echopet.mysql.SQLPetHandler;
-import com.github.dsh105.echopet.util.StringUtil;
-import com.github.dsh105.echopet.util.WorldUtil;
+import io.github.dsh105.echopet.api.event.PetInteractEvent;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.menu.selector.PetSelector;
+import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.mysql.SQLPetHandler;
+import io.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -20,10 +20,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.entity.pet.CraftPet;
-import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.entity.pet.CraftPet;
+import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.util.Lang;
 
 public class PetOwnerListener implements Listener {
 	

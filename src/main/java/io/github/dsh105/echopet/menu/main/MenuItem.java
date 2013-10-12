@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.menu.main;
+package io.github.dsh105.echopet.menu.main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
+import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 
 public enum MenuItem {
 	

@@ -1,15 +1,15 @@
-package com.github.dsh105.echopet.listeners;
+package io.github.dsh105.echopet.listeners;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.logger.Logger;
-import com.github.dsh105.echopet.menu.main.*;
-import com.github.dsh105.echopet.menu.selector.PetItem;
-import com.github.dsh105.echopet.menu.selector.SelectorItem;
-import com.github.dsh105.echopet.util.*;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.menu.main.*;
+import io.github.dsh105.echopet.menu.selector.PetItem;
+import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.util.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,10 +21,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 
 public class MenuListener implements Listener {
 	

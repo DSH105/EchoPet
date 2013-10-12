@@ -1,11 +1,11 @@
-package com.github.dsh105.echopet.entity.pet.villager;
+package io.github.dsh105.echopet.entity.pet.villager;
 
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.entity.pet.IAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.pet.IAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 
 public class VillagerPet extends Pet implements IAgeablePet {

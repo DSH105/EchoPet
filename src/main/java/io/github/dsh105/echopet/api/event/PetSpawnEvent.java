@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.api.event;
+package io.github.dsh105.echopet.api.event;
 
 
 import org.bukkit.Location;
@@ -6,7 +6,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class PetSpawnEvent extends Event implements Cancellable {
 	

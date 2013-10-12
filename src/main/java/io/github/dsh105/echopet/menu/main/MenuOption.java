@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.menu.main;
+package io.github.dsh105.echopet.menu.main;
 
 
 public class MenuOption {

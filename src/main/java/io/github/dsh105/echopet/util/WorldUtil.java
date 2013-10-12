@@ -1,7 +1,7 @@
-package com.github.dsh105.echopet.util;
+package io.github.dsh105.echopet.util;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.Hook;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.Hook;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;

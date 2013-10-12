@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.entity.pet;
+package io.github.dsh105.echopet.entity.pet;
 
 public interface IAgeablePet {
 	

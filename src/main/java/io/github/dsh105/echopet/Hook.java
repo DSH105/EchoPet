@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet;
+package io.github.dsh105.echopet;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.plugin.Plugin;

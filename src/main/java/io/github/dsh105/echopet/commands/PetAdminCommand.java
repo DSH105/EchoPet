@@ -1,13 +1,13 @@
-package com.github.dsh105.echopet.commands;
+package io.github.dsh105.echopet.commands;
 
-import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.data.UnorganisedPetData;
-import com.github.dsh105.echopet.menu.main.MenuOption;
-import com.github.dsh105.echopet.menu.main.PetMenu;
-import com.github.dsh105.echopet.menu.selector.PetSelector;
-import com.github.dsh105.echopet.menu.selector.SelectorItem;
-import com.github.dsh105.echopet.util.*;
+import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.data.UnorganisedPetData;
+import io.github.dsh105.echopet.menu.main.MenuOption;
+import io.github.dsh105.echopet.menu.main.PetMenu;
+import io.github.dsh105.echopet.menu.selector.PetSelector;
+import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,9 +16,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 import java.util.ArrayList;
 

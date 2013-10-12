@@ -1,7 +1,7 @@
-package com.github.dsh105.echopet.entity.pathfinder.goals;
+package io.github.dsh105.echopet.entity.pathfinder.goals;
 
-import com.github.dsh105.echopet.entity.pathfinder.PetGoal;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pet.EntityPet;
 
 public class PetGoalFloat extends PetGoal {
 	

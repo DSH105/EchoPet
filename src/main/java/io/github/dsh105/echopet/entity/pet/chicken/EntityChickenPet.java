@@ -1,9 +1,9 @@
-package com.github.dsh105.echopet.entity.pet.chicken;
+package io.github.dsh105.echopet.entity.pet.chicken;
 
 import net.minecraft.server.v1_6_R3.*;
 
-import com.github.dsh105.echopet.entity.pet.EntityAgeablePet;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class EntityChickenPet extends EntityAgeablePet {
 

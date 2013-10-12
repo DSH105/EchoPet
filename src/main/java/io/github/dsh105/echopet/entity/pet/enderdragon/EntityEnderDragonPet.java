@@ -1,13 +1,13 @@
-package com.github.dsh105.echopet.entity.pet.enderdragon;
+package io.github.dsh105.echopet.entity.pet.enderdragon;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.api.event.PetRideJumpEvent;
-import com.github.dsh105.echopet.api.event.PetRideMoveEvent;
-import com.github.dsh105.echopet.entity.pet.EntityNoClipPet;
-import com.github.dsh105.echopet.entity.pet.EntityPet;
-import com.github.dsh105.echopet.entity.pet.Pet;
-import com.github.dsh105.echopet.entity.pet.SizeCategory;
-import com.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
+import io.github.dsh105.echopet.api.event.PetRideMoveEvent;
+import io.github.dsh105.echopet.entity.pet.EntityNoClipPet;
+import io.github.dsh105.echopet.entity.pet.EntityPet;
+import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.SizeCategory;
+import io.github.dsh105.echopet.logger.Logger;
 import net.minecraft.server.v1_6_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;

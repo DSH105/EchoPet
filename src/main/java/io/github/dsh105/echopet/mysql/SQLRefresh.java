@@ -1,6 +1,6 @@
-package com.github.dsh105.echopet.mysql;
+package io.github.dsh105.echopet.mysql;
 
-import com.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPet;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class SQLRefresh extends BukkitRunnable {

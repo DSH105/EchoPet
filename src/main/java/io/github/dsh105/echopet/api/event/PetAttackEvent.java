@@ -1,6 +1,6 @@
-package com.github.dsh105.echopet.api.event;
+package io.github.dsh105.echopet.api.event;
 
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.pet.Pet;
 import net.minecraft.server.v1_6_R3.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;

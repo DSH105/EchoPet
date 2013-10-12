@@ -1,4 +1,4 @@
-package com.github.dsh105.echopet.entity.pet.horse;
+package io.github.dsh105.echopet.entity.pet.horse;
 
 public enum HorseMarking {
 	NONE(0, 1, 2, 3, 4, 5, 6),

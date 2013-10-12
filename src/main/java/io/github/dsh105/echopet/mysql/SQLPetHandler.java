@@ -1,21 +1,21 @@
-package com.github.dsh105.echopet.mysql;
+package io.github.dsh105.echopet.mysql;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.github.dsh105.echopet.logger.ConsoleLogger;
-import com.github.dsh105.echopet.logger.Logger;
-import com.github.dsh105.echopet.util.SQLUtil;
+import io.github.dsh105.echopet.logger.ConsoleLogger;
+import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.github.dsh105.echopet.EchoPet;
-import com.github.dsh105.echopet.data.PetData;
-import com.github.dsh105.echopet.data.PetHandler;
-import com.github.dsh105.echopet.data.PetType;
-import com.github.dsh105.echopet.data.UnorganisedPetData;
-import com.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.data.UnorganisedPetData;
+import io.github.dsh105.echopet.entity.pet.Pet;
 
 public class SQLPetHandler {
 
