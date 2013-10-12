@@ -12,7 +12,7 @@
       <minecraft.version>1.6.4</minecraft.version>
       <craftbukkit.version>R0.1</craftbukkit.version>
       <cb_package>v1_6_R3</cb_package>
-      <main.class>com.github.dsh105.echopet.EchoPet</main.class>
+      <main.class>io.github.dsh105.echopet.EchoPet</main.class>
   </properties>
   <version>${echopet.version}</version>
   <build>
