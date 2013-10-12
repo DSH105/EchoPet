@@ -6,6 +6,12 @@
 
 package io.github.dsh105.echopet;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,12 +19,6 @@ import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
  * Check dev.bukkit.org to find updates for a given plugin, and download the updates if needed.
@@ -61,7 +61,7 @@ public class Updater {
     private static final String QUERY = "/servermods/files?projectIds="; // Path to GET
     private static final String HOST = "https://api.curseforge.com"; // Slugs will be appended to this to get to the project's RSS feed
 
-    private static final String[] NO_UPDATE_TAG = { "-DEV", "-PRE", "-SNAPSHOT" }; // If the version number contains one of these, don't update.
+    private static final String[] NO_UPDATE_TAG = {"-DEV", "-PRE", "-SNAPSHOT"}; // If the version number contains one of these, don't update.
     private static final int BYTE_SIZE = 1024; // Used for downloading files
     private YamlConfiguration config; // Config file
     private String updateFolder;// The folder that downloads will be placed in

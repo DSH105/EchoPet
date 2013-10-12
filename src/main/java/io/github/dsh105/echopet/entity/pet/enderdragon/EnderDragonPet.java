@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 public class EnderDragonPet extends Pet {
 
-	public EnderDragonPet(Player owner, PetType petType) {
-		super(owner, petType);
-	}
+    public EnderDragonPet(Player owner, PetType petType) {
+        super(owner, petType);
+    }
 }

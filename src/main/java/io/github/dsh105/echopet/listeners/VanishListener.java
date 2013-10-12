@@ -13,13 +13,13 @@ import org.kitteh.vanish.event.VanishStatusChangeEvent;
 
 public class VanishListener implements Listener {
 
-	@EventHandler
-	public void onVanish(VanishStatusChangeEvent event) {
-		Player p = event.getPlayer();
-		Pet pet = PetHandler.getInstance().getPet(p);
-		if (pet != null) {
-			pet.getEntityPet().vnp = event.isVanishing();
-			pet.getEntityPet().setInvisible(event.isVanishing());
-		}
-	}
+    @EventHandler
+    public void onVanish(VanishStatusChangeEvent event) {
+        Player p = event.getPlayer();
+        Pet pet = PetHandler.getInstance().getPet(p);
+        if (pet != null) {
+            pet.getEntityPet().vnp = event.isVanishing();
+            pet.getEntityPet().setInvisible(event.isVanishing());
+        }
+    }
 }

@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class GiantPet extends Pet {
 
-	public GiantPet(Player owner, PetType petType) {
-		super(owner, petType);
-	}
+    public GiantPet(Player owner, PetType petType) {
+        super(owner, petType);
+    }
 }

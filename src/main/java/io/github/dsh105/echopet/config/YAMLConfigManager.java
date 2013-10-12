@@ -1,345 +1,336 @@
 package io.github.dsh105.echopet.config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
-
 import io.github.dsh105.echopet.EchoPet;
+
+import java.io.*;
+import java.nio.charset.Charset;
 
 public class YAMLConfigManager {
 
-	private EchoPet plugin;
-	
-	public YAMLConfigManager(EchoPet plugin) {
-		this.plugin = plugin;
-	}
+    private EchoPet plugin;
 
-	public YAMLConfig getNewConfig(String filePath, String[] header) {
+    public YAMLConfigManager(EchoPet plugin) {
+        this.plugin = plugin;
+    }
 
-		File file = this.getConfigFile(filePath);
-		
-		boolean fileExists = file.exists();
-		if (!fileExists) {
-			this.prepareFile(filePath);
+    public YAMLConfig getNewConfig(String filePath, String[] header) {
 
-			if (header != null && header.length != 0) {
-				this.setHeader(file, header);
-			}
+        File file = this.getConfigFile(filePath);
 
-		}
+        boolean fileExists = file.exists();
+        if (!fileExists) {
+            this.prepareFile(filePath);
 
-		YAMLConfig config = new YAMLConfig(this.getConfigContent(filePath), file,
-				this.getCommentsNum(file), plugin);
-		return config;
+            if (header != null && header.length != 0) {
+                this.setHeader(file, header);
+            }
 
-	}
-	
-	public YAMLConfig getNewConfig(String filePath) {
-		return this.getNewConfig(filePath, null);
-	}
-	
-	private File getConfigFile(String file) {
+        }
 
-		if (file.isEmpty() || file == null) {
-			return null;
-		}
+        YAMLConfig config = new YAMLConfig(this.getConfigContent(filePath), file,
+                this.getCommentsNum(file), plugin);
+        return config;
 
-		File configFile;
+    }
 
-		if (file.contains("/")) {
+    public YAMLConfig getNewConfig(String filePath) {
+        return this.getNewConfig(filePath, null);
+    }
 
-			if (file.startsWith("/")) {
-				configFile = new File(plugin.getDataFolder()
-						+ file.replace("/", File.separator));
-			} else {
-				configFile = new File(plugin.getDataFolder() + File.separator
-						+ file.replace("/", File.separator));
-			}
+    private File getConfigFile(String file) {
 
-		} else {
-			configFile = new File(plugin.getDataFolder(), file);
-		}
+        if (file.isEmpty() || file == null) {
+            return null;
+        }
 
-		return configFile;
+        File configFile;
 
-	}
-	
-	public void prepareFile(String filePath, String resource) {
+        if (file.contains("/")) {
 
-		File file = this.getConfigFile(filePath);
+            if (file.startsWith("/")) {
+                configFile = new File(plugin.getDataFolder()
+                        + file.replace("/", File.separator));
+            } else {
+                configFile = new File(plugin.getDataFolder() + File.separator
+                        + file.replace("/", File.separator));
+            }
 
-		if (file.exists()) {
-			return;
-		}
+        } else {
+            configFile = new File(plugin.getDataFolder(), file);
+        }
 
-		try {
-			file.getParentFile().mkdirs();
-			file.createNewFile();
+        return configFile;
 
-			if (resource != null && !resource.isEmpty()) {
-				this.copyResource(plugin.getResource(resource), file);
-			}
+    }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    public void prepareFile(String filePath, String resource) {
 
-	}
-	
-	public void prepareFile(String filePath) {
-		this.prepareFile(filePath, null);
-	}
-	
-	public void setHeader(File file, String[] header) {
+        File file = this.getConfigFile(filePath);
 
-		if (!file.exists()) {
-			return;
-		}
+        if (file.exists()) {
+            return;
+        }
 
-		try {
-			String currentLine;
-			StringBuilder config = new StringBuilder("");
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+        try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
 
-			while ((currentLine = reader.readLine()) != null) {
-				config.append(currentLine + "\n");
-			}
+            if (resource != null && !resource.isEmpty()) {
+                this.copyResource(plugin.getResource(resource), file);
+            }
 
-			reader.close();
-			config.append("# +----------------------------------------------------+ #\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-			for (String line : header) {
+    }
 
-				if (line.length() > 50) {
-					continue;
-				}
+    public void prepareFile(String filePath) {
+        this.prepareFile(filePath, null);
+    }
 
-				int lenght = (50 - line.length()) / 2;
-				StringBuilder finalLine = new StringBuilder(line);
+    public void setHeader(File file, String[] header) {
 
-				for (int i = 0; i < lenght; i++) {
-					finalLine.append(" ");
-					finalLine.reverse();
-					finalLine.append(" ");
-					finalLine.reverse();
-				}
+        if (!file.exists()) {
+            return;
+        }
 
-				if (line.length() % 2 != 0) {
-					finalLine.append(" ");
-				}
+        try {
+            String currentLine;
+            StringBuilder config = new StringBuilder("");
+            BufferedReader reader = new BufferedReader(new FileReader(file));
 
-				config.append("# < " + finalLine.toString() + " > #\n");
+            while ((currentLine = reader.readLine()) != null) {
+                config.append(currentLine + "\n");
+            }
 
-			}
+            reader.close();
+            config.append("# +----------------------------------------------------+ #\n");
 
-			config.append("# +----------------------------------------------------+ #");
+            for (String line : header) {
 
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(this.prepareConfigString(config.toString()));
-			writer.flush();
-			writer.close();
+                if (line.length() > 50) {
+                    continue;
+                }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+                int lenght = (50 - line.length()) / 2;
+                StringBuilder finalLine = new StringBuilder(line);
 
-	}
-	
-	public InputStream getConfigContent(File file) {
+                for (int i = 0; i < lenght; i++) {
+                    finalLine.append(" ");
+                    finalLine.reverse();
+                    finalLine.append(" ");
+                    finalLine.reverse();
+                }
 
-		if (!file.exists()) {
-			return null;
-		}
+                if (line.length() % 2 != 0) {
+                    finalLine.append(" ");
+                }
 
-		try {
-			int commentNum = 0;
+                config.append("# < " + finalLine.toString() + " > #\n");
 
-			String addLine;
-			String currentLine;
-			String pluginName = this.getPluginName();
+            }
 
-			StringBuilder whole = new StringBuilder("");
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+            config.append("# +----------------------------------------------------+ #");
 
-			while ((currentLine = reader.readLine()) != null) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(this.prepareConfigString(config.toString()));
+            writer.flush();
+            writer.close();
 
-				if (currentLine.startsWith("#")) {
-					addLine = currentLine.replaceFirst("#", pluginName
-							+ "_COMMENT_" + commentNum + ":");
-					whole.append(addLine + "\n");
-					commentNum++;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-				} else {
-					whole.append(currentLine + "\n");
-				}
+    }
 
-			}
+    public InputStream getConfigContent(File file) {
 
-			String config = whole.toString();
-			InputStream configStream = new ByteArrayInputStream(
-					config.getBytes(Charset.forName("UTF-8")));
+        if (!file.exists()) {
+            return null;
+        }
 
-			reader.close();
-			return configStream;
+        try {
+            int commentNum = 0;
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+            String addLine;
+            String currentLine;
+            String pluginName = this.getPluginName();
 
-	}
-	
-	private int getCommentsNum(File file) {
+            StringBuilder whole = new StringBuilder("");
+            BufferedReader reader = new BufferedReader(new FileReader(file));
 
-		if (!file.exists()) {
-			return 0;
-		}
+            while ((currentLine = reader.readLine()) != null) {
 
-		try {
-			int comments = 0;
-			String currentLine;
+                if (currentLine.startsWith("#")) {
+                    addLine = currentLine.replaceFirst("#", pluginName
+                            + "_COMMENT_" + commentNum + ":");
+                    whole.append(addLine + "\n");
+                    commentNum++;
 
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+                } else {
+                    whole.append(currentLine + "\n");
+                }
 
-			while ((currentLine = reader.readLine()) != null) {
+            }
 
-				if (currentLine.startsWith("#")) {
-					comments++;
-				}
+            String config = whole.toString();
+            InputStream configStream = new ByteArrayInputStream(
+                    config.getBytes(Charset.forName("UTF-8")));
 
-			}
+            reader.close();
+            return configStream;
 
-			reader.close();
-			return comments;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			return 0;
-		}
+    }
 
-	}
-	
-	public InputStream getConfigContent(String filePath) {
-		return this.getConfigContent(this.getConfigFile(filePath));
-	}
+    private int getCommentsNum(File file) {
 
-	private String prepareConfigString(String configString) {
+        if (!file.exists()) {
+            return 0;
+        }
 
-		int lastLine = 0;
-		int headerLine = 0;
+        try {
+            int comments = 0;
+            String currentLine;
 
-		String[] lines = configString.split("\n");
-		StringBuilder config = new StringBuilder("");
+            BufferedReader reader = new BufferedReader(new FileReader(file));
 
-		for (String line : lines) {
+            while ((currentLine = reader.readLine()) != null) {
 
-			if (line.startsWith(this.getPluginName() + "_COMMENT")) {
-				String comment = "#"
-						+ line.trim().substring(line.indexOf(":") + 1);
+                if (currentLine.startsWith("#")) {
+                    comments++;
+                }
 
-				if (comment.startsWith("# +-")) {
+            }
+
+            reader.close();
+            return comments;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+    public InputStream getConfigContent(String filePath) {
+        return this.getConfigContent(this.getConfigFile(filePath));
+    }
+
+    private String prepareConfigString(String configString) {
+
+        int lastLine = 0;
+        int headerLine = 0;
+
+        String[] lines = configString.split("\n");
+        StringBuilder config = new StringBuilder("");
+
+        for (String line : lines) {
+
+            if (line.startsWith(this.getPluginName() + "_COMMENT")) {
+                String comment = "#"
+                        + line.trim().substring(line.indexOf(":") + 1);
+
+                if (comment.startsWith("# +-")) {
 
 					/*
-					 * If header line = 0 then it is header start, if it's equal
+                     * If header line = 0 then it is header start, if it's equal
 					 * to 1 it's the end of header
 					 */
 
-					if (headerLine == 0) {
-						config.append(comment + "\n");
+                    if (headerLine == 0) {
+                        config.append(comment + "\n");
 
-						lastLine = 0;
-						headerLine = 1;
+                        lastLine = 0;
+                        headerLine = 1;
 
-					} else if (headerLine == 1) {
-						config.append(comment + "\n\n");
+                    } else if (headerLine == 1) {
+                        config.append(comment + "\n\n");
 
-						lastLine = 0;
-						headerLine = 0;
+                        lastLine = 0;
+                        headerLine = 0;
 
-					}
+                    }
 
-				} else {
+                } else {
 
 					/*
 					 * Last line = 0 - Comment Last line = 1 - Normal path
 					 */
 
-					String normalComment;
+                    String normalComment;
 
-					if (comment.startsWith("# ' ")) {
-						normalComment = comment.substring(0,
-								comment.length() - 1)
-								.replaceFirst("# ' ", "# ");
-					} else {
-						normalComment = comment;
-					}
+                    if (comment.startsWith("# ' ")) {
+                        normalComment = comment.substring(0,
+                                comment.length() - 1)
+                                .replaceFirst("# ' ", "# ");
+                    } else {
+                        normalComment = comment;
+                    }
 
-					if (lastLine == 0) {
-						config.append(normalComment + "\n");
-					} else if (lastLine == 1) {
-						config.append("\n" + normalComment + "\n");
-					}
+                    if (lastLine == 0) {
+                        config.append(normalComment + "\n");
+                    } else if (lastLine == 1) {
+                        config.append("\n" + normalComment + "\n");
+                    }
 
-					lastLine = 0;
+                    lastLine = 0;
 
-				}
+                }
 
-			} else {
-				config.append(line + "\n");
-				lastLine = 1;
-			}
+            } else {
+                config.append(line + "\n");
+                lastLine = 1;
+            }
 
-		}
+        }
 
-		return config.toString();
+        return config.toString();
 
-	}
-	
-	public void saveConfig(String configString, File file) {
-		String configuration = this.prepareConfigString(configString);
+    }
 
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(configuration);
-			writer.flush();
-			writer.close();
+    public void saveConfig(String configString, File file) {
+        String configuration = this.prepareConfigString(configString);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(configuration);
+            writer.flush();
+            writer.close();
 
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public String getPluginName() {
-		return plugin.getDescription().getName();
-	}
-	
-	private void copyResource(InputStream resource, File file) {
+    }
 
-		try {
-			OutputStream out = new FileOutputStream(file);
+    public String getPluginName() {
+        return plugin.getDescription().getName();
+    }
 
-			int lenght;
-			byte[] buf = new byte[1024];
+    private void copyResource(InputStream resource, File file) {
 
-			while ((lenght = resource.read(buf)) > 0) {
-				out.write(buf, 0, lenght);
-			}
+        try {
+            OutputStream out = new FileOutputStream(file);
 
-			out.close();
-			resource.close();
+            int lenght;
+            byte[] buf = new byte[1024];
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            while ((lenght = resource.read(buf)) > 0) {
+                out.write(buf, 0, lenght);
+            }
 
-	}
+            out.close();
+            resource.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

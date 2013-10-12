@@ -10,19 +10,19 @@ import org.kitteh.vanish.VanishPlugin;
 
 public class Hook {
 
-	public static VanishPlugin getVNP() {
-		Plugin plugin = EchoPet.getPluginInstance().getServer().getPluginManager().getPlugin("VanishNoPacket");
-		if (plugin == null || !(plugin instanceof VanishPlugin)) {
-			return null;
-		}
-		return (VanishPlugin) plugin;
-	}
+    public static VanishPlugin getVNP() {
+        Plugin plugin = EchoPet.getPluginInstance().getServer().getPluginManager().getPlugin("VanishNoPacket");
+        if (plugin == null || !(plugin instanceof VanishPlugin)) {
+            return null;
+        }
+        return (VanishPlugin) plugin;
+    }
 
-	public static WorldGuardPlugin getWorldGuard() {
-		Plugin plugin = EchoPet.getPluginInstance().getServer().getPluginManager().getPlugin("WorldGuard");
-		if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
-			return null;
-		}
-		return (WorldGuardPlugin) plugin;
-	}
+    public static WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = EchoPet.getPluginInstance().getServer().getPluginManager().getPlugin("WorldGuard");
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+        return (WorldGuardPlugin) plugin;
+    }
 }

@@ -1,55 +1,54 @@
 package io.github.dsh105.echopet.entity.pet.sheep;
 
-import org.bukkit.DyeColor;
-import org.bukkit.entity.Player;
-
 import io.github.dsh105.echopet.data.PetType;
 import io.github.dsh105.echopet.entity.pet.IAgeablePet;
 import io.github.dsh105.echopet.entity.pet.Pet;
+import org.bukkit.DyeColor;
+import org.bukkit.entity.Player;
 
 
 public class SheepPet extends Pet implements IAgeablePet {
-	
-	boolean baby;
-	boolean sheared;
-	byte color;
 
-	public SheepPet(Player owner, PetType petType) {
-		super(owner, petType);
-	}
-	
-	public void setBaby(boolean flag) {
-		((EntitySheepPet) getEntityPet()).setBaby(flag);
-		this.baby = flag;
-	}
-	
-	public boolean isBaby() {
-		return this.baby;
-	}
-	
-	public void setSheared(boolean flag) {
-		((EntitySheepPet) getEntityPet()).setSheared(flag);
-		this.sheared = flag;
-	}
-	
-	public boolean isSheared() {
-		return this.sheared;
-	}
-	
-	public DyeColor getColor() {
-		return org.bukkit.DyeColor.getByWoolData(color);
-	}
-	
-	public byte getColorByte() {
-		return color;
-	}
+    boolean baby;
+    boolean sheared;
+    byte color;
 
-	public void setColor(DyeColor c) {
-		((EntitySheepPet) getEntityPet()).setColor(c.getWoolData());
-	}
-	
-	public void setColor(byte b) {
-		((EntitySheepPet) getEntityPet()).setColor(b);
-	}
-	
+    public SheepPet(Player owner, PetType petType) {
+        super(owner, petType);
+    }
+
+    public void setBaby(boolean flag) {
+        ((EntitySheepPet) getEntityPet()).setBaby(flag);
+        this.baby = flag;
+    }
+
+    public boolean isBaby() {
+        return this.baby;
+    }
+
+    public void setSheared(boolean flag) {
+        ((EntitySheepPet) getEntityPet()).setSheared(flag);
+        this.sheared = flag;
+    }
+
+    public boolean isSheared() {
+        return this.sheared;
+    }
+
+    public DyeColor getColor() {
+        return org.bukkit.DyeColor.getByWoolData(color);
+    }
+
+    public byte getColorByte() {
+        return color;
+    }
+
+    public void setColor(DyeColor c) {
+        ((EntitySheepPet) getEntityPet()).setColor(c.getWoolData());
+    }
+
+    public void setColor(byte b) {
+        ((EntitySheepPet) getEntityPet()).setColor(b);
+    }
+
 }

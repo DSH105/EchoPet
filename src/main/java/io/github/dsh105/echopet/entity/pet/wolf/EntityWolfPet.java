@@ -1,96 +1,95 @@
 package io.github.dsh105.echopet.entity.pet.wolf;
 
 import io.github.dsh105.echopet.data.PetData;
-import net.minecraft.server.v1_6_R3.*;
-
-import org.bukkit.DyeColor;
-
 import io.github.dsh105.echopet.entity.pet.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.pet.Pet;
+import net.minecraft.server.v1_6_R3.BlockCloth;
+import net.minecraft.server.v1_6_R3.World;
+import org.bukkit.DyeColor;
 
 public class EntityWolfPet extends EntityAgeablePet {
 
-	public EntityWolfPet(World world) {
-		super(world);
-	}
+    public EntityWolfPet(World world) {
+        super(world);
+    }
 
-	public EntityWolfPet(World world, Pet pet) {
-		super(world, pet);
-		this.a(0.6F, 0.8F);
-		this.fireProof = true;
-	}
-	
-	public boolean isTamed() {
-		return (this.datawatcher.getByte(16) & 4) != 0;
-	}
+    public EntityWolfPet(World world, Pet pet) {
+        super(world, pet);
+        this.a(0.6F, 0.8F);
+        this.fireProof = true;
+    }
 
-	public void setTamed(boolean flag) {
-		if (isAngry() && flag) {
-			this.getPet().getActiveData().remove(PetData.ANGRY);
-		}
+    public boolean isTamed() {
+        return (this.datawatcher.getByte(16) & 4) != 0;
+    }
 
-		byte b0 = this.datawatcher.getByte(16);
+    public void setTamed(boolean flag) {
+        if (isAngry() && flag) {
+            this.getPet().getActiveData().remove(PetData.ANGRY);
+        }
 
-		if (flag) {
-			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 4)));
-		} else {
-			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -5)));
-		}
-	}
+        byte b0 = this.datawatcher.getByte(16);
 
-	public void setAngry(boolean flag) {
-		if (isTamed() && flag) {
-			this.getPet().getActiveData().remove(PetData.TAMED);
-		}
+        if (flag) {
+            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 4)));
+        } else {
+            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -5)));
+        }
+    }
 
-		byte b0 = this.datawatcher.getByte(16);
+    public void setAngry(boolean flag) {
+        if (isTamed() && flag) {
+            this.getPet().getActiveData().remove(PetData.TAMED);
+        }
 
-		if (flag) {
-			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 2)));
-		} else {
-			this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -3)));
-		}
-		((WolfPet) pet).angry = flag;
-	}
+        byte b0 = this.datawatcher.getByte(16);
 
-	public boolean isAngry() {
-		return (this.datawatcher.getByte(16) & 2) != 0;
-	}
+        if (flag) {
+            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 2)));
+        } else {
+            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -3)));
+        }
+        ((WolfPet) pet).angry = flag;
+    }
 
-	public void setBaby(boolean flag) {
-		if (flag) {
-			this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-		} else {
-			this.datawatcher.watch(12, new Integer(0));
-		}
-		((WolfPet) pet).baby = flag;
-	}
+    public boolean isAngry() {
+        return (this.datawatcher.getByte(16) & 2) != 0;
+    }
 
-	public void setCollarColor(DyeColor dc) {
-		if (((WolfPet) pet).tamed) {
-			byte colour = dc.getWoolData();
-			this.datawatcher.watch(20, colour);
-			((WolfPet) pet).collar = dc;
-		}
-	}
+    public void setBaby(boolean flag) {
+        if (flag) {
+            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
+        } else {
+            this.datawatcher.watch(12, new Integer(0));
+        }
+        ((WolfPet) pet).baby = flag;
+    }
 
-	@Override
-	protected String getIdleSound() {
-		return this.isAngry() ? "mob.wolf.growl" : (this.random.nextInt(3) == 0 ? (this.isTamed() && this.datawatcher.getFloat(18) < 10 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
-	}
-	
-	@Override
-	protected String getDeathSound() {
-		return "mob.wolf.death";
-	}
-	
-	@Override
-	protected void initDatawatcher() {
-		super.initDatawatcher();
-		this.datawatcher.a(17, "");
-		this.datawatcher.a(16, new Byte((byte) 0));
-		this.datawatcher.a(18, new Float(this.getHealth()));
-		this.datawatcher.a(19, new Byte((byte) 0));
-		this.datawatcher.a(20, new Byte((byte) BlockCloth.j_(1)));
-	}
+    public void setCollarColor(DyeColor dc) {
+        if (((WolfPet) pet).tamed) {
+            byte colour = dc.getWoolData();
+            this.datawatcher.watch(20, colour);
+            ((WolfPet) pet).collar = dc;
+        }
+    }
+
+    @Override
+    protected String getIdleSound() {
+        return this.isAngry() ? "mob.wolf.growl" : (this.random.nextInt(3) == 0 ? (this.isTamed() && this.datawatcher.getFloat(18) < 10 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
+    }
+
+    @Override
+    protected String getDeathSound() {
+        return "mob.wolf.death";
+    }
+
+    @Override
+    protected void initDatawatcher() {
+        super.initDatawatcher();
+        this.datawatcher.a(17, "");
+        this.datawatcher.a(16, new Byte((byte) 0));
+        this.datawatcher.a(18, new Float(this.getHealth()));
+        this.datawatcher.a(19, new Byte((byte) 0));
+        this.datawatcher.a(20, new Byte((byte) BlockCloth.j_(1)));
+    }
 }

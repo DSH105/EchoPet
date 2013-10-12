@@ -8,15 +8,15 @@ import net.minecraft.server.v1_6_R3.World;
 
 public abstract class EntityNoClipPet extends EntityPet {
 
-	public EntityNoClipPet(World world, Pet pet) {
-		super(world, pet);
-	}
+    public EntityNoClipPet(World world, Pet pet) {
+        super(world, pet);
+    }
 
-	protected EntityNoClipPet(World world) {
-		super(world);
-	}
+    protected EntityNoClipPet(World world) {
+        super(world);
+    }
 
-	public void noClip(boolean b) {
-		this.Z = b;
-	}
+    public void noClip(boolean b) {
+        this.Z = b;
+    }
 }

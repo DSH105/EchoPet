@@ -1,87 +1,83 @@
 package io.github.dsh105.echopet.entity.pet.slime;
 
-import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.logger.Logger;
-import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.*;
-
 import io.github.dsh105.echopet.entity.pet.EntityPet;
 import io.github.dsh105.echopet.entity.pet.Pet;
 import io.github.dsh105.echopet.entity.pet.SizeCategory;
+import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.util.Particle;
+import net.minecraft.server.v1_6_R3.World;
 
 public class EntitySlimePet extends EntityPet {
 
-	public EntitySlimePet(World world) {
-		super(world);
-	}
+    public EntitySlimePet(World world) {
+        super(world);
+    }
 
-	int jumpDelay;
-	
-	public EntitySlimePet(World world, Pet pet) {
-		super(world, pet);
-		this.fireProof = true;
-		int i = 1 << this.random.nextInt(3);
-		this.setSize(i);
-		this.jumpDelay = this.random.nextInt(15) + 10;
-	}
+    int jumpDelay;
 
-	public void setSize(int i) {
-		this.datawatcher.watch(16, new Byte((byte) i));
-		this.a(0.6F * (float) i, 0.6F * (float) i);
-		this.setPosition(this.locX, this.locY, this.locZ);
-		this.setHealth(this.getMaxHealth());
-		((SlimePet) pet).size = i;
-	}
+    public EntitySlimePet(World world, Pet pet) {
+        super(world, pet);
+        this.fireProof = true;
+        int i = 1 << this.random.nextInt(3);
+        this.setSize(i);
+        this.jumpDelay = this.random.nextInt(15) + 10;
+    }
 
-	public int getSize() {
-		return this.datawatcher.getByte(16);
-	}
+    public void setSize(int i) {
+        this.datawatcher.watch(16, new Byte((byte) i));
+        this.a(0.6F * (float) i, 0.6F * (float) i);
+        this.setPosition(this.locX, this.locY, this.locZ);
+        this.setHealth(this.getMaxHealth());
+        ((SlimePet) pet).size = i;
+    }
 
-	@Override
-	protected void initDatawatcher() {
-		super.initDatawatcher();
-		this.datawatcher.a(16, new Byte((byte) 1));
-	}
+    public int getSize() {
+        return this.datawatcher.getByte(16);
+    }
 
-	@Override
-	protected String getIdleSound() {
-		return "";
-	}
+    @Override
+    protected void initDatawatcher() {
+        super.initDatawatcher();
+        this.datawatcher.a(16, new Byte((byte) 1));
+    }
 
-	@Override
-	protected String getDeathSound() {
-		return "mob.slime." + (this.getSize() > 1 ? "big" : "small");
-	}
+    @Override
+    protected String getIdleSound() {
+        return "";
+    }
 
-	@Override
-	public void onLive() {
-		super.onLive();
+    @Override
+    protected String getDeathSound() {
+        return "mob.slime." + (this.getSize() > 1 ? "big" : "small");
+    }
 
-		if (this.onGround && this.jumpDelay-- <= 0) {
-			this.jumpDelay = this.random.nextInt(15) + 10;
-			this.makeSound("mob.magmacube." + (getSize() > 1 ? "big" : "small"), ba(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
-			getControllerJump().a();
-		}
+    @Override
+    public void onLive() {
+        super.onLive();
 
-		if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-			try {
-				Particle.FIRE.sendToLocation(pet.getLocation());
-			} catch (Exception e) {
-				Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
-			}
-		}
-	}
+        if (this.onGround && this.jumpDelay-- <= 0) {
+            this.jumpDelay = this.random.nextInt(15) + 10;
+            this.makeSound("mob.magmacube." + (getSize() > 1 ? "big" : "small"), ba(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+            getControllerJump().a();
+        }
 
-	@Override
-	public SizeCategory getSizeCategory() {
-		if (this.getSize() == 1) {
-			return SizeCategory.TINY;
-		}
-		else if (this.getSize() == 4) {
-			return SizeCategory.LARGE;
-		}
-		else {
-			return SizeCategory.REGULAR;
-		}
-	}
+        if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
+            try {
+                Particle.FIRE.sendToLocation(pet.getLocation());
+            } catch (Exception e) {
+                Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
+            }
+        }
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        if (this.getSize() == 1) {
+            return SizeCategory.TINY;
+        } else if (this.getSize() == 4) {
+            return SizeCategory.LARGE;
+        } else {
+            return SizeCategory.REGULAR;
+        }
+    }
 }
