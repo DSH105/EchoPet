@@ -248,13 +248,13 @@ public class EchoPet extends JavaPlugin {
         }
         CustomCommand petCmd = new CustomCommand(cmdString);
         CM.register("ec", petCmd);
-        petCmd.setExecutor(new PetCommand(this, cmdString));
+        petCmd.setExecutor(new PetCommand(cmdString));
         petCmd.setTabCompleter(new CommandComplete());
         this.cmdString = cmdString;
 
         CustomCommand petAdminCmd = new CustomCommand(adminCmdString);
         CM.register("ec", petAdminCmd);
-        petAdminCmd.setExecutor(new PetAdminCommand(this, adminCmdString));
+        petAdminCmd.setExecutor(new PetAdminCommand(adminCmdString));
         this.adminCmdString = adminCmdString;
 
         // Register listeners

@@ -13,6 +13,7 @@ import io.github.dsh105.echopet.menu.main.MenuItem;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetItem;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.permissions.Perm;
 import io.github.dsh105.echopet.util.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,19 +72,19 @@ public class MenuListener implements Listener {
                     if (inv.getItem(slot).equals(SelectorItem.TOGGLE.getItem())) {
                         Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
                         if (pet != null) {
-                            if (StringUtil.hpp("echopet.pet", "hide", player)) {
+                            if (Perm.BASE_HIDE.hasPerm(player, true, false)) {
                                 player.performCommand(cmd + " hide");
                                 player.closeInventory();
                             }
                         } else {
-                            if (StringUtil.hpp("echopet.pet", "show", player)) {
+                            if (Perm.BASE_SHOW.hasPerm(player, true, false)) {
                                 player.performCommand(cmd + " show");
                                 player.closeInventory();
                             }
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.CALL.getItem())) {
-                        if (StringUtil.hpp("echopet.pet", "call", player)) {
+                        if (Perm.BASE_CALL.hasPerm(player, true, false)) {
                             player.performCommand(cmd + " call");
                             player.closeInventory();
                         }
@@ -91,7 +92,7 @@ public class MenuListener implements Listener {
                     if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
                         Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
                         if (pet != null) {
-                            if (player.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pet.getPetType()), player)) {
+                            if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, pet.getPetType())) {
                                 player.performCommand(cmd + " ride");
                                 player.closeInventory();
                             }
@@ -100,21 +101,21 @@ public class MenuListener implements Listener {
                     if (inv.getItem(slot).equals(SelectorItem.HAT.getItem())) {
                         Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
                         if (pet != null) {
-                            if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
+                            if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, pet.getPetType())) {
                                 player.performCommand(cmd + " hat");
                                 player.closeInventory();
                             }
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.MENU.getItem())) {
-                        if (StringUtil.hpp("echopet.pet", "menu", player)) {
+                        if (Perm.BASE_MENU.hasPerm(player, true, false)) {
                             player.closeInventory();
                             player.performCommand(cmd + " menu");
                         }
                     }
                     for (PetItem i : PetItem.values()) {
                         if (inv.getItem(slot).equals(i.getItem(player))) {
-                            if (player.hasPermission("echopet.pet.type.*") || StringUtil.hpp("echopet.pet", "type." + PetUtil.getPetPerm(i.petType), player)) {
+                            if (Perm.hasTypePerm(player, true, Perm.BASE_PETTYPE, i.petType)) {
                                 Pet pet = PetHandler.getInstance().createPet(player, i.petType, true);
                                 if (pet != null) {
                                     ec.PH.saveFileData("autosave", pet);
@@ -156,7 +157,7 @@ public class MenuListener implements Listener {
                             if (mi.getMenuType() == DataMenuType.BOOLEAN) {
                                 if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
                                     PetData pd = PetData.valueOf(mi.toString());
-                                    if (StringUtil.hpp("echopet.pet.data", pd.getConfigOptionString().toLowerCase(), player)) {
+                                    if (Perm.hasDataPerm(player, true, pet.getPetType(), pd)) {
                                         if (pet.getActiveData().contains(pd)) {
                                             PetHandler.getInstance().setData(pet, pd, false);
                                             try {
@@ -173,7 +174,7 @@ public class MenuListener implements Listener {
                                     }
                                 } else {
                                     if (mi.toString().equals("HAT")) {
-                                        if (player.hasPermission("echopet.pet.hat.*") || StringUtil.hpp("echopet.pet", "hat." + PetUtil.getPetPerm(pet.getPetType()), player)) {
+                                        if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, pet.getPetType())) {
                                             if (!pet.isPetHat()) {
                                                 pet.setAsHat(true);
                                                 Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
@@ -184,7 +185,7 @@ public class MenuListener implements Listener {
                                         }
                                     }
                                     if (mi.toString().equals("RIDE")) {
-                                        if (player.hasPermission("echopet.pet.ride.*") || StringUtil.hpp("echopet.pet", "ride." + PetUtil.getPetPerm(pet.getPetType()), player)) {
+                                        if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, pet.getPetType())) {
                                             if (!pet.isOwnerRiding()) {
                                                 pet.ownerRidePet(true);
                                                 inv.setItem(slot, mi.getBoolean(false));
@@ -225,7 +226,7 @@ public class MenuListener implements Listener {
                     for (DataMenuItem dmi : DataMenuItem.values()) {
                         if (inv.getItem(slot).equals(dmi.getItem())) {
                             PetData pd = dmi.getDataLink();
-                            if (StringUtil.hpp("echopet.pet.data", pd.getConfigOptionString().toLowerCase(), player)) {
+                            if (Perm.hasDataPerm(player, true, pet.getPetType(), pd)) {
                                 PetHandler.getInstance().setData(pet, pd, true);
                             }
                         }

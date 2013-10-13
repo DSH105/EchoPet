@@ -22,6 +22,7 @@ import io.github.dsh105.echopet.entity.pet.villager.VillagerPet;
 import io.github.dsh105.echopet.entity.pet.wither.WitherPet;
 import io.github.dsh105.echopet.entity.pet.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.pet.zombie.ZombiePet;
+import io.github.dsh105.echopet.permissions.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -182,15 +183,10 @@ public class PetUtil {
             return null;
         }
 
-        boolean b = true;
         for (PetData dataTemp : petDataList) {
-            if (!StringUtil.hpp("echopet.pet" + admin + ".data", dataTemp.getConfigOptionString().toLowerCase(), sender, false)) {
-                b = false;
+            if (!Perm.hasDataPerm(sender, true, petType, dataTemp, false)) {
+                return null;
             }
-        }
-
-        if (!b) {
-            return null;
         }
 
         UnorganisedPetData UPD = new UnorganisedPetData(petDataList, petType, name);

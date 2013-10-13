@@ -19,42 +19,6 @@ public class StringUtil {
         }
     }
 
-    public static boolean hpp(String start, String perm, CommandSender sender, boolean allowConsole) {
-        String fullPerm;
-        if (perm.equalsIgnoreCase("")) {
-            fullPerm = start;
-        } else {
-            fullPerm = start + "." + perm;
-        }
-        if (sender instanceof Player) {
-            if (sender.hasPermission("echopet.*") || sender.hasPermission(start + ".*")) {
-                return true;
-            }
-            if (!sender.hasPermission(fullPerm)) {
-                Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
-            }
-            return sender.hasPermission(fullPerm);
-        } else {
-            return allowConsole ? true : false;
-        }
-    }
-
-    public static boolean hpp(String start, String perm, Player sender) {
-        String fullPerm;
-        if (perm.equalsIgnoreCase("")) {
-            fullPerm = start;
-        } else {
-            fullPerm = start + "." + perm;
-        }
-        if (sender.hasPermission("echopet.*") || sender.hasPermission(start + ".*")) {
-            return true;
-        }
-        if (!sender.hasPermission(fullPerm)) {
-            Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", fullPerm));
-        }
-        return sender.hasPermission(fullPerm);
-    }
-
     public static String capitalise(String s) {
         String finalString = "";
         if (s.contains(" ")) {
