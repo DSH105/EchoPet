@@ -94,7 +94,7 @@ public class EchoPet extends JavaPlugin {
     public boolean update = false;
     public String name = "";
     public long size = 0;
-    public boolean updateCheck = false;
+    public boolean updateChecked = false;
 
     public CommandMap CM;
 
@@ -294,6 +294,9 @@ public class EchoPet extends JavaPlugin {
                         name = updater.getLatestName();
                         ConsoleLogger.log(ChatColor.GOLD + "An update is available: " + name);
                         ConsoleLogger.log(ChatColor.GOLD + "Type /ecupdate to update.");
+                        if (!updateChecked) {
+                            updateChecked = true;
+                        }
                     }
                 }
             });
@@ -309,7 +312,7 @@ public class EchoPet extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (commandLabel.equalsIgnoreCase("ecupdate")) {
             if (sender.hasPermission("echopet.update")) {
-                if (updateCheck) {
+                if (updateChecked) {
                     @SuppressWarnings("unused")
                     Updater updater = new Updater(this, 67135, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
                     return true;
