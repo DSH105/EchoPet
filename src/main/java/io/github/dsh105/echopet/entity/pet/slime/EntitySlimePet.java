@@ -63,7 +63,7 @@ public class EntitySlimePet extends EntityPet {
 
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
-                Particle.FIRE.sendToLocation(pet.getLocation());
+                Particle.SLIME_SPLAT.sendToLocation(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }
