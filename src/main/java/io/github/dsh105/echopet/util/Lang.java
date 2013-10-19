@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 
 public enum Lang {
 
+    PREFIX("prefix", "&4[&cEchoPet&4]&r"),
+
     NO_PERMISSION("no_permission", "&6%perm% &epermission needed to perform that action."),
     PETS_DISABLED_HERE("pets_disabled_here", "&ePets are not allowed here."),
     ENTER_PET_DISABLED_REGION("enter_pet_disabled_region", "&eEntering region that does not allow Pets. Yours has been hidden."),

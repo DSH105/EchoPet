@@ -158,6 +158,8 @@ public class EchoPet extends JavaPlugin {
         }
         langConfig.reloadConfig();
 
+        this.prefix = Lang.PREFIX.toString();
+
         PH = new PetHandler(this);
         SPH = new SQLPetHandler();
 
