@@ -3,6 +3,8 @@ package io.github.dsh105.echopet.menu.selector;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetSelectMenuOpenEvent;
 import io.github.dsh105.echopet.menu.Menu;
+import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -51,5 +53,8 @@ public class PetSelector implements Menu {
             return;
         }
         this.viewer.openInventory(this.inv);
+        if (sendMessage) {
+            Lang.sendTo(this.viewer, Lang.OPEN_SELECTOR.toString());
+        }
     }
 }
