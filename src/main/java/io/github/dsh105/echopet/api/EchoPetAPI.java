@@ -12,8 +12,12 @@ import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import io.github.dsh105.echopet.entity.pet.Pet;
 import io.github.dsh105.echopet.logger.ConsoleLogger;
 import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.echopet.menu.main.MenuOption;
+import io.github.dsh105.echopet.menu.main.PetMenu;
+import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.StringUtil;
 import net.minecraft.server.v1_6_R3.EntityHuman;
 import org.bukkit.Location;
@@ -155,6 +159,51 @@ public class EchoPetAPI {
             return false;
         }
         return pet.getActiveData().contains(petData);
+    }
+
+    /**
+     * Opens the Pet Selector GUI Menu
+     *
+     * @param player {@link Player} to view the Menu
+     * @param sendMessage defines if the plugin sends a message to the target {@link Player}
+     */
+    public void openPetSelector(Player player, boolean sendMessage) {
+        PetSelector petSelector = new PetSelector(45, player);
+        petSelector.open(sendMessage);
+    }
+
+    /**
+     * Opens the Pet Selector GUI Menu
+     *
+     * @param player {@link Player} to view the menu
+     */
+    public void openPetSelector(Player player) {
+        this.openPetSelector(player, false);
+    }
+
+    /**
+     * Opens the Pet Data GUI Menu
+     *
+     * @param player {@link Player} to view the Menu
+     * @param sendMessage defines if the plugin sends a message to the target {@link Player}
+     */
+    public void openPetDataMenu(Player player, boolean sendMessage) {
+        Pet pet = PetHandler.getInstance().getPet(player);
+        if (pet == null) {
+            return;
+        }
+        ArrayList<MenuOption> options = MenuUtil.createOptionList(pet.getPetType());
+        PetMenu menu = new PetMenu(pet, options, pet.getPetType() == PetType.HORSE ? 18 : 9);
+        menu.open(sendMessage);
+    }
+
+    /**
+     * Opens the Pet Data GUI Menu
+     *
+     * @param player {@link Player} to view the menu
+     */
+    public void openPetDataMenu(Player player) {
+        this.openPetDataMenu(player, false);
     }
 
     /**
