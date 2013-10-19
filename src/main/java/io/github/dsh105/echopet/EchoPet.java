@@ -12,6 +12,7 @@ import io.github.dsh105.echopet.config.options.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
 import io.github.dsh105.echopet.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.data.PetType;
 import io.github.dsh105.echopet.entity.pet.EntityPet;
 import io.github.dsh105.echopet.entity.pet.bat.EntityBatPet;
 import io.github.dsh105.echopet.entity.pet.blaze.EntityBlazePet;
@@ -190,36 +191,9 @@ public class EchoPet extends JavaPlugin {
         }
 
         // Register custom entities
-        this.registerEntity(EntityBatPet.class, "BatPet", 65);
-        this.registerEntity(EntityBlazePet.class, "BlazePet", 61);
-        this.registerEntity(EntityCaveSpiderPet.class, "CaveSpiderPet", 59);
-        this.registerEntity(EntityChickenPet.class, "ChickenPet", 93);
-        this.registerEntity(EntityCowPet.class, "CowPet", 92);
-        this.registerEntity(EntityCreeperPet.class, "CreeperPet", 50);
-        this.registerEntity(EntityEnderDragonPet.class, "EnderDragonPet", 63);
-        this.registerEntity(EntityEndermanPet.class, "EndermanPet", 58);
-        this.registerEntity(EntityGhastPet.class, "GhastPet", 56);
-        this.registerEntity(EntityGiantPet.class, "GiantPet", 53);
-        this.registerEntity(EntityHorsePet.class, "HorsePet", 100);
-        //this.registerEntity(EntityHumanPet.class, "HumanPet", 49);
-        this.registerEntity(EntityIronGolemPet.class, "IronGolemPet", 99);
-        this.registerEntity(EntityMagmaCubePet.class, "MagmaCubePet", 62);
-        this.registerEntity(EntityMushroomCowPet.class, "MushroomCowPet", 96);
-        this.registerEntity(EntityOcelotPet.class, "OcelotPet", 98);
-        this.registerEntity(EntityPigPet.class, "PigPet", 90);
-        this.registerEntity(EntityPigZombiePet.class, "PigZombiePet", 57);
-        this.registerEntity(EntitySheepPet.class, "SheepPet", 91);
-        this.registerEntity(EntitySilverfishPet.class, "SilverfishPet", 60);
-        this.registerEntity(EntitySkeletonPet.class, "SkeletonPet", 51);
-        this.registerEntity(EntitySlimePet.class, "SlimePet", 55);
-        this.registerEntity(EntitySnowmanPet.class, "SnowManPet", 97);
-        this.registerEntity(EntitySpiderPet.class, "SpiderPet", 52);
-        this.registerEntity(EntitySquidPet.class, "SquidPet", 94);
-        this.registerEntity(EntityVillagerPet.class, "VillagerPet", 120);
-        this.registerEntity(EntityWitchPet.class, "WitchPet", 66);
-        this.registerEntity(EntityWitherPet.class, "WitherPet", 64);
-        this.registerEntity(EntityWolfPet.class, "WolfPet", 95);
-        this.registerEntity(EntityZombiePet.class, "ZombiePet", 54);
+        for (PetType pt : PetType.values()) {
+            this.registerEntity(pt.getEntityClass(), pt.getDefaultName().replace(" ", ""), pt.getRegistrationId());
+        }
 
         // Check whether to start AutoSave
         if (getMainConfig().getBoolean("autoSave")) {

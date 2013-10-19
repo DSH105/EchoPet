@@ -77,53 +77,53 @@ public enum PetType {
 	 */
 
     // Aggressive mobs
-    BLAZE(EntityBlazePet.class, BlazePet.class, "Blaze Pet", 20, 6D, EntityType.BLAZE, PetData.FIRE),
-    CAVESPIDER(EntityCaveSpiderPet.class, CaveSpiderPet.class, "Cave Spider Pet", 12, 5D, EntityType.CAVE_SPIDER),
-    CREEPER(EntityCreeperPet.class, CreeperPet.class, "Creeper Pet", 20, 6D, EntityType.CREEPER, PetData.POWER),
-    ENDERDRAGON(EntityEnderDragonPet.class, EnderDragonPet.class, "EnderDragon Pet", 200, 0D, EntityType.ENDER_DRAGON),
-    ENDERMAN(EntityEndermanPet.class, EndermanPet.class, "Enderman Pet", 40, 6D, EntityType.ENDERMAN, PetData.SCREAMING),
-    GHAST(EntityGhastPet.class, GhastPet.class, "Ghast Pet", 10, 7D, EntityType.GHAST),
-    GIANT(EntityGiantPet.class, GiantPet.class, "Giant Pet", 100, 0D, EntityType.GIANT),
-    MAGMACUBE(EntityMagmaCubePet.class, MagmaCubePet.class, "Magma Cube Pet", 20, 5D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-    PIGZOMBIE(EntityPigZombiePet.class, PigZombiePet.class, "Pig Zombie Pet", 20, 6D, EntityType.PIG_ZOMBIE, PetData.BABY, PetData.VILLAGER),
-    SILVERFISH(EntitySilverfishPet.class, SilverfishPet.class, "Silverfish Pet", 8, 4D, EntityType.SILVERFISH),
-    SKELETON(EntitySkeletonPet.class, SkeletonPet.class, "Skeleton Pet", 20, 5D, EntityType.SKELETON, PetData.WITHER),
-    SLIME(EntitySlimePet.class, SlimePet.class, "Slime Pet", 20, 4D, EntityType.SLIME, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-    SPIDER(EntitySpiderPet.class, SpiderPet.class, "Spider Pet", 16, 5D, EntityType.SPIDER),
-    WITCH(EntityWitchPet.class, WitchPet.class, "Witch Pet", 26, 5D, EntityType.WITCH),
-    WITHER(EntityWitherPet.class, WitherPet.class, "Wither Pet", 300, 8D, EntityType.WITHER, PetData.SHIELD),
-    ZOMBIE(EntityZombiePet.class, ZombiePet.class, "Zombie Pet", 20, 5D, EntityType.ZOMBIE, PetData.BABY, PetData.VILLAGER),
+    BLAZE(EntityBlazePet.class, BlazePet.class, 61, "Blaze Pet", 20, 6D, EntityType.BLAZE, PetData.FIRE),
+    CAVESPIDER(EntityCaveSpiderPet.class, CaveSpiderPet.class, 59, "Cave Spider Pet", 12, 5D, EntityType.CAVE_SPIDER),
+    CREEPER(EntityCreeperPet.class, CreeperPet.class, 50, "Creeper Pet", 20, 6D, EntityType.CREEPER, PetData.POWER),
+    ENDERDRAGON(EntityEnderDragonPet.class, EnderDragonPet.class, 63, "EnderDragon Pet", 200, 0D, EntityType.ENDER_DRAGON),
+    ENDERMAN(EntityEndermanPet.class, EndermanPet.class, 58, "Enderman Pet", 40, 6D, EntityType.ENDERMAN, PetData.SCREAMING),
+    GHAST(EntityGhastPet.class, GhastPet.class, 56, "Ghast Pet", 10, 7D, EntityType.GHAST),
+    GIANT(EntityGiantPet.class, GiantPet.class, 53, "Giant Pet", 100, 0D, EntityType.GIANT),
+    MAGMACUBE(EntityMagmaCubePet.class, MagmaCubePet.class, 62, "Magma Cube Pet", 20, 5D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
+    PIGZOMBIE(EntityPigZombiePet.class, PigZombiePet.class, 57, "Pig Zombie Pet", 20, 6D, EntityType.PIG_ZOMBIE, PetData.BABY, PetData.VILLAGER),
+    SILVERFISH(EntitySilverfishPet.class, SilverfishPet.class, 60, "Silverfish Pet", 8, 4D, EntityType.SILVERFISH),
+    SKELETON(EntitySkeletonPet.class, SkeletonPet.class, 51, "Skeleton Pet", 20, 5D, EntityType.SKELETON, PetData.WITHER),
+    SLIME(EntitySlimePet.class, SlimePet.class, 55, "Slime Pet", 20, 4D, EntityType.SLIME, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
+    SPIDER(EntitySpiderPet.class, SpiderPet.class, 52, "Spider Pet", 16, 5D, EntityType.SPIDER),
+    WITCH(EntityWitchPet.class, WitchPet.class, 66, "Witch Pet", 26, 5D, EntityType.WITCH),
+    WITHER(EntityWitherPet.class, WitherPet.class, 64, "Wither Pet", 300, 8D, EntityType.WITHER, PetData.SHIELD),
+    ZOMBIE(EntityZombiePet.class, ZombiePet.class, 54, "Zombie Pet", 20, 5D, EntityType.ZOMBIE, PetData.BABY, PetData.VILLAGER),
 
     // Passive mobs
-    BAT(EntityBatPet.class, BatPet.class, "Bat Pet", 6, 3D, EntityType.BAT),
-    CHICKEN(EntityChickenPet.class, ChickenPet.class, "Chicken Pet", 4, 3D, EntityType.CHICKEN, PetData.BABY),
-    COW(EntityCowPet.class, CowPet.class, "Cow Pet", 10, 4D, EntityType.COW, PetData.BABY),
-    HORSE(EntityHorsePet.class, HorsePet.class, "Horse Pet", 30, 4D, EntityType.HORSE, PetData.BABY, PetData.CHESTED, PetData.SADDLE,
+    BAT(EntityBatPet.class, BatPet.class, 65, "Bat Pet", 6, 3D, EntityType.BAT),
+    CHICKEN(EntityChickenPet.class, ChickenPet.class, 93, "Chicken Pet", 4, 3D, EntityType.CHICKEN, PetData.BABY),
+    COW(EntityCowPet.class, CowPet.class, 92, "Cow Pet", 10, 4D, EntityType.COW, PetData.BABY),
+    HORSE(EntityHorsePet.class, HorsePet.class, 100, "Horse Pet", 30, 4D, EntityType.HORSE, PetData.BABY, PetData.CHESTED, PetData.SADDLE,
             PetData.NORMAL, PetData.DONKEY,
             PetData.MULE, PetData.SKELETON, PetData.ZOMBIE, PetData.WHITE,
             PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK,
             PetData.GRAY, PetData.DARKBROWN, PetData.NONE, PetData.SOCKS,
             PetData.WHITEPATCH, PetData.WHITESPOT, PetData.BLACKSPOT,
             PetData.IRON, PetData.GOLD, PetData.DIAMOND),
-    IRONGOLEM(EntityIronGolemPet.class, IronGolemPet.class, "Iron Golem Pet", 100, 7D, EntityType.IRON_GOLEM),
-    MUSHROOMCOW(EntityMushroomCowPet.class, MushroomCowPet.class, "Mushroom Cow Pet", 10, 3D, EntityType.MUSHROOM_COW, PetData.BABY),
-    OCELOT(EntityOcelotPet.class, OcelotPet.class, "Ocelot Pet", 10, 4D, EntityType.OCELOT, PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
-    PIG(EntityPigPet.class, PigPet.class, "Pig Pet", 10, 3D, EntityType.PIG, PetData.BABY, PetData.SADDLE),
-    SNOWMAN(EntitySnowmanPet.class, SnowmanPet.class, "Snowman Pet", 4, 4D, EntityType.SNOWMAN),
-    SHEEP(EntitySheepPet.class, SheepPet.class, "Sheep Pet", 8, 3D, EntityType.SHEEP, PetData.BABY, PetData.SHEARED,
+    IRONGOLEM(EntityIronGolemPet.class, IronGolemPet.class, 99, "Iron Golem Pet", 100, 7D, EntityType.IRON_GOLEM),
+    MUSHROOMCOW(EntityMushroomCowPet.class, MushroomCowPet.class, 96, "Mushroom Cow Pet", 10, 3D, EntityType.MUSHROOM_COW, PetData.BABY),
+    OCELOT(EntityOcelotPet.class, OcelotPet.class, 98, "Ocelot Pet", 10, 4D, EntityType.OCELOT, PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
+    PIG(EntityPigPet.class, PigPet.class, 90, "Pig Pet", 10, 3D, EntityType.PIG, PetData.BABY, PetData.SADDLE),
+    SHEEP(EntitySheepPet.class, SheepPet.class, 91, "Sheep Pet", 8, 3D, EntityType.SHEEP, PetData.BABY, PetData.SHEARED,
             PetData.BLACK, PetData.BLUE, PetData.BROWN,
             PetData.CYAN, PetData.GRAY, PetData.GREEN,
             PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
             PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
-    SQUID(EntitySquidPet.class, SquidPet.class, "Squid Pet", 10, 4D, EntityType.SQUID),
-    WOLF(EntityWolfPet.class, WolfPet.class, "Wolf Pet", 20, 6D, EntityType.WOLF, PetData.BABY, PetData.TAMED, PetData.ANGRY,
+    SNOWMAN(EntitySnowmanPet.class, SnowmanPet.class, 97, "Snowman Pet", 4, 4D, EntityType.SNOWMAN),
+    SQUID(EntitySquidPet.class, SquidPet.class, 94, "Squid Pet", 10, 4D, EntityType.SQUID),
+    VILLAGER(EntityVillagerPet.class, VillagerPet.class, 120, "Villager Pet", 20, 4D, EntityType.VILLAGER, PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
+    WOLF(EntityWolfPet.class, WolfPet.class, 94, "Wolf Pet", 20, 6D, EntityType.WOLF, PetData.BABY, PetData.TAMED, PetData.ANGRY,
             PetData.BLACK, PetData.BLUE, PetData.BROWN,
             PetData.CYAN, PetData.GRAY, PetData.GREEN,
             PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
             PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
-    VILLAGER(EntityVillagerPet.class, VillagerPet.class, "Villager Pet", 20, 4D, EntityType.VILLAGER, PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
 
 	/*
 	 * It is currently undecided whether to include Human Pets.
@@ -139,15 +139,21 @@ public enum PetType {
     private double attackDamage;
     private EntityType entityType;
     private List<PetData> allowedData;
+    private int id;
 
-    PetType(Class<? extends EntityPet> entityClass, Class<? extends Pet> craftClass, String defaultName, int maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
+    PetType(Class<? extends EntityPet> entityClass, Class<? extends Pet> craftClass, int registrationId, String defaultName, int maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
         this.entityClass = entityClass;
         this.craftClass = craftClass;
+        this.id = registrationId;
         this.allowedData = Arrays.asList(allowedData);
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.entityType = entityType;
         this.defaultName = defaultName;
+    }
+
+    public int getRegistrationId() {
+        return this.id;
     }
 
     public int getMaxHealth() {
