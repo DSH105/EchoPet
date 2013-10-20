@@ -6,6 +6,7 @@ import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
 public class CraftPet extends CraftCreature {
@@ -15,6 +16,11 @@ public class CraftPet extends CraftCreature {
     public CraftPet(CraftServer server, EntityPet entity) {
         super(server, entity);
         this.entityPet = entity;
+    }
+
+    @Override
+    public EntityType getType() {
+        return this.entityPet.getPet().getPetType().getEntityType();
     }
 
     public void remove() {
