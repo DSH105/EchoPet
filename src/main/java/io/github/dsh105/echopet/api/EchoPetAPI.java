@@ -119,6 +119,27 @@ public class EchoPetAPI {
     }
 
     /**
+     * Save a Pet to file or an SQL Database
+     *
+     * @param pet {@link Pet} to be saved
+     * @param saveType whether to save to file or SQL database
+     * @return success of save
+     */
+    public boolean savePet(Pet pet, SaveType saveType) {
+        if (pet == null) {
+            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to save Pet file through the EchoPetAPI. Pet cannot be null.");
+            return false;
+        }
+
+        if (saveType == SaveType.SQL) {
+            SQLPetHandler.getInstance().saveToDatabase(pet, false);
+        } else if (saveType == SaveType.FILE) {
+            PetHandler.getInstance().saveFileData("autosave", pet);
+        }
+        return true;
+    }
+
+    /**
      * Adds {@link PetData} to a {@link Pet}
      *
      * @param pet     the {@link Pet} to add the data to
@@ -346,6 +367,13 @@ public class EchoPetAPI {
         public String getGoalString() {
             return this.goalString;
         }
+    }
+
+    /**
+     * Types used for saving {@link Pet}s
+     */
+    public enum SaveType {
+        SQL, FILE;
     }
 }
 
