@@ -118,7 +118,7 @@ public enum PetType {
     SNOWMAN(EntitySnowmanPet.class, SnowmanPet.class, 97, "Snowman Pet", 4, 4D, EntityType.SNOWMAN),
     SQUID(EntitySquidPet.class, SquidPet.class, 94, "Squid Pet", 10, 4D, EntityType.SQUID),
     VILLAGER(EntityVillagerPet.class, VillagerPet.class, 120, "Villager Pet", 20, 4D, EntityType.VILLAGER, PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
-    WOLF(EntityWolfPet.class, WolfPet.class, 94, "Wolf Pet", 20, 6D, EntityType.WOLF, PetData.BABY, PetData.TAMED, PetData.ANGRY,
+    WOLF(EntityWolfPet.class, WolfPet.class, 95, "Wolf Pet", 20, 6D, EntityType.WOLF, PetData.BABY, PetData.TAMED, PetData.ANGRY,
             PetData.BLACK, PetData.BLUE, PetData.BROWN,
             PetData.CYAN, PetData.GRAY, PetData.GREEN,
             PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
