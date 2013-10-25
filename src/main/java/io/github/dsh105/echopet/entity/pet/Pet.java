@@ -203,7 +203,7 @@ public class Pet {
      * @param s new name of the {@link Pet}
      */
     public void setName(String s) {
-        s = StringUtil.replaceStringWithColours(s);
+        s = StringUtil.replaceStringWithColours(s).replace("'", "\'");
         name = s;
         LivingEntity le = craftPet;
         le.setCustomName(s);
