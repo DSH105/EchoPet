@@ -130,7 +130,7 @@ public class SQLPetHandler {
                         if (pt == null) {
                             return null;
                         }
-                        name = rs.getString("PetName");
+                        name = rs.getString("PetName").replace("\'", "'");
 
                         for (PetData pd : PetData.values()) {
                             if (rs.getString(pd.toString()) != null) {
@@ -162,7 +162,7 @@ public class SQLPetHandler {
                             if (mt == null) {
                                 return null;
                             }
-                            String mName = rs.getString("MountPetName");
+                            String mName = rs.getString("MountPetName").replace("\'", "'");
                             for (PetData pd : PetData.values()) {
                                 if (rs.getString("Mount" + pd.toString()) != null) {
                                     map.put(pd, Boolean.valueOf(rs.getString("Mount" + pd.toString())));
@@ -217,118 +217,6 @@ public class SQLPetHandler {
             return PetType.valueOf(s.toUpperCase());
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    public void saveToDatabase(Player p, UnorganisedPetData UPD, UnorganisedPetData UMD) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            PetType pt = UPD.petType;
-            PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
-            String petName = UPD.petName;
-            if (UPD.petName == null || UPD.petName.equalsIgnoreCase("")) {
-                petName = pt.getDefaultName(p.getName());
-            }
-            PetType mountType = UMD.petType;
-            PetData[] mountData = UMD.petDataList.toArray(new PetData[UMD.petDataList.size()]);
-            String mountName = UMD.petName;
-            if (UMD.petName == null || UMD.petName.equalsIgnoreCase("")) {
-                mountName = pt.getDefaultName(p.getName());
-            }
-
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
-
-            if (con != null) {
-                try {
-                    PreparedStatement ps1 = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
-                    ps1.setString(1, p.getName());
-                    ps1.executeUpdate();
-
-
-                    PreparedStatement ps2 = con.prepareStatement("INSERT INTO Pets (OwnerName, PetType, PetName) VALUES (?, ?, ?);");
-                    ps2.setString(1, p.getName());
-                    ps2.setString(2, pt.toString());
-                    ps2.setString(3, petName);
-                    ps2.executeUpdate();
-
-
-                    for (PetData pd : data) {
-                        PreparedStatement ps3 = con.prepareStatement("INSERT INTO Pets (OwnerName, " + pd.toString() + ") VALUES (?, ?);");
-                        ps3.setString(1, p.getName());
-                        ps3.setString(2, "TRUE");
-                        ps3.executeUpdate();
-                    }
-
-
-                    PreparedStatement ps4 = con.prepareStatement("INSERT INTO Pets (OwnerName, MountPetType, MountPetName) VALUES (?, ?, ?);");
-                    ps4.setString(1, p.getName());
-                    ps4.setString(2, mountType.toString());
-                    ps4.setString(3, mountName);
-                    ps4.executeUpdate();
-
-
-                    for (PetData pd : mountData) {
-                        PreparedStatement ps5 = con.prepareStatement("INSERT INTO Pets (OwnerName, Mount" + pd.toString() + ") VALUES (?, ?);");
-                        ps5.setString(1, p.getName());
-                        ps5.setString(2, "TRUE");
-                        ps5.executeUpdate();
-                    }
-                } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getName() + " to MySQL Database", e, true);
-                } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
-				}*/
-                }
-            }
-        }
-
-    }
-
-    public void saveToDatabase(Player p, UnorganisedPetData UPD) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            PetType pt = UPD.petType;
-            PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
-            String petName = UPD.petName;
-            if (UPD.petName == null || UPD.petName.equalsIgnoreCase("")) {
-                petName = pt.getDefaultName(p.getName());
-            }
-
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
-
-            if (con != null) {
-                try {
-                    PreparedStatement ps1 = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
-                    ps1.setString(1, p.getName());
-                    ps1.executeUpdate();
-
-
-                    PreparedStatement ps2 = con.prepareStatement("INSERT INTO Pets (OwnerName, PetType, PetName) VALUES (?, ?);");
-                    ps2.setString(1, p.getName());
-                    ps2.setString(2, pt.toString());
-                    ps2.setString(3, petName);
-                    ps2.executeUpdate();
-
-
-                    for (PetData pd : data) {
-                        PreparedStatement ps3 = con.prepareStatement("INSERT INTO Pets (OwnerName, " + pd.toString() + ") VALUES (?, ?);");
-                        ps1.setString(1, p.getName());
-                        ps3.setString(2, "TRUE");
-                        ps3.executeUpdate();
-                    }
-                } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getName() + " to MySQL Database", e, true);
-                } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
-				}*/
-                }
-            }
         }
     }
 
