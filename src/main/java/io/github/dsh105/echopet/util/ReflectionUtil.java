@@ -45,7 +45,14 @@ public class ReflectionUtil {
             throws SecurityException, NoSuchMethodException,
             IllegalArgumentException, IllegalAccessException,
             InvocationTargetException, NoSuchFieldException {
-        if (!getNearbyEntities(l, 20).isEmpty()) {
+        sendPacket(l, packet, 20);
+    }
+
+    public static void sendPacket(Location l, Object packet, int radius)
+            throws SecurityException, NoSuchMethodException,
+            IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException, NoSuchFieldException {
+        if (!getNearbyEntities(l, radius).isEmpty()) {
             for (Entity e : getNearbyEntities(l, 20)) {
                 if (e != null && e instanceof Player) {
                     Player p = (Player) e;
@@ -68,7 +75,7 @@ public class ReflectionUtil {
                 entities.add(entity);
             }
         }
-        return entities.isEmpty() ? null : entities;
+        return entities;
     }
 
     public static boolean isInBorder(Location center, Location l, int range) {
