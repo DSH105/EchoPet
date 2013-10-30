@@ -1,21 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.dsh105</groupId>
-  <artifactId>EchoPet</artifactId>
-  <name>EchoPet</name>
-  <version>2.0.12-SNAPSHOT</version>
-  <url>http://dev.bukkit.org/bukkit-plugins/echopet/</url>
-  <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <vnp.version>3.18.4-SNAPSHOT</vnp.version>
-      <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
-      <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
-      <vault.version>1.2.27</vault.version>
-      <minecraft.version>1.6.4</minecraft.version>
-      <craftbukkit.version>R1.1</craftbukkit.version>
-      <cb_package>v1_6_R3</cb_package>
-      <main.class>io.github.dsh105.echopet.EchoPet</main.class>
-  </properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.dsh105</groupId>
+    <artifactId>EchoPet</artifactId>
+    <name>EchoPet</name>
+    <version>2.0.12-SNAPSHOT</version>
+    <url>http://dev.bukkit.org/bukkit-plugins/echopet/</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <vnp.version>3.18.4-SNAPSHOT</vnp.version>
+        <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
+        <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
+        <vault.version>1.2.27</vault.version>
+        <minecraft.version>1.6.4</minecraft.version>
+        <craftbukkit.version>R1.1</craftbukkit.version>
+        <cb_package>v1_6_R3</cb_package>
+        <main.class>io.github.dsh105.echopet.EchoPet</main.class>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -90,9 +91,9 @@
             <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
         </repository>
     </repositories>
-  <build>
+    <build>
         <defaultGoal>clean package install</defaultGoal>
-        <finalName>EchoPet</finalName>
+        <finalName>${project.name}</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <resources>
             <resource>
@@ -119,13 +120,13 @@
                 <version>2.1</version>
                 <configuration>
                     <archive>
-                      <manifestEntries>
-                        <Main-Class>${main.class}</Main-Class>
-                        <Plugin-Version>${project.version}</Plugin-Version>
-                        <Minecraft-Version>${minecraft.version}</Minecraft-Version>
-                        <CraftBukkit-Version>${craftbukkit.version}</CraftBukkit-Version>
-                        <NMS-Package>${cb_package}</NMS-Package>
-                      </manifestEntries>
+                        <manifestEntries>
+                            <Main-Class>${main.class}</Main-Class>
+                            <Plugin-Version>${project.version}</Plugin-Version>
+                            <Minecraft-Version>${minecraft.version}</Minecraft-Version>
+                            <CraftBukkit-Version>${craftbukkit.version}</CraftBukkit-Version>
+                            <NMS-Package>${cb_package}</NMS-Package>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
