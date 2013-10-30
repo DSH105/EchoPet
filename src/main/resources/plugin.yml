@@ -1,10 +1,9 @@
-name: EchoPet
-version: ${echopet.version}
+name: ${project.name}
+version: ${project.version}
 author: DSH105
-description: Mobs Under Your Control.
-website: http://dev.bukkit.org/server-mods/echopet/
+description: Mobs Under Your Control
+website: ${project.url}
 main: ${main.class}
-prefix: EchoPet
 commands:
     ecupdate:
         description: Update the EchoPet plugin.

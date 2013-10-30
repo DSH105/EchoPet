@@ -3,8 +3,10 @@
   <groupId>io.github.dsh105</groupId>
   <artifactId>EchoPet</artifactId>
   <name>EchoPet</name>
+  <version>2.0.12-SNAPSHOT</version>
+  <url>http://dev.bukkit.org/bukkit-plugins/echopet/</url>
   <properties>
-      <echopet.version>2.0.12-SNAPSHOT</echopet.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <vnp.version>3.18.4-SNAPSHOT</vnp.version>
       <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
       <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
@@ -14,48 +16,6 @@
       <cb_package>v1_6_R3</cb_package>
       <main.class>io.github.dsh105.echopet.EchoPet</main.class>
   </properties>
-  <version>${echopet.version}</version>
-  <build>
-        <defaultGoal>clean package install</defaultGoal>
-        <finalName>EchoPet</finalName>
-        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources/</directory>
-                <includes>
-                    <include>*.yml</include>
-                </includes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <archive>
-                      <manifestEntries>
-                        <Main-Class>${main.class}</Main-Class>
-                        <Plugin-Version>${echopet.version}</Plugin-Version>
-                        <Minecraft-Version>${minecraft.version}</Minecraft-Version>
-                        <CraftBukkit-Version>${craftbukkit.version}</CraftBukkit-Version>
-                        <NMS-Package>${cb_package}</NMS-Package>
-                      </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -130,4 +90,45 @@
             <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
         </repository>
     </repositories>
+  <build>
+        <defaultGoal>clean package install</defaultGoal>
+        <finalName>EchoPet</finalName>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+                <includes>
+                    <include>*.yml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <archive>
+                      <manifestEntries>
+                        <Main-Class>${main.class}</Main-Class>
+                        <Plugin-Version>${project.version}</Plugin-Version>
+                        <Minecraft-Version>${minecraft.version}</Minecraft-Version>
+                        <CraftBukkit-Version>${craftbukkit.version}</CraftBukkit-Version>
+                        <NMS-Package>${cb_package}</NMS-Package>
+                      </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
