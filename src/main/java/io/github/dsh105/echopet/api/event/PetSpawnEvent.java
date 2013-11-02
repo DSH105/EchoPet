@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.api.event;
 
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -12,38 +12,38 @@ public class PetSpawnEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private Pet pet;
+    private LivingPet pet;
     private Location spawnLocation;
 
-    public PetSpawnEvent(Pet pet, Location spawnLocation) {
+    public PetSpawnEvent(LivingPet pet, Location spawnLocation) {
         this.pet = pet;
         this.spawnLocation = spawnLocation;
     }
 
     /**
-     * Gets the {@link Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
      *
-     * @return the {@link Pet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
      */
-    public Pet getPet() {
+    public LivingPet getPet() {
         return this.pet;
     }
 
     /**
-     * Gets the spawn Location of the Pet
+     * Gets the spawn Location of the LivingPet
      * <p/>
      * This Location is most likely going to be the owner's Location
      *
-     * @return the Location this Pet spawned
+     * @return the Location this LivingPet spawned
      */
     public Location getSpawnLocation() {
         return this.spawnLocation;
     }
 
     /**
-     * Sets the spawn Location of this Pet
+     * Sets the spawn Location of this LivingPet
      *
-     * @param spawnLocation new Location to spawn the Pet
+     * @param spawnLocation new Location to spawn the LivingPet
      */
     public void setSpawnLocation(Location spawnLocation) {
         this.spawnLocation = spawnLocation;

@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -11,11 +11,11 @@ public class PetInteractEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private Pet pet;
+    private LivingPet pet;
     private Player player;
     private Action action;
 
-    public PetInteractEvent(Pet pet, Player player, Action action, boolean cancelledByDefault) {
+    public PetInteractEvent(LivingPet pet, Player player, Action action, boolean cancelledByDefault) {
         this.pet = pet;
         this.action = action;
         this.player = player;
@@ -23,16 +23,16 @@ public class PetInteractEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
      *
-     * @return the {@link Pet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
      */
-    public Pet getPet() {
+    public LivingPet getPet() {
         return this.pet;
     }
 
     /**
-     * Gets the player that interated with the Pet
+     * Gets the player that interated with the LivingPet
      *
      * @return
      */
@@ -50,7 +50,7 @@ public class PetInteractEvent extends Event implements Cancellable {
     }
 
     /**
-     * Returns whether the {@link Player} that interacted was the Pet's owner
+     * Returns whether the {@link Player} that interacted was the LivingPet's owner
      *
      * @return true if it is the owner
      */
@@ -89,12 +89,12 @@ public class PetInteractEvent extends Event implements Cancellable {
 
     public enum Action {
         /**
-         * Left clicking a Pet
+         * Left clicking a LivingPet
          */
         LEFT_CLICK,
 
         /**
-         * Right clicking a Pet
+         * Right clicking a LivingPet
          */
         RIGHT_CLICK;
     }

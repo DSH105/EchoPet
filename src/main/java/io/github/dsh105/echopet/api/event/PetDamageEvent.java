@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -11,18 +11,18 @@ public class PetDamageEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = true; // cancelled by default
 
-    private Pet pet;
+    private LivingPet pet;
     private double damage;
     private DamageCause damageCause;
 
-    public PetDamageEvent(Pet pet, DamageCause damageCause, final double damage) {
+    public PetDamageEvent(LivingPet pet, DamageCause damageCause, final double damage) {
         this.pet = pet;
         this.damage = damage;
         this.damageCause = damageCause;
     }
 
     /**
-     * Gets the damage dealt by the {@link Pet}
+     * Gets the damage dealt by the {@link io.github.dsh105.echopet.entity.living.LivingPet}
      *
      * @return damage dealt
      */
@@ -40,11 +40,11 @@ public class PetDamageEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
      *
-     * @return the {@link Pet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
      */
-    public Pet getPet() {
+    public LivingPet getPet() {
         return this.pet;
     }
 

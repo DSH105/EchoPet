@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -10,20 +10,20 @@ public class PetMenuOpenEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private Pet pet;
+    private LivingPet pet;
     private MenuType menuType;
 
-    public PetMenuOpenEvent(Pet pet, MenuType menuType) {
+    public PetMenuOpenEvent(LivingPet pet, MenuType menuType) {
         this.pet = pet;
         this.menuType = menuType;
     }
 
     /**
-     * Gets the {@link Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
      *
-     * @return the {@link Pet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
      */
-    public Pet getPet() {
+    public LivingPet getPet() {
         return this.pet;
     }
 

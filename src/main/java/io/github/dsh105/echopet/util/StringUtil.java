@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.util;
 
-import io.github.dsh105.echopet.data.PetData;
-import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -3,8 +3,8 @@ package io.github.dsh105.echopet.listeners;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.pet.CraftPet;
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.CraftLivingPet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
@@ -47,8 +47,8 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
-        if (e instanceof CraftPet) {
-            Pet pet = ((CraftPet) e).getPet();
+        if (e instanceof CraftLivingPet) {
+            LivingPet pet = ((CraftLivingPet) e).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
@@ -63,7 +63,7 @@ public class PetOwnerListener implements Listener {
         if (event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                Pet pet = PetHandler.getInstance().getPet(p);
+                LivingPet pet = PetHandler.getInstance().getPet(p);
                 if (pet != null && pet.isOwnerRiding()) {
                     event.setCancelled(true);
                 }
@@ -74,7 +74,7 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerTeleport(final PlayerTeleportEvent event) {
         final Player p = event.getPlayer();
-        final Pet pi = ec.PH.getPet(p);
+        final LivingPet pi = ec.PH.getPet(p);
         if (pi != null) {
             if (pi.ownerIsMounting) return;
             if (event.getFrom().getWorld() == event.getTo().getWorld()) {
@@ -117,7 +117,7 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player p = event.getPlayer();
-        Pet pi = ec.PH.getPet(p);
+        LivingPet pi = ec.PH.getPet(p);
         if (pi != null) {
             //ec.PH.saveFileData("autosave", pi);
             ec.PH.saveFileData("autosave", pi);
@@ -173,7 +173,7 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player p = event.getEntity();
-        Pet pet = ec.PH.getPet(p);
+        LivingPet pet = ec.PH.getPet(p);
         if (pet != null) {
             ec.PH.saveFileData("autosave", pet);
             ec.SPH.saveToDatabase(pet, false);

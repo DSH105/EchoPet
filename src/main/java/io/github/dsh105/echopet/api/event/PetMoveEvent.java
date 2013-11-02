@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -11,18 +11,18 @@ public class PetMoveEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private Pet pet;
+    private LivingPet pet;
     private Location from;
     private Location to;
 
-    public PetMoveEvent(Pet pet, Location from, Location to) {
+    public PetMoveEvent(LivingPet pet, Location from, Location to) {
         this.pet = pet;
         this.from = from;
         this.to = to;
     }
 
     /**
-     * Gets the Location this Pet moved to
+     * Gets the Location this LivingPet moved to
      *
      * @return Location moved to
      */
@@ -31,7 +31,7 @@ public class PetMoveEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the Location this Pet moved from
+     * Gets the Location this LivingPet moved from
      *
      * @return Location moved from
      */
@@ -40,20 +40,20 @@ public class PetMoveEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets the location that this Pet will move to
+     * Sets the location that this LivingPet will move to
      *
-     * @param to New Location this Pet will move to
+     * @param to New Location this LivingPet will move to
      */
     public void setTo(Location to) {
         this.to = to;
     }
 
     /**
-     * Gets the {@link Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
      *
-     * @return the {@link Pet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
      */
-    public Pet getPet() {
+    public LivingPet getPet() {
         return this.pet;
     }
 

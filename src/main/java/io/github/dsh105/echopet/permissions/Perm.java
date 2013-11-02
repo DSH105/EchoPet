@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.permissions;
 
-import io.github.dsh105.echopet.data.PetData;
-import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.util.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

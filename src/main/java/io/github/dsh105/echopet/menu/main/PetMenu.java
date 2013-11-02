@@ -2,8 +2,8 @@ package io.github.dsh105.echopet.menu.main;
 
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
-import io.github.dsh105.echopet.data.PetData;
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.Menu;
 import io.github.dsh105.echopet.util.EnumUtil;
 import io.github.dsh105.echopet.util.Lang;
@@ -18,10 +18,10 @@ public class PetMenu implements Menu {
 
     Inventory inv;
     private int size;
-    private Pet pet;
+    private LivingPet pet;
     private ArrayList<MenuOption> options = new ArrayList<MenuOption>();
 
-    public PetMenu(Pet pet, ArrayList<MenuOption> options, int size) {
+    public PetMenu(LivingPet pet, ArrayList<MenuOption> options, int size) {
         this.pet = pet;
         this.size = size;
         this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu");

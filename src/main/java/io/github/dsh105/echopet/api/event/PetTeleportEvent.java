@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.Location;
 import org.bukkit.event.HandlerList;
 
@@ -9,7 +9,7 @@ public class PetTeleportEvent extends PetMoveEvent {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    public PetTeleportEvent(Pet pet, Location from, Location to) {
+    public PetTeleportEvent(LivingPet pet, Location from, Location to) {
         super(pet, from, to);
     }
 

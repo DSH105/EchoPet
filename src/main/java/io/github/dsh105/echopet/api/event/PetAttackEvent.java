@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import net.minecraft.server.v1_6_R3.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
@@ -12,12 +12,12 @@ public class PetAttackEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private Pet pet;
+    private LivingPet pet;
     private Entity attacked;
     public DamageSource damageSource;
     private double damage;
 
-    public PetAttackEvent(Pet pet, Entity attacked, DamageSource damageSource, final double damage) {
+    public PetAttackEvent(LivingPet pet, Entity attacked, DamageSource damageSource, final double damage) {
         this.pet = pet;
         this.attacked = attacked;
         this.damage = damage;
@@ -25,7 +25,7 @@ public class PetAttackEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the damage dealt by the {@link Pet}
+     * Gets the damage dealt by the {@link io.github.dsh105.echopet.entity.living.LivingPet}
      *
      * @return damage dealt
      */
@@ -52,11 +52,11 @@ public class PetAttackEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
      *
-     * @return the {@link Pet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
      */
-    public Pet getPet() {
+    public LivingPet getPet() {
         return this.pet;
     }
 
