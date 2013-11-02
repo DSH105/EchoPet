@@ -1,27 +1,27 @@
 package io.github.dsh105.echopet.util;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.data.PetData;
-import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
-import io.github.dsh105.echopet.entity.pet.IAgeablePet;
-import io.github.dsh105.echopet.entity.pet.Pet;
-import io.github.dsh105.echopet.entity.pet.blaze.BlazePet;
-import io.github.dsh105.echopet.entity.pet.creeper.CreeperPet;
-import io.github.dsh105.echopet.entity.pet.enderman.EndermanPet;
-import io.github.dsh105.echopet.entity.pet.horse.HorsePet;
-import io.github.dsh105.echopet.entity.pet.horse.HorseType;
-import io.github.dsh105.echopet.entity.pet.magmacube.MagmaCubePet;
-import io.github.dsh105.echopet.entity.pet.ocelot.OcelotPet;
-import io.github.dsh105.echopet.entity.pet.pig.PigPet;
-import io.github.dsh105.echopet.entity.pet.pigzombie.PigZombiePet;
-import io.github.dsh105.echopet.entity.pet.sheep.SheepPet;
-import io.github.dsh105.echopet.entity.pet.skeleton.SkeletonPet;
-import io.github.dsh105.echopet.entity.pet.slime.SlimePet;
-import io.github.dsh105.echopet.entity.pet.villager.VillagerPet;
-import io.github.dsh105.echopet.entity.pet.wither.WitherPet;
-import io.github.dsh105.echopet.entity.pet.wolf.WolfPet;
-import io.github.dsh105.echopet.entity.pet.zombie.ZombiePet;
+import io.github.dsh105.echopet.entity.living.IAgeablePet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.entity.living.type.blaze.BlazePet;
+import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
+import io.github.dsh105.echopet.entity.living.type.enderman.EndermanPet;
+import io.github.dsh105.echopet.entity.living.type.horse.HorsePet;
+import io.github.dsh105.echopet.entity.living.type.horse.HorseType;
+import io.github.dsh105.echopet.entity.living.type.magmacube.MagmaCubePet;
+import io.github.dsh105.echopet.entity.living.type.ocelot.OcelotPet;
+import io.github.dsh105.echopet.entity.living.type.pig.PigPet;
+import io.github.dsh105.echopet.entity.living.type.pigzombie.PigZombiePet;
+import io.github.dsh105.echopet.entity.living.type.sheep.SheepPet;
+import io.github.dsh105.echopet.entity.living.type.skeleton.SkeletonPet;
+import io.github.dsh105.echopet.entity.living.type.slime.SlimePet;
+import io.github.dsh105.echopet.entity.living.type.villager.VillagerPet;
+import io.github.dsh105.echopet.entity.living.type.wither.WitherPet;
+import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
+import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
 import io.github.dsh105.echopet.permissions.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -214,7 +214,7 @@ public class PetUtil {
         }
     }
 
-    public static ArrayList<String> generatePetInfo(Pet pt) {
+    public static ArrayList<String> generatePetInfo(LivingPet pt) {
         ArrayList<String> info = new ArrayList<String>();
         info.add(ChatColor.GOLD + " - Pet Type: " + ChatColor.YELLOW + StringUtil.capitalise(pt.getPetType().toString()));
         info.add(ChatColor.GOLD + " - Name: " + ChatColor.YELLOW + pt.getPetName());
@@ -237,7 +237,7 @@ public class PetUtil {
         return info;
     }
 
-    public static ArrayList<String> generatePetDataInfo(Pet pt) {
+    public static ArrayList<String> generatePetDataInfo(LivingPet pt) {
         ArrayList<String> info = new ArrayList<String>();
         if (pt.getPetType() == PetType.BLAZE) {
             info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + ((BlazePet) pt).isOnFire());

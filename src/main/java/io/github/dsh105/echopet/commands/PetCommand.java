@@ -1,11 +1,11 @@
 package io.github.dsh105.echopet.commands;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
@@ -65,7 +65,7 @@ public class PetCommand implements CommandExecutor {
 
                 // Sets the name of the pet's mount if it exists
                 if (args.length >= 3 && args[1].equalsIgnoreCase("mount")) {
-                    Pet pi = ec.PH.getPet(p);
+                    LivingPet pi = ec.PH.getPet(p);
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -90,7 +90,7 @@ public class PetCommand implements CommandExecutor {
 
                 // Sets the name of a player's pet
                 else if (args.length >= 2) {
-                    Pet pi = ec.PH.getPet(p);
+                    LivingPet pi = ec.PH.getPet(p);
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -133,7 +133,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("call")) {
                 if (Perm.BASE_CALL.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
-                    Pet pet = PetHandler.getInstance().getPet(player);
+                    LivingPet pet = PetHandler.getInstance().getPet(player);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -147,7 +147,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("hide")) {
                 if (Perm.BASE_HIDE.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
-                    Pet pet = ec.PH.getPet(player);
+                    LivingPet pet = ec.PH.getPet(player);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -164,7 +164,7 @@ public class PetCommand implements CommandExecutor {
                 if (Perm.BASE_SHOW.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
                     PetHandler.getInstance().removePets(player);
-                    Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
+                    LivingPet pet = PetHandler.getInstance().loadPets(player, false, false, false);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
                         return true;
@@ -185,7 +185,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("menu")) {
                 if (Perm.BASE_MENU.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
-                    Pet p = ec.PH.getPet(player);
+                    LivingPet p = ec.PH.getPet(player);
                     if (p == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -201,7 +201,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("hat")) {
                 if (sender instanceof Player) {
                     Player p = (Player) sender;
-                    Pet pi = ec.PH.getPet(p);
+                    LivingPet pi = ec.PH.getPet(p);
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -221,7 +221,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("ride")) {
                 if (sender instanceof Player) {
                     Player p = (Player) sender;
-                    Pet pi = ec.PH.getPet(p);
+                    LivingPet pi = ec.PH.getPet(p);
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -264,7 +264,7 @@ public class PetCommand implements CommandExecutor {
             // Get all the info for a specific pet and send it to the player
             else if (args[0].equalsIgnoreCase("info")) {
                 if (Perm.BASE_INFO.hasPerm(sender, true, false)) {
-                    Pet pi = ec.PH.getPet((Player) sender);
+                    LivingPet pi = ec.PH.getPet((Player) sender);
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -279,7 +279,7 @@ public class PetCommand implements CommandExecutor {
 
             else if (args[0].equalsIgnoreCase("remove")) {
                 if (Perm.BASE_REMOVE.hasPerm(sender, true, false)) {
-                    Pet pi = ec.PH.getPet((Player) sender);
+                    LivingPet pi = ec.PH.getPet((Player) sender);
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
@@ -311,7 +311,7 @@ public class PetCommand implements CommandExecutor {
                 }
 
                 if (Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType)) {
-                    Pet pi = ec.PH.createPet((Player) sender, petType, true);
+                    LivingPet pi = ec.PH.createPet((Player) sender, petType, true);
                     if (pi == null) {
                         return true;
                     }
@@ -335,7 +335,7 @@ public class PetCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("mount")) {
                 if (args[1].equalsIgnoreCase("remove")) {
                     if (Perm.BASE_REMOVE.hasPerm(sender, true, false)) {
-                        Pet pi = ec.PH.getPet((Player) sender);
+                        LivingPet pi = ec.PH.getPet((Player) sender);
                         if (pi == null) {
                             Lang.sendTo(sender, Lang.NO_PET.toString());
                             return true;
@@ -357,7 +357,7 @@ public class PetCommand implements CommandExecutor {
                         return true;
                     }
 
-                    Pet pi = ec.PH.getPet((Player) sender);
+                    LivingPet pi = ec.PH.getPet((Player) sender);
 
                     if (pi == null) {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
@@ -382,7 +382,7 @@ public class PetCommand implements CommandExecutor {
                     }
 
                     if (Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType)) {
-                        Pet mount = pi.createMount(petType, true);
+                        LivingPet mount = pi.createMount(petType, true);
                         if (mount == null) {
                             return true;
                         }
@@ -456,7 +456,7 @@ public class PetCommand implements CommandExecutor {
                 }
 
                 if (Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType) && Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, mountType)) {
-                    Pet pi = ec.PH.createPet(((Player) sender), petType, mountType, true);
+                    LivingPet pi = ec.PH.createPet(((Player) sender), petType, mountType, true);
                     if (pi == null) {
                         return true;
                     }
@@ -489,7 +489,7 @@ public class PetCommand implements CommandExecutor {
                     if (args[2].equalsIgnoreCase("current")) {
                         if (Perm.BASE_DEFAULT_SET_CURRENT.hasPerm(sender, true, false)) {
 
-                            Pet pi = ec.PH.getPet(((Player) sender));
+                            LivingPet pi = ec.PH.getPet(((Player) sender));
                             if (pi == null) {
                                 Lang.sendTo(sender, Lang.NO_PET.toString());
                                 return true;

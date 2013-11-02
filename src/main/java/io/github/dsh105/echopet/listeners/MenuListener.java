@@ -1,10 +1,10 @@
 package io.github.dsh105.echopet.listeners;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.data.PetType;
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.menu.main.DataMenu;
 import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
@@ -70,7 +70,7 @@ public class MenuListener implements Listener {
                     }
                     String cmd = EchoPet.getPluginInstance().cmdString;
                     if (inv.getItem(slot).equals(SelectorItem.TOGGLE.getItem())) {
-                        Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+                        LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.BASE_HIDE.hasPerm(player, true, false)) {
                                 player.performCommand(cmd + " hide");
@@ -90,7 +90,7 @@ public class MenuListener implements Listener {
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
-                        Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+                        LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, pet.getPetType())) {
                                 player.performCommand(cmd + " ride");
@@ -99,7 +99,7 @@ public class MenuListener implements Listener {
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.HAT.getItem())) {
-                        Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+                        LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, pet.getPetType())) {
                                 player.performCommand(cmd + " hat");
@@ -116,7 +116,7 @@ public class MenuListener implements Listener {
                     for (PetItem i : PetItem.values()) {
                         if (inv.getItem(slot).equals(i.getItem(player))) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_PETTYPE, i.petType)) {
-                                Pet pet = PetHandler.getInstance().createPet(player, i.petType, true);
+                                LivingPet pet = PetHandler.getInstance().createPet(player, i.petType, true);
                                 if (pet != null) {
                                     ec.PH.saveFileData("autosave", pet);
                                     ec.SPH.saveToDatabase(pet, false);
@@ -136,7 +136,7 @@ public class MenuListener implements Listener {
         }
 
 
-        final Pet pet = EchoPet.getPluginInstance().PH.getPet(player);
+        final LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
         if (pet == null) {
             return;
         }

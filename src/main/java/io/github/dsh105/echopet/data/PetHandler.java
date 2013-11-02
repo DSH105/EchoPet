@@ -1,24 +1,25 @@
 package io.github.dsh105.echopet.data;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.data.PetData.Type;
-import io.github.dsh105.echopet.entity.pet.IAgeablePet;
-import io.github.dsh105.echopet.entity.pet.Pet;
-import io.github.dsh105.echopet.entity.pet.blaze.BlazePet;
-import io.github.dsh105.echopet.entity.pet.creeper.CreeperPet;
-import io.github.dsh105.echopet.entity.pet.enderman.EndermanPet;
-import io.github.dsh105.echopet.entity.pet.horse.*;
-import io.github.dsh105.echopet.entity.pet.magmacube.MagmaCubePet;
-import io.github.dsh105.echopet.entity.pet.ocelot.OcelotPet;
-import io.github.dsh105.echopet.entity.pet.pig.PigPet;
-import io.github.dsh105.echopet.entity.pet.pigzombie.PigZombiePet;
-import io.github.dsh105.echopet.entity.pet.sheep.SheepPet;
-import io.github.dsh105.echopet.entity.pet.skeleton.SkeletonPet;
-import io.github.dsh105.echopet.entity.pet.slime.SlimePet;
-import io.github.dsh105.echopet.entity.pet.villager.VillagerPet;
-import io.github.dsh105.echopet.entity.pet.wither.WitherPet;
-import io.github.dsh105.echopet.entity.pet.wolf.WolfPet;
-import io.github.dsh105.echopet.entity.pet.zombie.ZombiePet;
+import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.living.IAgeablePet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.entity.living.type.blaze.BlazePet;
+import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
+import io.github.dsh105.echopet.entity.living.type.enderman.EndermanPet;
+import io.github.dsh105.echopet.entity.living.type.horse.*;
+import io.github.dsh105.echopet.entity.living.type.magmacube.MagmaCubePet;
+import io.github.dsh105.echopet.entity.living.type.ocelot.OcelotPet;
+import io.github.dsh105.echopet.entity.living.type.pig.PigPet;
+import io.github.dsh105.echopet.entity.living.type.pigzombie.PigZombiePet;
+import io.github.dsh105.echopet.entity.living.type.sheep.SheepPet;
+import io.github.dsh105.echopet.entity.living.type.skeleton.SkeletonPet;
+import io.github.dsh105.echopet.entity.living.type.slime.SlimePet;
+import io.github.dsh105.echopet.entity.living.type.villager.VillagerPet;
+import io.github.dsh105.echopet.entity.living.type.wither.WitherPet;
+import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
+import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.EnumUtil;
 import io.github.dsh105.echopet.util.Lang;
@@ -39,7 +40,7 @@ public class PetHandler {
 
     private static EchoPet ec;
 
-    private ArrayList<Pet> pets = new ArrayList<Pet>();
+    private ArrayList<LivingPet> pets = new ArrayList<LivingPet>();
 
     public PetHandler(EchoPet ec) {
         PetHandler.ec = ec;
@@ -49,14 +50,14 @@ public class PetHandler {
         return ec.PH;
     }
 
-    public ArrayList<Pet> getPets() {
+    public ArrayList<LivingPet> getPets() {
         return pets;
     }
 
-    public Pet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
+    public LivingPet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
         EchoPet ec = EchoPet.getPluginInstance();
         if (ec.options.sqlOverride()) {
-            Pet pet = ec.SPH.createPetFromDatabase(p);
+            LivingPet pet = ec.SPH.createPetFromDatabase(p);
             if (pet == null) {
                 return null;
             } else {
@@ -66,7 +67,7 @@ public class PetHandler {
             }
             return pet;
         } else if (ec.getPetConfig().get("default." + p.getName() + ".pet.type") != null && findDefault) {
-            Pet pi = ec.PH.createPetFromFile("default", p);
+            LivingPet pi = ec.PH.createPetFromFile("default", p);
             if (pi == null) {
                 return null;
             } else {
@@ -77,7 +78,7 @@ public class PetHandler {
             return pi;
         } else if ((checkWorldOverride && (Boolean) ec.options.getConfigOption("multiworldLoadOverride", true)) || (Boolean) ec.options.getConfigOption("loadSavedPets", true)) {
             if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
-                Pet pi = ec.PH.createPetFromFile("autosave", p);
+                LivingPet pi = ec.PH.createPetFromFile("autosave", p);
                 if (pi == null) {
                     return null;
                 } else {
@@ -92,9 +93,9 @@ public class PetHandler {
     }
 
     public void removeAllPets() {
-        Iterator<Pet> i = pets.listIterator();
+        Iterator<LivingPet> i = pets.listIterator();
         while (i.hasNext()) {
-            Pet p = i.next();
+            LivingPet p = i.next();
             saveFileData("autosave", p);
             ec.SPH.saveToDatabase(p, false);
             p.removePet();
@@ -102,7 +103,7 @@ public class PetHandler {
         }
     }
 
-    public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
+    public LivingPet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
         removePets(owner);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendMessageOnFail) {
@@ -116,7 +117,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner, petType);
+        LivingPet pi = petType.getNewPetInstance(owner, petType);
         //Pet pi = new Pet(owner, petType);
         forceAllValidData(pi);
         pets.add(pi);
@@ -125,7 +126,7 @@ public class PetHandler {
         return pi;
     }
 
-    public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
+    public LivingPet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
         removePets(owner);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendFailMessage) {
@@ -139,7 +140,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner, petType);
+        LivingPet pi = petType.getNewPetInstance(owner, petType);
         //Pet pi = new Pet(owner, petType);
         pi.createMount(mountType, true);
         forceAllValidData(pi);
@@ -149,8 +150,8 @@ public class PetHandler {
         return pi;
     }
 
-    public Pet getPet(Player player) {
-        for (Pet pi : pets) {
+    public LivingPet getPet(Player player) {
+        for (LivingPet pi : pets) {
             if (pi.getOwner().getName().equals(player.getName())) {
                 return pi;
             }
@@ -158,8 +159,8 @@ public class PetHandler {
         return null;
     }
 
-    public Pet getPet(Entity pet) {
-        for (Pet pi : pets) {
+    public LivingPet getPet(Entity pet) {
+        for (LivingPet pi : pets) {
             if (pi.getEntityPet().equals(pet) || pi.getMount().getEntityPet().equals(pet)) {
                 return pi;
             }
@@ -186,7 +187,7 @@ public class PetHandler {
 	}*/
 
     // Force all data specified in config file and notify player.
-    public void forceAllValidData(Pet pi) {
+    public void forceAllValidData(LivingPet pi) {
         ArrayList<PetData> tempData = new ArrayList<PetData>();
         for (PetData data : PetData.values()) {
             if (ec.options.forceData(pi.getPetType(), data)) {
@@ -218,7 +219,7 @@ public class PetHandler {
         }
     }
 
-    public void updateFileData(String type, Pet pet, ArrayList<PetData> list, boolean b) {
+    public void updateFileData(String type, LivingPet pet, ArrayList<PetData> list, boolean b) {
         ec.SPH.updateDatabase(pet.getOwner(), list, b, pet.isMount());
         String w = pet.getOwner().getWorld().getName();
         String path = type + "." + w + "." + pet.getOwner().getName();
@@ -228,7 +229,7 @@ public class PetHandler {
         ec.getPetConfig().saveConfig();
     }
 
-    public Pet createPetFromFile(String type, Player p) {
+    public LivingPet createPetFromFile(String type, Player p) {
         if ((Boolean) ec.options.getConfigOption("loadSavedPets", true)) {
             String path = type + "." + p.getName();
             if (ec.getPetConfig().get(path) != null) {
@@ -241,7 +242,7 @@ public class PetHandler {
                 if (!ec.options.allowPetType(petType)) {
                     return null;
                 }
-                Pet pi = this.createPet(p, petType, true);
+                LivingPet pi = this.createPet(p, petType, true);
                 if (pi == null) {
                     return null;
                 }
@@ -275,7 +276,7 @@ public class PetHandler {
                     }
                     if (mountPetType == null) return null;
                     if (ec.options.allowMounts(petType)) {
-                        Pet mount = pi.createMount(mountPetType, true);
+                        LivingPet mount = pi.createMount(mountPetType, true);
                         if (mount != null) {
                             mount.setName(mountName);
                             ArrayList<PetData> mountData = new ArrayList<PetData>();
@@ -305,9 +306,9 @@ public class PetHandler {
     }
 
     public void removePets(Player player) {
-        Iterator<Pet> i = pets.listIterator();
+        Iterator<LivingPet> i = pets.listIterator();
         while (i.hasNext()) {
-            Pet p = i.next();
+            LivingPet p = i.next();
             if (p.getOwner().getName().equals(player.getName())) {
 				/*saveFileData("autosave", p);
 				ec.SPH.saveToDatabase(p, false);*/
@@ -317,14 +318,14 @@ public class PetHandler {
         }
     }
 
-    public void removePet(Pet pi) {
+    public void removePet(LivingPet pi) {
         //saveFileData("autosave", pi);
 		/*pi.removePet();
 		pets.remove(pi);*/
         removePets(pi.getOwner());
     }
 
-    public void saveFileData(String type, Pet pi) {
+    public void saveFileData(String type, LivingPet pi) {
         clearFileData(type, pi);
         try {
             String oName = pi.getOwner().getName();
@@ -426,7 +427,7 @@ public class PetHandler {
         ec.getPetConfig().saveConfig();
     }
 
-    public void clearFileData(String type, Pet pi) {
+    public void clearFileData(String type, LivingPet pi) {
         clearFileData(type, pi.getOwner());
     }
 
@@ -452,14 +453,14 @@ public class PetHandler {
         clearFileData(type, p.getName());
     }
 
-    public void setData(Pet pet, PetData[] data, boolean b) {
+    public void setData(LivingPet pet, PetData[] data, boolean b) {
         PetType petType = pet.getPetType();
         for (PetData pd : data) {
             setData(pet, pd, b);
         }
     }
 
-    public void setData(Pet pet, PetData pd, boolean b) {
+    public void setData(LivingPet pet, PetData pd, boolean b) {
         PetType petType = pet.getPetType();
         if (petType.isDataAllowed(pd)) {
             if (pd == PetData.BABY) {
@@ -476,7 +477,7 @@ public class PetHandler {
                 ((CreeperPet) pet).setPowered(b);
             }
 
-            if (pd.isType(Type.SIZE)) {
+            if (pd.isType(PetData.Type.SIZE)) {
                 int i = 1;
                 if (pd == PetData.MEDIUM) {
                     i = 2;
@@ -491,7 +492,7 @@ public class PetHandler {
                 }
             }
 
-            if (pd.isType(Type.CAT) && petType == PetType.OCELOT) {
+            if (pd.isType(PetData.Type.CAT) && petType == PetType.OCELOT) {
                 try {
                     org.bukkit.entity.Ocelot.Type t = org.bukkit.entity.Ocelot.Type.valueOf(pd.toString() + (pd == PetData.WILD ? "_OCELOT" : "_CAT"));
                     if (t != null) {
@@ -510,14 +511,14 @@ public class PetHandler {
                 ((WolfPet) pet).setTamed(b);
             }
 
-            if (pd.isType(Type.PROF)) {
+            if (pd.isType(PetData.Type.PROF)) {
                 Profession p = Profession.valueOf(pd.toString());
                 if (p != null) {
                     ((VillagerPet) pet).setProfession(p);
                 }
             }
 
-            if (pd.isType(Type.COLOUR) && (petType == PetType.SHEEP || petType == PetType.WOLF)) {
+            if (pd.isType(PetData.Type.COLOUR) && (petType == PetType.SHEEP || petType == PetType.WOLF)) {
                 String s = pd == PetData.LIGHTBLUE ? "LIGHT_BLUE" : pd.toString();
                 try {
                     DyeColor dc = DyeColor.valueOf(s);
@@ -575,7 +576,7 @@ public class PetHandler {
                     ((HorsePet) pet).setChested(b);
                 }
 
-                if (pd.isType(Type.HORSE_TYPE)) {
+                if (pd.isType(PetData.Type.HORSE_TYPE)) {
                     try {
                         HorseType h = HorseType.valueOf(pd.toString());
                         if (h != null) {
@@ -586,7 +587,7 @@ public class PetHandler {
                     }
                 }
 
-                if (pd.isType(Type.HORSE_VARIANT)) {
+                if (pd.isType(PetData.Type.HORSE_VARIANT)) {
                     try {
                         HorseVariant v = HorseVariant.valueOf(pd.toString());
                         if (v != null) {
@@ -601,7 +602,7 @@ public class PetHandler {
                     }
                 }
 
-                if (pd.isType(Type.HORSE_MARKING)) {
+                if (pd.isType(PetData.Type.HORSE_MARKING)) {
                     try {
                         HorseMarking m;
                         if (pd == PetData.WHITEPATCH) {
@@ -625,7 +626,7 @@ public class PetHandler {
                     }
                 }
 
-                if (pd.isType(Type.HORSE_ARMOUR)) {
+                if (pd.isType(PetData.Type.HORSE_ARMOUR)) {
                     try {
                         HorseArmour a;
                         if (pd == PetData.NOARMOUR) {
@@ -647,8 +648,8 @@ public class PetHandler {
                 if (petData != pd) {
                     ListIterator<PetData.Type> i2 = pd.getTypes().listIterator();
                     while (i2.hasNext()) {
-                        Type type = i2.next();
-                        if (type != Type.BOOLEAN && petData.isType(type)) {
+                        PetData.Type type = i2.next();
+                        if (type != PetData.Type.BOOLEAN && petData.isType(type)) {
                             i.remove();
                             break;
                         }

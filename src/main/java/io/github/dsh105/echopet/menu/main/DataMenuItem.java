@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.menu.main;
 
-import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

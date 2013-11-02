@@ -1,11 +1,11 @@
 package io.github.dsh105.echopet.mysql;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.data.PetData;
+import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.data.PetType;
+import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
-import io.github.dsh105.echopet.entity.pet.Pet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
@@ -58,7 +58,7 @@ public class SQLPetHandler {
         }
     }
 
-    public void saveToDatabase(Pet p, boolean isMount) {
+    public void saveToDatabase(LivingPet p, boolean isMount) {
         if (EchoPet.getPluginInstance().options.useSql()) {
             Connection con = EchoPet.getPluginInstance().getSqlCon();
             String mountPrefix = isMount ? "Mount" : "";
@@ -109,11 +109,11 @@ public class SQLPetHandler {
         }
     }
 
-    public Pet createPetFromDatabase(Player p) {
+    public LivingPet createPetFromDatabase(Player p) {
         if (EchoPet.getPluginInstance().options.useSql()) {
             Connection con = EchoPet.getPluginInstance().getSqlCon();
 
-            Pet pet = null;
+            LivingPet pet = null;
             Player owner;
             PetType pt;
             String name;
@@ -169,7 +169,7 @@ public class SQLPetHandler {
                                 }
                             }
 
-                            Pet mount = pet.createMount(mt, false);
+                            LivingPet mount = pet.createMount(mt, false);
                             if (mount != null) {
                                 mount.setName(mName);
                                 PetData[] MDT = createArray(map, true);
