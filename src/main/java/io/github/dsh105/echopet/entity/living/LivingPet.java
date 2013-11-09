@@ -149,7 +149,7 @@ public class LivingPet {
         World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
         EntityLivingPet entityPet = pt.getNewEntityInstance(mcWorld, this);
 
-        entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
+        entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), this.getOwner().getLocation().getYaw(), this.getOwner().getLocation().getPitch());
         if (!l.getChunk().isLoaded()) {
             l.getChunk().load();
         }
