@@ -358,6 +358,14 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             }
         }
 
+        if (((CraftPlayer) this.getOwner()).getHandle().isSneaking() != this.isSneaking()) {
+            this.setSneaking(!this.isSneaking());
+        }
+
+        if (((CraftPlayer) this.getOwner()).getHandle().isSprinting() != this.isSprinting()) {
+            this.setSprinting(!this.isSprinting());
+        }
+
         if (this.getPet().isPetHat()) {
 
             this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getOwner().getLocation().getYaw() - 180 : this.getOwner().getLocation().getYaw());
