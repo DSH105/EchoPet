@@ -41,7 +41,7 @@ public class CommandComplete implements TabCompleter {
                 return new String[]{EchoPet.getPluginInstance().cmdString, EchoPet.getPluginInstance().adminCmdString};
             case 1:
                 return new String[]{"bat", "blaze", "cavespider", "chicken", "cow", "creeper", "enderdragon",
-                        "enderman", "ghast", "horse", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig",
+                        "enderman", "ghast", "horse", "human", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig",
                         "pigzombie", "sheep", "silverfish", "skeleton", "slime", "snowman", "spider", "squid",
                         "villager", "witch", "wither", "wolf", "zombie", "name", "mount", "list", "info", "default",
                         "ride", "hat", "call", "show", "hide", "menu", "select", "remove"};

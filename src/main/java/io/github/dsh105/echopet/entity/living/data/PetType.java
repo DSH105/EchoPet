@@ -25,6 +25,8 @@ import io.github.dsh105.echopet.entity.living.type.giant.EntityGiantPet;
 import io.github.dsh105.echopet.entity.living.type.giant.GiantPet;
 import io.github.dsh105.echopet.entity.living.type.horse.EntityHorsePet;
 import io.github.dsh105.echopet.entity.living.type.horse.HorsePet;
+import io.github.dsh105.echopet.entity.living.type.human.EntityHumanPet;
+import io.github.dsh105.echopet.entity.living.type.human.HumanPet;
 import io.github.dsh105.echopet.entity.living.type.irongolem.EntityIronGolemPet;
 import io.github.dsh105.echopet.entity.living.type.irongolem.IronGolemPet;
 import io.github.dsh105.echopet.entity.living.type.magmacube.EntityMagmaCubePet;
@@ -124,6 +126,8 @@ public enum PetType {
             PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
             PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
+
+    HUMAN(EntityHumanPet.class, HumanPet.class, 54, "Human Pet", 20, 6D, EntityType.UNKNOWN),
 
 	/*
 	 * It is currently undecided whether to include Human Pets.
