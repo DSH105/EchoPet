@@ -73,7 +73,7 @@ public class PetGoalFollowOwner extends PetGoal {
 
     @Override
     public void finish() {
-        this.nav.g();
+        this.nav.h();
     }
 
     @Override
