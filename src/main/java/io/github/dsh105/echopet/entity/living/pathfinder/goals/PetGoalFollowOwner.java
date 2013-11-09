@@ -68,7 +68,7 @@ public class PetGoalFollowOwner extends PetGoal {
         this.timer = 0;
 
         //Set pathfinding radius
-        pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance * this.teleportDistance);
+        pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance);
     }
 
     @Override
@@ -87,27 +87,24 @@ public class PetGoalFollowOwner extends PetGoal {
                 return;
             }
 
-            double speed = 0.6F;
-            if (owner.isSprinting()) {
-                speed = 0.7F;
-            } else if (owner.isSneaking())
-                speed = 0.4F;
+            double speed = 0.55F;
+
+            if (this.pet.e(this.owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getOwner()).getHandle().onGround) {
+                this.pet.getPet().teleport(this.pet.getOwner().getLocation());
+                return;
+            }
 
             PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
             EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
             if (moveEvent.isCancelled()) {
                 return;
             }
-            //Entity.e: get location squared between 2 entities, needs distance * distance
-            if (this.pet.e(this.owner) > (this.teleportDistance * this.teleportDistance)) {
-                this.pet.getPet().teleport(this.pet.getOwner().getLocation());
-            } else if (!this.nav.a(owner, speed)) {
-                if (owner.onGround && pet.goalTarget == null) {
-                    //Smooth path finding to entity instead of location
-                    PathEntity path = pet.world.findPath(pet, owner, (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
-                    pet.setPathEntity(path);
-                    nav.a(path, speed);
-                }
+
+            if (owner.onGround && pet.goalTarget == null) {
+                //Smooth path finding to entity instead of location
+                PathEntity path = pet.world.findPath(pet, owner, (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
+                pet.setPathEntity(path);
+                nav.a(path, speed);
             }
         }
     }
