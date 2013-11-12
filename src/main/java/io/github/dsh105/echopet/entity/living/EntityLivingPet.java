@@ -399,13 +399,9 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
                 z = z + 1.5;
             }
 
-            this.motX = x;
-            this.motY = y;
-            this.motZ = z;
-
-            this.motX *= 0.7;
-            this.motY *= 0.7;
-            this.motZ *= 0.7;
+            this.motX = x *= 0.3;
+            this.motY = y *= 0.3;
+            this.motZ = z *= 0.3;
         }
     }
 }
