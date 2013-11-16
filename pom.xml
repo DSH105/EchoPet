@@ -17,6 +17,12 @@
         <cb_package>v1_6_R3</cb_package>
         <main.class>io.github.dsh105.echopet.EchoPet</main.class>
     </properties>
+    <distributionManagement>
+        <repository>
+            <id>hawk-repo</id>
+            <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
