@@ -324,10 +324,10 @@ public class EchoPet extends JavaPlugin {
             }
 
             Iterator i2 = e.keySet().iterator();
-            while (i.hasNext()) {
-                Class cl = (Class) i.next();
+            while (i2.hasNext()) {
+                Class cl = (Class) i2.next();
                 if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                    i.remove();
+                    i2.remove();
                 }
             }
 
