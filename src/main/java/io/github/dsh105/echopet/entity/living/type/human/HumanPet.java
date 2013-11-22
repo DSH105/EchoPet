@@ -22,6 +22,7 @@ public class HumanPet extends LivingPet {
 
     @Override
     public void setName(String s) {
+        s = s.length() > 16 ? s.substring(0, 16) : s;
         super.setName(s);
         EntityHumanPet human = (EntityHumanPet) this.getEntityPet();
         if (human.init) {
