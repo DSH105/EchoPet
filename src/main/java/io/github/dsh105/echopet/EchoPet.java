@@ -84,7 +84,7 @@ public class EchoPet extends JavaPlugin {
     public SQLPetHandler SPH;
     public SQLConnection sqlCon;
     private SQLRefresh sqlRefresh;
-    public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
+    public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "PETS" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
     private EchoPetAPI api;
 
