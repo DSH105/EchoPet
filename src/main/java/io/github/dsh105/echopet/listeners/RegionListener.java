@@ -21,7 +21,7 @@ public class RegionListener implements Listener {
         LivingPet pet = PetHandler.getInstance().getPet(p);
         if (pet != null) {
             if (!WorldUtil.allowRegion(event.getTo())) {
-                PetHandler.getInstance().removePet(pet);
+                PetHandler.getInstance().removePet(pet, true);
                 Lang.sendTo(p, Lang.ENTER_PET_DISABLED_REGION.toString());
             }
         }

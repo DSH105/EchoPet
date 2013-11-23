@@ -164,7 +164,7 @@ public class PetAdminCommand implements CommandExecutor {
                     }
                     ec.PH.saveFileData("autosave", pet);
                     ec.SPH.saveToDatabase(pet, false);
-                    ec.PH.removePet(pet);
+                    ec.PH.removePet(pet, true);
                     Lang.sendTo(target, Lang.HIDE_PET.toString());
                     Lang.sendTo(sender, Lang.ADMIN_HIDE_PET.toString().replace("%player%", target.getName()));
                     return true;
@@ -262,7 +262,7 @@ public class PetAdminCommand implements CommandExecutor {
 
                         ec.PH.clearFileData("autosave", pet);
                         ec.SPH.clearFromDatabase(target);
-                        ec.PH.removePet(pet);
+                        ec.PH.removePet(pet, true);
 
                         Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", target.getName()));
                         Lang.sendTo(target, Lang.REMOVE_PET.toString());
@@ -499,7 +499,7 @@ public class PetAdminCommand implements CommandExecutor {
 
                             ec.PH.clearFileData("autosave", pet);
                             ec.SPH.clearFromDatabase(target);
-                            ec.PH.removePet(pet);
+                            ec.PH.removePet(pet, true);
 
                             Lang.sendTo(sender, Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", target.getName()));
                             Lang.sendTo(target, Lang.REMOVE_MOUNT.toString());

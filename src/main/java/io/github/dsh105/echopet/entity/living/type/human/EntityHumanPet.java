@@ -132,8 +132,8 @@ public class EntityHumanPet extends EntityLivingPet {
 
 
     @Override
-    public void remove() {
+    public void remove(boolean makeSound) {
         this.animate(2);
-        super.remove();
+        super.remove(makeSound);
     }
 }

@@ -60,7 +60,7 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
-        EchoPet.getPluginInstance().PH.removePets(player);
+        EchoPet.getPluginInstance().PH.removePets(player, true);
         if (save) {
             if (hasPet(player)) {
                 PetHandler.getInstance().saveFileData("autosave", PetHandler.getInstance().getPet(player));

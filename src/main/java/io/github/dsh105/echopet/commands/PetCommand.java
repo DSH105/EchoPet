@@ -154,7 +154,7 @@ public class PetCommand implements CommandExecutor {
                     }
                     ec.PH.saveFileData("autosave", pet);
                     ec.SPH.saveToDatabase(pet, false);
-                    ec.PH.removePet(pet);
+                    ec.PH.removePet(pet, true);
                     Lang.sendTo(sender, Lang.HIDE_PET.toString());
                     return true;
                 } else return true;
@@ -163,7 +163,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("show")) {
                 if (Perm.BASE_SHOW.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
-                    PetHandler.getInstance().removePets(player);
+                    PetHandler.getInstance().removePets(player, true);
                     LivingPet pet = PetHandler.getInstance().loadPets(player, false, false, false);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
@@ -175,7 +175,7 @@ public class PetCommand implements CommandExecutor {
                     } else {
                         Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
                         if (pet != null) {
-                            PetHandler.getInstance().removePet(pet);
+                            PetHandler.getInstance().removePet(pet, true);
                         }
                         return true;
                     }
@@ -286,7 +286,7 @@ public class PetCommand implements CommandExecutor {
                     }
                     ec.PH.clearFileData("autosave", pi);
                     ec.SPH.clearFromDatabase(pi.getOwner());
-                    ec.PH.removePet(pi);
+                    ec.PH.removePet(pi, true);
                     Lang.sendTo(sender, Lang.REMOVE_PET.toString());
                     return true;
                 } else return true;

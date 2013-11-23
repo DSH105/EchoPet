@@ -98,13 +98,13 @@ public class PetHandler {
             LivingPet p = i.next();
             saveFileData("autosave", p);
             ec.SPH.saveToDatabase(p, false);
-            p.removePet();
+            p.removePet(true);
             i.remove();
         }
     }
 
     public LivingPet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
-        removePets(owner);
+        removePets(owner, true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendMessageOnFail) {
                 Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
@@ -127,7 +127,7 @@ public class PetHandler {
     }
 
     public LivingPet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
-        removePets(owner);
+        removePets(owner, true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendFailMessage) {
                 Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
@@ -305,24 +305,24 @@ public class PetHandler {
         return null;
     }
 
-    public void removePets(Player player) {
+    public void removePets(Player player, boolean makeDeathSound) {
         Iterator<LivingPet> i = pets.listIterator();
         while (i.hasNext()) {
             LivingPet p = i.next();
             if (p.getOwner().getName().equals(player.getName())) {
 				/*saveFileData("autosave", p);
 				ec.SPH.saveToDatabase(p, false);*/
-                p.removePet();
+                p.removePet(makeDeathSound);
                 i.remove();
             }
         }
     }
 
-    public void removePet(LivingPet pi) {
+    public void removePet(LivingPet pi, boolean makeDeathSound) {
         //saveFileData("autosave", pi);
 		/*pi.removePet();
 		pets.remove(pi);*/
-        removePets(pi.getOwner());
+        removePets(pi.getOwner(), makeDeathSound);
     }
 
     public void saveFileData(String type, LivingPet pi) {

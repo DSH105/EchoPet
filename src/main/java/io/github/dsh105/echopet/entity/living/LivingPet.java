@@ -82,7 +82,7 @@ public class LivingPet {
             }
         } else {
             if (this.mount != null) {
-                this.mount.removePet();
+                this.mount.removePet(false);
             }
             new BukkitRunnable() {
                 public void run() {
@@ -155,7 +155,7 @@ public class LivingPet {
         }
         if (!mcWorld.addEntity(entityPet, SpawnReason.CUSTOM)) {
             owner.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
-            EchoPet.getPluginInstance().PH.removePet(this);
+            EchoPet.getPluginInstance().PH.removePet(this, true);
             spawnEvent.setCancelled(true);
         }
         try {
@@ -282,7 +282,7 @@ public class LivingPet {
      */
     public void removeMount() {
         if (mount != null) {
-            mount.removePet();
+            mount.removePet(true);
             this.mount = null;
         }
     }
@@ -292,12 +292,12 @@ public class LivingPet {
      * <p/>
      * Kills this {@link LivingPet} and removes any mounts
      */
-    public void removePet() {
+    public void removePet(boolean makeSound) {
         try {
             Particle.CLOUD.sendToLocation(this.craftPet.getLocation());
             Particle.LAVA_SPARK.sendToLocation(this.craftPet.getLocation());
             removeMount();
-            pet.remove();
+            pet.remove(makeSound);
             craftPet.remove();
         } catch (Exception e) {
         }

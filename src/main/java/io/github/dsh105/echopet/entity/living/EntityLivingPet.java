@@ -47,7 +47,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
     public EntityLivingPet(World world) {
         super(world);
-        this.remove();
+        this.remove(false);
     }
 
     public EntityLivingPet(World world, LivingPet pet) {
@@ -64,7 +64,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             setPathfinding();
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityLivingPet.", e, true);
-            this.remove();
+            this.remove(false);
         }
     }
 
@@ -222,7 +222,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         this.getPet().getCraftPet().teleport(l);
     }
 
-    public void remove() {
+    public void remove(boolean makeSound) {
         bukkitEntity.remove();
         makeSound(this.aP(), 1.0F, 1.0F);
     }
@@ -343,7 +343,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
     public void onLive() {
         if (this.getOwner() == null || !this.getOwner().isOnline() || Bukkit.getPlayerExact(this.getOwner().getName()) == null) {
-            PetHandler.getInstance().removePet(this.getPet());
+            PetHandler.getInstance().removePet(this.getPet(), true);
         }
 
         if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible() && !this.vnp) {

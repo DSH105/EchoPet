@@ -80,7 +80,7 @@ public class PetOwnerListener implements Listener {
             if (event.getFrom().getWorld() == event.getTo().getWorld()) {
                 PetHandler.getInstance().saveFileData("autosave", pi);
                 SQLPetHandler.getInstance().saveToDatabase(pi, false);
-                PetHandler.getInstance().removePet(pi);
+                PetHandler.getInstance().removePet(pi, false);
                 if (!WorldUtil.allowPets(event.getTo())) {
                     Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
                     return;
@@ -96,7 +96,7 @@ public class PetOwnerListener implements Listener {
             } else {
                 PetHandler.getInstance().saveFileData("autosave", pi);
                 SQLPetHandler.getInstance().saveToDatabase(pi, false);
-                ec.PH.removePet(pi);
+                ec.PH.removePet(pi, false);
                 if (!WorldUtil.allowPets(event.getTo())) {
                     Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
                     return;
@@ -122,7 +122,7 @@ public class PetOwnerListener implements Listener {
             //ec.PH.saveFileData("autosave", pi);
             ec.PH.saveFileData("autosave", pi);
             ec.SPH.saveToDatabase(pi, false);
-            ec.PH.removePet(pi);
+            ec.PH.removePet(pi, true);
         }
     }
 
@@ -177,7 +177,7 @@ public class PetOwnerListener implements Listener {
         if (pet != null) {
             ec.PH.saveFileData("autosave", pet);
             ec.SPH.saveToDatabase(pet, false);
-            ec.PH.removePet(pet);
+            ec.PH.removePet(pet, true);
             //p.sendMessage(Lang.REMOVE_PET_DEATH.toString());
         }
     }
