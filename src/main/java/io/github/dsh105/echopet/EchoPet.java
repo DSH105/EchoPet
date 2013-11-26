@@ -1,5 +1,7 @@
 package io.github.dsh105.echopet;
 
+import com.jolbox.bonecp.BoneCP;
+import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.echopet.Updater.UpdateType;
 import io.github.dsh105.echopet.api.EchoPetAPI;
 import io.github.dsh105.echopet.commands.CommandComplete;
@@ -14,41 +16,10 @@ import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
-import io.github.dsh105.echopet.entity.living.type.bat.EntityBatPet;
-import io.github.dsh105.echopet.entity.living.type.blaze.EntityBlazePet;
-import io.github.dsh105.echopet.entity.living.type.cavespider.EntityCaveSpiderPet;
-import io.github.dsh105.echopet.entity.living.type.chicken.EntityChickenPet;
-import io.github.dsh105.echopet.entity.living.type.cow.EntityCowPet;
-import io.github.dsh105.echopet.entity.living.type.creeper.EntityCreeperPet;
-import io.github.dsh105.echopet.entity.living.type.enderdragon.EntityEnderDragonPet;
-import io.github.dsh105.echopet.entity.living.type.enderman.EntityEndermanPet;
-import io.github.dsh105.echopet.entity.living.type.ghast.EntityGhastPet;
-import io.github.dsh105.echopet.entity.living.type.giant.EntityGiantPet;
-import io.github.dsh105.echopet.entity.living.type.horse.EntityHorsePet;
-import io.github.dsh105.echopet.entity.living.type.irongolem.EntityIronGolemPet;
-import io.github.dsh105.echopet.entity.living.type.magmacube.EntityMagmaCubePet;
-import io.github.dsh105.echopet.entity.living.type.mushroomcow.EntityMushroomCowPet;
-import io.github.dsh105.echopet.entity.living.type.ocelot.EntityOcelotPet;
-import io.github.dsh105.echopet.entity.living.type.pig.EntityPigPet;
-import io.github.dsh105.echopet.entity.living.type.pigzombie.EntityPigZombiePet;
-import io.github.dsh105.echopet.entity.living.type.sheep.EntitySheepPet;
-import io.github.dsh105.echopet.entity.living.type.silverfish.EntitySilverfishPet;
-import io.github.dsh105.echopet.entity.living.type.skeleton.EntitySkeletonPet;
-import io.github.dsh105.echopet.entity.living.type.slime.EntitySlimePet;
-import io.github.dsh105.echopet.entity.living.type.snowman.EntitySnowmanPet;
-import io.github.dsh105.echopet.entity.living.type.spider.EntitySpiderPet;
-import io.github.dsh105.echopet.entity.living.type.squid.EntitySquidPet;
-import io.github.dsh105.echopet.entity.living.type.villager.EntityVillagerPet;
-import io.github.dsh105.echopet.entity.living.type.witch.EntityWitchPet;
-import io.github.dsh105.echopet.entity.living.type.wither.EntityWitherPet;
-import io.github.dsh105.echopet.entity.living.type.wolf.EntityWolfPet;
-import io.github.dsh105.echopet.entity.living.type.zombie.EntityZombiePet;
 import io.github.dsh105.echopet.listeners.*;
 import io.github.dsh105.echopet.logger.ConsoleLogger;
 import io.github.dsh105.echopet.logger.Logger;
-import io.github.dsh105.echopet.mysql.SQLConnection;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
-import io.github.dsh105.echopet.mysql.SQLRefresh;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.ReflectionUtil;
 import io.github.dsh105.echopet.util.SQLUtil;
@@ -67,6 +38,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -82,8 +54,7 @@ public class EchoPet extends JavaPlugin {
     public AutoSave AS;
     public PetHandler PH;
     public SQLPetHandler SPH;
-    public SQLConnection sqlCon;
-    private SQLRefresh sqlRefresh;
+    public BoneCP dbPool;
     public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
     private EchoPetAPI api;
@@ -170,11 +141,26 @@ public class EchoPet extends JavaPlugin {
             String db = mainConfig.getString("sql.database", "EchoPet");
             String user = mainConfig.getString("sql.username", "none");
             String pass = mainConfig.getString("sql.password", "none");
-            sqlCon = new SQLConnection(host, port, db, user, pass);
-            Connection con = sqlCon.getConnection();
-            if (con != null) {
+            BoneCPConfig bcc = new BoneCPConfig();
+            bcc.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db);
+            bcc.setUsername(user);
+            bcc.setPassword(pass);
+            bcc.setPartitionCount(2);
+            bcc.setMinConnectionsPerPartition(3);
+            bcc.setMaxConnectionsPerPartition(7);
+            bcc.setConnectionTestStatement("SELECT 1");
+            try {
+                dbPool = new BoneCP(bcc);
+            } catch (SQLException e) {
+                Logger.log(Logger.LogLevel.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", e, true);
+            }
+            if (dbPool != null) {
+                Connection connection = null;
+                Statement statement = null;
                 try {
-                    con.prepareStatement("CREATE TABLE IF NOT EXISTS Pets (" +
+                    connection = dbPool.getConnection();
+                    statement = connection.createStatement();
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS Pets (" +
                             "OwnerName varchar(255)," +
                             "PetType varchar(255)," +
                             "PetName varchar(255)," +
@@ -182,11 +168,20 @@ public class EchoPet extends JavaPlugin {
                             "MountPetType varchar(255), MountPetName varchar(255), " +
                             SQLUtil.serialise(PetData.values(), true) +
                             ", PRIMARY KEY (OwnerName)" +
-                            ");").executeUpdate();
+                            ");");
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "`Pets` Table generation failed [MySQL DataBase: " + db + "].", e, true);
+                } finally {
+                    try {
+                        if (statement != null) {
+                            statement.close();
+                        }
+                        if (connection != null) {
+                            connection.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
                 }
-                this.sqlRefresh = new SQLRefresh(getMainConfig().getInt("sql.timeout") * 20 * 60);
             }
         }
 
@@ -282,6 +277,7 @@ public class EchoPet extends JavaPlugin {
     @Override
     public void onDisable() {
         PH.removeAllPets();
+        dbPool.shutdown();
     }
 
     @Override
@@ -345,10 +341,6 @@ public class EchoPet extends JavaPlugin {
 
     public static EchoPet getPluginInstance() {
         return plugin;
-    }
-
-    public Connection getSqlCon() {
-        return this.sqlCon.getConnection();
     }
 
     public YAMLConfig getPetConfig() {

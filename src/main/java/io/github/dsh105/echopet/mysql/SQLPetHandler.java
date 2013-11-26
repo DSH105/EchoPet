@@ -11,12 +11,8 @@ import io.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.*;
+import java.util.*;
 
 public class SQLPetHandler {
 
@@ -24,18 +20,23 @@ public class SQLPetHandler {
         return EchoPet.getPluginInstance().SPH;
     }
 
-    public void updateDatabase(Player player, ArrayList<PetData> list, Boolean result, boolean isMount) {
+    public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isMount) {
         if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+            Connection con = null;
+            PreparedStatement ps = null;
 
-            if (con != null) {
+            if (EchoPet.getPluginInstance().dbPool != null) {
                 try {
-                    String data = SQLUtil.serialiseUpdate(list, result, isMount);
-                    if (!data.equalsIgnoreCase("")) {
-                        PreparedStatement ps = con.prepareStatement("UPDATE Pets SET ? WHERE OwnerName = ?;");
-                        ps.setString(1, data);
-                        ps.setString(2, player.getName());
-                        ps.executeUpdate();
+                    Map<String, String> updates = SQLUtil.constructUpdateMap(list, result, isMount);
+                    if (!updates.isEmpty()) {
+                        con = EchoPet.getPluginInstance().dbPool.getConnection();
+                        ps = con.prepareStatement("UPDATE Pets SET ? = ? WHERE OwnerName = ?;");
+                        ps.setString(3, player.getName());
+                        for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
+                            ps.setString(1, updateEntry.getKey());
+                            ps.setString(2, updateEntry.getValue());
+                            ps.executeUpdate();
+                        }
                     }
 
 				/*for (PetData pd : list) {
@@ -47,12 +48,13 @@ public class SQLPetHandler {
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player.getName() + " to MySQL Database", e, true);
                 } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + player.getName() + ")");
-				}*/
+                    try {
+                        if (ps != null)
+                            ps.close();
+                        if (con != null)
+                            con.close();
+                    } catch (SQLException ignored) {
+                    }
                 }
             }
         }
@@ -60,50 +62,43 @@ public class SQLPetHandler {
 
     public void saveToDatabase(LivingPet p, boolean isMount) {
         if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
-            String mountPrefix = isMount ? "Mount" : "";
+            Connection con = null;
+            PreparedStatement ps = null;
 
-            if (con != null && p != null) {
+            if (EchoPet.getPluginInstance().dbPool != null && p != null) {
                 try {
+                    con = EchoPet.getPluginInstance().dbPool.getConnection();
                     // Delete any existing info
                     if (!isMount) {
                         this.clearFromDatabase(p.getOwner());
                     }
 
-                    String dataList = SQLUtil.serialiseDataList(p.getActiveData(), isMount);
-                    String data1 = SQLUtil.serialiseDataListBooleans(p.getActiveData(), true);
+                    // Deal with the pet metadata first
+                    // This tends to be more problematic, so by shoving it out of the way, we can get the pet data saved.
+                    if (isMount)
+                        ps = con.prepareStatement("INSERT INTO Pets (OwnerName, MountPetType, MountPetName) VALUES (?, ?, ?)");
+                    else
+                        ps = con.prepareStatement("INSERT INTO Pets (OwnerName, PetType, PetName) VALUES (?, ?, ?)");
 
-                    String sql;
-                    if ((!dataList.equalsIgnoreCase("") && !data1.equalsIgnoreCase(""))) {
-                        sql = "INSERT INTO Pets (OwnerName, " + mountPrefix + "PetType, " + mountPrefix + "PetName, " + dataList + ") " +
-                                "VALUES (?)";
-                    } else {
-                        sql = "INSERT INTO Pets (OwnerName, " + mountPrefix + "PetType, " + mountPrefix + "PetName) " +
-                                "VALUES (?)";
-                    }
+                    ps.setString(1, p.getOwner().getName());
+                    ps.setString(2, p.getPetType().toString());
+                    ps.setString(3, p.getPetName());
+                    ps.executeUpdate();
 
-                    String duplicate = "ON DUPLICATE KEY UPDATE " + mountPrefix + "PetType='" + p.getPetType().toString() + "', " + mountPrefix + "PetName='" + p.getNameToString() + "'";
-
-                    //PreparedStatement ps = con.prepareStatement(sql);
-                    String state = "'" + p.getOwner().getName() + "', '" + p.getPetType().toString() + "', '" + p.getNameToString() + "'";
-
-                    state = state + (data1.equalsIgnoreCase("") ? "" : ", " + data1);
-                    duplicate = duplicate + SQLUtil.serialiseUpdate(p.getActiveData(), true, isMount);
-
-                    con.createStatement().executeUpdate(sql.replace("?", state) + " " + duplicate + ";");
-
+                    this.updateDatabase(p.getOwner(), p.getActiveData(), true, isMount);
 
                     this.saveToDatabase(p.getMount(), true);
 
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getOwner().getName() + " to MySQL Database", e, true);
                 } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getOwner().getName() + ")");
-				}*/
+                    try {
+                        if (ps != null)
+                            ps.close();
+                        if (con != null)
+                            con.close();
+                    } catch (SQLException ignored) {
+                    }
                 }
             }
         }
@@ -111,17 +106,19 @@ public class SQLPetHandler {
 
     public LivingPet createPetFromDatabase(Player p) {
         if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+            Connection con = null;
+            PreparedStatement ps = null;
 
             LivingPet pet = null;
             Player owner;
             PetType pt;
             String name;
-            HashMap<PetData, Boolean> map = new HashMap<PetData, Boolean>();
+            Map<PetData, Boolean> map = new HashMap<PetData, Boolean>();
 
-            if (con != null) {
+            if (EchoPet.getPluginInstance().dbPool != null) {
                 try {
-                    PreparedStatement ps = con.prepareStatement("SELECT * FROM Pets WHERE OwnerName = ?;");
+                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    ps = con.prepareStatement("SELECT * FROM Pets WHERE OwnerName = ?;");
                     ps.setString(1, p.getName());
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
@@ -187,12 +184,13 @@ public class SQLPetHandler {
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + p.getName() + " in MySQL Database", e, true);
                 } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
-				}*/
+                    try {
+                        if (ps != null)
+                            ps.close();
+                        if (con != null)
+                            con.close();
+                    } catch (SQLException ignored) {
+                    }
                 }
             }
 
@@ -202,8 +200,8 @@ public class SQLPetHandler {
         return null;
     }
 
-    private PetData[] createArray(HashMap<PetData, Boolean> map, boolean b) {
-        ArrayList<PetData> list = new ArrayList<PetData>();
+    private PetData[] createArray(Map<PetData, Boolean> map, boolean b) {
+        List<PetData> list = new ArrayList<PetData>();
         for (PetData pd : map.keySet()) {
             if (map.get(pd) == b) {
                 list.add(pd);
@@ -226,22 +224,25 @@ public class SQLPetHandler {
 
     public void clearFromDatabase(String name) {
         if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+            Connection con = null;
+            PreparedStatement ps = null;
 
-            if (con != null) {
+            if (EchoPet.getPluginInstance().dbPool != null) {
                 try {
-                    PreparedStatement ps1 = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
-                    ps1.setString(1, name);
-                    ps1.executeUpdate();
+                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    ps = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
+                    ps.setString(1, name);
+                    ps.executeUpdate();
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + name + " in MySQL Database", e, true);
                 } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
-				}*/
+                    try {
+                        if (ps != null)
+                            ps.close();
+                        if (con != null)
+                            con.close();
+                    } catch (SQLException ignored) {
+                    }
                 }
             }
         }
@@ -249,28 +250,27 @@ public class SQLPetHandler {
 
     public void clearMountFromDatabase(String name) {
         if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+            Connection con = null;
+            PreparedStatement ps = null;
 
-            if (con != null) {
+            if (EchoPet.getPluginInstance().dbPool != null) {
                 try {
-                    ArrayList<PetData> arrayList = new ArrayList<PetData>();
-                    for (PetData pd : PetData.values()) {
-                        arrayList.add(pd);
-                    }
-                    String list = SQLUtil.serialiseUpdate(arrayList, null, true);
-                    PreparedStatement ps = con.prepareStatement("UPDATE Pets SET ? WHERE OwnerName = ?;");
+                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    String list = SQLUtil.serialiseUpdate(Arrays.asList(PetData.values()), null, true);
+                    ps = con.prepareStatement("UPDATE Pets SET ? WHERE OwnerName = ?;");
                     ps.setString(1, list);
                     ps.setString(2, name);
                     ps.executeUpdate();
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + name + " in MySQL Database", e, true);
                 } finally {
-                    // Close the connection
-				/*try {
-					con.close();
-				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
-				}*/
+                    try {
+                        if (ps != null)
+                            ps.close();
+                        if (con != null)
+                            con.close();
+                    } catch (SQLException ignored) {
+                    }
                 }
             }
         }
