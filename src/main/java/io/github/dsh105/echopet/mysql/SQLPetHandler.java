@@ -23,19 +23,16 @@ public class SQLPetHandler {
     public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isMount) {
         if (EchoPet.getPluginInstance().options.useSql()) {
             Connection con = null;
-            PreparedStatement ps = null;
+            Statement statement = null;
 
             if (EchoPet.getPluginInstance().dbPool != null) {
                 try {
                     Map<String, String> updates = SQLUtil.constructUpdateMap(list, result, isMount);
                     if (!updates.isEmpty()) {
                         con = EchoPet.getPluginInstance().dbPool.getConnection();
-                        ps = con.prepareStatement("UPDATE Pets SET ? = ? WHERE OwnerName = ?;");
-                        ps.setString(3, player.getName());
+                        statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
-                            ps.setString(1, updateEntry.getKey());
-                            ps.setString(2, updateEntry.getValue());
-                            ps.executeUpdate();
+                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE OwnerName = '" + player.getName() + "'");
                         }
                     }
 
@@ -49,8 +46,8 @@ public class SQLPetHandler {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player.getName() + " to MySQL Database", e, true);
                 } finally {
                     try {
-                        if (ps != null)
-                            ps.close();
+                        if (statement != null)
+                            statement.close();
                         if (con != null)
                             con.close();
                     } catch (SQLException ignored) {
