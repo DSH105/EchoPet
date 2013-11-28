@@ -9,9 +9,6 @@ import org.bukkit.command.TabCompleter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Project by DSH105
- */
 
 public class CommandComplete implements TabCompleter {
 

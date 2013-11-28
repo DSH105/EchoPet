@@ -4,9 +4,6 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import org.bukkit.entity.Player;
 
-/**
- * Project by DSH105
- */
 
 public class GiantPet extends LivingPet {
 

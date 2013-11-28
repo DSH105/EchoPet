@@ -9,9 +9,6 @@ import io.github.dsh105.echopet.Hook;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
-/**
- * Project by DSH105
- */
 
 public class WorldUtil {
 

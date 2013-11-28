@@ -9,9 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-/**
- * Project by DSH105
- */
 
 public class PetSelector implements Menu {
 

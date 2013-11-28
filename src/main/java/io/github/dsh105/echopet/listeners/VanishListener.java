@@ -7,9 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.kitteh.vanish.event.VanishStatusChangeEvent;
 
-/**
- * Project by DSH105
- */
 
 public class VanishListener implements Listener {
 

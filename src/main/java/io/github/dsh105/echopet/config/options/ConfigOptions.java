@@ -5,9 +5,6 @@ import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import org.bukkit.Bukkit;
 
-/**
- * Project by DSH105
- */
 
 public class ConfigOptions extends Options {
 

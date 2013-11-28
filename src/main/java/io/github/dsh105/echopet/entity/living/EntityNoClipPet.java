@@ -2,9 +2,6 @@ package io.github.dsh105.echopet.entity.living;
 
 import net.minecraft.server.v1_6_R3.World;
 
-/**
- * Project by DSH105
- */
 
 public abstract class EntityNoClipPet extends EntityLivingPet {
 

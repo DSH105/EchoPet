@@ -3,9 +3,6 @@ package io.github.dsh105.echopet.logger;
 import io.github.dsh105.echopet.EchoPet;
 import org.bukkit.command.ConsoleCommandSender;
 
-/**
- * Project by DSH105
- */
 
 public class ConsoleLogger {
 
