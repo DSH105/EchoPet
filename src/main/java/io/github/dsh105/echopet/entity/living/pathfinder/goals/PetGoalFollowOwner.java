@@ -38,7 +38,6 @@ public class PetGoalFollowOwner extends PetGoal {
         } else if (this.owner == null) {
             return false;
         } else if (this.pet.e(this.owner) < this.startDistance) {
-            //ConsoleLogger.log("test3 : " + " : " + this.pet.e(this.owner) + " : " + this.startDistance + " : " + this.stopDistance + " : " + this.teleportDistance);
             return false;
         } else if (this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive()) {
             return false;
