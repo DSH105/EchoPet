@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity.living;
 
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 
 public abstract class EntityNoClipPet extends EntityLivingPet {
@@ -14,6 +14,6 @@ public abstract class EntityNoClipPet extends EntityLivingPet {
     }
 
     public void noClip(boolean b) {
-        this.Z = b;
+        this.Y = b;
     }
 }

@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntitySquidPet extends EntityLivingPet {
 
@@ -38,15 +38,15 @@ public class EntitySquidPet extends EntityLivingPet {
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            if (pet.getEntityPet().world.getMaterial((int) pet.getEntityPet().locX, (int) pet.getEntityPet().locY, (int) pet.getEntityPet().locZ).isLiquid()) {
+            if (this.M()) {
                 try {
-                    Particle.BUBBLE.sendToLocation(pet.getLocation());
+                    Particle.BUBBLE.sendTo(pet.getLocation());
                 } catch (Exception e) {
                     Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
                 }
             }
             try {
-                Particle.SPLASH.sendToLocation(pet.getLocation());
+                Particle.SPLASH.sendTo(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }

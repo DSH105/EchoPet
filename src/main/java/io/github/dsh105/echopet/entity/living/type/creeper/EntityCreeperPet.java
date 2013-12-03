@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntityCreeperPet extends EntityLivingPet {
 
@@ -24,11 +24,17 @@ public class EntityCreeperPet extends EntityLivingPet {
         ((CreeperPet) pet).powered = flag;
     }
 
+    public void setIgnited(boolean flag) {
+        this.datawatcher.watch(18, Byte.valueOf((byte) (flag ? 1 : 0)));
+        ((CreeperPet) pet).ignited = flag;
+    }
+
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(16, Byte.valueOf((byte) -1));
         this.datawatcher.a(17, Byte.valueOf((byte) 0));
+        this.datawatcher.a(18, Byte.valueOf((byte) 0));
     }
 
     @Override
@@ -51,7 +57,7 @@ public class EntityCreeperPet extends EntityLivingPet {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
-                Particle.SMOKE.sendToLocation(pet.getLocation());
+                Particle.SMOKE.sendTo(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }

@@ -28,6 +28,7 @@ public enum PetData {
     GRAY("gray", Type.COLOUR, Type.HORSE_VARIANT),
     GREEN("green", Type.COLOUR),
     GOLD("gold", Type.HORSE_ARMOUR),
+    IGNITED("ignited", Type.BOOLEAN),
     IRON("iron", Type.HORSE_ARMOUR),
     LARGE("large", Type.SIZE),
     LIBRARIAN("librarian", Type.PROF),

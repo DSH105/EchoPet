@@ -3,8 +3,8 @@ package io.github.dsh105.echopet.entity.living.type.irongolem;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import net.minecraft.server.v1_6_R3.Entity;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.Entity;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntityIronGolemPet extends EntityLivingPet {
 

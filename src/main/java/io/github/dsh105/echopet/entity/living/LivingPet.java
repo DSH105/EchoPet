@@ -9,11 +9,11 @@ import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.Particle;
 import io.github.dsh105.echopet.util.StringUtil;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -96,7 +96,10 @@ public class LivingPet {
         }
         this.ownerIsRiding = flag;
         try {
-            Particle.PORTAL.sendToLocation(this.getLocation());
+            Particle.PORTAL.sendTo(this.getLocation());
+            Location l = this.getLocation().clone();
+            l.setY(l.getY() - 1D);
+            Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
         }
@@ -131,7 +134,10 @@ public class LivingPet {
         }
         this.isHat = flag;
         try {
-            Particle.PORTAL.sendToLocation(this.getLocation());
+            Particle.PORTAL.sendTo(this.getLocation());
+            Location l = this.getLocation().clone();
+            l.setY(l.getY() - 1D);
+            Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
         }
@@ -159,7 +165,7 @@ public class LivingPet {
             spawnEvent.setCancelled(true);
         }
         try {
-            Particle.MAGIC_RUNES.sendToLocation(l);
+            Particle.MAGIC_RUNES.sendTo(l);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
         }
@@ -294,8 +300,8 @@ public class LivingPet {
      */
     public void removePet(boolean makeSound) {
         try {
-            Particle.CLOUD.sendToLocation(this.craftPet.getLocation());
-            Particle.LAVA_SPARK.sendToLocation(this.craftPet.getLocation());
+            Particle.CLOUD.sendTo(this.craftPet.getLocation());
+            Particle.LAVA_SPARK.sendTo(this.craftPet.getLocation());
             removeMount();
             pet.remove(makeSound);
             craftPet.remove();

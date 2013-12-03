@@ -109,13 +109,13 @@ public enum Lang {
 
     public static void sendTo(CommandSender sender, String msg) {
         if (msg != null || !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
-            sender.sendMessage(EchoPet.getPluginInstance().prefix + msg);
+            sender.sendMessage(EchoPet.getPluginInstance().prefix + " " + msg);
         }
     }
 
     public static void sendTo(Player p, String msg) {
         if (msg != null && !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !(msg.equalsIgnoreCase("none"))) {
-            p.sendMessage(EchoPet.getPluginInstance().prefix + msg);
+            p.sendMessage(EchoPet.getPluginInstance().prefix + " " + msg);
         }
     }
 

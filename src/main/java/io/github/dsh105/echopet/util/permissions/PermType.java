@@ -1,4 +1,4 @@
-package io.github.dsh105.echopet.permissions;
+package io.github.dsh105.echopet.util.permissions;
 
 
 public enum PermType {

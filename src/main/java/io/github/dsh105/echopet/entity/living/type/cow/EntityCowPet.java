@@ -1,8 +1,9 @@
 package io.github.dsh105.echopet.entity.living.type.cow;
 
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.living.IAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 
 public class EntityCowPet extends EntityAgeablePet {

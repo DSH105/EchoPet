@@ -2,8 +2,8 @@ package io.github.dsh105.echopet.entity.living.pathfinder.goals;
 
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
-import net.minecraft.server.v1_6_R3.EntityLiving;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import net.minecraft.server.v1_7_R1.EntityLiving;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 
 public class PetGoalAttack extends PetGoal {
 
@@ -68,7 +68,7 @@ public class PetGoalAttack extends PetGoal {
     public void tick() {
         this.pet.getControllerLook().a(this.target, 30.0F, 30.0F);
         if (this.pet.getEntitySenses().canSee(this.target) && --this.navUpdate <= 0) {
-            this.navUpdate = 4 + this.pet.aD().nextInt(7);
+            this.navUpdate = 4 + this.pet.random().nextInt(7);
             this.pet.getNavigation().a(this.target);
         }
 
@@ -80,9 +80,10 @@ public class PetGoalAttack extends PetGoal {
                 this.ticksUntilAttack = this.ticksBetweenAttack;
 
                 // Arm animation
-                if (this.pet.aZ() != null) {
-                    this.pet.aV();
+                if (this.pet.be() != null) {
+                    this.pet.ba();
                 }
+                //this.pet.m(this.target)
                 this.pet.attack(this.target);
             }
         }

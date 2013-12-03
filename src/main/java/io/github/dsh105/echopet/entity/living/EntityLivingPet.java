@@ -16,18 +16,19 @@ import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.*;
+import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class EntityLivingPet extends EntityCreature implements IMonster,IEntityPet {
 
@@ -56,7 +57,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             pet.setCraftPet(new CraftLivingPet(world.getServer(), this));
             this.pet = pet;
             ((LivingEntity) this.getBukkitEntity()).setMaxHealth(pet.getPetType().getMaxHealth());
-            this.setHealth(pet.getPetType().getMaxHealth());
+            this.setHealth((float) pet.getPetType().getMaxHealth());
             this.jumpHeight = EchoPet.getPluginInstance().options.getRideJumpHeight(this.getPet().getPetType());
             this.rideSpeed = EchoPet.getPluginInstance().options.getRideSpeed(this.getPet().getPetType());
             this.jump = EntityLiving.class.getDeclaredField("bd");
@@ -66,6 +67,10 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityLivingPet.", e, true);
             this.remove(false);
         }
+    }
+
+    public Random random() {
+        return this.random;
     }
 
     public boolean attack(Entity entity) {
@@ -96,7 +101,6 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             this.getNavigation().b(true);
 
             petGoalSelector.addGoal("Float", new PetGoalFloat(this));
-
             petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())));
             petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
 
@@ -118,7 +122,9 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         return this.pet.getLocation();
     }
 
-    public boolean bf() {
+    // EntityInsentient
+    @Override
+    public boolean bk() {
         return true;
     }
 
@@ -130,13 +136,15 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         return this.bukkitEntity;
     }
 
+    // EntityInsentient
     @Override
-    protected String r() {
+    protected String t() {
         return this.getIdleSound();
     }
 
+    // EntityInsentient
     @Override
-    protected String aP() {
+    protected String aU() {
         return this.getDeathSound();
     }
 
@@ -146,61 +154,28 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
     public abstract SizeCategory getSizeCategory();
 
-    // Overriden from EntityLiving - Most importantly overrides pathfinding selectors
+    // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
     @Override
-    protected void bi() {
+    protected void bn() {
         ++this.aV;
-        //this.world.methodProfiler.a("checkDespawn");
 
-        this.u();
-        //this.world.methodProfiler.b();
+        this.w();
 
-        //this.world.methodProfiler.a("sensing");
         this.getEntitySenses().a();
-        //this.bq.a() - 1.6
-        //this.world.methodProfiler.b();
 
-        //this.world.methodProfiler.a("targetSelector");
-        //this.targetSelector.a();
-        //this.world.methodProfiler.b();
+        this.petGoalSelector.run();
 
-        //this.world.methodProfiler.a("goalSelector");
-        //this.goalSelector.a();
-        this.petGoalSelector.run(); // This is where I tick my own pathfinder selector
-        //this.world.methodProfiler.b();
-
-        //this.world.methodProfiler.a("navigation");
-        //this.getNavigation().e(); //1.5.2
         this.getNavigation().f();
-        //this.world.methodProfiler.b();
 
-        //this.world.methodProfiler.a("mob tick");
-        //this.bp(); - 1.5.2
-        this.bk(); //bg() - 1.6.1
-        //this.world.methodProfiler.b();
+        this.bp();
 
-        //this.world.methodProfiler.a("controls");
-
-        //this.world.methodProfiler.a("move");
         this.getControllerMove().c();
-
-        //this.world.methodProfiler.c("look");
         this.getControllerLook().a();
-        //this.h.a() - 1.6
-
-        //this.world.methodProfiler.c("jump");
         this.getControllerJump().b();
-        //this.world.methodProfiler.b();
-        //this.world.methodProfiler.b();
     }
 
-    //Entity
-    //public boolean a_(EntityHuman human) { 1.5
-    public boolean a(EntityHuman human) { //1.6
-        /*if (super.a_(human)) {
-			return false;
-		}*/
-
+    // EntityInsentient
+    public boolean a(EntityHuman human) {
         if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
             if ((Boolean) EchoPet.getPluginInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
@@ -224,9 +199,10 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
     public void remove(boolean makeSound) {
         bukkitEntity.remove();
-        makeSound(this.aP(), 1.0F, 1.0F);
+        makeSound(this.getDeathSound(), 1.0F, 1.0F);
     }
 
+    // EntityInsentient
     @Override
     public void e(float f, float f1) { //f = sidewards, f1 = forwards/backwards
 
@@ -235,17 +211,17 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityHorse.java#L914
         if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
             super.e(f, f1);
-            this.Y = 0.5F;
+            this.X = 0.5F;
             return;
         }
         EntityHuman human = (EntityHuman) this.passenger;
         if (human.getBukkitEntity() != this.getOwner().getPlayer()) {
             super.e(f, f1);
-            this.Y = 0.5F;
+            this.X = 0.5F;
             return;
         }
 
-        this.Y = 1.0F;
+        this.X = 1.0F;
 
         this.lastYaw = this.yaw = this.passenger.yaw;
         this.pitch = this.passenger.pitch * 0.5F;
@@ -304,34 +280,38 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         }
     }
 
+    // Entity
     @Override
-    public void l_() {
-        super.l_();
+    public void h() {
+        super.h();
+        //this.C();
         try {
             onLive();
         } catch (Exception e) {
         }
     }
 
+    // EntityLiving
     @Override
-    protected void a() {
-        super.a();
+    protected void c() {
+        super.c();
         try {
             initDatawatcher();
         } catch (Exception e) {
         }
     }
 
+    // Entity
     @Override
-    protected void a(int i, int j, int k, int l) {
-        super.a(i, j, k, l);
+    protected void a(int i, int j, int k, Block block) {
+        super.a(i, j, k, block);
         try {
-            makeStepSound(i, j, k, l);
+            makeStepSound(i, j, k, block);
         } catch (Exception e) {
         }
     }
 
-    protected void makeStepSound(int i, int j, int k, int l) {
+    protected void makeStepSound(int i, int j, int k, Block block) {
         this.makeStepSound();
     }
 
@@ -352,8 +332,8 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
         if (this.isInvisible()) {
             try {
-                Particle.MAGIC_CRITIAL_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
-                Particle.WITCH_MAGIC_SMALL.sendToPlayer(this.getLocation(), this.getOwner());
+                Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getOwner());
+                Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getOwner());
             } catch (Exception e) {
             }
         }

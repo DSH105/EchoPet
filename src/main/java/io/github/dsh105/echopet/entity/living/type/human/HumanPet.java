@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.human;
 
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.data.PetType;
+import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -25,6 +26,9 @@ public class HumanPet extends LivingPet {
         s = s.length() > 16 ? s.substring(0, 16) : s;
         super.setName(s);
         EntityHumanPet human = (EntityHumanPet) this.getEntityPet();
+        if (human.profile != null) {
+            human.profile = new GameProfile(human.profile.getId(), s);
+        }
         if (human.init) {
             ((EntityHumanPet) this.getEntityPet()).updatePacket();
         }

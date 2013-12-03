@@ -22,7 +22,7 @@ import io.github.dsh105.echopet.entity.living.type.villager.VillagerPet;
 import io.github.dsh105.echopet.entity.living.type.wither.WitherPet;
 import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
-import io.github.dsh105.echopet.permissions.Perm;
+import io.github.dsh105.echopet.util.permissions.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

@@ -4,9 +4,9 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import net.minecraft.server.v1_6_R3.Item;
-import net.minecraft.server.v1_6_R3.ItemStack;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.Items;
+import net.minecraft.server.v1_7_R1.ItemStack;
+import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EntitySkeletonPet extends EntityLivingPet {
@@ -23,9 +23,9 @@ public class EntitySkeletonPet extends EntityLivingPet {
         new BukkitRunnable() {
             public void run() {
                 if (sp.wither) {
-                    setEquipment(0, new ItemStack(Item.STONE_SWORD));
+                    setEquipment(0, new ItemStack(Items.STONE_SWORD));
                 } else {
-                    setEquipment(0, new ItemStack(Item.BOW));
+                    setEquipment(0, new ItemStack(Items.BOW));
                 }
             }
         }.runTaskLater(EchoPet.getPluginInstance(), 5L);
@@ -35,9 +35,9 @@ public class EntitySkeletonPet extends EntityLivingPet {
         this.datawatcher.watch(13, (byte) (flag ? 1 : 0));
         ((SkeletonPet) pet).wither = flag;
         if (flag) {
-            setEquipment(0, new ItemStack(Item.STONE_SWORD));
+            setEquipment(0, new ItemStack(Items.STONE_SWORD));
         } else {
-            setEquipment(0, new ItemStack(Item.BOW));
+            setEquipment(0, new ItemStack(Items.BOW));
         }
     }
 
@@ -56,7 +56,8 @@ public class EntitySkeletonPet extends EntityLivingPet {
         return "mob.skeleton.say";
     }
 
-    protected void a(int i, int j, int k, int l) {
+    @Override
+    protected void makeStepSound() {
         this.makeSound("mob.skeleton.step", 0.15F, 1.0F);
     }
 

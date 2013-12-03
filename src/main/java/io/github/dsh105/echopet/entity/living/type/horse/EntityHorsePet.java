@@ -3,10 +3,7 @@ package io.github.dsh105.echopet.entity.living.type.horse;
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import net.minecraft.server.v1_6_R3.Block;
-import net.minecraft.server.v1_6_R3.Entity;
-import net.minecraft.server.v1_6_R3.StepSound;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.*;
 
 public class EntityHorsePet extends EntityAgeablePet {
 
@@ -80,12 +77,12 @@ public class EntityHorsePet extends EntityAgeablePet {
     }
 
     /*
-         * 4 = saddle
-         * 8 = chest
-         * 32 = head down
-         * 64 = rear
-         * 128 = mouth open
-         */
+        * 4 = saddle
+        * 8 = chest
+        * 32 = head down
+        * 64 = rear
+        * 128 = mouth open
+        */
     private void horseVisual(int i, boolean flag) {
         int j = this.datawatcher.getInt(16);
 
@@ -117,30 +114,30 @@ public class EntityHorsePet extends EntityAgeablePet {
     }
 
     @Override
-    protected void makeStepSound(int i, int j, int k, int l) {
-        StepSound stepsound = Block.byId[l].stepSound;
+    protected void makeStepSound(int i, int j, int k, Block block) {
+        StepSound stepsound = block.stepSound;
 
-        if (this.world.getTypeId(i, j + 1, k) == Block.SNOW.id) {
-            stepsound = Block.SNOW.stepSound;
+        if (this.world.getType(i, j + 1, k) == Blocks.SNOW) {
+            stepsound = Blocks.SNOW.stepSound;
         }
 
-        if (!Block.byId[l].material.isLiquid()) {
-            int i1 = this.getType();
+        if (!block.getMaterial().isLiquid()) {
+            int l = this.getType();
 
-            if (this.passenger != null && i1 != 1 && i1 != 2) {
+            if (this.passenger != null && l != 1 && l != 2) {
                 ++this.bP;
                 if (this.bP > 5 && this.bP % 3 == 0) {
                     this.makeSound("mob.horse.gallop", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
-                    if (i1 == 0 && this.random.nextInt(10) == 0) {
+                    if (l == 0 && this.random.nextInt(10) == 0) {
                         this.makeSound("mob.horse.breathe", stepsound.getVolume1() * 0.6F, stepsound.getVolume2());
                     }
                 } else if (this.bP <= 5) {
                     this.makeSound("mob.horse.wood", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
                 }
-            } else if (stepsound == Block.h) {
-                this.makeSound("mob.horse.soft", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
-            } else {
+            } else if (stepsound == Block.f) {
                 this.makeSound("mob.horse.wood", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
+            } else {
+                this.makeSound("mob.horse.soft", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
             }
         }
     }

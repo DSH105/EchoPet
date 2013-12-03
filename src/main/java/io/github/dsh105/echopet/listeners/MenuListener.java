@@ -5,6 +5,7 @@ import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.logger.ConsoleLogger;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.menu.main.DataMenu;
 import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
@@ -13,7 +14,7 @@ import io.github.dsh105.echopet.menu.main.MenuItem;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetItem;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
-import io.github.dsh105.echopet.permissions.Perm;
+import io.github.dsh105.echopet.util.permissions.Perm;
 import io.github.dsh105.echopet.util.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -152,22 +153,22 @@ public class MenuListener implements Listener {
                         event.setCancelled(true);
                         return;
                     }
-                    for (final MenuItem mi : MenuItem.values()) {
+                    for (MenuItem mi : MenuItem.values()) {
                         if (inv.getItem(slot).equals(mi.getItem()) || inv.getItem(slot).equals(mi.getBoolean(true)) || inv.getItem(slot).equals(mi.getBoolean(false))) {
                             if (mi.getMenuType() == DataMenuType.BOOLEAN) {
-                                if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
+                                if (EnumUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
                                     PetData pd = PetData.valueOf(mi.toString());
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd)) {
                                         if (pet.getActiveData().contains(pd)) {
                                             PetHandler.getInstance().setData(pet, pd, false);
                                             try {
-                                                Particle.RED_SMOKE.sendToLocation(pet.getLocation());
+                                                Particle.RED_SMOKE.sendTo(pet.getLocation());
                                             } catch (Exception e) {
                                             }
                                         } else {
                                             PetHandler.getInstance().setData(pet, pd, true);
                                             try {
-                                                Particle.SPARKLE.sendToLocation(pet.getLocation());
+                                                Particle.SPARKLE.sendTo(pet.getLocation());
                                             } catch (Exception e) {
                                             }
                                         }
@@ -200,12 +201,24 @@ public class MenuListener implements Listener {
                                 }
                             } else {
                                 player.closeInventory();
-                                new BukkitRunnable() {
+                                class OpenMenu extends BukkitRunnable {
+
+                                    MenuItem mi;
+
+                                    public OpenMenu(MenuItem mi) {
+                                        this.mi = mi;
+                                        this.runTaskLater(ec, 1L);
+                                    }
+
+                                    @Override
                                     public void run() {
                                         DataMenu dm = new DataMenu(mi, pet);
                                         dm.open(false);
                                     }
-                                }.runTaskLater(ec, 1L);
+
+                                }
+
+                                new OpenMenu(mi);
                             }
                         }
                     }

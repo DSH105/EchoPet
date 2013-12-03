@@ -32,7 +32,7 @@ public class PetGoalSelector {
     public void removeGoal(String s) {
         if (this.goalMap.containsKey(s)) {
             PetGoalSelectorItem goalItem = this.goalMap.get(s);
-            PetGoal goal = goalItem.a;
+            PetGoal goal = goalItem.petGoal;
             this.goalList.remove(goalItem);
             this.goalMap.remove(goalItem);
             if (this.activeGoalList.contains(goalItem)) {
@@ -49,7 +49,7 @@ public class PetGoalSelector {
         ListIterator<PetGoalSelectorItem> i = goalList.listIterator();
         while (i.hasNext()) {
             PetGoalSelectorItem goalItem = i.next();
-            if (goalItem.a == petGoal) {
+            if (goalItem.petGoal == petGoal) {
                 i.remove();
                 this.goalMap.remove(goalItem);
                 if (this.activeGoalList.contains(goalItem)) {
@@ -63,14 +63,14 @@ public class PetGoalSelector {
     public PetGoal getGoal(String s) {
         PetGoalSelectorItem goalItem = this.goalMap.get(s);
         if (goalItem != null) {
-            return goalItem.a;
+            return goalItem.petGoal;
         }
         return null;
     }
 
     public PetGoal getGoal(Class<? extends PetGoal> goalClass) {
         for (PetGoalSelectorItem goalItem : this.goalList) {
-            PetGoal goal = goalItem.a;
+            PetGoal goal = goalItem.petGoal;
             if (goalClass.isInstance(goal)) {
                 return goal;
             }
@@ -82,7 +82,7 @@ public class PetGoalSelector {
         this.goalMap.clear();
         this.goalList.clear();
         for (PetGoalSelectorItem goalItem : this.activeGoalList) {
-            PetGoal goal = goalItem.a;
+            PetGoal goal = goalItem.petGoal;
             goal.finish();
         }
         this.activeGoalList.clear();
@@ -92,7 +92,7 @@ public class PetGoalSelector {
         ListIterator<PetGoalSelectorItem> i = this.goalList.listIterator();
         while (i.hasNext()) {
             PetGoalSelectorItem goalItem = i.next();
-            PetGoal goal = goalItem.a;
+            PetGoal goal = goalItem.petGoal;
             if (!this.activeGoalList.contains(goalItem)) {
                 if (goal.shouldStart()) {
                     this.activeGoalList.add(goalItem);
@@ -103,7 +103,7 @@ public class PetGoalSelector {
         ListIterator<PetGoalSelectorItem> i2 = this.activeGoalList.listIterator();
         while (i2.hasNext()) {
             PetGoalSelectorItem goalItem = i2.next();
-            PetGoal goal = goalItem.a;
+            PetGoal goal = goalItem.petGoal;
             if (goal.shouldFinish()) {
                 goal.finish();
                 i2.remove();
@@ -113,7 +113,7 @@ public class PetGoalSelector {
         ListIterator<PetGoalSelectorItem> i3 = this.activeGoalList.listIterator();
         while (i3.hasNext()) {
             PetGoalSelectorItem goalItem = i3.next();
-            PetGoal goal = goalItem.a;
+            PetGoal goal = goalItem.petGoal;
             goal.tick();
         }
     }
