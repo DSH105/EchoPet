@@ -9,12 +9,12 @@ public class SQLRefresh extends BukkitRunnable {
 
     public SQLRefresh(int timeout) {
         this.timeout = timeout;
-        this.runTaskLater(EchoPet.getPluginInstance(), this.timeout);
+        this.runTaskLater(EchoPet.getInstance(), this.timeout);
     }
 
     @Override
     public void run() {
-        SQLConnection sql = EchoPet.getPluginInstance().sqlCon;
+        SQLConnection sql = EchoPet.getInstance().sqlCon;
         sql.close();
         sql.connect();
     }

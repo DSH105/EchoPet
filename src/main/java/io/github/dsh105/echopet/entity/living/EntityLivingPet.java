@@ -58,8 +58,8 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             this.pet = pet;
             ((LivingEntity) this.getBukkitEntity()).setMaxHealth(pet.getPetType().getMaxHealth());
             this.setHealth((float) pet.getPetType().getMaxHealth());
-            this.jumpHeight = EchoPet.getPluginInstance().options.getRideJumpHeight(this.getPet().getPetType());
-            this.rideSpeed = EchoPet.getPluginInstance().options.getRideSpeed(this.getPet().getPetType());
+            this.jumpHeight = EchoPet.getInstance().options.getRideJumpHeight(this.getPet().getPetType());
+            this.rideSpeed = EchoPet.getInstance().options.getRideSpeed(this.getPet().getPetType());
             this.jump = EntityLiving.class.getDeclaredField("bd");
             this.jump.setAccessible(true);
             setPathfinding();
@@ -83,10 +83,10 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
     public boolean attack(Entity entity, DamageSource damageSource, float f) {
         PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), damageSource, f);
-        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
+        EchoPet.getInstance().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {
-                if (!((Boolean) EchoPet.getPluginInstance().options.getConfigOption("canAttackPlayers", false))) {
+                if (!((Boolean) EchoPet.getInstance().options.getConfigOption("canAttackPlayers", false))) {
                     return false;
                 }
             }
@@ -177,7 +177,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
     // EntityInsentient
     public boolean a(EntityHuman human) {
         if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
-            if ((Boolean) EchoPet.getPluginInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
+            if ((Boolean) EchoPet.getInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
                 PetMenu menu = new PetMenu(getPet(), options, size);
@@ -237,7 +237,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         f *= 0.75F;
 
         PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), f1, f);
-        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+        EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
         if (moveEvent.isCancelled()) {
             return;
         }
@@ -249,14 +249,14 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
         PetType pt = this.getPet().getPetType();
         if (jump != null) {
-            if (EchoPet.getPluginInstance().options.canFly(pt)) {
+            if (EchoPet.getInstance().options.canFly(pt)) {
                 try {
                     if (((Player) (human.getBukkitEntity())).isFlying()) {
                         ((Player) (human.getBukkitEntity())).setFlying(false);
                     }
                     if (jump.getBoolean(this.passenger)) {
                         PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+                        EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                         if (!rideEvent.isCancelled()) {
                             this.motY = 0.5F;
                         }
@@ -268,7 +268,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
                 try {
                     if (jump.getBoolean(this.passenger)) {
                         PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+                        EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                         if (!rideEvent.isCancelled()) {
                             this.motY = rideEvent.getJumpHeight();
                         }
@@ -358,7 +358,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             this.particle++;
         }
 
-        if (this.getOwner().isFlying() && EchoPet.getPluginInstance().options.canFly(this.getPet().getPetType())) {
+        if (this.getOwner().isFlying() && EchoPet.getInstance().options.canFly(this.getPet().getPetType())) {
             Location petLoc = this.getLocation();
             Location ownerLoc = this.getOwner().getLocation();
             Vector v = ownerLoc.toVector().subtract(petLoc.toVector());

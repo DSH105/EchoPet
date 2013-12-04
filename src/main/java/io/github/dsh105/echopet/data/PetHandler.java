@@ -55,7 +55,7 @@ public class PetHandler {
     }
 
     public LivingPet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
-        EchoPet ec = EchoPet.getPluginInstance();
+        EchoPet ec = EchoPet.getInstance();
         if (ec.options.sqlOverride()) {
             LivingPet pet = ec.SPH.createPetFromDatabase(p);
             if (pet == null) {

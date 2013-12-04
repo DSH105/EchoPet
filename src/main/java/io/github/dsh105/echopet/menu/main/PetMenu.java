@@ -62,7 +62,7 @@ public class PetMenu implements Menu {
 
     public void open(boolean sendMessage) {
         PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet, PetMenuOpenEvent.MenuType.MAIN);
-        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(menuEvent);
+        EchoPet.getInstance().getServer().getPluginManager().callEvent(menuEvent);
         if (menuEvent.isCancelled()) {
             return;
         }

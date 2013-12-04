@@ -27,7 +27,7 @@ public class PetCommand implements CommandExecutor {
     private String cmdLabel;
 
     public PetCommand(String commandLabel) {
-        this.ec = EchoPet.getPluginInstance();
+        this.ec = EchoPet.getInstance();
         this.cmdLabel = commandLabel;
     }
 

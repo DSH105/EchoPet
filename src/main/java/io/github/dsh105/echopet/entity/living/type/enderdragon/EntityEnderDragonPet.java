@@ -96,7 +96,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
 
 				/*PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot, sideMot);
-				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+				EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
 				if (moveEvent.isCancelled()) {
 					return;
 				}*/
@@ -132,7 +132,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                     try {
                         if (this.jump.getBoolean(this.passenger)) {
                             PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                            EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+                            EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                             if (!rideEvent.isCancelled()) {
                                 v.setY(0.5F);
                             }

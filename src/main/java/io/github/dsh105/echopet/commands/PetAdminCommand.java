@@ -31,7 +31,7 @@ public class PetAdminCommand implements CommandExecutor {
     public String cmdLabel;
 
     public PetAdminCommand(String commandLabel) {
-        this.ec = EchoPet.getPluginInstance();
+        this.ec = EchoPet.getInstance();
         this.cmdLabel = commandLabel;
     }
 
@@ -53,7 +53,7 @@ public class PetAdminCommand implements CommandExecutor {
         else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (Perm.ADMIN_RELOAD.hasPerm(sender, true, true)) {
-                    EchoPet.getPluginInstance().getMainConfig().reloadConfig();
+                    EchoPet.getInstance().getMainConfig().reloadConfig();
                     Lang.sendTo(sender, Lang.ADMIN_RELOAD_CONFIG.toString());
                     return true;
                 } else return true;
@@ -248,7 +248,7 @@ public class PetAdminCommand implements CommandExecutor {
                             return true;
                         } else {
                             PetHandler.getInstance().clearFileData("autosave", args[1]);
-                            EchoPet.getPluginInstance().SPH.clearFromDatabase(args[1]);
+                            EchoPet.getInstance().SPH.clearFromDatabase(args[1]);
                             Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", target.getName()));
                             return true;
                         }
@@ -480,7 +480,7 @@ public class PetAdminCommand implements CommandExecutor {
                                     ec.getPetConfig().set(path + ".mount" + key, null);
                                 }
 
-                                EchoPet.getPluginInstance().SPH.clearMountFromDatabase(args[2]);
+                                EchoPet.getInstance().SPH.clearMountFromDatabase(args[2]);
                                 Lang.sendTo(sender, Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", target.getName()));
                                 return true;
                             }

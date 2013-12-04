@@ -4,7 +4,6 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
-import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.SQLUtil;
@@ -21,12 +20,12 @@ import java.util.HashMap;
 public class SQLPetHandler {
 
     public static SQLPetHandler getInstance() {
-        return EchoPet.getPluginInstance().SPH;
+        return EchoPet.getInstance().SPH;
     }
 
     public void updateDatabase(Player player, ArrayList<PetData> list, Boolean result, boolean isMount) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+        if (EchoPet.getInstance().options.useSql()) {
+            Connection con = EchoPet.getInstance().getSqlCon();
 
             if (con != null) {
                 try {
@@ -51,7 +50,7 @@ public class SQLPetHandler {
 				/*try {
 					con.close();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + player.getName() + ")");
+					EchoPet.getInstance().severe(e, "Failed to close connection to MySQL Database (" + player.getName() + ")");
 				}*/
                 }
             }
@@ -59,8 +58,8 @@ public class SQLPetHandler {
     }
 
     public void saveToDatabase(LivingPet p, boolean isMount) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+        if (EchoPet.getInstance().options.useSql()) {
+            Connection con = EchoPet.getInstance().getSqlCon();
             String mountPrefix = isMount ? "Mount" : "";
 
             if (con != null && p != null) {
@@ -102,7 +101,7 @@ public class SQLPetHandler {
 				/*try {
 					con.close();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getOwner().getName() + ")");
+					EchoPet.getInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getOwner().getName() + ")");
 				}*/
                 }
             }
@@ -110,8 +109,8 @@ public class SQLPetHandler {
     }
 
     public LivingPet createPetFromDatabase(Player p) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+        if (EchoPet.getInstance().options.useSql()) {
+            Connection con = EchoPet.getInstance().getSqlCon();
 
             LivingPet pet = null;
             Player owner;
@@ -191,7 +190,7 @@ public class SQLPetHandler {
 				/*try {
 					con.close();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
+					EchoPet.getInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
 				}*/
                 }
             }
@@ -225,8 +224,8 @@ public class SQLPetHandler {
     }
 
     public void clearFromDatabase(String name) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+        if (EchoPet.getInstance().options.useSql()) {
+            Connection con = EchoPet.getInstance().getSqlCon();
 
             if (con != null) {
                 try {
@@ -240,7 +239,7 @@ public class SQLPetHandler {
 				/*try {
 					con.close();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
+					EchoPet.getInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
 				}*/
                 }
             }
@@ -248,8 +247,8 @@ public class SQLPetHandler {
     }
 
     public void clearMountFromDatabase(String name) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
-            Connection con = EchoPet.getPluginInstance().getSqlCon();
+        if (EchoPet.getInstance().options.useSql()) {
+            Connection con = EchoPet.getInstance().getSqlCon();
 
             if (con != null) {
                 try {
@@ -269,7 +268,7 @@ public class SQLPetHandler {
 				/*try {
 					con.close();
 				} catch (SQLException e) {
-					EchoPet.getPluginInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
+					EchoPet.getInstance().severe(e, "Failed to close connection to MySQL Database (" + p.getName() + ")");
 				}*/
                 }
             }

@@ -23,7 +23,7 @@ public class EntityPigZombiePet extends EntityLivingPet {
             public void run() {
                 setEquipment(0, new ItemStack(Items.GOLD_SWORD));
             }
-        }.runTaskLater(EchoPet.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getInstance(), 5L);
     }
 
     public void setBaby(boolean flag) {

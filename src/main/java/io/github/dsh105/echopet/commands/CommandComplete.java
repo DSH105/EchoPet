@@ -15,7 +15,7 @@ public class CommandComplete implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> list = new ArrayList<String>();
-        String cmdString = EchoPet.getPluginInstance().cmdString;
+        String cmdString = EchoPet.getInstance().cmdString;
         if (cmd.getName().equalsIgnoreCase(cmdString)) {
             String[] completions;
             if (args.length >= 2) {
@@ -35,7 +35,7 @@ public class CommandComplete implements TabCompleter {
     private String[] getCompletions(int i) {
         switch (i) {
             case 0:
-                return new String[]{EchoPet.getPluginInstance().cmdString, EchoPet.getPluginInstance().adminCmdString};
+                return new String[]{EchoPet.getInstance().cmdString, EchoPet.getInstance().adminCmdString};
             case 1:
                 return new String[]{"bat", "blaze", "cavespider", "chicken", "cow", "creeper", "enderdragon",
                         "enderman", "ghast", "horse", "human", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig",

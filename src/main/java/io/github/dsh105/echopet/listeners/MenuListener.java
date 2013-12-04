@@ -5,7 +5,6 @@ import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.logger.ConsoleLogger;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.menu.main.DataMenu;
 import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
@@ -14,6 +13,7 @@ import io.github.dsh105.echopet.menu.main.MenuItem;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetItem;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.permissions.Perm;
 import io.github.dsh105.echopet.util.*;
 import org.bukkit.entity.Player;
@@ -26,12 +26,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class MenuListener implements Listener {
-
-    private EchoPet ec;
-
-    public MenuListener(EchoPet ec) {
-        this.ec = ec;
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
@@ -69,9 +63,9 @@ public class MenuListener implements Listener {
                     if (inv.getItem(slot).equals(SelectorItem.CLOSE.getItem())) {
                         player.closeInventory();
                     }
-                    String cmd = EchoPet.getPluginInstance().cmdString;
+                    String cmd = EchoPet.getInstance().cmdString;
                     if (inv.getItem(slot).equals(SelectorItem.TOGGLE.getItem())) {
-                        LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
+                        LivingPet pet = EchoPet.getInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.BASE_HIDE.hasPerm(player, true, false)) {
                                 player.performCommand(cmd + " hide");
@@ -91,7 +85,7 @@ public class MenuListener implements Listener {
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
-                        LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
+                        LivingPet pet = EchoPet.getInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, pet.getPetType())) {
                                 player.performCommand(cmd + " ride");
@@ -100,7 +94,7 @@ public class MenuListener implements Listener {
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.HAT.getItem())) {
-                        LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
+                        LivingPet pet = EchoPet.getInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, pet.getPetType())) {
                                 player.performCommand(cmd + " hat");
@@ -119,8 +113,8 @@ public class MenuListener implements Listener {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_PETTYPE, i.petType)) {
                                 LivingPet pet = PetHandler.getInstance().createPet(player, i.petType, true);
                                 if (pet != null) {
-                                    ec.PH.saveFileData("autosave", pet);
-                                    ec.SPH.saveToDatabase(pet, false);
+                                    PetHandler.getInstance().saveFileData("autosave", pet);
+                                    SQLPetHandler.getInstance().saveToDatabase(pet, false);
                                     Lang.sendTo(player, Lang.CREATE_PET.toString()
                                             .replace("%type%", StringUtil.capitalise(i.petType.toString().replace("_", ""))));
                                 }
@@ -137,7 +131,7 @@ public class MenuListener implements Listener {
         }
 
 
-        final LivingPet pet = EchoPet.getPluginInstance().PH.getPet(player);
+        final LivingPet pet = EchoPet.getInstance().PH.getPet(player);
         if (pet == null) {
             return;
         }
@@ -207,7 +201,7 @@ public class MenuListener implements Listener {
 
                                     public OpenMenu(MenuItem mi) {
                                         this.mi = mi;
-                                        this.runTaskLater(ec, 1L);
+                                        this.runTaskLater(EchoPet.getInstance(), 1L);
                                     }
 
                                     @Override
@@ -233,7 +227,7 @@ public class MenuListener implements Listener {
                                 PetMenu menu = new PetMenu(pet, MenuUtil.createOptionList(pet.getPetType()), size);
                                 menu.open(false);
                             }
-                        }.runTaskLater(ec, 1L);
+                        }.runTaskLater(EchoPet.getInstance(), 1L);
                         return;
                     }
                     for (DataMenuItem dmi : DataMenuItem.values()) {

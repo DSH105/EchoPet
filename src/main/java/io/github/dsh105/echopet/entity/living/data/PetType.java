@@ -165,7 +165,7 @@ public enum PetType {
     }
 
     public String getDefaultName(String name) {
-        return EchoPet.getPluginInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
+        return EchoPet.getInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
         //return this.defaultName;
     }
 
@@ -174,7 +174,7 @@ public enum PetType {
     }
 
     public double getAttackDamage() {
-        return EchoPet.getPluginInstance().getMainConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", " ") + ".attackDamage", this.attackDamage);
+        return EchoPet.getInstance().getMainConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", " ") + ".attackDamage", this.attackDamage);
     }
 
     public EntityType getEntityType() {

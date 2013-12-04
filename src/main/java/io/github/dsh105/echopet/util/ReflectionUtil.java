@@ -28,7 +28,7 @@ public class ReflectionUtil {
     }
 
     public static String getVersionString() {
-        EchoPet plugin = EchoPet.getPluginInstance();
+        EchoPet plugin = EchoPet.getInstance();
         String packageName = plugin.getServer().getClass().getPackage().getName();
         String[] packageSplit = packageName.split("\\.");
         String version = packageSplit[packageSplit.length - 1];

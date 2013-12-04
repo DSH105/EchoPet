@@ -92,7 +92,7 @@ public class LivingPet {
                         ((EntityNoClipPet) getEntityPet()).noClip(false);
                     }
                 }
-            }.runTaskLater(EchoPet.getPluginInstance(), 5L);
+            }.runTaskLater(EchoPet.getInstance(), 5L);
         }
         this.ownerIsRiding = flag;
         try {
@@ -146,7 +146,7 @@ public class LivingPet {
     protected EntityLivingPet createPet() {
         Location l = owner.getLocation();
         PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);
-        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(spawnEvent);
+        EchoPet.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
             return null;
         }
@@ -160,8 +160,8 @@ public class LivingPet {
             l.getChunk().load();
         }
         if (!mcWorld.addEntity(entityPet, SpawnReason.CUSTOM)) {
-            owner.sendMessage(EchoPet.getPluginInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
-            EchoPet.getPluginInstance().PH.removePet(this, true);
+            owner.sendMessage(EchoPet.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
+            EchoPet.getInstance().PH.removePet(this, true);
             spawnEvent.setCancelled(true);
         }
         try {
@@ -186,7 +186,7 @@ public class LivingPet {
      */
     public void teleport(Location to) {
         PetTeleportEvent teleportEvent = new PetTeleportEvent(this.pet.getPet(), this.pet.getLocation(), to);
-        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(teleportEvent);
+        EchoPet.getInstance().getServer().getPluginManager().callEvent(teleportEvent);
         if (teleportEvent.isCancelled()) {
             return;
         }
@@ -213,7 +213,7 @@ public class LivingPet {
         name = s;
         LivingEntity le = craftPet;
         le.setCustomName(s);
-        le.setCustomNameVisible((Boolean) EchoPet.getPluginInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+        le.setCustomNameVisible((Boolean) EchoPet.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
     }
 
     /**
@@ -326,7 +326,7 @@ public class LivingPet {
      * @return a new {@link LivingPet} object that is mounting this {@link LivingPet}
      */
     public LivingPet createMount(final PetType pt, boolean sendFailMessage) {
-        if (!EchoPet.getPluginInstance().options.allowMounts(this.petType)) {
+        if (!EchoPet.getInstance().options.allowMounts(this.petType)) {
             if (sendFailMessage) {
                 Lang.sendTo(this.owner, Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.petType.toString())));
             }
@@ -344,9 +344,9 @@ public class LivingPet {
                 mount = p;
                 craftPet.setPassenger(mount.getCraftPet());
                 p.isMount = true;
-                EchoPet.getPluginInstance().SPH.saveToDatabase(mount, true);
+                EchoPet.getInstance().SPH.saveToDatabase(mount, true);
             }
-        }.runTaskLater(EchoPet.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getInstance(), 5L);
 
         return this.mount;
     }

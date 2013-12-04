@@ -16,7 +16,7 @@ public class Logger {
     private static boolean enabled = false;
 
     public static void initiate() {
-        EchoPet plugin = EchoPet.getPluginInstance();
+        EchoPet plugin = EchoPet.getInstance();
         File folder = plugin.getDataFolder();
         if (!folder.exists()) {
             folder.mkdir();
@@ -89,7 +89,7 @@ public class Logger {
         }
 
         public String getPrefix() {
-            return EchoPet.getPluginInstance().prefix + " " + this.prefix;
+            return EchoPet.getInstance().prefix + " " + this.prefix;
         }
     }
 }

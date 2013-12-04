@@ -13,7 +13,7 @@ public class ZombiePet extends LivingPet {
 
     public ZombiePet(Player owner, PetType petType) {
         super(owner, petType);
-        //this.equipment = EchoPet.getPluginInstance().options.shouldHaveEquipment(getPet().getPetType());
+        //this.equipment = EchoPet.getInstance().options.shouldHaveEquipment(getPet().getPetType());
     }
 
     public void setBaby(boolean flag) {

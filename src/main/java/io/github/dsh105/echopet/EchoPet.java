@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class EchoPet extends JavaPlugin {
 
-    public static EchoPet plugin;
+    private static EchoPet plugin;
 
     private YAMLConfigManager configManager;
     private YAMLConfig petConfig;
@@ -205,9 +205,9 @@ public class EchoPet extends JavaPlugin {
         this.adminCmdString = adminCmdString;
 
         // Register listeners
-        manager.registerEvents(new MenuListener(this), this);
-        manager.registerEvents(new PetEntityListener(this), this);
-        manager.registerEvents(new PetOwnerListener(this), this);
+        manager.registerEvents(new MenuListener(), this);
+        manager.registerEvents(new PetEntityListener(), this);
+        manager.registerEvents(new PetOwnerListener(), this);
 
         if (Hook.getVNP() != null) {
             manager.registerEvents(new VanishListener(), this);
@@ -313,7 +313,7 @@ public class EchoPet extends JavaPlugin {
         return this.api;
     }
 
-    public static EchoPet getPluginInstance() {
+    public static EchoPet getInstance() {
         return plugin;
     }
 

@@ -28,7 +28,7 @@ public class EntitySkeletonPet extends EntityLivingPet {
                     setEquipment(0, new ItemStack(Items.BOW));
                 }
             }
-        }.runTaskLater(EchoPet.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getInstance(), 5L);
     }
 
     public void setWither(boolean flag) {

@@ -4,7 +4,6 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMoveEvent;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
-import io.github.dsh105.echopet.logger.ConsoleLogger;
 import net.minecraft.server.v1_7_R1.EntityPlayer;
 import net.minecraft.server.v1_7_R1.GenericAttributes;
 import net.minecraft.server.v1_7_R1.Navigation;
@@ -95,7 +94,7 @@ public class PetGoalFollowOwner extends PetGoal {
             }
 
             PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
-            EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+            EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
             if (moveEvent.isCancelled()) {
                 return;
             }
