@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public enum SelectorItem {
 
     SELECTOR(Material.BONE, 1, (short) 0, false, ChatColor.GREEN + "Pet Selector"),
-    TOGGLE(Material.BONE, 1, (short) 0, false, ChatColor.YELLOW + "Toggle Pet"),
-    CALL(Material.ENDER_PEARL, 1, (short) 0, false, ChatColor.YELLOW + "Call Pet"),
-    RIDE(Material.CARROT_STICK, 1, (short) 0, false, ChatColor.YELLOW + "Ride Pet"),
+    TOGGLE(Material.BONE, 1, (short) 0, false, ChatColor.YELLOW + "Aparecer/Sumir"),
+    CALL(Material.ENDER_PEARL, 1, (short) 0, false, ChatColor.YELLOW + "Chamar Pet"),
+    RIDE(Material.CARROT_STICK, 1, (short) 0, false, ChatColor.YELLOW + "Montar"),
     HAT(Material.IRON_HELMET, 1, (short) 0, false, ChatColor.YELLOW + "Hat Pet"),
     MENU(Material.WORKBENCH, 1, (short) 0, false, ChatColor.YELLOW + "Open PetMenu"),
-    CLOSE(Material.BOOK, 1, (short) 0, false, ChatColor.YELLOW + "Close");
+    CLOSE(Material.BOOK, 1, (short) 0, false, ChatColor.YELLOW + "Sair");
 
     private Material mat;
     private int amount;
