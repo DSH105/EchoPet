@@ -208,6 +208,7 @@ public class EchoPet extends JavaPlugin {
         manager.registerEvents(new MenuListener(), this);
         manager.registerEvents(new PetEntityListener(), this);
         manager.registerEvents(new PetOwnerListener(), this);
+        manager.registerEvents(new ChunkListener(), this);
 
         if (Hook.getVNP() != null) {
             manager.registerEvents(new VanishListener(), this);
