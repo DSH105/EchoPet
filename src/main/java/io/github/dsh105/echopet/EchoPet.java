@@ -57,7 +57,7 @@ public class EchoPet extends JavaPlugin {
     public SQLPetHandler SPH;
     public SQLConnection sqlCon;
     private SQLRefresh sqlRefresh;
-    public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
+    public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "PETS" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
     private EchoPetAPI api;
 
@@ -80,7 +80,7 @@ public class EchoPet extends JavaPlugin {
 
         // Make sure that the plugin is running under the correct version to prevent errors
         if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString())) {
-            ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
+            ConsoleLogger.log(ChatColor.RED + "PETS " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
                     + " is only compatible with:");
             ConsoleLogger.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
