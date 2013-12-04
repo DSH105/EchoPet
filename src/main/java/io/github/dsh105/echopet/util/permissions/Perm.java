@@ -139,7 +139,9 @@ public enum Perm {
         String dataPerm = "echopet.pet.type." + petType.toString().toLowerCase() + "." + petData.getConfigOptionString().toLowerCase();
         boolean hdp = player.hasPermission(dataPerm) || player.hasPermission("echopet.pet.type." + petType.toString().toLowerCase() + ".*") || player.hasPermission("echopet.pet.*") || player.hasPermission("echopet.*");
         if (!hdp) {
-            Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
+            if (sendMessage) {
+                Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
+            }
             return false;
         }
 
