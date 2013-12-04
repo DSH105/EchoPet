@@ -128,12 +128,6 @@ public enum PetType {
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
 
     HUMAN(EntityHumanPet.class, HumanPet.class, 54, "Human Pet", 20D, 6D, EntityType.UNKNOWN),
-
-	/*
-	 * It is currently undecided whether to include Human Pets.
-	 */
-
-    //HUMAN(EntityHumanPet.class, HumanPet.class, "Human Pet", 20, 2D, EntityType.UNKNOWN)
     ;
 
     private Class<? extends EntityLivingPet> entityClass;
@@ -166,7 +160,6 @@ public enum PetType {
 
     public String getDefaultName(String name) {
         return EchoPet.getInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
-        //return this.defaultName;
     }
 
     public String getDefaultName() {
