@@ -81,7 +81,7 @@ public enum PetType {
     // Aggressive mobs
     BLAZE(EntityBlazePet.class, BlazePet.class, 61, "Blaze Pet", 20D, 6D, EntityType.BLAZE, PetData.FIRE),
     CAVESPIDER(EntityCaveSpiderPet.class, CaveSpiderPet.class, 59, "Cave Spider Pet", 12D, 5D, EntityType.CAVE_SPIDER),
-    CREEPER(EntityCreeperPet.class, CreeperPet.class, 50, "Creeper Pet", 20D, 6D, EntityType.CREEPER, PetData.POWER, PetData.IGNITED),
+    CREEPER(EntityCreeperPet.class, CreeperPet.class, 50, "Creeper Pet", 20D, 6D, EntityType.CREEPER, PetData.POWER),
     ENDERDRAGON(EntityEnderDragonPet.class, EnderDragonPet.class, 63, "EnderDragon Pet", 200D, 0D, EntityType.ENDER_DRAGON),
     ENDERMAN(EntityEndermanPet.class, EndermanPet.class, 58, "Enderman Pet", 40D, 6D, EntityType.ENDERMAN, PetData.SCREAMING),
     GHAST(EntityGhastPet.class, GhastPet.class, 56, "Ghast Pet", 10D, 7D, EntityType.GHAST),
