@@ -106,7 +106,7 @@ public enum PetType {
             PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK,
             PetData.GRAY, PetData.DARKBROWN, PetData.NONE, PetData.SOCKS,
             PetData.WHITEPATCH, PetData.WHITESPOT, PetData.BLACKSPOT,
-            PetData.IRON, PetData.GOLD, PetData.DIAMOND),
+            PetData.NOARMOUR, PetData.IRON, PetData.GOLD, PetData.DIAMOND),
     IRONGOLEM(EntityIronGolemPet.class, IronGolemPet.class, 99, "Iron Golem Pet", 100D, 7D, EntityType.IRON_GOLEM),
     MUSHROOMCOW(EntityMushroomCowPet.class, MushroomCowPet.class, 96, "Mushroom Cow Pet", 10D, 3D, EntityType.MUSHROOM_COW, PetData.BABY),
     OCELOT(EntityOcelotPet.class, OcelotPet.class, 98, "Ocelot Pet", 10D, 4D, EntityType.OCELOT, PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
