@@ -40,10 +40,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 public class EchoPet extends JavaPlugin {
 
     private static EchoPet plugin;
+    private static Random random = new Random();
 
     private YAMLConfigManager configManager;
     private YAMLConfig petConfig;
@@ -316,6 +318,10 @@ public class EchoPet extends JavaPlugin {
 
     public static EchoPet getInstance() {
         return plugin;
+    }
+
+    public static Random random() {
+        return random;
     }
 
     public Connection getSqlCon() {
