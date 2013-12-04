@@ -43,14 +43,6 @@ public enum Particle {
     BLOCK_DUST("blockdust", 0.1F, 100),
     ;
 
-	/*
-     * Unused effects
-	 * FIREWORK_SPARK("fireworksSpark", 0f, 50, "firework_spark"),
-	 * MOB_SPELL("mobSpell", 2f, 50, "" "mob_spell"),
-	 * SPELL("spell", 1f, 50, "" "spell"),
-	 * INSTANT_SPELL("instantSpell", 1f, 50, "instant_spell")
-	 */
-
     private String particleName;
     private float defaultSpeed;
     private int particleAmount;
