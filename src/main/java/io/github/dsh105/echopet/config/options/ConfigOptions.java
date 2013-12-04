@@ -57,11 +57,11 @@ public class ConfigOptions extends Options {
     }
 
     public float getRideSpeed(PetType petType) {
-        return (float) this.config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.35D);
+        return (float) this.config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.25D);
     }
 
     public double getRideJumpHeight(PetType petType) {
-        return this.config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 0.5D);
+        return this.config.getDouble("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideJump", 0.6D);
     }
 
     public boolean useSql() {
@@ -130,7 +130,7 @@ public class ConfigOptions extends Options {
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.loseHealth", false);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.health", petType.getMaxHealth());
 
-            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.3D);
+            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.25D);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".jumpHeight", 0.6D);
 
             if (petType != PetType.ENDERDRAGON) {
