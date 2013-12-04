@@ -25,7 +25,6 @@ public class EntityBatPet extends EntityLivingPet {
         } else {
             this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -2)));
         }
-        ((BatPet) pet).hanging = flag;
     }
 
     @Override

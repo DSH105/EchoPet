@@ -16,15 +16,6 @@ public class EntityPigPet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((PigPet) pet).baby = flag;
-    }
-
     public boolean hasSaddle() {
         return (this.datawatcher.getByte(16) & 1) != 0;
     }
@@ -35,7 +26,6 @@ public class EntityPigPet extends EntityAgeablePet {
         } else {
             this.datawatcher.watch(16, Byte.valueOf((byte) 0));
         }
-        ((PigPet) pet).saddle = flag;
     }
 
     @Override

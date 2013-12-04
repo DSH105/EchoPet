@@ -54,7 +54,6 @@ public class EntityWolfPet extends EntityAgeablePet {
         } else {
             this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -3)));
         }
-        ((WolfPet) pet).angry = flag;
     }
 
     public boolean isAngry() {
@@ -67,14 +66,12 @@ public class EntityWolfPet extends EntityAgeablePet {
         } else {
             this.datawatcher.watch(12, new Integer(0));
         }
-        ((WolfPet) pet).baby = flag;
     }
 
     public void setCollarColor(DyeColor dc) {
         if (((WolfPet) pet).tamed) {
             byte colour = dc.getWoolData();
             this.datawatcher.watch(20, colour);
-            ((WolfPet) pet).collar = dc;
         }
     }
 

@@ -19,15 +19,6 @@ public class EntityHorsePet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(-24000));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((HorsePet) pet).baby = flag;
-    }
-
     public boolean isBaby() {
         return ((HorsePet) pet).isBaby();
     }
@@ -42,19 +33,15 @@ public class EntityHorsePet extends EntityAgeablePet {
             this.setArmour(HorseArmour.NONE);
         }
         this.datawatcher.watch(19, Byte.valueOf((byte) t.getId()));
-        ((HorsePet) pet).horseType = t;
     }
 
     public void setVariant(HorseVariant v, HorseMarking m) {
         this.datawatcher.watch(20, Integer.valueOf(m.getId(v)));
-        ((HorsePet) pet).variant = v;
-        ((HorsePet) pet).marking = m;
     }
 
     public void setArmour(HorseArmour a) {
         if (this.datawatcher.getByte(19) == Byte.valueOf((byte) HorseType.NORMAL.getId())) {
             this.datawatcher.watch(22, Integer.valueOf(a.getId()));
-            ((HorsePet) pet).armour = a;
         }
     }
 

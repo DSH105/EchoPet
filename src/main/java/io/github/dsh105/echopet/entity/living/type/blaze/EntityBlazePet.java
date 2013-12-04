@@ -21,7 +21,6 @@ public class EntityBlazePet extends EntityLivingPet {
 
     public void setOnFire(boolean flag) {
         this.datawatcher.watch(16, (byte) (flag ? 1 : 0));
-        ((BlazePet) pet).onFire = flag;
     }
 
     @Override

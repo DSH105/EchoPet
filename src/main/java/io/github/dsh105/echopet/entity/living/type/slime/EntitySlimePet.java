@@ -28,7 +28,6 @@ public class EntitySlimePet extends EntityLivingPet {
         this.a(0.6F * (float) i, 0.6F * (float) i);
         this.setPosition(this.locX, this.locY, this.locZ);
         this.setHealth(this.getMaxHealth());
-        ((SlimePet) pet).size = i;
     }
 
     public int getSize() {

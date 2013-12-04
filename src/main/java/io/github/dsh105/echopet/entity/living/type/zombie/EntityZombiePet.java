@@ -28,12 +28,10 @@ public class EntityZombiePet extends EntityLivingPet {
 
     public void setBaby(boolean flag) {
         this.datawatcher.watch(12, (byte) (flag ? 1 : 0));
-        ((ZombiePet) pet).baby = flag;
     }
 
     public void setVillager(boolean flag) {
         this.datawatcher.watch(13, (byte) (flag ? 1 : 0));
-        ((ZombiePet) pet).villager = flag;
     }
 
     @Override

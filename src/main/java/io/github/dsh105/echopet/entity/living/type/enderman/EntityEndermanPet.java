@@ -21,7 +21,6 @@ public class EntityEndermanPet extends EntityLivingPet {
 
     public void setScreaming(boolean flag) {
         this.datawatcher.watch(18, Byte.valueOf((byte) (flag ? 1 : 0)));
-        ((EndermanPet) pet).scream = flag;
     }
 
     @Override

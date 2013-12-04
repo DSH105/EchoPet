@@ -28,7 +28,6 @@ public class EntityMagmaCubePet extends EntityLivingPet {
         this.a(0.6F * (float) i, 0.6F * (float) i);
         this.setPosition(this.locX, this.locY, this.locZ);
         this.setHealth(this.getMaxHealth());
-        ((MagmaCubePet) pet).size = i;
     }
 
     public int getSize() {

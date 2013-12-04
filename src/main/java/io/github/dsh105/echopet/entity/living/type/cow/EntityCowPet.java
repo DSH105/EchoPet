@@ -18,15 +18,6 @@ public class EntityCowPet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((CowPet) pet).baby = flag;
-    }
-
     @Override
     protected void makeStepSound() {
         this.makeSound("mob.cow.step", 0.15F, 1.0F);

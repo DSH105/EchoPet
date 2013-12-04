@@ -21,7 +21,6 @@ public class EntityVillagerPet extends EntityAgeablePet {
 
     public void setProfession(int i) {
         this.datawatcher.watch(16, i);
-        ((VillagerPet) pet).profession = Profession.getProfession(i);
     }
 
     public void setBaby(boolean flag) {
@@ -30,7 +29,6 @@ public class EntityVillagerPet extends EntityAgeablePet {
         } else {
             this.datawatcher.watch(12, new Integer(0));
         }
-        ((VillagerPet) pet).baby = flag;
     }
 
     @Override

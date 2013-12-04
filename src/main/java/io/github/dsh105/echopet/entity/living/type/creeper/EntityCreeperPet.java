@@ -21,12 +21,10 @@ public class EntityCreeperPet extends EntityLivingPet {
 
     public void setPowered(boolean flag) {
         this.datawatcher.watch(17, Byte.valueOf((byte) (flag ? 1 : 0)));
-        ((CreeperPet) pet).powered = flag;
     }
 
     public void setIgnited(boolean flag) {
         this.datawatcher.watch(18, Byte.valueOf((byte) (flag ? 1 : 0)));
-        ((CreeperPet) pet).ignited = flag;
     }
 
     @Override

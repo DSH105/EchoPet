@@ -17,22 +17,12 @@ public class EntityOcelotPet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((OcelotPet) pet).baby = flag;
-    }
-
     public int getCatType() {
         return this.datawatcher.getByte(18);
     }
 
     public void setCatType(int i) {
         this.datawatcher.watch(18, (byte) i);
-        ((OcelotPet) pet).type = Type.getType(i);
     }
 
     @Override

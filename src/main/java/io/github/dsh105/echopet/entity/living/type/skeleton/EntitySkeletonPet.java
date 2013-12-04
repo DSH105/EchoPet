@@ -33,7 +33,6 @@ public class EntitySkeletonPet extends EntityLivingPet {
 
     public void setWither(boolean flag) {
         this.datawatcher.watch(13, (byte) (flag ? 1 : 0));
-        ((SkeletonPet) pet).wither = flag;
         if (flag) {
             setEquipment(0, new ItemStack(Items.STONE_SWORD));
         } else {

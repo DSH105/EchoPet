@@ -16,15 +16,6 @@ public class EntityChickenPet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((ChickenPet) pet).baby = flag;
-    }
-
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
