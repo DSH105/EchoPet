@@ -115,10 +115,10 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                     v.add(l.getDirection().normalize().multiply(-0.5));
                 }
 
-                if (forw > 0.0F) {
+                if (forw < 0.0F) {
                     l.setYaw(this.passenger.yaw);
-                    v.add(l.getDirection().normalize().multiply(-1.4));
-                } else if (forw < 0.0F) {
+                    v.add(l.getDirection().normalize().multiply(0.5));
+                } else if (forw > 0.0F) {
                     l.setYaw(this.passenger.yaw);
                     v.add(l.getDirection().normalize().multiply(0.5));
                 }
