@@ -99,7 +99,7 @@ public class PetGoalFollowOwner extends PetGoal {
                 return;
             }
 
-            if (owner.onGround && pet.goalTarget == null) {
+            if (pet.goalTarget == null) {
                 //Smooth path finding to entity instead of location
                 PathEntity path = pet.world.findPath(pet, owner, (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
                 pet.setPathEntity(path);
