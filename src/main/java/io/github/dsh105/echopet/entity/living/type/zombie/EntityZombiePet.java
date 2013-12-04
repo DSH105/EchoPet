@@ -36,8 +36,9 @@ public class EntityZombiePet extends EntityLivingPet {
         ((ZombiePet) pet).villager = flag;
     }
 
-    protected void a() {
-        super.a();
+    @Override
+    protected void initDatawatcher() {
+        super.initDatawatcher();
         this.datawatcher.a(12, new Byte((byte) 0));
         this.datawatcher.a(13, new Byte((byte) 0));
     }
@@ -58,7 +59,7 @@ public class EntityZombiePet extends EntityLivingPet {
     }
 
     public boolean isBaby() {
-        return this.datawatcher.getByte(12) < 0;
+        return this.datawatcher.getByte(12) == 1;
     }
 
     @Override
