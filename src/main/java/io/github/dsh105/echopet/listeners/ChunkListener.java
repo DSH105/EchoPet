@@ -14,6 +14,9 @@ public class ChunkListener implements Listener {
         for (Entity e : event.getChunk().getEntities()) {
             if (e instanceof EntityLivingPet) {
                 PetHandler.getInstance().removePet(((EntityLivingPet) e).getPet(), true);
+                if (!e.isDead()) {
+                    ((EntityLivingPet) e).remove(true);
+                }
             }
         }
     }
