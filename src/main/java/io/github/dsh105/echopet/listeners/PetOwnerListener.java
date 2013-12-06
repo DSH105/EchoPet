@@ -5,6 +5,8 @@ import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.entity.living.type.human.EntityHumanPet;
+import io.github.dsh105.echopet.entity.living.type.human.HumanPet;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
@@ -23,6 +25,8 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Iterator;
 
 public class PetOwnerListener implements Listener {
 
@@ -154,6 +158,15 @@ public class PetOwnerListener implements Listener {
                 inv.setItem(slot, selector);
             }
         }
+
+        Iterator<LivingPet> i = PetHandler.getInstance().getPets().iterator();
+        while (i.hasNext()) {
+            LivingPet pet = i.next();
+            if (pet instanceof HumanPet) {
+                ((EntityHumanPet) pet.getEntityPet()).updatePacket();
+            }
+        }
+
         final boolean sendMessage = ((Boolean) ec.options.getConfigOption("sendLoadMessage", true));
 
         new BukkitRunnable() {
