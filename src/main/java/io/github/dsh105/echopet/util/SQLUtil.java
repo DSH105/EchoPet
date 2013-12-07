@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.util;
 
 import io.github.dsh105.echopet.entity.living.data.PetData;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class SQLUtil {
 
@@ -22,41 +22,7 @@ public class SQLUtil {
         return s;
     }
 
-    public static String serialiseDataList(ArrayList<PetData> data, boolean mount) {
-        String s = "";
-        if (!data.isEmpty()) {
-            for (PetData pd : data) {
-                if (!s.equalsIgnoreCase("")) {
-                    s = s + ", ";
-                }
-                if (mount) {
-                    s = s + "Mount" + pd.toString();
-                } else {
-                    s = s + pd.toString();
-                }
-            }
-        }
-        return s;
-    }
-
-    public static String serialiseDataListBooleans(ArrayList<PetData> data, Boolean result) {
-        String s = "'";
-        if (!data.isEmpty()) {
-            for (PetData pd : data) {
-                if (!s.equalsIgnoreCase("'")) {
-                    s = s + "', '";
-                }
-                s = s + result.toString();
-            }
-        }
-        s = s + "'";
-        if (s.equalsIgnoreCase("''")) {
-            s = "";
-        }
-        return s;
-    }
-
-    public static String serialiseUpdate(ArrayList<PetData> data, Object value, boolean isMount) {
+    public static String serialiseUpdate(List<PetData> data, Object value, boolean isMount) {
         String s = ", ";
         String mount = isMount ? "Mount" : "";
         if (!data.isEmpty()) {
@@ -71,5 +37,13 @@ public class SQLUtil {
             return "";
         }
         return s;
+    }
+
+    public static Map<String, String> constructUpdateMap(List<PetData> data, Object value, boolean isMount) {
+        Map<String, String> updateMap = new HashMap<String, String>();
+        for (PetData pd : data) {
+            updateMap.put((isMount ? "Mount" : "") + pd.toString(), value.toString());
+        }
+        return updateMap;
     }
 }
