@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity.living;
 
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public abstract class EntityAgeablePet extends EntityLivingPet {
 
@@ -17,7 +17,13 @@ public abstract class EntityAgeablePet extends EntityLivingPet {
         this.datawatcher.a(12, new Integer(0));
     }
 
-    public abstract void setBaby(boolean flag);
+    public void setBaby(boolean flag) {
+        if (flag) {
+            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
+        } else {
+            this.datawatcher.watch(12, new Integer(0));
+        }
+    }
 
     public boolean isBaby() {
         return this.datawatcher.getInt(12) < 0;

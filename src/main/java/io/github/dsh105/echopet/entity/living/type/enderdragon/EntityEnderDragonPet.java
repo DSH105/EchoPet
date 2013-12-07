@@ -6,9 +6,9 @@ import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
-import net.minecraft.server.v1_6_R3.*;
+import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.util.Vector;
 
 import java.util.Iterator;
@@ -46,9 +46,9 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         this.a(8.0F, 4.0F);
         this.setHealth(this.getMaxHealth());
         this.fireProof = true;
-        this.Z = true;
+        this.noClip(true);
         this.i = 100.0D;
-        this.am = true;
+        this.al = true;
     }
 
     public double[] b(int i, float f) {
@@ -72,7 +72,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
     }
 
     @Override
-    public void c() {
+    public void e() {
         float f;
         float f1;
 
@@ -96,7 +96,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
 
 				/*PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forMot, sideMot);
-				EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+				EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
 				if (moveEvent.isCancelled()) {
 					return;
 				}*/
@@ -117,7 +117,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
                 if (forw < 0.0F) {
                     l.setYaw(this.passenger.yaw);
-                    v.add(l.getDirection().normalize().multiply(-1.6));
+                    v.add(l.getDirection().normalize().multiply(0.5));
                 } else if (forw > 0.0F) {
                     l.setYaw(this.passenger.yaw);
                     v.add(l.getDirection().normalize().multiply(0.5));
@@ -132,7 +132,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                     try {
                         if (this.jump.getBoolean(this.passenger)) {
                             PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                            EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(rideEvent);
+                            EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                             if (!rideEvent.isCancelled()) {
                                 v.setY(0.5F);
                             }
@@ -171,7 +171,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
             this.world.addParticle("largeexplode", this.locX + (double) f, this.locY + 2.0D + (double) f1, this.locZ + (double) f2, 0.0D, 0.0D, 0.0D);
         } else {
             // For EnderCrystals
-            //this.bJ();
+            //this.bN();
 
             f = 0.2F / (MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ) * 10.0F + 1.0F);
             f *= (float) Math.pow(2.0D, this.motY);
@@ -237,7 +237,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                     this.j += this.random.nextGaussian() * 2.0D;
                 }
 
-                if (this.bz || d3 < 100.0D || d3 > 22500.0D || this.positionChanged || this.H) {
+                if (this.bz || d3 < 100.0D || d3 > 22500.0D || this.positionChanged || this.G) {
                     this.target();
                 }
 
@@ -340,11 +340,11 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         float f11 = MathHelper.sin(f10);
         float f12 = MathHelper.cos(f10);
 
-        this.body.l_();
+        this.body.h();
         this.body.setPositionRotation(this.locX + (double) (f11 * 0.5F), this.locY, this.locZ - (double) (f12 * 0.5F), 0.0F, 0.0F);
-        this.wing1.l_();
+        this.wing1.h();
         this.wing1.setPositionRotation(this.locX + (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ + (double) (f11 * 4.5F), 0.0F, 0.0F);
-        this.wing2.l_();
+        this.wing2.h();
         this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
 
 		/*if (!this.world.isStatic && this.hurtTicks == 0) {
@@ -362,7 +362,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         float f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
         float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
 
-        this.head.l_();
+        this.head.h();
         this.head.setPositionRotation(this.locX + (double) (f3 * 5.5F * f2), this.locY + (adouble1[1] - adouble[1]) * 1.0D + (double) (f9 * 5.5F), this.locZ - (double) (f13 * 5.5F * f2), 0.0F, 0.0F);
 
         for (int j = 0; j < 3; ++j) {
@@ -387,7 +387,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
             float f17 = 1.5F;
             float f18 = (float) (j + 1) * 2.0F;
 
-            entitycomplexpart.l_();
+            entitycomplexpart.h();
             entitycomplexpart.setPositionRotation(this.locX - (double) ((f11 * f17 + f15 * f18) * f2), this.locY + (adouble2[1] - adouble[1]) * 1.0D - (double) ((f18 + f17) * f9) + 1.5D, this.locZ + (double) ((f12 * f17 + f16 * f18) * f2), 0.0F, 0.0F);
         }
     }
@@ -432,7 +432,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         }
     }
 
-    //bK() EntityEnderDragon
+    //bO() EntityEnderDragon
     protected void target() {
         this.bz = false;
         if (this.random.nextInt(2) == 0 && !this.world.players.isEmpty()) {
@@ -442,7 +442,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                 this.bD = (Entity) this.world.players.get(this.random.nextInt(this.world.players.size()));
             }
         } else {
-            boolean flag = false;
+            boolean flag;
 
             do {
                 this.h = 0.0D;
@@ -462,7 +462,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
     }
 
     @Override
-    public World b() {
+    public World a() {
         return this.world;
     }
 

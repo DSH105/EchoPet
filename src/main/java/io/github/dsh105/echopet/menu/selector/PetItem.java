@@ -7,10 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.MaterialData;
 
-/**
- * Project by DSH105
- */
 
 public enum PetItem {
 
@@ -25,7 +24,7 @@ public enum PetItem {
     GHAST(PetType.GHAST, Material.getMaterial(383), 1, (short) 56,  "Ghast Pet"),
     GIANT(PetType.GIANT, Material.getMaterial(383), 1, (short) 54,  "Giant Pet"),
     HORSE(PetType.HORSE, Material.getMaterial(383), 1, (short) 100,  "Horse Pet"),
-    HUMAN(PetType.HUMAN, Material.SKULL, 1, (short) 3, "Human Pet"),
+    HUMAN(PetType.HUMAN, Material.SKULL_ITEM, 1, (short) 3, "Human Pet"),
     IRONGOLEM(PetType.IRONGOLEM, Material.getMaterial(86), 1, (short) 0,  "Iron Golem Pet"),
     MAGMACUBE(PetType.MAGMACUBE, Material.getMaterial(383), 1, (short) 62,  "Magma Cube Pet"),
     MUSHROOMCOW(PetType.MUSHROOMCOW, Material.getMaterial(383), 1, (short) 96,  "Mushroom Cow Pet"),
@@ -66,6 +65,12 @@ public enum PetItem {
         meta.setDisplayName((hasPerm ? ChatColor.GREEN : ChatColor.RED) + this.name);
         //meta.setLore(this.lore);
         i.setItemMeta(meta);
+
+        if (this == PetItem.HUMAN) {
+            SkullMeta sm = (SkullMeta) i.getItemMeta();
+            sm.setOwner(p.getName());
+            i.setItemMeta(sm);
+        }
         return i;
     }
 }

@@ -1,10 +1,10 @@
 package io.github.dsh105.echopet.entity.living;
 
-import net.minecraft.server.v1_6_R3.EntityCreature;
-import net.minecraft.server.v1_6_R3.EntityLiving;
-import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftCreature;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftLivingEntity;
+import net.minecraft.server.v1_7_R1.EntityCreature;
+import net.minecraft.server.v1_7_R1.EntityLiving;
+import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;

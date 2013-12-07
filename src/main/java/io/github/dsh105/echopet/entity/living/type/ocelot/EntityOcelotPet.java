@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.ocelot;
 
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.entity.Ocelot.Type;
 
 public class EntityOcelotPet extends EntityAgeablePet {
@@ -17,22 +17,12 @@ public class EntityOcelotPet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((OcelotPet) pet).baby = flag;
-    }
-
     public int getCatType() {
         return this.datawatcher.getByte(18);
     }
 
     public void setCatType(int i) {
         this.datawatcher.watch(18, (byte) i);
-        ((OcelotPet) pet).type = Type.getType(i);
     }
 
     @Override

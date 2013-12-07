@@ -4,18 +4,18 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMoveEvent;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
-import net.minecraft.server.v1_6_R3.EntityPlayer;
-import net.minecraft.server.v1_6_R3.GenericAttributes;
-import net.minecraft.server.v1_6_R3.Navigation;
-import net.minecraft.server.v1_6_R3.PathEntity;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.GenericAttributes;
+import net.minecraft.server.v1_7_R1.Navigation;
+import net.minecraft.server.v1_7_R1.PathEntity;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 
 
 public class PetGoalFollowOwner extends PetGoal {
 
-    private EntityLivingPet pet; //d
-    private Navigation nav; //g
-    private int timer = 0; //h
+    private EntityLivingPet pet;
+    private Navigation nav;
+    private int timer = 0;
     private double startDistance;
     private double stopDistance;
     private double teleportDistance;
@@ -79,7 +79,7 @@ public class PetGoalFollowOwner extends PetGoal {
     @Override
     public void tick() {
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalFollowOwner.java#L57
-        this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.bp()); //(bl() - 1.6.1) (bs() - 1.5.2)
+        this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.x());
         if (--this.timer <= 0) {
             this.timer = 10;
             if (this.pet.getOwner().isFlying()) {
@@ -88,19 +88,18 @@ public class PetGoalFollowOwner extends PetGoal {
             }
 
             double speed = 0.55F;
-
             if (this.pet.e(this.owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getOwner()).getHandle().onGround) {
                 this.pet.getPet().teleport(this.pet.getOwner().getLocation());
                 return;
             }
 
             PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
-            EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(moveEvent);
+            EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
             if (moveEvent.isCancelled()) {
                 return;
             }
 
-            if (owner.onGround && pet.goalTarget == null) {
+            if (pet.goalTarget == null) {
                 //Smooth path finding to entity instead of location
                 PathEntity path = pet.world.findPath(pet, owner, (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
                 pet.setPathEntity(path);

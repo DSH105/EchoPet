@@ -3,16 +3,13 @@ package io.github.dsh105.echopet.logger;
 import io.github.dsh105.echopet.EchoPet;
 import org.bukkit.command.ConsoleCommandSender;
 
-/**
- * Project by DSH105
- */
 
 public class ConsoleLogger {
 
     private static ConsoleCommandSender console;
 
     public static void initiate() {
-        console = EchoPet.getPluginInstance().getServer().getConsoleSender();
+        console = EchoPet.getInstance().getServer().getConsoleSender();
     }
 
     public static void log(Logger.LogLevel logLevel, String message) {

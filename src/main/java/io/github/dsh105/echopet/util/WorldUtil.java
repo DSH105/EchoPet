@@ -9,20 +9,17 @@ import io.github.dsh105.echopet.Hook;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
-/**
- * Project by DSH105
- */
 
 public class WorldUtil {
 
     public static boolean allowPets(Location location) {
         boolean allowRegion = allowRegion(location);
         String worldName = location.getWorld().getName();
-        Boolean allowWorld = EchoPet.getPluginInstance().getMainConfig().getBoolean("worlds." + worldName);
+        Boolean allowWorld = EchoPet.getInstance().getMainConfig().getBoolean("worlds." + worldName);
         if (allowWorld != null) {
             return allowWorld && allowRegion;
         } else {
-            return EchoPet.getPluginInstance().getMainConfig().getBoolean("worlds.enableByDefault", true) && allowRegion;
+            return EchoPet.getInstance().getMainConfig().getBoolean("worlds.enableByDefault", true) && allowRegion;
         }
     }
 
@@ -36,14 +33,14 @@ public class WorldUtil {
 
         boolean result = true;
         boolean hasSet = false;
-        boolean def = EchoPet.getPluginInstance().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
+        boolean def = EchoPet.getInstance().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
 
-        ConfigurationSection cs = EchoPet.getPluginInstance().getMainConfig().getConfigurationSection("worldguard.regions");
+        ConfigurationSection cs = EchoPet.getInstance().getMainConfig().getConfigurationSection("worldguard.regions");
         for (ProtectedRegion region : set) {
             for (String key : cs.getKeys(false)) {
                 if (region.getId().equals(key)) {
                     if (!hasSet) {
-                        result = EchoPet.getPluginInstance().getMainConfig().getBoolean("worldguard.regions." + key, true);
+                        result = EchoPet.getInstance().getMainConfig().getBoolean("worldguard.regions." + key, true);
                         hasSet = true;
                     } else if (result != def) {
                         result = def;

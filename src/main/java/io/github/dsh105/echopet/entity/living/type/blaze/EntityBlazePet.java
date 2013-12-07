@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntityBlazePet extends EntityLivingPet {
 
@@ -21,7 +21,6 @@ public class EntityBlazePet extends EntityLivingPet {
 
     public void setOnFire(boolean flag) {
         this.datawatcher.watch(16, (byte) (flag ? 1 : 0));
-        ((BlazePet) pet).onFire = flag;
     }
 
     @Override
@@ -50,8 +49,8 @@ public class EntityBlazePet extends EntityLivingPet {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
-                Particle.FIRE.sendToLocation(pet.getLocation());
-                Particle.SMOKE.sendToLocation(pet.getLocation());
+                Particle.FIRE.sendTo(pet.getLocation());
+                Particle.SMOKE.sendTo(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }

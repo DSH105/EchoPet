@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetDamageEvent;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.entity.living.CraftLivingPet;
-import net.minecraft.server.v1_6_R3.DamageSource;
+import net.minecraft.server.v1_7_R1.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,12 +15,6 @@ import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.*;
 
 public class PetEntityListener implements Listener {
-
-    private EchoPet ec;
-
-    public PetEntityListener(EchoPet ec) {
-        this.ec = ec;
-    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
@@ -54,7 +48,7 @@ public class PetEntityListener implements Listener {
         if (e instanceof CraftLivingPet) {
             CraftLivingPet craftPet = (CraftLivingPet) e;
             PetDamageEvent damageEvent = new PetDamageEvent(craftPet.getPet(), event.getCause(), event.getDamage());
-            EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(damageEvent);
+            EchoPet.getInstance().getServer().getPluginManager().callEvent(damageEvent);
             event.setDamage(damageEvent.getDamage());
             event.setCancelled(damageEvent.isCancelled());
         }
@@ -67,13 +61,13 @@ public class PetEntityListener implements Listener {
             Entity damager = event.getDamager();
             if (damager instanceof Player) {
                 PetInteractEvent iEvent = new PetInteractEvent(((CraftLivingPet) e).getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
-                EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(iEvent);
+                EchoPet.getInstance().getServer().getPluginManager().callEvent(iEvent);
                 event.setCancelled(iEvent.isCancelled());
             }
         } else if (event.getDamager() instanceof CraftLivingPet) {
             CraftLivingPet craftPet = (CraftLivingPet) event.getDamager();
             PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, DamageSource.mobAttack(craftPet.getPet().getEntityPet()), event.getDamage());
-            EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(attackEvent);
+            EchoPet.getInstance().getServer().getPluginManager().callEvent(attackEvent);
             event.setDamage(attackEvent.getDamage());
             event.setCancelled(attackEvent.isCancelled());
         }

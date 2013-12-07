@@ -5,14 +5,19 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.ReflectionUtil;
-import net.minecraft.server.v1_6_R3.*;
+import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Location;
+
+import java.lang.reflect.Field;
 
 public class EntityHumanPet extends EntityLivingPet {
 
-    private Packet20NamedEntitySpawn packet;
-    private Packet40EntityMetadata metaPacket;
+    private PacketPlayOutNamedEntitySpawn packet;
+    private PacketPlayOutEntityMetadata metaPacket;
     private DataWatcher dw;
+    private int id;
+    protected GameProfile profile;
     protected int equipmentId = 0;
     protected byte b0 = 0;
     protected boolean init;
@@ -24,21 +29,29 @@ public class EntityHumanPet extends EntityLivingPet {
     public EntityHumanPet(World world, LivingPet pet) {
         super(world, pet);
         this.a(0.6F, 0.9F);
+        try {
+            Field f = Entity.class.getDeclaredField("id");
+            f.setAccessible(true);
+            this.id = (Integer) f.get(this);
+        } catch (Exception e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to construct Human Pet.", e, true);
+        }
         this.fireProof = true;
-        this.dw = new DataWatcher();
-        this.packet = new Packet20NamedEntitySpawn();
+        this.dw = new DataWatcher(this);
+        this.packet = new PacketPlayOutNamedEntitySpawn();
     }
 
     private void createPacket() {
-        packet.a = this.getBukkitEntity().getEntityId();
-        packet.b = this.pet.getPetName();
-        packet.c = (int) this.locX * 32;
-        packet.d = (int) this.locY * 32;
-        packet.e = (int) this.locZ * 32;
-        packet.f = this.angle(this.pitch);
-        packet.g = this.angle(this.yaw);
-        packet.h = this.equipmentId;
+        this.profile = new GameProfile(this.id + "", this.pet.getPetName());
         try {
+            ReflectionUtil.setValue(this.packet, "a", this.id);
+            ReflectionUtil.setValue(this.packet, "b", this.profile);
+            ReflectionUtil.setValue(this.packet, "c", (int) this.locX * 32);
+            ReflectionUtil.setValue(this.packet, "d", (int) this.locY * 32);
+            ReflectionUtil.setValue(this.packet, "e", (int) this.locZ * 32);
+            ReflectionUtil.setValue(this.packet, "f", this.angle(this.pitch));
+            ReflectionUtil.setValue(this.packet, "g", this.angle(this.yaw));
+            ReflectionUtil.setValue(this.packet, "h", this.equipmentId);
             ReflectionUtil.setValue(this.packet, "i", this.dw);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create Human Pet packet.", e, true);
@@ -50,15 +63,15 @@ public class EntityHumanPet extends EntityLivingPet {
         this.dw.watch(1, (Object) (short) 0);
         this.dw.watch(8, (Object) (byte) 0);
         this.dw.watch(10, (Object) (String) this.pet.getPetName());
-        this.metaPacket = new Packet40EntityMetadata(id, this.dw, true);
         try {
+            this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
             ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.metaPacket);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
         }
     }
 
-    protected void updatePacket() {
+    public void updatePacket() {
         this.createPacket();
         try {
             ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.packet);
@@ -72,7 +85,11 @@ public class EntityHumanPet extends EntityLivingPet {
         this.dw.a(1, (Object) (short) 0);
         this.dw.a(8, (Object) (byte) 0);
         this.dw.a(10, (Object) (String) "Human Pet");
-        this.metaPacket = new Packet40EntityMetadata(id, this.dw, true);
+        try {
+            this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
+        } catch (Exception e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
+        }
         this.updatePacket();
     }
 
@@ -81,8 +98,8 @@ public class EntityHumanPet extends EntityLivingPet {
     }
 
     @Override
-    public void l_() {
-        super.l_();
+    public void onLive() {
+        super.onLive();
         if (this.isInvisible()) {
             this.b0 = 32;
         } else if (this.isSneaking()) {
@@ -119,21 +136,8 @@ public class EntityHumanPet extends EntityLivingPet {
         return SizeCategory.REGULAR;
     }
 
-    protected void animate(int i) {
-        Packet18ArmAnimation animation = new Packet18ArmAnimation();
-        animation.a = this.getBukkitEntity().getEntityId();
-        animation.b = i;
-        try {
-            ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), animation);
-        } catch (Exception e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Animation Packet for Human Pet.", e, true);
-        }
-    }
-
-
     @Override
     public void remove(boolean makeSound) {
-        this.animate(2);
         super.remove(makeSound);
     }
 }

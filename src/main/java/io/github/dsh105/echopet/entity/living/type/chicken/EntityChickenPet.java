@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.chicken;
 
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntityChickenPet extends EntityAgeablePet {
 
@@ -14,15 +14,6 @@ public class EntityChickenPet extends EntityAgeablePet {
         super(world, pet);
         this.a(0.3F, 0.7F);
         this.fireProof = true;
-    }
-
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((ChickenPet) pet).baby = flag;
     }
 
     @Override

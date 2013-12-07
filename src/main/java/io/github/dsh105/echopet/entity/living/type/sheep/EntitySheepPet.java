@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.sheep;
 
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 
 public class EntitySheepPet extends EntityAgeablePet {
@@ -17,15 +17,6 @@ public class EntitySheepPet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-        ((SheepPet) pet).baby = flag;
-    }
-
     public int getColor() {
         return this.datawatcher.getByte(16) & 15;
     }
@@ -35,7 +26,6 @@ public class EntitySheepPet extends EntityAgeablePet {
 
         byte b = Byte.valueOf((byte) (b0 & 240 | i & 15));
         this.datawatcher.watch(16, b);
-        ((SheepPet) pet).color = b;
     }
 
     public boolean isSheared() {
@@ -50,7 +40,6 @@ public class EntitySheepPet extends EntityAgeablePet {
         } else {
             this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -17)));
         }
-        ((SheepPet) pet).sheared = flag;
     }
 
     @Override

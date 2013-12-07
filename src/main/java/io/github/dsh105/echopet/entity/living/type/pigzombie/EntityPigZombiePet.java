@@ -4,9 +4,9 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import net.minecraft.server.v1_6_R3.Item;
-import net.minecraft.server.v1_6_R3.ItemStack;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.Items;
+import net.minecraft.server.v1_7_R1.ItemStack;
+import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EntityPigZombiePet extends EntityLivingPet {
@@ -21,19 +21,17 @@ public class EntityPigZombiePet extends EntityLivingPet {
         this.fireProof = true;
         new BukkitRunnable() {
             public void run() {
-                setEquipment(0, new ItemStack(Item.GOLD_SWORD));
+                setEquipment(0, new ItemStack(Items.GOLD_SWORD));
             }
-        }.runTaskLater(EchoPet.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getInstance(), 5L);
     }
 
     public void setBaby(boolean flag) {
         this.datawatcher.watch(12, (byte) (flag ? 1 : 0));
-        ((PigZombiePet) pet).baby = flag;
     }
 
     public void setVillager(boolean flag) {
         this.datawatcher.watch(13, (byte) (flag ? 1 : 0));
-        ((PigZombiePet) pet).villager = flag;
     }
 
     @Override

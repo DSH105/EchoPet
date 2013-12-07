@@ -13,8 +13,8 @@ public enum Lang {
     NO_PERMISSION("no_permission", "&6%perm% &epermission needed to perform that action."),
     PETS_DISABLED_HERE("pets_disabled_here", "&ePets are not allowed here."),
     ENTER_PET_DISABLED_REGION("enter_pet_disabled_region", "&eEntering region that does not allow Pets. Yours has been hidden."),
-    ADMIN_COMMAND_ERROR("admin_cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getPluginInstance().adminCmdString + " for help"),
-    COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getPluginInstance().cmdString + " for help."),
+    ADMIN_COMMAND_ERROR("admin_cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getInstance().adminCmdString + " for help"),
+    COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPet.getInstance().cmdString + " for help."),
     IN_GAME_ONLY("in_game_only", "&6%cmd% &ecan only be used in-game."),
     STRING_ERROR("string_error", "&eError parsing String: [&6%string%&e]. Please revise command arguments."),
 
@@ -109,27 +109,27 @@ public enum Lang {
 
     public static void sendTo(CommandSender sender, String msg) {
         if (msg != null || !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
-            sender.sendMessage(EchoPet.getPluginInstance().prefix + msg);
+            sender.sendMessage(EchoPet.getInstance().prefix + " " + msg);
         }
     }
 
     public static void sendTo(Player p, String msg) {
         if (msg != null && !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !(msg.equalsIgnoreCase("none"))) {
-            p.sendMessage(EchoPet.getPluginInstance().prefix + msg);
+            p.sendMessage(EchoPet.getInstance().prefix + " " + msg);
         }
     }
 
     @Override
     public String toString() {
-        String result = EchoPet.getPluginInstance().getLangConfig().getString(this.path, this.def);
+        String result = EchoPet.getInstance().getLangConfig().getString(this.path, this.def);
         if (result != null && result != "" && result != "none") {
-            return ChatColor.translateAlternateColorCodes('&', EchoPet.getPluginInstance().getLangConfig().getString(this.path, this.def));
+            return ChatColor.translateAlternateColorCodes('&', EchoPet.getInstance().getLangConfig().getString(this.path, this.def));
         } else {
             return "";
         }
     }
 
     public String toString_() {
-        return EchoPet.getPluginInstance().getLangConfig().getString(this.path, this.def);
+        return EchoPet.getInstance().getLangConfig().getString(this.path, this.def);
     }
 }

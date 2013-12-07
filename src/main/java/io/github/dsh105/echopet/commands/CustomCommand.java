@@ -55,7 +55,7 @@ public class CustomCommand extends Command {
             for (String arg : args) {
                 message.append(arg).append(' ');
             }
-            message.deleteCharAt(message.length() - 1).append("' in plugin ").append(EchoPet.getPluginInstance().getDescription().getFullName());
+            message.deleteCharAt(message.length() - 1).append("' in plugin ").append(EchoPet.getInstance().getDescription().getFullName());
             throw new CommandException(message.toString(), ex);
         }
 

@@ -2,9 +2,6 @@ package io.github.dsh105.echopet.config.options;
 
 import io.github.dsh105.echopet.config.YAMLConfig;
 
-/**
- * Project by DSH105
- */
 
 public abstract class Options {
 

@@ -12,7 +12,7 @@ public class SkeletonPet extends LivingPet {
 
     public SkeletonPet(Player owner, PetType petType) {
         super(owner, petType);
-        //this.equipment = EchoPet.getPluginInstance().options.shouldHaveEquipment(pet.getPet().getPetType());
+        //this.equipment = EchoPet.getInstance().options.shouldHaveEquipment(pet.getPet().getPetType());
     }
 
     public void setWither(boolean flag) {

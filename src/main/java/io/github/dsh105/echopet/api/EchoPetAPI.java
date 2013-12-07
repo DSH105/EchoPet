@@ -19,7 +19,7 @@ import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.StringUtil;
-import net.minecraft.server.v1_6_R3.EntityHuman;
+import net.minecraft.server.v1_7_R1.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class EchoPetAPI {
      */
     public LivingPet givePet(Player player, PetType petType, boolean sendMessage) {
         if (player != null && petType != null) {
-            LivingPet pet = EchoPet.getPluginInstance().PH.createPet(player, petType, sendMessage);
+            LivingPet pet = EchoPet.getInstance().PH.createPet(player, petType, sendMessage);
             if (pet == null) {
                 ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml?");
                 return null;
@@ -60,7 +60,7 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
-        EchoPet.getPluginInstance().PH.removePets(player, true);
+        EchoPet.getInstance().PH.removePets(player, true);
         if (save) {
             if (hasPet(player)) {
                 PetHandler.getInstance().saveFileData("autosave", PetHandler.getInstance().getPet(player));
@@ -76,7 +76,7 @@ public class EchoPetAPI {
      * @return true if {@link Player} has a LivingPet, false if not
      */
     public boolean hasPet(Player player) {
-        return EchoPet.getPluginInstance().PH.getPet(player) != null;
+        return EchoPet.getInstance().PH.getPet(player) != null;
     }
 
     /**
@@ -86,7 +86,7 @@ public class EchoPetAPI {
      * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} instance linked to the {@link Player}
      */
     public LivingPet getPet(Player player) {
-        return EchoPet.getPluginInstance().PH.getPet(player);
+        return EchoPet.getInstance().PH.getPet(player);
     }
 
     /**
@@ -96,7 +96,7 @@ public class EchoPetAPI {
      */
 
     public LivingPet[] getAllPets() {
-        ArrayList<LivingPet> pets = EchoPet.getPluginInstance().PH.getPets();
+        ArrayList<LivingPet> pets = EchoPet.getInstance().PH.getPets();
         return pets.toArray(new LivingPet[pets.size()]);
     }
 
@@ -150,7 +150,7 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetData [" + petData.toString() + "] to LivingPet through the EchoPetAPI. LivingPet cannot be null.");
             return;
         }
-        EchoPet.getPluginInstance().PH.setData(pet, new PetData[]{petData}, true);
+        EchoPet.getInstance().PH.setData(pet, new PetData[]{petData}, true);
     }
 
     /**
@@ -164,7 +164,7 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetData [" + petData.toString() + "] from LivingPet through the EchoPetAPI. LivingPet cannot be null.");
             return;
         }
-        EchoPet.getPluginInstance().PH.setData(pet, new PetData[]{petData}, false);
+        EchoPet.getInstance().PH.setData(pet, new PetData[]{petData}, false);
     }
 
     /**
@@ -272,7 +272,7 @@ public class EchoPetAPI {
             return;
         }
         if (goalType == GoalType.ATTACK) {
-            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getPluginInstance().options.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPet.getPluginInstance().options.getConfigOption("attack.ticksBetweenAttacks", 20)));
+            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getInstance().options.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPet.getInstance().options.getConfigOption("attack.ticksBetweenAttacks", 20)));
         } else if (goalType == GoalType.FLOAT) {
             pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));
         } else if (goalType == GoalType.FOLLOW_OWNER) {

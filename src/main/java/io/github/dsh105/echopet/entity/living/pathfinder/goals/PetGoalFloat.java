@@ -14,12 +14,13 @@ public class PetGoalFloat extends PetGoal {
 
     @Override
     public boolean shouldStart() {
-        return pet.world.getMaterial((int) pet.locX, (int) pet.locY, (int) pet.locZ).isLiquid();
+        // Returns if the pet is in water. A handy change :D
+        return this.pet.M();
     }
 
     @Override
     public void tick() {
-        if (pet.aD().nextFloat() < 0.8F) {
+        if (pet.random().nextFloat() < 0.8F) {
             this.pet.getControllerJump().a();
         }
     }

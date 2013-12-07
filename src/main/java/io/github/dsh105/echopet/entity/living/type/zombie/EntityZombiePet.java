@@ -4,9 +4,9 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import net.minecraft.server.v1_6_R3.Item;
-import net.minecraft.server.v1_6_R3.ItemStack;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.Items;
+import net.minecraft.server.v1_7_R1.ItemStack;
+import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EntityZombiePet extends EntityLivingPet {
@@ -21,23 +21,22 @@ public class EntityZombiePet extends EntityLivingPet {
         this.fireProof = true;
         new BukkitRunnable() {
             public void run() {
-                setEquipment(0, new ItemStack(Item.IRON_SPADE));
+                setEquipment(0, new ItemStack(Items.IRON_SPADE));
             }
-        }.runTaskLater(EchoPet.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getInstance(), 5L);
     }
 
     public void setBaby(boolean flag) {
         this.datawatcher.watch(12, (byte) (flag ? 1 : 0));
-        ((ZombiePet) pet).baby = flag;
     }
 
     public void setVillager(boolean flag) {
         this.datawatcher.watch(13, (byte) (flag ? 1 : 0));
-        ((ZombiePet) pet).villager = flag;
     }
 
-    protected void a() {
-        super.a();
+    @Override
+    protected void initDatawatcher() {
+        super.initDatawatcher();
         this.datawatcher.a(12, new Byte((byte) 0));
         this.datawatcher.a(13, new Byte((byte) 0));
     }
@@ -58,7 +57,7 @@ public class EntityZombiePet extends EntityLivingPet {
     }
 
     public boolean isBaby() {
-        return this.datawatcher.getByte(12) < 0;
+        return this.datawatcher.getByte(12) == 1;
     }
 
     @Override

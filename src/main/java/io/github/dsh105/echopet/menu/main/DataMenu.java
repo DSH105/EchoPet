@@ -24,7 +24,7 @@ public class DataMenu implements Menu {
 
     public void open(boolean sendMessage) {
         PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet, PetMenuOpenEvent.MenuType.DATA);
-        EchoPet.getPluginInstance().getServer().getPluginManager().callEvent(menuEvent);
+        EchoPet.getInstance().getServer().getPluginManager().callEvent(menuEvent);
         if (menuEvent.isCancelled()) {
             return;
         }

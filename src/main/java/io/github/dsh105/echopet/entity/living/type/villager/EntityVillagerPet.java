@@ -4,7 +4,7 @@ import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.entity.Villager.Profession;
 
 public class EntityVillagerPet extends EntityAgeablePet {
@@ -21,7 +21,6 @@ public class EntityVillagerPet extends EntityAgeablePet {
 
     public void setProfession(int i) {
         this.datawatcher.watch(16, i);
-        ((VillagerPet) pet).profession = Profession.getProfession(i);
     }
 
     public void setBaby(boolean flag) {
@@ -30,7 +29,6 @@ public class EntityVillagerPet extends EntityAgeablePet {
         } else {
             this.datawatcher.watch(12, new Integer(0));
         }
-        ((VillagerPet) pet).baby = flag;
     }
 
     @Override
@@ -54,7 +52,7 @@ public class EntityVillagerPet extends EntityAgeablePet {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
-                Particle.SPARKLE.sendToLocation(pet.getLocation());
+                Particle.SPARKLE.sendTo(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }

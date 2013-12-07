@@ -4,7 +4,6 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
-import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.SQLUtil;
@@ -17,19 +16,19 @@ import java.util.*;
 public class SQLPetHandler {
 
     public static SQLPetHandler getInstance() {
-        return EchoPet.getPluginInstance().SPH;
+        return EchoPet.getInstance().SPH;
     }
 
     public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isMount) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
+        if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             Statement statement = null;
 
-            if (EchoPet.getPluginInstance().dbPool != null) {
+            if (EchoPet.getInstance().dbPool != null) {
                 try {
                     Map<String, String> updates = SQLUtil.constructUpdateMap(list, result, isMount);
                     if (!updates.isEmpty()) {
-                        con = EchoPet.getPluginInstance().dbPool.getConnection();
+                        con = EchoPet.getInstance().dbPool.getConnection();
                         statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
                             statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE OwnerName = '" + player.getName() + "'");
@@ -58,13 +57,13 @@ public class SQLPetHandler {
     }
 
     public void saveToDatabase(LivingPet p, boolean isMount) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
+        if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
 
-            if (EchoPet.getPluginInstance().dbPool != null && p != null) {
+            if (EchoPet.getInstance().dbPool != null && p != null) {
                 try {
-                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    con = EchoPet.getInstance().dbPool.getConnection();
                     // Delete any existing info
                     if (!isMount) {
                         this.clearFromDatabase(p.getOwner());
@@ -102,7 +101,7 @@ public class SQLPetHandler {
     }
 
     public LivingPet createPetFromDatabase(Player p) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
+        if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
 
@@ -112,9 +111,9 @@ public class SQLPetHandler {
             String name;
             Map<PetData, Boolean> map = new HashMap<PetData, Boolean>();
 
-            if (EchoPet.getPluginInstance().dbPool != null) {
+            if (EchoPet.getInstance().dbPool != null) {
                 try {
-                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    con = EchoPet.getInstance().dbPool.getConnection();
                     ps = con.prepareStatement("SELECT * FROM Pets WHERE OwnerName = ?;");
                     ps.setString(1, p.getName());
                     ResultSet rs = ps.executeQuery();
@@ -220,13 +219,13 @@ public class SQLPetHandler {
     }
 
     public void clearFromDatabase(String name) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
+        if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
 
-            if (EchoPet.getPluginInstance().dbPool != null) {
+            if (EchoPet.getInstance().dbPool != null) {
                 try {
-                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    con = EchoPet.getInstance().dbPool.getConnection();
                     ps = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
                     ps.setString(1, name);
                     ps.executeUpdate();
@@ -246,13 +245,13 @@ public class SQLPetHandler {
     }
 
     public void clearMountFromDatabase(String name) {
-        if (EchoPet.getPluginInstance().options.useSql()) {
+        if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
 
-            if (EchoPet.getPluginInstance().dbPool != null) {
+            if (EchoPet.getInstance().dbPool != null) {
                 try {
-                    con = EchoPet.getPluginInstance().dbPool.getConnection();
+                    con = EchoPet.getInstance().dbPool.getConnection();
                     String list = SQLUtil.serialiseUpdate(Arrays.asList(PetData.values()), null, true);
                     ps = con.prepareStatement("UPDATE Pets SET ? WHERE OwnerName = ?;");
                     ps.setString(1, list);

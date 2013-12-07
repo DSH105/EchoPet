@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.horse;
 
 public enum HorseArmour {
 
-    NONE(0),
+    NONE(Integer.MIN_VALUE),
     IRON(1),
     GOLD(2),
     DIAMOND(3);

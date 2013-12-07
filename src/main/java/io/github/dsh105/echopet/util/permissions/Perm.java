@@ -1,4 +1,4 @@
-package io.github.dsh105.echopet.permissions;
+package io.github.dsh105.echopet.util.permissions;
 
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.data.PetType;
@@ -8,9 +8,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-/**
- * Project by DSH105
- */
 
 public enum Perm {
 
@@ -140,9 +137,11 @@ public enum Perm {
         }
 
         String dataPerm = "echopet.pet.type." + petType.toString().toLowerCase() + "." + petData.getConfigOptionString().toLowerCase();
-        boolean hdp = player.hasPermission(dataPerm) || player.hasPermission("echopet.pet.type." + petType.toString().toLowerCase() + ".*");
+        boolean hdp = player.hasPermission(dataPerm) || player.hasPermission("echopet.pet.type." + petType.toString().toLowerCase() + ".*") || player.hasPermission("echopet.pet.*") || player.hasPermission("echopet.*");
         if (!hdp) {
-            Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
+            if (sendMessage) {
+                Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
+            }
             return false;
         }
 

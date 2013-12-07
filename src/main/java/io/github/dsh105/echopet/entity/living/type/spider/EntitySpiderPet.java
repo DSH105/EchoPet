@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntitySpiderPet extends EntityLivingPet {
 
@@ -35,18 +35,6 @@ public class EntitySpiderPet extends EntityLivingPet {
         return "mob.spider.say";
     }
 
-    public void a(boolean flag) {
-        byte b0 = this.datawatcher.getByte(16);
-
-        if (flag) {
-            b0 = (byte) (b0 | 1);
-        } else {
-            b0 &= -2;
-        }
-
-        this.datawatcher.watch(16, Byte.valueOf(b0));
-    }
-
     @Override
     protected String getDeathSound() {
         return "mob.spider.death";
@@ -62,7 +50,7 @@ public class EntitySpiderPet extends EntityLivingPet {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
-                Particle.SPELL_AMBIENT.sendToLocation(pet.getLocation());
+                Particle.SPELL_AMBIENT.sendTo(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }

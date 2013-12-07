@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_7_R1.World;
 
 public class EntitySlimePet extends EntityLivingPet {
 
@@ -28,7 +28,6 @@ public class EntitySlimePet extends EntityLivingPet {
         this.a(0.6F * (float) i, 0.6F * (float) i);
         this.setPosition(this.locX, this.locY, this.locZ);
         this.setHealth(this.getMaxHealth());
-        ((SlimePet) pet).size = i;
     }
 
     public int getSize() {
@@ -57,13 +56,13 @@ public class EntitySlimePet extends EntityLivingPet {
 
         if (this.onGround && this.jumpDelay-- <= 0) {
             this.jumpDelay = this.random.nextInt(15) + 10;
-            this.makeSound("mob.magmacube." + (getSize() > 1 ? "big" : "small"), ba(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+            this.makeSound(this.getDeathSound(), this.bf(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             getControllerJump().a();
         }
 
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
-                Particle.SLIME_SPLAT.sendToLocation(pet.getLocation());
+                Particle.SLIME_SPLAT.sendTo(pet.getLocation());
             } catch (Exception e) {
                 Logger.log(Logger.LogLevel.WARNING, "Particle effect creation failed.", e, true);
             }

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 public class CreeperPet extends LivingPet {
 
     boolean powered;
+    boolean ignited;
 
     public CreeperPet(Player owner, PetType petType) {
         super(owner, petType);
@@ -20,5 +21,14 @@ public class CreeperPet extends LivingPet {
 
     public boolean isPowered() {
         return this.powered;
+    }
+
+    public void setIgnited(boolean flag) {
+        ((EntityCreeperPet) getEntityPet()).setIgnited(flag);
+        this.ignited = flag;
+    }
+
+    public boolean isIgnited() {
+        return this.ignited;
     }
 }

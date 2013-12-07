@@ -23,13 +23,13 @@ import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.ReflectionUtil;
 import io.github.dsh105.echopet.util.SQLUtil;
-import net.minecraft.server.v1_6_R3.EntityTypes;
+import net.minecraft.server.v1_7_R1.EntityTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,10 +41,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 public class EchoPet extends JavaPlugin {
 
-    public static EchoPet plugin;
+    private static EchoPet plugin;
+    private static Random random = new Random();
 
     private YAMLConfigManager configManager;
     private YAMLConfig petConfig;
@@ -229,9 +231,10 @@ public class EchoPet extends JavaPlugin {
         this.adminCmdString = adminCmdString;
 
         // Register listeners
-        manager.registerEvents(new MenuListener(this), this);
-        manager.registerEvents(new PetEntityListener(this), this);
-        manager.registerEvents(new PetOwnerListener(this), this);
+        manager.registerEvents(new MenuListener(), this);
+        manager.registerEvents(new PetEntityListener(), this);
+        manager.registerEvents(new PetOwnerListener(), this);
+        manager.registerEvents(new ChunkListener(), this);
 
         if (Hook.getVNP() != null) {
             manager.registerEvents(new VanishListener(), this);
@@ -301,17 +304,16 @@ public class EchoPet extends JavaPlugin {
     }
 
     public void registerEntity(Class<? extends EntityLivingPet> clazz, String name, int id) {
-        Field field_c = null;
         try {
-            field_c = EntityTypes.class.getDeclaredField("c");
-            Field field_e = EntityTypes.class.getDeclaredField("e");
-            field_c.setAccessible(true);
-            field_e.setAccessible(true);
+            Field field_d = EntityTypes.class.getDeclaredField("d");
+            Field field_f = EntityTypes.class.getDeclaredField("f");
+            field_d.setAccessible(true);
+            field_f.setAccessible(true);
 
-            Map<Class, String> c = (Map) field_c.get(field_c);
-            Map<Class, Integer> e = (Map) field_e.get(field_e);
+            Map<Class, String> d = (Map) field_d.get(field_d);
+            Map<Class, Integer> f = (Map) field_f.get(field_f);
 
-            Iterator i = c.keySet().iterator();
+            Iterator i = d.keySet().iterator();
             while (i.hasNext()) {
                 Class cl = (Class) i.next();
                 if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
@@ -319,7 +321,7 @@ public class EchoPet extends JavaPlugin {
                 }
             }
 
-            Iterator i2 = e.keySet().iterator();
+            Iterator i2 = f.keySet().iterator();
             while (i2.hasNext()) {
                 Class cl = (Class) i2.next();
                 if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
@@ -327,8 +329,8 @@ public class EchoPet extends JavaPlugin {
                 }
             }
 
-            c.put(clazz, name);
-            e.put(clazz, id);
+            d.put(clazz, name);
+            f.put(clazz, id);
 
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
@@ -339,8 +341,12 @@ public class EchoPet extends JavaPlugin {
         return this.api;
     }
 
-    public static EchoPet getPluginInstance() {
+    public static EchoPet getInstance() {
         return plugin;
+    }
+
+    public static Random random() {
+        return random;
     }
 
     public YAMLConfig getPetConfig() {
