@@ -15,6 +15,8 @@
         <minecraft.version>1.7.2</minecraft.version>
         <craftbukkit.version>R0.1</craftbukkit.version>
         <cb_package>v1_7_R1</cb_package>
+        <slf4j.version>1.7.5</slf4j.version>
+        <bonecp.version>0.8.0-rc3</bonecp.version>
         <main.class>io.github.dsh105.echopet.EchoPet</main.class>
     </properties>
     <distributionManagement>
@@ -78,6 +80,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>${bonecp.version}</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -135,6 +147,39 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.jolbox:bonecp</include>
+                                    <include>org.slf4j:slf4j-api</include>
+                                    <include>org.slf4j:slf4j-jdk14</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.jolbox</pattern>
+                                    <shadedPattern>io.github.dsh105.echopet.libraries</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.slf4j</pattern>
+                                    <shadedPattern>io.github.dsh105.echopet.libraries.slf4j</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
