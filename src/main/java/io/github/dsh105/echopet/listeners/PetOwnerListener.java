@@ -11,6 +11,7 @@ import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.ReflectionUtil;
 import io.github.dsh105.echopet.util.StringUtil;
 import io.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.ChatColor;
@@ -73,6 +74,15 @@ public class PetOwnerListener implements Listener {
     public void onPlayerTeleport(final PlayerTeleportEvent event) {
         final Player p = event.getPlayer();
         final LivingPet pi = PetHandler.getInstance().getPet(p);
+        Iterator<LivingPet> i = PetHandler.getInstance().getPets().iterator();
+        while (i.hasNext()) {
+            LivingPet pet = i.next();
+            if (pet instanceof HumanPet) {
+                if (ReflectionUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
+                    ((EntityHumanPet) pet.getEntityPet()).updatePacket();
+                }
+            }
+        }
         if (pi != null) {
             if (pi.ownerIsMounting) return;
             if (event.getFrom().getWorld() == event.getTo().getWorld()) {
