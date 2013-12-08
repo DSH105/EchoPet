@@ -77,7 +77,7 @@ public class PetOwnerListener implements Listener {
         Iterator<LivingPet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             LivingPet pet = i.next();
-            if (pet instanceof HumanPet) {
+            if (pet instanceof HumanPet && ((EntityHumanPet) pet.getEntityPet()).hasInititiated()) {
                 if (ReflectionUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
                     ((EntityHumanPet) pet.getEntityPet()).updatePacket();
                 }
@@ -169,13 +169,6 @@ public class PetOwnerListener implements Listener {
             }
         }
 
-        Iterator<LivingPet> i = PetHandler.getInstance().getPets().iterator();
-        while (i.hasNext()) {
-            LivingPet pet = i.next();
-            if (pet instanceof HumanPet) {
-                ((EntityHumanPet) pet.getEntityPet()).updatePacket();
-            }
-        }
 
         final boolean sendMessage = ((Boolean) ec.options.getConfigOption("sendLoadMessage", true));
 
@@ -186,6 +179,16 @@ public class PetOwnerListener implements Listener {
             }
 
         }.runTaskLater(ec, 20);
+
+        Iterator<LivingPet> i = PetHandler.getInstance().getPets().iterator();
+        while (i.hasNext()) {
+            LivingPet pet = i.next();
+            if (pet instanceof HumanPet && ((EntityHumanPet) pet.getEntityPet()).hasInititiated()) {
+                if (ReflectionUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
+                    ((EntityHumanPet) pet.getEntityPet()).updatePacket();
+                }
+            }
+        }
     }
 
     @EventHandler

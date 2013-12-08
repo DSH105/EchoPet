@@ -80,6 +80,10 @@ public class EntityHumanPet extends EntityLivingPet {
         }
     }
 
+    public boolean hasInititiated() {
+        return this.init;
+    }
+
     private void init() {
         this.dw.a(0, (Object) (byte) 0);
         this.dw.a(1, (Object) (short) 0);

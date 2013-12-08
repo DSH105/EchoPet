@@ -38,6 +38,8 @@ public class HumanPet extends LivingPet {
     @Override
     public void teleport(Location to) {
         super.teleport(to);
-        ((EntityHumanPet) this.getEntityPet()).updatePacket();
+        if (((EntityHumanPet) this.getEntityPet()).hasInititiated()) {
+            ((EntityHumanPet) this.getEntityPet()).updatePacket();
+        }
     }
 }
