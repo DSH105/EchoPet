@@ -280,7 +280,9 @@ public class EchoPet extends JavaPlugin {
     @Override
     public void onDisable() {
         PH.removeAllPets();
-        dbPool.shutdown();
+        if (dbPool != null) {
+            dbPool.shutdown();
+        }
     }
 
     @Override
