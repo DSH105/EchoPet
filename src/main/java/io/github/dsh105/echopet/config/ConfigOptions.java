@@ -1,4 +1,4 @@
-package io.github.dsh105.echopet.config.options;
+package io.github.dsh105.echopet.config;
 
 import io.github.dsh105.dshutils.config.YAMLConfig;
 import io.github.dsh105.dshutils.config.options.Options;

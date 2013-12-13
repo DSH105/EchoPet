@@ -15,7 +15,7 @@ import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.CustomCommand;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
-import io.github.dsh105.echopet.config.options.ConfigOptions;
+import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
