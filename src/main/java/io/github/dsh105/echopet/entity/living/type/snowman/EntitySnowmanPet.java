@@ -1,14 +1,14 @@
 package io.github.dsh105.echopet.entity.living.type.snowman;
 
+import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import io.github.dsh105.echopet.logger.Logger;
-import io.github.dsh105.echopet.util.Particle;
-import net.minecraft.server.v1_7_R1.Blocks;
+import io.github.dsh105.dshutils.logger.Logger;
 import net.minecraft.server.v1_7_R1.Material;
 import net.minecraft.server.v1_7_R1.MathHelper;
 import net.minecraft.server.v1_7_R1.World;
+import org.bukkit.craftbukkit.v1_7_R1.util.CraftMagicNumbers;
 
 public class EntitySnowmanPet extends EntityLivingPet {
 
@@ -45,8 +45,9 @@ public class EntitySnowmanPet extends EntityLivingPet {
             int i = MathHelper.floor(this.locX + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
             int j = MathHelper.floor(this.locY);
             int k = MathHelper.floor(this.locZ + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
-            if (this.world.getType(i, j, k).getMaterial() == Material.SNOW_LAYER) {
-                this.world.setTypeUpdate(i, j, k, Blocks.AIR);
+            org.bukkit.block.BlockState blockState = this.world.getWorld().getBlockAt(j, k, l).getState();
+            if (blockState.getType().equals(Material.SNOW_LAYER)) {
+                blockState.setType(CraftMagicNumbers.getMaterial(net.minecraft.server.v1_7_R1.Blocks.AIR));
             }
         }
 

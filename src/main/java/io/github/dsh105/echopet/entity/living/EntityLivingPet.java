@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.living;
 
+import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
@@ -11,11 +12,10 @@ import io.github.dsh105.echopet.entity.living.pathfinder.PetGoalSelector;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFollowOwner;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalLookAtPlayer;
-import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.util.MenuUtil;
-import io.github.dsh105.echopet.util.Particle;
 import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

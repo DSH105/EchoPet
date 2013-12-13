@@ -60,6 +60,7 @@
                   <include>com.jolbox:bonecp</include>
                   <include>org.slf4j:slf4j-api</include>
                   <include>org.slf4j:slf4j-jdk14</include>
+                  <include>io.github.dsh105:DSHUtils</include>
                 </includes>
               </artifactSet>
               <relocations>
@@ -70,6 +71,10 @@
                 <relocation>
                   <pattern>org.slf4j</pattern>
                   <shadedPattern>io.github.dsh105.echopet.libraries.slf4j</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>io.github.dsh105.dshutils</pattern>
+                  <shadedPattern>io.github.dsh105.echopet.libraries.dshutils</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>
@@ -82,6 +87,10 @@
     <repository>
       <id>bukkit-repo</id>
       <url>http://repo.bukkit.org/content/groups/public/</url>
+    </repository>
+    <repository>
+      <id>hawk-repo</id>
+      <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
     </repository>
     <repository>
       <id>sk89q-repo</id>
@@ -186,6 +195,7 @@
     <craftbukkit.version>R0.1</craftbukkit.version>
     <vault.version>1.2.27</vault.version>
     <bonecp.version>0.8.0-rc3</bonecp.version>
+    <dshutils.version>1.0-SNAPSHOT</dshutils.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
     <main.class>io.github.dsh105.echopet.EchoPet</main.class>

@@ -2,14 +2,19 @@ package io.github.dsh105.echopet;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
-import io.github.dsh105.echopet.Updater.UpdateType;
+import io.github.dsh105.dshutils.Metrics;
+import io.github.dsh105.dshutils.Updater;
+import io.github.dsh105.dshutils.Version;
+import io.github.dsh105.dshutils.config.YAMLConfig;
+import io.github.dsh105.dshutils.config.YAMLConfigManager;
+import io.github.dsh105.dshutils.logger.ConsoleLogger;
+import io.github.dsh105.dshutils.logger.Logger;
+import io.github.dsh105.dshutils.util.ReflectionUtil;
 import io.github.dsh105.echopet.api.EchoPetAPI;
 import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.CustomCommand;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
-import io.github.dsh105.echopet.config.YAMLConfig;
-import io.github.dsh105.echopet.config.YAMLConfigManager;
 import io.github.dsh105.echopet.config.options.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
 import io.github.dsh105.echopet.entity.living.data.PetData;
@@ -17,11 +22,8 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.listeners.*;
-import io.github.dsh105.echopet.logger.ConsoleLogger;
-import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.ReflectionUtil;
 import io.github.dsh105.echopet.util.SQLUtil;
 import net.minecraft.server.v1_7_R1.EntityTypes;
 import org.bukkit.Bukkit;
@@ -75,11 +77,11 @@ public class EchoPet extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        Logger.initiate();
-        ConsoleLogger.initiate();
+        Logger.initiate(this, "EchoPet", "[EchoPet]");
+        ConsoleLogger.initiate(this);
 
         // Make sure that the plugin is running under the correct version to prevent errors
-        if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString())) {
+        if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString(this))) {
             ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
                     + " is only compatible with:");
@@ -258,7 +260,7 @@ public class EchoPet extends JavaPlugin {
     protected void checkUpdates() {
         if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
             final File file = this.getFile();
-            final Updater.UpdateType updateType = this.getMainConfig().getBoolean("autoUpdate", false) ? UpdateType.DEFAULT : UpdateType.NO_DOWNLOAD;
+            final Updater.UpdateType updateType = this.getMainConfig().getBoolean("autoUpdate", false) ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD;
             getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
                 @Override
                 public void run() {

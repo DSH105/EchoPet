@@ -1,13 +1,13 @@
 package io.github.dsh105.echopet.entity.living;
 
+import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetSpawnEvent;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.data.PetType;
-import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.Particle;
 import io.github.dsh105.echopet.util.StringUtil;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.ChatColor;

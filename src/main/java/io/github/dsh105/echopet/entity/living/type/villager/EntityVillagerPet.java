@@ -1,11 +1,10 @@
 package io.github.dsh105.echopet.entity.living.type.villager;
 
+import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.logger.Logger;
-import io.github.dsh105.echopet.util.Particle;
+import io.github.dsh105.dshutils.logger.Logger;
 import net.minecraft.server.v1_7_R1.World;
-import org.bukkit.entity.Villager.Profession;
 
 public class EntityVillagerPet extends EntityAgeablePet {
 

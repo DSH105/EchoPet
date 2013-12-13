@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.dshutils.logger.Logger;
 import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;

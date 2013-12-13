@@ -1,11 +1,11 @@
 package io.github.dsh105.echopet.menu.main;
 
+import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.Menu;
-import io.github.dsh105.echopet.util.EnumUtil;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.StringUtil;
 import org.bukkit.Bukkit;

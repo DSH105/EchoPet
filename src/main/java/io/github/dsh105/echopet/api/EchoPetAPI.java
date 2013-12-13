@@ -1,5 +1,7 @@
 package io.github.dsh105.echopet.api;
 
+import io.github.dsh105.dshutils.logger.ConsoleLogger;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.data.PetData;
@@ -10,8 +12,6 @@ import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalAttack;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFollowOwner;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalLookAtPlayer;
-import io.github.dsh105.echopet.logger.ConsoleLogger;
-import io.github.dsh105.echopet.logger.Logger;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetSelector;

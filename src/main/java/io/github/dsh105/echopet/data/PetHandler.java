@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.data;
 
+import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.data.PetType;
@@ -20,8 +21,7 @@ import io.github.dsh105.echopet.entity.living.type.villager.VillagerPet;
 import io.github.dsh105.echopet.entity.living.type.wither.WitherPet;
 import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
-import io.github.dsh105.echopet.logger.Logger;
-import io.github.dsh105.echopet.util.EnumUtil;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.StringUtil;
 import io.github.dsh105.echopet.util.WorldUtil;

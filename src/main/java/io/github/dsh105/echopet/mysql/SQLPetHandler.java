@@ -5,7 +5,7 @@ import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -5,6 +5,7 @@ import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetDamageEvent;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.entity.living.CraftLivingPet;
+import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import net.minecraft.server.v1_7_R1.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

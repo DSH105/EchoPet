@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.util;
 
+import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.data.PetType;

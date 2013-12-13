@@ -1,6 +1,7 @@
 package io.github.dsh105.echopet.config.options;
 
-import io.github.dsh105.echopet.config.YAMLConfig;
+import io.github.dsh105.dshutils.config.YAMLConfig;
+import io.github.dsh105.dshutils.config.options.Options;
 import io.github.dsh105.echopet.entity.living.data.PetData;
 import io.github.dsh105.echopet.entity.living.data.PetType;
 import org.bukkit.Bukkit;

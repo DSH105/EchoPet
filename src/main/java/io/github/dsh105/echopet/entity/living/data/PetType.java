@@ -63,7 +63,7 @@ import io.github.dsh105.echopet.entity.living.type.wolf.EntityWolfPet;
 import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.living.type.zombie.EntityZombiePet;
 import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
-import io.github.dsh105.echopet.logger.Logger;
+import io.github.dsh105.dshutils.logger.Logger;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
