@@ -40,17 +40,6 @@ public class EntitySnowmanPet extends EntityLivingPet {
     @Override
     public void onLive() {
         super.onLive();
-
-        for (int l = 0; l < 4; ++l) {
-            int i = MathHelper.floor(this.locX + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
-            int j = MathHelper.floor(this.locY);
-            int k = MathHelper.floor(this.locZ + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
-            org.bukkit.block.BlockState blockState = this.world.getWorld().getBlockAt(j, k, l).getState();
-            if (blockState.getType().equals(Material.SNOW_LAYER)) {
-                blockState.setType(CraftMagicNumbers.getMaterial(net.minecraft.server.v1_7_R1.Blocks.AIR));
-            }
-        }
-
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             try {
                 Particle.SNOW_SHOVEL.sendTo(pet.getLocation());
