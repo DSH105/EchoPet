@@ -83,7 +83,6 @@ public class ConfigOptions extends Options {
         set("checkForUpdates", true, "If -autoUpdate- is set to false, EchoPet will notify certain", "players of new updates if they are available (if set to true).");
 
         set("sql.overrideFile", true, "If true, Pets saved to a MySQL Database will override", "those saved to a file (Default and AutoSave Pets)");
-        set("sql.timeout", 30);
         set("sql.use", false);
         set("sql.host", "localhost");
         set("sql.port", 3306);
