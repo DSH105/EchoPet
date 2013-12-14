@@ -48,7 +48,6 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
     public EntityLivingPet(World world) {
         super(world);
-        this.remove(false);
     }
 
     public EntityLivingPet(World world, LivingPet pet) {
