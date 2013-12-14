@@ -6,6 +6,7 @@ import io.github.dsh105.dshutils.Metrics;
 import io.github.dsh105.dshutils.Updater;
 import io.github.dsh105.dshutils.Version;
 import io.github.dsh105.dshutils.command.CustomCommand;
+import io.github.dsh105.dshutils.command.VersionIncompatibleCommand;
 import io.github.dsh105.dshutils.config.YAMLConfig;
 import io.github.dsh105.dshutils.config.YAMLConfigManager;
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
@@ -31,7 +32,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -79,6 +79,7 @@ public class EchoPet extends JavaPlugin {
         plugin = this;
         Logger.initiate(this, "EchoPet", "[EchoPet]");
         ConsoleLogger.initiate(this);
+        CustomCommand.initiate(this);
 
         // Make sure that the plugin is running under the correct version to prevent errors
         if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString(this))) {
@@ -87,6 +88,25 @@ public class EchoPet extends JavaPlugin {
                     + " is only compatible with:");
             ConsoleLogger.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
             ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
+
+            try {
+                Class craftServer = Class.forName("org.bukkit.craftbukkit." + ReflectionUtil.getVersionString(this) + ".CraftServer");
+                if (craftServer.isInstance(Bukkit.getServer())) {
+                    final Field f = craftServer.getDeclaredField("commandMap");
+                    f.setAccessible(true);
+                    CM = (CommandMap) f.get(Bukkit.getServer());
+                }
+                CustomCommand petCmd = new CustomCommand(cmdString);
+                CM.register("ec", petCmd);
+                petCmd.setExecutor(new VersionIncompatibleCommand(petCmd.getLabel(), prefix, ChatColor.YELLOW +
+                        "EchoPet " + ChatColor.GOLD + Version.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
+                        + ChatColor.GOLD + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion()
+                        + ChatColor.YELLOW + ". Please update the plugin.",
+                        "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."));
+            } catch (Exception e) {
+                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+            }
+
             return;
         }
 
@@ -203,10 +223,10 @@ public class EchoPet extends JavaPlugin {
         // Command string based off the string defined in config.yml
         // By default, set to 'pet'
         // PetAdmin command draws from the original, with 'admin' on the end
-        CustomCommand.initiate(this);
         try {
-            if (Bukkit.getServer() instanceof CraftServer) {
-                final Field f = CraftServer.class.getDeclaredField("commandMap");
+            Class craftServer = Class.forName("org.bukkit.craftbukkit." + ReflectionUtil.getVersionString(this) + ".CraftServer");
+            if (craftServer.isInstance(Bukkit.getServer())) {
+                final Field f = craftServer.getDeclaredField("commandMap");
                 f.setAccessible(true);
                 CM = (CommandMap) f.get(Bukkit.getServer());
             }
@@ -224,13 +244,13 @@ public class EchoPet extends JavaPlugin {
         }
         CustomCommand petCmd = new CustomCommand(cmdString);
         CM.register("ec", petCmd);
-        petCmd.setExecutor(new PetCommand(cmdString));
+        petCmd.setExecutor(new PetCommand(petCmd.getLabel()));
         petCmd.setTabCompleter(new CommandComplete());
         this.cmdString = cmdString;
 
         CustomCommand petAdminCmd = new CustomCommand(adminCmdString);
         CM.register("ec", petAdminCmd);
-        petAdminCmd.setExecutor(new PetAdminCommand(adminCmdString));
+        petAdminCmd.setExecutor(new PetAdminCommand(petAdminCmd.getLabel()));
         this.adminCmdString = adminCmdString;
 
         // Register listeners
