@@ -5,6 +5,7 @@ import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.dshutils.Metrics;
 import io.github.dsh105.dshutils.Updater;
 import io.github.dsh105.dshutils.Version;
+import io.github.dsh105.dshutils.command.CustomCommand;
 import io.github.dsh105.dshutils.config.YAMLConfig;
 import io.github.dsh105.dshutils.config.YAMLConfigManager;
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
@@ -12,7 +13,6 @@ import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.dshutils.util.ReflectionUtil;
 import io.github.dsh105.echopet.api.EchoPetAPI;
 import io.github.dsh105.echopet.commands.CommandComplete;
-import io.github.dsh105.echopet.commands.CustomCommand;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
 import io.github.dsh105.echopet.config.ConfigOptions;
@@ -203,6 +203,7 @@ public class EchoPet extends JavaPlugin {
         // Command string based off the string defined in config.yml
         // By default, set to 'pet'
         // PetAdmin command draws from the original, with 'admin' on the end
+        CustomCommand.initiate(this);
         try {
             if (Bukkit.getServer() instanceof CraftServer) {
                 final Field f = CraftServer.class.getDeclaredField("commandMap");

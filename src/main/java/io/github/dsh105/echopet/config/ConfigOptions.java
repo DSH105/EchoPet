@@ -14,7 +14,6 @@ public class ConfigOptions extends Options {
     public ConfigOptions(YAMLConfig config) {
         super(config);
         instance = this;
-        this.setDefaults();
     }
 
     public boolean allowPetType(PetType petType) {
