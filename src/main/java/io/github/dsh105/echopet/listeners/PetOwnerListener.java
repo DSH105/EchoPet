@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.dshutils.util.ReflectionUtil;
+import io.github.dsh105.dshutils.util.GeometryUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
@@ -78,7 +78,7 @@ public class PetOwnerListener implements Listener {
         while (i.hasNext()) {
             LivingPet pet = i.next();
             if (pet instanceof HumanPet && ((EntityHumanPet) pet.getEntityPet()).hasInititiated()) {
-                if (ReflectionUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
+                if (GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
                     ((EntityHumanPet) pet.getEntityPet()).updatePacket();
                 }
             }
@@ -184,7 +184,7 @@ public class PetOwnerListener implements Listener {
         while (i.hasNext()) {
             LivingPet pet = i.next();
             if (pet instanceof HumanPet && ((EntityHumanPet) pet.getEntityPet()).hasInititiated()) {
-                if (ReflectionUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
+                if (GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
                     ((EntityHumanPet) pet.getEntityPet()).updatePacket();
                 }
             }
