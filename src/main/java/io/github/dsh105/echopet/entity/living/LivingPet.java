@@ -338,12 +338,12 @@ public class LivingPet {
         if (this.mount != null) {
             this.removeMount();
         }
+        LivingPet p = pt.getNewPetInstance(owner, pt);
+        mount = p;
+        p.isMount = true;
         new BukkitRunnable() {
             public void run() {
-                LivingPet p = pt.getNewPetInstance(owner, pt);
-                mount = p;
                 craftPet.setPassenger(mount.getCraftPet());
-                p.isMount = true;
                 EchoPet.getInstance().SPH.saveToDatabase(mount, true);
             }
         }.runTaskLater(EchoPet.getInstance(), 5L);
