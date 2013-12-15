@@ -135,7 +135,7 @@ public class ConfigOptions extends Options {
             if (petType != PetType.ENDERDRAGON) {
                 boolean canFly = (petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER);
                 set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".canFly", canFly);
-                set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", canFly);
+                set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true);
             }
 
             for (PetData pd : PetData.values()) {
