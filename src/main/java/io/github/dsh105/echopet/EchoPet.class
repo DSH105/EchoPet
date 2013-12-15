@@ -59,7 +59,7 @@ public class EchoPet extends JavaPlugin {
     public PetHandler PH;
     public SQLPetHandler SPH;
     public BoneCP dbPool;
-    public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
+    public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "Pets" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
     private EchoPetAPI api;
 
