@@ -13,14 +13,8 @@ import org.bukkit.configuration.ConfigurationSection;
 public class WorldUtil {
 
     public static boolean allowPets(Location location) {
-        boolean allowRegion = allowRegion(location);
-        String worldName = location.getWorld().getName();
-        Boolean allowWorld = EchoPet.getInstance().getMainConfig().getBoolean("worlds." + worldName);
-        if (allowWorld != null) {
-            return allowWorld && allowRegion;
-        } else {
-            return EchoPet.getInstance().getMainConfig().getBoolean("worlds.enableByDefault", true) && allowRegion;
-        }
+        boolean allowWorld = EchoPet.getInstance().getMainConfig().getBoolean("worlds." + location.getWorld().getName(), EchoPet.getInstance().getMainConfig().getBoolean("worlds.enableByDefault", true));
+        return allowWorld && allowRegion(location);
     }
 
     public static boolean allowRegion(Location location) {
@@ -38,12 +32,12 @@ public class WorldUtil {
         ConfigurationSection cs = EchoPet.getInstance().getMainConfig().getConfigurationSection("worldguard.regions");
         for (ProtectedRegion region : set) {
             for (String key : cs.getKeys(false)) {
-                if (region.getId().equals(key)) {
-                    if (!hasSet) {
-                        result = EchoPet.getInstance().getMainConfig().getBoolean("worldguard.regions." + key, true);
-                        hasSet = true;
-                    } else if (result != def) {
-                        result = def;
+                if (!key.equalsIgnoreCase("allowByDefault") && !key.equalsIgnoreCase("regionEnterCheck")) {
+                    if (region.getId().equals(key)) {
+                        if (!hasSet) {
+                            result = EchoPet.getInstance().getMainConfig().getBoolean("worldguard.regions." + key, true);
+                            hasSet = true;
+                        }
                     }
                 }
             }
