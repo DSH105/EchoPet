@@ -45,10 +45,12 @@ public class SheepPet extends LivingPet implements IAgeablePet {
 
     public void setColor(DyeColor c) {
         ((EntitySheepPet) getEntityPet()).setColor(c.getWoolData());
+        this.color = c.getWoolData();
     }
 
     public void setColor(byte b) {
         ((EntitySheepPet) getEntityPet()).setColor(b);
+        this.color = b;
     }
 
 }

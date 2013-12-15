@@ -31,9 +31,11 @@ public class OcelotPet extends LivingPet implements IAgeablePet {
 
     public void setCatType(Type t) {
         setCatType(t.getId());
+        this.type = t;
     }
 
     public void setCatType(int i) {
         ((EntityOcelotPet) getEntityPet()).setCatType(i);
+        this.type = Type.getType(i);
     }
 }
