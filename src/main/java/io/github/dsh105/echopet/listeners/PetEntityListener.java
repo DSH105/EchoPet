@@ -7,6 +7,7 @@ import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import net.minecraft.server.v1_7_R1.DamageSource;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -85,8 +86,9 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onBlockForm(EntityBlockFormEvent event) {
         Entity e = event.getEntity();
-        if (e instanceof CraftLivingPet) {
+        if (e instanceof CraftLivingPet && event.getNewState().getType().equals(Material.SNOW)) {
             event.setCancelled(true);
+            event.getNewState().setType(Material.AIR);
         }
     }
 }
