@@ -1,6 +1,7 @@
 package io.github.dsh105.echopet.util;
 
 import io.github.dsh105.dshutils.util.EnumUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.PetData;
@@ -27,6 +28,7 @@ import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
 import io.github.dsh105.echopet.util.permissions.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
@@ -327,5 +329,84 @@ public class PetUtil {
         }
 
         return info;
+    }
+
+    public static ArrayList<String> getPetList(CommandSender sender, boolean petAdmin) {
+        ArrayList<String> list = new ArrayList<String>();
+        String admin = petAdmin ? "admin" : "";
+        for (PetType pt : PetType.values()) {
+            ChatColor color1 = ChatColor.GREEN;
+            ChatColor color2 = ChatColor.DARK_GREEN;
+            String separator = ", ";
+            if (sender instanceof Player) {
+
+                if (!sender.hasPermission("echopet.pet" + admin + ".type." + pt.toString().toLowerCase().replace("_", ""))) {
+                    color1 = ChatColor.RED;
+                    color2 = ChatColor.DARK_RED;
+                }
+
+                StringBuilder builder = new StringBuilder();
+
+                builder.append(color1 + "- " + StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
+
+                if (pt.getAllowedDataTypes().size() != 0) {
+                    builder.append(color2 + "    ");
+                    for (PetData data : pt.getAllowedDataTypes()) {
+                        builder.append(color2 + StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
+                        builder.append(separator);
+                    }
+                    builder.deleteCharAt(builder.length() - separator.length());
+                }
+
+                list.add(builder.toString());
+            } else {
+                StringBuilder builder = new StringBuilder();
+
+                builder.append(color1 + "- " + StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
+
+                if (pt.getAllowedDataTypes().size() != 0) {
+                    builder.append(color2 + " (");
+                    for (PetData data : pt.getAllowedDataTypes()) {
+                        builder.append(separator);
+                        builder.append(color2 + StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
+                    }
+                    builder.deleteCharAt(builder.length() - separator.length());
+                    builder.append(color2 + ")");
+                }
+
+                list.add(builder.toString().replace(" )", ")"));
+            }
+        }
+        return list;
+    }
+
+    public static String dataToString(ArrayList<PetData> data) {
+        if (data.isEmpty()) {
+            return " ";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (PetData pd : data) {
+            builder.append(pd.getConfigOptionString());
+            builder.append(", ");
+        }
+        builder.deleteCharAt(builder.length() - 2);
+        return builder.toString();
+    }
+
+    public static String dataToString(ArrayList<PetData> data, ArrayList<PetData> mountData) {
+        if (data.isEmpty()) {
+            return " ";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (PetData pd : data) {
+            builder.append(pd.getConfigOptionString());
+            builder.append(", ");
+        }
+        for (PetData pd : mountData) {
+            builder.append(pd.getConfigOptionString());
+            builder.append("(Mount), ");
+        }
+        builder.deleteCharAt(builder.length() - 2);
+        return builder.toString();
     }
 }

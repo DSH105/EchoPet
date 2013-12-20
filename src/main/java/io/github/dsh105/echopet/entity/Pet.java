@@ -8,7 +8,7 @@ import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;

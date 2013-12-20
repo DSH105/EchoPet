@@ -19,7 +19,7 @@ import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
-import io.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import net.minecraft.server.v1_7_R1.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;

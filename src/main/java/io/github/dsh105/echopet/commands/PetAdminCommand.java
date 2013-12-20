@@ -15,7 +15,7 @@ import io.github.dsh105.echopet.util.permissions.Perm;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.PetUtil;
-import io.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -74,7 +74,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("list")) {
                 if (Perm.ADMIN.hasPerm(sender, true, true)) {
                     sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
-                    for (String s : StringUtil.getPetList(sender, true)) {
+                    for (String s : PetUtil.getPetList(sender, true)) {
                         sender.sendMessage(s);
                     }
                     return true;

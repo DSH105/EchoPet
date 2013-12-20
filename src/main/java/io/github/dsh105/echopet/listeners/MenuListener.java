@@ -19,6 +19,7 @@ import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.permissions.Perm;
 import io.github.dsh105.echopet.util.*;
+import io.github.dsh105.dshutils.util.StringUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -13,6 +13,7 @@ import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.util.permissions.Perm;
 import io.github.dsh105.echopet.util.*;
+import io.github.dsh105.dshutils.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -255,7 +256,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("list")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
                     sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
-                    for (String s : StringUtil.getPetList(sender, false)) {
+                    for (String s : PetUtil.getPetList(sender, false)) {
                         sender.sendMessage(s);
                     }
                     return true;

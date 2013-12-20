@@ -8,7 +8,7 @@ import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.Menu;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 

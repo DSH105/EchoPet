@@ -24,7 +24,8 @@ import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.StringUtil;
+import io.github.dsh105.echopet.util.PetUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -210,9 +211,9 @@ public class PetHandler {
         if ((Boolean) ec.options.getConfigOption("sendForceMessage", true)) {
             String dataToString = " ";
             if (!tempMountData.isEmpty()) {
-                dataToString = StringUtil.dataToString(tempData);
+                dataToString = PetUtil.dataToString(tempData);
             } else {
-                dataToString = StringUtil.dataToString(tempData, tempMountData);
+                dataToString = PetUtil.dataToString(tempData, tempMountData);
             }
             if (dataToString != " ") {
                 Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
