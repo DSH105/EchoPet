@@ -130,9 +130,9 @@ public class EntityHorsePet extends EntityAgeablePet {
     }
 
     @Override
-    public void e(float f, float f1) {
-        super.e(f, f1);
-        if (f1 <= 0.0F) {
+    public void e(float sideMot, float forwMot) {
+        super.e(sideMot, forwMot);
+        if (forwMot <= 0.0F) {
             this.bP = 0;
         }
     }

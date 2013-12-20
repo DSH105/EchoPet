@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.menu.main;
 
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
+import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.Menu;
 import io.github.dsh105.echopet.util.StringUtil;
@@ -13,9 +14,9 @@ import org.bukkit.inventory.Inventory;
 public class DataMenu implements Menu {
 
     Inventory inv;
-    private LivingPet pet;
+    private Pet pet;
 
-    public DataMenu(MenuItem mi, LivingPet pet) {
+    public DataMenu(MenuItem mi, Pet pet) {
         this.pet = pet;
         int size = mi == MenuItem.COLOR ? 18 : 9;
         this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu - " + StringUtil.capitalise(mi.toString().replace("_", " ")));
@@ -23,7 +24,7 @@ public class DataMenu implements Menu {
     }
 
     public void open(boolean sendMessage) {
-        PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet, PetMenuOpenEvent.MenuType.DATA);
+        PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.DATA);
         EchoPet.getInstance().getServer().getPluginManager().callEvent(menuEvent);
         if (menuEvent.isCancelled()) {
             return;

@@ -3,7 +3,8 @@ package io.github.dsh105.echopet.menu.main;
 import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
-import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.Menu;
 import io.github.dsh105.echopet.util.Lang;
@@ -18,10 +19,10 @@ public class PetMenu implements Menu {
 
     Inventory inv;
     private int size;
-    private LivingPet pet;
+    private Pet pet;
     private ArrayList<MenuOption> options = new ArrayList<MenuOption>();
 
-    public PetMenu(LivingPet pet, ArrayList<MenuOption> options, int size) {
+    public PetMenu(Pet pet, ArrayList<MenuOption> options, int size) {
         this.pet = pet;
         this.size = size;
         this.inv = Bukkit.createInventory(pet.getOwner(), size, "EchoPet DataMenu");
@@ -31,14 +32,14 @@ public class PetMenu implements Menu {
                 MenuItem mi = o.item;
                 if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
                     PetData pd = PetData.valueOf(mi.toString());
-                    if (pet.getActiveData().contains(pd)) {
+                    if (pet.getPetData().contains(pd)) {
                         this.inv.setItem(o.position, o.item.getBoolean(false));
                     } else {
                         this.inv.setItem(o.position, o.item.getBoolean(true));
                     }
                 } else {
                     if (mi.toString().equals("HAT")) {
-                        if (pet.isPetHat()) {
+                        if (pet.isHat()) {
                             this.inv.setItem(o.position, o.item.getBoolean(false));
                         } else {
                             this.inv.setItem(o.position, o.item.getBoolean(true));
@@ -61,7 +62,7 @@ public class PetMenu implements Menu {
     }
 
     public void open(boolean sendMessage) {
-        PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet, PetMenuOpenEvent.MenuType.MAIN);
+        PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.MAIN);
         EchoPet.getInstance().getServer().getPluginManager().callEvent(menuEvent);
         if (menuEvent.isCancelled()) {
             return;

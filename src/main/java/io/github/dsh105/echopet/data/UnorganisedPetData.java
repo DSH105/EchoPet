@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.data;
 
-import io.github.dsh105.echopet.entity.living.data.PetData;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetType;
 
 import java.util.ArrayList;
 

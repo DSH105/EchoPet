@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.entity.Pet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -11,49 +11,49 @@ public class PetMoveEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private LivingPet pet;
+    private Pet pet;
     private Location from;
     private Location to;
 
-    public PetMoveEvent(LivingPet pet, Location from, Location to) {
+    public PetMoveEvent(Pet pet, Location from, Location to) {
         this.pet = pet;
         this.from = from;
         this.to = to;
     }
 
     /**
-     * Gets the Location this LivingPet moved to
+     * Gets the {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.entity.Pet} moved to
      *
-     * @return Location moved to
+     * @return {@link org.bukkit.Location} moved to
      */
     public Location getTo() {
         return this.to;
     }
 
     /**
-     * Gets the Location this LivingPet moved from
+     * Gets the {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.entity.Pet} moved from
      *
-     * @return Location moved from
+     * @return {@link org.bukkit.Location} moved from
      */
     public Location getFrom() {
         return this.from;
     }
 
     /**
-     * Sets the location that this LivingPet will move to
+     * Sets the {@link org.bukkit.Location} that this {@link io.github.dsh105.echopet.entity.Pet} will move to
      *
-     * @param to New Location this LivingPet will move to
+     * @param to new {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.entity.Pet} will move to
      */
     public void setTo(Location to) {
         this.to = to;
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.Pet} involved
      */
-    public LivingPet getPet() {
+    public Pet getPet() {
         return this.pet;
     }
 

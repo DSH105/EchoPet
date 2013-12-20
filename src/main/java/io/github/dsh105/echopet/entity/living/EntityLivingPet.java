@@ -7,7 +7,7 @@ import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.IEntityPet;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoalSelector;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFollowOwner;
@@ -30,7 +30,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class EntityLivingPet extends EntityCreature implements IMonster,IEntityPet {
+public abstract class EntityLivingPet extends EntityCreature implements IEntityPet {
 
     public boolean vnp;
 
@@ -59,6 +59,7 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             this.setHealth((float) pet.getPetType().getMaxHealth());
             this.jumpHeight = EchoPet.getInstance().options.getRideJumpHeight(this.getPet().getPetType());
             this.rideSpeed = EchoPet.getInstance().options.getRideSpeed(this.getPet().getPetType());
+            //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
             this.jump = EntityLiving.class.getDeclaredField("bd");
             this.jump.setAccessible(true);
             setPathfinding();
@@ -66,6 +67,28 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityLivingPet.", e, true);
             this.remove(false);
         }
+    }
+
+    public LivingPet getPet() {
+        return this.pet;
+    }
+
+    public Player getOwner() {
+        return pet.getOwner();
+    }
+
+    public Location getLocation() {
+        return this.pet.getLocation();
+    }
+
+    @Override
+    public boolean vnp() {
+        return this.vnp;
+    }
+
+    @Override
+    public void setVnp(boolean flag) {
+        this.vnp = flag;
     }
 
     public Random random() {
@@ -108,19 +131,6 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         }
     }
 
-    public LivingPet getPet() {
-        return this.pet;
-    }
-
-    public Player getOwner() {
-        return pet.getOwner();
-    }
-
-    public Location getLocation() {
-        //return new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
-        return this.pet.getLocation();
-    }
-
     // EntityInsentient
     @Override
     public boolean bk() {
@@ -134,24 +144,6 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         }
         return this.bukkitEntity;
     }
-
-    // EntityInsentient
-    @Override
-    protected String t() {
-        return this.getIdleSound();
-    }
-
-    // EntityInsentient
-    @Override
-    protected String aU() {
-        return this.getDeathSound();
-    }
-
-    protected abstract String getIdleSound(); //idle sound
-
-    protected abstract String getDeathSound(); //death sound
-
-    public abstract SizeCategory getSizeCategory();
 
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
     @Override
@@ -201,21 +193,82 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         makeSound(this.getDeathSound(), 1.0F, 1.0F);
     }
 
+    public void onLive() {
+        if (this.getOwner() == null || !this.getOwner().isOnline() || Bukkit.getPlayerExact(this.getOwner().getName()) == null) {
+            PetHandler.getInstance().removePet(this.getPet(), true);
+        }
+
+        if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible() && !this.vnp) {
+            this.setInvisible(!this.isInvisible());
+        }
+
+        if (this.isInvisible()) {
+            try {
+                Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getOwner());
+                Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getOwner());
+            } catch (Exception e) {
+            }
+        }
+
+        if (((CraftPlayer) this.getOwner()).getHandle().isSneaking() != this.isSneaking()) {
+            this.setSneaking(!this.isSneaking());
+        }
+
+        if (((CraftPlayer) this.getOwner()).getHandle().isSprinting() != this.isSprinting()) {
+            this.setSprinting(!this.isSprinting());
+        }
+
+        if (this.getPet().isHat()) {
+
+            this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getOwner().getLocation().getYaw() - 180 : this.getOwner().getLocation().getYaw());
+        }
+
+        if (this.particle == this.particleCounter) {
+            this.particle = 0;
+            this.particleCounter = this.random.nextInt(50);
+        } else {
+            this.particle++;
+        }
+
+        if (this.getOwner().isFlying() && EchoPet.getInstance().options.canFly(this.getPet().getPetType())) {
+            Location petLoc = this.getLocation();
+            Location ownerLoc = this.getOwner().getLocation();
+            Vector v = ownerLoc.toVector().subtract(petLoc.toVector());
+
+            double x = v.getX();
+            double y = v.getY();
+            double z = v.getZ();
+
+            Vector vo = this.getOwner().getLocation().getDirection();
+            if (vo.getX() > 0) {
+                x = x - 1.5;
+            } else if (vo.getX() < 0) {
+                x = x + 1.5;
+            }
+            if (vo.getZ() > 0) {
+                z = z - 1.5;
+            } else if (vo.getZ() < 0) {
+                z = z + 1.5;
+            }
+
+            this.motX = x *= 0.3;
+            this.motY = y *= 0.3;
+            this.motZ = z *= 0.3;
+        }
+    }
+
     // EntityInsentient
     @Override
-    public void e(float f, float f1) { //f = sidewards, f1 = forwards/backwards
-
-        // Can only jump over half slabs if the rider is not the owner
-        // I like this idea
-        // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityHorse.java#L914
+    public void e(float sideMot, float forwMot) {
         if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
-            super.e(f, f1);
+            super.e(sideMot, forwMot);
+            // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityHorse.java#L914
             this.X = 0.5F;
             return;
         }
         EntityHuman human = (EntityHuman) this.passenger;
         if (human.getBukkitEntity() != this.getOwner().getPlayer()) {
-            super.e(f, f1);
+            super.e(sideMot, forwMot);
             this.X = 0.5F;
             return;
         }
@@ -227,15 +280,15 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
         this.b(this.yaw, this.pitch);
         this.aP = this.aN = this.yaw;
 
-        f = ((EntityLiving) this.passenger).be * 0.5F;
-        f1 = ((EntityLiving) this.passenger).bf;
+        sideMot = ((EntityLiving) this.passenger).be * 0.5F;
+        forwMot = ((EntityLiving) this.passenger).bf;
 
-        if (f1 <= 0.0F) {
-            f1 *= 0.25F;
+        if (forwMot <= 0.0F) {
+            forwMot *= 0.25F;
         }
-        f *= 0.75F;
+        sideMot *= 0.75F;
 
-        PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), f1, f);
+        PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forwMot, sideMot);
         EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
         if (moveEvent.isCancelled()) {
             return;
@@ -243,8 +296,6 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
 
         this.i(this.rideSpeed);
         super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
-
-        //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
 
         PetType pt = this.getPet().getPetType();
         if (jump != null) {
@@ -278,6 +329,24 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
             }
         }
     }
+
+    // EntityInsentient
+    @Override
+    protected String t() {
+        return this.getIdleSound();
+    }
+
+    // EntityInsentient
+    @Override
+    protected String aU() {
+        return this.getDeathSound();
+    }
+
+    protected abstract String getIdleSound(); //idle sound
+
+    protected abstract String getDeathSound(); //death sound
+
+    public abstract SizeCategory getSizeCategory();
 
     // Entity
     @Override
@@ -318,69 +387,5 @@ public abstract class EntityLivingPet extends EntityCreature implements IMonster
     }
 
     protected void makeStepSound() {
-    }
-
-    public void onLive() {
-        if (this.getOwner() == null || !this.getOwner().isOnline() || Bukkit.getPlayerExact(this.getOwner().getName()) == null) {
-            PetHandler.getInstance().removePet(this.getPet(), true);
-        }
-
-        if (((CraftPlayer) this.getOwner()).getHandle().isInvisible() != this.isInvisible() && !this.vnp) {
-            this.setInvisible(!this.isInvisible());
-        }
-
-        if (this.isInvisible()) {
-            try {
-                Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getOwner());
-                Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getOwner());
-            } catch (Exception e) {
-            }
-        }
-
-        if (((CraftPlayer) this.getOwner()).getHandle().isSneaking() != this.isSneaking()) {
-            this.setSneaking(!this.isSneaking());
-        }
-
-        if (((CraftPlayer) this.getOwner()).getHandle().isSprinting() != this.isSprinting()) {
-            this.setSprinting(!this.isSprinting());
-        }
-
-        if (this.getPet().isPetHat()) {
-
-            this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getOwner().getLocation().getYaw() - 180 : this.getOwner().getLocation().getYaw());
-        }
-
-        if (this.particle == this.particleCounter) {
-            this.particle = 0;
-            this.particleCounter = this.random.nextInt(50);
-        } else {
-            this.particle++;
-        }
-
-        if (this.getOwner().isFlying() && EchoPet.getInstance().options.canFly(this.getPet().getPetType())) {
-            Location petLoc = this.getLocation();
-            Location ownerLoc = this.getOwner().getLocation();
-            Vector v = ownerLoc.toVector().subtract(petLoc.toVector());
-
-            double x = v.getX();
-            double y = v.getY();
-            double z = v.getZ();
-
-            Vector vo = this.getOwner().getLocation().getDirection();
-            if (vo.getX() > 0) {
-                x = x - 1.5;
-            } else if (vo.getX() < 0) {
-                x = x + 1.5;
-            }
-            if (vo.getZ() > 0) {
-                z = z - 1.5;
-            } else if (vo.getZ() < 0) {
-                z = z + 1.5;
-            }
-
-            this.motX = x *= 0.3;
-            this.motY = y *= 0.3;
-            this.motZ = z *= 0.3;
-        }
     }
 }

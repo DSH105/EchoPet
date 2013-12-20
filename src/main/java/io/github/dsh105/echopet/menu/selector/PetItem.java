@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.menu.selector;
 
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.util.PetUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.material.MaterialData;
 
 
 public enum PetItem {

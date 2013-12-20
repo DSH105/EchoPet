@@ -1,21 +1,26 @@
 package io.github.dsh105.echopet.api.event;
 
+import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Called when a {@link Player} interacts with a {@link io.github.dsh105.echopet.entity.Pet}
+ */
+
 public class PetInteractEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private LivingPet pet;
+    private Pet pet;
     private Player player;
     private Action action;
 
-    public PetInteractEvent(LivingPet pet, Player player, Action action, boolean cancelledByDefault) {
+    public PetInteractEvent(Pet pet, Player player, Action action, boolean cancelledByDefault) {
         this.pet = pet;
         this.action = action;
         this.player = player;
@@ -23,16 +28,16 @@ public class PetInteractEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.Pet} involved
      */
-    public LivingPet getPet() {
+    public Pet getPet() {
         return this.pet;
     }
 
     /**
-     * Gets the player that interated with the LivingPet
+     * Gets the player that interacted with the LivingPet
      *
      * @return
      */
@@ -41,16 +46,16 @@ public class PetInteractEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the action executed by the {@link Player}
+     * Gets the action executed by the {@link org.bukkit.entity.Player}
      *
-     * @return the {@link Action} of the event
+     * @return the {@link io.github.dsh105.echopet.api.event.PetInteractEvent.Action} of the event
      */
     public Action getAction() {
         return this.action;
     }
 
     /**
-     * Returns whether the {@link Player} that interacted was the LivingPet's owner
+     * Returns whether the {@link org.bukkit.entity.Player} that interacted was the Pet's owner
      *
      * @return true if it is the owner
      */

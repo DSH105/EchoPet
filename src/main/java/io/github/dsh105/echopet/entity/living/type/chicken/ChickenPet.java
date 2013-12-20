@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.chicken;
 
 
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
 import org.bukkit.entity.Player;
 

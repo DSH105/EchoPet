@@ -1,10 +1,10 @@
 package io.github.dsh105.echopet.mysql;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.living.data.PetType;
-import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.util.SQLUtil;
 import org.bukkit.Bukkit;
@@ -56,7 +56,7 @@ public class SQLPetHandler {
         }
     }
 
-    public void saveToDatabase(LivingPet p, boolean isMount) {
+    public void saveToDatabase(Pet p, boolean isMount) {
         if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -78,10 +78,10 @@ public class SQLPetHandler {
 
                     ps.setString(1, p.getOwner().getName());
                     ps.setString(2, p.getPetType().toString());
-                    ps.setString(3, p.getPetName());
+                    ps.setString(3, p.getName());
                     ps.executeUpdate();
 
-                    this.updateDatabase(p.getOwner(), p.getActiveData(), true, isMount);
+                    this.updateDatabase(p.getOwner(), p.getPetData(), true, isMount);
 
                     this.saveToDatabase(p.getMount(), true);
 
@@ -100,12 +100,12 @@ public class SQLPetHandler {
         }
     }
 
-    public LivingPet createPetFromDatabase(Player p) {
+    public Pet createPetFromDatabase(Player p) {
         if (EchoPet.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
 
-            LivingPet pet = null;
+            Pet pet = null;
             Player owner;
             PetType pt;
             String name;
@@ -162,7 +162,7 @@ public class SQLPetHandler {
                                 }
                             }
 
-                            LivingPet mount = pet.createMount(mt, false);
+                            Pet mount = pet.createMount(mt, false);
                             if (mount != null) {
                                 mount.setName(mName);
                                 PetData[] MDT = createArray(map, true);

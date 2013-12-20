@@ -3,9 +3,10 @@ package io.github.dsh105.echopet.listeners;
 import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.menu.main.DataMenu;
@@ -67,7 +68,7 @@ public class MenuListener implements Listener {
                     }
                     String cmd = EchoPet.getInstance().cmdString;
                     if (inv.getItem(slot).equals(SelectorItem.TOGGLE.getItem())) {
-                        LivingPet pet = EchoPet.getInstance().PH.getPet(player);
+                        Pet pet = EchoPet.getInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.BASE_HIDE.hasPerm(player, true, false)) {
                                 player.performCommand(cmd + " hide");
@@ -87,7 +88,7 @@ public class MenuListener implements Listener {
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.RIDE.getItem())) {
-                        LivingPet pet = EchoPet.getInstance().PH.getPet(player);
+                        Pet pet = EchoPet.getInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_RIDE, pet.getPetType())) {
                                 player.performCommand(cmd + " ride");
@@ -96,7 +97,7 @@ public class MenuListener implements Listener {
                         }
                     }
                     if (inv.getItem(slot).equals(SelectorItem.HAT.getItem())) {
-                        LivingPet pet = EchoPet.getInstance().PH.getPet(player);
+                        Pet pet = EchoPet.getInstance().PH.getPet(player);
                         if (pet != null) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, pet.getPetType())) {
                                 player.performCommand(cmd + " hat");
@@ -113,7 +114,7 @@ public class MenuListener implements Listener {
                     for (PetItem i : PetItem.values()) {
                         if (inv.getItem(slot).equals(i.getItem(player))) {
                             if (Perm.hasTypePerm(player, true, Perm.BASE_PETTYPE, i.petType)) {
-                                LivingPet pet = PetHandler.getInstance().createPet(player, i.petType, true);
+                                Pet pet = PetHandler.getInstance().createPet(player, i.petType, true);
                                 if (pet != null) {
                                     PetHandler.getInstance().saveFileData("autosave", pet);
                                     SQLPetHandler.getInstance().saveToDatabase(pet, false);
@@ -133,7 +134,7 @@ public class MenuListener implements Listener {
         }
 
 
-        final LivingPet pet = EchoPet.getInstance().PH.getPet(player);
+        final Pet pet = EchoPet.getInstance().PH.getPet(player);
         if (pet == null) {
             return;
         }
@@ -155,7 +156,7 @@ public class MenuListener implements Listener {
                                 if (EnumUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
                                     PetData pd = PetData.valueOf(mi.toString());
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd)) {
-                                        if (pet.getActiveData().contains(pd)) {
+                                        if (pet.getPetData().contains(pd)) {
                                             PetHandler.getInstance().setData(pet, pd, false);
                                             try {
                                                 Particle.RED_SMOKE.sendTo(pet.getLocation());
@@ -172,7 +173,7 @@ public class MenuListener implements Listener {
                                 } else {
                                     if (mi.toString().equals("HAT")) {
                                         if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, pet.getPetType())) {
-                                            if (!pet.isPetHat()) {
+                                            if (!pet.isHat()) {
                                                 pet.setAsHat(true);
                                                 Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
                                             } else {

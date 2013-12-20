@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.api.event;
 
+import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -10,22 +11,22 @@ public class PetRideMoveEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private LivingPet pet;
+    private Pet pet;
     private float forwardSpeed;
     private float sidewardSpeed;
 
-    public PetRideMoveEvent(LivingPet pet, float forwardSpeed, float sidewardSpeed) {
+    public PetRideMoveEvent(Pet pet, float forwardSpeed, float sidewardSpeed) {
         this.pet = pet;
         this.forwardSpeed = forwardSpeed;
         this.sidewardSpeed = sidewardSpeed;
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.entity.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.entity.living.LivingPet} involved
+     * @return the {@link io.github.dsh105.echopet.entity.Pet} involved
      */
-    public LivingPet getPet() {
+    public Pet getPet() {
         return this.pet;
     }
 

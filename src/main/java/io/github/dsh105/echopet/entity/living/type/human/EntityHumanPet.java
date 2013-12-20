@@ -42,7 +42,7 @@ public class EntityHumanPet extends EntityLivingPet {
     }
 
     private void createPacket() {
-        this.profile = new GameProfile(this.id + "", this.pet.getPetName());
+        this.profile = new GameProfile(this.id + "", this.pet.getName());
         try {
             ReflectionUtil.setValue(this.packet, "a", this.id);
             ReflectionUtil.setValue(this.packet, "b", this.profile);
@@ -62,7 +62,7 @@ public class EntityHumanPet extends EntityLivingPet {
         this.dw.watch(0, (Object) (byte) this.b0/*(this.isInvisible() ? 32 : this.isSneaking() ? 2 : this.isSprinting() ? 8 : 0)*/);
         this.dw.watch(1, (Object) (short) 0);
         this.dw.watch(8, (Object) (byte) 0);
-        this.dw.watch(10, (Object) (String) this.pet.getPetName());
+        this.dw.watch(10, (Object) (String) this.pet.getName());
         try {
             this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
             ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.metaPacket);

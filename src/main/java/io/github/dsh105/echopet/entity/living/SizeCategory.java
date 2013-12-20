@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.living;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 
 public enum SizeCategory {
 

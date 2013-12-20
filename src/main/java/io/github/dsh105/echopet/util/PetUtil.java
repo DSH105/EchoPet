@@ -2,8 +2,9 @@ package io.github.dsh105.echopet.util;
 
 import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.living.data.PetData;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
@@ -215,10 +216,10 @@ public class PetUtil {
         }
     }
 
-    public static ArrayList<String> generatePetInfo(LivingPet pt) {
+    public static ArrayList<String> generatePetInfo(Pet pt) {
         ArrayList<String> info = new ArrayList<String>();
         info.add(ChatColor.GOLD + " - Pet Type: " + ChatColor.YELLOW + StringUtil.capitalise(pt.getPetType().toString()));
-        info.add(ChatColor.GOLD + " - Name: " + ChatColor.YELLOW + pt.getPetName());
+        info.add(ChatColor.GOLD + " - Name: " + ChatColor.YELLOW + pt.getName());
         if (pt instanceof IAgeablePet) {
             info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + ((IAgeablePet) pt).isBaby());
         }
@@ -238,7 +239,7 @@ public class PetUtil {
         return info;
     }
 
-    public static ArrayList<String> generatePetDataInfo(LivingPet pt) {
+    public static ArrayList<String> generatePetDataInfo(Pet pt) {
         ArrayList<String> info = new ArrayList<String>();
         if (pt.getPetType() == PetType.BLAZE) {
             info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + ((BlazePet) pt).isOnFire());

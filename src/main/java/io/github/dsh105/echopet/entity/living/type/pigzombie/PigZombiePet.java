@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity.living.type.pigzombie;
 
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.entity.Player;
 

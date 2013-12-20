@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.living.type.wolf;
 
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import net.minecraft.server.v1_7_R1.BlockCloth;
 import net.minecraft.server.v1_7_R1.MathHelper;
@@ -30,7 +30,7 @@ public class EntityWolfPet extends EntityAgeablePet {
 
     public void setTamed(boolean flag) {
         if (isAngry() && flag) {
-            this.getPet().getActiveData().remove(PetData.ANGRY);
+            this.getPet().getPetData().remove(PetData.ANGRY);
         }
 
         byte b0 = this.datawatcher.getByte(16);
@@ -44,7 +44,7 @@ public class EntityWolfPet extends EntityAgeablePet {
 
     public void setAngry(boolean flag) {
         if (isTamed() && flag) {
-            this.getPet().getActiveData().remove(PetData.TAMED);
+            this.getPet().getPetData().remove(PetData.TAMED);
         }
 
         byte b0 = this.datawatcher.getByte(16);

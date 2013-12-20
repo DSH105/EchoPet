@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.living;
 
+import io.github.dsh105.echopet.entity.ICraftPet;
 import net.minecraft.server.v1_7_R1.EntityCreature;
 import net.minecraft.server.v1_7_R1.EntityLiving;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
@@ -8,14 +9,20 @@ import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Vehicle;
 
-public class CraftLivingPet extends CraftCreature {
+public class CraftLivingPet extends CraftCreature implements ICraftPet {
 
     private EntityLivingPet entityPet;
 
     public CraftLivingPet(CraftServer server, EntityLivingPet entity) {
         super(server, entity);
         this.entityPet = entity;
+    }
+
+    @Override
+    public EntityLivingPet getHandle() {
+        return this.entityPet;
     }
 
     @Override

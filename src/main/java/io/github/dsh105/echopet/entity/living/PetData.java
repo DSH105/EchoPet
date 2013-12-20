@@ -1,4 +1,4 @@
-package io.github.dsh105.echopet.entity.living.data;
+package io.github.dsh105.echopet.entity.living;
 
 import java.util.ArrayList;
 

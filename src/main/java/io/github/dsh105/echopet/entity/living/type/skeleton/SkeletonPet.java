@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.living.type.skeleton;
 
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import org.bukkit.entity.Player;
 
 

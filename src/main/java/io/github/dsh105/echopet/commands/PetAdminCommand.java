@@ -1,9 +1,10 @@
 package io.github.dsh105.echopet.commands;
 
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.living.data.PetData;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.menu.main.MenuOption;
@@ -91,7 +92,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    LivingPet pet = PetHandler.getInstance().getPet(target);
+                    Pet pet = PetHandler.getInstance().getPet(target);
 
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -115,7 +116,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    LivingPet pet = PetHandler.getInstance().getPet(target);
+                    Pet pet = PetHandler.getInstance().getPet(target);
 
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -135,7 +136,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    LivingPet pet = PetHandler.getInstance().getPet(target);
+                    Pet pet = PetHandler.getInstance().getPet(target);
 
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_HIDDEN_PET.toString());
@@ -156,7 +157,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    LivingPet pet = PetHandler.getInstance().getPet(target);
+                    Pet pet = PetHandler.getInstance().getPet(target);
 
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -206,7 +207,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    LivingPet pet = PetHandler.getInstance().getPet(target);
+                    Pet pet = PetHandler.getInstance().getPet(target);
 
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -253,7 +254,7 @@ public class PetAdminCommand implements CommandExecutor {
                             return true;
                         }
                     } else {
-                        LivingPet pet = PetHandler.getInstance().getPet(target);
+                        Pet pet = PetHandler.getInstance().getPet(target);
 
                         if (pet == null) {
                             Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -277,15 +278,15 @@ public class PetAdminCommand implements CommandExecutor {
                     Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                     return true;
                 }
-                LivingPet pet = PetHandler.getInstance().getPet(target);
+                Pet pet = PetHandler.getInstance().getPet(target);
 
                 if (pet == null) {
                     Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
                     return true;
                 }
                 if (Perm.hasTypePerm(sender, true, Perm.ADMIN_HAT, true, pet.getPetType())) {
-                    pet.setAsHat(!pet.isPetHat());
-                    if (pet.isPetHat()) {
+                    pet.setAsHat(!pet.isHat());
+                    if (pet.isHat()) {
                         Lang.sendTo(target, Lang.HAT_PET_ON.toString());
                         Lang.sendTo(sender, Lang.ADMIN_HAT_PET_ON.toString().replace("%player%", target.getName()));
                     } else {
@@ -302,7 +303,7 @@ public class PetAdminCommand implements CommandExecutor {
                     Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                     return true;
                 }
-                LivingPet pet = PetHandler.getInstance().getPet(target);
+                Pet pet = PetHandler.getInstance().getPet(target);
 
                 if (pet == null) {
                     Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -339,7 +340,7 @@ public class PetAdminCommand implements CommandExecutor {
                 }
 
                 if (Perm.hasTypePerm(sender, true, Perm.ADMIN_PETTYPE, true, petType)) {
-                    LivingPet pet = ec.PH.createPet(target, petType, true);
+                    Pet pet = ec.PH.createPet(target, petType, true);
                     if (pet == null) {
                         return true;
                     }
@@ -390,7 +391,7 @@ public class PetAdminCommand implements CommandExecutor {
                             Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                             return true;
                         }
-                        LivingPet pet = PetHandler.getInstance().getPet(target);
+                        Pet pet = PetHandler.getInstance().getPet(target);
 
                         if (pet == null) {
                             Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -485,7 +486,7 @@ public class PetAdminCommand implements CommandExecutor {
                                 return true;
                             }
                         } else {
-                            LivingPet pet = PetHandler.getInstance().getPet(target);
+                            Pet pet = PetHandler.getInstance().getPet(target);
 
                             if (pet == null) {
                                 Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -514,7 +515,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    LivingPet pet = PetHandler.getInstance().getPet(target);
+                    Pet pet = PetHandler.getInstance().getPet(target);
 
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -539,7 +540,7 @@ public class PetAdminCommand implements CommandExecutor {
                     }
 
                     if (Perm.hasTypePerm(sender, true, Perm.ADMIN_PETTYPE, true, petType)) {
-                        LivingPet mount = pet.createMount(petType, true);
+                        Pet mount = pet.createMount(petType, true);
                         if (mount == null) {
                             return true;
                         }
@@ -587,7 +588,7 @@ public class PetAdminCommand implements CommandExecutor {
                 }
 
                 if (Perm.hasTypePerm(sender, true, Perm.ADMIN_PETTYPE, true, petType) && Perm.hasTypePerm(sender, true, Perm.ADMIN_PETTYPE, true, mountType)) {
-                    LivingPet pi = ec.PH.createPet(target, petType, mountType, true);
+                    Pet pi = ec.PH.createPet(target, petType, mountType, true);
                     if (pi == null) {
                         return true;
                     }
@@ -637,7 +638,7 @@ public class PetAdminCommand implements CommandExecutor {
                         return true;
                     }
 
-                    LivingPet pet = ec.PH.getPet(target);
+                    Pet pet = ec.PH.getPet(target);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
                         return true;
@@ -671,7 +672,7 @@ public class PetAdminCommand implements CommandExecutor {
                         return true;
                     }
 
-                    LivingPet pet = ec.PH.getPet(target);
+                    Pet pet = ec.PH.getPet(target);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
                         return true;
