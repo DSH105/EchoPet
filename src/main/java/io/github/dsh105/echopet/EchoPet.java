@@ -32,6 +32,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -258,6 +259,66 @@ public class EchoPet extends JavaPlugin {
         manager.registerEvents(new PetEntityListener(), this);
         manager.registerEvents(new PetOwnerListener(), this);
         manager.registerEvents(new ChunkListener(), this);
+
+        // Register perms. This could really be done a lot better...
+        String[] permissions = new String[] {"remove", "list", "info", "menu", "show", "hide", "call", "name", "select", "selector"};
+        HashMap<Permission, Boolean> perms = new HashMap<Permission, Boolean>();
+        String[] type = new String[] {"pet", "petadmin"};
+        for (int i = 0; i <= 1; i++) {
+            String s = type[i];
+            boolean admin = i == 1;
+            for (PetType pt : PetType.values()) {
+                Permission p0 = new Permission("echopet." + s + ".type." + pt.toString().toLowerCase());
+                perms.put(p0, admin);
+                p0.addParent("echopet." + s + ".type.*", true);
+
+                Permission p1 = new Permission("echopet." + s + ".ride." + pt.toString().toLowerCase());
+                perms.put(p1, admin);
+                p1.addParent("echopet." + s + ".ride.*", true);
+
+                Permission p2 = new Permission("echopet." + s + ".hat." + pt.toString().toLowerCase());
+                perms.put(p2, admin);
+                p2.addParent("echopet.pet." + s + ".ride.*", true);
+
+                Permission p3 = new Permission("echopet." + s + ".default.set.type." + pt.toString().toLowerCase());
+                perms.put(p3, admin);
+                p3.addParent("echopet." + s + ".default.set.type.*", true);
+
+                for (PetData data : PetData.values()) {
+                    if (pt.isDataAllowed(data)) {
+                        Permission child = new Permission("echopet." + s + ".type." + pt.toString().toLowerCase() + "." + data.getConfigOptionString().toLowerCase());
+                        child.addParent("echopet." + s + ".type." + pt.toString().toLowerCase() + ".*", true);
+                        perms.put(child, admin);
+                    }
+                }
+            }
+            Permission d0 = new Permission("echopet." + s + ".default.set.current");
+            d0.addParent("echopet." + s + ".default.*", true);
+            Permission d1 = new Permission("echopet." + s + ".default.remove");
+            perms.put(d0, admin);
+            d1.addParent("echopet." + s + ".default.*", true);
+            perms.put(d1, admin);
+
+            for (String str : permissions) {
+                perms.put(new Permission("echopet." + s + "." + str), admin);
+            }
+        }
+        Permission p0 = new Permission("echopet.petadmin.reload");
+        perms.put(p0, true);
+        Permission p1 = new Permission("echopet.petadmin");
+        perms.put(p1, true);
+        Permission p2 = new Permission("echopet.pet");
+        perms.put(p2, false);
+        for (Map.Entry<Permission, Boolean> entry : perms.entrySet()) {
+            Permission p = entry.getKey();
+            p.addParent("echopet.*", true);
+            if (entry.getValue()) {
+                p.addParent("echopet.petadmin.*", true);
+            } else {
+                p.addParent("echopet.pet.*", true);
+            }
+            manager.addPermission(p);
+        }
 
         if (Hook.getVNP() != null) {
             manager.registerEvents(new VanishListener(), this);

@@ -1,7 +1,9 @@
 package io.github.dsh105.echopet.util.permissions;
 
-import io.github.dsh105.echopet.entity.living.data.PetData;
-import io.github.dsh105.echopet.entity.living.data.PetType;
+import io.github.dsh105.dshutils.logger.ConsoleLogger;
+import io.github.dsh105.dshutils.logger.Logger;
+import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.util.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -98,53 +100,42 @@ public enum Perm {
 
     public boolean hasPerm(Player player, boolean sendMessage) {
         boolean hasRequiredPerm = this.requiredPerm.equalsIgnoreCase("") ? true : player.hasPermission(this.requiredPerm);
-        if (!(player.hasPermission(this.perm) && hasRequiredPerm)) {
-            for (String s : this.hierarchy) {
-                if (player.hasPermission(s)) {
-                    return true;
-                }
-            }
-            if (sendMessage) {
-                Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", this.perm));
-            }
-            return false;
-        } else {
+        if (player.hasPermission(this.perm) && hasRequiredPerm) {
             return true;
         }
+        if (sendMessage) {
+            Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", this.perm));
+        }
+        ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        return false;
     }
 
     public static boolean hasTypePerm(Player player, boolean sendMessage, Perm base, PetType petType) {
         String perm = "echopet.pet." + base.perm.split("!")[1] + "." + petType.toString().toLowerCase();
-        if (!(player.hasPermission(perm))) {
-            for (String s : base.hierarchy) {
-                if (player.hasPermission(s)) {
-                    return true;
-                }
-            }
-            if (sendMessage) {
-                Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
-            }
-            return false;
-        } else {
+        if (player.hasPermission(perm)) {
             return true;
         }
+        if (sendMessage) {
+            Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
+        }
+        ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        return false;
     }
 
     public static boolean hasDataPerm(Player player, boolean sendMessage, PetType petType, PetData petData) {
-        boolean hpp = hasTypePerm(player, sendMessage, Perm.BASE_PETTYPE, petType);
-        if (!hpp) {
+        boolean hasTypePerm = hasTypePerm(player, sendMessage, Perm.BASE_PETTYPE, petType);
+        if (!hasTypePerm) {
             return false;
         }
-
         String dataPerm = "echopet.pet.type." + petType.toString().toLowerCase() + "." + petData.getConfigOptionString().toLowerCase();
-        boolean hdp = player.hasPermission(dataPerm) || player.hasPermission("echopet.pet.type." + petType.toString().toLowerCase() + ".*") || player.hasPermission("echopet.pet.*") || player.hasPermission("echopet.*");
-        if (!hdp) {
-            if (sendMessage) {
-                Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
-            }
-            return false;
+        if (player.hasPermission(dataPerm)) {
+            return true;
         }
 
-        return true;
+        if (sendMessage) {
+            Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
+        }
+        ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
+        return false;
     }
 }
