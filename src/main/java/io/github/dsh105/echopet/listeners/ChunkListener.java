@@ -22,7 +22,6 @@ public class ChunkListener implements Listener {
                 if (entity instanceof EntityLivingPet) {
                     PetHandler.getInstance().removePet(((EntityLivingPet) entity).getPet(), false);
                     iter.remove();
-                    ConsoleLogger.log(Logger.LogLevel.WARNING, "Removed pet entity from unloaded chunk.");
                 }
             }
         }
