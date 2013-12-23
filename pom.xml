@@ -14,7 +14,7 @@
         <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
         <vault.version>1.2.27</vault.version>
         <minecraft.version>1.7.2</minecraft.version>
-        <craftbukkit.version>R0.2</craftbukkit.version>
+        <craftbukkit.version>R0.3</craftbukkit.version>
         <cb_package>v1_7_R1</cb_package>
         <slf4j.version>1.7.5</slf4j.version>
         <bonecp.version>0.8.0-rc3</bonecp.version>
