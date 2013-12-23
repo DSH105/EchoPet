@@ -37,12 +37,7 @@ public class PetCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {
         if (args.length == 0) {
             if (Perm.BASE.hasPerm(sender, true, true)) {
-                PluginDescriptionFile pdFile = ec.getDescription();
-                sender.sendMessage(ChatColor.RED + "-------- EchoPet --------");
-                sender.sendMessage(ChatColor.GOLD + "Author: " + ChatColor.YELLOW + "DSH105");
-                sender.sendMessage(ChatColor.GOLD + "Description: " + ChatColor.YELLOW + pdFile.getDescription());
-                sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.YELLOW + pdFile.getVersion());
-                sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.YELLOW + pdFile.getWebsite());
+                Lang.sendTo(sender, Lang.HELP.toString().replace("%cmd%", "pet help"));
                 return true;
             } else return true;
 
@@ -254,7 +249,7 @@ public class PetCommand implements CommandExecutor {
 
             // List of all pet types
             else if (args[0].equalsIgnoreCase("list")) {
-                if (Perm.BASE.hasPerm(sender, true, true)) {
+                if (Perm.LIST.hasPerm(sender, true, true)) {
                     sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
                     for (String s : PetUtil.getPetList(sender, false)) {
                         sender.sendMessage(s);

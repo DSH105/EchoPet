@@ -35,6 +35,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -385,6 +386,21 @@ public class EchoPet extends JavaPlugin {
                 }
             } else {
                 Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.update"));
+                return true;
+            }
+        } else if (commandLabel.equalsIgnoreCase("echopet")) {
+            if (sender.hasPermission("echopet.petadmin")) {
+                PluginDescriptionFile pdFile = this.getDescription();
+                sender.sendMessage(ChatColor.RED + "-------- EchoPet --------");
+                sender.sendMessage(ChatColor.GOLD + "Author: " + ChatColor.YELLOW + "DSH105");
+                sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.YELLOW + pdFile.getVersion());
+                sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.YELLOW + pdFile.getWebsite());
+                sender.sendMessage(ChatColor.GOLD + "Commands are registered at runtime to provide you with more dynamic control over the command labels.");
+                sender.sendMessage(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Command Registration:");
+                sender.sendMessage(ChatColor.GOLD + "Main: " + this.options.getCommandString());
+                sender.sendMessage(ChatColor.GOLD + "Admin: " + this.options.getCommandString() + "admin");
+            } else {
+                Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.petadmin"));
                 return true;
             }
         }
