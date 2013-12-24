@@ -83,7 +83,7 @@ public class PetAdminCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("menu")) {
                 if (Perm.ADMIN_MENU.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -107,7 +107,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("call")) {
                 if (Perm.ADMIN_CALL.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -127,7 +127,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("show")) {
                 if (Perm.ADMIN_SHOW.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -148,7 +148,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("hide")) {
                 if (Perm.ADMIN_HIDE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -170,7 +170,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("select")) {
                 if (Perm.ADMIN_SELECT.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -184,7 +184,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("selector")) {
                 if (Perm.ADMIN_SELECTOR.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -198,7 +198,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("info")) {
                 if (Perm.ADMIN_INFO.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
@@ -237,7 +237,7 @@ public class PetAdminCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("remove")) {
                 if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
+                    if (target == null || !target.isOnline()) {
                         String path = "autosave." + args[1];
                         if (ec.getPetConfig().get(path + ".pet.type") == null) {
                             Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
@@ -269,7 +269,7 @@ public class PetAdminCommand implements CommandExecutor {
 
             else if (args[0].equalsIgnoreCase("hat")) {
                 Player target = Bukkit.getPlayer(args[1]);
-                if (target == null) {
+                if (target == null || !target.isOnline()) {
                     Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                     return true;
                 }
@@ -294,7 +294,7 @@ public class PetAdminCommand implements CommandExecutor {
 
             else if (args[0].equalsIgnoreCase("ride")) {
                 Player target = Bukkit.getPlayer(args[1]);
-                if (target == null) {
+                if (target == null || !target.isOnline()) {
                     Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                     return true;
                 }
@@ -319,7 +319,7 @@ public class PetAdminCommand implements CommandExecutor {
 
             else {
                 Player target = Bukkit.getPlayer(args[0]);
-                if (target == null) {
+                if (target == null || !target.isOnline()) {
                     Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                     return true;
                 }
@@ -368,8 +368,9 @@ public class PetAdminCommand implements CommandExecutor {
             if (args.length == 3 && args[2].equalsIgnoreCase("remove")) {
                 if (Perm.ADMIN_DEFAULT_REMOVE.hasPerm(sender, true, true)) {
                     String name = args[1];
-                    if (Bukkit.getPlayer(args[1]) != null) {
-                        name = Bukkit.getPlayer(args[1]).getName();
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if (target != null && target.isOnline()) {
+                        name = target.getName();
                     }
                     String path = "default." + name + ".";
                     if (ec.getPetConfig().get(path + "pet.type") == null) {
