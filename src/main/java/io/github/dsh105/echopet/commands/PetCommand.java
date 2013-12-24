@@ -317,7 +317,11 @@ public class PetCommand implements CommandExecutor {
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
                         if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
-                            pi.setName(UPD.petName);
+                            if (UPD.petName.length() > 32) {
+                                Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            } else {
+                                pi.setName(UPD.petName);
+                            }
                         }
                     }
                     ec.PH.saveFileData("autosave", pi);
@@ -390,7 +394,11 @@ public class PetCommand implements CommandExecutor {
                         }
                         if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
                             if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
-                                mount.setName(UPD.petName);
+                                if (UPD.petName.length() > 32) {
+                                    Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                                } else {
+                                    mount.setName(UPD.petName);
+                                }
                             }
                         }
                         ec.PH.saveFileData("autosave", pi);
@@ -466,7 +474,11 @@ public class PetCommand implements CommandExecutor {
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
                         if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
-                            pi.setName(UPD.petName);
+                            if (UPD.petName.length() > 32) {
+                                Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            } else {
+                                pi.setName(UPD.petName);
+                            }
                         }
                     }
                     if (!mountDataList.isEmpty()) {
@@ -474,7 +486,11 @@ public class PetCommand implements CommandExecutor {
                     }
                     if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
                         if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
-                            pi.getMount().setName(UMD.petName);
+                            if (UPD.petName.length() > 32) {
+                                Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            } else {
+                                pi.getMount().setName(UPD.petName);
+                            }
                         }
                     }
                     ec.PH.saveFileData("autosave", pi);

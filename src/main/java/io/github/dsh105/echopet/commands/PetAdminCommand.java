@@ -343,7 +343,13 @@ public class PetAdminCommand implements CommandExecutor {
                         ec.PH.setData(pet, petDataList.toArray(new PetData[petDataList.size()]), true);
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                        pet.setName(UPD.petName);
+                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            if (UPD.petName.length() > 32) {
+                                Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            } else {
+                                pet.setName(UPD.petName);
+                            }
+                        }
                     }
                     ec.PH.saveFileData("autosave", pet);
                     ec.SPH.saveToDatabase(pet, false);
@@ -543,7 +549,13 @@ public class PetAdminCommand implements CommandExecutor {
                             ec.PH.setData(mount, petDataList.toArray(new PetData[petDataList.size()]), true);
                         }
                         if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                            mount.setName(UPD.petName);
+                            if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                                if (UPD.petName.length() > 32) {
+                                    Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                                } else {
+                                    mount.setName(UPD.petName);
+                                }
+                            }
                         }
                         ec.PH.saveFileData("autosave", pet);
                         ec.SPH.saveToDatabase(pet, false);
@@ -591,13 +603,25 @@ public class PetAdminCommand implements CommandExecutor {
                         ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                        pi.setName(UPD.petName);
+                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            if (UPD.petName.length() > 32) {
+                                Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            } else {
+                                pi.setName(UPD.petName);
+                            }
+                        }
                     }
                     if (!mountDataList.isEmpty()) {
                         ec.PH.setData(pi.getMount(), mountDataList.toArray(new PetData[mountDataList.size()]), true);
                     }
                     if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
-                        pi.getMount().setName(UPD.petName);
+                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            if (UPD.petName.length() > 32) {
+                                Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            } else {
+                                pi.getMount().setName(UPD.petName);
+                            }
+                        }
                     }
                     ec.PH.saveFileData("autosave", pi);
                     ec.SPH.saveToDatabase(pi, false);
