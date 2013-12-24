@@ -47,6 +47,10 @@ public class PetUtil {
 
         if (s.contains(";")) {
             String[] split = s.split(";");
+            if (split.length <= 1) {
+                Lang.sendTo(sender, Lang.STRING_ERROR.toString().replace("%string%", s));
+                return null;
+            }
             if (split[0].contains(":")) {
                 String[] splitt = split[0].split(":");
                 if (splitt.length <= 1) {
