@@ -8,62 +8,51 @@ import io.github.dsh105.echopet.util.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-
 
 public enum Perm {
 
-    ADMIN(PermType.ADMIN, "echopet.petadmin", ""),
-    ADMIN_CALL(PermType.ADMIN, "echopet.petadmin.call", ""),
-    ADMIN_DEFAULT_REMOVE(PermType.ADMIN, "echopet.petadmin.default.remove", "", "echopet.petadmin.default.*"),
-    ADMIN_DEFAULT_SET_CURRENT(PermType.ADMIN, "echopet.petadmin.default.set.current", "", "echopet.petadmin.default.*"),
-    ADMIN_DEFAULT_SET_PETTYPE(PermType.ADMIN, "echopet.petadmin!default.set.type", "", "echopet.petadmin.default.*", "echopet.petadmin.default.set.type.*"),
-    ADMIN_HAT(PermType.ADMIN, "echopet.petadmin!hat", "", "echopet.petadmin.hat.*"),
-    ADMIN_RIDE(PermType.ADMIN, "echopet.petadmin!ride", "", "echopet.petadmin.ride.*"),
-    ADMIN_HIDE(PermType.ADMIN, "echopet.petadmin.hide", ""),
-    ADMIN_INFO(PermType.ADMIN, "echopet.petadmin.info", ""),
-    ADMIN_MENU(PermType.ADMIN, "echopet.petadmin.menu", ""),
-    ADMIN_NAME(PermType.ADMIN, "echopet.petadmin.name", ""),
-    ADMIN_PETTYPE(PermType.ADMIN, "echopet.petadmin!type", ""),
-    ADMIN_RELOAD(PermType.ADMIN, "echopet.petadmin.reload", ""),
-    ADMIN_REMOVE(PermType.ADMIN, "echopet.petadmin.remove", ""),
-    ADMIN_SHOW(PermType.ADMIN, "echopet.petadmin.show", ""),
-    ADMIN_SELECT(PermType.ADMIN, "echopet.petadmin.select", ""),
-    ADMIN_SELECTOR(PermType.ADMIN, "echopet.petadmin.selector", ""),
+    ADMIN("echopet.petadmin"),
+    ADMIN_CALL("echopet.petadmin.call"),
+    ADMIN_DEFAULT_REMOVE("echopet.petadmin.default.remove"),
+    ADMIN_DEFAULT_SET_CURRENT("echopet.petadmin.default.set.current"),
+    ADMIN_DEFAULT_SET_PETTYPE("echopet.petadmin!default.set.type"),
+    ADMIN_HAT("echopet.petadmin!hat"),
+    ADMIN_RIDE("echopet.petadmin!ride"),
+    ADMIN_HIDE("echopet.petadmin.hide"),
+    ADMIN_INFO("echopet.petadmin.info"),
+    ADMIN_MENU("echopet.petadmin.menu"),
+    ADMIN_NAME("echopet.petadmin.name"),
+    ADMIN_PETTYPE("echopet.petadmin!type"),
+    ADMIN_RELOAD("echopet.petadmin.reload"),
+    ADMIN_REMOVE("echopet.petadmin.remove"),
+    ADMIN_SHOW("echopet.petadmin.show"),
+    ADMIN_SELECT("echopet.petadmin.select"),
+    ADMIN_SELECTOR("echopet.petadmin.selector"),
 
-    BASE(PermType.BASE, "echopet.pet", ""),
-    LIST(PermType.BASE, "echopet.pet.list", ""),
-    BASE_CALL(PermType.BASE, "echopet.pet.call", ""),
-    BASE_DEFAULT_REMOVE(PermType.BASE, "echopet.pet.default.remove", "", "echopet.pet.default.*"),
-    BASE_DEFAULT_SET_CURRENT(PermType.BASE, "echopet.pet.default.set.current", "", "echopet.pet.default.*"),
-    BASE_DEFAULT_SET_PETTYPE(PermType.BASE, "echopet.pet!default.set.type", "", "echopet.pet.default.*", "echopet.pet.default.set.type.*"),
-    BASE_HAT(PermType.BASE, "echopet.pet!hat", "", "echopet.pet.hat.*"),
-    BASE_HIDE(PermType.BASE, "echopet.pet.hide", ""),
-    BASE_RIDE(PermType.BASE, "echopet.pet!ride", "", "echopet.pet.ride.*"),
-    BASE_INFO(PermType.BASE, "echopet.pet.info", ""),
-    BASE_MENU(PermType.BASE, "echopet.pet.menu", ""),
-    BASE_NAME(PermType.BASE, "echopet.pet.name", ""),
-    BASE_PETTYPE(PermType.BASE, "echopet.pet!type", "", "echopet.pet.type.*"),
-    BASE_REMOVE(PermType.BASE, "echopet.pet.remove", ""),
-    BASE_SHOW(PermType.BASE, "echopet.pet.show", ""),
-    BASE_SELECT(PermType.BASE, "echopet.pet.select", ""),
-    BASE_SELECTOR(PermType.BASE, "echopet.pet.selector", ""),
+    BASE("echopet.pet"),
+    LIST("echopet.pet.list"),
+    BASE_CALL("echopet.pet.call"),
+    BASE_DEFAULT_REMOVE("echopet.pet.default.remove"),
+    BASE_DEFAULT_SET_CURRENT("echopet.pet.default.set.current"),
+    BASE_DEFAULT_SET_PETTYPE("echopet.pet!default.set.type"),
+    BASE_HAT("echopet.pet!hat"),
+    BASE_HIDE("echopet.pet.hide"),
+    BASE_RIDE("echopet.pet!ride"),
+    BASE_INFO("echopet.pet.info"),
+    BASE_MENU("echopet.pet.menu"),
+    BASE_NAME("echopet.pet.name"),
+    BASE_PETTYPE("echopet.pet!type"),
+    BASE_REMOVE("echopet.pet.remove"),
+    BASE_SHOW("echopet.pet.show"),
+    BASE_SELECT("echopet.pet.select"),
+    BASE_SELECTOR("echopet.pet.selector"),
     ;
 
-    PermType permType;
     String perm;
     String requiredPerm;
-    ArrayList<String> hierarchy = new ArrayList<String>();
 
-    Perm(PermType permType, String perm, String requiredPerm, String... hierarchy) {
-        this.permType = permType;
+    Perm(String perm) {
         this.perm = perm;
-        this.requiredPerm = requiredPerm;
-        for (String s : hierarchy) {
-            this.hierarchy.add(s);
-            this.hierarchy.add("echopet.*");
-            this.hierarchy.add(this.permType.getPerm());
-        }
     }
 
     public boolean hasPerm(CommandSender sender, boolean sendMessage, boolean allowConsole) {
@@ -107,7 +96,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", this.perm));
         }
-        ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
         return false;
     }
 
@@ -119,7 +108,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
         }
-        ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
         return false;
     }
 
@@ -136,7 +125,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
         }
-        ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
+        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
         return false;
     }
 }
