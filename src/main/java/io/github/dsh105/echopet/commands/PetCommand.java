@@ -316,7 +316,9 @@ public class PetCommand implements CommandExecutor {
                         ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                        pi.setName(UPD.petName);
+                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            pi.setName(UPD.petName);
+                        }
                     }
                     ec.PH.saveFileData("autosave", pi);
                     ec.SPH.saveToDatabase(pi, false);
@@ -387,7 +389,9 @@ public class PetCommand implements CommandExecutor {
                             ec.PH.setData(mount, petDataList.toArray(new PetData[petDataList.size()]), true);
                         }
                         if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                            mount.setName(UPD.petName);
+                            if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                                mount.setName(UPD.petName);
+                            }
                         }
                         ec.PH.saveFileData("autosave", pi);
                         ec.SPH.saveToDatabase(pi, false);
@@ -461,13 +465,17 @@ public class PetCommand implements CommandExecutor {
                         ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                        pi.setName(UPD.petName);
+                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            pi.setName(UPD.petName);
+                        }
                     }
                     if (!mountDataList.isEmpty()) {
                         ec.PH.setData(pi.getMount(), mountDataList.toArray(new PetData[mountDataList.size()]), true);
                     }
                     if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
-                        pi.getMount().setName(UMD.petName);
+                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            pi.getMount().setName(UMD.petName);
+                        }
                     }
                     ec.PH.saveFileData("autosave", pi);
                     ec.SPH.saveToDatabase(pi, false);
