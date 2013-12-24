@@ -7,7 +7,6 @@ author: DSH105
 website: ${project.url}
 main: ${main.class}
 softdepend: [WorldGuard, VanishNoPacket]
-load: STARTUP
 
 commands:
     ecupdate:
