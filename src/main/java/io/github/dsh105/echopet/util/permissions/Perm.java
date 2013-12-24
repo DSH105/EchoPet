@@ -49,7 +49,6 @@ public enum Perm {
     ;
 
     String perm;
-    String requiredPerm;
 
     Perm(String perm) {
         this.perm = perm;
@@ -89,8 +88,7 @@ public enum Perm {
     }
 
     public boolean hasPerm(Player player, boolean sendMessage) {
-        boolean hasRequiredPerm = this.requiredPerm.equalsIgnoreCase("") ? true : player.hasPermission(this.requiredPerm);
-        if (player.hasPermission(this.perm) && hasRequiredPerm) {
+        if (player.hasPermission(this.perm)) {
             return true;
         }
         if (sendMessage) {
