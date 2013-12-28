@@ -1,14 +1,11 @@
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.dshutils.logger.ConsoleLogger;
-import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.craftbukkit.v1_7_R1.CraftChunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class ChunkListener implements Listener {

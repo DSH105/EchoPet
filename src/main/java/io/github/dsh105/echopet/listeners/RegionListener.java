@@ -2,7 +2,6 @@ package io.github.dsh105.echopet.listeners;
 
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.entity.Player;

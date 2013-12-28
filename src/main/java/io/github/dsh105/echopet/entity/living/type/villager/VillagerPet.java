@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.entity.living.type.villager;
 
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
+import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 

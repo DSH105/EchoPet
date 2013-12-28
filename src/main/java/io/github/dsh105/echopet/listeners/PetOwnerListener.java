@@ -1,20 +1,18 @@
 package io.github.dsh105.echopet.listeners;
 
 import io.github.dsh105.dshutils.util.GeometryUtil;
+import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.CraftLivingPet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.type.human.EntityHumanPet;
 import io.github.dsh105.echopet.entity.living.type.human.HumanPet;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;

@@ -2,11 +2,12 @@ package io.github.dsh105.echopet.api;
 
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.dshutils.logger.Logger;
+import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalAttack;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
@@ -18,7 +19,6 @@ import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
-import io.github.dsh105.dshutils.util.StringUtil;
 import net.minecraft.server.v1_7_R1.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -121,7 +121,7 @@ public class EchoPetAPI {
     /**
      * Save a {@link io.github.dsh105.echopet.entity.Pet} to file or an SQL Database
      *
-     * @param pet {@link io.github.dsh105.echopet.entity.Pet} to be saved
+     * @param pet      {@link io.github.dsh105.echopet.entity.Pet} to be saved
      * @param saveType whether to save to file or SQL database
      * @return success of save
      */
@@ -185,7 +185,7 @@ public class EchoPetAPI {
     /**
      * Opens the Pet Selector GUI Menu
      *
-     * @param player {@link org.bukkit.entity.Player} to view the Menu
+     * @param player      {@link org.bukkit.entity.Player} to view the Menu
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void openPetSelector(Player player, boolean sendMessage) {
@@ -205,7 +205,7 @@ public class EchoPetAPI {
     /**
      * Opens the Pet Data GUI Menu
      *
-     * @param player {@link org.bukkit.entity.Player} to view the Menu
+     * @param player      {@link org.bukkit.entity.Player} to view the Menu
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void openPetDataMenu(Player player, boolean sendMessage) {

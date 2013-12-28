@@ -1,10 +1,10 @@
 package io.github.dsh105.echopet.entity.living.type.squid;
 
 import io.github.dsh105.dshutils.Particle;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import io.github.dsh105.dshutils.logger.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
 public class EntitySquidPet extends EntityLivingPet {

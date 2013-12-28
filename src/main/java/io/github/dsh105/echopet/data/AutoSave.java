@@ -2,7 +2,6 @@ package io.github.dsh105.echopet.data;
 
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.scheduler.BukkitRunnable;
 
 

@@ -4,7 +4,6 @@ import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetDamageEvent;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
-import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_7_R1.DamageSource;

@@ -18,23 +18,20 @@ import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
-import io.github.dsh105.echopet.entity.EntityPet;
-import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.living.EntityLivingPet;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.listeners.*;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.SQLUtil;
-import net.minecraft.server.v1_7_R1.Entity;
 import net.minecraft.server.v1_7_R1.EntityTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,7 +42,9 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
 
 public class EchoPet extends JavaPlugin {
 

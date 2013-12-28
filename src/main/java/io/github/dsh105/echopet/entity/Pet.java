@@ -2,14 +2,13 @@ package io.github.dsh105.echopet.entity;
 
 import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.dshutils.logger.Logger;
+import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
-import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.dshutils.util.StringUtil;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
@@ -239,7 +238,7 @@ public abstract class Pet {
             }
             new BukkitRunnable() {
                 public void run() {
-                    ((CraftPlayer) owner).getHandle().mount((Entity) getEntityPet());
+                    ((CraftPlayer) owner).getHandle().mount(getEntityPet());
                     ownerIsMounting = false;
                     if (getEntityPet() instanceof EntityNoClipPet) {
                         ((EntityNoClipPet) getEntityPet()).noClip(false);

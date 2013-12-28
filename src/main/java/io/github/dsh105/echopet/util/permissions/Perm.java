@@ -1,9 +1,7 @@
 package io.github.dsh105.echopet.util.permissions;
 
-import io.github.dsh105.dshutils.logger.ConsoleLogger;
-import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.util.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -45,8 +43,7 @@ public enum Perm {
     BASE_REMOVE("echopet.pet.remove"),
     BASE_SHOW("echopet.pet.show"),
     BASE_SELECT("echopet.pet.select"),
-    BASE_SELECTOR("echopet.pet.selector"),
-    ;
+    BASE_SELECTOR("echopet.pet.selector"),;
 
     String perm;
 

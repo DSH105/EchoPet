@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity;
 
-import io.github.dsh105.dshutils.logger.ConsoleLogger;
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
@@ -65,8 +65,6 @@ import io.github.dsh105.echopet.entity.living.type.wolf.EntityWolfPet;
 import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.living.type.zombie.EntityZombiePet;
 import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
-import io.github.dsh105.dshutils.logger.Logger;
-import net.minecraft.server.v1_7_R1.Entity;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -77,7 +75,7 @@ import java.util.List;
 public enum PetType {
 
 	/*
-	 * Enumeration of valid pet types
+     * Enumeration of valid pet types
 	 * Stores valid pet data types
 	 */
 
@@ -131,7 +129,6 @@ public enum PetType {
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
 
     HUMAN(EntityHumanPet.class, HumanPet.class, 54, true, "Human Pet", 20D, 6D, EntityType.UNKNOWN),
-
 
 
     // Inanimate Pets

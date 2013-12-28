@@ -2,7 +2,9 @@ package io.github.dsh105.echopet.util;
 
 import io.github.dsh105.echopet.entity.living.PetData;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SQLUtil {
 

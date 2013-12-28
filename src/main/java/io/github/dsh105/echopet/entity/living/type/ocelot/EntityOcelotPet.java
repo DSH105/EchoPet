@@ -3,7 +3,6 @@ package io.github.dsh105.echopet.entity.living.type.ocelot;
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import net.minecraft.server.v1_7_R1.World;
-import org.bukkit.entity.Ocelot.Type;
 
 public class EntityOcelotPet extends EntityAgeablePet {
 

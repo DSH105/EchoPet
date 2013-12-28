@@ -3,12 +3,11 @@ package io.github.dsh105.echopet.util;
 import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.PetData;
-import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
+import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.living.type.blaze.BlazePet;
 import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
 import io.github.dsh105.echopet.entity.living.type.enderman.EndermanPet;
@@ -202,7 +201,7 @@ public class PetUtil {
     }
 
 	/*private static boolean isPetType(String s) {
-		try {
+        try {
 			PetType.valueOf(s.toUpperCase());
 			return true;
 		} catch (Exception e) {

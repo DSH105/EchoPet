@@ -1,11 +1,11 @@
 package io.github.dsh105.echopet.entity.living.type.enderdragon;
 
+import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import io.github.dsh105.dshutils.logger.Logger;
 import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
@@ -80,7 +80,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
             EntityHuman human = (EntityHuman) this.passenger;
             if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
                 /*this.lastYaw = this.yaw = this.passenger.yaw - 180.0F;
-				this.pitch = this.passenger.pitch * 0.5F;
+                this.pitch = this.passenger.pitch * 0.5F;
 				this.b(this.yaw, this.pitch);
 				this.aP = this.aN = this.yaw;*/
 
