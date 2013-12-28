@@ -57,14 +57,6 @@ public class LivingPet extends Pet {
     }
 
     @Override
-    public void setName(String name) {
-        super.setName(name);
-        LivingEntity le = this.getCraftPet();
-        le.setCustomName(name);
-        le.setCustomNameVisible((Boolean) EchoPet.getInstance().options.getConfigOption("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
-    }
-
-    @Override
     public CraftLivingPet getCraftPet() {
         return this.craftPet;
     }

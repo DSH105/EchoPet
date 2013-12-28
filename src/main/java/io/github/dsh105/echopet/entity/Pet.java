@@ -12,6 +12,7 @@ import io.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -129,7 +130,9 @@ public abstract class Pet {
      * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public void setName(String name) {
-        this.name = name;
+        this.name = StringUtil.replaceStringWithColours(name);
+        this.getCraftPet().setCustomName(this.name);
+        this.getCraftPet().setCustomNameVisible((Boolean) EchoPet.getInstance().options.getConfigOption("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
     }
 
     /**
