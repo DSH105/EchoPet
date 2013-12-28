@@ -5,6 +5,10 @@ import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.Location;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Called when a {@link io.github.dsh105.echopet.entity.Pet} teleports
+ */
+
 public class PetTeleportEvent extends PetMoveEvent {
 
     private static final HandlerList handlers = new HandlerList();

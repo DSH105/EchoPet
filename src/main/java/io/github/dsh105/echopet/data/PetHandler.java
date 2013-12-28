@@ -178,7 +178,7 @@ public class PetHandler {
 		List<Pet> tempList = new ArrayList<Pet>();
 		
 		for (Pet pi : pets) {
-			if (pi.getOwner() == player) tempList.add(pi);
+			if (pi.getPlayerOwner() == player) tempList.add(pi);
 		}
 		
 		return tempList.isEmpty() ? null : tempList;

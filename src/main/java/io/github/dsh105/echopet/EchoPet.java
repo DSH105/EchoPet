@@ -18,7 +18,7 @@ import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
-import io.github.dsh105.echopet.entity.IEntityPet;
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.PetType;
@@ -347,7 +347,7 @@ public class EchoPet extends JavaPlugin {
         return false;
     }
 
-    public void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
+    public void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
         try {
             Field field_d = EntityTypes.class.getDeclaredField("d");
             Field field_f = EntityTypes.class.getDeclaredField("f");
@@ -375,7 +375,6 @@ public class EchoPet extends JavaPlugin {
 
             d.put(clazz, name);
             f.put(clazz, id);
-
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
         }

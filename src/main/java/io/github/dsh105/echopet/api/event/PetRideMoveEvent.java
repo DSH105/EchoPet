@@ -6,6 +6,10 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Called when a {@link io.github.dsh105.echopet.entity.Pet} moves when their owner is riding
+ */
+
 public class PetRideMoveEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();

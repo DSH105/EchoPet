@@ -4,6 +4,7 @@ import io.github.dsh105.dshutils.util.GeometryUtil;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
+import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
@@ -47,8 +48,8 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
-        if (e instanceof CraftLivingPet) {
-            LivingPet pet = ((CraftLivingPet) e).getPet();
+        if (e instanceof CraftPet) {
+            Pet pet = ((CraftPet) e).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPet.getInstance().getServer().getPluginManager().callEvent(iEvent);

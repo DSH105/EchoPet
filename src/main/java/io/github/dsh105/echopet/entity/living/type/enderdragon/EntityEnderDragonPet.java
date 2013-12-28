@@ -78,7 +78,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
         if (this.passenger != null && (this.passenger instanceof EntityHuman)) {
             EntityHuman human = (EntityHuman) this.passenger;
-            if (human.getBukkitEntity() == this.getOwner().getPlayer()) {
+            if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
                 /*this.lastYaw = this.yaw = this.passenger.yaw - 180.0F;
 				this.pitch = this.passenger.pitch * 0.5F;
 				this.b(this.yaw, this.pitch);
@@ -142,7 +142,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                             }
                         }
                     } catch (Exception e) {
-                        Logger.log(Logger.LogLevel.WARNING, "Failed to initiate LivingPet Flying Motion for " + this.getOwner().getName() + "'s LivingPet.", e, true);
+                        Logger.log(Logger.LogLevel.WARNING, "Failed to initiate LivingPet Flying Motion for " + this.getPlayerOwner().getName() + "'s LivingPet.", e, true);
                     }
                 }
 
@@ -437,7 +437,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         this.bz = false;
         if (this.random.nextInt(2) == 0 && !this.world.players.isEmpty()) {
             if (this.random.nextInt(50) <= 40) {
-                this.bD = ((CraftPlayer) this.getOwner()).getHandle();
+                this.bD = ((CraftPlayer) this.getPlayerOwner()).getHandle();
             } else {
                 this.bD = (Entity) this.world.players.get(this.random.nextInt(this.world.players.size()));
             }

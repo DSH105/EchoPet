@@ -6,6 +6,10 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Called when a {@link io.github.dsh105.echopet.entity.Pet} jumps when their owner is riding
+ */
+
 public class PetRideJumpEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
@@ -14,7 +18,7 @@ public class PetRideJumpEvent extends Event implements Cancellable {
     private Pet pet;
     private double jumpHeight;
 
-    public PetRideJumpEvent(LivingPet pet, final double jumpHeight) {
+    public PetRideJumpEvent(Pet pet, final double jumpHeight) {
         this.pet = pet;
         this.jumpHeight = jumpHeight;
     }

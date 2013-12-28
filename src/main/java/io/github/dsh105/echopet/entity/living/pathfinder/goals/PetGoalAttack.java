@@ -1,14 +1,14 @@
 package io.github.dsh105.echopet.entity.living.pathfinder.goals;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
-import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import net.minecraft.server.v1_7_R1.EntityLiving;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 
 public class PetGoalAttack extends PetGoal {
 
     EntityLiving target;
-    EntityLivingPet pet;
+    EntityPet pet;
     int ticksBetweenAttack;
     int ticksUntilAttack;
     double lockRange;
@@ -16,7 +16,7 @@ public class PetGoalAttack extends PetGoal {
 
     public boolean isActive;
 
-    public PetGoalAttack(EntityLivingPet pet, double lockRange, int ticksBetweenAttack) {
+    public PetGoalAttack(EntityPet pet, double lockRange, int ticksBetweenAttack) {
         this.pet = pet;
         this.ticksBetweenAttack = this.ticksUntilAttack = ticksBetweenAttack;
         this.lockRange = lockRange * lockRange;
@@ -45,7 +45,7 @@ public class PetGoalAttack extends PetGoal {
             return true;
         } else if (!entityliving.isAlive()) {
             return true;
-        } else if (this.pet.e(((CraftPlayer) this.pet.getOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport(this.pet.getPet().getPetType())) {
+        } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport(this.pet.getPet().getPetType())) {
             return true;
         }
         return false;

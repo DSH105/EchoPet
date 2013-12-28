@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity;
 
+import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
@@ -137,7 +138,7 @@ public enum PetType {
     //TODO
     ;
 
-    private Class<? extends IEntityPet> entityClass;
+    private Class<? extends EntityPet> entityClass;
     private Class<? extends Pet> petClass;
     private boolean living;
     private String defaultName;
@@ -147,7 +148,7 @@ public enum PetType {
     private List<PetData> allowedData;
     private int id;
 
-    PetType(Class<? extends IEntityPet> entityClass, Class<? extends Pet> petClass, int registrationId, boolean living, String defaultName, double maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
+    PetType(Class<? extends EntityPet> entityClass, Class<? extends Pet> petClass, int registrationId, boolean living, String defaultName, double maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
         this.entityClass = entityClass;
         this.petClass = petClass;
         this.living = living;
@@ -195,19 +196,17 @@ public enum PetType {
         return getAllowedDataTypes().contains(data);
     }
 
-    public IEntityPet getNewEntityPetInstance(World world, Pet pet) {
-        IEntityPet ePet = null;
+    public EntityPet getNewEntityPetInstance(World world, Pet pet) {
+        EntityPet ePet = null;
         try {
+            Object o;
             if (this.isLiving()) {
-                Object o = entityClass.getConstructor(World.class, LivingPet.class).newInstance(world, pet);
-                if (o instanceof IEntityPet) {
-                    ePet = (IEntityPet) o;
-                }
+                o = entityClass.getConstructor(World.class, LivingPet.class).newInstance(world, pet);
             } else {
-                Object o = entityClass.getConstructor(World.class, InanimatePet.class).newInstance(world, pet);
-                if (o instanceof IEntityPet) {
-                    ePet = (IEntityPet) o;
-                }
+                o = entityClass.getConstructor(World.class, InanimatePet.class).newInstance(world, pet);
+            }
+            if (o instanceof EntityPet) {
+                ePet = (EntityPet) o;
             }
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
@@ -228,7 +227,7 @@ public enum PetType {
         return p;
     }
 
-    public Class<? extends IEntityPet> getEntityClass() {
+    public Class<? extends EntityPet> getEntityClass() {
         return this.entityClass;
     }
 

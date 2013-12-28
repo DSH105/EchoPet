@@ -2,8 +2,8 @@ package io.github.dsh105.echopet.entity.living.pathfinder.goals;
 
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetMoveEvent;
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
-import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import net.minecraft.server.v1_7_R1.EntityPlayer;
 import net.minecraft.server.v1_7_R1.GenericAttributes;
 import net.minecraft.server.v1_7_R1.Navigation;
@@ -13,7 +13,7 @@ import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 
 public class PetGoalFollowOwner extends PetGoal {
 
-    private EntityLivingPet pet;
+    private EntityPet pet;
     private Navigation nav;
     private int timer = 0;
     private double startDistance;
@@ -21,13 +21,13 @@ public class PetGoalFollowOwner extends PetGoal {
     private double teleportDistance;
     private EntityPlayer owner;
 
-    public PetGoalFollowOwner(EntityLivingPet pet, double startDistance, double stopDistance, double teleportDistance) {
+    public PetGoalFollowOwner(EntityPet pet, double startDistance, double stopDistance, double teleportDistance) {
         this.pet = pet;
         this.nav = pet.getNavigation();
         this.startDistance = startDistance;
         this.stopDistance = stopDistance;
         this.teleportDistance = teleportDistance;
-        this.owner = ((CraftPlayer) pet.getOwner()).getHandle();
+        this.owner = ((CraftPlayer) pet.getPlayerOwner()).getHandle();
     }
 
     @Override
@@ -82,18 +82,18 @@ public class PetGoalFollowOwner extends PetGoal {
         this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.x());
         if (--this.timer <= 0) {
             this.timer = 10;
-            if (this.pet.getOwner().isFlying()) {
+            if (this.pet.getPlayerOwner().isFlying()) {
                 //Don't move pet when owner flying
                 return;
             }
 
             double speed = 0.55F;
-            if (this.pet.e(this.owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getOwner()).getHandle().onGround) {
-                this.pet.getPet().teleport(this.pet.getOwner().getLocation());
+            if (this.pet.e(this.owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround) {
+                this.pet.getPet().teleport(this.pet.getPlayerOwner().getLocation());
                 return;
             }
 
-            PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getOwner().getLocation());
+            PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getPlayerOwner().getLocation());
             EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
             if (moveEvent.isCancelled()) {
                 return;

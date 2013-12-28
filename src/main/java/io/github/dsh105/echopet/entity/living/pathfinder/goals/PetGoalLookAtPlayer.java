@@ -1,27 +1,27 @@
 package io.github.dsh105.echopet.entity.living.pathfinder.goals;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
-import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import net.minecraft.server.v1_7_R1.Entity;
 import net.minecraft.server.v1_7_R1.EntityHuman;
 
 public class PetGoalLookAtPlayer extends PetGoal {
 
-    private EntityLivingPet pet;
+    private EntityPet pet;
     protected Entity player;
     private float range;
     private int ticksLeft;
     private float chance;
     private Class clazz;
 
-    public PetGoalLookAtPlayer(EntityLivingPet pet, Class c, float f) {
+    public PetGoalLookAtPlayer(EntityPet pet, Class c, float f) {
         this.pet = pet;
         this.range = f;
         this.chance = 0.2F;
         this.clazz = c;
     }
 
-    public PetGoalLookAtPlayer(EntityLivingPet pet, Class c, float f, float f1) {
+    public PetGoalLookAtPlayer(EntityPet pet, Class c, float f, float f1) {
         this.pet = pet;
         this.range = f;
         this.chance = f1;
@@ -38,7 +38,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
             if (this.clazz == EntityHuman.class) {
                 this.player = this.pet.world.findNearbyPlayer(this.pet, (double) this.range);
             } else {
-                this.player = this.pet.world.a(this.clazz, this.player.boundingBox.grow((double) this.range, 3.0D, (double) this.range), this.player);
+                this.player = this.pet.world.a(this.clazz, this.pet.boundingBox.grow((double) this.range, 3.0D, (double) this.range), this.pet);
             }
             return this.player != null;
         }

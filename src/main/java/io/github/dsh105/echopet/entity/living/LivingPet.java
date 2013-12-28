@@ -4,7 +4,7 @@ import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetSpawnEvent;
 import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.entity.ICraftPet;
+import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
 import org.bukkit.ChatColor;
@@ -70,7 +70,7 @@ public class LivingPet extends Pet {
     }
 
     @Override
-    public ICraftPet setCraftPet(ICraftPet craftPet) {
+    public CraftPet setCraftPet(CraftPet craftPet) {
         if (craftPet instanceof CraftLivingPet) {
             this.craftPet = (CraftLivingPet) craftPet;
         }

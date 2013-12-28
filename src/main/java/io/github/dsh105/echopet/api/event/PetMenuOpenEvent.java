@@ -1,6 +1,5 @@
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

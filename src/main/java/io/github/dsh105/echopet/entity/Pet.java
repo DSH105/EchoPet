@@ -4,6 +4,7 @@ import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
+import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.PetData;
@@ -38,23 +39,23 @@ public abstract class Pet {
         this.isLiving = this.petType.getEntityClass().equals(EntityLivingPet.class);
     }
 
-    protected abstract IEntityPet initiatePet();
+    protected abstract EntityPet initiatePet();
 
     /**
-     * Gets the {@link IEntityPet} for this {@link Pet}
+     * Gets the {@link EntityPet} for this {@link Pet}
      *
-     * @return a {@link IEntityPet} object for this {@link Pet}
+     * @return a {@link EntityPet} object for this {@link Pet}
      */
-    public abstract IEntityPet getEntityPet();
+    public abstract EntityPet getEntityPet();
 
     /**
-     * Gets the {@link ICraftPet} for this {@link Pet}
+     * Gets the {@link CraftPet} for this {@link Pet}
      *
-     * @return a {@link ICraftPet} object for this {@link Pet}
+     * @return a {@link CraftPet} object for this {@link Pet}
      */
-    public abstract ICraftPet getCraftPet();
+    public abstract CraftPet getCraftPet();
 
-    public abstract ICraftPet setCraftPet(ICraftPet craftPet);
+    public abstract CraftPet setCraftPet(CraftPet craftPet);
 
     public Location getLocation() {
         return this.getCraftPet().getLocation();

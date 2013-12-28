@@ -1,13 +1,13 @@
 package io.github.dsh105.echopet.entity.living.pathfinder.goals;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
-import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 
 public class PetGoalFloat extends PetGoal {
 
-    private EntityLivingPet pet;
+    private EntityPet pet;
 
-    public PetGoalFloat(EntityLivingPet pet) {
+    public PetGoalFloat(EntityPet pet) {
         this.pet = pet;
         pet.getNavigation().e(true);
     }
