@@ -227,12 +227,12 @@ public abstract class Pet {
         if (this.isHat) {
             this.setAsHat(false);
         }
-        this.teleportToOwner();
         if (!flag) {
             ((CraftPlayer) this.owner).getHandle().mount(null);
             if (this.getEntityPet() instanceof EntityNoClipPet) {
                 ((EntityNoClipPet) this.getEntityPet()).noClip(true);
             }
+            ownerIsMounting = false;
         } else {
             if (this.getMount() != null) {
                 this.getMount().removePet(false);
@@ -247,6 +247,7 @@ public abstract class Pet {
                 }
             }.runTaskLater(EchoPet.getInstance(), 5L);
         }
+        this.teleportToOwner();
         this.ownerRiding = flag;
         try {
             Particle.PORTAL.sendTo(this.getLocation());

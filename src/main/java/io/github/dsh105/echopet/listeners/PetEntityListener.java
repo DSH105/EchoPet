@@ -6,6 +6,7 @@ import io.github.dsh105.echopet.api.event.PetDamageEvent;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.echopet.entity.CraftPet;
+import io.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_7_R1.DamageSource;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -15,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 
 public class PetEntityListener implements Listener {
 
@@ -33,6 +35,14 @@ public class PetEntityListener implements Listener {
             if (event.isCancelled()) {
                 event.setCancelled(false);
             }
+        }
+    }
+
+    @EventHandler
+    public void onDismount(VehicleExitEvent event) {
+        Entity e = event.getVehicle();
+        if (e instanceof CraftPet) {
+            Lang.sendTo(((CraftPet) e).getPet().getOwner(), Lang.RIDE_PET_OFF.toString());
         }
     }
 
