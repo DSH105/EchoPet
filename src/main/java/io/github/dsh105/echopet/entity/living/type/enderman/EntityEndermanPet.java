@@ -5,6 +5,7 @@ import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
+import net.minecraft.server.v1_7_R1.Block;
 import net.minecraft.server.v1_7_R1.World;
 
 public class EntityEndermanPet extends EntityLivingPet {
@@ -38,6 +39,22 @@ public class EntityEndermanPet extends EntityLivingPet {
 
     public boolean isScreaming() {
         return this.datawatcher.getByte(18) > 0;
+    }
+
+    public void setCarried(Block block) {
+        this.datawatcher.watch(16, Byte.valueOf((byte) (Block.b(block) & 255)));
+    }
+
+    public Block getCarried() {
+        return Block.e(this.datawatcher.getByte(16));
+    }
+
+    public void setCarriedData(int i) {
+        this.datawatcher.watch(17, Byte.valueOf((byte) (i & 255)));
+    }
+
+    public int getCarriedData() {
+        return this.datawatcher.getByte(17);
     }
 
     @Override

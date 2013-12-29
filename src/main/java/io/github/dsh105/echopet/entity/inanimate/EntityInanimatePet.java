@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.entity.inanimate;
 
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.dshutils.util.ReflectionUtil;
+import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
@@ -49,9 +50,10 @@ public abstract class EntityInanimatePet extends EntityPet {
     @Override
     public CraftInanimatePet getBukkitEntity() {
         if (this.bukkitEntity == null || !(this.bukkitEntity instanceof CraftInanimatePet)) {
-            CraftInanimatePet craftPet = new CraftInanimatePet(this.world.getServer(), this);
-            this.bukkitEntity = craftPet;
-            return craftPet;
+            CraftPet craftPet = this.getPet().getPetType().getNewCraftInstance(this);
+            if (craftPet instanceof CraftInanimatePet) {
+                this.bukkitEntity = craftPet;
+            }
         }
         return (CraftInanimatePet) this.bukkitEntity;
     }

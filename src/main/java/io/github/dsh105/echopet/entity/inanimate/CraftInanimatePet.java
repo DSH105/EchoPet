@@ -3,7 +3,7 @@ package io.github.dsh105.echopet.entity.inanimate;
 import io.github.dsh105.echopet.entity.CraftPet;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 
-public class CraftInanimatePet extends CraftPet {
+public abstract class CraftInanimatePet extends CraftPet {
 
     public CraftInanimatePet(CraftServer server, EntityInanimatePet entity) {
         super(server, entity);
