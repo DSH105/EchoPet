@@ -23,9 +23,9 @@ public class CraftVillagerPet extends CraftAgeablePet implements Villager {
 
     @Override
     public void setProfession(Profession profession) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof VillagerPet) {
             ((VillagerPet) p).setProfession(profession);
-        }
+        }*/
     }
 }

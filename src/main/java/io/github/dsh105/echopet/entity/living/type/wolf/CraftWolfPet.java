@@ -24,10 +24,10 @@ public class CraftWolfPet extends CraftAgeablePet implements Wolf {
 
     @Override
     public void setAngry(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof WolfPet) {
             ((WolfPet) p).setAngry(b);
-        }
+        }*/
     }
 
     @Override
@@ -55,9 +55,9 @@ public class CraftWolfPet extends CraftAgeablePet implements Wolf {
 
     @Override
     public void setCollarColor(DyeColor dyeColor) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof WolfPet) {
             ((WolfPet) p).setCollarColor(dyeColor);
-        }
+        }*/
     }
 }

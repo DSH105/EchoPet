@@ -25,10 +25,10 @@ public class CraftHorsePet extends CraftAgeablePet implements Horse {
 
     @Override
     public void setVariant(Variant variant) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof HorsePet) {
             ((HorsePet) p).setHorseType(HorseType.getForBukkitVariant(variant));
-        }
+        }*/
     }
 
     @Override
@@ -42,10 +42,10 @@ public class CraftHorsePet extends CraftAgeablePet implements Horse {
 
     @Override
     public void setColor(Color color) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof HorsePet) {
             ((HorsePet) p).setVariant(HorseVariant.getForBukkitColour(color), ((HorsePet) p).getMarking());
-        }
+        }*/
     }
 
     @Override
@@ -59,10 +59,10 @@ public class CraftHorsePet extends CraftAgeablePet implements Horse {
 
     @Override
     public void setStyle(Style style) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof HorsePet) {
             ((HorsePet) p).setVariant(((HorsePet) p).getVariant(), HorseMarking.getForBukkitStyle(style));
-        }
+        }*/
     }
 
     @Override
@@ -76,10 +76,10 @@ public class CraftHorsePet extends CraftAgeablePet implements Horse {
 
     @Override
     public void setCarryingChest(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof HorsePet) {
             ((HorsePet) p).setChested(b);
-        }
+        }*/
     }
 
     @Override

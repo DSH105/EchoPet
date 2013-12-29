@@ -43,10 +43,10 @@ public class CraftPigZombiePet extends CraftLivingPet implements PigZombie {
 
     @Override
     public void setBaby(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof PigZombiePet) {
             ((PigZombiePet) p).setBaby(b);
-        }
+        }*/
     }
 
     @Override
@@ -60,9 +60,9 @@ public class CraftPigZombiePet extends CraftLivingPet implements PigZombie {
 
     @Override
     public void setVillager(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof PigZombiePet) {
             ((PigZombiePet) p).setVillager(b);
-        }
+        }*/
     }
 }

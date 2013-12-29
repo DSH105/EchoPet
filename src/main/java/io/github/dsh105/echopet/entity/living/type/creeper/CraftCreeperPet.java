@@ -25,9 +25,9 @@ public class CraftCreeperPet extends CraftLivingPet implements Creeper {
 
     @Override
     public void setPowered(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof CreeperPet) {
             ((CreeperPet) p).setPowered(b);
-        }
+        }*/
     }
 }

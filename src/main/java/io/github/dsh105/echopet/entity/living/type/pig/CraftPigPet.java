@@ -23,9 +23,9 @@ public class CraftPigPet extends CraftAgeablePet implements Pig {
 
     @Override
     public void setSaddle(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof PigPet) {
             ((PigPet) p).setSaddle(b);
-        }
+        }*/
     }
 }

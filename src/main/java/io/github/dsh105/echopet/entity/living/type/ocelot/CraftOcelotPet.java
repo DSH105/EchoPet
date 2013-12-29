@@ -23,10 +23,10 @@ public class CraftOcelotPet extends CraftAgeablePet implements Ocelot {
 
     @Override
     public void setCatType(Type type) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof OcelotPet) {
             ((OcelotPet) p).setCatType(type);
-        }
+        }*/
     }
 
     @Override

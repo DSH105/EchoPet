@@ -30,12 +30,14 @@ public class CraftAgeablePet extends CraftLivingPet implements Ageable {
 
     @Override
     public void setAge(int i) {
+        // Nuh-uh. Not allowed
         // Pet age should not be controlled like this
     }
 
     @Override
     public void setAgeLock(boolean b) {
-        this.getHandle().setAgeLocked(b);
+        // Nuh-uh. Not allowed
+        //this.getHandle().setAgeLocked(b);
     }
 
     @Override
@@ -45,12 +47,14 @@ public class CraftAgeablePet extends CraftLivingPet implements Ageable {
 
     @Override
     public void setBaby() {
-        this.getHandle().setBaby(true);
+        // Nuh-uh. Not allowed
+        //this.getHandle().setBaby(true);
     }
 
     @Override
     public void setAdult() {
-        this.getHandle().setBaby(false);
+        // Nuh-uh. Not allowed
+        //this.getHandle().setBaby(false);
     }
 
     @Override

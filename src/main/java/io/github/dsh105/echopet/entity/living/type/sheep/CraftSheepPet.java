@@ -24,10 +24,10 @@ public class CraftSheepPet extends CraftAgeablePet implements Sheep {
 
     @Override
     public void setSheared(boolean b) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof SheepPet) {
             ((SheepPet) p).setSheared(b);
-        }
+        }*/
     }
 
     @Override
@@ -41,9 +41,9 @@ public class CraftSheepPet extends CraftAgeablePet implements Sheep {
 
     @Override
     public void setColor(DyeColor dyeColor) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof SheepPet) {
             ((SheepPet) p).setColor(dyeColor);
-        }
+        }*/
     }
 }

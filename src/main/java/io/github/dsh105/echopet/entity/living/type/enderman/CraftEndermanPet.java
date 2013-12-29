@@ -26,11 +26,11 @@ public class CraftEndermanPet extends CraftLivingPet implements Enderman {
 
     @Override
     public void setCarriedMaterial(MaterialData data) {
-        EntityPet e = getHandle();
+        /*EntityPet e = getHandle();
         if (e instanceof EntityEndermanPet) {
             EntityEndermanPet endermanPet = (EntityEndermanPet) e;
             endermanPet.setCarried(CraftMagicNumbers.getBlock(data.getItemTypeId()));
             endermanPet.setCarriedData(data.getData());
-        }
+        }*/
     }
 }

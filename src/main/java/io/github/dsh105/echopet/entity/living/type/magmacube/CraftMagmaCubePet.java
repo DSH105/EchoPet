@@ -23,9 +23,9 @@ public class CraftMagmaCubePet extends CraftLivingPet implements MagmaCube {
 
     @Override
     public void setSize(int i) {
-        Pet p = this.getPet();
+        /*Pet p = this.getPet();
         if (p instanceof MagmaCubePet) {
             ((MagmaCubePet) p).setSize(i);
-        }
+        }*/
     }
 }
