@@ -215,12 +215,12 @@ public class PetAdminCommand implements CommandExecutor {
                     if (target == null || !target.isOnline()) {
                         String path = "autosave." + args[1];
                         if (ec.getPetConfig().get(path + ".pet.type") == null) {
-                            Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+                            Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[1]));
                             return true;
                         } else {
                             PetHandler.getInstance().clearFileData("autosave", args[1]);
                             EchoPet.getInstance().SPH.clearFromDatabase(args[1]);
-                            Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", target.getName()));
+                            Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", args[1]));
                             return true;
                         }
                     } else {
@@ -435,7 +435,7 @@ public class PetAdminCommand implements CommandExecutor {
                         if (target == null) {
                             String path = "autosave." + "." + args[2];
                             if (ec.getPetConfig().get(path + ".mount.type") == null) {
-                                Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[2]));
+                                Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[2]));
                                 return true;
                             } else {
                                 for (String key : ec.getPetConfig().getConfigurationSection(path + ".mount").getKeys(false)) {
@@ -443,7 +443,7 @@ public class PetAdminCommand implements CommandExecutor {
                                 }
 
                                 EchoPet.getInstance().SPH.clearMountFromDatabase(args[2]);
-                                Lang.sendTo(sender, Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", target.getName()));
+                                Lang.sendTo(sender, Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", args[2]));
                                 return true;
                             }
                         } else {

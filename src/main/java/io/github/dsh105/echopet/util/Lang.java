@@ -76,6 +76,7 @@ public enum Lang {
     ADMIN_HAT_PET_ON("admin_hat_pet_on", "&6%player%&e's pet now rides on their head."),
     ADMIN_HAT_PET_OFF("admin_hat_pet_off", "&6%player%&e's pet no longer rides on their head."),
     ADMIN_NULL_PLAYER("admin_null_player", "&6%player% &eis not online or does not exist."),
+    ADMIN_NULL_PLAYER_DATA("admin_null_player_data", "&ePet data for &6%player% &edoes not exist."),
     ADMIN_PET_REMOVED("admin_pet_removed", "&6%player%&e's Pet has been removed."),
     ADMIN_NAME_MOUNT("admin_name_mount", "&6%player%&e's &ePet's mount has been named to &r%name%&e."),
     ADMIN_NAME_PET("admin_name_pet", "&6%player%&e's &6%type% &ehas been named &r%name%&e."),
