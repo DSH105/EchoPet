@@ -180,7 +180,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     }
 
     public void setLocation(Location l) {
-        this.setLocation(l.getX(), l.getY(), l.getZ(), l.getPitch(), l.getYaw());
+        this.setLocation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
         this.world = ((CraftWorld) l.getWorld()).getHandle();
     }
 
