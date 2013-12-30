@@ -1,6 +1,7 @@
-package io.github.dsh105.echopet.entity.living.type.human;
+package io.github.dsh105.echopet.entity.inanimate.type.human;
 
 import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Location;
@@ -8,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 
-public class HumanPet extends LivingPet {
+public class HumanPet extends InanimatePet {
 
     public HumanPet(Player owner, PetType petType) {
         super(owner, petType);
@@ -23,23 +24,12 @@ public class HumanPet extends LivingPet {
     }
 
     @Override
-    public void setName(String s) {
-        s = s.length() > 16 ? s.substring(0, 16) : s;
-        super.setName(s);
+    public void setName(String name) {
+        name = name.length() > 16 ? name.substring(0, 16) : name;
+        super.setName(name);
         EntityHumanPet human = (EntityHumanPet) this.getEntityPet();
         if (human.profile != null) {
-            human.profile = new GameProfile(human.profile.getId(), s);
-        }
-        if (human.init) {
-            ((EntityHumanPet) this.getEntityPet()).updatePacket();
-        }
-    }
-
-    @Override
-    public void teleport(Location to) {
-        super.teleport(to);
-        if (((EntityHumanPet) this.getEntityPet()).hasInititiated()) {
-            ((EntityHumanPet) this.getEntityPet()).updatePacket();
+            human.profile = new GameProfile(human.profile.getId(), name);
         }
     }
 }

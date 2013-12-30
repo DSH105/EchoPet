@@ -26,6 +26,22 @@ public class InanimatePet extends Pet {
     }
 
     @Override
+    public void setName(String name) {
+        super.setName(name);
+        if (this.getEntityPet().hasInititiated()) {
+            this.getEntityPet().updatePacket();
+        }
+    }
+
+    @Override
+    public void teleport(Location to) {
+        super.teleport(to);
+        if (this.getEntityPet().hasInititiated()) {
+            this.getEntityPet().updatePacket();
+        }
+    }
+
+    @Override
     protected EntityInanimatePet initiatePet() {
         Location l = this.getOwner().getLocation();
         PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);

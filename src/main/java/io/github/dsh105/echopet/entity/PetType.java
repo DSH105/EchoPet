@@ -4,7 +4,6 @@ import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPet;
 import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
-import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.PetData;
@@ -40,9 +39,9 @@ import io.github.dsh105.echopet.entity.living.type.giant.GiantPet;
 import io.github.dsh105.echopet.entity.living.type.horse.CraftHorsePet;
 import io.github.dsh105.echopet.entity.living.type.horse.EntityHorsePet;
 import io.github.dsh105.echopet.entity.living.type.horse.HorsePet;
-import io.github.dsh105.echopet.entity.living.type.human.CraftHumanPet;
-import io.github.dsh105.echopet.entity.living.type.human.EntityHumanPet;
-import io.github.dsh105.echopet.entity.living.type.human.HumanPet;
+import io.github.dsh105.echopet.entity.inanimate.type.human.CraftHumanPet;
+import io.github.dsh105.echopet.entity.inanimate.type.human.EntityHumanPet;
+import io.github.dsh105.echopet.entity.inanimate.type.human.HumanPet;
 import io.github.dsh105.echopet.entity.living.type.irongolem.CraftIronGolemPet;
 import io.github.dsh105.echopet.entity.living.type.irongolem.EntityIronGolemPet;
 import io.github.dsh105.echopet.entity.living.type.irongolem.IronGolemPet;
@@ -161,12 +160,7 @@ public enum PetType {
             PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
 
-    HUMAN(EntityHumanPet.class, HumanPet.class, CraftHumanPet.class, 54, true, "Human Pet", 20D, 6D, EntityType.UNKNOWN),
-
-
-    // Inanimate Pets
-    //TODO
-    ;
+    HUMAN(EntityHumanPet.class, HumanPet.class, CraftHumanPet.class, 54, false, "Human Pet", 20D, 6D, EntityType.UNKNOWN);
 
     private Class<? extends EntityPet> entityClass;
     private Class<? extends Pet> petClass;

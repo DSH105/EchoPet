@@ -7,8 +7,8 @@ import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.type.human.EntityHumanPet;
-import io.github.dsh105.echopet.entity.living.type.human.HumanPet;
+import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
+import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
@@ -77,9 +77,9 @@ public class PetOwnerListener implements Listener {
         Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             Pet pet = i.next();
-            if (pet instanceof HumanPet && ((EntityHumanPet) pet.getEntityPet()).hasInititiated()) {
+            if (pet instanceof InanimatePet && ((EntityInanimatePet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
-                    ((EntityHumanPet) pet.getEntityPet()).updatePacket();
+                    ((EntityInanimatePet) pet.getEntityPet()).updatePacket();
                 }
             }
         }
@@ -183,9 +183,9 @@ public class PetOwnerListener implements Listener {
         Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             Pet pet = i.next();
-            if (pet instanceof HumanPet && ((EntityHumanPet) pet.getEntityPet()).hasInititiated()) {
+            if (pet instanceof InanimatePet && ((EntityInanimatePet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
-                    ((EntityHumanPet) pet.getEntityPet()).updatePacket();
+                    ((EntityInanimatePet) pet.getEntityPet()).updatePacket();
                 }
             }
         }

@@ -13,12 +13,15 @@ import java.lang.reflect.Field;
 
 public abstract class EntityInanimatePet extends EntityPet {
 
-    private Packet packet;
     private PacketPlayOutEntityMetadata metaPacket;
-    private DataWatcher dw;
+    protected DataWatcher dw;
     protected byte b0 = 0;
     protected boolean init;
-    private int id;
+    protected int id;
+
+    public EntityInanimatePet(World world) {
+        super(world);
+    }
 
     public EntityInanimatePet(World world, InanimatePet pet) {
         super(world, pet);
@@ -34,10 +37,10 @@ public abstract class EntityInanimatePet extends EntityPet {
     }
 
     @Override
-    public LivingPet getPet() {
+    public InanimatePet getPet() {
         Pet p = super.getPet();
-        if (p instanceof LivingPet) {
-            return (LivingPet) super.getPet();
+        if (p instanceof InanimatePet) {
+            return (InanimatePet) super.getPet();
         }
         return null;
     }
@@ -60,6 +63,15 @@ public abstract class EntityInanimatePet extends EntityPet {
 
     @Override
     public void onLive() {
+        if (this.isInvisible()) {
+            this.b0 = 32;
+        } else if (this.isSneaking()) {
+            this.b0 = 2;
+        } else if (this.isSprinting()) {
+            this.b0 = 8;
+        } else {
+            this.b0 = 0;
+        }
         if (!this.init) {
             this.init();
             this.init = true;
@@ -67,9 +79,19 @@ public abstract class EntityInanimatePet extends EntityPet {
         this.updateDatawatcher();
     }
 
+    protected byte angle(float f) {
+        return (byte) (f * 256.0F / 360.0F);
+    }
+
     public abstract Packet createPacket();
 
-    public abstract void updatePacket();
+    public void updatePacket() {
+        try {
+            ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.createPacket());
+        } catch (Exception e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
+        }
+    }
 
     private void updateDatawatcher() {
         this.dw.watch(0, (Object) (byte) this.b0/*(this.isInvisible() ? 32 : this.isSneaking() ? 2 : this.isSprinting() ? 8 : 0)*/);
