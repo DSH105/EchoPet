@@ -40,6 +40,7 @@ import io.github.dsh105.echopet.entity.living.type.giant.GiantPet;
 import io.github.dsh105.echopet.entity.living.type.horse.CraftHorsePet;
 import io.github.dsh105.echopet.entity.living.type.horse.EntityHorsePet;
 import io.github.dsh105.echopet.entity.living.type.horse.HorsePet;
+import io.github.dsh105.echopet.entity.living.type.human.CraftHumanPet;
 import io.github.dsh105.echopet.entity.living.type.human.EntityHumanPet;
 import io.github.dsh105.echopet.entity.living.type.human.HumanPet;
 import io.github.dsh105.echopet.entity.living.type.irongolem.CraftIronGolemPet;
@@ -160,7 +161,7 @@ public enum PetType {
             PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
             PetData.SILVER, PetData.WHITE, PetData.YELLOW),
 
-    HUMAN(EntityHumanPet.class, HumanPet.class, CraftLivingPet.class, 54, true, "Human Pet", 20D, 6D, EntityType.UNKNOWN),
+    HUMAN(EntityHumanPet.class, HumanPet.class, CraftHumanPet.class, 54, true, "Human Pet", 20D, 6D, EntityType.UNKNOWN),
 
 
     // Inanimate Pets
@@ -263,9 +264,9 @@ public enum PetType {
         try {
             Object o = null;
             if (this.isLiving() && entityPet instanceof EntityLivingPet) {
-                o = petClass.getConstructor(CraftServer.class, EntityLivingPet.class).newInstance(entityPet.world.getServer(), entityPet);
+                o = craftClass.getConstructor(CraftServer.class, EntityLivingPet.class).newInstance(entityPet.world.getServer(), entityPet);
             } else if (!this.isLiving() && entityPet instanceof EntityInanimatePet) {
-                o = petClass.getConstructor(CraftServer.class, EntityInanimatePet.class).newInstance(entityPet.world.getServer(), entityPet);
+                o = craftClass.getConstructor(CraftServer.class, EntityInanimatePet.class).newInstance(entityPet.world.getServer(), entityPet);
             }
             if (o instanceof CraftPet) {
                 p = (CraftPet) o;

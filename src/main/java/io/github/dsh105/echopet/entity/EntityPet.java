@@ -50,8 +50,8 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     public EntityPet(World world, Pet pet) {
         super(world);
         try {
-            pet.setCraftPet(this.getBukkitEntity());
             this.pet = pet;
+            this.pet.setCraftPet(this.getBukkitEntity());
             this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
             this.setHealth((float) pet.getPetType().getMaxHealth());
             this.jumpHeight = EchoPet.getInstance().options.getRideJumpHeight(this.getPet().getPetType());
