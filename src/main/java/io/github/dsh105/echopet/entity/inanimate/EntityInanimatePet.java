@@ -63,6 +63,7 @@ public abstract class EntityInanimatePet extends EntityPet {
 
     @Override
     public void onLive() {
+        super.onLive();
         if (this.isInvisible()) {
             this.b0 = 32;
         } else if (this.isSneaking()) {
