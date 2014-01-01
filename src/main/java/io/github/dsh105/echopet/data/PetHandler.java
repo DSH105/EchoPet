@@ -311,7 +311,7 @@ public class PetHandler {
         while (i.hasNext()) {
             Pet p = i.next();
             if (p.getOwner().getName().equals(player.getName())) {
-				/*saveFileData("autosave", p);
+                /*saveFileData("autosave", p);
 				ec.SPH.saveToDatabase(p, false);*/
                 p.removePet(makeDeathSound);
                 i.remove();

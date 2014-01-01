@@ -4,14 +4,11 @@ import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.dshutils.util.ReflectionUtil;
 import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
-import io.github.dsh105.echopet.entity.living.EntityLivingPet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R1.Packet;
+import net.minecraft.server.v1_7_R1.PacketPlayOutNamedEntitySpawn;
+import net.minecraft.server.v1_7_R1.World;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
-import org.bukkit.Location;
-
-import java.lang.reflect.Field;
 
 public class EntityHumanPet extends EntityInanimatePet {
 

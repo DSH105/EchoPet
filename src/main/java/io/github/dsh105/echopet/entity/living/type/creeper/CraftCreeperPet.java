@@ -1,7 +1,5 @@
 package io.github.dsh105.echopet.entity.living.type.creeper;
 
-import io.github.dsh105.dshutils.logger.ConsoleLogger;
-import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.living.CraftLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;

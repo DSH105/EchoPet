@@ -2,9 +2,7 @@ package io.github.dsh105.echopet.entity.inanimate.type.human;
 
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 

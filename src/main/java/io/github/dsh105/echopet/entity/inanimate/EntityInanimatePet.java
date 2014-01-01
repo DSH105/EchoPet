@@ -5,7 +5,6 @@ import io.github.dsh105.dshutils.util.ReflectionUtil;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.living.LivingPet;
 import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 

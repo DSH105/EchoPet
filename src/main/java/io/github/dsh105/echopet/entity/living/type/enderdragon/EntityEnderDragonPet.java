@@ -88,7 +88,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                 float forw = ((EntityLiving) this.passenger).bf;
 
 				/*float sideMot = (float) Math.pow(side, side);
-				float forMot = (float) Math.pow(forw, forw);*/
+                float forMot = (float) Math.pow(forw, forw);*/
 
 				/*if (forMot <= 0.0F) {
 					forMot *= 0.25F;
