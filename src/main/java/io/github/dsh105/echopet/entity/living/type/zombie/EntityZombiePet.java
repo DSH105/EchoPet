@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity.living.type.zombie;
 
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import io.github.dsh105.echopet.entity.living.SizeCategory;
@@ -23,7 +23,7 @@ public class EntityZombiePet extends EntityLivingPet {
             public void run() {
                 setEquipment(0, new ItemStack(Items.IRON_SPADE));
             }
-        }.runTaskLater(EchoPet.getInstance(), 5L);
+        }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
     }
 
     public void setBaby(boolean flag) {

@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.data;
 
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.Pet;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -10,12 +10,12 @@ public class AutoSave {
     public AutoSave(int timer) {
         new BukkitRunnable() {
             public void run() {
-                EchoPet ec = EchoPet.getInstance();
+                EchoPetPlugin ec = EchoPetPlugin.getInstance();
                 for (Pet pi : ec.PH.getPets()) {
                     ec.PH.saveFileData("autosave", pi);
                     ec.SPH.saveToDatabase(pi, false);
                 }
             }
-        }.runTaskTimer(EchoPet.getInstance(), (20 * timer) / 2, 20 * timer);
+        }.runTaskTimer(EchoPetPlugin.getInstance(), (20 * timer) / 2, 20 * timer);
     }
 }

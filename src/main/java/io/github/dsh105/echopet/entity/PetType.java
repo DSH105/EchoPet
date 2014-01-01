@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity;
 
 import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
@@ -199,7 +199,7 @@ public enum PetType {
     }
 
     public String getDefaultName(String name) {
-        return EchoPet.getInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
+        return EchoPetPlugin.getInstance().getMainConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
     }
 
     public String getDefaultName() {
@@ -207,7 +207,7 @@ public enum PetType {
     }
 
     public double getAttackDamage() {
-        return EchoPet.getInstance().getMainConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", " ") + ".attackDamage", this.attackDamage);
+        return EchoPetPlugin.getInstance().getMainConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", " ") + ".attackDamage", this.attackDamage);
     }
 
     public EntityType getEntityType() {

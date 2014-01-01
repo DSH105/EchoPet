@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.menu.main;
 
 import io.github.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.menu.Menu;
@@ -24,7 +24,7 @@ public class DataMenu implements Menu {
 
     public void open(boolean sendMessage) {
         PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.DATA);
-        EchoPet.getInstance().getServer().getPluginManager().callEvent(menuEvent);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(menuEvent);
         if (menuEvent.isCancelled()) {
             return;
         }

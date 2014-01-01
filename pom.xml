@@ -18,7 +18,7 @@
         <cb_package>v1_7_R1</cb_package>
         <slf4j.version>1.7.5</slf4j.version>
         <bonecp.version>0.8.0-rc3</bonecp.version>
-        <main.class>io.github.dsh105.echopet.EchoPet</main.class>
+        <main.class>io.github.dsh105.echopet.EchoPetPlugin</main.class>
     </properties>
     <distributionManagement>
         <repository>

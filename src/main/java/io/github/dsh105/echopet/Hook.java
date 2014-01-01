@@ -8,7 +8,7 @@ import org.kitteh.vanish.VanishPlugin;
 public class Hook {
 
     public static VanishPlugin getVNP() {
-        Plugin plugin = EchoPet.getInstance().getServer().getPluginManager().getPlugin("VanishNoPacket");
+        Plugin plugin = EchoPetPlugin.getInstance().getServer().getPluginManager().getPlugin("VanishNoPacket");
         if (plugin == null || !(plugin instanceof VanishPlugin)) {
             return null;
         }
@@ -16,7 +16,7 @@ public class Hook {
     }
 
     public static WorldGuardPlugin getWorldGuard() {
-        Plugin plugin = EchoPet.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
+        Plugin plugin = EchoPetPlugin.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
         }

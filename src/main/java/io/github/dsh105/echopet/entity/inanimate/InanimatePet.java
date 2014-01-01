@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.inanimate;
 
 import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetSpawnEvent;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
@@ -45,7 +45,7 @@ public class InanimatePet extends Pet {
     protected EntityInanimatePet initiatePet() {
         Location l = this.getOwner().getLocation();
         PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);
-        EchoPet.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
             return null;
         }
@@ -59,8 +59,8 @@ public class InanimatePet extends Pet {
             l.getChunk().load();
         }
         if (!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
-            this.getOwner().sendMessage(EchoPet.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
-            EchoPet.getInstance().PH.removePet(this, true);
+            this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
+            EchoPetPlugin.getInstance().PH.removePet(this, true);
             spawnEvent.setCancelled(true);
         }
         try {

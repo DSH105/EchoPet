@@ -3,7 +3,7 @@ package io.github.dsh105.echopet.api;
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
@@ -28,6 +28,15 @@ import java.util.ArrayList;
 
 public class EchoPetAPI {
 
+    private static EchoPetAPI instance;
+
+    public static EchoPetAPI getAPI() {
+        if (instance == null) {
+            instance = new EchoPetAPI();
+        }
+        return instance;
+    }
+
     /**
      * Gives a {@link io.github.dsh105.echopet.entity.Pet} to the specified {@link Player}
      * <p/>
@@ -40,7 +49,7 @@ public class EchoPetAPI {
      */
     public Pet givePet(Player player, PetType petType, boolean sendMessage) {
         if (player != null && petType != null) {
-            Pet pet = EchoPet.getInstance().PH.createPet(player, petType, sendMessage);
+            Pet pet = EchoPetPlugin.getInstance().PH.createPet(player, petType, sendMessage);
             if (pet == null) {
                 ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml?");
                 return null;
@@ -60,7 +69,7 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
-        EchoPet.getInstance().PH.removePets(player, true);
+        EchoPetPlugin.getInstance().PH.removePets(player, true);
         if (save) {
             if (hasPet(player)) {
                 PetHandler.getInstance().saveFileData("autosave", PetHandler.getInstance().getPet(player));
@@ -76,7 +85,7 @@ public class EchoPetAPI {
      * @return true if {@link org.bukkit.entity.Player} has a {@link io.github.dsh105.echopet.entity.Pet}, false if not
      */
     public boolean hasPet(Player player) {
-        return EchoPet.getInstance().PH.getPet(player) != null;
+        return EchoPetPlugin.getInstance().PH.getPet(player) != null;
     }
 
     /**
@@ -86,7 +95,7 @@ public class EchoPetAPI {
      * @return the {@link io.github.dsh105.echopet.entity.Pet} instance linked to the {@link org.bukkit.entity.Player}
      */
     public Pet getPet(Player player) {
-        return EchoPet.getInstance().PH.getPet(player);
+        return EchoPetPlugin.getInstance().PH.getPet(player);
     }
 
     /**
@@ -96,7 +105,7 @@ public class EchoPetAPI {
      */
 
     public Pet[] getAllPets() {
-        ArrayList<Pet> pets = EchoPet.getInstance().PH.getPets();
+        ArrayList<Pet> pets = EchoPetPlugin.getInstance().PH.getPets();
         return pets.toArray(new Pet[pets.size()]);
     }
 
@@ -150,7 +159,7 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
             return;
         }
-        EchoPet.getInstance().PH.setData(pet, new PetData[]{petData}, true);
+        EchoPetPlugin.getInstance().PH.setData(pet, new PetData[]{petData}, true);
     }
 
     /**
@@ -164,7 +173,7 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetData [" + petData.toString() + "] from Pet through the EchoPetAPI. Pet cannot be null.");
             return;
         }
-        EchoPet.getInstance().PH.setData(pet, new PetData[]{petData}, false);
+        EchoPetPlugin.getInstance().PH.setData(pet, new PetData[]{petData}, false);
     }
 
     /**
@@ -272,7 +281,7 @@ public class EchoPetAPI {
             return;
         }
         if (goalType == GoalType.ATTACK) {
-            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPet.getInstance().options.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPet.getInstance().options.getConfigOption("attack.ticksBetweenAttacks", 20)));
+            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPetPlugin.getInstance().options.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPetPlugin.getInstance().options.getConfigOption("attack.ticksBetweenAttacks", 20)));
         } else if (goalType == GoalType.FLOAT) {
             pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));
         } else if (goalType == GoalType.FOLLOW_OWNER) {

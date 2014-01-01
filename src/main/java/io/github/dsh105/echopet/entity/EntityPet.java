@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity;
 
 import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.api.event.PetRideMoveEvent;
@@ -54,8 +54,8 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
             this.pet.setCraftPet(this.getBukkitEntity());
             this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
             this.setHealth((float) pet.getPetType().getMaxHealth());
-            this.jumpHeight = EchoPet.getInstance().options.getRideJumpHeight(this.getPet().getPetType());
-            this.rideSpeed = EchoPet.getInstance().options.getRideSpeed(this.getPet().getPetType());
+            this.jumpHeight = EchoPetPlugin.getInstance().options.getRideJumpHeight(this.getPet().getPetType());
+            this.rideSpeed = EchoPetPlugin.getInstance().options.getRideSpeed(this.getPet().getPetType());
             //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityLiving.java#L1322-L1334
             this.jump = EntityLiving.class.getDeclaredField("bd");
             this.jump.setAccessible(true);
@@ -109,10 +109,10 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     public boolean attack(Entity entity, DamageSource damageSource, float f) {
         PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), damageSource, f);
-        EchoPet.getInstance().getServer().getPluginManager().callEvent(attackEvent);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {
-                if (!((Boolean) EchoPet.getInstance().options.getConfigOption("canAttackPlayers", false))) {
+                if (!((Boolean) EchoPetPlugin.getInstance().options.getConfigOption("canAttackPlayers", false))) {
                     return false;
                 }
             }
@@ -168,7 +168,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     // EntityInsentient
     public boolean a(EntityHuman human) {
         if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
-            if ((Boolean) EchoPet.getInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
+            if ((Boolean) EchoPetPlugin.getInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
                 PetMenu menu = new PetMenu(getPet(), options, size);
@@ -232,7 +232,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
             this.particle++;
         }
 
-        if (this.getPlayerOwner().isFlying() && EchoPet.getInstance().options.canFly(this.getPet().getPetType())) {
+        if (this.getPlayerOwner().isFlying() && EchoPetPlugin.getInstance().options.canFly(this.getPet().getPetType())) {
             Location petLoc = this.getLocation();
             Location ownerLoc = this.getPlayerOwner().getLocation();
             Vector v = ownerLoc.toVector().subtract(petLoc.toVector());
@@ -289,7 +289,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         sideMot *= 0.75F;
 
         PetRideMoveEvent moveEvent = new PetRideMoveEvent(this.getPet(), forwMot, sideMot);
-        EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(moveEvent);
         if (moveEvent.isCancelled()) {
             return;
         }
@@ -299,14 +299,14 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
         PetType pt = this.getPet().getPetType();
         if (jump != null) {
-            if (EchoPet.getInstance().options.canFly(pt)) {
+            if (EchoPetPlugin.getInstance().options.canFly(pt)) {
                 try {
                     if (((Player) (human.getBukkitEntity())).isFlying()) {
                         ((Player) (human.getBukkitEntity())).setFlying(false);
                     }
                     if (jump.getBoolean(this.passenger)) {
                         PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                        EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
+                        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                         if (!rideEvent.isCancelled()) {
                             this.motY = 0.5F;
                         }
@@ -318,7 +318,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                 try {
                     if (jump.getBoolean(this.passenger)) {
                         PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                        EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
+                        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                         if (!rideEvent.isCancelled()) {
                             this.motY = rideEvent.getJumpHeight();
                         }

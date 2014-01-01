@@ -3,7 +3,7 @@ package io.github.dsh105.echopet.data;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
@@ -39,11 +39,11 @@ import java.util.ListIterator;
 
 public class PetHandler {
 
-    private static EchoPet ec;
+    private static EchoPetPlugin ec;
 
     private ArrayList<Pet> pets = new ArrayList<Pet>();
 
-    public PetHandler(EchoPet ec) {
+    public PetHandler(EchoPetPlugin ec) {
         PetHandler.ec = ec;
     }
 
@@ -56,7 +56,7 @@ public class PetHandler {
     }
 
     public Pet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
-        EchoPet ec = EchoPet.getInstance();
+        EchoPetPlugin ec = EchoPetPlugin.getInstance();
         if (ec.options.sqlOverride()) {
             Pet pet = ec.SPH.createPetFromDatabase(p);
             if (pet == null) {

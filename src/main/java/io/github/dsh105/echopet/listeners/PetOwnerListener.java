@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.listeners;
 
 import io.github.dsh105.dshutils.util.GeometryUtil;
 import io.github.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
@@ -50,7 +50,7 @@ public class PetOwnerListener implements Listener {
             Pet pet = ((CraftPet) e).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
-            EchoPet.getInstance().getServer().getPluginManager().callEvent(iEvent);
+            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(iEvent);
             if (!iEvent.isCancelled()) {
                 pet.getEntityPet().a(((CraftPlayer) p).getHandle());
             }
@@ -100,7 +100,7 @@ public class PetOwnerListener implements Listener {
                         PetHandler.getInstance().loadPets(p, false, false, false);
                     }
 
-                }.runTaskLater(EchoPet.getInstance(), 20L);
+                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);
             } else {
                 PetHandler.getInstance().saveFileData("autosave", pi);
                 SQLPetHandler.getInstance().saveToDatabase(pi, false);
@@ -117,7 +117,7 @@ public class PetOwnerListener implements Listener {
                         PetHandler.getInstance().loadPets(p, false, false, false);
                     }
 
-                }.runTaskLater(EchoPet.getInstance(), 20L);
+                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);
             }
         }
     }
@@ -136,7 +136,7 @@ public class PetOwnerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
-        EchoPet ec = EchoPet.getInstance();
+        EchoPetPlugin ec = EchoPetPlugin.getInstance();
         final Player p = event.getPlayer();
         Inventory inv = p.getInventory();
         if (ec.update && p.hasPermission("echopet.update")) {

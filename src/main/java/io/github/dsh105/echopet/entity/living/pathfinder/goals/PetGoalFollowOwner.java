@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity.living.pathfinder.goals;
 
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMoveEvent;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
@@ -94,7 +94,7 @@ public class PetGoalFollowOwner extends PetGoal {
             }
 
             PetMoveEvent moveEvent = new PetMoveEvent(this.pet.getPet(), this.pet.getLocation(), this.pet.getPlayerOwner().getLocation());
-            EchoPet.getInstance().getServer().getPluginManager().callEvent(moveEvent);
+            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(moveEvent);
             if (moveEvent.isCancelled()) {
                 return;
             }

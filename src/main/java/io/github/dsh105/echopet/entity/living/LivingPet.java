@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living;
 
 import io.github.dsh105.dshutils.Particle;
 import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetSpawnEvent;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
@@ -10,7 +10,6 @@ import io.github.dsh105.echopet.entity.PetType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
@@ -30,7 +29,7 @@ public class LivingPet extends Pet {
     protected EntityLivingPet initiatePet() {
         Location l = this.getOwner().getLocation();
         PetSpawnEvent spawnEvent = new PetSpawnEvent(this, l);
-        EchoPet.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
             return null;
         }
@@ -44,8 +43,8 @@ public class LivingPet extends Pet {
             l.getChunk().load();
         }
         if (!mcWorld.addEntity(entityPet, SpawnReason.CUSTOM)) {
-            this.getOwner().sendMessage(EchoPet.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
-            EchoPet.getInstance().PH.removePet(this, true);
+            this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity. Maybe WorldGuard is blocking it?");
+            EchoPetPlugin.getInstance().PH.removePet(this, true);
             spawnEvent.setCancelled(true);
         }
         try {

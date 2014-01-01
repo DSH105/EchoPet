@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.living.type.enderdragon;
 
 import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
@@ -132,7 +132,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                     try {
                         if (this.jump.getBoolean(this.passenger)) {
                             PetRideJumpEvent rideEvent = new PetRideJumpEvent(this.getPet(), this.jumpHeight);
-                            EchoPet.getInstance().getServer().getPluginManager().callEvent(rideEvent);
+                            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(rideEvent);
                             if (!rideEvent.isCancelled()) {
                                 v.setY(0.5F);
                             }

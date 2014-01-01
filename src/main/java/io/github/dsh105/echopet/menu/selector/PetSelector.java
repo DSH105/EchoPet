@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.menu.selector;
 
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
 import io.github.dsh105.echopet.menu.Menu;
 import io.github.dsh105.echopet.util.Lang;
@@ -26,7 +26,7 @@ public class PetSelector implements Menu {
         int count = 0;
         for (PetItem item : PetItem.values()) {
 
-            if (EchoPet.getInstance().options.allowPetType(item.petType)) {
+            if (EchoPetPlugin.getInstance().options.allowPetType(item.petType)) {
                 this.inv.setItem(count, item.getItem(this.viewer));
                 count++;
             }
@@ -44,7 +44,7 @@ public class PetSelector implements Menu {
 
     public void open(boolean sendMessage) {
         PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.viewer, PetMenuOpenEvent.MenuType.SELECTOR);
-        EchoPet.getInstance().getServer().getPluginManager().callEvent(menuEvent);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(menuEvent);
         if (menuEvent.isCancelled()) {
             return;
         }

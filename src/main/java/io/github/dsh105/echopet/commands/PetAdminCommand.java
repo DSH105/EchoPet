@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.commands;
 
 import io.github.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.Pet;
@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 public class PetAdminCommand implements CommandExecutor {
 
-    private EchoPet ec;
+    private EchoPetPlugin ec;
     public String cmdLabel;
 
     public PetAdminCommand(String commandLabel) {
-        this.ec = EchoPet.getInstance();
+        this.ec = EchoPetPlugin.getInstance();
         this.cmdLabel = commandLabel;
     }
 
@@ -45,7 +45,7 @@ public class PetAdminCommand implements CommandExecutor {
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (Perm.ADMIN_RELOAD.hasPerm(sender, true, true)) {
-                    EchoPet.getInstance().getMainConfig().reloadConfig();
+                    EchoPetPlugin.getInstance().getMainConfig().reloadConfig();
                     Lang.sendTo(sender, Lang.ADMIN_RELOAD_CONFIG.toString());
                     return true;
                 } else return true;
@@ -219,7 +219,7 @@ public class PetAdminCommand implements CommandExecutor {
                             return true;
                         } else {
                             PetHandler.getInstance().clearFileData("autosave", args[1]);
-                            EchoPet.getInstance().SPH.clearFromDatabase(args[1]);
+                            EchoPetPlugin.getInstance().SPH.clearFromDatabase(args[1]);
                             Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", args[1]));
                             return true;
                         }
@@ -442,7 +442,7 @@ public class PetAdminCommand implements CommandExecutor {
                                     ec.getPetConfig().set(path + ".mount" + key, null);
                                 }
 
-                                EchoPet.getInstance().SPH.clearMountFromDatabase(args[2]);
+                                EchoPetPlugin.getInstance().SPH.clearMountFromDatabase(args[2]);
                                 Lang.sendTo(sender, Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", args[2]));
                                 return true;
                             }

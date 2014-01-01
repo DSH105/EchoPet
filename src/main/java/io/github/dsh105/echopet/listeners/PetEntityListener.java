@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetDamageEvent;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
@@ -59,7 +59,7 @@ public class PetEntityListener implements Listener {
         if (e instanceof CraftPet) {
             CraftPet craftPet = (CraftPet) e;
             PetDamageEvent damageEvent = new PetDamageEvent(craftPet.getPet(), event.getCause(), event.getDamage());
-            EchoPet.getInstance().getServer().getPluginManager().callEvent(damageEvent);
+            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(damageEvent);
             event.setDamage(damageEvent.getDamage());
             event.setCancelled(damageEvent.isCancelled());
         }
@@ -72,13 +72,13 @@ public class PetEntityListener implements Listener {
             Entity damager = event.getDamager();
             if (damager instanceof Player) {
                 PetInteractEvent iEvent = new PetInteractEvent(((CraftPet) e).getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
-                EchoPet.getInstance().getServer().getPluginManager().callEvent(iEvent);
+                EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(iEvent);
                 event.setCancelled(iEvent.isCancelled());
             }
         } else if (event.getDamager() instanceof CraftPet) {
             CraftPet craftPet = (CraftPet) event.getDamager();
             PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, DamageSource.mobAttack(craftPet.getPet().getEntityPet()), event.getDamage());
-            EchoPet.getInstance().getServer().getPluginManager().callEvent(attackEvent);
+            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(attackEvent);
             event.setDamage(attackEvent.getDamage());
             event.setCancelled(attackEvent.isCancelled());
         }

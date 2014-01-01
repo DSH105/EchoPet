@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity.living;
 
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.PetType;
 
 public enum SizeCategory {
@@ -18,14 +18,14 @@ public enum SizeCategory {
     }
 
     public float getStartWalk(PetType petType) {
-        return ((Integer) (EchoPet.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".startFollowDistance", 12))) * this.mod;
+        return ((Integer) (EchoPetPlugin.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".startFollowDistance", 12))) * this.mod;
     }
 
     public float getStopWalk(PetType petType) {
-        return ((Integer) (EchoPet.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 8))) * this.mod;
+        return ((Integer) (EchoPetPlugin.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 8))) * this.mod;
     }
 
     public float getTeleport(PetType petType) {
-        return ((Integer) (EchoPet.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 50))) * this.mod;
+        return ((Integer) (EchoPetPlugin.getInstance().options.getConfigOption("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 50))) * this.mod;
     }
 }

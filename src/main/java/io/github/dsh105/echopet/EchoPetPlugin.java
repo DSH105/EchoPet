@@ -12,7 +12,6 @@ import io.github.dsh105.dshutils.config.YAMLConfigManager;
 import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.dshutils.util.ReflectionUtil;
-import io.github.dsh105.echopet.api.EchoPetAPI;
 import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
@@ -46,9 +45,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-public class EchoPet extends JavaPlugin {
+public class EchoPetPlugin extends JavaPlugin {
 
-    private static EchoPet plugin;
+    private static EchoPetPlugin plugin;
     private static Random random = new Random();
 
     private YAMLConfigManager configManager;
@@ -61,8 +60,6 @@ public class EchoPet extends JavaPlugin {
     public SQLPetHandler SPH;
     public BoneCP dbPool;
     public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
-
-    private EchoPetAPI api;
 
     public String cmdString = "pet";
     public String adminCmdString = "petadmin";
@@ -110,8 +107,6 @@ public class EchoPet extends JavaPlugin {
 
             return;
         }
-
-        this.api = new EchoPetAPI();
 
         PluginManager manager = getServer().getPluginManager();
 
@@ -379,11 +374,7 @@ public class EchoPet extends JavaPlugin {
         }
     }
 
-    public EchoPetAPI getAPI() {
-        return this.api;
-    }
-
-    public static EchoPet getInstance() {
+    public static EchoPetPlugin getInstance() {
         return plugin;
     }
 

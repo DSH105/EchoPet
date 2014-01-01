@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.commands;
 
 import io.github.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPet;
+import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.Pet;
@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 public class PetCommand implements CommandExecutor {
 
-    private EchoPet ec;
+    private EchoPetPlugin ec;
     private String cmdLabel;
 
     public PetCommand(String commandLabel) {
-        this.ec = EchoPet.getInstance();
+        this.ec = EchoPetPlugin.getInstance();
         this.cmdLabel = commandLabel;
     }
 
