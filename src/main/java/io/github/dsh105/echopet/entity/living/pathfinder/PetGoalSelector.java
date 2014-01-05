@@ -13,7 +13,7 @@ public class PetGoalSelector {
 
     public void addGoal(int i, String s, PetGoal goal) {
         PetGoalSelectorItem goalItem = new PetGoalSelectorItem(this, i, goal);
-        if (this.goalMap.containsKey(goalItem)) {
+        if (this.goalMap.containsKey(s)) {
             return;
         }
         this.goalMap.put(s, goalItem);
