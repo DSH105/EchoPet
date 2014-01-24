@@ -90,6 +90,7 @@ public class ConfigOptions extends Options {
         set("sql.username", "none");
         set("sql.password", "none");
 
+        set("petSelector.allowDrop", true);
         set("petSelector.giveOnJoin.enable", false);
         set("petSelector.giveOnJoin.usePerm", false);
         set("petSelector.giveOnJoin.perm", "echopet.selector.join");

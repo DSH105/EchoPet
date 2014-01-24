@@ -4,6 +4,7 @@ import io.github.dsh105.dshutils.util.GeometryUtil;
 import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
+import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
@@ -135,6 +136,14 @@ public class PetOwnerListener implements Listener {
     }
 
     @EventHandler
+    public void onDropItem(PlayerDropItemEvent event) {
+        Player p = event.getPlayer();
+        if (event.getItemDrop().getItemStack().isSimilar(SelectorItem.SELECTOR.getItem()) && !((Boolean) ConfigOptions.instance.getConfigOption("petSelector.allowDrop", true))) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
         EchoPetPlugin ec = EchoPetPlugin.getInstance();
         final Player p = event.getPlayer();
@@ -144,10 +153,9 @@ public class PetOwnerListener implements Listener {
             p.sendMessage(ec.prefix + ChatColor.GOLD + "Type /ecupdate to update.");
         }
 
-        for (int j = 0; j <= 35; j++) {
-            ItemStack item = inv.getItem(j);
+        for (ItemStack item : inv.getContents()) {
             if (item != null && item.isSimilar(SelectorItem.SELECTOR.getItem())) {
-                inv.clear(j);
+                inv.remove(item);
             }
         }
 
