@@ -23,7 +23,16 @@ public class WorldUtil {
             return true;
         }
         RegionManager regionManager = wg.getRegionManager(location.getWorld());
+
+        if (regionManager == null) {
+            return true;
+        }
+
         ApplicableRegionSet set = regionManager.getApplicableRegions(location);
+
+        if (set.size() <= 0) {
+            return true;
+        }
 
         boolean result = true;
         boolean hasSet = false;
@@ -43,10 +52,6 @@ public class WorldUtil {
             }
         }
 
-        if (!hasSet) {
-            result = def;
-        }
-
-        return result;
+        return hasSet ? result : def;
     }
 }
