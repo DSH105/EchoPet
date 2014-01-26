@@ -312,7 +312,7 @@ public class PetAdminCommand implements CommandExecutor {
                         ec.PH.setData(pet, petDataList.toArray(new PetData[petDataList.size()]), true);
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                        if (Perm.ADMIN_NAME.hasPerm(sender, true, false)) {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
@@ -507,7 +507,7 @@ public class PetAdminCommand implements CommandExecutor {
                             ec.PH.setData(mount, petDataList.toArray(new PetData[petDataList.size()]), true);
                         }
                         if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                            if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                            if (Perm.ADMIN_NAME.hasPerm(sender, true, false)) {
                                 if (UPD.petName.length() > 32) {
                                     Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                                 } else {
@@ -559,7 +559,7 @@ public class PetAdminCommand implements CommandExecutor {
                         ec.PH.setData(pi, petDataList.toArray(new PetData[petDataList.size()]), true);
                     }
                     if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
-                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                        if (Perm.ADMIN_NAME.hasPerm(sender, true, false)) {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
@@ -571,7 +571,7 @@ public class PetAdminCommand implements CommandExecutor {
                         ec.PH.setData(pi.getMount(), mountDataList.toArray(new PetData[mountDataList.size()]), true);
                     }
                     if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
-                        if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
+                        if (Perm.ADMIN_NAME.hasPerm(sender, true, false)) {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
