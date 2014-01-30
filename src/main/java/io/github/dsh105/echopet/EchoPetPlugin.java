@@ -1,7 +1,5 @@
 package io.github.dsh105.echopet;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
 import com.dsh105.dshutils.Metrics;
 import com.dsh105.dshutils.Updater;
 import com.dsh105.dshutils.Version;
@@ -12,6 +10,8 @@ import com.dsh105.dshutils.config.YAMLConfigManager;
 import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.ReflectionUtil;
+import com.jolbox.bonecp.BoneCP;
+import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
@@ -19,8 +19,8 @@ import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.EntityPet;
-import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.PetData;
+import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.listeners.*;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;

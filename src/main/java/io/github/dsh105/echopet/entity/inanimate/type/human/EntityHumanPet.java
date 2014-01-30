@@ -2,9 +2,9 @@ package io.github.dsh105.echopet.entity.inanimate.type.human;
 
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.ReflectionUtil;
+import io.github.dsh105.echopet.entity.SizeCategory;
 import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
-import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R1.Packet;
 import net.minecraft.server.v1_7_R1.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_7_R1.World;

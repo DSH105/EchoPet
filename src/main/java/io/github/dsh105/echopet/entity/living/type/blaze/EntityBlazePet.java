@@ -2,9 +2,9 @@ package io.github.dsh105.echopet.entity.living.type.blaze;
 
 import com.dsh105.dshutils.Particle;
 import com.dsh105.dshutils.logger.Logger;
+import io.github.dsh105.echopet.entity.SizeCategory;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R1.World;
 
 public class EntityBlazePet extends EntityLivingPet {

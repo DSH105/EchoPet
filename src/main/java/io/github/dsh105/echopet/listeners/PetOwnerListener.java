@@ -1,6 +1,5 @@
 package io.github.dsh105.echopet.listeners;
 
-import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;

@@ -3,9 +3,9 @@ package io.github.dsh105.echopet.entity.living.type.enderdragon;
 import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
+import io.github.dsh105.echopet.entity.SizeCategory;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
@@ -91,7 +91,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                 float forMot = (float) Math.pow(forw, forw);*/
 
 				/*if (forMot <= 0.0F) {
-					forMot *= 0.25F;
+                    forMot *= 0.25F;
 				}*/
 
 

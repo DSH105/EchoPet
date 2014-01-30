@@ -5,9 +5,9 @@ import com.dsh105.dshutils.util.EnumUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
-import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.living.type.blaze.BlazePet;
 import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
 import io.github.dsh105.echopet.entity.living.type.enderman.EndermanPet;
@@ -312,7 +312,7 @@ public class PetHandler {
             Pet p = i.next();
             if (p.getOwner().getName().equals(player.getName())) {
                 /*saveFileData("autosave", p);
-				ec.SPH.saveToDatabase(p, false);*/
+                ec.SPH.saveToDatabase(p, false);*/
                 p.removePet(makeDeathSound);
                 i.remove();
             }
