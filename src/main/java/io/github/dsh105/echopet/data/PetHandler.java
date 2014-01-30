@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.data;
 
-import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.dshutils.util.EnumUtil;
-import io.github.dsh105.dshutils.util.StringUtil;
+import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.util.EnumUtil;
+import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;

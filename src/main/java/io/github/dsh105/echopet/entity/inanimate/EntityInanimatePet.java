@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.inanimate;
 
-import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.dshutils.util.ReflectionUtil;
+import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.util.ReflectionUtil;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.Pet;

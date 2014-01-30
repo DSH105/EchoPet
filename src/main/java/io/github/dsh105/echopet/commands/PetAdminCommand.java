@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.commands;
 
-import io.github.dsh105.dshutils.util.StringUtil;
+import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.data.UnorganisedPetData;

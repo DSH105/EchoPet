@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.living;
 
-import io.github.dsh105.dshutils.Particle;
-import io.github.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.Particle;
+import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetSpawnEvent;
 import io.github.dsh105.echopet.entity.CraftPet;

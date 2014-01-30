@@ -40,7 +40,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.dsh105</groupId>
+            <groupId>com.dsh105</groupId>
             <artifactId>DSHUtils</artifactId>
             <version>${dshutils.version}</version>
         </dependency>
@@ -175,7 +175,7 @@
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
-                                    <include>io.github.dsh105:DSHUtils</include>
+                                    <include>com.dsh105:DSHUtils</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -188,7 +188,7 @@
                                     <shadedPattern>io.github.dsh105.echopet.libraries.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>io.github.dsh105.dshutils</pattern>
+                                    <pattern>com.dsh105.dshutils</pattern>
                                     <shadedPattern>io.github.dsh105.echopet.libraries.dshutils</shadedPattern>
                                 </relocation>
                             </relocations>

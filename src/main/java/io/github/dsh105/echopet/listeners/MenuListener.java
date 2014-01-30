@@ -1,9 +1,9 @@
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.dshutils.Particle;
-import io.github.dsh105.dshutils.logger.Logger;
-import io.github.dsh105.dshutils.util.EnumUtil;
-import io.github.dsh105.dshutils.util.StringUtil;
+import com.dsh105.dshutils.Particle;
+import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.util.EnumUtil;
+import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;

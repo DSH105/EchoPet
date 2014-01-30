@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity;
 
-import io.github.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
 import io.github.dsh105.echopet.entity.inanimate.InanimatePet;

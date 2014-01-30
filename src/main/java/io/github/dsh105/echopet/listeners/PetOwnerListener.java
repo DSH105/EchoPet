@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.dshutils.logger.ConsoleLogger;
-import io.github.dsh105.dshutils.util.GeometryUtil;
-import io.github.dsh105.dshutils.util.StringUtil;
+import com.dsh105.dshutils.logger.ConsoleLogger;
+import com.dsh105.dshutils.util.GeometryUtil;
+import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.config.ConfigOptions;

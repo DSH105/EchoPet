@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.living.type.villager;
 
-import io.github.dsh105.dshutils.Particle;
-import io.github.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.Particle;
+import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
 import net.minecraft.server.v1_7_R1.World;
