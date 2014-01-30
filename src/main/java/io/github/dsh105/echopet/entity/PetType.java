@@ -25,6 +25,7 @@ import io.github.dsh105.echopet.entity.living.type.chicken.EntityChickenPet;
 import io.github.dsh105.echopet.entity.living.type.cow.CowPet;
 import io.github.dsh105.echopet.entity.living.type.cow.CraftCowPet;
 import io.github.dsh105.echopet.entity.living.type.cow.EntityCowPet;
+import io.github.dsh105.echopet.entity.living.type.creeper.CraftCreeperPet;
 import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
 import io.github.dsh105.echopet.entity.living.type.creeper.EntityCreeperPet;
 import io.github.dsh105.echopet.entity.living.type.enderdragon.CraftEnderDragonPet;
@@ -114,7 +115,7 @@ public enum PetType {
     // Aggressive mobs
     BLAZE(EntityBlazePet.class, BlazePet.class, CraftBlazePet.class, 61, true, "Blaze Pet", 20D, 6D, EntityType.BLAZE, PetData.FIRE),
     CAVESPIDER(EntityCaveSpiderPet.class, CaveSpiderPet.class, CraftCaveSpiderPet.class, 59, true, "Cave Spider Pet", 12D, 5D, EntityType.CAVE_SPIDER),
-    CREEPER(EntityCreeperPet.class, CreeperPet.class, CraftSnowmanPet.class, 50, true, "Creeper Pet", 20D, 6D, EntityType.CREEPER, PetData.POWER),
+    CREEPER(EntityCreeperPet.class, CreeperPet.class, CraftCreeperPet.class, 50, true, "Creeper Pet", 20D, 6D, EntityType.CREEPER, PetData.POWER),
     ENDERDRAGON(EntityEnderDragonPet.class, EnderDragonPet.class, CraftEnderDragonPet.class, 63, true, "EnderDragon Pet", 200D, 0D, EntityType.ENDER_DRAGON),
     ENDERMAN(EntityEndermanPet.class, EndermanPet.class, CraftEndermanPet.class, 58, true, "Enderman Pet", 40D, 6D, EntityType.ENDERMAN, PetData.SCREAMING),
     GHAST(EntityGhastPet.class, GhastPet.class, CraftGhastPet.class, 56, true, "Ghast Pet", 10D, 7D, EntityType.GHAST),
