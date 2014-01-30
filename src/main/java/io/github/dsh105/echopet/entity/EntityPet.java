@@ -7,7 +7,6 @@ import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.api.event.PetRideMoveEvent;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.living.SizeCategory;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoalSelector;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFollowOwner;

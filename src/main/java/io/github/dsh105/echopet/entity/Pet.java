@@ -7,7 +7,6 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.EntityNoClipPet;
-import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Location;
@@ -135,9 +134,9 @@ public abstract class Pet {
     }
 
     /**
-     * Get active {@link io.github.dsh105.echopet.entity.living.PetData} for this {@link io.github.dsh105.echopet.entity.Pet}
+     * Get active {@link PetData} for this {@link io.github.dsh105.echopet.entity.Pet}
      *
-     * @return An {@link java.util.ArrayList} of {@link io.github.dsh105.echopet.entity.living.PetData} for this {@link io.github.dsh105.echopet.entity.Pet}
+     * @return An {@link java.util.ArrayList} of {@link PetData} for this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public ArrayList<PetData> getPetData() {
         return this.petData;

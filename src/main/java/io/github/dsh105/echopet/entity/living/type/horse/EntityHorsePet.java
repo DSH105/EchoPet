@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.living.type.horse;
 
 import io.github.dsh105.echopet.entity.living.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.living.SizeCategory;
+import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R1.*;
 
 public class EntityHorsePet extends EntityAgeablePet {

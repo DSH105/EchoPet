@@ -1,4 +1,4 @@
-package io.github.dsh105.echopet.entity.living;
+package io.github.dsh105.echopet.entity;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.PetType;

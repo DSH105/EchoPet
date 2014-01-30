@@ -7,7 +7,7 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.living.IAgeablePet;
-import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.living.type.blaze.BlazePet;
 import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
 import io.github.dsh105.echopet.entity.living.type.enderman.EndermanPet;

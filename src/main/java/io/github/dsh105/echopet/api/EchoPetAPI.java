@@ -7,7 +7,7 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalAttack;
 import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
@@ -152,7 +152,7 @@ public class EchoPetAPI {
      * Adds {@link PetData} to a {@link io.github.dsh105.echopet.entity.Pet}
      *
      * @param pet     the {@link io.github.dsh105.echopet.entity.Pet} to add the data to
-     * @param petData {@link io.github.dsh105.echopet.entity.living.PetData} to add to the {@link io.github.dsh105.echopet.entity.Pet}
+     * @param petData {@link io.github.dsh105.echopet.entity.PetData} to add to the {@link io.github.dsh105.echopet.entity.Pet}
      */
     public void addData(Pet pet, PetData petData) {
         if (pet == null) {
@@ -163,10 +163,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Removes {@link io.github.dsh105.echopet.entity.living.PetData} from a {@link io.github.dsh105.echopet.entity.Pet}
+     * Removes {@link io.github.dsh105.echopet.entity.PetData} from a {@link io.github.dsh105.echopet.entity.Pet}
      *
      * @param pet     the {@link io.github.dsh105.echopet.entity.Pet} to remove the data from
-     * @param petData {@link io.github.dsh105.echopet.entity.living.PetData} to remove to the {@link io.github.dsh105.echopet.entity.Pet}
+     * @param petData {@link io.github.dsh105.echopet.entity.PetData} to remove to the {@link io.github.dsh105.echopet.entity.Pet}
      */
     public void removeData(Pet pet, PetData petData) {
         if (pet == null) {
@@ -177,11 +177,11 @@ public class EchoPetAPI {
     }
 
     /**
-     * Checks if a {@link io.github.dsh105.echopet.entity.Pet} has specific {@link io.github.dsh105.echopet.entity.living.PetData}
+     * Checks if a {@link io.github.dsh105.echopet.entity.Pet} has specific {@link io.github.dsh105.echopet.entity.PetData}
      *
      * @param pet     the {@link io.github.dsh105.echopet.entity.Pet} to search
      * @param petData the {@link PetData} searched for in the {@link io.github.dsh105.echopet.entity.Pet} instance
-     * @return true if the {@link io.github.dsh105.echopet.entity.Pet} has the specified {@link io.github.dsh105.echopet.entity.living.PetData}
+     * @return true if the {@link io.github.dsh105.echopet.entity.Pet} has the specified {@link io.github.dsh105.echopet.entity.PetData}
      */
     public boolean hasData(Pet pet, PetData petData) {
         if (pet == null) {

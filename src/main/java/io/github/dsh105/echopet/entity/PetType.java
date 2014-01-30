@@ -9,7 +9,6 @@ import io.github.dsh105.echopet.entity.inanimate.type.human.EntityHumanPet;
 import io.github.dsh105.echopet.entity.inanimate.type.human.HumanPet;
 import io.github.dsh105.echopet.entity.living.EntityLivingPet;
 import io.github.dsh105.echopet.entity.living.LivingPet;
-import io.github.dsh105.echopet.entity.living.PetData;
 import io.github.dsh105.echopet.entity.living.type.bat.BatPet;
 import io.github.dsh105.echopet.entity.living.type.bat.CraftBatPet;
 import io.github.dsh105.echopet.entity.living.type.bat.EntityBatPet;

@@ -8,7 +8,7 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.menu.main.DataMenu;
 import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 import io.github.dsh105.echopet.menu.main.DataMenuItem;

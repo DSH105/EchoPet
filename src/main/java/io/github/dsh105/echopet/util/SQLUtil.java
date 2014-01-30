@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.util;
 
-import io.github.dsh105.echopet.entity.living.PetData;
+import io.github.dsh105.echopet.entity.PetData;
 
 import java.util.HashMap;
 import java.util.List;
