@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.listeners;
 
+import io.github.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.dshutils.util.GeometryUtil;
 import io.github.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
@@ -85,9 +86,16 @@ public class PetOwnerListener implements Listener {
             }
         }
         if (pi != null) {
-            if (pi.ownerIsMounting) return;
-            if (event.getFrom().getWorld() == event.getTo().getWorld()) {
+            if (!WorldUtil.allowPets(event.getTo())) {
+                Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
                 PetHandler.getInstance().saveFileData("autosave", pi);
+                SQLPetHandler.getInstance().saveToDatabase(pi, false);
+                PetHandler.getInstance().removePet(pi, false);
+                return;
+            }
+            //if (pi.ownerIsMounting) return;
+            if (event.getFrom().getWorld() == event.getTo().getWorld()) {
+                /*PetHandler.getInstance().saveFileData("autosave", pi);
                 SQLPetHandler.getInstance().saveToDatabase(pi, false);
                 PetHandler.getInstance().removePet(pi, false);
                 if (!WorldUtil.allowPets(event.getTo())) {
@@ -101,9 +109,9 @@ public class PetOwnerListener implements Listener {
                         PetHandler.getInstance().loadPets(p, false, false, false);
                     }
 
-                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);
+                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);*/
             } else {
-                PetHandler.getInstance().saveFileData("autosave", pi);
+                /*PetHandler.getInstance().saveFileData("autosave", pi);
                 SQLPetHandler.getInstance().saveToDatabase(pi, false);
                 PetHandler.getInstance().removePet(pi, false);
                 if (!WorldUtil.allowPets(event.getTo())) {
@@ -118,7 +126,7 @@ public class PetOwnerListener implements Listener {
                         PetHandler.getInstance().loadPets(p, false, false, false);
                     }
 
-                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);
+                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);*/
             }
         }
     }
@@ -215,5 +223,24 @@ public class PetOwnerListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player p = event.getPlayer();
         PetHandler.getInstance().loadPets(p, true, false, true);
+    }
+
+    @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent event) {
+        final Player p = event.getPlayer();
+        final Pet pi = PetHandler.getInstance().getPet(p);
+        if (pi != null) {
+            PetHandler.getInstance().saveFileData("autosave", pi);
+            SQLPetHandler.getInstance().saveToDatabase(pi, false);
+            PetHandler.getInstance().removePet(pi, false);
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    PetHandler.getInstance().loadPets(p, false, false, false);
+                }
+
+            }.runTaskLater(EchoPetPlugin.getInstance(), 20L);
+        }
     }
 }

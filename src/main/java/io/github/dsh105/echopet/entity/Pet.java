@@ -225,6 +225,9 @@ public abstract class Pet {
      */
     public void ownerRidePet(boolean flag) {
         this.ownerIsMounting = true;
+        if (this.ownerRiding == flag) {
+            return;
+        }
         if (this.isHat) {
             this.setAsHat(false);
         }
@@ -266,6 +269,9 @@ public abstract class Pet {
      * @param flag true if your wish for this {@link io.github.dsh105.echopet.entity.Pet} to be a Hat
      */
     public void setAsHat(boolean flag) {
+        if (this.isHat == flag) {
+            return;
+        }
         if (this.ownerRiding) {
             this.ownerRidePet(false);
         }
