@@ -343,32 +343,56 @@ public class EchoPetPlugin extends JavaPlugin {
 
     public void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
         try {
+            Field field_c = EntityTypes.class.getDeclaredField("c");
             Field field_d = EntityTypes.class.getDeclaredField("d");
             Field field_f = EntityTypes.class.getDeclaredField("f");
+            Field field_g = EntityTypes.class.getDeclaredField("g");
+            field_c.setAccessible(true);
             field_d.setAccessible(true);
             field_f.setAccessible(true);
+            field_g.setAccessible(true);
 
+            Map<String, Class> c = (Map) field_c.get(field_c);
             Map<Class, String> d = (Map) field_d.get(field_d);
             Map<Class, Integer> f = (Map) field_f.get(field_f);
+            Map<String, Integer> g = (Map) field_g.get(field_g);
 
-            Iterator i = d.keySet().iterator();
+            Iterator<String> i = c.keySet().iterator();
             while (i.hasNext()) {
-                Class cl = (Class) i.next();
-                if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
+                String s = i.next();
+                if (s.equals(name)) {
                     i.remove();
                 }
             }
 
-            Iterator i2 = f.keySet().iterator();
+            Iterator<Class> i2 = d.keySet().iterator();
             while (i2.hasNext()) {
-                Class cl = (Class) i2.next();
+                Class cl = i2.next();
                 if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
                     i2.remove();
                 }
             }
 
+            Iterator<Class> i3 = f.keySet().iterator();
+            while (i2.hasNext()) {
+                Class cl = i3.next();
+                if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
+                    i3.remove();
+                }
+            }
+
+            Iterator<String> i4 = g.keySet().iterator();
+            while (i4.hasNext()) {
+                String s = i4.next();
+                if (s.equals(name)) {
+                    i4.remove();
+                }
+            }
+
+            c.put(name, clazz);
             d.put(clazz, name);
             f.put(clazz, id);
+            g.put(name, id);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
         }
