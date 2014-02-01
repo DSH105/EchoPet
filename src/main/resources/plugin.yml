@@ -99,6 +99,64 @@ permissions:
     echopet.petadmin.selector:
         default: op
         description: Give yourself the Pet Selector
+    echopet.pet.type.bat:
+        default: op
+    echopet.pet.type.blaze:
+        default: op
+    echopet.pet.type.cavespider:
+        default: op
+    echopet.pet.type.chicken:
+        default: op
+    echopet.pet.type.cow:
+        default: op
+    echopet.pet.type.creeper:
+        default: op
+    echopet.pet.type.enderdragon:
+        default: op
+    echopet.pet.type.enderman:
+        default: op
+    echopet.pet.type.ghast:
+        default: op
+    echopet.pet.type.horse:
+        default: op
+    echopet.pet.type.human:
+        default: op
+    echopet.pet.type.irongolem:
+        default: op
+    echopet.pet.type.magmacube:
+        default: op
+    echopet.pet.type.mushroomcow:
+        default: op
+    echopet.pet.type.ocelot:
+        default: op
+    echopet.pet.type.pig:
+        default: op
+    echopet.pet.type.pigzombie:
+        default: op
+    echopet.pet.type.sheep:
+        default: op
+    echopet.pet.type.silverfish:
+        default: op
+    echopet.pet.type.skeleton:
+        default: op
+    echopet.pet.type.slime:
+        default: op
+    echopet.pet.type.snowman:
+        default: op
+    echopet.pet.type.spider:
+        default: op
+    echopet.pet.type.squid:
+        default: op
+    echopet.pet.type.villager:
+        default: op
+    echopet.pet.type.witch:
+        default: op
+    echopet.pet.type.wither:
+        default: op
+    echopet.pet.type.wolf:
+        default: op
+    echopet.pet.type.zombie:
+        default: op
     echopet.pet.hat.bat:
         default: op
     echopet.pet.hat.blaze:
@@ -1018,31 +1076,26 @@ permissions:
         default: op
         description: 'All blaze pet data permissions'
         children:
-            echopet.pet.type.blaze: true
             echopet.pet.type.blaze.fire: true
     echopet.pet.type.chicken.*:
         default: op
         description: 'All chicken pet data permissions'
         children:
-            echopet.pet.type.chicken: true
             echopet.pet.type.chicken.baby: true
     echopet.pet.type.cow.*:
         default: op
         description: 'All cow pet data permissions'
         children:
-            echopet.pet.type.cow: true
             echopet.pet.type.cow.baby: true
     echopet.pet.type.enderman.*:
         default: op
         description: 'All enderman pet data permissions'
         children:
-            echopet.pet.type.enderman: true
             echopet.pet.type.enderman.screaming: true
     echopet.pet.type.horse.*:
         default: op
         description: 'All horse pet data permissions'
         children:
-            echopet.pet.type.horse: true
             echopet.pet.type.horse.baby: true
             echopet.pet.type.horse.chested: true
             echopet.pet.type.horse.saddle: true
@@ -1071,7 +1124,6 @@ permissions:
         default: op
         description: 'All magma cube pet data permissions'
         children:
-            echopet.pet.type.magmacube: true
             echopet.pet.type.magmacube.small: true
             echopet.pet.type.magmacube.medium: true
             echopet.pet.type.magmacube.large: true
@@ -1079,13 +1131,11 @@ permissions:
         default: op
         description: 'All mushroom cow pet data permissions'
         children:
-            echopet.pet.type.mushroomcow: true
             echopet.pet.type.mushroomcow.baby: true
     echopet.pet.type.ocelot.*:
         default: op
         description: 'All ocelot pet data permissions'
         children:
-            echopet.pet.type.ocelot: true
             echopet.pet.type.ocelot.baby: true
             echopet.pet.type.ocelot.black: true
             echopet.pet.type.ocelot.red: true
@@ -1095,21 +1145,18 @@ permissions:
         default: op
         description: 'All pig pet data permissions'
         children:
-            echopet.pet.type.pig: true
             echopet.pet.type.pig.baby: true
             echopet.pet.type.pig.saddle: true
     echopet.pet.type.pigzombie.*:
         default: op
         description: 'All pigzombie pet data permissions'
         children:
-            echopet.pet.type.pigzombie: true
             echopet.pet.type.pigzombie.baby: true
             echopet.pet.type.pigzombie.villager: true
     echopet.pet.type.sheep.*:
         default: op
         description: 'All sheep pet data permissions'
         children:
-            echopet.pet.type.sheep: true
             echopet.pet.type.sheep.baby: true
             echopet.pet.type.sheep.sheared: true
             echopet.pet.type.sheep.black: true
@@ -1132,13 +1179,11 @@ permissions:
         default: op
         description: 'All skeleton pet data permissions'
         children:
-            echopet.pet.type.skeleton: true
             echopet.pet.type.skeleton.wither: true
     echopet.pet.type.slime.*:
         default: op
         description: 'All slime pet data permissions'
         children:
-            echopet.pet.type.slime: true
             echopet.pet.type.slime.small: true
             echopet.pet.type.slime.medium: true
             echopet.pet.type.slime.large: true
@@ -1146,7 +1191,6 @@ permissions:
         default: op
         description: 'All villager pet data permissions'
         children:
-            echopet.pet.type.villager: true
             echopet.pet.type.villager.baby: true
             echopet.pet.type.villager.blacksmith: true
             echopet.pet.type.villager.butcher: true
@@ -1157,13 +1201,11 @@ permissions:
         default: op
         description: 'All wither pet data permissions'
         children:
-            echopet.pet.type.wither: true
             echopet.pet.type.wither.shield: true
     echopet.pet.type.wolf.*:
         default: op
         description: 'All wolf pet data permissions'
         children:
-            echopet.pet.type.wolf: true
             echopet.pet.type.wolf.baby: true
             echopet.pet.type.wolf.tamed: true
             echopet.pet.type.wolf.angry: true
@@ -1187,7 +1229,6 @@ permissions:
         default: op
         description: 'All zombie pet data permissions'
         children:
-            echopet.pet.type.zombie: true
             echopet.pet.type.zombie.baby: true
             echopet.pet.type.zombie.villager: true
     echopet.pet.data.*:
