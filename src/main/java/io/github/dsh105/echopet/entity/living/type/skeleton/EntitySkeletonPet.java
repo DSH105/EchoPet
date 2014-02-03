@@ -21,6 +21,7 @@ public class EntitySkeletonPet extends EntityLivingPet {
         this.fireProof = true;
         final SkeletonPet sp = (SkeletonPet) pet;
         new BukkitRunnable() {
+            @Override
             public void run() {
                 if (sp.wither) {
                     setEquipment(0, new ItemStack(Items.STONE_SWORD));

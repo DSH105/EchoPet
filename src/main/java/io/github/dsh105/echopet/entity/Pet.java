@@ -241,6 +241,7 @@ public abstract class Pet {
                 this.getMount().removePet(false);
             }
             new BukkitRunnable() {
+                @Override
                 public void run() {
                     ((CraftPlayer) owner).getHandle().mount(getEntityPet());
                     ownerIsMounting = false;
@@ -330,6 +331,7 @@ public abstract class Pet {
         this.mount = p;
         p.isMount = true;
         new BukkitRunnable() {
+            @Override
             public void run() {
                 getCraftPet().setPassenger(mount.getCraftPet());
                 EchoPetPlugin.getInstance().SPH.saveToDatabase(mount, true);

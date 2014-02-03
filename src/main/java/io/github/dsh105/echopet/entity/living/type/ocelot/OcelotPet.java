@@ -16,11 +16,13 @@ public class OcelotPet extends LivingPet implements IAgeablePet {
         super(owner, petType);
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntityOcelotPet) getEntityPet()).setBaby(flag);
         this.baby = flag;
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }

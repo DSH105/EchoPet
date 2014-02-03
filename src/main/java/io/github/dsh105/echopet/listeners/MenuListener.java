@@ -229,6 +229,7 @@ public class MenuListener implements Listener {
                         player.closeInventory();
                         event.setCancelled(true);
                         new BukkitRunnable() {
+                            @Override
                             public void run() {
                                 int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
                                 PetMenu menu = new PetMenu(pet, MenuUtil.createOptionList(pet.getPetType()), size);

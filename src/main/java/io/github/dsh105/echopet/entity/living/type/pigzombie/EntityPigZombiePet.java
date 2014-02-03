@@ -20,6 +20,7 @@ public class EntityPigZombiePet extends EntityLivingPet {
         this.a(0.6F, 0.9F);
         this.fireProof = true;
         new BukkitRunnable() {
+            @Override
             public void run() {
                 setEquipment(0, new ItemStack(Items.GOLD_SWORD));
             }
@@ -51,6 +52,7 @@ public class EntityPigZombiePet extends EntityLivingPet {
         return "mob.zombiepig.zpigdeath";
     }
 
+    @Override
     public boolean isBaby() {
         return this.datawatcher.getByte(12) < 0;
     }

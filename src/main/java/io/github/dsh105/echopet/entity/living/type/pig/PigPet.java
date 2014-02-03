@@ -15,11 +15,13 @@ public class PigPet extends LivingPet implements IAgeablePet {
         super(owner, petType);
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntityPigPet) getEntityPet()).setBaby(flag);
         this.baby = flag;
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }

@@ -31,11 +31,13 @@ public abstract class EntityAgeablePet extends EntityLivingPet {
         this.ageLocked = ageLocked;
     }
 
+    @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(12, new Integer(0));
     }
 
+    @Override
     public void e() {
         super.e();
         if (!(this.world.isStatic || this.ageLocked)) {
@@ -59,6 +61,7 @@ public abstract class EntityAgeablePet extends EntityLivingPet {
         }
     }
 
+    @Override
     public boolean isBaby() {
         return this.datawatcher.getInt(12) < 0;
     }

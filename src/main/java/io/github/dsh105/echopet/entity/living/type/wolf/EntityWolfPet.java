@@ -60,6 +60,7 @@ public class EntityWolfPet extends EntityAgeablePet {
         return (this.datawatcher.getByte(16) & 2) != 0;
     }
 
+    @Override
     public void setBaby(boolean flag) {
         if (flag) {
             this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
