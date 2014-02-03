@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum MenuItem {
@@ -48,9 +49,7 @@ public enum MenuItem {
         this.amount = amount;
         this.data = data;
         List<String> list = new ArrayList<String>();
-        for (String s : lore) {
-            list.add(s);
-        }
+        list.addAll(Arrays.asList(lore));
         this.lore = list;
         this.menuType = menuType;
     }
