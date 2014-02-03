@@ -352,7 +352,7 @@ public class PetUtil {
 
                 builder.append(color1 + "- " + StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
 
-                if (pt.getAllowedDataTypes().size() != 0) {
+                if (!pt.getAllowedDataTypes().isEmpty()) {
                     builder.append(color2 + "    ");
                     for (PetData data : pt.getAllowedDataTypes()) {
                         builder.append(color2 + StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
@@ -367,7 +367,7 @@ public class PetUtil {
 
                 builder.append(color1 + "- " + StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
 
-                if (pt.getAllowedDataTypes().size() != 0) {
+                if (!pt.getAllowedDataTypes().isEmpty()) {
                     builder.append(color2 + " (");
                     for (PetData data : pt.getAllowedDataTypes()) {
                         builder.append(separator);
