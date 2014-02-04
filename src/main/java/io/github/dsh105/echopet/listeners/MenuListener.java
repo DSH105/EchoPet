@@ -247,7 +247,10 @@ public class MenuListener implements Listener {
                     }
                     event.setCancelled(true);
                 }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
+                Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
+                event.setCancelled(true);
+            } catch (IllegalStateException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
                 event.setCancelled(true);
             }

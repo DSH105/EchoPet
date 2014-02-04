@@ -141,7 +141,11 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                                 v.setY(-0.4F);
                             }
                         }
-                    } catch (Exception e) {
+                    } catch (IllegalArgumentException e) {
+                        Logger.log(Logger.LogLevel.WARNING, "Failed to initiate LivingPet Flying Motion for " + this.getPlayerOwner().getName() + "'s LivingPet.", e, true);
+                    } catch (IllegalAccessException e) {
+                        Logger.log(Logger.LogLevel.WARNING, "Failed to initiate LivingPet Flying Motion for " + this.getPlayerOwner().getName() + "'s LivingPet.", e, true);
+                    } catch (IllegalStateException e) {
                         Logger.log(Logger.LogLevel.WARNING, "Failed to initiate LivingPet Flying Motion for " + this.getPlayerOwner().getName() + "'s LivingPet.", e, true);
                     }
                 }

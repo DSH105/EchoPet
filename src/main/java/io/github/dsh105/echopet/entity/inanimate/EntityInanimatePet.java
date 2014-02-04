@@ -9,6 +9,7 @@ import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 public abstract class EntityInanimatePet extends EntityPet {
 
@@ -29,7 +30,16 @@ public abstract class EntityInanimatePet extends EntityPet {
             f.setAccessible(true);
             this.id = (Integer) f.get(this);
             this.dw = new DataWatcher(this);
-        } catch (Exception e) {
+        } catch (NoSuchFieldException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityInanimatePet.", e, true);
+            this.remove(false);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityInanimatePet.", e, true);
+            this.remove(false);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityInanimatePet.", e, true);
+            this.remove(false);
+        } catch (IllegalAccessException e) {
             Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityInanimatePet.", e, true);
             this.remove(false);
         }
@@ -88,7 +98,17 @@ public abstract class EntityInanimatePet extends EntityPet {
     public void updatePacket() {
         try {
             ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.createPacket());
-        } catch (Exception e) {
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
+        } catch (NoSuchMethodException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
+        } catch (IllegalAccessException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
+        } catch (InvocationTargetException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
+        } catch (NoSuchFieldException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
         }
     }
@@ -101,7 +121,17 @@ public abstract class EntityInanimatePet extends EntityPet {
         try {
             this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
             ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.metaPacket);
-        } catch (Exception e) {
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
+        } catch (NoSuchMethodException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
+        } catch (IllegalAccessException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
+        } catch (InvocationTargetException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
+        } catch (NoSuchFieldException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
         }
     }

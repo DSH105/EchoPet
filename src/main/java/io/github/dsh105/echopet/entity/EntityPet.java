@@ -59,7 +59,10 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
             this.jump = EntityLiving.class.getDeclaredField("bd");
             this.jump.setAccessible(true);
             setPathfinding();
-        } catch (Exception e) {
+        } catch (NoSuchFieldException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityLivingPet.", e, true);
+            this.remove(false);
+        } catch (SecurityException e) {
             Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityLivingPet.", e, true);
             this.remove(false);
         }
@@ -165,6 +168,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     }
 
     // EntityInsentient
+    @Override
     public boolean a(EntityHuman human) {
         if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
             if ((Boolean) EchoPetPlugin.getInstance().options.getConfigOption("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
@@ -310,7 +314,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                             this.motY = 0.5F;
                         }
                     }
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalAccessException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalStateException e) {
                     Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
                 }
             } else if (this.onGround) {
@@ -322,7 +330,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                             this.motY = rideEvent.getJumpHeight();
                         }
                     }
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalAccessException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalStateException e) {
                     Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
                 }
             }
