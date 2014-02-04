@@ -14,11 +14,13 @@ public class CowPet extends LivingPet implements IAgeablePet {
         super(owner, petType);
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntityCowPet) getEntityPet()).setBaby(flag);
         this.baby = flag;
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }

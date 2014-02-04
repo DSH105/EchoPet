@@ -19,6 +19,7 @@ public class EntityHorsePet extends EntityAgeablePet {
         this.fireProof = true;
     }
 
+    @Override
     public boolean isBaby() {
         return ((HorsePet) pet).isBaby();
     }
@@ -84,6 +85,7 @@ public class EntityHorsePet extends EntityAgeablePet {
         return this.datawatcher.getByte(19);
     }
 
+    @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(16, Integer.valueOf(0));

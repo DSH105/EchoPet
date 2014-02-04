@@ -246,14 +246,14 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
             Vector vo = this.getPlayerOwner().getLocation().getDirection();
             if (vo.getX() > 0) {
-                x = x - 1.5;
+                x -= 1.5;
             } else if (vo.getX() < 0) {
-                x = x + 1.5;
+                x += 1.5;
             }
             if (vo.getZ() > 0) {
-                z = z - 1.5;
+                z -= 1.5;
             } else if (vo.getZ() < 0) {
-                z = z + 1.5;
+                z += 1.5;
             }
 
             this.setVelocity(new Vector(x, y, z).normalize().multiply(0.3F));

@@ -18,6 +18,7 @@ public class EntityGiantPet extends EntityLivingPet {
         this.a(this.width * 5.0F, this.length * 5.0F);
     }
 
+    @Override
     protected void makeStepSound() {
         this.makeSound("mob.zombie.step", 0.15F, 1.0F);
     }

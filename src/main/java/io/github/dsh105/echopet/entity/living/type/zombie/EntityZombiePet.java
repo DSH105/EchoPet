@@ -20,6 +20,7 @@ public class EntityZombiePet extends EntityLivingPet {
         this.a(0.6F, 0.9F);
         this.fireProof = true;
         new BukkitRunnable() {
+            @Override
             public void run() {
                 setEquipment(0, new ItemStack(Items.IRON_SPADE));
             }
@@ -56,6 +57,7 @@ public class EntityZombiePet extends EntityLivingPet {
         return "mob.zombie.death";
     }
 
+    @Override
     public boolean isBaby() {
         return this.datawatcher.getByte(12) == 1;
     }

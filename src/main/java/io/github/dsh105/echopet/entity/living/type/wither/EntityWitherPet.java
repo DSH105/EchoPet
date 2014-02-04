@@ -19,6 +19,7 @@ public class EntityWitherPet extends EntityLivingPet {
         this.fireProof = true;
     }
 
+    @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(17, new Integer(0));

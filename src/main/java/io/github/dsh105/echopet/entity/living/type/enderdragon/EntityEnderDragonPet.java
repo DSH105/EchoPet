@@ -415,6 +415,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         }
     }
 
+    @Override
     public void setPosition(double d0, double d1, double d2) {
         this.locX = d0;
         this.locY = d1;

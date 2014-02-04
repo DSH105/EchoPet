@@ -350,12 +350,12 @@ public class PetUtil {
 
                 StringBuilder builder = new StringBuilder();
 
-                builder.append(color1 + "- " + StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
+                builder.append(color1).append("- ").append(StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
 
-                if (pt.getAllowedDataTypes().size() != 0) {
-                    builder.append(color2 + "    ");
+                if (!pt.getAllowedDataTypes().isEmpty()) {
+                    builder.append(color2).append("    ");
                     for (PetData data : pt.getAllowedDataTypes()) {
-                        builder.append(color2 + StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
+                        builder.append(color2).append(StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
                         builder.append(separator);
                     }
                     builder.deleteCharAt(builder.length() - separator.length());
@@ -365,16 +365,16 @@ public class PetUtil {
             } else {
                 StringBuilder builder = new StringBuilder();
 
-                builder.append(color1 + "- " + StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
+                builder.append(color1).append("- ").append(StringUtil.capitalise(pt.toString().toLowerCase().replace("_", " ")));
 
-                if (pt.getAllowedDataTypes().size() != 0) {
-                    builder.append(color2 + " (");
+                if (!pt.getAllowedDataTypes().isEmpty()) {
+                    builder.append(color2).append(" (");
                     for (PetData data : pt.getAllowedDataTypes()) {
                         builder.append(separator);
-                        builder.append(color2 + StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
+                        builder.append(color2).append(StringUtil.capitalise(data.toString().toLowerCase().replace("_", "")));
                     }
                     builder.deleteCharAt(builder.length() - separator.length());
-                    builder.append(color2 + ")");
+                    builder.append(color2).append(")");
                 }
 
                 list.add(builder.toString().replace(" )", ")"));

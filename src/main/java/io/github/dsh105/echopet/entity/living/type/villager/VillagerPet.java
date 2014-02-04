@@ -16,10 +16,12 @@ public class VillagerPet extends LivingPet implements IAgeablePet {
         super(owner, petType);
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntityVillagerPet) getEntityPet()).setBaby(flag);
         this.baby = flag;

@@ -42,6 +42,7 @@ public class PetSelector implements Menu {
         this.inv.setItem(this.size - 9, SelectorItem.MENU.getItem());
     }
 
+    @Override
     public void open(boolean sendMessage) {
         PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.viewer, PetMenuOpenEvent.MenuType.SELECTOR);
         EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(menuEvent);

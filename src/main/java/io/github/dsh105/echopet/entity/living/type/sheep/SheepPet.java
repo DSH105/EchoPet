@@ -17,11 +17,13 @@ public class SheepPet extends LivingPet implements IAgeablePet {
         super(owner, petType);
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntitySheepPet) getEntityPet()).setBaby(flag);
         this.baby = flag;
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }

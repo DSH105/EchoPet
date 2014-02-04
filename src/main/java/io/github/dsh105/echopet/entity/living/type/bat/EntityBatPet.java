@@ -49,6 +49,7 @@ public class EntityBatPet extends EntityLivingPet {
         }
     }
 
+    @Override
     public boolean bN() {
         return (this.datawatcher.getByte(16) & 1) != 0;
     }

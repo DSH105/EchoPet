@@ -18,6 +18,7 @@ public class EntityIronGolemPet extends EntityLivingPet {
         this.fireProof = true;
     }
 
+    @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(16, Byte.valueOf((byte) 0));

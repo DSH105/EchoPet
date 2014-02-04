@@ -60,6 +60,7 @@ public class PetMenu implements Menu {
         this.inv.setItem(book, DataMenuItem.CLOSE.getItem());
     }
 
+    @Override
     public void open(boolean sendMessage) {
         PetMenuOpenEvent menuEvent = new PetMenuOpenEvent(this.pet.getOwner(), PetMenuOpenEvent.MenuType.MAIN);
         EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(menuEvent);
