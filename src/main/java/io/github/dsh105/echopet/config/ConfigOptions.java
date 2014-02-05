@@ -44,14 +44,6 @@ public class ConfigOptions extends Options {
                 + ".canFly", false);
     }
 
-    public Object getConfigOption(String s) {
-        return this.config.get(s);
-    }
-
-    public Object getConfigOption(String s, Object def) {
-        return this.config.get(s, def);
-    }
-
     public String getCommandString() {
         return this.config.getString("commandString", "pet");
     }

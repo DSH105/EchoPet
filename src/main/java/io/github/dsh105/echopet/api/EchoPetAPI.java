@@ -8,11 +8,11 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.living.pathfinder.PetGoal;
-import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalAttack;
-import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFloat;
-import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalFollowOwner;
-import io.github.dsh105.echopet.entity.living.pathfinder.goals.PetGoalLookAtPlayer;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
@@ -69,12 +69,15 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
-        EchoPetPlugin.getInstance().PH.removePets(player, true);
+        EchoPetPlugin.getInstance().PH.removePets(player.getName(), true);
         if (save) {
             if (hasPet(player)) {
                 PetHandler.getInstance().saveFileData("autosave", PetHandler.getInstance().getPet(player));
                 SQLPetHandler.getInstance().saveToDatabase(PetHandler.getInstance().getPet(player), false);
             }
+        }
+        if (sendMessage) {
+            Lang.sendTo(player, Lang.REMOVE_PET.toString());
         }
     }
 
@@ -270,7 +273,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add a predefined {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal} to a {@link io.github.dsh105.echopet.entity.Pet} from the API
+     * Add a predefined {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal} to a {@link io.github.dsh105.echopet.entity.Pet} from the API
      *
      * @param pet      the {@link io.github.dsh105.echopet.entity.Pet} to add the goal to
      * @param goalType type of goal
@@ -281,7 +284,7 @@ public class EchoPetAPI {
             return;
         }
         if (goalType == GoalType.ATTACK) {
-            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), (Double) EchoPetPlugin.getInstance().options.getConfigOption("attack.lockRange", 0.0D), (Integer) EchoPetPlugin.getInstance().options.getConfigOption("attack.ticksBetweenAttacks", 20)));
+            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)));
         } else if (goalType == GoalType.FLOAT) {
             pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));
         } else if (goalType == GoalType.FOLLOW_OWNER) {
@@ -292,10 +295,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add an implementation of {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal} to a {@link io.github.dsh105.echopet.entity.Pet}
+     * Add an implementation of {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal} to a {@link io.github.dsh105.echopet.entity.Pet}
      *
-     * @param pet        the {@link io.github.dsh105.echopet.entity.Pet} to add the {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal} to
-     * @param goal       the {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal} to add
+     * @param pet        the {@link io.github.dsh105.echopet.entity.Pet} to add the {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal} to
+     * @param goal       the {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal} to add
      * @param identifier a {@link java.lang.String} to identify the goal
      */
     public void addGoal(Pet pet, PetGoal goal, String identifier) {
@@ -330,7 +333,7 @@ public class EchoPetAPI {
      * The goal is identified using a string, initiated when the goal is added to the {@link io.github.dsh105.echopet.entity.Pet}
      *
      * @param pet        {@link io.github.dsh105.echopet.entity.Pet} to remove the goal from
-     * @param identifier String that identifies a {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal}
+     * @param identifier String that identifies a {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal}
      */
     public void removeGoal(Pet pet, String identifier) {
         if (pet == null) {
@@ -344,7 +347,7 @@ public class EchoPetAPI {
      * Remove a goal from a {@link io.github.dsh105.echopet.entity.Pet}'s AI
      *
      * @param pet     {@link io.github.dsh105.echopet.entity.Pet} to remove the goal from
-     * @param petGoal {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal} to remove
+     * @param petGoal {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal} to remove
      */
     public void removeGoal(Pet pet, PetGoal petGoal) {
         if (pet == null) {
@@ -359,7 +362,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * {@link Enum} of predefined {@link io.github.dsh105.echopet.entity.living.pathfinder.PetGoal}s
+     * {@link Enum} of predefined {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal}s
      */
     public enum GoalType {
         ATTACK("Attack"),

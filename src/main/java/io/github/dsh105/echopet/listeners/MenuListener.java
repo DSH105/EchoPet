@@ -19,7 +19,7 @@ import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
-import io.github.dsh105.echopet.util.permissions.Perm;
+import io.github.dsh105.echopet.util.Perm;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -162,16 +162,10 @@ public class MenuListener implements Listener {
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd)) {
                                         if (pet.getPetData().contains(pd)) {
                                             PetHandler.getInstance().setData(pet, pd, false);
-                                            try {
-                                                Particle.RED_SMOKE.sendTo(pet.getLocation());
-                                            } catch (Exception e) {
-                                            }
+                                            Particle.RED_SMOKE.sendTo(pet.getLocation());
                                         } else {
                                             PetHandler.getInstance().setData(pet, pd, true);
-                                            try {
-                                                Particle.SPARKLE.sendTo(pet.getLocation());
-                                            } catch (Exception e) {
-                                            }
+                                            Particle.SPARKLE.sendTo(pet.getLocation());
                                         }
                                     }
                                 } else {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public enum PetData {
 
 	/*
-     * Enumeration of valid pet data values
+     * Valid pet data types
 	 */
 
     ANGRY("angry", Type.BOOLEAN),

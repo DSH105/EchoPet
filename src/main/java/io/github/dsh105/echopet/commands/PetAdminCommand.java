@@ -14,7 +14,7 @@ import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.PetUtil;
-import io.github.dsh105.echopet.util.permissions.Perm;
+import io.github.dsh105.echopet.util.Perm;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -304,7 +304,7 @@ public class PetAdminCommand implements CommandExecutor {
                         }
 
                         ec.PH.clearFileData("autosave", pet);
-                        ec.SPH.clearFromDatabase(target);
+                        ec.SPH.clearFromDatabase(target.getName());
                         ec.PH.removePet(pet, true);
 
                         Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", target.getName()));
@@ -388,7 +388,7 @@ public class PetAdminCommand implements CommandExecutor {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pet.setName(UPD.petName);
+                                pet.setPetName(UPD.petName);
                             }
                         }
                     }
@@ -532,7 +532,7 @@ public class PetAdminCommand implements CommandExecutor {
                             }
 
                             ec.PH.clearFileData("autosave", pet);
-                            ec.SPH.clearFromDatabase(target);
+                            ec.SPH.clearFromDatabase(target.getName());
                             ec.PH.removePet(pet, true);
 
                             Lang.sendTo(sender, Lang.ADMIN_REMOVE_MOUNT.toString().replace("%player%", target.getName()));
@@ -583,7 +583,7 @@ public class PetAdminCommand implements CommandExecutor {
                                 if (UPD.petName.length() > 32) {
                                     Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                                 } else {
-                                    mount.setName(UPD.petName);
+                                    mount.setPetName(UPD.petName);
                                 }
                             }
                         }
@@ -635,7 +635,7 @@ public class PetAdminCommand implements CommandExecutor {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pi.setName(UPD.petName);
+                                pi.setPetName(UPD.petName);
                             }
                         }
                     }
@@ -647,7 +647,7 @@ public class PetAdminCommand implements CommandExecutor {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pi.getMount().setName(UPD.petName);
+                                pi.getMount().setPetName(UPD.petName);
                             }
                         }
                     }

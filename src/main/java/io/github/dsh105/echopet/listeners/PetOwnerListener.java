@@ -8,8 +8,7 @@ import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.inanimate.EntityInanimatePet;
-import io.github.dsh105.echopet.entity.inanimate.InanimatePet;
+import io.github.dsh105.echopet.entity.EntityPacketPet;
 import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
@@ -78,9 +77,9 @@ public class PetOwnerListener implements Listener {
         Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             Pet pet = i.next();
-            if (pet instanceof InanimatePet && ((EntityInanimatePet) pet.getEntityPet()).hasInititiated()) {
+            if (pet.getEntityPet() instanceof EntityPacketPet && ((EntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
-                    ((EntityInanimatePet) pet.getEntityPet()).updatePacket();
+                    ((EntityPacketPet) pet.getEntityPet()).updatePacket();
                 }
             }
         }
@@ -145,7 +144,7 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
         Player p = event.getPlayer();
-        if (event.getItemDrop().getItemStack().isSimilar(SelectorItem.SELECTOR.getItem()) && !((Boolean) ConfigOptions.instance.getConfigOption("petSelector.allowDrop", true))) {
+        if (event.getItemDrop().getItemStack().isSimilar(SelectorItem.SELECTOR.getItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))) {
             event.setCancelled(true);
         }
     }
@@ -166,13 +165,13 @@ public class PetOwnerListener implements Listener {
             }
         }
 
-        if ((Boolean) ec.options.getConfigOption("petSelector.clearInvOnJoin", false)) {
+        if (ec.options.getConfig().getBoolean("petSelector.clearInvOnJoin", false)) {
             inv.clear();
         }
-        if ((Boolean) ec.options.getConfigOption("petSelector.giveOnJoin.enable", true)
-                && (((Boolean) ec.options.getConfigOption("petSelector.giveOnJoin.usePerm", false) && p.hasPermission((String) ec.options.getConfigOption("petSelector.giveOnJoin.perm", "echopet.selector.join")))
-                || !((Boolean) ec.options.getConfigOption("petSelector.giveOnJoin.usePerm", false)))) {
-            int slot = ((Integer) ec.options.getConfigOption("petSelector.giveOnJoin.slot", 9)) - 1;
+        if (ec.options.getConfig().getBoolean("petSelector.giveOnJoin.enable", true)
+                && ((ec.options.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false) && p.hasPermission(ec.options.getConfig().getString("petSelector.giveOnJoin.perm", "echopet.selector.join")))
+                || !(ec.options.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false)))) {
+            int slot = (ec.options.getConfig().getInt("petSelector.giveOnJoin.slot", 9)) - 1;
             ItemStack i = inv.getItem(slot);
             ItemStack selector = SelectorItem.SELECTOR.getItem();
             if (i != null) {
@@ -185,7 +184,7 @@ public class PetOwnerListener implements Listener {
         }
 
 
-        final boolean sendMessage = ((Boolean) ec.options.getConfigOption("sendLoadMessage", true));
+        final boolean sendMessage = ec.options.getConfig().getBoolean("sendLoadMessage", true);
 
         new BukkitRunnable() {
 
@@ -198,9 +197,9 @@ public class PetOwnerListener implements Listener {
         Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             Pet pet = i.next();
-            if (pet instanceof InanimatePet && ((EntityInanimatePet) pet.getEntityPet()).hasInititiated()) {
+            if (pet.getEntityPet() instanceof EntityPacketPet && ((EntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
-                    ((EntityInanimatePet) pet.getEntityPet()).updatePacket();
+                    ((EntityPacketPet) pet.getEntityPet()).updatePacket();
                 }
             }
         }

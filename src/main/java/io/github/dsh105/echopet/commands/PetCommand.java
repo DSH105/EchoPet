@@ -15,7 +15,7 @@ import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.PetUtil;
 import io.github.dsh105.echopet.util.WorldUtil;
-import io.github.dsh105.echopet.util.permissions.Perm;
+import io.github.dsh105.echopet.util.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -79,7 +79,7 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                         return true;
                     }
-                    pi.getMount().setName(name);
+                    pi.getMount().setPetName(name);
                     Lang.sendTo(sender, Lang.NAME_MOUNT.toString()
                             .replace("%type%", StringUtil.capitalise(pi.getPetType().toString().replace("_", " ")))
                             .replace("%name%", name));
@@ -99,7 +99,7 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                         return true;
                     }
-                    pi.setName(name);
+                    pi.setPetName(name);
                     Lang.sendTo(sender, Lang.NAME_PET.toString()
                             .replace("%type%", StringUtil.capitalise(pi.getPetType().toString().replace("_", " ")))
                             .replace("%name%", name));
@@ -150,7 +150,7 @@ public class PetCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("show")) {
                 if (Perm.BASE_SHOW.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
-                    PetHandler.getInstance().removePets(player, true);
+                    PetHandler.getInstance().removePets(player.getName(), true);
                     Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
@@ -264,7 +264,7 @@ public class PetCommand implements CommandExecutor {
                         return true;
                     }
                     ec.PH.clearFileData("autosave", pi);
-                    ec.SPH.clearFromDatabase(pi.getOwner());
+                    ec.SPH.clearFromDatabase(pi.getNameOfOwner());
                     ec.PH.removePet(pi, true);
                     Lang.sendTo(sender, Lang.REMOVE_PET.toString());
                     return true;
@@ -300,7 +300,7 @@ public class PetCommand implements CommandExecutor {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pi.setName(UPD.petName);
+                                pi.setPetName(UPD.petName);
                             }
                         }
                     }
@@ -375,7 +375,7 @@ public class PetCommand implements CommandExecutor {
                                 if (UPD.petName.length() > 32) {
                                     Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                                 } else {
-                                    mount.setName(UPD.petName);
+                                    mount.setPetName(UPD.petName);
                                 }
                             }
                         }
@@ -416,7 +416,7 @@ public class PetCommand implements CommandExecutor {
                         }
 
                         ec.PH.clearFileData("default", (Player) sender);
-                        ec.SPH.clearFromDatabase((Player) sender);
+                        ec.SPH.clearFromDatabase(sender.getName());
                         Lang.sendTo(sender, Lang.REMOVE_DEFAULT.toString());
                         return true;
                     } else return true;
@@ -453,7 +453,7 @@ public class PetCommand implements CommandExecutor {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pi.setName(UPD.petName);
+                                pi.setPetName(UPD.petName);
                             }
                         }
                     }
@@ -465,7 +465,7 @@ public class PetCommand implements CommandExecutor {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pi.getMount().setName(UPD.petName);
+                                pi.getMount().setPetName(UPD.petName);
                             }
                         }
                     }

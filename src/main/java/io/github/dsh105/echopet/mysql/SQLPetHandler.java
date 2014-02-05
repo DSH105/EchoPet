@@ -19,7 +19,7 @@ public class SQLPetHandler {
         return EchoPetPlugin.getInstance().SPH;
     }
 
-    public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isMount) {
+    public void updateDatabase(String player, List<PetData> list, Boolean result, boolean isMount) {
         if (EchoPetPlugin.getInstance().options.useSql()) {
             Connection con = null;
             Statement statement = null;
@@ -31,7 +31,7 @@ public class SQLPetHandler {
                         con = EchoPetPlugin.getInstance().dbPool.getConnection();
                         statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
-                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE OwnerName = '" + player.getName() + "'");
+                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE OwnerName = '" + player + "'");
                         }
                     }
 
@@ -42,7 +42,7 @@ public class SQLPetHandler {
 					ps4.executeUpdate();
 				}*/
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player.getName() + " to MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player + " to MySQL Database", e, true);
                 } finally {
                     try {
                         if (statement != null)
@@ -66,7 +66,7 @@ public class SQLPetHandler {
                     con = EchoPetPlugin.getInstance().dbPool.getConnection();
                     // Delete any existing info
                     if (!isMount) {
-                        this.clearFromDatabase(p.getOwner());
+                        this.clearFromDatabase(p.getNameOfOwner());
                     }
 
                     // Deal with the pet metadata first
@@ -76,17 +76,17 @@ public class SQLPetHandler {
                     else
                         ps = con.prepareStatement("INSERT INTO Pets (OwnerName, PetType, PetName) VALUES (?, ?, ?)");
 
-                    ps.setString(1, p.getOwner().getName());
+                    ps.setString(1, p.getNameOfOwner());
                     ps.setString(2, p.getPetType().toString());
-                    ps.setString(3, p.getName());
+                    ps.setString(3, p.getPetName());
                     ps.executeUpdate();
 
-                    this.updateDatabase(p.getOwner(), p.getPetData(), true, isMount);
+                    this.updateDatabase(p.getNameOfOwner(), p.getPetData(), true, isMount);
 
                     this.saveToDatabase(p.getMount(), true);
 
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getOwner().getName() + " to MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getNameOfOwner() + " to MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -100,7 +100,7 @@ public class SQLPetHandler {
         }
     }
 
-    public Pet createPetFromDatabase(Player p) {
+    public Pet createPetFromDatabase(String player) {
         if (EchoPetPlugin.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -115,7 +115,7 @@ public class SQLPetHandler {
                 try {
                     con = EchoPetPlugin.getInstance().dbPool.getConnection();
                     ps = con.prepareStatement("SELECT * FROM Pets WHERE OwnerName = ?;");
-                    ps.setString(1, p.getName());
+                    ps.setString(1, player);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
                         owner = Bukkit.getPlayerExact(rs.getString("OwnerName"));
@@ -140,7 +140,7 @@ public class SQLPetHandler {
                         if (pet == null) {
                             return null;
                         }
-                        pet.setName(name);
+                        pet.setPetName(name);
                         PetData[] PDT = createArray(map, true);
                         PetData[] PDF = createArray(map, false);
                         if (PDT != null) {
@@ -164,7 +164,7 @@ public class SQLPetHandler {
 
                             Pet mount = pet.createMount(mt, false);
                             if (mount != null) {
-                                mount.setName(mName);
+                                mount.setPetName(mName);
                                 PetData[] MDT = createArray(map, true);
                                 PetData[] MDF = createArray(map, false);
 
@@ -178,7 +178,7 @@ public class SQLPetHandler {
                         }
                     }
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + p.getName() + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -212,10 +212,6 @@ public class SQLPetHandler {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    public void clearFromDatabase(Player p) {
-        clearFromDatabase(p.getName());
     }
 
     public void clearFromDatabase(String name) {

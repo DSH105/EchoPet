@@ -5,12 +5,9 @@ import net.minecraft.server.v1_7_R1.EntityLiving;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Vehicle;
+import org.bukkit.entity.*;
 
-public abstract class CraftPet extends CraftCreature implements Vehicle {
+public abstract class CraftPet extends CraftCreature implements Vehicle, Tameable {
 
     protected EntityPet entityPet;
 
@@ -33,7 +30,9 @@ public abstract class CraftPet extends CraftCreature implements Vehicle {
         super.remove();
     }
 
-    public abstract Pet getPet();
+    public Pet getPet() {
+        return this.entityPet.getPet();
+    }
 
     public CraftLivingEntity getTarget() {
         if (getHandle().target == null) return null;
@@ -93,13 +92,15 @@ public abstract class CraftPet extends CraftCreature implements Vehicle {
         super.setHealth(health);
     }
 
-    /*@Override
+    @Override
     public boolean isTamed() {
         return true;
     }
 
     @Override
-    public void setTamed(boolean b) {}
+    public void setTamed(boolean b) {
+        // Not applicable. Pets are ALWAYS tamed
+    }
 
     @Override
     public AnimalTamer getOwner() {
@@ -107,5 +108,7 @@ public abstract class CraftPet extends CraftCreature implements Vehicle {
     }
 
     @Override
-    public void setOwner(AnimalTamer animalTamer) {}*/
+    public void setOwner(AnimalTamer animalTamer) {
+        // Not applicable. Pets can't change owners
+    }
 }

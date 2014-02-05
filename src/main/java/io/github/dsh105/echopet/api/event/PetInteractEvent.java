@@ -59,7 +59,7 @@ public class PetInteractEvent extends Event implements Cancellable {
      * @return true if it is the owner
      */
     public boolean isPlayerOwner() {
-        return this.player == this.pet.getOwner();
+        return this.player.getName().equals(this.pet.getNameOfOwner());
     }
 
     /**

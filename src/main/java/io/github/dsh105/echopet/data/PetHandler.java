@@ -7,22 +7,22 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.living.IAgeablePet;
-import io.github.dsh105.echopet.entity.living.type.blaze.BlazePet;
-import io.github.dsh105.echopet.entity.living.type.creeper.CreeperPet;
-import io.github.dsh105.echopet.entity.living.type.enderman.EndermanPet;
-import io.github.dsh105.echopet.entity.living.type.horse.*;
-import io.github.dsh105.echopet.entity.living.type.magmacube.MagmaCubePet;
-import io.github.dsh105.echopet.entity.living.type.ocelot.OcelotPet;
-import io.github.dsh105.echopet.entity.living.type.pig.PigPet;
-import io.github.dsh105.echopet.entity.living.type.pigzombie.PigZombiePet;
-import io.github.dsh105.echopet.entity.living.type.sheep.SheepPet;
-import io.github.dsh105.echopet.entity.living.type.skeleton.SkeletonPet;
-import io.github.dsh105.echopet.entity.living.type.slime.SlimePet;
-import io.github.dsh105.echopet.entity.living.type.villager.VillagerPet;
-import io.github.dsh105.echopet.entity.living.type.wither.WitherPet;
-import io.github.dsh105.echopet.entity.living.type.wolf.WolfPet;
-import io.github.dsh105.echopet.entity.living.type.zombie.ZombiePet;
+import io.github.dsh105.echopet.entity.IAgeablePet;
+import io.github.dsh105.echopet.entity.type.blaze.BlazePet;
+import io.github.dsh105.echopet.entity.type.creeper.CreeperPet;
+import io.github.dsh105.echopet.entity.type.enderman.EndermanPet;
+import io.github.dsh105.echopet.entity.type.horse.*;
+import io.github.dsh105.echopet.entity.type.magmacube.MagmaCubePet;
+import io.github.dsh105.echopet.entity.type.ocelot.OcelotPet;
+import io.github.dsh105.echopet.entity.type.pig.PigPet;
+import io.github.dsh105.echopet.entity.type.pigzombie.PigZombiePet;
+import io.github.dsh105.echopet.entity.type.sheep.SheepPet;
+import io.github.dsh105.echopet.entity.type.skeleton.SkeletonPet;
+import io.github.dsh105.echopet.entity.type.slime.SlimePet;
+import io.github.dsh105.echopet.entity.type.villager.VillagerPet;
+import io.github.dsh105.echopet.entity.type.wither.WitherPet;
+import io.github.dsh105.echopet.entity.type.wolf.WolfPet;
+import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.PetUtil;
 import io.github.dsh105.echopet.util.WorldUtil;
@@ -58,12 +58,12 @@ public class PetHandler {
     public Pet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride) {
         EchoPetPlugin ec = EchoPetPlugin.getInstance();
         if (ec.options.sqlOverride()) {
-            Pet pet = ec.SPH.createPetFromDatabase(p);
+            Pet pet = ec.SPH.createPetFromDatabase(p.getName());
             if (pet == null) {
                 return null;
             } else {
                 if (sendMessage) {
-                    Lang.sendTo(p, Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getName().toString()));
+                    Lang.sendTo(p, Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
                 }
             }
             return pet;
@@ -73,18 +73,18 @@ public class PetHandler {
                 return null;
             } else {
                 if (sendMessage) {
-                    Lang.sendTo(p, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getName().toString()));
+                    Lang.sendTo(p, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
                 }
             }
             return pi;
-        } else if ((checkWorldOverride && (Boolean) ec.options.getConfigOption("multiworldLoadOverride", true)) || (Boolean) ec.options.getConfigOption("loadSavedPets", true)) {
+        } else if ((checkWorldOverride && ec.options.getConfig().getBoolean("multiworldLoadOverride", true)) || ec.options.getConfig().getBoolean("loadSavedPets", true)) {
             if (ec.getPetConfig().get("autosave." + p.getName() + ".pet.type") != null) {
                 Pet pi = ec.PH.createPetFromFile("autosave", p);
                 if (pi == null) {
                     return null;
                 } else {
                     if (sendMessage) {
-                        Lang.sendTo(p, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getName().toString()));
+                        Lang.sendTo(p, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
                     }
                 }
                 return pi;
@@ -105,7 +105,7 @@ public class PetHandler {
     }
 
     public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
-        removePets(owner, true);
+        removePets(owner.getName(), true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendMessageOnFail) {
                 Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
@@ -118,7 +118,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner, petType);
+        Pet pi = petType.getNewPetInstance(owner.getName());
         //Pet pi = new Pet(owner, petType);
         forceAllValidData(pi);
         pets.add(pi);
@@ -128,7 +128,7 @@ public class PetHandler {
     }
 
     public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
-        removePets(owner, true);
+        removePets(owner.getName(), true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendFailMessage) {
                 Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
@@ -141,7 +141,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner, petType);
+        Pet pi = petType.getNewPetInstance(owner.getName());
         //Pet pi = new Pet(owner, petType);
         pi.createMount(mountType, true);
         forceAllValidData(pi);
@@ -153,7 +153,7 @@ public class PetHandler {
 
     public Pet getPet(Player player) {
         for (Pet pi : pets) {
-            if (pi.getOwner().getName().equals(player.getName())) {
+            if (pi.getNameOfOwner().equals(player.getName())) {
                 return pi;
             }
         }
@@ -207,7 +207,7 @@ public class PetHandler {
             setData(pi.getMount(), tempMountData.toArray(new PetData[tempData.size()]), true);
         }
 
-        if ((Boolean) ec.options.getConfigOption("sendForceMessage", true)) {
+        if (ec.options.getConfig().getBoolean("sendForceMessage", true)) {
             String dataToString = " ";
             if (!tempMountData.isEmpty()) {
                 dataToString = PetUtil.dataToString(tempData);
@@ -221,9 +221,9 @@ public class PetHandler {
     }
 
     public void updateFileData(String type, Pet pet, ArrayList<PetData> list, boolean b) {
-        ec.SPH.updateDatabase(pet.getOwner(), list, b, pet.isMount());
+        ec.SPH.updateDatabase(pet.getNameOfOwner(), list, b, pet.isMount());
         String w = pet.getOwner().getWorld().getName();
-        String path = type + "." + w + "." + pet.getOwner().getName();
+        String path = type + "." + w + "." + pet.getNameOfOwner();
         for (PetData pd : list) {
             ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), b);
         }
@@ -231,7 +231,7 @@ public class PetHandler {
     }
 
     public Pet createPetFromFile(String type, Player p) {
-        if ((Boolean) ec.options.getConfigOption("loadSavedPets", true)) {
+        if (ec.options.getConfig().getBoolean("loadSavedPets", true)) {
             String path = type + "." + p.getName();
             if (ec.getPetConfig().get(path) != null) {
                 PetType petType = PetType.valueOf(ec.getPetConfig().getString(path + ".pet.type"));
@@ -250,7 +250,7 @@ public class PetHandler {
                 //Pet pi = petType.getNewPetInstance(p, petType);
                 //Pet pi = new Pet(p, petType);
 
-                pi.setName(name);
+                pi.setPetName(name);
 
                 ArrayList<PetData> data = new ArrayList<PetData>();
                 ConfigurationSection cs = ec.getPetConfig().getConfigurationSection(path + ".pet.data");
@@ -260,7 +260,7 @@ public class PetHandler {
                             PetData pd = PetData.valueOf(key.toUpperCase());
                             data.add(pd);
                         } else {
-                            Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key + ".", true);
+                            Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Save Data for " + pi.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
                         }
                     }
                 }
@@ -269,35 +269,7 @@ public class PetHandler {
                     setData(pi, data.toArray(new PetData[data.size()]), true);
                 }
 
-                if (ec.getPetConfig().get(path + ".mount.type") != null) {
-                    PetType mountPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".mount.type"));
-                    String mountName = ec.getPetConfig().getString(path + ".mount.name");
-                    if (mountName.equalsIgnoreCase("") || mountName == null) {
-                        mountName = mountPetType.getDefaultName(p.getName());
-                    }
-                    if (mountPetType == null) return null;
-                    if (ec.options.allowMounts(petType)) {
-                        Pet mount = pi.createMount(mountPetType, true);
-                        if (mount != null) {
-                            mount.setName(mountName);
-                            ArrayList<PetData> mountData = new ArrayList<PetData>();
-                            ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
-                            if (mcs != null) {
-                                for (String key : mcs.getKeys(false)) {
-                                    if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
-                                        PetData pd = PetData.valueOf(key.toUpperCase());
-                                        data.add(pd);
-                                    } else {
-                                        Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Mount Save Data for " + pi.getOwner().getName() + ". Unknown enum type: " + key + ".", true);
-                                    }
-                                }
-                            }
-                            if (!mountData.isEmpty()) {
-                                setData(pi, mountData.toArray(new PetData[mountData.size()]), true);
-                            }
-                        }
-                    }
-                }
+                this.loadMountFromFile(type, pi);
 
                 forceAllValidData(pi);
                 return pi;
@@ -306,13 +278,49 @@ public class PetHandler {
         return null;
     }
 
-    public void removePets(Player player, boolean makeDeathSound) {
+    public void loadMountFromFile(Pet pet) {
+        this.loadMountFromFile("autosave", pet);
+    }
+
+    public void loadMountFromFile(String type, Pet pet) {
+        String path = type + "." + pet.getNameOfOwner();
+        if (ec.getPetConfig().get(path + ".mount.type") != null) {
+            PetType mountPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".mount.type"));
+            String mountName = ec.getPetConfig().getString(path + ".mount.name");
+            if (mountName.equalsIgnoreCase("") || mountName == null) {
+                mountName = mountPetType.getDefaultName(pet.getNameOfOwner());
+            }
+            if (mountPetType == null) return;
+            if (ec.options.allowMounts(pet.getPetType())) {
+                Pet mount = pet.createMount(mountPetType, true);
+                if (mount != null) {
+                    mount.setPetName(mountName);
+                    ArrayList<PetData> mountData = new ArrayList<PetData>();
+                    ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
+                    if (mcs != null) {
+                        for (String key : mcs.getKeys(false)) {
+                            if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+                                PetData pd = PetData.valueOf(key.toUpperCase());
+                                mountData.add(pd);
+                            } else {
+                                Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Mount Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+                            }
+                        }
+                    }
+                    if (!mountData.isEmpty()) {
+                        setData(pet, mountData.toArray(new PetData[mountData.size()]), true);
+                    }
+                }
+            }
+        }
+    }
+
+    //TODO: Don't compare player objects
+    public void removePets(String player, boolean makeDeathSound) {
         Iterator<Pet> i = pets.listIterator();
         while (i.hasNext()) {
             Pet p = i.next();
-            if (p.getOwner().getName().equals(player.getName())) {
-                /*saveFileData("autosave", p);
-                ec.SPH.saveToDatabase(p, false);*/
+            if (p.getNameOfOwner().equals(player)) {
                 p.removePet(makeDeathSound);
                 i.remove();
             }
@@ -320,21 +328,18 @@ public class PetHandler {
     }
 
     public void removePet(Pet pi, boolean makeDeathSound) {
-        //saveFileData("autosave", pi);
-		/*pi.removePet();
-		pets.remove(pi);*/
-        removePets(pi.getOwner(), makeDeathSound);
+        removePets(pi.getNameOfOwner(), makeDeathSound);
     }
 
     public void saveFileData(String type, Pet pi) {
         clearFileData(type, pi);
         try {
-            String oName = pi.getOwner().getName();
+            String oName = pi.getNameOfOwner();
             String path = type + "." + oName;
             PetType petType = pi.getPetType();
 
             ec.getPetConfig().set(path + ".pet.type", petType.toString());
-            ec.getPetConfig().set(path + ".pet.name", pi.getNameWithoutColours());
+            ec.getPetConfig().set(path + ".pet.name", pi.getPetNameWithoutColours());
 
             for (PetData pd : pi.getPetData()) {
                 ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), true);
@@ -344,7 +349,7 @@ public class PetHandler {
                 PetType mountType = pi.getMount().getPetType();
 
                 ec.getPetConfig().set(path + ".mount.type", mountType.toString());
-                ec.getPetConfig().set(path + ".mount.name", pi.getMount().getNameWithoutColours());
+                ec.getPetConfig().set(path + ".mount.name", pi.getMount().getPetNameWithoutColours());
                 for (PetData pd : pi.getMount().getPetData()) {
                     ec.getPetConfig().set(path + ".mount.data." + pd.toString().toLowerCase(), true);
                 }
@@ -429,7 +434,7 @@ public class PetHandler {
     }
 
     public void clearFileData(String type, Pet pi) {
-        clearFileData(type, pi.getOwner());
+        clearFileData(type, pi.getNameOfOwner());
     }
 
     public void clearFileData(String type, String pName) {
