@@ -1,6 +1,5 @@
 package io.github.dsh105.echopet.entity.pathfinder.goals;
 
-import com.dsh105.dshutils.logger.ConsoleLogger;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import net.minecraft.server.v1_7_R1.Entity;

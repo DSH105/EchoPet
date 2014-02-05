@@ -1,8 +1,5 @@
 package io.github.dsh105.echopet.entity;
 
-import io.github.dsh105.echopet.entity.EntityPet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R1.World;
 
 public abstract class EntityAgeablePet extends EntityPet {

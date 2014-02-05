@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.entity.type.sheep;
 
 import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.IAgeablePet;
+import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
 import org.bukkit.DyeColor;
 

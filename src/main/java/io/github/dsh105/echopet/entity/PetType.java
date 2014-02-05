@@ -2,9 +2,6 @@ package io.github.dsh105.echopet.entity;
 
 import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.entity.type.human.CraftHumanPet;
-import io.github.dsh105.echopet.entity.type.human.EntityHumanPet;
-import io.github.dsh105.echopet.entity.type.human.HumanPet;
 import io.github.dsh105.echopet.entity.type.bat.BatPet;
 import io.github.dsh105.echopet.entity.type.bat.CraftBatPet;
 import io.github.dsh105.echopet.entity.type.bat.EntityBatPet;
@@ -38,6 +35,9 @@ import io.github.dsh105.echopet.entity.type.giant.GiantPet;
 import io.github.dsh105.echopet.entity.type.horse.CraftHorsePet;
 import io.github.dsh105.echopet.entity.type.horse.EntityHorsePet;
 import io.github.dsh105.echopet.entity.type.horse.HorsePet;
+import io.github.dsh105.echopet.entity.type.human.CraftHumanPet;
+import io.github.dsh105.echopet.entity.type.human.EntityHumanPet;
+import io.github.dsh105.echopet.entity.type.human.HumanPet;
 import io.github.dsh105.echopet.entity.type.irongolem.CraftIronGolemPet;
 import io.github.dsh105.echopet.entity.type.irongolem.EntityIronGolemPet;
 import io.github.dsh105.echopet.entity.type.irongolem.IronGolemPet;
@@ -92,11 +92,11 @@ import io.github.dsh105.echopet.entity.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.type.zombie.CraftZombiePet;
 import io.github.dsh105.echopet.entity.type.zombie.EntityZombiePet;
 import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
-import java.lang.reflect.InvocationTargetException;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.entity.EntityType;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 

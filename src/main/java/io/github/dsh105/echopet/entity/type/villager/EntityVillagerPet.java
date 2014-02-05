@@ -1,10 +1,10 @@
 package io.github.dsh105.echopet.entity.type.villager;
 
 import com.dsh105.dshutils.Particle;
+import io.github.dsh105.echopet.entity.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.EntitySize;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.EntityAgeablePet;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.8F)

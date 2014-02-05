@@ -4,10 +4,10 @@ import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.EnumUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.entity.IAgeablePet;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
 import io.github.dsh105.echopet.entity.type.blaze.BlazePet;
 import io.github.dsh105.echopet.entity.type.creeper.CreeperPet;
 import io.github.dsh105.echopet.entity.type.enderman.EndermanPet;
@@ -440,7 +440,7 @@ public class PetHandler {
     public void clearFileData(String type, String pName) {
         String path = type + "." + pName;
         ec.getPetConfig().set(path, null);
-		/*if (ec.getPetConfig().get(path + ".pet.type") != null) {
+        /*if (ec.getPetConfig().get(path + ".pet.type") != null) {
 			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
 				for (String key1 : ec.getPetConfig().getConfigurationSection(path + "." + key).getKeys(false)) {
 					if (ec.getPetConfig().get(path + "." + key + "." + key1) != null) {

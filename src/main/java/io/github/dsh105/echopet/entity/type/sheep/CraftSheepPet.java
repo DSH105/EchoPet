@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.entity.type.sheep;
 
+import io.github.dsh105.echopet.entity.CraftAgeablePet;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.CraftAgeablePet;
 import org.bukkit.DyeColor;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.entity.Sheep;

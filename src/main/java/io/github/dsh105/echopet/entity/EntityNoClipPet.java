@@ -1,6 +1,5 @@
 package io.github.dsh105.echopet.entity;
 
-import io.github.dsh105.echopet.entity.EntityPet;
 import net.minecraft.server.v1_7_R1.World;
 
 
