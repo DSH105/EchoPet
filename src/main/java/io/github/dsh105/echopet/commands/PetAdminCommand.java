@@ -68,8 +68,80 @@ public class PetAdminCommand implements CommandExecutor {
                 } else return true;
             }
 
-        } else if (args.length == 2) {
+        } else if (args.length >= 1 && args[0].equalsIgnoreCase("name")) {
+            if (Perm.ADMIN_NAME.hasPerm(sender, true, true)) {
+                if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("mount"))) {
+                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
+                    sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> <name>");
+                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet.");
+                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
+                    sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> mount <name>");
+                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet's mount.");
+                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
+                    return true;
+                } else if (args.length >= 4 && args[1].equalsIgnoreCase("mount")) {
+                    Player target = Bukkit.getPlayer(args[2]);
+                    if (target == null) {
+                        Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[2]));
+                        return true;
+                    }
 
+                    Pet pet = ec.PH.getPet(target);
+                    if (pet == null) {
+                        Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
+                        return true;
+                    }
+
+                    if (pet.getMount() == null) {
+                        Lang.sendTo(sender, Lang.ADMIN_NO_MOUNT.toString().replace("%player%", target.getName()));
+                        return true;
+                    }
+
+                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(3, args, " "));
+                    if (name.length() > 32) {
+                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                        return true;
+                    }
+                    pet.getMount().setPetName(name);
+                    Lang.sendTo(sender, Lang.ADMIN_NAME_MOUNT.toString()
+                            .replace("%player%", target.getName())
+                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                            .replace("%name%", name));
+                    Lang.sendTo(target, Lang.NAME_MOUNT.toString()
+                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                            .replace("%name%", name));
+                    return true;
+                } else if (args.length >= 2) {
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if (target == null) {
+                        Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
+                        return true;
+                    }
+
+                    Pet pet = ec.PH.getPet(target);
+                    if (pet == null) {
+                        Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
+                        return true;
+                    }
+
+                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(2, args, " "));
+                    if (name.length() > 32) {
+                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                        return true;
+                    }
+                    pet.setPetName(name);
+                    Lang.sendTo(sender, Lang.ADMIN_NAME_PET.toString()
+                            .replace("%player%", target.getName())
+                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                            .replace("%name%", name));
+                    Lang.sendTo(target, Lang.NAME_PET.toString()
+                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                            .replace("%name%", name));
+                    return true;
+                }
+
+            } else return true;
+        } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("menu")) {
                 if (Perm.ADMIN_MENU.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -591,79 +663,6 @@ public class PetAdminCommand implements CommandExecutor {
                     return true;
                 } else return true;
             }
-        } else if (args.length >= 1 && args[0].equalsIgnoreCase("name")) {
-            if (Perm.ADMIN_NAME.hasPerm(sender, true, true)) {
-                if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("mount"))) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
-                    sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-                    sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> mount <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet's mount.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-                    return true;
-                } else if (args.length >= 3 && args[1].equalsIgnoreCase("mount")) {
-                    Player target = Bukkit.getPlayer(args[2]);
-                    if (target == null) {
-                        Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[2]));
-                        return true;
-                    }
-
-                    Pet pet = ec.PH.getPet(target);
-                    if (pet == null) {
-                        Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
-                        return true;
-                    }
-
-                    if (pet.getMount() == null) {
-                        Lang.sendTo(sender, Lang.ADMIN_NO_MOUNT.toString().replace("%player%", target.getName()));
-                        return true;
-                    }
-
-                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(3, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
-                    }
-                    pet.getMount().setName(name);
-                    Lang.sendTo(sender, Lang.ADMIN_NAME_MOUNT.toString()
-                            .replace("%player%", target.getName())
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    Lang.sendTo(target, Lang.NAME_MOUNT.toString()
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    return true;
-                } else if (args.length >= 2) {
-                    Player target = Bukkit.getPlayer(args[1]);
-                    if (target == null) {
-                        Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
-                        return true;
-                    }
-
-                    Pet pet = ec.PH.getPet(target);
-                    if (pet == null) {
-                        Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
-                        return true;
-                    }
-
-                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(2, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
-                    }
-                    pet.setName(name);
-                    Lang.sendTo(sender, Lang.ADMIN_NAME_PET.toString()
-                            .replace("%player%", target.getName())
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    Lang.sendTo(target, Lang.NAME_PET.toString()
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    return true;
-                }
-
-            } else return true;
         }
 
         // Something went wrong. Maybe the player didn't use a command correctly?
