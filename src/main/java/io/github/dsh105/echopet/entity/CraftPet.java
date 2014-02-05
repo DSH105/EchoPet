@@ -26,6 +26,7 @@ public abstract class CraftPet extends CraftCreature implements Vehicle, Tameabl
         return this.entityPet.getPet().getPetType().getEntityType();
     }
 
+    @Override
     public void remove() {
         super.remove();
     }
@@ -34,12 +35,14 @@ public abstract class CraftPet extends CraftCreature implements Vehicle, Tameabl
         return this.entityPet.getPet();
     }
 
+    @Override
     public CraftLivingEntity getTarget() {
         if (getHandle().target == null) return null;
         if (!(getHandle().target instanceof EntityLiving)) return null;
         return (CraftLivingEntity) getHandle().target.getBukkitEntity();
     }
 
+    @Override
     public void setTarget(LivingEntity target) {
         EntityCreature entity = getHandle();
         if (target == null) {
@@ -50,34 +53,42 @@ public abstract class CraftPet extends CraftCreature implements Vehicle, Tameabl
         }
     }
 
+    @Override
     public void _INVALID_damage(int amount) {
         damage((double) amount);
     }
 
+    @Override
     public void _INVALID_damage(int amount, Entity source) {
         damage((double) amount, source);
     }
 
+    @Override
     public int _INVALID_getHealth() {
         return (int) getHealth();
     }
 
+    @Override
     public int _INVALID_getLastDamage() {
         return (int) getLastDamage();
     }
 
+    @Override
     public int _INVALID_getMaxHealth() {
         return (int) getMaxHealth();
     }
 
+    @Override
     public void _INVALID_setHealth(int health) {
         setHealth((double) health);
     }
 
+    @Override
     public void _INVALID_setLastDamage(int damage) {
         setLastDamage((double) damage);
     }
 
+    @Override
     public void _INVALID_setMaxHealth(int health) {
     }
 

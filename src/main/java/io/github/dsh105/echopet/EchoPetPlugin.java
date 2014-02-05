@@ -101,7 +101,15 @@ public class EchoPetPlugin extends JavaPlugin {
                         + ChatColor.GOLD + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion()
                         + ChatColor.YELLOW + ". Please update the plugin.",
                         "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."));
-            } catch (Exception e) {
+            } catch (ClassNotFoundException e) {
+                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+            } catch (NoSuchFieldException e) {
+                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+            } catch (SecurityException e) {
+                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+            } catch (IllegalArgumentException e) {
+                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+            } catch (IllegalAccessException e) {
                 Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
             }
 
@@ -226,7 +234,15 @@ public class EchoPetPlugin extends JavaPlugin {
                 f.setAccessible(true);
                 CM = (CommandMap) f.get(Bukkit.getServer());
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+        } catch (NoSuchFieldException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
+        } catch (IllegalAccessException e) {
             Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
         }
 
@@ -389,11 +405,17 @@ public class EchoPetPlugin extends JavaPlugin {
                 }
             }
 
-            c.put(name, clazz);
+            //c.put(name, clazz);
             d.put(clazz, name);
             f.put(clazz, id);
-            g.put(name, id);
-        } catch (Exception e) {
+            //g.put(name, id);
+        } catch (NoSuchFieldException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
+        } catch (IllegalAccessException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
         }
     }

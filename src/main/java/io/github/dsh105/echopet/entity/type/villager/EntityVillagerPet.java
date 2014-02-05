@@ -27,6 +27,7 @@ public class EntityVillagerPet extends EntityAgeablePet {
         this.datawatcher.watch(16, i);
     }
 
+    @Override
     public void setBaby(boolean flag) {
         if (flag) {
             this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));

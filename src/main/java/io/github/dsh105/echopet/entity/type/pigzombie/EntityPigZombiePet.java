@@ -17,6 +17,7 @@ public class EntityPigZombiePet extends EntityPet {
     public EntityPigZombiePet(World world, Pet pet) {
         super(world, pet);
         new BukkitRunnable() {
+            @Override
             public void run() {
                 setEquipment(0, new ItemStack(Items.GOLD_SWORD));
             }
@@ -53,6 +54,7 @@ public class EntityPigZombiePet extends EntityPet {
         return "mob.zombiepig.zpigdeath";
     }
 
+    @Override
     public boolean isBaby() {
         return this.datawatcher.getByte(12) < 0;
     }

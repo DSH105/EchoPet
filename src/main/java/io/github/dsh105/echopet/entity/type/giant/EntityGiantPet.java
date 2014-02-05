@@ -19,6 +19,7 @@ public class EntityGiantPet extends EntityPet {
         return PetType.GIANT;
     }
 
+    @Override
     protected void makeStepSound() {
         this.makeSound("mob.zombie.step", 0.15F, 1.0F);
     }

@@ -75,6 +75,7 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
         this.cancelled = cancel;
     }
 
+    @Override
     public HandlerList getHandlers() {
         return handlers;
     }

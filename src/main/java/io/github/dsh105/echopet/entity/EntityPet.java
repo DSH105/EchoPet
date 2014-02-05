@@ -64,8 +64,8 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                 e.printStackTrace();
             }
         }
-        this.getBukkitEntity().setMaxHealth(this.getPet().getPetType().getMaxHealth());
-        this.setHealth((float) this.getPet().getPetType().getMaxHealth());
+        this.getBukkitEntity().setMaxHealth(pet.getPetType().getMaxHealth());
+        this.setHealth((float) pet.getPetType().getMaxHealth());
         this.jumpHeight = EchoPetPlugin.getInstance().options.getRideJumpHeight(this.getPet().getPetType());
         this.rideSpeed = EchoPetPlugin.getInstance().options.getRideSpeed(this.getPet().getPetType());
         this.setPathfinding();
@@ -190,6 +190,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     }
 
     // EntityInsentient
+    @Override
     public boolean a(EntityHuman human) {
         if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
             if (EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true)) {
@@ -264,14 +265,14 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
             Vector vo = this.getPlayerOwner().getLocation().getDirection();
             if (vo.getX() > 0) {
-                x = x - 1.5;
+                x -= 1.5;
             } else if (vo.getX() < 0) {
-                x = x + 1.5;
+                x += 1.5;
             }
             if (vo.getZ() > 0) {
-                z = z - 1.5;
+                z -= 1.5;
             } else if (vo.getZ() < 0) {
-                z = z + 1.5;
+                z += 1.5;
             }
 
             this.setVelocity(new Vector(x, y, z).normalize().multiply(0.3F));
@@ -332,7 +333,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                             this.motY = 0.5F;
                         }
                     }
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalAccessException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalStateException e) {
                     Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Flying Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
                 }
             } else if (this.onGround) {
@@ -344,7 +349,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                             this.motY = rideEvent.getJumpHeight();
                         }
                     }
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalAccessException e) {
+                    Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
+                } catch (IllegalStateException e) {
                     Logger.log(Logger.LogLevel.WARNING, "Failed to initiate Pet Jumping Motion for " + this.getPlayerOwner().getName() + "'s Pet.", e, true);
                 }
             }

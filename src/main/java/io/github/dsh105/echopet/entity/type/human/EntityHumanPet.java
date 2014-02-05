@@ -27,6 +27,7 @@ public class EntityHumanPet extends EntityPacketPet {
         return PetType.HUMAN;
     }
 
+    @Override
     public Packet createPacket() {
         PacketPlayOutNamedEntitySpawn packet = new PacketPlayOutNamedEntitySpawn();
         this.profile = new GameProfile(this.id + "", this.pet.getPetName());

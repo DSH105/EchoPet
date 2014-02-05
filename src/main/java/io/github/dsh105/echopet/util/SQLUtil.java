@@ -12,15 +12,15 @@ public class SQLUtil {
         String s = "";
         for (PetData pd : data) {
             if (!s.equalsIgnoreCase("")) {
-                s = s + " varchar(255), ";
+                s += " varchar(255), ";
             }
             if (mount) {
                 s = s + "Mount" + pd.toString();
             } else {
-                s = s + pd.toString();
+                s += pd.toString();
             }
         }
-        s = s + " varchar(255)";
+        s += " varchar(255)";
         return s;
     }
 
@@ -30,7 +30,7 @@ public class SQLUtil {
         if (!data.isEmpty()) {
             for (PetData pd : data) {
                 if (!s.equalsIgnoreCase(", ")) {
-                    s = s + ", ";
+                    s += ", ";
                 }
                 s = s + mount + "`" + pd.toString() + "` = '" + value.toString() + "'";
             }

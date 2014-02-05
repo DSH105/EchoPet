@@ -20,6 +20,7 @@ public class EntityWitherPet extends EntityPet {
         return PetType.WITHER;
     }
 
+    @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(17, new Integer(0));

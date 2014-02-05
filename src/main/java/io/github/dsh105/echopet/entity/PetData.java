@@ -1,6 +1,7 @@
 package io.github.dsh105.echopet.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public enum PetData {
 
@@ -70,9 +71,7 @@ public enum PetData {
 
     PetData(String configOptionString, Type... t) {
         this.configOptionString = configOptionString;
-        for (Type ty : t) {
-            this.t.add(ty);
-        }
+        this.t.addAll(Arrays.asList(t));
     }
 
     public String getConfigOptionString() {

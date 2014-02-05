@@ -92,6 +92,7 @@ import io.github.dsh105.echopet.entity.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.type.zombie.CraftZombiePet;
 import io.github.dsh105.echopet.entity.type.zombie.EntityZombiePet;
 import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
+import java.lang.reflect.InvocationTargetException;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.entity.EntityType;
@@ -218,7 +219,17 @@ public enum PetType {
             if (o instanceof EntityPet) {
                 ePet = (EntityPet) o;
             }
-        } catch (Exception e) {
+        } catch (NoSuchMethodException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
+        } catch (InstantiationException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
+        } catch (IllegalAccessException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
+        } catch (InvocationTargetException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create new EntityPet instance.", e, true);
         }
         return ePet;
@@ -244,8 +255,18 @@ public enum PetType {
             if (o instanceof Pet) {
                 p = (Pet) o;
             }
-        } catch (Exception e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+        } catch (NoSuchMethodException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance.", e, true);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance.", e, true);
+        } catch (InstantiationException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance.", e, true);
+        } catch (IllegalAccessException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance.", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance.", e, true);
+        } catch (InvocationTargetException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance.", e, true);
         }
         return p;
     }
@@ -257,7 +278,17 @@ public enum PetType {
             if (o instanceof CraftPet) {
                 p = (CraftPet) o;
             }
-        } catch (Exception e) {
+        } catch (NoSuchMethodException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new CraftPet instance [" + entityPet.getPet().getPetType().toString() + "].", e, true);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new CraftPet instance [" + entityPet.getPet().getPetType().toString() + "].", e, true);
+        } catch (InstantiationException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new CraftPet instance [" + entityPet.getPet().getPetType().toString() + "].", e, true);
+        } catch (IllegalAccessException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new CraftPet instance [" + entityPet.getPet().getPetType().toString() + "].", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new CraftPet instance [" + entityPet.getPet().getPetType().toString() + "].", e, true);
+        } catch (InvocationTargetException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create new CraftPet instance [" + entityPet.getPet().getPetType().toString() + "].", e, true);
         }
         return p;

@@ -223,6 +223,7 @@ public class MenuListener implements Listener {
                         player.closeInventory();
                         event.setCancelled(true);
                         new BukkitRunnable() {
+                            @Override
                             public void run() {
                                 int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
                                 PetMenu menu = new PetMenu(pet, MenuUtil.createOptionList(pet.getPetType()), size);
@@ -241,7 +242,10 @@ public class MenuListener implements Listener {
                     }
                     event.setCancelled(true);
                 }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
+                Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
+                event.setCancelled(true);
+            } catch (IllegalStateException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
                 event.setCancelled(true);
             }

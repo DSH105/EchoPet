@@ -27,11 +27,13 @@ public class WolfPet extends Pet implements IAgeablePet {
         return this.collar;
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntityWolfPet) getEntityPet()).setBaby(flag);
         this.baby = flag;
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }

@@ -18,6 +18,7 @@ public class EntitySkeletonPet extends EntityPet {
         super(world, pet);
         final SkeletonPet sp = (SkeletonPet) pet;
         new BukkitRunnable() {
+            @Override
             public void run() {
                 if (sp.wither) {
                     setEquipment(0, new ItemStack(Items.STONE_SWORD));

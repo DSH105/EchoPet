@@ -20,6 +20,7 @@ public class EntityIronGolemPet extends EntityPet {
         return PetType.IRONGOLEM;
     }
 
+    @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(16, Byte.valueOf((byte) 0));

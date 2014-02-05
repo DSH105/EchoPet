@@ -36,6 +36,7 @@ public class HorsePet extends Pet implements IAgeablePet {
         this.armour = armour;
     }
 
+    @Override
     public void setBaby(boolean flag) {
         ((EntityHorsePet) getEntityPet()).setBaby(flag);
         this.baby = flag;
@@ -67,6 +68,7 @@ public class HorsePet extends Pet implements IAgeablePet {
         return this.armour;
     }
 
+    @Override
     public boolean isBaby() {
         return this.baby;
     }
