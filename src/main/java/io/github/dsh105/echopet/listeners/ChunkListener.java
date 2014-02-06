@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 public class ChunkListener implements Listener {
 
-    @EventHandler
+    /*@EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         for (int i = 0; i < ((CraftChunk) event.getChunk()).getHandle().entitySlices.length; ++i) {
             @SuppressWarnings("unchecked")
@@ -31,7 +31,7 @@ public class ChunkListener implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     /*@EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
