@@ -405,10 +405,10 @@ public class EchoPetPlugin extends JavaPlugin {
                 }
             }
 
-            //c.put(name, clazz);
+            c.put(name, clazz);
             d.put(clazz, name);
             f.put(clazz, id);
-            //g.put(name, id);
+            g.put(name, id);
         } catch (NoSuchFieldException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
         } catch (SecurityException e) {
