@@ -283,39 +283,40 @@ public class PetHandler {
     }
 
     public void loadMountFromFile(String type, Pet pet) {
-        String path = type + "." + pet.getNameOfOwner();
-        if (ec.getPetConfig().get(path + ".mount.type") != null) {
-            PetType mountPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".mount.type"));
-            String mountName = ec.getPetConfig().getString(path + ".mount.name");
-            if (mountName.equalsIgnoreCase("") || mountName == null) {
-                mountName = mountPetType.getDefaultName(pet.getNameOfOwner());
-            }
-            if (mountPetType == null) return;
-            if (ec.options.allowMounts(pet.getPetType())) {
-                Pet mount = pet.createMount(mountPetType, true);
-                if (mount != null) {
-                    mount.setPetName(mountName);
-                    ArrayList<PetData> mountData = new ArrayList<PetData>();
-                    ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
-                    if (mcs != null) {
-                        for (String key : mcs.getKeys(false)) {
-                            if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
-                                PetData pd = PetData.valueOf(key.toUpperCase());
-                                mountData.add(pd);
-                            } else {
-                                Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Mount Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+        if (pet.getNameOfOwner() != null) {
+            String path = type + "." + pet.getNameOfOwner();
+            if (ec.getPetConfig().get(path + ".mount.type") != null) {
+                PetType mountPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".mount.type"));
+                String mountName = ec.getPetConfig().getString(path + ".mount.name");
+                if (mountName.equalsIgnoreCase("") || mountName == null) {
+                    mountName = mountPetType.getDefaultName(pet.getNameOfOwner());
+                }
+                if (mountPetType == null) return;
+                if (ec.options.allowMounts(pet.getPetType())) {
+                    Pet mount = pet.createMount(mountPetType, true);
+                    if (mount != null) {
+                        mount.setPetName(mountName);
+                        ArrayList<PetData> mountData = new ArrayList<PetData>();
+                        ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
+                        if (mcs != null) {
+                            for (String key : mcs.getKeys(false)) {
+                                if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+                                    PetData pd = PetData.valueOf(key.toUpperCase());
+                                    mountData.add(pd);
+                                } else {
+                                    Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Mount Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+                                }
                             }
                         }
-                    }
-                    if (!mountData.isEmpty()) {
-                        setData(pet, mountData.toArray(new PetData[mountData.size()]), true);
+                        if (!mountData.isEmpty()) {
+                            setData(pet, mountData.toArray(new PetData[mountData.size()]), true);
+                        }
                     }
                 }
             }
         }
     }
 
-    //TODO: Don't compare player objects
     public void removePets(String player, boolean makeDeathSound) {
         Iterator<Pet> i = pets.listIterator();
         while (i.hasNext()) {

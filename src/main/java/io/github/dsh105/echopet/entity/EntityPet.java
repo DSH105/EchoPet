@@ -425,7 +425,6 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     @Override
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
-        // Store as little data as possible this way so we can use and store our own entity data
         nbttagcompound.setString("EchoPet_OwnerName", this.getPet().getNameOfOwner());
     }
 
@@ -437,5 +436,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         this.pet = this.getPet().getPetType().getNewPetInstance(owner, this);
         PetHandler.getInstance().loadMountFromFile(this.getPet());
         this.initiateEntityPet();
+    }
+
+    // Whether to set entity position after loading custom NBT data
+    @Override
+    protected boolean V() {
+        return false;
     }
 }

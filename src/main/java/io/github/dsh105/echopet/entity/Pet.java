@@ -5,6 +5,7 @@ import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetPreSpawnEvent;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
+import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Bukkit;
@@ -213,7 +214,9 @@ public abstract class Pet {
      * Teleports this {@link io.github.dsh105.echopet.entity.Pet} to its owner
      */
     public void teleportToOwner() {
-        this.teleport(this.getOwner().getLocation());
+        if (this.getOwner() != null && this.getOwner().getLocation() != null) {
+            this.teleport(this.getOwner().getLocation());
+        }
     }
 
     /**
