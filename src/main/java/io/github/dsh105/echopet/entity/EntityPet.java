@@ -215,7 +215,10 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     public void remove(boolean makeSound) {
         bukkitEntity.remove();
         if (makeSound) {
-            makeSound(this.getDeathSound(), 1.0F, 1.0F);
+            String sound = this.getDeathSound();
+            if (sound != null) {
+                makeSound(this.getDeathSound(), 1.0F, 1.0F);
+            }
         }
     }
 
