@@ -225,6 +225,13 @@ public abstract class Pet {
      * @param to {@link org.bukkit.Location} to teleport the {@link io.github.dsh105.echopet.entity.Pet} to
      */
     public void teleport(Location to) {
+        if (this.entityPet == null || this.entityPet.dead) {
+            EchoPetPlugin.getInstance().PH.saveFileData("autosave", this);
+            EchoPetPlugin.getInstance().SPH.saveToDatabase(this, false);
+            PetHandler.getInstance().removePet(this, false);
+            PetHandler.getInstance().createPetFromFile("autosave", this.getOwner());
+            return;
+        }
         PetTeleportEvent teleportEvent = new PetTeleportEvent(this, this.getLocation(), to);
         EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(teleportEvent);
         if (teleportEvent.isCancelled()) {
