@@ -2,6 +2,8 @@ package io.github.dsh105.echopet.entity.type.enderman;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.Block;
 import net.minecraft.server.v1_7_R1.World;
 
@@ -72,7 +74,11 @@ public class EntityEndermanPet extends EntityPet {
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            Particle.PORTAL.sendTo(pet.getLocation());
+            try {
+                Particle.PORTAL.sendTo(pet.getLocation());
+            } catch (Exception ex) {
+                Logger.getLogger(EntityEndermanPet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

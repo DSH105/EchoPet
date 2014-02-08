@@ -5,6 +5,8 @@ import io.github.dsh105.echopet.entity.EntityAgeablePet;
 import io.github.dsh105.echopet.entity.EntitySize;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 1.8F)
@@ -56,7 +58,11 @@ public class EntityVillagerPet extends EntityAgeablePet {
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            Particle.SPARKLE.sendTo(pet.getLocation());
+            try {
+                Particle.SPARKLE.sendTo(pet.getLocation());
+            } catch (Exception ex) {
+                Logger.getLogger(EntityVillagerPet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

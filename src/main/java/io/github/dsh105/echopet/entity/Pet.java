@@ -18,6 +18,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Pet {
 
@@ -70,7 +72,11 @@ public abstract class Pet {
             this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
             EchoPetPlugin.getInstance().PH.removePet(this, true);
         } else {
-            Particle.MAGIC_RUNES.sendTo(l);
+            try {
+                Particle.MAGIC_RUNES.sendTo(l);
+            } catch (Exception ex) {
+                Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return entityPet;
     }
@@ -203,11 +209,15 @@ public abstract class Pet {
      * Kills this {@link io.github.dsh105.echopet.entity.Pet} and removes any mounts
      */
     public void removePet(boolean makeSound) {
-        Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
-        Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
-        removeMount();
-        this.getEntityPet().remove(makeSound);
-        this.getCraftPet().remove();
+        try {
+            Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
+            Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
+            removeMount();
+            this.getEntityPet().remove(makeSound);
+            this.getCraftPet().remove();
+        } catch (Exception ex) {
+            Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -304,10 +314,18 @@ public abstract class Pet {
         }
         this.teleportToOwner();
         this.ownerRiding = flag;
-        Particle.PORTAL.sendTo(this.getLocation());
+        try {
+            Particle.PORTAL.sendTo(this.getLocation());
+        } catch (Exception ex) {
+            Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
+        try {
+            Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
+        } catch (Exception ex) {
+            Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -315,6 +333,7 @@ public abstract class Pet {
      *
      * @param flag true if your wish for this {@link io.github.dsh105.echopet.entity.Pet} to be a Hat
      */
+    @SuppressWarnings("deprecation")
     public void setAsHat(boolean flag) {
         if (this.isHat == flag) {
             return;
@@ -344,10 +363,18 @@ public abstract class Pet {
             }
         }
         this.isHat = flag;
-        Particle.PORTAL.sendTo(this.getLocation());
+        try {
+            Particle.PORTAL.sendTo(this.getLocation());
+        } catch (Exception ex) {
+            Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
+        try {
+            Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
+        } catch (Exception ex) {
+            Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

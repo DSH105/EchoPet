@@ -2,6 +2,8 @@ package io.github.dsh105.echopet.entity.type.slime;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
@@ -64,7 +66,11 @@ public class EntitySlimePet extends EntityPet {
         }
 
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            Particle.SLIME_SPLAT.sendTo(pet.getLocation());
+            try {
+                Particle.SLIME_SPLAT.sendTo(pet.getLocation());
+            } catch (Exception ex) {
+                Logger.getLogger(EntitySlimePet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
