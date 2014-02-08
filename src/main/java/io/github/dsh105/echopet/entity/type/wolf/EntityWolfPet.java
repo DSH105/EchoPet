@@ -7,6 +7,7 @@ import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.8F)
+@EntityPetType(petType = PetType.WOLF)
 public class EntityWolfPet extends EntityAgeablePet {
 
     private boolean wet;
@@ -19,11 +20,6 @@ public class EntityWolfPet extends EntityAgeablePet {
 
     public EntityWolfPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.WOLF;
     }
 
     public boolean isTamed() {

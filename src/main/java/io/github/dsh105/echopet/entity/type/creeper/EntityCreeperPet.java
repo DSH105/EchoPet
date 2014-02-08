@@ -5,6 +5,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.9F)
+@EntityPetType(petType = PetType.CREEPER)
 public class EntityCreeperPet extends EntityPet {
 
     public EntityCreeperPet(World world) {
@@ -13,11 +14,6 @@ public class EntityCreeperPet extends EntityPet {
 
     public EntityCreeperPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.CREEPER;
     }
 
     public void setPowered(boolean flag) {

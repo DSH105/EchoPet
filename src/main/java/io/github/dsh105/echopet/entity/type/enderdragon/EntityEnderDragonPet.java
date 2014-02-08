@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @EntitySize(width = 8.0F, height = 4.0F)
+@EntityPetType(petType = PetType.ENDERDRAGON)
 public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, IMonster {
 
     private double i;
@@ -45,11 +46,6 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         this.noClip(true);
         this.i = 100.0D;
         this.al = true;
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.ENDERDRAGON;
     }
 
     public double[] b(int i, float f) {

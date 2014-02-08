@@ -8,6 +8,7 @@ import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 @EntitySize(width = 0.6F, height = 0.9F)
+@EntityPetType(petType = PetType.PIGZOMBIE)
 public class EntityPigZombiePet extends EntityPet {
 
     public EntityPigZombiePet(World world) {
@@ -22,11 +23,6 @@ public class EntityPigZombiePet extends EntityPet {
                 setEquipment(0, new ItemStack(Items.GOLD_SWORD));
             }
         }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.PIGZOMBIE;
     }
 
     public void setBaby(boolean flag) {

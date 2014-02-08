@@ -5,6 +5,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.7F)
+@EntityPetType(petType = PetType.BLAZE)
 public class EntityBlazePet extends EntityPet {
 
     public EntityBlazePet(World world) {
@@ -13,11 +14,6 @@ public class EntityBlazePet extends EntityPet {
 
     public EntityBlazePet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.BLAZE;
     }
 
     public void setOnFire(boolean flag) {

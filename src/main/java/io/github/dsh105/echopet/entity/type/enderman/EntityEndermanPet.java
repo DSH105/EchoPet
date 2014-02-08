@@ -6,6 +6,7 @@ import net.minecraft.server.v1_7_R1.Block;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.9F)
+@EntityPetType(petType = PetType.ENDERMAN)
 public class EntityEndermanPet extends EntityPet {
 
     public EntityEndermanPet(World world) {
@@ -14,11 +15,6 @@ public class EntityEndermanPet extends EntityPet {
 
     public EntityEndermanPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.ENDERMAN;
     }
 
     public void setScreaming(boolean flag) {

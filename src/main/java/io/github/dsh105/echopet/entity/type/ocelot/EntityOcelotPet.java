@@ -1,12 +1,10 @@
 package io.github.dsh105.echopet.entity.type.ocelot;
 
-import io.github.dsh105.echopet.entity.EntityAgeablePet;
-import io.github.dsh105.echopet.entity.EntitySize;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.9F, height = 0.9F)
+@EntityPetType(petType = PetType.OCELOT)
 public class EntityOcelotPet extends EntityAgeablePet {
 
     public EntityOcelotPet(World world) {
@@ -15,11 +13,6 @@ public class EntityOcelotPet extends EntityAgeablePet {
 
     public EntityOcelotPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.OCELOT;
     }
 
     public int getCatType() {

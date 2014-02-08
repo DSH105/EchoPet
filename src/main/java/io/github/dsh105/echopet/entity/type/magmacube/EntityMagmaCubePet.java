@@ -5,6 +5,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
+@EntityPetType(petType = PetType.MAGMACUBE)
 public class EntityMagmaCubePet extends EntityPet {
 
     int jumpDelay;
@@ -18,11 +19,6 @@ public class EntityMagmaCubePet extends EntityPet {
         int i = 1 << this.random.nextInt(3);
         this.setSize(i);
         this.jumpDelay = this.random.nextInt(15) + 10;
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.MAGMACUBE;
     }
 
     public void setSize(int i) {

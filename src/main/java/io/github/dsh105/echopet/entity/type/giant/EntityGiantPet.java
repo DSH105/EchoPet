@@ -4,6 +4,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 5.5F, height = 5.5F)
+@EntityPetType(petType = PetType.GIANT)
 public class EntityGiantPet extends EntityPet {
 
     public EntityGiantPet(World world) {
@@ -12,11 +13,6 @@ public class EntityGiantPet extends EntityPet {
 
     public EntityGiantPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.GIANT;
     }
 
     @Override

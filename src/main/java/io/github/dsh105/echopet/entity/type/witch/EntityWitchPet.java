@@ -5,6 +5,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.8F)
+@EntityPetType(petType = PetType.WITCH)
 public class EntityWitchPet extends EntityPet {
 
     public EntityWitchPet(World world) {
@@ -13,11 +14,6 @@ public class EntityWitchPet extends EntityPet {
 
     public EntityWitchPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.WITCH;
     }
 
     @Override

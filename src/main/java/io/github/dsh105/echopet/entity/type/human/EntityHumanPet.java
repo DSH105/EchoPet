@@ -9,6 +9,7 @@ import net.minecraft.server.v1_7_R1.World;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 
 @EntitySize(width = 0.6F, height = 0.9F)
+@EntityPetType(petType = PetType.HUMAN)
 public class EntityHumanPet extends EntityPacketPet {
 
     protected GameProfile profile;
@@ -20,11 +21,6 @@ public class EntityHumanPet extends EntityPacketPet {
 
     public EntityHumanPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.HUMAN;
     }
 
     @Override

@@ -4,6 +4,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.*;
 
 @EntitySize(width = 1.4F, height = 1.6F)
+@EntityPetType(petType = PetType.HORSE)
 public class EntityHorsePet extends EntityAgeablePet {
 
     int bP = 0;
@@ -14,11 +15,6 @@ public class EntityHorsePet extends EntityAgeablePet {
 
     public EntityHorsePet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.HORSE;
     }
 
     @Override

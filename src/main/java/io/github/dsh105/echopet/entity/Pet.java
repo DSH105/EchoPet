@@ -207,7 +207,6 @@ public abstract class Pet {
         Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
         removeMount();
         this.getEntityPet().remove(makeSound);
-        this.getCraftPet().remove();
     }
 
     /**
