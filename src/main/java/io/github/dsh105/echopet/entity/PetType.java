@@ -242,7 +242,17 @@ public enum PetType {
             if (o instanceof Pet) {
                 p = (Pet) o;
             }
-        } catch (Exception e) {
+        } catch (NoSuchMethodException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+        } catch (SecurityException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+        } catch (InstantiationException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+        } catch (IllegalAccessException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+        } catch (IllegalArgumentException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+        } catch (InvocationTargetException e) {
             Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
         }
         return p;
