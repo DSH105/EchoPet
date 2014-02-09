@@ -88,7 +88,8 @@ public enum Lang {
     ADMIN_SHOW_PET("admin_show_pet", "&6%player%&e's hidden Pet magically reappears!"),
     ADMIN_HIDE_PET("admin_hide_pet", "&6%player%&e's Pet has been hidden."),
     ADMIN_ADD_SELECTOR("admin_add_selector", "&eThe &6Pet Selector &ehas been added to &6%player%&e's inventory."),
-    ADMIN_OPEN_SELECTOR("admin_add_selector", "&eThe &6Pet Selector &eMenu has been opened for &6%player%."),
+    ADMIN_OPEN_SELECTOR("admin_open_selector", "&eThe &6Pet Selector &eMenu has been opened for &6%player%."),
+    ADMIN_CLOSE_SELECTOR("admin_close_selector", "&eThe &6Pet Selector &eMenu has been closed for &6%player%."),
     ADMIN_RELOAD_CONFIG("admin_reload_config", "&eConfiguration File reloaded.");
 
     private String path;

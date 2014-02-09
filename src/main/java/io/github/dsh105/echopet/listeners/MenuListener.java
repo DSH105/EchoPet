@@ -34,7 +34,7 @@ public class MenuListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (event.getView().getTitle().equals("Pet Selector") || event.getView().getTitle().contains("EchoPet DataMenu")) {
+        if (event.getView().getTitle().contains("EchoPet DataMenu")) {
             event.setCancelled(true);
         }
 
@@ -64,7 +64,7 @@ public class MenuListener implements Listener {
                 return;
             }
         }
-        if (title.equals("Pet Selector")) {
+        /*if (title.equals("Pets")) {
             try {
                 if (slot <= 44 && inv.getItem(slot) != null) {
                     if (inv.getItem(slot).equals(SelectorItem.CLOSE.getItem())) {
@@ -135,7 +135,7 @@ public class MenuListener implements Listener {
                 Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
                 event.setCancelled(true);
             }
-        }
+        }*/
 
 
         final Pet pet = EchoPetPlugin.getInstance().PH.getPet(player);

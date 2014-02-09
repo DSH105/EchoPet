@@ -15,7 +15,7 @@ import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
 import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
-import io.github.dsh105.echopet.menu.selector.PetSelector;
+import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
@@ -201,8 +201,10 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void openPetSelector(Player player, boolean sendMessage) {
-        PetSelector petSelector = new PetSelector(45, player);
-        petSelector.open(sendMessage);
+        new SelectorMenu().showTo(player);
+        if (sendMessage) {
+            Lang.sendTo(player, Lang.OPEN_SELECTOR.toString());
+        }
     }
 
     /**

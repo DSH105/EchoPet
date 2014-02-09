@@ -9,8 +9,8 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPacketPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.WorldUtil;
@@ -36,8 +36,7 @@ public class PetOwnerListener implements Listener {
         Player p = event.getPlayer();
         ItemStack itemStack = event.getItem();
         if (itemStack != null && itemStack.isSimilar(SelectorItem.SELECTOR.getItem())) {
-            PetSelector petSelector = new PetSelector(45, p);
-            petSelector.open(false);
+            new SelectorMenu().showTo(p);
             event.setCancelled(true);
         }
     }
@@ -190,7 +189,9 @@ public class PetOwnerListener implements Listener {
 
             @Override
             public void run() {
-                PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                if (p != null) {
+                    PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                }
             }
 
         }.runTaskLater(ec, 20);

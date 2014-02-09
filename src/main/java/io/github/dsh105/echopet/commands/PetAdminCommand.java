@@ -9,8 +9,8 @@ import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
-import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.Perm;
@@ -228,8 +228,12 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    PetSelector petSelector = new PetSelector(45, target);
-                    petSelector.open(false);
+                    if (target.getOpenInventory() != null && target.getOpenInventory().getTitle().equals("Pets")) {
+                        target.closeInventory();
+                        Lang.sendTo(sender, Lang.ADMIN_CLOSE_SELECTOR.toString().replace("%player%", target.getName()));
+                        return true;
+                    }
+                    new SelectorMenu().showTo(target);
                     Lang.sendTo(sender, Lang.ADMIN_OPEN_SELECTOR.toString().replace("%player%", target.getName()));
                     return true;
                 } else return true;

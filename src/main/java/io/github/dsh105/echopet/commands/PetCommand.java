@@ -9,8 +9,8 @@ import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
-import io.github.dsh105.echopet.menu.selector.PetSelector;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -104,10 +104,17 @@ public class PetCommand implements CommandExecutor {
             } else return true;
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("select")) {
+                if (sender instanceof Player) {
+                    // We can exempt the player from having the appropriate permission here
+                    Player p = (Player) sender;
+                    if (p.getOpenInventory() != null && p.getOpenInventory().getTitle().equals("Pets")) {
+                        p.closeInventory();
+                        return true;
+                    }
+                }
                 if (Perm.BASE_SELECT.hasPerm(sender, true, false)) {
                     Player p = (Player) sender;
-                    PetSelector petSelector = new PetSelector(45, p);
-                    petSelector.open(false);
+                    new SelectorMenu().showTo(p);
                     return true;
                 } else return true;
             } else if (args[0].equalsIgnoreCase("selector")) {
@@ -127,6 +134,35 @@ public class PetCommand implements CommandExecutor {
                     }
                     pet.teleport(player.getLocation());
                     Lang.sendTo(sender, Lang.PET_CALL.toString());
+                    return true;
+                } else return true;
+            } else if (args[0].equalsIgnoreCase("toggle")) {
+                if (Perm.BASE_TOGGLE.hasPerm(sender, true, false)) {
+                    Player player = (Player) sender;
+                    Pet p = ec.PH.getPet(player);
+                    if (p == null) {
+                        PetHandler.getInstance().removePets(player.getName(), true);
+                        Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
+                        if (pet == null) {
+                            Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
+                            return true;
+                        }
+                        if (WorldUtil.allowPets(player.getLocation())) {
+                            Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+                            return true;
+                        } else {
+                            Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
+                            if (pet != null) {
+                                PetHandler.getInstance().removePet(pet, true);
+                            }
+                            return true;
+                        }
+                    } else {
+                        ec.PH.saveFileData("autosave", p);
+                        ec.SPH.saveToDatabase(p, false);
+                        ec.PH.removePet(p, true);
+                        Lang.sendTo(sender, Lang.HIDE_PET.toString());
+                    }
                     return true;
                 } else return true;
             } else if (args[0].equalsIgnoreCase("hide")) {
