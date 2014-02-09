@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.type.human;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.PacketPet;
 import io.github.dsh105.echopet.entity.PetType;
@@ -12,6 +13,10 @@ public class HumanPet extends PacketPet {
 
     public HumanPet(String owner) {
         super(owner);
+    }
+
+    public HumanPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setEquipment(Material material) {

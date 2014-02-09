@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.type.creeper;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
@@ -12,6 +13,10 @@ public class CreeperPet extends Pet {
 
     public CreeperPet(String owner) {
         super(owner);
+    }
+
+    public CreeperPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setPowered(boolean flag) {

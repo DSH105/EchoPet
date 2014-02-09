@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.type.magmacube;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
@@ -11,6 +12,10 @@ public class MagmaCubePet extends Pet {
 
     public MagmaCubePet(String owner) {
         super(owner);
+    }
+
+    public MagmaCubePet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setSize(int i) {

@@ -1,9 +1,6 @@
 package io.github.dsh105.echopet.entity.type.wolf;
 
-import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
 import org.bukkit.DyeColor;
 
 @EntityPetType(petType = PetType.WOLF)
@@ -16,6 +13,10 @@ public class WolfPet extends Pet implements IAgeablePet {
 
     public WolfPet(String owner) {
         super(owner);
+    }
+
+    public WolfPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setCollarColor(DyeColor dc) {

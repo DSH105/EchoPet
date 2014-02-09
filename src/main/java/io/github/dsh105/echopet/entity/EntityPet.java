@@ -168,7 +168,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     @Override
     public CraftPet getBukkitEntity() {
         if (this.bukkitEntity == null) {
-            this.bukkitEntity = this.getPet().getPetType().getNewCraftInstance(this);
+            this.bukkitEntity = this.getEntityPetType().getNewCraftInstance(this);
         }
         return (CraftPet) this.bukkitEntity;
     }

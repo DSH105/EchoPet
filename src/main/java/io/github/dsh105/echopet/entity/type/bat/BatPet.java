@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.type.bat;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
@@ -11,6 +12,10 @@ public class BatPet extends Pet {
 
     public BatPet(String owner) {
         super(owner);
+    }
+
+    public BatPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setHanging(boolean flag) {

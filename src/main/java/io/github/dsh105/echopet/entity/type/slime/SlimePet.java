@@ -1,5 +1,6 @@
 package io.github.dsh105.echopet.entity.type.slime;
 
+import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
@@ -11,6 +12,10 @@ public class SlimePet extends Pet {
 
     public SlimePet(String owner) {
         super(owner);
+    }
+
+    public SlimePet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setSize(int i) {

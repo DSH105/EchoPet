@@ -1,10 +1,7 @@
 package io.github.dsh105.echopet.entity.type.chicken;
 
 
-import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
 
 @EntityPetType(petType = PetType.CHICKEN)
 public class ChickenPet extends Pet implements IAgeablePet {
@@ -13,6 +10,10 @@ public class ChickenPet extends Pet implements IAgeablePet {
 
     public ChickenPet(String owner) {
         super(owner);
+    }
+
+    public ChickenPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setBaby(boolean flag) {

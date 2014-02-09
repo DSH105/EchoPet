@@ -1,9 +1,6 @@
 package io.github.dsh105.echopet.entity.type.villager;
 
-import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
 import org.bukkit.entity.Villager.Profession;
 
 @EntityPetType(petType = PetType.VILLAGER)
@@ -14,6 +11,10 @@ public class VillagerPet extends Pet implements IAgeablePet {
 
     public VillagerPet(String owner) {
         super(owner);
+    }
+
+    public VillagerPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     @Override

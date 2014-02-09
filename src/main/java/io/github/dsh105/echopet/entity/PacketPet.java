@@ -6,6 +6,10 @@ public class PacketPet extends Pet {
         super(owner);
     }
 
+    public PacketPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
+    }
+
     @Override
     public EntityPacketPet getEntityPet() {
         return (EntityPacketPet) super.getEntityPet();
