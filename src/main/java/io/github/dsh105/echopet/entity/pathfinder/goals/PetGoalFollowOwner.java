@@ -9,6 +9,7 @@ import net.minecraft.server.v1_7_R1.GenericAttributes;
 import net.minecraft.server.v1_7_R1.Navigation;
 import net.minecraft.server.v1_7_R1.PathEntity;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 
 public class PetGoalFollowOwner extends PetGoal {
@@ -19,7 +20,7 @@ public class PetGoalFollowOwner extends PetGoal {
     private double startDistance;
     private double stopDistance;
     private double teleportDistance;
-    private EntityPlayer owner;
+    //private EntityPlayer owner;
 
     public PetGoalFollowOwner(EntityPet pet, double startDistance, double stopDistance, double teleportDistance) {
         this.pet = pet;
@@ -27,16 +28,16 @@ public class PetGoalFollowOwner extends PetGoal {
         this.startDistance = startDistance;
         this.stopDistance = stopDistance;
         this.teleportDistance = teleportDistance;
-        this.owner = ((CraftPlayer) pet.getPlayerOwner()).getHandle();
+        //this.owner = ((CraftPlayer) pet.getPlayerOwner()).getHandle();
     }
 
     @Override
     public boolean shouldStart() {
         if (!this.pet.isAlive()) {
             return false;
-        } else if (this.owner == null) {
+        } else if (this.pet.getPlayerOwner() == null) {
             return false;
-        } else if (this.pet.e(this.owner) < this.startDistance) {
+        } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance) {
             return false;
         } else if (this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive()) {
             return false;
@@ -52,9 +53,9 @@ public class PetGoalFollowOwner extends PetGoal {
         if (attackGoal != null && attackGoal.isActive) {
             return true;
         }
-        if (this.owner == null) {
+        if (this.pet.getPlayerOwner() == null) {
             return true;
-        } else if (this.pet.e(this.owner) <= this.stopDistance) {
+        } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance) {
             return true;
         } else return this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive();
     }
@@ -75,6 +76,7 @@ public class PetGoalFollowOwner extends PetGoal {
     @Override
     public void tick() {
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalFollowOwner.java#L57
+        EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
         this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.x());
         if (--this.timer <= 0) {
             this.timer = 10;
@@ -84,7 +86,7 @@ public class PetGoalFollowOwner extends PetGoal {
             }
 
             double speed = 0.55F;
-            if (this.pet.e(this.owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround) {
+            if (this.pet.e(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround) {
                 this.pet.getPet().teleport(this.pet.getPlayerOwner().getLocation());
                 return;
             }
