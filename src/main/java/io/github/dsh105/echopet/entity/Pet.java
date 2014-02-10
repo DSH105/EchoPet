@@ -40,7 +40,7 @@ public abstract class Pet {
         this.setPetType();
         this.entityPet = entityPet;
         this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-        this.teleportToOwner();
+        //this.teleportToOwner();
     }
 
     public Pet(String owner) {
@@ -48,31 +48,35 @@ public abstract class Pet {
         this.setPetType();
         this.entityPet = this.initiatePet();
         this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-        this.teleportToOwner();
+        this.teleportToOwner();    // Will despawn and recreate if pet is found null
     }
 
     protected EntityPet initiatePet() {
-        Location l = this.getOwner().getLocation();
-        PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(this, l);
-        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
-        if (spawnEvent.isCancelled()) {
-            return null;
-        }
-        l = spawnEvent.getSpawnLocation();
-        net.minecraft.server.v1_7_R1.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
-        EntityPet entityPet = this.getPetType().getNewEntityPetInstance(mcWorld, this);
+        // If the owner is null it's likely something happened when a player logged in
+        if (this.getOwner() != null) {
+            Location l = this.getOwner().getLocation();
+            PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(this, l);
+            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
+            if (spawnEvent.isCancelled()) {
+                return null;
+            }
+            l = spawnEvent.getSpawnLocation();
+            net.minecraft.server.v1_7_R1.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
+            EntityPet entityPet = this.getPetType().getNewEntityPetInstance(mcWorld, this);
 
-        entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), this.getOwner().getLocation().getYaw(), this.getOwner().getLocation().getPitch());
-        if (!l.getChunk().isLoaded()) {
-            l.getChunk().load();
+            entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), this.getOwner().getLocation().getYaw(), this.getOwner().getLocation().getPitch());
+            if (!l.getChunk().isLoaded()) {
+                l.getChunk().load();
+            }
+            if (!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
+                this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
+                EchoPetPlugin.getInstance().PH.removePet(this, true);
+            } else {
+                Particle.MAGIC_RUNES.sendTo(l);
+            }
+            return entityPet;
         }
-        if (!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
-            this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
-            EchoPetPlugin.getInstance().PH.removePet(this, true);
-        } else {
-            Particle.MAGIC_RUNES.sendTo(l);
-        }
-        return entityPet;
+        return null;
     }
 
     protected void setPetType() {
