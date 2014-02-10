@@ -1,16 +1,25 @@
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.EntityPet;
-import net.minecraft.server.v1_7_R1.Entity;
-import org.bukkit.craftbukkit.v1_7_R1.CraftChunk;
+import io.github.dsh105.echopet.entity.CraftPet;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-import java.util.NoSuchElementException;
-
 public class ChunkListener implements Listener {
+
+    @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        if (event.getChunk().getEntities().length > 0) {
+            for (int i = 0; i < event.getChunk().getEntities().length; i++) {
+                Entity e = event.getChunk().getEntities()[i];
+                if (e instanceof CraftPet) {
+                    e.remove();
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
 
     /*@EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
