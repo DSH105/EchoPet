@@ -142,7 +142,6 @@ public class PetOwnerListener implements Listener {
 
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
-        Player p = event.getPlayer();
         if (event.getItemDrop().getItemStack().isSimilar(SelectorItem.SELECTOR.getItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))) {
             event.setCancelled(true);
         }
@@ -189,7 +188,7 @@ public class PetOwnerListener implements Listener {
 
             @Override
             public void run() {
-                if (p != null) {
+                if (p != null && p.isOnline()) {
                     PetHandler.getInstance().loadPets(p, true, sendMessage, false);
                 }
             }

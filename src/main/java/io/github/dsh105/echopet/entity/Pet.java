@@ -47,8 +47,10 @@ public abstract class Pet {
         this.owner = owner;
         this.setPetType();
         this.entityPet = this.initiatePet();
-        this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-        this.teleportToOwner();    // Will despawn and recreate if pet is found null
+        if (this.entityPet != null) {
+            this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
+            this.teleportToOwner();    // Will despawn and recreate if pet is found null
+        }
     }
 
     protected EntityPet initiatePet() {
