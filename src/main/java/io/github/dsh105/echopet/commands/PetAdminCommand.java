@@ -97,7 +97,7 @@ public class PetAdminCommand implements CommandExecutor {
                         return true;
                     }
 
-                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(3, args, " "));
+                    String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(3, args, " "));
                     if (name.length() > 32) {
                         Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                         return true;
@@ -124,7 +124,7 @@ public class PetAdminCommand implements CommandExecutor {
                         return true;
                     }
 
-                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(2, args, " "));
+                    String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(2, args, " "));
                     if (name.length() > 32) {
                         Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                         return true;

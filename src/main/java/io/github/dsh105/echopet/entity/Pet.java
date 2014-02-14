@@ -179,7 +179,7 @@ public abstract class Pet {
      * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public void setPetName(String name) {
-        this.name = StringUtil.replaceStringWithColours(name);
+        this.name = ChatColor.translateAlternateColorCodes('&', name);
         this.getCraftPet().setCustomName(this.name);
         this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
     }

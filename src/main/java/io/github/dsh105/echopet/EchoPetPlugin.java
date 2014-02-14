@@ -1,15 +1,15 @@
 package io.github.dsh105.echopet;
 
+import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.dshutils.Metrics;
 import com.dsh105.dshutils.Updater;
-import com.dsh105.dshutils.Version;
+import com.dsh105.dshutils.util.VersionUtil;
 import com.dsh105.dshutils.command.CustomCommand;
 import com.dsh105.dshutils.command.VersionIncompatibleCommand;
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.config.YAMLConfigManager;
 import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.ReflectionUtil;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.echopet.commands.CommandComplete;
@@ -45,12 +45,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-public class EchoPetPlugin extends JavaPlugin {
+public class EchoPetPlugin extends DSHPlugin {
 
-    private static EchoPetPlugin plugin;
-    private static Random random = new Random();
-
-    private YAMLConfigManager configManager;
     private YAMLConfig petConfig;
     private YAMLConfig mainConfig;
     private YAMLConfig langConfig;
@@ -74,21 +70,19 @@ public class EchoPetPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        plugin = this;
+        super.onEnable();
         Logger.initiate(this, "EchoPet", "[EchoPet]");
-        ConsoleLogger.initiate(this);
-        CustomCommand.initiate(this);
 
         // Make sure that the plugin is running under the correct version to prevent errors
-        if (!(Version.getNMSPackage()).equalsIgnoreCase(ReflectionUtil.getVersionString(this))) {
+        if (!VersionUtil.compareVersions()) {
             ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
                     + " is only compatible with:");
-            ConsoleLogger.log(ChatColor.RED + "    " + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion() + ".");
+            ConsoleLogger.log(ChatColor.RED + "    " + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion() + ".");
             ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
             try {
-                Class craftServer = Class.forName("org.bukkit.craftbukkit." + ReflectionUtil.getVersionString(this) + ".CraftServer");
+                Class craftServer = Class.forName("org.bukkit.craftbukkit." + VersionUtil.getServerVersion() + ".CraftServer");
                 if (craftServer.isInstance(Bukkit.getServer())) {
                     final Field f = craftServer.getDeclaredField("commandMap");
                     f.setAccessible(true);
@@ -97,8 +91,8 @@ public class EchoPetPlugin extends JavaPlugin {
                 CustomCommand petCmd = new CustomCommand(cmdString);
                 CM.register("ec", petCmd);
                 petCmd.setExecutor(new VersionIncompatibleCommand(petCmd.getLabel(), prefix, ChatColor.YELLOW +
-                        "EchoPet " + ChatColor.GOLD + Version.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
-                        + ChatColor.GOLD + Version.getMinecraftVersion() + "-" + Version.getCraftBukkitVersion()
+                        "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
+                        + ChatColor.GOLD + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion()
                         + ChatColor.YELLOW + ". Please update the plugin.",
                         "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."));
             } catch (ClassNotFoundException e) {
@@ -118,12 +112,11 @@ public class EchoPetPlugin extends JavaPlugin {
 
         PluginManager manager = getServer().getPluginManager();
 
-        configManager = new YAMLConfigManager(this);
         String[] header = {"EchoPet By DSH105", "---------------------",
                 "Configuration for EchoPet 2",
                 "See the EchoPet Wiki before editing this file"};
         try {
-            mainConfig = configManager.getNewConfig("config.yml", header);
+            mainConfig = this.getConfigManager().getNewConfig("config.yml", header);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [config.yml] generation failed.", e, true);
         }
@@ -133,7 +126,7 @@ public class EchoPetPlugin extends JavaPlugin {
         mainConfig.reloadConfig();
 
         try {
-            petConfig = configManager.getNewConfig("pets.yml");
+            petConfig = this.getConfigManager().getNewConfig("pets.yml");
             petConfig.reloadConfig();
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
@@ -142,7 +135,7 @@ public class EchoPetPlugin extends JavaPlugin {
         String[] langHeader = {"EchoPet By DSH105", "---------------------",
                 "Language Configuration File"};
         try {
-            langConfig = configManager.getNewConfig("language.yml", langHeader);
+            langConfig = this.getConfigManager().getNewConfig("language.yml", langHeader);
             try {
                 for (Lang l : Lang.values()) {
                     String[] desc = l.getDescription();
@@ -228,7 +221,7 @@ public class EchoPetPlugin extends JavaPlugin {
         // By default, set to 'pet'
         // PetAdmin command draws from the original, with 'admin' on the end
         try {
-            Class craftServer = Class.forName("org.bukkit.craftbukkit." + ReflectionUtil.getVersionString(this) + ".CraftServer");
+            Class craftServer = Class.forName("org.bukkit.craftbukkit." + VersionUtil.getServerVersion() + ".CraftServer");
             if (craftServer.isInstance(Bukkit.getServer())) {
                 final Field f = craftServer.getDeclaredField("commandMap");
                 f.setAccessible(true);
@@ -297,7 +290,7 @@ public class EchoPetPlugin extends JavaPlugin {
             getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
                 @Override
                 public void run() {
-                    Updater updater = new Updater(plugin, 53655, file, updateType, false);
+                    Updater updater = new Updater(getInstance(), 53655, file, updateType, false);
                     update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
                     if (update) {
                         name = updater.getLatestName();
@@ -314,6 +307,7 @@ public class EchoPetPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        super.onDisable();
         if (PH != null) {
             PH.removeAllPets();
         }
@@ -421,11 +415,7 @@ public class EchoPetPlugin extends JavaPlugin {
     }
 
     public static EchoPetPlugin getInstance() {
-        return plugin;
-    }
-
-    public static Random random() {
-        return random;
+        return (EchoPetPlugin) getPluginInstance();
     }
 
     public YAMLConfig getPetConfig() {
