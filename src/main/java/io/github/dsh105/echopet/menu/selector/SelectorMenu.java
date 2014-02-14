@@ -11,7 +11,7 @@ import java.util.Map;
 public class SelectorMenu extends InventoryMenu {
 
     public SelectorMenu() {
-        super(EchoPetPlugin.getInstance(), ConfigOptions.instance.getConfig().getString("petSelector.menu.title", "Pets"), ConfigOptions.instance.getConfig().getInt("petSelector.menu.slots", 45));
+        super(ConfigOptions.instance.getConfig().getString("petSelector.menu.title", "Pets"), ConfigOptions.instance.getConfig().getInt("petSelector.menu.slots", 45));
         for (Map.Entry<Integer, SelectorIcon> entry : SelectorLayout.getLoadedLayout().entrySet()) {
             //ConsoleLogger.log(entry.getKey() + "," + entry.getValue().getPetType().toString());
             this.setSlot(entry.getKey(), entry.getValue());
