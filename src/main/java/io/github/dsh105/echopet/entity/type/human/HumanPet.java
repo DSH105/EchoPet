@@ -7,11 +7,12 @@ import io.github.dsh105.echopet.entity.PetType;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.HUMAN)
 public class HumanPet extends PacketPet {
 
-    public HumanPet(String owner) {
+    public HumanPet(Player owner) {
         super(owner);
     }
 

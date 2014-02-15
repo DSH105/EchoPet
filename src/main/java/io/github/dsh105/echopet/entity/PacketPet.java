@@ -8,7 +8,7 @@ public class PacketPet extends Pet {
         super(owner);
     }
 
-    public PacketPet(Player owner, EntityPet entityPet) {
+    public PacketPet(String owner, EntityPet entityPet) {
         super(owner, entityPet);
     }
 
