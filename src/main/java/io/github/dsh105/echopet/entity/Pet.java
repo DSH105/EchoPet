@@ -372,6 +372,12 @@ public abstract class Pet {
      * @return a new Pet object that is mounting this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public Pet createMount(final PetType pt, boolean sendFailMessage) {
+        if (pt == PetType.HUMAN) {
+            if (sendFailMessage) {
+                Lang.sendTo(this.getOwner(), Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+            }
+            return null;
+        }
         if (!EchoPetPlugin.getInstance().options.allowMounts(this.getPetType())) {
             if (sendFailMessage) {
                 Lang.sendTo(this.getOwner(), Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
