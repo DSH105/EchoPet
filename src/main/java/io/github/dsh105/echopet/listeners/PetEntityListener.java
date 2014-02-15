@@ -41,8 +41,8 @@ public class PetEntityListener implements Listener {
     public void onDismount(VehicleExitEvent event) {
         Entity e = event.getVehicle();
         if (e instanceof CraftPet) {
-            Lang.sendTo(((CraftPet) e).getPet().getOwner(), Lang.RIDE_PET_OFF.toString());
             if (((CraftPet) e).getPet().isOwnerRiding() && !((CraftPet) e).getPet().ownerIsMounting) {
+                Lang.sendTo(((CraftPet) e).getPet().getOwner(), Lang.RIDE_PET_OFF.toString());
                 ((CraftPet) e).getPet().ownerRidePet(false);
             }
         }
