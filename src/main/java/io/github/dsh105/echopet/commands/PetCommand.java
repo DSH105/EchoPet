@@ -10,6 +10,7 @@ import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.util.*;
 import org.bukkit.ChatColor;
@@ -120,7 +121,7 @@ public class PetCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("selector")) {
                 if (Perm.BASE_SELECTOR.hasPerm(sender, true, false)) {
                     Player p = (Player) sender;
-                    p.getInventory().addItem(SelectorItem.SELECTOR.getItem());
+                    p.getInventory().addItem(SelectorLayout.getSelectorItem());
                     Lang.sendTo(sender, Lang.ADD_SELECTOR.toString());
                     return true;
                 } else return true;

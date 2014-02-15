@@ -16,6 +16,7 @@ import io.github.dsh105.echopet.menu.main.MenuItem;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.PetItem;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
@@ -54,7 +55,7 @@ public class MenuListener implements Listener {
         if (event.getSlotType() == InventoryType.SlotType.RESULT) {
             try {
                 for (int i = 1; i <= 4; i++) {
-                    if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).equals(SelectorItem.SELECTOR.getItem())) {
+                    if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).isSimilar(SelectorLayout.getSelectorItem())) {
                         player.updateInventory();
                         event.setCancelled(true);
                         break;

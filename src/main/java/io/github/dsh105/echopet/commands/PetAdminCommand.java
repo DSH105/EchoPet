@@ -10,6 +10,7 @@ import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
@@ -244,7 +245,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
                         return true;
                     }
-                    target.getInventory().addItem(SelectorItem.SELECTOR.getItem());
+                    target.getInventory().addItem(SelectorLayout.getSelectorItem());
                     Lang.sendTo(target, Lang.ADD_SELECTOR.toString());
                     Lang.sendTo(sender, Lang.ADMIN_ADD_SELECTOR.toString().replace("%player%", target.getName()));
                     return true;

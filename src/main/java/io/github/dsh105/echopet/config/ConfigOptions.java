@@ -7,6 +7,7 @@ import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.selector.SelectorIcon;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 
 
 public class ConfigOptions extends Options {
@@ -91,6 +92,10 @@ public class ConfigOptions extends Options {
         set("petSelector.giveOnJoin.perm", "echopet.selector.join");
         set("petSelector.giveOnJoin.slot", 9);
         set("petSelector.clearInvOnJoin", false);
+        set("petSelector.item.name", "&aPets");
+        set("petSelector.item.lore", "&7Right click to open");
+        set("petSelector.item.materialId", Material.BONE.getId());
+        set("petSelector.item.materialData", 0);
 
         boolean loadDefault = this.config.get("petSelector.menu.slots") == null;
         set("petSelector.menu.slots", 45);

@@ -20,6 +20,26 @@ public class SelectorLayout {
 
     private static ArrayList<SelectorIcon> selectorLayout = new ArrayList<SelectorIcon>();
 
+    public static ItemStack getSelectorItem() {
+        YAMLConfig config = ConfigOptions.instance.getConfig();
+        String name = config.getString("petSelector.item.name", "&aPets");
+        int materialId = config.getInt("petSelector.item.materialId", Material.BONE.getId());
+        int materialData = config.getInt("petSelector.item.materialData", 0);
+        String l = config.getString("petSelector.item.lore");
+        String[] lore = new String[] {l};
+        if (l.contains(";")) {
+            lore = l.split(";");
+        }
+        ItemStack i = new ItemStack(materialId, 1, (short) materialData);
+        ItemMeta meta = i.getItemMeta();
+        meta.setDisplayName(name);
+        if (lore != null && lore.length > 0) {
+            meta.setLore(Arrays.asList(lore));
+        }
+        i.setItemMeta(meta);
+        return i;
+    }
+
     public static void loadLayout() {
         YAMLConfig config = ConfigOptions.instance.getConfig();
         String s = "petSelector.menu";

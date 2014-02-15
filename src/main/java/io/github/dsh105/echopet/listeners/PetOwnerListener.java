@@ -10,6 +10,7 @@ import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPacketPet;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
@@ -35,7 +36,7 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         ItemStack itemStack = event.getItem();
-        if (itemStack != null && itemStack.isSimilar(SelectorItem.SELECTOR.getItem())) {
+        if (itemStack != null && itemStack.isSimilar(SelectorLayout.getSelectorItem())) {
             new SelectorMenu().showTo(p);
             event.setCancelled(true);
         }
@@ -142,7 +143,7 @@ public class PetOwnerListener implements Listener {
 
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
-        if (event.getItemDrop().getItemStack().isSimilar(SelectorItem.SELECTOR.getItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))) {
+        if (event.getItemDrop().getItemStack().isSimilar(SelectorLayout.getSelectorItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))) {
             event.setCancelled(true);
         }
     }
@@ -158,7 +159,7 @@ public class PetOwnerListener implements Listener {
         }
 
         for (ItemStack item : inv.getContents()) {
-            if (item != null && item.isSimilar(SelectorItem.SELECTOR.getItem())) {
+            if (item != null && item.isSimilar(SelectorLayout.getSelectorItem())) {
                 inv.remove(item);
             }
         }
