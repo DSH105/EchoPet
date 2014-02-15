@@ -307,13 +307,15 @@ public class EchoPetPlugin extends DSHPlugin {
 
     @Override
     public void onDisable() {
-        super.onDisable();
         if (PH != null) {
             PH.removeAllPets();
         }
         if (dbPool != null) {
             dbPool.shutdown();
         }
+
+        // Don't nullify instance until after we're done
+        super.onDisable();
     }
 
     @Override
