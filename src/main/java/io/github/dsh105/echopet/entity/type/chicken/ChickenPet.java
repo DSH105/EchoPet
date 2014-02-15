@@ -2,13 +2,14 @@ package io.github.dsh105.echopet.entity.type.chicken;
 
 
 import io.github.dsh105.echopet.entity.*;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CHICKEN)
 public class ChickenPet extends Pet implements IAgeablePet {
 
     boolean baby;
 
-    public ChickenPet(String owner) {
+    public ChickenPet(Player owner) {
         super(owner);
     }
 

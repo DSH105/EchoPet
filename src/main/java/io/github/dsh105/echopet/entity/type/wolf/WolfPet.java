@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.entity.type.wolf;
 
 import io.github.dsh105.echopet.entity.*;
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.WOLF)
 public class WolfPet extends Pet implements IAgeablePet {
@@ -11,7 +12,7 @@ public class WolfPet extends Pet implements IAgeablePet {
     boolean tamed = false;
     boolean angry = false;
 
-    public WolfPet(String owner) {
+    public WolfPet(Player owner) {
         super(owner);
     }
 

@@ -5,11 +5,12 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CAVESPIDER)
 public class CaveSpiderPet extends Pet {
 
-    public CaveSpiderPet(String owner) {
+    public CaveSpiderPet(Player owner) {
         super(owner);
     }
 

@@ -1,6 +1,7 @@
 package io.github.dsh105.echopet.entity.type.villager;
 
 import io.github.dsh105.echopet.entity.*;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 
 @EntityPetType(petType = PetType.VILLAGER)
@@ -9,7 +10,7 @@ public class VillagerPet extends Pet implements IAgeablePet {
     boolean baby = false;
     Profession profession = Profession.FARMER;
 
-    public VillagerPet(String owner) {
+    public VillagerPet(Player owner) {
         super(owner);
     }
 

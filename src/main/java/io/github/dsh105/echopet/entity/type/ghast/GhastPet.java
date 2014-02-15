@@ -4,11 +4,12 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.GHAST)
 public class GhastPet extends Pet {
 
-    public GhastPet(String owner) {
+    public GhastPet(Player owner) {
         super(owner);
     }
 

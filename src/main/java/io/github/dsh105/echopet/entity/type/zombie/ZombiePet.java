@@ -4,6 +4,7 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.ZOMBIE)
 public class ZombiePet extends Pet {
@@ -11,7 +12,7 @@ public class ZombiePet extends Pet {
     boolean baby = false;
     boolean villager = false;
 
-    public ZombiePet(String owner) {
+    public ZombiePet(Player owner) {
         super(owner);
     }
 

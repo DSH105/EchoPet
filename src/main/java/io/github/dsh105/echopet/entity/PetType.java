@@ -95,6 +95,7 @@ import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -235,10 +236,10 @@ public enum PetType {
         return ePet;
     }
 
-    public Pet getNewPetInstance(String owner) {
+    public Pet getNewPetInstance(Player owner) {
         Pet p = null;
         try {
-            Object o = petClass.getConstructor(String.class).newInstance(owner);
+            Object o = petClass.getConstructor(Player.class).newInstance(owner);
             if (o instanceof Pet) {
                 p = (Pet) o;
             }

@@ -118,7 +118,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner.getName());
+        Pet pi = petType.getNewPetInstance(owner);
         //Pet pi = new Pet(owner, petType);
         forceAllValidData(pi);
         pets.add(pi);
@@ -141,7 +141,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner.getName());
+        Pet pi = petType.getNewPetInstance(owner);
         //Pet pi = new Pet(owner, petType);
         pi.createMount(mountType, true);
         forceAllValidData(pi);

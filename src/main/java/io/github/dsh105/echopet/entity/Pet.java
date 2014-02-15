@@ -43,35 +43,40 @@ public abstract class Pet {
         //this.teleportToOwner();
     }
 
-    public Pet(String owner) {
-        this.owner = owner;
+    public Pet(Player owner) {
+        this.owner = owner.getName();
         this.setPetType();
-        this.entityPet = this.initiatePet();
+        this.entityPet = this.initiateEntityPet(owner);
         if (this.entityPet != null) {
             this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-            this.teleportToOwner();    // Will despawn and recreate if pet is found null
+            this.teleportToOwner();
         }
     }
 
-    protected EntityPet initiatePet() {
-        // If the owner is null it's likely something happened when a player logged in
-        if (this.getOwner() != null) {
-            Location l = this.getOwner().getLocation();
+    protected EntityPet initiateEntityPet() {
+        return this.initiateEntityPet(this.getOwner());
+    }
+
+    protected EntityPet initiateEntityPet(Player owner) {
+        if (owner != null) {
+            Location l = owner.getLocation();
             PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(this, l);
             EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
             if (spawnEvent.isCancelled()) {
+                owner.sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Pet spawn was cancelled externally.");
+                EchoPetPlugin.getInstance().PH.removePet(this, true);
                 return null;
             }
             l = spawnEvent.getSpawnLocation();
             net.minecraft.server.v1_7_R1.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
             EntityPet entityPet = this.getPetType().getNewEntityPetInstance(mcWorld, this);
 
-            entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), this.getOwner().getLocation().getYaw(), this.getOwner().getLocation().getPitch());
+            entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
             if (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }
             if (!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
-                this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
+                owner.sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
                 EchoPetPlugin.getInstance().PH.removePet(this, true);
             } else {
                 Particle.MAGIC_RUNES.sendTo(l);
@@ -103,7 +108,7 @@ public abstract class Pet {
      * @return a {@link CraftPet} object for this {@link Pet}
      */
     public CraftPet getCraftPet() {
-        return this.getEntityPet().getBukkitEntity();
+        return this.getEntityPet() == null ? null : this.getEntityPet().getBukkitEntity();
     }
 
     public Location getLocation() {
@@ -209,10 +214,14 @@ public abstract class Pet {
      * Kills this {@link io.github.dsh105.echopet.entity.Pet} and removes any mounts
      */
     public void removePet(boolean makeSound) {
-        Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
-        Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
+        if (this.getCraftPet() != null) {
+            Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
+            Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
+        }
         removeMount();
-        this.getEntityPet().remove(makeSound);
+        if (this.getEntityPet() != null) {
+            this.getEntityPet().remove(makeSound);
+        }
     }
 
     /**
@@ -375,7 +384,7 @@ public abstract class Pet {
         if (this.mount != null) {
             this.removeMount();
         }
-        Pet p = pt.getNewPetInstance(this.getNameOfOwner());
+        Pet p = pt.getNewPetInstance(this.getOwner());
         this.mount = p;
         p.isMount = true;
         new BukkitRunnable() {

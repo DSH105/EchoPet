@@ -4,11 +4,12 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SNOWMAN)
 public class SnowmanPet extends Pet {
 
-    public SnowmanPet(String owner) {
+    public SnowmanPet(Player owner) {
         super(owner);
     }
 

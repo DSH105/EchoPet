@@ -4,13 +4,14 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.BAT)
 public class BatPet extends Pet {
 
     boolean hanging;
 
-    public BatPet(String owner) {
+    public BatPet(Player owner) {
         super(owner);
     }
 

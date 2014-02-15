@@ -4,6 +4,7 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.EntityPetType;
 import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.CREEPER)
 public class CreeperPet extends Pet {
@@ -11,7 +12,7 @@ public class CreeperPet extends Pet {
     boolean powered;
     boolean ignited;
 
-    public CreeperPet(String owner) {
+    public CreeperPet(Player owner) {
         super(owner);
     }
 
