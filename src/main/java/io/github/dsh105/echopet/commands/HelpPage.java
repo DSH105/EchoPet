@@ -13,11 +13,11 @@ public enum HelpPage {
             ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
             ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type>",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " <type>:[data],[data];[name <mount>:[data],[data];[name]",
-            ChatColor.YELLOW + "    - Spawns a pet by your side with the specified mount.",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " <type>:[data],[data];[name <rider>:[data],[data];[name]",
+            ChatColor.YELLOW + "    - Spawns a pet by your side with the specified rider.",
             ChatColor.YELLOW + "    - Each data value is separated by a comma.",
             ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
-            ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type> and echopet.pet.type.<mount>",
+            ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type> and echopet.pet.type.<rider>",
 
             ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " name <name>",
             ChatColor.YELLOW + "    - Set the name tag of your pet.",
@@ -28,19 +28,19 @@ public enum HelpPage {
             ChatColor.YELLOW + "    - Remove your current pet.",
             ChatColor.DARK_RED + "    - Permission: echopet.pet.remove"),
 
-    MOUNT(2, ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " mount <type>:[data],[data];[name]",
-            ChatColor.YELLOW + "    - Changes the mount type of your current pet.",
+    RIDER(2, ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " rider <type>:[data],[data];[name]",
+            ChatColor.YELLOW + "    - Changes the rider type of your current pet.",
             ChatColor.YELLOW + "    - Each data value is separated by a comma.",
             ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
             ChatColor.DARK_RED + "    - Permission: echopet.pet.type.<type>",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " name mount <name>",
-            ChatColor.YELLOW + "    - Set the name tag of your pet's mount.",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " name rider <name>",
+            ChatColor.YELLOW + "    - Set the name tag of your pet's rider.",
             ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
             ChatColor.DARK_RED + "    - Permission: echopet.pet.name",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " mount remove",
-            ChatColor.YELLOW + "    - Remove your pet's current mount.",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " riderremove",
+            ChatColor.YELLOW + "    - Remove your pet's current rider.",
             ChatColor.DARK_RED + "    - Permission: echopet.pet.remove"),
 
     DEFAULT(3, ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " list",
@@ -51,9 +51,9 @@ public enum HelpPage {
             ChatColor.YELLOW + "    - Provides info on your current pet.",
             ChatColor.DARK_RED + "    - Permission: echopet.pet.info",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " default set <type>:[data],[data] [mount]:[data],[data]",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " default set <type>:[data],[data] [rider]:[data],[data]",
             ChatColor.YELLOW + "    - Set the default pet for when you log in.",
-            ChatColor.DARK_RED + "    - Permission: echopet.pet.default.set.type.<type> and echopet.pet.default.set.type.<mount>",
+            ChatColor.DARK_RED + "    - Permission: echopet.pet.default.set.type.<type> and echopet.pet.default.set.type.<rider>",
 
             ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().cmdString + " default set current",
             ChatColor.YELLOW + "    - Set the default pet to your current pet.",
@@ -134,9 +134,9 @@ public enum HelpPage {
                 sender.sendMessage(s);
             }
             return true;
-        } else if (args[0].equalsIgnoreCase("mount")) {
+        } else if (args[0].equalsIgnoreCase("rider")) {
             sender.sendMessage(ChatColor.RED + "------------ EchoPet Help ------------");
-            for (String s : HelpPage.MOUNT.getLines()) {
+            for (String s : HelpPage.RIDER.getLines()) {
                 sender.sendMessage(s);
             }
             return true;

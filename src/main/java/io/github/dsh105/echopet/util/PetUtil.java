@@ -235,9 +235,9 @@ public class PetUtil {
         }
         info.addAll(generatePetDataInfo(pt));
 
-        if (pt.getMount() != null) {
-            info.add(ChatColor.RED + "Mount:");
-            info.addAll(generatePetInfo(pt.getMount()));
+        if (pt.getRider() != null) {
+            info.add(ChatColor.RED + "Rider:");
+            info.addAll(generatePetInfo(pt.getRider()));
         }
 
         return info;
@@ -395,7 +395,7 @@ public class PetUtil {
         return builder.toString();
     }
 
-    public static String dataToString(ArrayList<PetData> data, ArrayList<PetData> mountData) {
+    public static String dataToString(ArrayList<PetData> data, ArrayList<PetData> riderData) {
         if (data.isEmpty()) {
             return " ";
         }
@@ -404,9 +404,9 @@ public class PetUtil {
             builder.append(pd.getConfigOptionString());
             builder.append(", ");
         }
-        for (PetData pd : mountData) {
+        for (PetData pd : riderData) {
             builder.append(pd.getConfigOptionString());
-            builder.append("(Mount), ");
+            builder.append("(Rider), ");
         }
         builder.deleteCharAt(builder.length() - 2);
         return builder.toString();

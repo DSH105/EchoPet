@@ -449,7 +449,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         if (pt != null) {
             this.pet = pt.getNewPetInstance(owner, this);
             if (this.pet != null) {
-                PetHandler.getInstance().loadMountFromFile(this.getPet());
+                PetHandler.getInstance().loadRiderFromFile(this.getPet());
                 this.initiateEntityPet();
             }
         }

@@ -186,7 +186,7 @@ public class EchoPetPlugin extends DSHPlugin {
                             "PetType varchar(255)," +
                             "PetName varchar(255)," +
                             SQLUtil.serialise(PetData.values(), false) + ", " +
-                            "MountPetType varchar(255), MountPetName varchar(255), " +
+                            "RiderPetType varchar(255), RiderPetName varchar(255), " +
                             SQLUtil.serialise(PetData.values(), true) +
                             ", PRIMARY KEY (OwnerName)" +
                             ");");

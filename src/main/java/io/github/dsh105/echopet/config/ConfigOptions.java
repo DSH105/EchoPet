@@ -25,12 +25,12 @@ public class ConfigOptions extends Options {
                 + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
     }
 
-    public boolean allowMounts(PetType petType) {
+    public boolean allowRidersFor(PetType petType) {
         if (petType == PetType.ENDERDRAGON) {
             return false;
         }
         return this.config.getBoolean("pets."
-                + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true);
+                + petType.toString().toLowerCase().replace("_", " ") + ".allow.riders", true);
     }
 
     public boolean allowData(PetType type, PetData data) {
@@ -153,7 +153,7 @@ public class ConfigOptions extends Options {
             if (petType != PetType.ENDERDRAGON) {
                 boolean canFly = (petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER);
                 set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".canFly", canFly);
-                set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true);
+                set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.riders", true);
             }
 
             for (PetData pd : PetData.values()) {

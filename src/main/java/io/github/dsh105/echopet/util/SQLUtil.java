@@ -8,14 +8,14 @@ import java.util.Map;
 
 public class SQLUtil {
 
-    public static String serialise(PetData[] data, boolean mount) {
+    public static String serialise(PetData[] data, boolean isRider) {
         String s = "";
         for (PetData pd : data) {
             if (!s.equalsIgnoreCase("")) {
                 s += " varchar(255), ";
             }
-            if (mount) {
-                s = s + "Mount" + pd.toString();
+            if (isRider) {
+                s = s + "Rider" + pd.toString();
             } else {
                 s += pd.toString();
             }
@@ -24,15 +24,15 @@ public class SQLUtil {
         return s;
     }
 
-    public static String serialiseUpdate(List<PetData> data, Object value, boolean isMount) {
+    public static String serialiseUpdate(List<PetData> data, Object value, boolean isRider) {
         String s = ", ";
-        String mount = isMount ? "Mount" : "";
+        String rider = isRider ? "Rider" : "";
         if (!data.isEmpty()) {
             for (PetData pd : data) {
                 if (!s.equalsIgnoreCase(", ")) {
                     s += ", ";
                 }
-                s = s + mount + "`" + pd.toString() + "` = '" + value.toString() + "'";
+                s = s + rider + "`" + pd.toString() + "` = '" + value.toString() + "'";
             }
         }
         if (s.equals(", ")) {
@@ -41,10 +41,10 @@ public class SQLUtil {
         return s;
     }
 
-    public static Map<String, String> constructUpdateMap(List<PetData> data, Object value, boolean isMount) {
+    public static Map<String, String> constructUpdateMap(List<PetData> data, Object value, boolean isRider) {
         Map<String, String> updateMap = new HashMap<String, String>();
         for (PetData pd : data) {
-            updateMap.put((isMount ? "Mount" : "") + pd.toString(), value.toString());
+            updateMap.put((isRider ? "Rider" : "") + pd.toString(), value.toString());
         }
         return updateMap;
     }
