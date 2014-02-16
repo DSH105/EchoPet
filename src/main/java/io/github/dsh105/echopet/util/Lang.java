@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.util;
 
 
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.api.event.EchoPetSendMessageEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -110,15 +111,25 @@ public enum Lang {
         return this.path;
     }
 
-    public static void sendTo(CommandSender sender, String msg) {
-        if (msg != null || !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
-            sender.sendMessage(EchoPetPlugin.getInstance().prefix + " " + msg);
+    public static void sendTo(CommandSender sender, String message) {
+        EchoPetSendMessageEvent event = new EchoPetSendMessageEvent(message, sender);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            String msg = event.getMessageToSend();
+            if (msg != null || !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
+                event.getRecipient().sendMessage(EchoPetPlugin.getInstance().prefix + " " + msg);
+            }
         }
     }
 
-    public static void sendTo(Player p, String msg) {
-        if (msg != null && !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !(msg.equalsIgnoreCase("none"))) {
-            p.sendMessage(EchoPetPlugin.getInstance().prefix + " " + msg);
+    public static void sendTo(Player p, String message) {
+        EchoPetSendMessageEvent event = new EchoPetSendMessageEvent(message, p);
+        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            String msg = event.getMessageToSend();
+            if (msg != null && !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !(msg.equalsIgnoreCase("none"))) {
+                event.getRecipient().sendMessage(EchoPetPlugin.getInstance().prefix + " " + msg);
+            }
         }
     }
 
