@@ -12,7 +12,7 @@ import org.bukkit.event.HandlerList;
 public class EchoPetSendMessageEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled = true;
+    private boolean cancelled = false;
 
     private String messageToSend;
     private CommandSender recipient;
