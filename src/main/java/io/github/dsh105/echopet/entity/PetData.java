@@ -1,7 +1,8 @@
 package io.github.dsh105.echopet.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.google.common.collect.ImmutableList;
+
+import java.util.List;
 
 public enum PetData {
 
@@ -67,18 +68,18 @@ public enum PetData {
 
 
     private String configOptionString;
-    private ArrayList<Type> t = new ArrayList<Type>();
+    private List<Type> t;
 
     PetData(String configOptionString, Type... t) {
         this.configOptionString = configOptionString;
-        this.t.addAll(Arrays.asList(t));
+        this.t = ImmutableList.copyOf(t);
     }
 
     public String getConfigOptionString() {
         return this.configOptionString;
     }
 
-    public ArrayList<Type> getTypes() {
+    public List<Type> getTypes() {
         return this.t;
     }
 

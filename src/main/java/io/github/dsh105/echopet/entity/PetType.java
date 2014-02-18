@@ -1,6 +1,7 @@
 package io.github.dsh105.echopet.entity;
 
 import com.dsh105.dshutils.logger.Logger;
+import com.google.common.collect.ImmutableList;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.type.bat.BatPet;
 import io.github.dsh105.echopet.entity.type.bat.CraftBatPet;
@@ -98,7 +99,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.List;
 
 public enum PetType {
@@ -174,7 +174,7 @@ public enum PetType {
         this.petClass = petClass;
         this.craftClass = craftClass;
         this.id = registrationId;
-        this.allowedData = Arrays.asList(allowedData);
+        this.allowedData = ImmutableList.copyOf(allowedData);
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.entityType = entityType;
