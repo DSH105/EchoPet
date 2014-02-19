@@ -7,6 +7,7 @@ import io.github.dsh105.echopet.api.event.PetPreSpawnEvent;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.PetNames;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -184,9 +185,15 @@ public abstract class Pet {
      * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public void setPetName(String name) {
-        this.name = ChatColor.translateAlternateColorCodes('&', name);
-        this.getCraftPet().setCustomName(this.name);
-        this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+        if (PetNames.allow(name, this)) {
+            this.name = ChatColor.translateAlternateColorCodes('&', name);
+            this.getCraftPet().setCustomName(this.name);
+            this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+        } else {
+            if (this.getOwner() != null) {
+                Lang.sendTo(this.getOwner(), Lang.NAME_NOT_ALLOWED.toString().replace("%name%", name));
+            }
+        }
     }
 
     /**

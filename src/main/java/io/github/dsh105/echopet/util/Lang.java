@@ -34,6 +34,7 @@ public enum Lang {
     PET_NAME_TOO_LONG("name_length", "&ePet names cannot be longer than &632 &echaracters."),
     NAME_RIDER("name_rider", "&eYour &6%type%&e's rider has been named to &r%name%&e."),
     NAME_PET("name_pet", "&eYour &6%type% &ehas been named &r%name%&e."),
+    NAME_NOT_ALLOWED("name_not_allowed", "&eYou are not permitted to name your pet &6%name%&e."),
     REMOVE_PET("remove_pet", "&eYour pet has been removed."),
     REMOVE_PET_DEATH("remove_pet_death", "&eUpon your death, your pet has despawned."),
     REMOVE_RIDER("remove_rider", "&eYour pet's rider has been removed."),

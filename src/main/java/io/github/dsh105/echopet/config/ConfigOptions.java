@@ -112,6 +112,8 @@ public class ConfigOptions extends Options {
             }
         }
 
+        set("petNames.My Pet", "allow");
+
         set("autoSave", true, "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
         set("autoSaveTimer", 180, "Interval between autosave of pet data (in seconds).");
         set("loadSavedPets", true, "Auto-load pets from last session");

@@ -766,6 +766,7 @@ permissions:
             echopet.pet.hide: true
             echopet.pet.call: true
             echopet.pet.name: true
+            echopet.pet.name.override: true
             echopet.pet.select: true
             echopet.pet.selector: true
             echopet.pet.type.*: true
