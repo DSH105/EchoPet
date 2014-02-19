@@ -86,6 +86,25 @@ public class ConfigOptions extends Options {
         set("sql.username", "none");
         set("sql.password", "none");
 
+        set("petNames.My Pet", "allow");
+
+        set("autoSave", true, "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
+        set("autoSaveTimer", 180, "Interval between autosave of pet data (in seconds).");
+        set("loadSavedPets", true, "Auto-load pets from last session");
+        set("multiworldLoadOverride", true, "When true, if -loadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
+
+        set("sendLoadMessage", true, "Send message that pet was loaded if -loadSavedPets- is true");
+        set("sendForceMessage", true, "For all data values forced, EchoPet will notify the player", "(if set to true).");
+
+        set("worlds." + Bukkit.getWorlds().get(0).getName(), true);
+        set("worlds.enableByDefault", true);
+
+        if (config.getConfigurationSection("worldguard.regions") == null) {
+            set("worldguard.regions.echopet", true);
+        }
+        set("worldguard.regions.allowByDefault", true);
+        set("worldguard.regionEnterCheck", true);
+
         set("petSelector.allowDrop", true);
         set("petSelector.giveOnJoin.enable", false);
         set("petSelector.giveOnJoin.usePerm", false);
@@ -111,27 +130,6 @@ public class ConfigOptions extends Options {
                 set("petSelector.menu.slot-" + friendlySlot + ".lore", icon.getLore() == null || icon.getLore().length <= 0 ? "" : icon.getLore());
             }
         }
-
-        set("petNames.My Pet", "allow");
-
-        set("autoSave", true, "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
-        set("autoSaveTimer", 180, "Interval between autosave of pet data (in seconds).");
-        set("loadSavedPets", true, "Auto-load pets from last session");
-        set("multiworldLoadOverride", true, "When true, if -loadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
-
-        set("sendLoadMessage", true, "Send message that pet was loaded if -loadSavedPets- is true");
-        set("sendForceMessage", true, "For all data values forced, EchoPet will notify the player", "(if set to true).");
-
-        set("worlds." + Bukkit.getWorlds().get(0).getName(), true);
-        set("worlds.enableByDefault", true);
-
-        if (config.getConfigurationSection("worldguard.regions") == null) {
-            set("worldguard.regions.echopet", true);
-        }
-        set("worldguard.regions.allowByDefault", true);
-        set("worldguard.regionEnterCheck", true);
-
-
 
         for (PetType petType : PetType.values()) {
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
