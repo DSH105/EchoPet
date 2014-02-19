@@ -117,7 +117,7 @@ public enum Lang {
         EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             String msg = event.getMessageToSend();
-            if (msg != null || !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
+            if (msg != null && !msg.equalsIgnoreCase("") && !msg.equalsIgnoreCase(" ") && !msg.equalsIgnoreCase("none")) {
                 event.getRecipient().sendMessage(EchoPetPlugin.getInstance().prefix + " " + msg);
             }
         }
