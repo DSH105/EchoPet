@@ -172,7 +172,7 @@ public class PetOwnerListener implements Listener {
                 || !(ec.options.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false)))) {
             int slot = (ec.options.getConfig().getInt("petSelector.giveOnJoin.slot", 9)) - 1;
             ItemStack i = inv.getItem(slot);
-            ItemStack selector = SelectorItem.SELECTOR.getItem();
+            ItemStack selector = SelectorLayout.getSelectorItem();
             if (i != null) {
                 inv.clear(slot);
                 inv.setItem(slot, selector);

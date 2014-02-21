@@ -62,11 +62,13 @@ public class SelectorLayout {
                 continue;
             }
             String l = config.getString(s + ".slot-" + i + ".lore");
-            String[] lore = new String[]{l};
+            String[] lore;
             if (l.contains(";")) {
                 lore = l.split(";");
+            } else {
+                lore = new String[]{l};
             }
-            if (lore == null || lore.length <= 0) {
+            if (lore == null || lore.length <= 0 || lore[0] == "") {
                 selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name));
             } else {
                 selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name, lore));
