@@ -3,13 +3,12 @@ package io.github.dsh105.echopet;
 import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.dshutils.Metrics;
 import com.dsh105.dshutils.Updater;
-import com.dsh105.dshutils.util.VersionUtil;
 import com.dsh105.dshutils.command.CustomCommand;
 import com.dsh105.dshutils.command.VersionIncompatibleCommand;
 import com.dsh105.dshutils.config.YAMLConfig;
-import com.dsh105.dshutils.config.YAMLConfigManager;
 import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.dshutils.util.VersionUtil;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.echopet.commands.CommandComplete;
@@ -33,7 +32,6 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +41,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 
 public class EchoPetPlugin extends DSHPlugin {
 
@@ -151,6 +148,9 @@ public class EchoPetPlugin extends DSHPlugin {
         }
         langConfig.reloadConfig();
 
+        if (Lang.PREFIX.toString_().equals("&4[&cEchoPet&4]&r")) {
+            langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
+        }
         this.prefix = Lang.PREFIX.toString();
 
         PH = new PetHandler(this);
