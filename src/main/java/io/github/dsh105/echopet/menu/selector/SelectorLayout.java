@@ -27,6 +27,9 @@ public class SelectorLayout {
             lore = l.split(";");
         }
         ItemStack i = new ItemStack(materialId, 1, (short) materialData);
+        if (i == null) {
+            return SelectorItem.SELECTOR.getItem();
+        }
         ItemMeta meta = i.getItemMeta();
         meta.setDisplayName(name);
         if (lore != null && lore.length > 0) {
