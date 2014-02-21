@@ -6,7 +6,6 @@ import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class EntityPacketPet extends EntityPet {
 

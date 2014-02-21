@@ -9,7 +9,6 @@ import net.minecraft.server.v1_7_R1.GenericAttributes;
 import net.minecraft.server.v1_7_R1.Navigation;
 import net.minecraft.server.v1_7_R1.PathEntity;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 
 
 public class PetGoalFollowOwner extends PetGoal {

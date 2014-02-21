@@ -442,7 +442,7 @@ public class PetHandler {
         String path = type + "." + pName;
         ec.getPetConfig().set(path, null);
         /*if (ec.getPetConfig().get(path + ".pet.type") != null) {
-			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
+            for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
 				for (String key1 : ec.getPetConfig().getConfigurationSection(path + "." + key).getKeys(false)) {
 					if (ec.getPetConfig().get(path + "." + key + "." + key1) != null) {
 						ec.getPetConfig().set(path + "." + key + "." + key1, null);

@@ -305,7 +305,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
             this.updateComplexParts();
 
             //Nope, absolutely no destruction
-			/*if (!this.world.isStatic) {
+            /*if (!this.world.isStatic) {
 				this.bA = this.a(this.head.boundingBox) | this.a(this.body.boundingBox);
 			}*/
         }
