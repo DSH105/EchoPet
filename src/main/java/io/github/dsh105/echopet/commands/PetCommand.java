@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.commands;
 
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.conversation.NameFactory;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.Pet;
@@ -16,6 +17,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -45,60 +47,45 @@ public class PetCommand implements CommandExecutor {
         else if (args.length >= 1 && args[0].equalsIgnoreCase("name")) {
             if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
                 Player p = (Player) sender;
-
-                if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("rider"))) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
-                    sender.sendMessage(ChatColor.GOLD + "/" + this.cmdLabel + " name <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-                    sender.sendMessage(ChatColor.GOLD + "/" + this.cmdLabel + " name rider <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet's rider.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
+                Pet pet = ec.PH.getPet(p);
+                if (pet == null) {
+                    Lang.sendTo(sender, Lang.NO_PET.toString());
                     return true;
                 }
 
-                // Sets the name of the pet's rider if it exists
-                if (args.length >= 3 && args[1].equalsIgnoreCase("rider")) {
-                    Pet pi = ec.PH.getPet(p);
-                    if (pi == null) {
-                        Lang.sendTo(sender, Lang.NO_PET.toString());
-                        return true;
-                    }
-
-                    if (pi.getRider() == null) {
+                if (args.length >= 2 && args[1].equals("rider")) {
+                    if (pet.getRider() == null) {
                         Lang.sendTo(sender, Lang.NO_RIDER.toString());
                         return true;
                     }
-
-                    String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(2, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
+                    if (args.length == 2) {
+                        NameFactory.askForName(p, pet.getRider(), false);
+                    } else {
+                        String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(2, args, " "));
+                        if (name.length() > 32) {
+                            Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            return true;
+                        }
+                        pet.getRider().setPetName(name);
+                        Lang.sendTo(sender, Lang.NAME_RIDER.toString()
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
                     }
-                    pi.getRider().setPetName(name);
-                    Lang.sendTo(sender, Lang.NAME_RIDER.toString()
-                            .replace("%type%", StringUtil.capitalise(pi.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
                     return true;
-                }
-
-                // Sets the name of a player's pet
-                else if (args.length >= 2) {
-                    Pet pi = ec.PH.getPet(p);
-                    if (pi == null) {
-                        Lang.sendTo(sender, Lang.NO_PET.toString());
-                        return true;
+                } else {
+                    if (args.length == 1) {
+                        NameFactory.askForName(p, pet, false);
+                    } else {
+                        String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(1, args, " "));
+                        if (name.length() > 32) {
+                            Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            return true;
+                        }
+                        pet.setPetName(name);
+                        Lang.sendTo(sender, Lang.NAME_PET.toString()
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
                     }
-
-                    String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(1, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
-                    }
-                    pi.setPetName(name);
-                    Lang.sendTo(sender, Lang.NAME_PET.toString()
-                            .replace("%type%", StringUtil.capitalise(pi.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
                     return true;
                 }
             } else return true;

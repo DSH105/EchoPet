@@ -184,15 +184,29 @@ public abstract class Pet {
      *
      * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
      */
-    public void setPetName(String name) {
+    public boolean setPetName(String name) {
+        return this.setPetName(name, true);
+    }
+
+    /**
+     * Set the name tag of this {@link io.github.dsh105.echopet.entity.Pet}
+     *
+     * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
+     * @param sendFailMessage if true, sends a message to the owner on fail
+     */
+    public boolean setPetName(String name, boolean sendFailMessage) {
         if (PetNames.allow(name, this)) {
             this.name = ChatColor.translateAlternateColorCodes('&', name);
             this.getCraftPet().setCustomName(this.name);
             this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+            return true;
         } else {
-            if (this.getOwner() != null) {
-                Lang.sendTo(this.getOwner(), Lang.NAME_NOT_ALLOWED.toString().replace("%name%", name));
+            if (sendFailMessage) {
+                if (this.getOwner() != null) {
+                    Lang.sendTo(this.getOwner(), Lang.NAME_NOT_ALLOWED.toString().replace("%name%", name));
+                }
             }
+            return false;
         }
     }
 

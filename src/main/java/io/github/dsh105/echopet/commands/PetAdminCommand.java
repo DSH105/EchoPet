@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.commands;
 
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.conversation.NameFactory;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.Pet;
@@ -20,6 +21,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -70,22 +72,13 @@ public class PetAdminCommand implements CommandExecutor {
 
         } else if (args.length >= 1 && args[0].equalsIgnoreCase("name")) {
             if (Perm.ADMIN_NAME.hasPerm(sender, true, true)) {
-                if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("rider"))) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
-                    sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-                    sender.sendMessage(ChatColor.GOLD + "/petadmin name <player> rider <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of a Player's pet's rider.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-                    return true;
-                } else if (args.length >= 4 && args[1].equalsIgnoreCase("rider")) {
+
+                if (args.length >= 2 && args[1].equals("rider")) {
                     Player target = Bukkit.getPlayer(args[2]);
                     if (target == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[2]));
                         return true;
                     }
-
                     Pet pet = ec.PH.getPet(target);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
@@ -97,21 +90,29 @@ public class PetAdminCommand implements CommandExecutor {
                         return true;
                     }
 
-                    String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(3, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
+                    if (args.length == 2) {
+                        if (sender instanceof Conversable) {
+                            NameFactory.askForName((Conversable) sender, pet.getRider(), true);
+                        } else {
+                            Lang.sendTo(sender, Lang.IN_GAME_ONLY.toString()
+                                    .replace("%cmd%", "/" + cmd.getLabel() + " " + (args.length == 0 ? "" : StringUtil.combineSplit(0, args, " "))));
+                        }
+                    } else {
+                        String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(3, args, " "));
+                        if (name.length() > 32) {
+                            Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            return true;
+                        }
+                        pet.getRider().setPetName(name);
+                        Lang.sendTo(sender, Lang.ADMIN_NAME_RIDER.toString()
+                                .replace("%player%", target.getName())
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
+                        Lang.sendTo(target, Lang.NAME_RIDER.toString()
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
                     }
-                    pet.getRider().setPetName(name);
-                    Lang.sendTo(sender, Lang.ADMIN_NAME_RIDER.toString()
-                            .replace("%player%", target.getName())
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    Lang.sendTo(target, Lang.NAME_RIDER.toString()
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    return true;
-                } else if (args.length >= 2) {
+                } else {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER.toString().replace("%player%", args[1]));
@@ -123,21 +124,28 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
                         return true;
                     }
-
-                    String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(2, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
+                    if (args.length == 2) {
+                        if (sender instanceof Conversable) {
+                            NameFactory.askForName((Conversable) sender, pet, true);
+                        } else {
+                            Lang.sendTo(sender, Lang.IN_GAME_ONLY.toString()
+                                    .replace("%cmd%", "/" + cmd.getLabel() + " " + (args.length == 0 ? "" : StringUtil.combineSplit(0, args, " "))));
+                        }
+                    } else {
+                        String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(2, args, " "));
+                        if (name.length() > 32) {
+                            Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            return true;
+                        }
+                        pet.setPetName(name);
+                        Lang.sendTo(sender, Lang.ADMIN_NAME_PET.toString()
+                                .replace("%player%", target.getName())
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
+                        Lang.sendTo(target, Lang.NAME_PET.toString()
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
                     }
-                    pet.setPetName(name);
-                    Lang.sendTo(sender, Lang.ADMIN_NAME_PET.toString()
-                            .replace("%player%", target.getName())
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    Lang.sendTo(target, Lang.NAME_PET.toString()
-                            .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
-                    return true;
                 }
 
             } else return true;
