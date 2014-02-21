@@ -33,7 +33,7 @@ public class SelectorIcon extends MenuIcon {
         ItemStack i = super.getIcon(viewer);
         ItemMeta meta = i.getItemMeta();
         ChatColor c = this.petType == null ? ChatColor.YELLOW : (viewer.hasPermission("echopet.pet.type." + PetUtil.getPetPerm(this.getPetType()))) ? ChatColor.GREEN : ChatColor.RED;
-        meta.setDisplayName(c + this.getName());
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', c + this.getName()));
         i.setItemMeta(meta);
 
         if (this.petType == PetType.HUMAN && i.getItemMeta() instanceof SkullMeta) {

@@ -4,6 +4,7 @@ import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.entity.PetType;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,9 +32,13 @@ public class SelectorLayout {
             return SelectorItem.SELECTOR.getItem();
         }
         ItemMeta meta = i.getItemMeta();
-        meta.setDisplayName(name);
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         if (lore != null && lore.length > 0) {
-            meta.setLore(Arrays.asList(lore));
+            ArrayList<String> list = new ArrayList<String>();
+            for (String s : lore) {
+                list.add(ChatColor.translateAlternateColorCodes('&', s));
+            }
+            meta.setLore(list);
         }
         i.setItemMeta(meta);
         return i;
