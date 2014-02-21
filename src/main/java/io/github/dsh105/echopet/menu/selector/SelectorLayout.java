@@ -82,7 +82,7 @@ public class SelectorLayout {
             count++;
         }
 
-        SelectorItem[] selectorItems = new SelectorItem[]{SelectorItem.CLOSE, null, SelectorItem.TOGGLE, SelectorItem.CALL, null, SelectorItem.HAT, SelectorItem.RIDE, null, SelectorItem.MENU};
+        SelectorItem[] selectorItems = new SelectorItem[]{SelectorItem.CLOSE, null, SelectorItem.TOGGLE, SelectorItem.CALL, null, SelectorItem.HAT, SelectorItem.RIDE, SelectorItem.NAME, SelectorItem.MENU};
         int i = 0;
         for (int j = 1; j < 10; j++) {
             SelectorItem s = selectorItems[i++];
