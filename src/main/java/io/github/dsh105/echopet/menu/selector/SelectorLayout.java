@@ -79,7 +79,7 @@ public class SelectorLayout {
     public static HashMap<Integer, SelectorIcon> getLoadedLayout() {
         HashMap<Integer, SelectorIcon> layout = new HashMap<Integer, SelectorIcon>();
         for (SelectorIcon icon : selectorLayout) {
-            if (ConfigOptions.instance.getConfig().getBoolean("petSelector.showDisabledPets", true) && icon.getPetType() != null) {
+            if (!ConfigOptions.instance.getConfig().getBoolean("petSelector.showDisabledPets", true) && icon.getPetType() != null) {
                 if (!ConfigOptions.instance.allowPetType(icon.getPetType())) {
                     continue;
                 }
