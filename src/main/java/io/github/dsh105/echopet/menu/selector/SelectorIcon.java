@@ -46,5 +46,6 @@ public class SelectorIcon extends MenuIcon {
 
     public void onClick(Player viewer) {
         viewer.performCommand(this.getCommand());
+        viewer.closeInventory();
     }
 }
