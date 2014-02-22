@@ -106,6 +106,7 @@ public class ConfigOptions extends Options {
         set("worldguard.regionEnterCheck", true);
 
         set("petSelector.allowDrop", true);
+        set("petSelector.showDisabledPets", true);
         set("petSelector.giveOnJoin.enable", false);
         set("petSelector.giveOnJoin.usePerm", false);
         set("petSelector.giveOnJoin.perm", "echopet.selector.join");
