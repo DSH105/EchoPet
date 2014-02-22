@@ -127,7 +127,7 @@ public class ConfigOptions extends Options {
                 set("petSelector.menu.slot-" + friendlySlot + ".petType", icon.getPetType() == null ? "" : icon.getPetType().toString());
                 set("petSelector.menu.slot-" + friendlySlot + ".materialId", icon.getMaterialId());
                 set("petSelector.menu.slot-" + friendlySlot + ".materialData", icon.getMaterialData());
-                set("petSelector.menu.slot-" + friendlySlot + ".name", icon.getName() == null ? "" : icon.getName());
+                set("petSelector.menu.slot-" + friendlySlot + ".name", icon.getName() == null ? "" : "'" + icon.getName() + "'");
                 set("petSelector.menu.slot-" + friendlySlot + ".lore", icon.getLore() == null || icon.getLore().length <= 0 ? "" : icon.getLore());
             }
         }
