@@ -7,6 +7,7 @@ import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.selector.SelectorIcon;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 
@@ -127,8 +128,16 @@ public class ConfigOptions extends Options {
                 set("petSelector.menu.slot-" + friendlySlot + ".petType", icon.getPetType() == null ? "" : icon.getPetType().toString());
                 set("petSelector.menu.slot-" + friendlySlot + ".materialId", icon.getMaterialId());
                 set("petSelector.menu.slot-" + friendlySlot + ".materialData", icon.getMaterialData());
-                set("petSelector.menu.slot-" + friendlySlot + ".name", icon.getName() == null ? "" : "'" + icon.getName() + "'");
-                set("petSelector.menu.slot-" + friendlySlot + ".lore", icon.getLore() == null || icon.getLore().length <= 0 ? "" : icon.getLore());
+                set("petSelector.menu.slot-" + friendlySlot + ".name", (icon.getName() == null ? "" : icon.getName()).replace(ChatColor.COLOR_CHAR, '&'));
+                String l = null;
+                for (String s : icon.getLore()) {
+                    if (l == null) {
+                        l = s.replace(ChatColor.COLOR_CHAR, '&');
+                    } else {
+                        l += ";" + s.replace(ChatColor.COLOR_CHAR, '&');
+                    }
+                }
+                set("petSelector.menu.slot-" + friendlySlot + ".lore", l == null ? "" : l);
             }
         }
 
