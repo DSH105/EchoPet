@@ -48,6 +48,7 @@ public class PetAdminCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (Perm.ADMIN_RELOAD.hasPerm(sender, true, true)) {
                     EchoPetPlugin.getInstance().getMainConfig().reloadConfig();
+                    EchoPetPlugin.getInstance().getLangConfig().reloadConfig();
                     Lang.sendTo(sender, Lang.ADMIN_RELOAD_CONFIG.toString());
                     return true;
                 } else return true;
