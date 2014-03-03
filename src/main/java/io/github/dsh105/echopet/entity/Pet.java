@@ -256,6 +256,7 @@ public abstract class Pet {
     public void teleportToOwner() {
         if (this.getOwner() == null || this.getOwner().getLocation() == null) {
             this.removePet(false);
+            return;
         }
         this.teleport(this.getOwner().getLocation());
     }
