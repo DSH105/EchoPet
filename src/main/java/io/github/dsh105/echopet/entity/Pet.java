@@ -30,7 +30,7 @@ public abstract class Pet {
     private String name;
     private ArrayList<PetData> petData = new ArrayList<PetData>();
 
-    private boolean isRiding = false;
+    private boolean isRider = false;
 
     public boolean ownerIsMounting = false;
     private boolean ownerRiding = false;
@@ -149,7 +149,7 @@ public abstract class Pet {
      * @return true if this {@link io.github.dsh105.echopet.entity.Pet} is a rider
      */
     public boolean isRider() {
-        return this.isRiding;
+        return this.isRider;
     }
 
     /**
@@ -411,16 +411,18 @@ public abstract class Pet {
         if (this.rider != null) {
             this.removeRider();
         }
-        Pet p = pt.getNewPetInstance(this.getOwner());
-        this.rider = p;
-        p.isRiding = true;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                getCraftPet().setPassenger(rider.getCraftPet());
-                EchoPetPlugin.getInstance().SPH.saveToDatabase(rider, true);
-            }
-        }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
+        Pet newRider = pt.getNewPetInstance(this.getOwner());
+        if (newRider != null) {
+            this.rider = newRider;
+            newRider.isRider = true;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    getCraftPet().setPassenger(Pet.this.rider.getCraftPet());
+                    EchoPetPlugin.getInstance().SPH.saveToDatabase(Pet.this.rider, true);
+                }
+            }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
+        }
 
         return this.rider;
     }
