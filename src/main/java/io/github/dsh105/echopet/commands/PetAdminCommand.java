@@ -186,7 +186,7 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_NO_PET.toString().replace("%player%", target.getName()));
                         return true;
                     }
-                    pet.teleport(target.getLocation());
+                    pet.teleportToOwner();
                     Lang.sendTo(target, Lang.PET_CALL.toString());
                     Lang.sendTo(sender, Lang.ADMIN_PET_CALL.toString().replace("%player%", target.getName()));
                     return true;

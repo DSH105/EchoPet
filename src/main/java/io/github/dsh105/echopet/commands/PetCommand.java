@@ -119,7 +119,7 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
                     }
-                    pet.teleport(player.getLocation());
+                    pet.teleportToOwner();
                     Lang.sendTo(sender, Lang.PET_CALL.toString());
                     return true;
                 } else return true;

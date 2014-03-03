@@ -244,7 +244,7 @@ public enum PetType {
                 p = (Pet) o;
             }
         } catch (Exception e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner + ".", e, true);
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner.getName() + ".", e, true);
         }
         return p;
     }

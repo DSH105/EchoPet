@@ -86,7 +86,7 @@ public class PetGoalFollowOwner extends PetGoal {
 
             double speed = 0.55F;
             if (this.pet.e(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround) {
-                this.pet.getPet().teleport(this.pet.getPlayerOwner().getLocation());
+                this.pet.getPet().teleportToOwner();
                 return;
             }
 

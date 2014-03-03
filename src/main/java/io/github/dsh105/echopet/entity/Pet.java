@@ -45,12 +45,14 @@ public abstract class Pet {
     }
 
     public Pet(Player owner) {
-        this.owner = owner.getName();
-        this.setPetType();
-        this.entityPet = this.initiateEntityPet(owner);
-        if (this.entityPet != null) {
-            this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-            this.teleportToOwner();
+        if (owner != null) {
+            this.owner = owner.getName();
+            this.setPetType();
+            this.entityPet = this.initiateEntityPet(owner);
+            if (this.entityPet != null) {
+                this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
+                this.teleportToOwner();
+            }
         }
     }
 
@@ -122,6 +124,9 @@ public abstract class Pet {
      * @return {@link org.bukkit.entity.Player} that owns this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public Player getOwner() {
+        if (this.owner == null) {
+            return null;
+        }
         return Bukkit.getPlayerExact(owner);
     }
 
@@ -249,9 +254,10 @@ public abstract class Pet {
      * Teleports this {@link io.github.dsh105.echopet.entity.Pet} to its owner
      */
     public void teleportToOwner() {
-        if (this.getOwner() != null && this.getOwner().getLocation() != null) {
-            this.teleport(this.getOwner().getLocation());
+        if (this.getOwner() == null || this.getOwner().getLocation() == null) {
+            this.removePet(false);
         }
+        this.teleport(this.getOwner().getLocation());
     }
 
     /**
