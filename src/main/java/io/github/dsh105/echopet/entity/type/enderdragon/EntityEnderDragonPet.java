@@ -216,7 +216,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
                 }
             } else {
                 d0 = this.h - this.locX;
-                d1 = this.i - this.locY;
+                d1 = (this.i + 5.0D) - this.locY;
                 d2 = this.j - this.locZ;
                 d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
