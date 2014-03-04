@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 import java.util.Iterator;
 import java.util.List;
 
-@EntitySize(width = 8.0F, height = 4.0F)
+@EntitySize(width = 16.0F, height = 8.0F)
 @EntityPetType(petType = PetType.ENDERDRAGON)
 public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, IMonster {
 
@@ -46,6 +46,10 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         this.noClip(true);
         this.i = 100.0D;
         this.al = true;
+    }
+
+    protected void resize(boolean flag) {
+        this.setSize(flag ? 8.0F : 16.0F, flag ? 4.0F : 8.0F);
     }
 
     public double[] b(int i, float f) {

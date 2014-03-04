@@ -78,11 +78,15 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         return null;
     }
 
-    public void setSize() {
+    protected void setSize() {
         EntitySize es = this.getClass().getAnnotation(EntitySize.class);
         if (es != null) {
-            this.a(es.width(), es.height());
+            this.setSize(es.width(), es.height());
         }
+    }
+
+    protected void setSize(float width, float height) {
+        this.a(width, height);
     }
 
     @Override
