@@ -9,7 +9,6 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPacketPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.menu.selector.SelectorItem;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;

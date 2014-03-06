@@ -196,7 +196,7 @@ public abstract class Pet {
     /**
      * Set the name tag of this {@link io.github.dsh105.echopet.entity.Pet}
      *
-     * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
+     * @param name            new name of this {@link io.github.dsh105.echopet.entity.Pet}
      * @param sendFailMessage if true, sends a message to the owner on fail
      */
     public boolean setPetName(String name, boolean sendFailMessage) {

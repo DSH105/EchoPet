@@ -310,7 +310,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
             //Nope, absolutely no destruction
             /*if (!this.world.isStatic) {
-				this.bA = this.a(this.head.boundingBox) | this.a(this.body.boundingBox);
+                this.bA = this.a(this.head.boundingBox) | this.a(this.body.boundingBox);
 			}*/
         }
     }
