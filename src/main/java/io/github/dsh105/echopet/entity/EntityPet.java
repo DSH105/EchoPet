@@ -1,6 +1,5 @@
 package io.github.dsh105.echopet.entity;
 
-import com.dsh105.dshutils.Particle;
 import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
@@ -248,8 +247,8 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         }
 
         if (this.isInvisible()) {
-            Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getPlayerOwner());
-            Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getPlayerOwner());
+            //Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getPlayerOwner());
+            //Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getPlayerOwner());
         }
 
         if (((CraftPlayer) this.getPlayerOwner()).getHandle().isSneaking() != this.isSneaking()) {
