@@ -4,6 +4,7 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMoveEvent;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.type.ghast.EntityGhastPet;
 import net.minecraft.server.v1_7_R1.EntityPlayer;
 import net.minecraft.server.v1_7_R1.GenericAttributes;
 import net.minecraft.server.v1_7_R1.Navigation;
@@ -97,6 +98,11 @@ public class PetGoalFollowOwner extends PetGoal {
             }
 
             if (pet.goalTarget == null) {
+                if (pet instanceof EntityGhastPet) {
+                    PathEntity path = pet.world.a(pet, pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
+                    pet.setPathEntity(path);
+                    nav.a(path, speed);
+                }
                 //Smooth path finding to entity instead of location
                 PathEntity path = pet.world.findPath(pet, owner, (float) pet.getAttributeInstance(GenericAttributes.b).getValue(), true, false, false, true);
                 pet.setPathEntity(path);
