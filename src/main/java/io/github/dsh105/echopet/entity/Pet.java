@@ -345,6 +345,7 @@ public abstract class Pet {
             }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
         }
         this.teleportToOwner();
+        this.getEntityPet().resize(flag);
         this.ownerRiding = flag;
         Particle.PORTAL.sendTo(this.getLocation());
         Location l = this.getLocation().clone();
@@ -385,6 +386,7 @@ public abstract class Pet {
                 craftPet.mount(((CraftPlayer) this.getOwner()).getHandle());
             }
         }
+        this.getEntityPet().resize(flag);
         this.isHat = flag;
         Particle.PORTAL.sendTo(this.getLocation());
         Location l = this.getLocation().clone();

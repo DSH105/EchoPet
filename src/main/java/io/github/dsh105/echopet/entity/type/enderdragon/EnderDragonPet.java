@@ -16,10 +16,4 @@ public class EnderDragonPet extends Pet {
     public EnderDragonPet(String owner, EntityPet entityPet) {
         super(owner, entityPet);
     }
-
-    @Override
-    public void ownerRidePet(boolean flag) {
-        super.ownerRidePet(flag);
-        ((EntityEnderDragonPet) this.getEntityPet()).resize(flag);
-    }
 }
