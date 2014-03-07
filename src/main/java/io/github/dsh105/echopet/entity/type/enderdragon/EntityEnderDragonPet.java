@@ -327,30 +327,31 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
     }
 
     private void updateComplexParts() {
-        this.aN = this.yaw;
-        this.head.width = this.head.length = 3.0F;
-        this.tail1.width = this.tail1.length = 2.0F;
-        this.tail2.width = this.tail2.length = 2.0F;
-        this.tail3.width = this.tail3.length = 2.0F;
-        this.body.length = 3.0F;
-        this.body.width = 5.0F;
-        this.wing1.length = 2.0F;
-        this.wing1.width = 4.0F;
-        this.wing2.length = 3.0F;
-        this.wing2.width = 4.0F;
-        float f1 = (float) (this.b(5, 1.0F)[1] - this.b(10, 1.0F)[1]) * 10.0F / 180.0F * 3.1415927F;
-        float f2 = MathHelper.cos(f1);
-        float f9 = -MathHelper.sin(f1);
-        float f10 = this.yaw * 3.1415927F / 180.0F;
-        float f11 = MathHelper.sin(f10);
-        float f12 = MathHelper.cos(f10);
+        if (this.children != null) {
+            this.aN = this.yaw;
+            this.head.width = this.head.length = 3.0F;
+            this.tail1.width = this.tail1.length = 2.0F;
+            this.tail2.width = this.tail2.length = 2.0F;
+            this.tail3.width = this.tail3.length = 2.0F;
+            this.body.length = 3.0F;
+            this.body.width = 5.0F;
+            this.wing1.length = 2.0F;
+            this.wing1.width = 4.0F;
+            this.wing2.length = 3.0F;
+            this.wing2.width = 4.0F;
+            float f1 = (float) (this.b(5, 1.0F)[1] - this.b(10, 1.0F)[1]) * 10.0F / 180.0F * 3.1415927F;
+            float f2 = MathHelper.cos(f1);
+            float f9 = -MathHelper.sin(f1);
+            float f10 = this.yaw * 3.1415927F / 180.0F;
+            float f11 = MathHelper.sin(f10);
+            float f12 = MathHelper.cos(f10);
 
-        this.body.h();
-        this.body.setPositionRotation(this.locX + (double) (f11 * 0.5F), this.locY, this.locZ - (double) (f12 * 0.5F), 0.0F, 0.0F);
-        this.wing1.h();
-        this.wing1.setPositionRotation(this.locX + (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ + (double) (f11 * 4.5F), 0.0F, 0.0F);
-        this.wing2.h();
-        this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
+            this.body.h();
+            this.body.setPositionRotation(this.locX + (double) (f11 * 0.5F), this.locY, this.locZ - (double) (f12 * 0.5F), 0.0F, 0.0F);
+            this.wing1.h();
+            this.wing1.setPositionRotation(this.locX + (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ + (double) (f11 * 4.5F), 0.0F, 0.0F);
+            this.wing2.h();
+            this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
 
 		/*if (!this.world.isStatic && this.hurtTicks == 0) {
 				PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
@@ -361,39 +362,40 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 				}
 		}*/
 
-        double[] adouble = this.b(5, 1.0F);
-        double[] adouble1 = this.b(0, 1.0F);
+            double[] adouble = this.b(5, 1.0F);
+            double[] adouble1 = this.b(0, 1.0F);
 
-        float f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
-        float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
+            float f3 = MathHelper.sin(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
+            float f13 = MathHelper.cos(this.yaw * 3.1415927F / 180.0F - this.bg * 0.01F);
 
-        this.head.h();
-        this.head.setPositionRotation(this.locX + (double) (f3 * 5.5F * f2), this.locY + (adouble1[1] - adouble[1]) * 1.0D + (double) (f9 * 5.5F), this.locZ - (double) (f13 * 5.5F * f2), 0.0F, 0.0F);
+            this.head.h();
+            this.head.setPositionRotation(this.locX + (double) (f3 * 5.5F * f2), this.locY + (adouble1[1] - adouble[1]) * 1.0D + (double) (f9 * 5.5F), this.locZ - (double) (f13 * 5.5F * f2), 0.0F, 0.0F);
 
-        for (int j = 0; j < 3; ++j) {
-            EntityComplexPart entitycomplexpart = null;
+            for (int j = 0; j < 3; ++j) {
+                EntityComplexPart entitycomplexpart = null;
 
-            if (j == 0) {
-                entitycomplexpart = this.tail1;
+                if (j == 0) {
+                    entitycomplexpart = this.tail1;
+                }
+
+                if (j == 1) {
+                    entitycomplexpart = this.tail2;
+                }
+
+                if (j == 2) {
+                    entitycomplexpart = this.tail3;
+                }
+
+                double[] adouble2 = this.b(12 + j * 2, 1.0F);
+                float f14 = this.yaw * 3.1415927F / 180.0F + (float) MathHelper.g(adouble2[0] - adouble[0]) * 3.1415927F / 180.0F * 1.0F;
+                float f15 = MathHelper.sin(f14);
+                float f16 = MathHelper.cos(f14);
+                float f17 = 1.5F;
+                float f18 = (float) (j + 1) * 2.0F;
+
+                entitycomplexpart.h();
+                entitycomplexpart.setPositionRotation(this.locX - (double) ((f11 * f17 + f15 * f18) * f2), this.locY + (adouble2[1] - adouble[1]) * 1.0D - (double) ((f18 + f17) * f9) + 1.5D, this.locZ + (double) ((f12 * f17 + f16 * f18) * f2), 0.0F, 0.0F);
             }
-
-            if (j == 1) {
-                entitycomplexpart = this.tail2;
-            }
-
-            if (j == 2) {
-                entitycomplexpart = this.tail3;
-            }
-
-            double[] adouble2 = this.b(12 + j * 2, 1.0F);
-            float f14 = this.yaw * 3.1415927F / 180.0F + (float) MathHelper.g(adouble2[0] - adouble[0]) * 3.1415927F / 180.0F * 1.0F;
-            float f15 = MathHelper.sin(f14);
-            float f16 = MathHelper.cos(f14);
-            float f17 = 1.5F;
-            float f18 = (float) (j + 1) * 2.0F;
-
-            entitycomplexpart.h();
-            entitycomplexpart.setPositionRotation(this.locX - (double) ((f11 * f17 + f15 * f18) * f2), this.locY + (adouble2[1] - adouble[1]) * 1.0D - (double) ((f18 + f17) * f9) + 1.5D, this.locZ + (double) ((f12 * f17 + f16 * f18) * f2), 0.0F, 0.0F);
         }
     }
 
