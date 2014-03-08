@@ -80,15 +80,14 @@ public class EchoPetPlugin extends DSHPlugin {
             ConsoleLogger.log(ChatColor.RED + "    " + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion() + ".");
             ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
-            DynamicPluginCommand holoCommand = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
+            DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
                     new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
                     "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
                     + ChatColor.GOLD + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion()
                     + ChatColor.YELLOW + ". Please update the plugin.",
                     "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
                     null, this);
-            holoCommand.setPermission("holoapi.holo");
-            COMMAND_MANAGER.register(holoCommand);
+            COMMAND_MANAGER.register(cmd);
             return;
         }
 
