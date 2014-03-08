@@ -3,7 +3,6 @@ package io.github.dsh105.echopet;
 import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.dshutils.Metrics;
 import com.dsh105.dshutils.Updater;
-import com.dsh105.dshutils.command.CustomCommand;
 import com.dsh105.dshutils.command.VersionIncompatibleCommand;
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.logger.ConsoleLogger;
@@ -14,6 +13,8 @@ import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
+import io.github.dsh105.echopet.commands.util.CommandManager;
+import io.github.dsh105.echopet.commands.util.DynamicPluginCommand;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
 import io.github.dsh105.echopet.data.PetHandler;
@@ -25,10 +26,8 @@ import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.SQLUtil;
 import net.minecraft.server.v1_7_R1.EntityTypes;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -43,6 +42,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class EchoPetPlugin extends DSHPlugin {
+
+    private CommandManager COMMAND_MANAGER;
 
     private YAMLConfig petConfig;
     private YAMLConfig mainConfig;
@@ -63,13 +64,14 @@ public class EchoPetPlugin extends DSHPlugin {
     public long size = 0;
     public boolean updateChecked = false;
 
-    public CommandMap CM;
+    //public CommandMap CM;
 
     @Override
     public void onEnable() {
         super.onEnable();
         Logger.initiate(this, "EchoPet", "[EchoPet]");
 
+        COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors
         if (!VersionUtil.compareVersions()) {
             ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
@@ -78,32 +80,15 @@ public class EchoPetPlugin extends DSHPlugin {
             ConsoleLogger.log(ChatColor.RED + "    " + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion() + ".");
             ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
-            try {
-                Class craftServer = Class.forName("org.bukkit.craftbukkit." + VersionUtil.getServerVersion() + ".CraftServer");
-                if (craftServer.isInstance(Bukkit.getServer())) {
-                    final Field f = craftServer.getDeclaredField("commandMap");
-                    f.setAccessible(true);
-                    CM = (CommandMap) f.get(Bukkit.getServer());
-                }
-                CustomCommand petCmd = new CustomCommand(cmdString);
-                CM.register("ec", petCmd);
-                petCmd.setExecutor(new VersionIncompatibleCommand(petCmd.getLabel(), prefix, ChatColor.YELLOW +
-                        "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
-                        + ChatColor.GOLD + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion()
-                        + ChatColor.YELLOW + ". Please update the plugin.",
-                        "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."));
-            } catch (ClassNotFoundException e) {
-                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-            } catch (NoSuchFieldException e) {
-                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-            } catch (SecurityException e) {
-                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-            } catch (IllegalArgumentException e) {
-                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-            } catch (IllegalAccessException e) {
-                Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-            }
-
+            DynamicPluginCommand holoCommand = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
+                    new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
+                    "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
+                    + ChatColor.GOLD + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion()
+                    + ChatColor.YELLOW + ". Please update the plugin.",
+                    "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
+                    null, this);
+            holoCommand.setPermission("holoapi.holo");
+            COMMAND_MANAGER.register(holoCommand);
             return;
         }
 
@@ -220,43 +205,12 @@ public class EchoPetPlugin extends DSHPlugin {
         // Command string based off the string defined in config.yml
         // By default, set to 'pet'
         // PetAdmin command draws from the original, with 'admin' on the end
-        try {
-            Class craftServer = Class.forName("org.bukkit.craftbukkit." + VersionUtil.getServerVersion() + ".CraftServer");
-            if (craftServer.isInstance(Bukkit.getServer())) {
-                final Field f = craftServer.getDeclaredField("commandMap");
-                f.setAccessible(true);
-                CM = (CommandMap) f.get(Bukkit.getServer());
-            }
-        } catch (ClassNotFoundException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-        } catch (NoSuchFieldException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-        } catch (SecurityException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-        } catch (IllegalArgumentException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-        } catch (IllegalAccessException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Registration of /pet command failed.", e, true);
-        }
-
-        String cmdString = options.getCommandString();
-        if (CM.getCommand(cmdString) != null) {
-            ConsoleLogger.log(Logger.LogLevel.WARNING, "A command under the name " + ChatColor.RED + "/" + cmdString + ChatColor.YELLOW + " already exists. Pet Command temporarily registered under " + ChatColor.RED + "/ec:" + cmdString);
-        }
-        String adminCmdString = options.getCommandString() + "admin";
-        if (CM.getCommand(adminCmdString) != null) {
-            ConsoleLogger.log(Logger.LogLevel.WARNING, "A command under the name " + ChatColor.RED + "/" + adminCmdString + ChatColor.YELLOW + " already exists. Pet Admin Command temporarily registered under " + ChatColor.RED + "/ec:" + adminCmdString);
-        }
-        CustomCommand petCmd = new CustomCommand(cmdString);
-        CM.register("ec", petCmd);
-        petCmd.setExecutor(new PetCommand(petCmd.getLabel()));
+        this.cmdString = options.getCommandString();
+        this.adminCmdString = options.getCommandString() + "admin";
+        DynamicPluginCommand petCmd = new DynamicPluginCommand(this.cmdString, new String[0], "Create and manage your own custom pets.", "Use /" + this.cmdString + " help to see the command list.", new PetCommand(this.cmdString), null, this);
         petCmd.setTabCompleter(new CommandComplete());
-        this.cmdString = cmdString;
-
-        CustomCommand petAdminCmd = new CustomCommand(adminCmdString);
-        CM.register("ec", petAdminCmd);
-        petAdminCmd.setExecutor(new PetAdminCommand(petAdminCmd.getLabel()));
-        this.adminCmdString = adminCmdString;
+        COMMAND_MANAGER.register(petCmd);
+        COMMAND_MANAGER.register(new DynamicPluginCommand(this.adminCmdString, new String[0], "Create and manage the pets of other players.", "Use /" + this.adminCmdString + " help to see the command list.", new PetAdminCommand(this.adminCmdString), null, this));
 
         // Register listeners
         manager.registerEvents(new MenuListener(), this);
