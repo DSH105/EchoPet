@@ -64,8 +64,11 @@ public class SelectorLayout {
             String[] lore;
             if (l.contains(";")) {
                 lore = l.split(";");
+                for (int index = 0; index < lore.length; index++) {
+                    lore[index] = ChatColor.translateAlternateColorCodes('&', lore[index]);
+                }
             } else {
-                lore = new String[]{l};
+                lore = new String[]{ChatColor.translateAlternateColorCodes('&', l)};
             }
             if (lore == null || lore.length <= 0 || lore[0] == "") {
                 selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name));
