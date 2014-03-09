@@ -8,6 +8,7 @@ import io.github.dsh105.echopet.api.event.PetTeleportEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.PetNames;
+import io.github.dsh105.echopet.util.StringSimplifier;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -202,6 +203,12 @@ public abstract class Pet {
     public boolean setPetName(String name, boolean sendFailMessage) {
         if (PetNames.allow(name, this)) {
             this.name = ChatColor.translateAlternateColorCodes('&', name);
+            if (EchoPetPlugin.getInstance().getMainConfig().getBoolean("stripDiacriticsFromNames", true)) {
+                this.name = StringSimplifier.stripDiacritics(this.name);
+            }
+            if (this.name == null || this.name.equalsIgnoreCase("")) {
+                this.name = this.petType.getDefaultName(this.owner);
+            }
             this.getCraftPet().setCustomName(this.name);
             this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
             return true;
