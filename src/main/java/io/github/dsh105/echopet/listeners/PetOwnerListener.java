@@ -3,6 +3,7 @@ package io.github.dsh105.echopet.listeners;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.Hook;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.PetHandler;
@@ -189,7 +190,15 @@ public class PetOwnerListener implements Listener {
             @Override
             public void run() {
                 if (p != null && p.isOnline()) {
-                    PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                    Pet pet = PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                    if (pet != null) {
+                        if (Hook.getVNP() != null) {
+                            if (Hook.getVNP().getManager().isVanished(p)) {
+                                pet.getEntityPet().vnp = true;
+                                pet.getEntityPet().setInvisible(true);
+                            }
+                        }
+                    }
                 }
             }
 
