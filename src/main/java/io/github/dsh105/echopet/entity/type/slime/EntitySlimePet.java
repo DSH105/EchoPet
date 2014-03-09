@@ -46,7 +46,7 @@ public class EntitySlimePet extends EntityPet {
 
     @Override
     protected String getDeathSound() {
-        return "mob.slime." + (this.getSize() > 1 ? "big" : "small");
+        return "mob.zombie" + (this.getSize() > 1 ? "big" : "small");
     }
 
     @Override
