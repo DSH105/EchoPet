@@ -7,7 +7,7 @@ import net.minecraft.server.v1_7_R1.Items;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
-@EntitySize(width = 0.6F, height = 0.6F)
+@EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.SKELETON)
 public class EntitySkeletonPet extends EntityPet {
 

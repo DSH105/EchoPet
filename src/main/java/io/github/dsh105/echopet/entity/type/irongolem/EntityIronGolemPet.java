@@ -4,7 +4,7 @@ import io.github.dsh105.echopet.entity.*;
 import net.minecraft.server.v1_7_R1.Entity;
 import net.minecraft.server.v1_7_R1.World;
 
-@EntitySize(width = 1.4F, height = 1.9F)
+@EntitySize(width = 1.4F, height = 2.9F)
 @EntityPetType(petType = PetType.IRONGOLEM)
 public class EntityIronGolemPet extends EntityPet {
 
