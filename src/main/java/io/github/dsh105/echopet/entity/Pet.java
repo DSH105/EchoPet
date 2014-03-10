@@ -209,8 +209,10 @@ public abstract class Pet {
             if (this.name == null || this.name.equalsIgnoreCase("")) {
                 this.name = this.petType.getDefaultName(this.owner);
             }
-            this.getCraftPet().setCustomName(this.name);
-            this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+            if (this.getCraftPet() != null) {
+                this.getCraftPet().setCustomName(this.name);
+                this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+            }
             return true;
         } else {
             if (sendFailMessage) {
