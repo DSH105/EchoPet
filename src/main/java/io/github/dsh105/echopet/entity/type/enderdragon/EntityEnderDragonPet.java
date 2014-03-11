@@ -444,7 +444,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
     protected void target() {
         this.bz = false;
         if (this.random.nextInt(2) == 0 && !this.world.players.isEmpty()) {
-            if (this.random.nextInt(50) <= 40) {
+            if (this.random.nextInt(50) <= 40 && this.getPlayerOwner() != null) {
                 this.bD = ((CraftPlayer) this.getPlayerOwner()).getHandle();
             } else {
                 this.bD = (Entity) this.world.players.get(this.random.nextInt(this.world.players.size()));

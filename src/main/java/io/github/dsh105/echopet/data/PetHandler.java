@@ -294,7 +294,7 @@ public class PetHandler {
                 if (riderPetType == null) return;
                 if (ec.options.allowRidersFor(pet.getPetType())) {
                     Pet rider = pet.createRider(riderPetType, true);
-                    if (rider != null) {
+                    if (rider != null && rider.getEntityPet() != null) {
                         rider.setPetName(riderName);
                         ArrayList<PetData> riderData = new ArrayList<PetData>();
                         ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".rider.data");
