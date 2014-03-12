@@ -141,15 +141,9 @@ public class SQLPetHandler {
                             return null;
                         }
                         pet.setPetName(name);
-                        PetData[] PDT = createArray(map, true);
-                        PetData[] PDF = createArray(map, false);
-                        if (PDT != null) {
-                            PetHandler.getInstance().setData(pet, PDT, true);
+                        for (Map.Entry<PetData, Boolean> entry : map.entrySet()) {
+                            PetHandler.getInstance().setData(pet, entry.getKey(), entry.getValue());
                         }
-                        if (PDF != null) {
-                            PetHandler.getInstance().setData(pet, PDF, false);
-                        }
-
                         if (rs.getString("RiderPetType") != null) {
                             PetType mt = findPetType(rs.getString("RiderPetType"));
                             if (mt == null) {
@@ -165,14 +159,8 @@ public class SQLPetHandler {
                             Pet rider = pet.createRider(mt, false);
                             if (rider != null) {
                                 rider.setPetName(mName);
-                                PetData[] MDT = createArray(map, true);
-                                PetData[] MDF = createArray(map, false);
-
-                                if (MDT != null) {
-                                    ph.setData(rider, MDT, true);
-                                }
-                                if (MDF != null) {
-                                    ph.setData(rider, MDF, false);
+                                for (Map.Entry<PetData, Boolean> entry : map.entrySet()) {
+                                    PetHandler.getInstance().setData(rider, entry.getKey(), entry.getValue());
                                 }
                             }
                         }
@@ -194,16 +182,6 @@ public class SQLPetHandler {
             return pet;
         }
         return null;
-    }
-
-    private PetData[] createArray(Map<PetData, Boolean> map, boolean b) {
-        List<PetData> list = new ArrayList<PetData>();
-        for (PetData pd : map.keySet()) {
-            if (map.get(pd) == b) {
-                list.add(pd);
-            }
-        }
-        return list.isEmpty() ? null : list.toArray(new PetData[list.size()]);
     }
 
     private PetType findPetType(String s) {
