@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.entity.pathfinder.goals;
 
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 import net.minecraft.server.v1_7_R1.Entity;
 import net.minecraft.server.v1_7_R1.EntityHuman;
 
@@ -29,6 +30,16 @@ public class PetGoalLookAtPlayer extends PetGoal {
     }
 
     @Override
+    public PetGoalType getType() {
+        return PetGoalType.TWO;
+    }
+
+    @Override
+    public String getDefaultKey() {
+        return "LookAtPlayer";
+    }
+
+    @Override
     public boolean shouldStart() {
         if (this.pet.random().nextFloat() >= this.chance) {
             return false;
@@ -45,7 +56,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
     }
 
     @Override
-    public boolean shouldFinish() {
+    public boolean shouldContinue() {
         return !this.player.isAlive() ? false : (this.pet.e(this.player) > (double) (this.range * this.range) ? false : this.ticksLeft > 0);
     }
 

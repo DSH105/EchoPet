@@ -4,6 +4,7 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMoveEvent;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 import io.github.dsh105.echopet.entity.type.ghast.EntityGhastPet;
 import net.minecraft.server.v1_7_R1.EntityPlayer;
 import net.minecraft.server.v1_7_R1.GenericAttributes;
@@ -32,6 +33,16 @@ public class PetGoalFollowOwner extends PetGoal {
     }
 
     @Override
+    public PetGoalType getType() {
+        return PetGoalType.THREE;
+    }
+
+    @Override
+    public String getDefaultKey() {
+        return "FollowOwner";
+    }
+
+    @Override
     public boolean shouldStart() {
         if (!this.pet.isAlive()) {
             return false;
@@ -48,16 +59,19 @@ public class PetGoalFollowOwner extends PetGoal {
     }
 
     @Override
-    public boolean shouldFinish() {
-        PetGoalAttack attackGoal = (PetGoalAttack) this.pet.petGoalSelector.getGoal(PetGoalAttack.class);
-        if (attackGoal != null && attackGoal.isActive) {
-            return true;
-        }
-        if (this.pet.getPlayerOwner() == null) {
-            return true;
+    public boolean shouldContinue() {
+        if (this.nav.g()) {
+            return false;
+        } else if (this.pet.getPlayerOwner() == null) {
+            return false;
         } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance) {
-            return true;
-        } else return this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive();
+            return false;
+        }
+        PetGoalAttack attackGoal = (PetGoalAttack) this.pet.petGoalSelector.getGoal("Attack");
+        if (attackGoal != null && attackGoal.isActive) {
+            return false;
+        }
+        return true;
     }
 
     @Override

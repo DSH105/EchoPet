@@ -157,12 +157,12 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     public void setPathfinding() {
         try {
-            this.petGoalSelector = new PetGoalSelector();
+            this.petGoalSelector = new PetGoalSelector(this.getPet());
             this.getNavigation().b(true);
 
-            petGoalSelector.addGoal("Float", new PetGoalFloat(this));
-            petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())));
-            petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
+            petGoalSelector.addGoal(new PetGoalFloat(this), 0);
+            petGoalSelector.addGoal(new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())), 1);
+            petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, EntityHuman.class, 8.0F), 2);
 
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Could not add PetGoals to Pet AI.", e, true);
@@ -193,7 +193,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
         this.getEntitySenses().a();
 
-        this.petGoalSelector.run();
+        this.petGoalSelector.updateGoals();
 
         this.getNavigation().f();
 

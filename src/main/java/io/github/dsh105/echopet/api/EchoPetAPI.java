@@ -256,7 +256,7 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to set attack target for Pet through the EchoPetAPI. Target cannot be null.");
             return;
         }
-        if (pet.getEntityPet().petGoalSelector.getGoal(PetGoalAttack.class) != null) {
+        if (pet.getEntityPet().petGoalSelector.getGoal("Attack") != null) {
             pet.getCraftPet().setTarget(target);
         }
     }
@@ -286,13 +286,13 @@ public class EchoPetAPI {
             return;
         }
         if (goalType == GoalType.ATTACK) {
-            pet.getEntityPet().petGoalSelector.addGoal("Attack", new PetGoalAttack(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)));
+            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalAttack(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)), 3);
         } else if (goalType == GoalType.FLOAT) {
-            pet.getEntityPet().petGoalSelector.addGoal("Float", new PetGoalFloat(pet.getEntityPet()));
+            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalFloat(pet.getEntityPet()), 0);
         } else if (goalType == GoalType.FOLLOW_OWNER) {
-            pet.getEntityPet().petGoalSelector.addGoal("FollowOwner", new PetGoalFollowOwner(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getStopWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getTeleport(pet.getPetType())));
+            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalFollowOwner(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getStopWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getTeleport(pet.getPetType())), 1);
         } else if (goalType == GoalType.LOOK_AT_PLAYER) {
-            pet.getEntityPet().petGoalSelector.addGoal("LookAtPlayer", new PetGoalLookAtPlayer(pet.getEntityPet(), EntityHuman.class, 8.0F));
+            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalLookAtPlayer(pet.getEntityPet(), EntityHuman.class, 8.0F), 2);
         }
     }
 
@@ -303,7 +303,7 @@ public class EchoPetAPI {
      * @param goal       the {@link io.github.dsh105.echopet.entity.pathfinder.PetGoal} to add
      * @param identifier a {@link java.lang.String} to identify the goal
      */
-    public void addGoal(Pet pet, PetGoal goal, String identifier) {
+    public void addGoal(Pet pet, PetGoal goal, String identifier, int priority) {
         if (pet == null) {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
@@ -312,7 +312,7 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to ad PetGoal to Pet AI through the EchoPetAPI. Goal cannot be null.");
             return;
         }
-        pet.getEntityPet().petGoalSelector.addGoal(identifier, goal);
+        pet.getEntityPet().petGoalSelector.addGoal(identifier, goal, priority);
     }
 
     /**

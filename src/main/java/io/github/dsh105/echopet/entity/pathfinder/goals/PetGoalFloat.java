@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.entity.pathfinder.goals;
 
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 
 public class PetGoalFloat extends PetGoal {
 
@@ -13,14 +14,23 @@ public class PetGoalFloat extends PetGoal {
     }
 
     @Override
+    public PetGoalType getType() {
+        return PetGoalType.FOUR;
+    }
+
+    @Override
+    public String getDefaultKey() {
+        return "Float";
+    }
+
+    @Override
     public boolean shouldStart() {
-        // Returns if the pet is in water. A handy change :D
-        return this.pet.M();
+        return this.pet.M() || this.pet.P();
     }
 
     @Override
     public void tick() {
-        if (pet.random().nextFloat() < 0.8F) {
+        if (this.pet.aI().nextFloat() < 0.8F) {
             this.pet.getControllerJump().a();
         }
     }

@@ -2,18 +2,25 @@ package io.github.dsh105.echopet.entity.pathfinder;
 
 public abstract class PetGoal {
 
-    public abstract boolean shouldStart();
+    public abstract PetGoalType getType();
 
-    public boolean shouldFinish() {
-        return !shouldStart();
+    public abstract String getDefaultKey();
+
+    public abstract boolean shouldStart(); //a
+
+    public boolean shouldContinue() { //b
+        return shouldStart();
     }
 
-    public void start() {
+    public void start() { //c
     }
 
-    public void finish() {
+    public void finish() { //d
     }
 
-    public void tick() {
+    public boolean isContinuous() {
+        return true;
     }
+
+    public abstract void tick(); //e
 }
