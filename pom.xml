@@ -130,6 +130,10 @@
             <id>vault-repo</id>
             <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>fanciful-repo</id>
+            <url>https://raw2.github.com/mkremins/fanciful/mvn-repo/</url>
+        </repository>
     </repositories>
     <build>
         <defaultGoal>clean package install</defaultGoal>
