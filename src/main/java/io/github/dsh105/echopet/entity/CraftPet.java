@@ -16,6 +16,14 @@ public abstract class CraftPet extends CraftCreature implements Vehicle, Tameabl
         this.entityPet = entity;
     }
 
+    public PetType getPetType() {
+        EntityPetType entityPetType = this.getClass().getAnnotation(EntityPetType.class);
+        if (entityPetType != null) {
+            return entityPetType.petType();
+        }
+        return null;
+    }
+
     @Override
     public EntityPet getHandle() {
         return this.entityPet;

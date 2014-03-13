@@ -1,11 +1,10 @@
 package io.github.dsh105.echopet.entity.type.skeleton;
 
-import io.github.dsh105.echopet.entity.CraftPet;
-import io.github.dsh105.echopet.entity.EntityPet;
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.*;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.entity.Skeleton;
 
+@EntityPetType(petType = PetType.SKELETON)
 public class CraftSkeletonPet extends CraftPet implements Skeleton {
 
     public CraftSkeletonPet(CraftServer server, EntityPet entity) {

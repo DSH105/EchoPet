@@ -1,11 +1,10 @@
 package io.github.dsh105.echopet.entity.type.villager;
 
-import io.github.dsh105.echopet.entity.CraftAgeablePet;
-import io.github.dsh105.echopet.entity.EntityPet;
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.*;
 import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
 import org.bukkit.entity.Villager;
 
+@EntityPetType(petType = PetType.VILLAGER)
 public class CraftVillagerPet extends CraftAgeablePet implements Villager {
 
     public CraftVillagerPet(CraftServer server, EntityPet entity) {

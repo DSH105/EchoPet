@@ -5,6 +5,7 @@ import net.minecraft.server.v1_7_R1.MathHelper;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.5F, height = 0.9F)
+@EntityPetType(petType = PetType.BAT)
 public class EntityBatPet extends EntityPet {
 
     public EntityBatPet(World world) {
@@ -13,11 +14,6 @@ public class EntityBatPet extends EntityPet {
 
     public EntityBatPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.BAT;
     }
 
     public void setHanging(boolean flag) {
