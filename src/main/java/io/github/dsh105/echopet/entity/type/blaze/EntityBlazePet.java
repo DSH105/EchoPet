@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
-@EntitySize(width = 0.6F, height = 0.7F)
+@EntitySize(width = 0.6F, height = 1.7F)
 @EntityPetType(petType = PetType.BLAZE)
 public class EntityBlazePet extends EntityPet {
 

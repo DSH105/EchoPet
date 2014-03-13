@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
-@EntitySize(width = 0.6F, height = 0.8F)
+@EntitySize(width = 0.6F, height = 1.9F)
 @EntityPetType(petType = PetType.WITCH)
 public class EntityWitchPet extends EntityPet {
 

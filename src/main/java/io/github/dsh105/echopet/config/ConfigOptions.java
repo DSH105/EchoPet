@@ -4,7 +4,11 @@ import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.config.options.Options;
 import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.menu.selector.SelectorIcon;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
 
 public class ConfigOptions extends Options {
@@ -14,6 +18,7 @@ public class ConfigOptions extends Options {
     public ConfigOptions(YAMLConfig config) {
         super(config);
         instance = this;
+        SelectorLayout.loadLayout();
     }
 
     public boolean allowPetType(PetType petType) {
@@ -21,12 +26,12 @@ public class ConfigOptions extends Options {
                 + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
     }
 
-    public boolean allowMounts(PetType petType) {
+    public boolean allowRidersFor(PetType petType) {
         if (petType == PetType.ENDERDRAGON) {
             return false;
         }
         return this.config.getBoolean("pets."
-                + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true);
+                + petType.toString().toLowerCase().replace("_", " ") + ".allow.riders", true);
     }
 
     public boolean allowData(PetType type, PetData data) {
@@ -82,12 +87,8 @@ public class ConfigOptions extends Options {
         set("sql.username", "none");
         set("sql.password", "none");
 
-        set("petSelector.allowDrop", true);
-        set("petSelector.giveOnJoin.enable", false);
-        set("petSelector.giveOnJoin.usePerm", false);
-        set("petSelector.giveOnJoin.perm", "echopet.selector.join");
-        set("petSelector.giveOnJoin.slot", 9);
-        set("petSelector.clearInvOnJoin", false);
+        set("petNames.My Pet", "allow");
+        set("stripDiacriticsFromNames", true);
 
         set("autoSave", true, "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
         set("autoSaveTimer", 180, "Interval between autosave of pet data (in seconds).");
@@ -105,6 +106,41 @@ public class ConfigOptions extends Options {
         }
         set("worldguard.regions.allowByDefault", true);
         set("worldguard.regionEnterCheck", true);
+
+        set("petSelector.allowDrop", true);
+        set("petSelector.showDisabledPets", true);
+        set("petSelector.giveOnJoin.enable", false);
+        set("petSelector.giveOnJoin.usePerm", false);
+        set("petSelector.giveOnJoin.perm", "echopet.selector.join");
+        set("petSelector.giveOnJoin.slot", 9);
+        set("petSelector.clearInvOnJoin", false);
+        set("petSelector.item.name", "&aPets");
+        set("petSelector.item.lore", "&7Right click to open");
+        set("petSelector.item.materialId", Material.BONE.getId());
+        set("petSelector.item.materialData", 0);
+
+        boolean loadDefault = this.config.get("petSelector.menu.slots") == null;
+        set("petSelector.menu.slots", 45);
+        set("petSelector.menu.title", "Pets");
+        if (loadDefault) {
+            for (SelectorIcon icon : SelectorLayout.getDefaultLayout()) {
+                int friendlySlot = icon.getSlot() + 1;
+                set("petSelector.menu.slot-" + friendlySlot + ".command", icon.getCommand());
+                set("petSelector.menu.slot-" + friendlySlot + ".petType", icon.getPetType() == null ? "" : icon.getPetType().toString());
+                set("petSelector.menu.slot-" + friendlySlot + ".materialId", icon.getMaterialId());
+                set("petSelector.menu.slot-" + friendlySlot + ".materialData", icon.getMaterialData());
+                set("petSelector.menu.slot-" + friendlySlot + ".name", (icon.getName() == null ? "" : icon.getName()).replace(ChatColor.COLOR_CHAR, '&'));
+                String l = null;
+                for (String s : icon.getLore()) {
+                    if (l == null) {
+                        l = s.replace(ChatColor.COLOR_CHAR, '&');
+                    } else {
+                        l += ";" + s.replace(ChatColor.COLOR_CHAR, '&');
+                    }
+                }
+                set("petSelector.menu.slot-" + friendlySlot + ".lore", l == null ? "" : l);
+            }
+        }
 
         for (PetType petType : PetType.values()) {
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
@@ -128,7 +164,7 @@ public class ConfigOptions extends Options {
             if (petType != PetType.ENDERDRAGON) {
                 boolean canFly = (petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER);
                 set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".canFly", canFly);
-                set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.mounts", true);
+                set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".allow.riders", true);
             }
 
             for (PetData pd : PetData.values()) {

@@ -1,9 +1,7 @@
 package io.github.dsh105.echopet.entity.type.horse;
 
-import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.HORSE)
 public class HorsePet extends Pet implements IAgeablePet {
@@ -16,8 +14,12 @@ public class HorsePet extends Pet implements IAgeablePet {
     boolean chested = false;
     boolean saddle = false;
 
-    public HorsePet(String owner) {
+    public HorsePet(Player owner) {
         super(owner);
+    }
+
+    public HorsePet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     public void setHorseType(HorseType type) {

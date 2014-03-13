@@ -8,7 +8,7 @@ import net.minecraft.server.v1_7_R1.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_7_R1.World;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 
-@EntitySize(width = 0.6F, height = 0.9F)
+@EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.HUMAN)
 public class EntityHumanPet extends EntityPacketPet {
 

@@ -1,11 +1,9 @@
 package io.github.dsh105.echopet.entity.type.ocelot;
 
 
-import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
 import org.bukkit.entity.Ocelot.Type;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.OCELOT)
 public class OcelotPet extends Pet implements IAgeablePet {
@@ -13,8 +11,12 @@ public class OcelotPet extends Pet implements IAgeablePet {
     boolean baby;
     Type type = Type.WILD_OCELOT;
 
-    public OcelotPet(String owner) {
+    public OcelotPet(Player owner) {
         super(owner);
+    }
+
+    public OcelotPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     @Override

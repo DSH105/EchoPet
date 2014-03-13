@@ -56,6 +56,7 @@ public class MenuUtil {
             options.add(new MenuOption(i++, MenuItem.BABY));
         }
         if (pt == PetType.OCELOT) {
+            options.add(new MenuOption(i++, MenuItem.BABY));
             options.add(new MenuOption(i++, MenuItem.CAT_TYPE));
         }
         if (pt == PetType.PIG) {

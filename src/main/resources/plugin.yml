@@ -39,6 +39,9 @@ permissions:
     echopet.pet.hide:
         default: op
         description: Hide your current pet
+    echopet.pet.toggle:
+        default: op
+        description: Hide your current pet
     echopet.pet.call:
         default: op
         description: Call your pet to your side
@@ -764,8 +767,10 @@ permissions:
             echopet.pet.menu: true
             echopet.pet.show: true
             echopet.pet.hide: true
+            echopet.pet.toggle: true
             echopet.pet.call: true
             echopet.pet.name: true
+            echopet.pet.name.override: true
             echopet.pet.select: true
             echopet.pet.selector: true
             echopet.pet.type.*: true

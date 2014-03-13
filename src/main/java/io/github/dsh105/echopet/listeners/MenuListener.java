@@ -3,7 +3,6 @@ package io.github.dsh105.echopet.listeners;
 import com.dsh105.dshutils.Particle;
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.EnumUtil;
-import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.Pet;
@@ -14,9 +13,7 @@ import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
 import io.github.dsh105.echopet.menu.main.DataMenuItem;
 import io.github.dsh105.echopet.menu.main.MenuItem;
 import io.github.dsh105.echopet.menu.main.PetMenu;
-import io.github.dsh105.echopet.menu.selector.PetItem;
-import io.github.dsh105.echopet.menu.selector.SelectorItem;
-import io.github.dsh105.echopet.mysql.SQLPetHandler;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.Perm;
@@ -35,7 +32,7 @@ public class MenuListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (event.getView().getTitle().equals("Pet Selector") || event.getView().getTitle().contains("EchoPet DataMenu")) {
+        if (event.getView().getTitle().contains("EchoPet DataMenu")) {
             event.setCancelled(true);
         }
 
@@ -55,7 +52,7 @@ public class MenuListener implements Listener {
         if (event.getSlotType() == InventoryType.SlotType.RESULT) {
             try {
                 for (int i = 1; i <= 4; i++) {
-                    if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).equals(SelectorItem.SELECTOR.getItem())) {
+                    if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).isSimilar(SelectorLayout.getSelectorItem())) {
                         player.updateInventory();
                         event.setCancelled(true);
                         break;
@@ -65,7 +62,7 @@ public class MenuListener implements Listener {
                 return;
             }
         }
-        if (title.equals("Pet Selector")) {
+        /*if (title.equals("Pets")) {
             try {
                 if (slot <= 44 && inv.getItem(slot) != null) {
                     if (inv.getItem(slot).equals(SelectorItem.CLOSE.getItem())) {
@@ -136,7 +133,7 @@ public class MenuListener implements Listener {
                 Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
                 event.setCancelled(true);
             }
-        }
+        }*/
 
 
         final Pet pet = EchoPetPlugin.getInstance().PH.getPet(player);

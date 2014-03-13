@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.commands;
 
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.conversation.NameFactory;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.data.UnorganisedPetData;
 import io.github.dsh105.echopet.entity.Pet;
@@ -9,9 +10,11 @@ import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
-import io.github.dsh105.echopet.menu.selector.PetSelector;
-import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
+import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.util.*;
+import io.github.dsh105.echopet.util.pagination.FancyPaginator;
+import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,6 +33,14 @@ public class PetCommand implements CommandExecutor {
         this.cmdLabel = commandLabel;
     }
 
+    private FancyPaginator getHelp(CommandSender sender) {
+        ArrayList<FancyMessage> helpMessages = new ArrayList<FancyMessage>();
+        for (HelpEntry he : HelpEntry.values()) {
+            helpMessages.add(he.getFancyMessage(sender));
+        }
+        return new FancyPaginator(helpMessages, 5);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {
         if (args.length == 0) {
@@ -40,80 +51,72 @@ public class PetCommand implements CommandExecutor {
 
         }
 
-        // Setting the pet and mount names
+        // Setting the pet and rider names
         // Supports colour coding
         else if (args.length >= 1 && args[0].equalsIgnoreCase("name")) {
             if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
                 Player p = (Player) sender;
-
-                if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("mount"))) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help - Pet Names ------------");
-                    sender.sendMessage(ChatColor.GOLD + "/" + this.cmdLabel + " name <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
-                    sender.sendMessage(ChatColor.GOLD + "/" + this.cmdLabel + " name mount <name>");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Set the name tag of your pet's mount.");
-                    sender.sendMessage(ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.");
+                Pet pet = ec.PH.getPet(p);
+                if (pet == null) {
+                    Lang.sendTo(sender, Lang.NO_PET.toString());
                     return true;
                 }
 
-                // Sets the name of the pet's mount if it exists
-                if (args.length >= 3 && args[1].equalsIgnoreCase("mount")) {
-                    Pet pi = ec.PH.getPet(p);
-                    if (pi == null) {
-                        Lang.sendTo(sender, Lang.NO_PET.toString());
+                if (args.length >= 2 && args[1].equals("rider")) {
+                    if (pet.getRider() == null) {
+                        Lang.sendTo(sender, Lang.NO_RIDER.toString());
                         return true;
                     }
-
-                    if (pi.getMount() == null) {
-                        Lang.sendTo(sender, Lang.NO_MOUNT.toString());
-                        return true;
+                    if (args.length == 2) {
+                        NameFactory.askForName(p, pet.getRider(), false);
+                    } else {
+                        String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(2, args, " "));
+                        if (name.length() > 32) {
+                            Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            return true;
+                        }
+                        pet.getRider().setPetName(name);
+                        Lang.sendTo(sender, Lang.NAME_RIDER.toString()
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
                     }
-
-                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(2, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
-                    }
-                    pi.getMount().setPetName(name);
-                    Lang.sendTo(sender, Lang.NAME_MOUNT.toString()
-                            .replace("%type%", StringUtil.capitalise(pi.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
                     return true;
-                }
-
-                // Sets the name of a player's pet
-                else if (args.length >= 2) {
-                    Pet pi = ec.PH.getPet(p);
-                    if (pi == null) {
-                        Lang.sendTo(sender, Lang.NO_PET.toString());
-                        return true;
+                } else {
+                    if (args.length == 1) {
+                        NameFactory.askForName(p, pet, false);
+                    } else {
+                        String name = ChatColor.translateAlternateColorCodes('&', StringUtil.combineSplit(1, args, " "));
+                        if (name.length() > 32) {
+                            Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
+                            return true;
+                        }
+                        pet.setPetName(name);
+                        Lang.sendTo(sender, Lang.NAME_PET.toString()
+                                .replace("%type%", StringUtil.capitalise(pet.getPetType().toString().replace("_", " ")))
+                                .replace("%name%", name));
                     }
-
-                    String name = StringUtil.replaceStringWithColours(StringUtil.combineSplit(1, args, " "));
-                    if (name.length() > 32) {
-                        Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
-                        return true;
-                    }
-                    pi.setPetName(name);
-                    Lang.sendTo(sender, Lang.NAME_PET.toString()
-                            .replace("%type%", StringUtil.capitalise(pi.getPetType().toString().replace("_", " ")))
-                            .replace("%name%", name));
                     return true;
                 }
             } else return true;
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("select")) {
+                if (sender instanceof Player) {
+                    // We can exempt the player from having the appropriate permission here
+                    Player p = (Player) sender;
+                    if (p.getOpenInventory() != null && p.getOpenInventory().getTitle().equals("Pets")) {
+                        p.closeInventory();
+                        return true;
+                    }
+                }
                 if (Perm.BASE_SELECT.hasPerm(sender, true, false)) {
                     Player p = (Player) sender;
-                    PetSelector petSelector = new PetSelector(45, p);
-                    petSelector.open(false);
+                    new SelectorMenu().showTo(p);
                     return true;
                 } else return true;
             } else if (args[0].equalsIgnoreCase("selector")) {
                 if (Perm.BASE_SELECTOR.hasPerm(sender, true, false)) {
                     Player p = (Player) sender;
-                    p.getInventory().addItem(SelectorItem.SELECTOR.getItem());
+                    p.getInventory().addItem(SelectorLayout.getSelectorItem());
                     Lang.sendTo(sender, Lang.ADD_SELECTOR.toString());
                     return true;
                 } else return true;
@@ -125,8 +128,37 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.NO_PET.toString());
                         return true;
                     }
-                    pet.teleport(player.getLocation());
+                    pet.teleportToOwner();
                     Lang.sendTo(sender, Lang.PET_CALL.toString());
+                    return true;
+                } else return true;
+            } else if (args[0].equalsIgnoreCase("toggle")) {
+                if (Perm.BASE_TOGGLE.hasPerm(sender, true, false)) {
+                    Player player = (Player) sender;
+                    Pet p = ec.PH.getPet(player);
+                    if (p == null) {
+                        PetHandler.getInstance().removePets(player.getName(), true);
+                        Pet pet = PetHandler.getInstance().loadPets(player, false, false, false);
+                        if (pet == null) {
+                            Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
+                            return true;
+                        }
+                        if (WorldUtil.allowPets(player.getLocation())) {
+                            Lang.sendTo(sender, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
+                            return true;
+                        } else {
+                            Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
+                            if (pet != null) {
+                                PetHandler.getInstance().removePet(pet, true);
+                            }
+                            return true;
+                        }
+                    } else {
+                        ec.PH.saveFileData("autosave", p);
+                        ec.SPH.saveToDatabase(p, false);
+                        ec.PH.removePet(p, true);
+                        Lang.sendTo(sender, Lang.HIDE_PET.toString());
+                    }
                     return true;
                 } else return true;
             } else if (args[0].equalsIgnoreCase("hide")) {
@@ -218,10 +250,20 @@ public class PetCommand implements CommandExecutor {
             // Help page 1
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
-                    sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                    for (String s : HelpPage.getHelpPage(1)) {
-                        sender.sendMessage(s);
+                    if (sender instanceof Player) {
+                        FancyPaginator paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (FancyMessage fancy : paginator.getPage(1)) {
+                            fancy.send((Player) sender);
+                        }
+                        sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (String s : HelpPage.getHelpPage(1)) {
+                            sender.sendMessage(s);
+                        }
                     }
                     return true;
                 } else return true;
@@ -309,7 +351,7 @@ public class PetCommand implements CommandExecutor {
             }
 
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("mount")) {
+            if (args[0].equalsIgnoreCase("rider")) {
                 if (args[1].equalsIgnoreCase("remove")) {
                     if (Perm.BASE_REMOVE.hasPerm(sender, true, false)) {
                         Pet pi = ec.PH.getPet((Player) sender);
@@ -317,14 +359,14 @@ public class PetCommand implements CommandExecutor {
                             Lang.sendTo(sender, Lang.NO_PET.toString());
                             return true;
                         }
-                        if (pi.getMount() == null) {
-                            Lang.sendTo(sender, Lang.NO_MOUNT.toString());
+                        if (pi.getRider() == null) {
+                            Lang.sendTo(sender, Lang.NO_RIDER.toString());
                             return true;
                         }
-                        pi.removeMount();
+                        pi.removeRider();
                         ec.PH.saveFileData("autosave", pi);
                         ec.SPH.saveToDatabase(pi, false);
-                        Lang.sendTo(sender, Lang.REMOVE_MOUNT.toString());
+                        Lang.sendTo(sender, Lang.REMOVE_RIDER.toString());
                         return true;
                     } else return true;
                 } else {
@@ -352,32 +394,32 @@ public class PetCommand implements CommandExecutor {
                         return true;
                     }
 
-                    if (!ec.options.allowMounts(petType)) {
-                        Lang.sendTo(sender, Lang.MOUNTS_DISABLED.toString()
+                    if (!ec.options.allowRidersFor(petType)) {
+                        Lang.sendTo(sender, Lang.RIDERS_DISABLED.toString()
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
                         return true;
                     }
 
                     if (Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType)) {
-                        Pet mount = pi.createMount(petType, true);
-                        if (mount == null) {
+                        Pet rider = pi.createRider(petType, true);
+                        if (rider == null) {
                             return true;
                         }
                         if (!petDataList.isEmpty()) {
-                            ec.PH.setData(mount, petDataList.toArray(new PetData[petDataList.size()]), true);
+                            ec.PH.setData(rider, petDataList.toArray(new PetData[petDataList.size()]), true);
                         }
                         if (UPD.petName != null && !UPD.petName.equalsIgnoreCase("")) {
                             if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
                                 if (UPD.petName.length() > 32) {
                                     Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                                 } else {
-                                    mount.setPetName(UPD.petName);
+                                    rider.setPetName(UPD.petName);
                                 }
                             }
                         }
                         ec.PH.saveFileData("autosave", pi);
                         ec.SPH.saveToDatabase(pi, false);
-                        Lang.sendTo(sender, Lang.CHANGE_MOUNT.toString()
+                        Lang.sendTo(sender, Lang.CHANGE_RIDER.toString()
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
                         return true;
                     } else return true;
@@ -388,17 +430,41 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
                     if (StringUtil.isInt(args[1])) {
-                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
-                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                        for (String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))) {
-                            sender.sendMessage(s);
+                        if (sender instanceof Player) {
+                            FancyPaginator paginator = this.getHelp(sender);
+                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getIndex() + " ------------");
+                            sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                            if (Integer.parseInt(args[1]) > paginator.getIndex()) {
+                                Lang.sendTo(sender, Lang.HELP_INDEX_TOO_BIG.toString().replace("%index%", args[1]));
+                                return true;
+                            }
+                            for (FancyMessage fancy : paginator.getPage(Integer.parseInt(args[1]))) {
+                                fancy.send((Player) sender);
+                            }
+                            sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                        } else {
+                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
+                            sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                            for (String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))) {
+                                sender.sendMessage(s);
+                            }
                         }
                         return true;
                     }
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
-                    sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                    for (String s : HelpPage.getHelpPage(1)) {
-                        sender.sendMessage(s);
+                    if (sender instanceof Player) {
+                        FancyPaginator paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (FancyMessage fancy : paginator.getPage(1)) {
+                            fancy.send((Player) sender);
+                        }
+                        sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (String s : HelpPage.getHelpPage(1)) {
+                            sender.sendMessage(s);
+                        }
                     }
                     return true;
                 } else return true;
@@ -429,15 +495,15 @@ public class PetCommand implements CommandExecutor {
                 if (UMD == null) {
                     return true;
                 }
-                PetType mountType = UMD.petType;
-                ArrayList<PetData> mountDataList = UMD.petDataList;
+                PetType riderType = UMD.petType;
+                ArrayList<PetData> riderDataList = UMD.petDataList;
 
-                if (petType == null || petDataList == null || mountType == null || mountDataList == null) {
+                if (petType == null || petDataList == null || riderType == null || riderDataList == null) {
                     return true;
                 }
 
-                if (Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType) && Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, mountType)) {
-                    Pet pi = ec.PH.createPet(((Player) sender), petType, mountType, true);
+                if (Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, petType) && Perm.hasTypePerm(sender, true, Perm.BASE_PETTYPE, false, riderType)) {
+                    Pet pi = ec.PH.createPet(((Player) sender), petType, riderType, true);
                     if (pi == null) {
                         return true;
                     }
@@ -453,23 +519,23 @@ public class PetCommand implements CommandExecutor {
                             }
                         }
                     }
-                    if (!mountDataList.isEmpty()) {
-                        ec.PH.setData(pi.getMount(), mountDataList.toArray(new PetData[mountDataList.size()]), true);
+                    if (!riderDataList.isEmpty()) {
+                        ec.PH.setData(pi.getRider(), riderDataList.toArray(new PetData[riderDataList.size()]), true);
                     }
                     if (UMD.petName != null && !UMD.petName.equalsIgnoreCase("")) {
                         if (Perm.BASE_NAME.hasPerm(sender, true, false)) {
                             if (UPD.petName.length() > 32) {
                                 Lang.sendTo(sender, Lang.PET_NAME_TOO_LONG.toString());
                             } else {
-                                pi.getMount().setPetName(UPD.petName);
+                                pi.getRider().setPetName(UPD.petName);
                             }
                         }
                     }
                     ec.PH.saveFileData("autosave", pi);
                     ec.SPH.saveToDatabase(pi, false);
-                    Lang.sendTo(sender, Lang.CREATE_PET_WITH_MOUNT.toString()
+                    Lang.sendTo(sender, Lang.CREATE_PET_WITH_RIDER.toString()
                             .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
-                            .replace("%mtype%", StringUtil.capitalise(mountType.toString().replace("_", ""))));
+                            .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
                     return true;
                 } else return true;
             }
@@ -524,18 +590,18 @@ public class PetCommand implements CommandExecutor {
                     if (UMD == null) {
                         return true;
                     }
-                    PetType mountType = UMD.petType;
-                    ArrayList<PetData> mountDataList = UMD.petDataList;
+                    PetType riderType = UMD.petType;
+                    ArrayList<PetData> riderDataList = UMD.petDataList;
 
-                    if (petType == null || petDataList == null || mountType == null || mountDataList == null) {
+                    if (petType == null || petDataList == null || riderType == null || riderDataList == null) {
                         return true;
                     }
 
                     if (Perm.hasTypePerm(sender, true, Perm.BASE_DEFAULT_SET_PETTYPE, false, petType) && Perm.hasTypePerm(sender, true, Perm.BASE_DEFAULT_SET_PETTYPE, false, petType)) {
                         ec.PH.saveFileData("default", (Player) sender, UPD, UMD);
-                        Lang.sendTo(sender, Lang.SET_DEFAULT_WITH_MOUNT.toString()
+                        Lang.sendTo(sender, Lang.SET_DEFAULT_WITH_RIDER.toString()
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
-                                .replace("%mtype%", StringUtil.capitalise(mountType.toString().replace("_", ""))));
+                                .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
                         return true;
                     } else return true;
                 }

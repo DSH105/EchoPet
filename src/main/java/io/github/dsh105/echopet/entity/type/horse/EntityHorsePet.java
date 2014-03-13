@@ -22,6 +22,15 @@ public class EntityHorsePet extends EntityAgeablePet {
         return ((HorsePet) pet).isBaby();
     }
 
+    @Override
+    public void setBaby(boolean flag) {
+        if (flag) {
+            this.datawatcher.watch(12, Integer.valueOf(-24000));
+        } else {
+            this.datawatcher.watch(12, new Integer(0));
+        }
+    }
+
     public void setSaddled(boolean flag) {
         this.horseVisual(4, flag);
         ((HorsePet) pet).saddle = flag;

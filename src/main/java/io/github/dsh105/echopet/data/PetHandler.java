@@ -118,7 +118,7 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner.getName());
+        Pet pi = petType.getNewPetInstance(owner);
         //Pet pi = new Pet(owner, petType);
         forceAllValidData(pi);
         pets.add(pi);
@@ -127,7 +127,7 @@ public class PetHandler {
         return pi;
     }
 
-    public Pet createPet(Player owner, PetType petType, PetType mountType, boolean sendFailMessage) {
+    public Pet createPet(Player owner, PetType petType, PetType riderType, boolean sendFailMessage) {
         removePets(owner.getName(), true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendFailMessage) {
@@ -141,9 +141,9 @@ public class PetHandler {
             }
             return null;
         }
-        Pet pi = petType.getNewPetInstance(owner.getName());
+        Pet pi = petType.getNewPetInstance(owner);
         //Pet pi = new Pet(owner, petType);
-        pi.createMount(mountType, true);
+        pi.createRider(riderType, true);
         forceAllValidData(pi);
         pets.add(pi);
         //saveFileData("autosave", pi);
@@ -162,10 +162,10 @@ public class PetHandler {
 
     public Pet getPet(Entity pet) {
         for (Pet pi : pets) {
-            if (pi.getEntityPet().equals(pet) || pi.getMount().getEntityPet().equals(pet)) {
+            if (pi.getEntityPet().equals(pet) || pi.getRider().getEntityPet().equals(pet)) {
                 return pi;
             }
-            if (pi.getCraftPet().equals(pet) || pi.getMount().getCraftPet().equals(pet)) {
+            if (pi.getCraftPet().equals(pet) || pi.getRider().getCraftPet().equals(pet)) {
                 return pi;
             }
         }
@@ -197,22 +197,22 @@ public class PetHandler {
         }
         setData(pi, tempData.toArray(new PetData[tempData.size()]), true);
 
-        ArrayList<PetData> tempMountData = new ArrayList<PetData>();
-        if (pi.getMount() != null) {
+        ArrayList<PetData> tempRiderData = new ArrayList<PetData>();
+        if (pi.getRider() != null) {
             for (PetData data : PetData.values()) {
                 if (ec.options.forceData(pi.getPetType(), data)) {
-                    tempMountData.add(data);
+                    tempRiderData.add(data);
                 }
             }
-            setData(pi.getMount(), tempMountData.toArray(new PetData[tempData.size()]), true);
+            setData(pi.getRider(), tempRiderData.toArray(new PetData[tempData.size()]), true);
         }
 
         if (ec.options.getConfig().getBoolean("sendForceMessage", true)) {
             String dataToString = " ";
-            if (!tempMountData.isEmpty()) {
+            if (!tempRiderData.isEmpty()) {
                 dataToString = PetUtil.dataToString(tempData);
             } else {
-                dataToString = PetUtil.dataToString(tempData, tempMountData);
+                dataToString = PetUtil.dataToString(tempData, tempRiderData);
             }
             if (dataToString != " ") {
                 Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
@@ -221,7 +221,7 @@ public class PetHandler {
     }
 
     public void updateFileData(String type, Pet pet, ArrayList<PetData> list, boolean b) {
-        ec.SPH.updateDatabase(pet.getNameOfOwner(), list, b, pet.isMount());
+        ec.SPH.updateDatabase(pet.getNameOfOwner(), list, b, pet.isRider());
         String w = pet.getOwner().getWorld().getName();
         String path = type + "." + w + "." + pet.getNameOfOwner();
         for (PetData pd : list) {
@@ -269,7 +269,7 @@ public class PetHandler {
                     setData(pi, data.toArray(new PetData[data.size()]), true);
                 }
 
-                this.loadMountFromFile(type, pi);
+                this.loadRiderFromFile(type, pi);
 
                 forceAllValidData(pi);
                 return pi;
@@ -278,38 +278,38 @@ public class PetHandler {
         return null;
     }
 
-    public void loadMountFromFile(Pet pet) {
-        this.loadMountFromFile("autosave", pet);
+    public void loadRiderFromFile(Pet pet) {
+        this.loadRiderFromFile("autosave", pet);
     }
 
-    public void loadMountFromFile(String type, Pet pet) {
+    public void loadRiderFromFile(String type, Pet pet) {
         if (pet.getNameOfOwner() != null) {
             String path = type + "." + pet.getNameOfOwner();
-            if (ec.getPetConfig().get(path + ".mount.type") != null) {
-                PetType mountPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".mount.type"));
-                String mountName = ec.getPetConfig().getString(path + ".mount.name");
-                if (mountName.equalsIgnoreCase("") || mountName == null) {
-                    mountName = mountPetType.getDefaultName(pet.getNameOfOwner());
+            if (ec.getPetConfig().get(path + ".rider.type") != null) {
+                PetType riderPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".rider.type"));
+                String riderName = ec.getPetConfig().getString(path + ".rider.name");
+                if (riderName.equalsIgnoreCase("") || riderName == null) {
+                    riderName = riderPetType.getDefaultName(pet.getNameOfOwner());
                 }
-                if (mountPetType == null) return;
-                if (ec.options.allowMounts(pet.getPetType())) {
-                    Pet mount = pet.createMount(mountPetType, true);
-                    if (mount != null) {
-                        mount.setPetName(mountName);
-                        ArrayList<PetData> mountData = new ArrayList<PetData>();
-                        ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".mount.data");
+                if (riderPetType == null) return;
+                if (ec.options.allowRidersFor(pet.getPetType())) {
+                    Pet rider = pet.createRider(riderPetType, true);
+                    if (rider != null && rider.getEntityPet() != null) {
+                        rider.setPetName(riderName);
+                        ArrayList<PetData> riderData = new ArrayList<PetData>();
+                        ConfigurationSection mcs = ec.getPetConfig().getConfigurationSection(path + ".rider.data");
                         if (mcs != null) {
                             for (String key : mcs.getKeys(false)) {
                                 if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
                                     PetData pd = PetData.valueOf(key.toUpperCase());
-                                    mountData.add(pd);
+                                    riderData.add(pd);
                                 } else {
-                                    Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Mount Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
+                                    Logger.log(Logger.LogLevel.WARNING, "Error whilst loading data Pet Rider Save Data for " + pet.getNameOfOwner() + ". Unknown enum type: " + key + ".", true);
                                 }
                             }
                         }
-                        if (!mountData.isEmpty()) {
-                            setData(pet, mountData.toArray(new PetData[mountData.size()]), true);
+                        if (!riderData.isEmpty()) {
+                            setData(pet, riderData.toArray(new PetData[riderData.size()]), true);
                         }
                     }
                 }
@@ -346,13 +346,13 @@ public class PetHandler {
                 ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), true);
             }
 
-            if (pi.getMount() != null) {
-                PetType mountType = pi.getMount().getPetType();
+            if (pi.getRider() != null) {
+                PetType riderType = pi.getRider().getPetType();
 
-                ec.getPetConfig().set(path + ".mount.type", mountType.toString());
-                ec.getPetConfig().set(path + ".mount.name", pi.getMount().getPetNameWithoutColours());
-                for (PetData pd : pi.getMount().getPetData()) {
-                    ec.getPetConfig().set(path + ".mount.data." + pd.toString().toLowerCase(), true);
+                ec.getPetConfig().set(path + ".rider.type", riderType.toString());
+                ec.getPetConfig().set(path + ".rider.name", pi.getRider().getPetNameWithoutColours());
+                for (PetData pd : pi.getRider().getPetData()) {
+                    ec.getPetConfig().set(path + ".rider.data." + pd.toString().toLowerCase(), true);
                 }
             }
         } catch (Exception e) {
@@ -372,11 +372,11 @@ public class PetHandler {
         if (UPD.petName == null || UPD.petName.equalsIgnoreCase("")) {
             petName = pt.getDefaultName(name);
         }
-        PetType mountType = UMD.petType;
-        PetData[] mountData = UMD.petDataList.toArray(new PetData[UMD.petDataList.size()]);
-        String mountName = UMD.petName;
+        PetType riderType = UMD.petType;
+        PetData[] riderData = UMD.petDataList.toArray(new PetData[UMD.petDataList.size()]);
+        String riderName = UMD.petName;
         if (UMD.petName == null || UMD.petName.equalsIgnoreCase("")) {
-            mountName = pt.getDefaultName(name);
+            riderName = pt.getDefaultName(name);
         }
 
         String path = type + "." + name;
@@ -388,11 +388,11 @@ public class PetHandler {
                 ec.getPetConfig().set(path + ".pet.data." + pd.toString().toLowerCase(), true);
             }
 
-            if (mountData != null && mountType != null) {
-                ec.getPetConfig().set(path + ".mount.type", mountType.toString());
-                ec.getPetConfig().set(path + ".mount.name", mountName);
-                for (PetData pd : mountData) {
-                    ec.getPetConfig().set(path + ".mount.data." + pd.toString().toLowerCase(), true);
+            if (riderData != null && riderType != null) {
+                ec.getPetConfig().set(path + ".rider.type", riderType.toString());
+                ec.getPetConfig().set(path + ".rider.name", riderName);
+                for (PetData pd : riderData) {
+                    ec.getPetConfig().set(path + ".rider.data." + pd.toString().toLowerCase(), true);
                 }
 
             }
@@ -442,7 +442,7 @@ public class PetHandler {
         String path = type + "." + pName;
         ec.getPetConfig().set(path, null);
         /*if (ec.getPetConfig().get(path + ".pet.type") != null) {
-			for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
+            for (String key : ec.getPetConfig().getConfigurationSection(path).getKeys(false)) {
 				for (String key1 : ec.getPetConfig().getConfigurationSection(path + "." + key).getKeys(false)) {
 					if (ec.getPetConfig().get(path + "." + key + "." + key1) != null) {
 						ec.getPetConfig().set(path + "." + key + "." + key1, null);

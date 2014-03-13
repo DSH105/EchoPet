@@ -8,26 +8,47 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public enum SelectorItem {
 
-    SELECTOR(Material.BONE, 1, (short) 0, false, ChatColor.GREEN + "Pet Selector"),
-    TOGGLE(Material.BONE, 1, (short) 0, false, ChatColor.YELLOW + "Toggle Pet"),
-    CALL(Material.ENDER_PEARL, 1, (short) 0, false, ChatColor.YELLOW + "Call Pet"),
-    RIDE(Material.CARROT_STICK, 1, (short) 0, false, ChatColor.YELLOW + "Ride Pet"),
-    HAT(Material.IRON_HELMET, 1, (short) 0, false, ChatColor.YELLOW + "Hat Pet"),
-    MENU(Material.WORKBENCH, 1, (short) 0, false, ChatColor.YELLOW + "Open PetMenu"),
-    CLOSE(Material.BOOK, 1, (short) 0, false, ChatColor.YELLOW + "Close");
+    SELECTOR(Material.BONE, 1, (short) 0, ChatColor.GREEN + "Pets", ""),
+    TOGGLE(Material.BONE, 1, (short) 0, ChatColor.YELLOW + "Toggle Pet", "toggle"),
+    CALL(Material.ENDER_PEARL, 1, (short) 0, ChatColor.YELLOW + "Call Pet", "call"),
+    RIDE(Material.CARROT_STICK, 1, (short) 0, ChatColor.YELLOW + "Ride Pet", "ride"),
+    HAT(Material.IRON_HELMET, 1, (short) 0, ChatColor.YELLOW + "Hat Pet", "hat"),
+    NAME(Material.NAME_TAG, 1, (short) 0, ChatColor.YELLOW + "Name Your Pet", "name"),
+    MENU(Material.WORKBENCH, 1, (short) 0, ChatColor.YELLOW + "Open PetMenu", "menu"),
+    CLOSE(Material.BOOK, 1, (short) 0, ChatColor.YELLOW + "Close", "select");
 
+    private String command;
     private Material mat;
     private int amount;
     private short data;
-    private boolean glow;
     private String name;
 
-    SelectorItem(Material mat, int amount, short data, boolean glow, String name) {
+    SelectorItem(Material mat, int amount, short data, String name, String command) {
+        this.command = "pet " + command;
         this.mat = mat;
         this.amount = amount;
         this.data = data;
-        this.glow = glow;
         this.name = name;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public Material getMat() {
+        return mat;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public short getData() {
+        return data;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ItemStack getItem() {

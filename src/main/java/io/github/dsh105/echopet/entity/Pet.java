@@ -7,6 +7,8 @@ import io.github.dsh105.echopet.api.event.PetPreSpawnEvent;
 import io.github.dsh105.echopet.api.event.PetTeleportEvent;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.PetNames;
+import io.github.dsh105.echopet.util.StringSimplifier;
 import net.minecraft.server.v1_7_R1.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,11 +29,11 @@ public abstract class Pet {
     private PetType petType;
 
     private String owner;
-    private Pet mount;
+    private Pet rider;
     private String name;
     private ArrayList<PetData> petData = new ArrayList<PetData>();
 
-    private boolean isMount = false;
+    private boolean isRider = false;
 
     public boolean ownerIsMounting = false;
     private boolean ownerRiding = false;
@@ -42,43 +44,52 @@ public abstract class Pet {
         this.setPetType();
         this.entityPet = entityPet;
         this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-        this.teleportToOwner();
+        //this.teleportToOwner();
     }
 
-    public Pet(String owner) {
-        this.owner = owner;
-        this.setPetType();
-        this.entityPet = this.initiatePet();
-        this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-        this.teleportToOwner();
-    }
-
-    protected EntityPet initiatePet() {
-        Location l = this.getOwner().getLocation();
-        PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(this, l);
-        EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
-        if (spawnEvent.isCancelled()) {
-            return null;
-        }
-        l = spawnEvent.getSpawnLocation();
-        net.minecraft.server.v1_7_R1.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
-        EntityPet entityPet = this.getPetType().getNewEntityPetInstance(mcWorld, this);
-
-        entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), this.getOwner().getLocation().getYaw(), this.getOwner().getLocation().getPitch());
-        if (!l.getChunk().isLoaded()) {
-            l.getChunk().load();
-        }
-        if (!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
-            this.getOwner().sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
-            EchoPetPlugin.getInstance().PH.removePet(this, true);
-        } else {
-            try {
-                Particle.MAGIC_RUNES.sendTo(l);
-            } catch (Exception ex) {
-                Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
+    public Pet(Player owner) {
+        if (owner != null) {
+            this.owner = owner.getName();
+            this.setPetType();
+            this.entityPet = this.initiateEntityPet(owner);
+            if (this.entityPet != null) {
+                this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
+                this.teleportToOwner();
             }
         }
-        return entityPet;
+    }
+
+    protected EntityPet initiateEntityPet() {
+        return this.initiateEntityPet(this.getOwner());
+    }
+
+    protected EntityPet initiateEntityPet(Player owner) {
+        if (owner != null) {
+            Location l = owner.getLocation();
+            PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(this, l);
+            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(spawnEvent);
+            if (spawnEvent.isCancelled()) {
+                owner.sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Pet spawn was cancelled externally.");
+                EchoPetPlugin.getInstance().PH.removePet(this, true);
+                return null;
+            }
+            l = spawnEvent.getSpawnLocation();
+            net.minecraft.server.v1_7_R1.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
+            EntityPet entityPet = this.getPetType().getNewEntityPetInstance(mcWorld, this);
+
+            entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
+            if (!l.getChunk().isLoaded()) {
+                l.getChunk().load();
+            }
+            if (!mcWorld.addEntity(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
+                owner.sendMessage(EchoPetPlugin.getInstance().prefix + ChatColor.YELLOW + "Failed to spawn pet entity.");
+                EchoPetPlugin.getInstance().PH.removePet(this, true);
+            } else {
+                Particle.MAGIC_RUNES.sendTo(l);
+            }
+            return entityPet;
+        }
+        return null;
     }
 
     protected void setPetType() {
@@ -103,7 +114,7 @@ public abstract class Pet {
      * @return a {@link CraftPet} object for this {@link Pet}
      */
     public CraftPet getCraftPet() {
-        return this.getEntityPet().getBukkitEntity();
+        return this.getEntityPet() == null ? null : this.getEntityPet().getBukkitEntity();
     }
 
     public Location getLocation() {
@@ -116,6 +127,9 @@ public abstract class Pet {
      * @return {@link org.bukkit.entity.Player} that owns this {@link io.github.dsh105.echopet.entity.Pet}
      */
     public Player getOwner() {
+        if (this.owner == null) {
+            return null;
+        }
         return Bukkit.getPlayerExact(owner);
     }
 
@@ -138,21 +152,21 @@ public abstract class Pet {
     }
 
     /**
-     * Gets whether this {@link io.github.dsh105.echopet.entity.Pet} is a mount on another {@link io.github.dsh105.echopet.entity.Pet}
+     * Gets whether this {@link io.github.dsh105.echopet.entity.Pet} is a rider on another {@link io.github.dsh105.echopet.entity.Pet}
      *
-     * @return true if this {@link io.github.dsh105.echopet.entity.Pet} is mounted
+     * @return true if this {@link io.github.dsh105.echopet.entity.Pet} is a rider
      */
-    public boolean isMount() {
-        return isMount;
+    public boolean isRider() {
+        return this.isRider;
     }
 
     /**
-     * Get this {@link io.github.dsh105.echopet.entity.Pet}'s mount
+     * Get this {@link io.github.dsh105.echopet.entity.Pet}'s rider
      *
-     * @return {@link io.github.dsh105.echopet.entity.Pet} object mounted on this {@link io.github.dsh105.echopet.entity.Pet}
+     * @return {@link io.github.dsh105.echopet.entity.Pet} riding this {@link io.github.dsh105.echopet.entity.Pet}
      */
-    public Pet getMount() {
-        return this.mount;
+    public Pet getRider() {
+        return this.rider;
     }
 
     /**
@@ -178,10 +192,38 @@ public abstract class Pet {
      *
      * @param name new name of this {@link io.github.dsh105.echopet.entity.Pet}
      */
-    public void setPetName(String name) {
-        this.name = StringUtil.replaceStringWithColours(name);
-        this.getCraftPet().setCustomName(this.name);
-        this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+    public boolean setPetName(String name) {
+        return this.setPetName(name, true);
+    }
+
+    /**
+     * Set the name tag of this {@link io.github.dsh105.echopet.entity.Pet}
+     *
+     * @param name            new name of this {@link io.github.dsh105.echopet.entity.Pet}
+     * @param sendFailMessage if true, sends a message to the owner on fail
+     */
+    public boolean setPetName(String name, boolean sendFailMessage) {
+        if (PetNames.allow(name, this)) {
+            this.name = ChatColor.translateAlternateColorCodes('&', name);
+            if (EchoPetPlugin.getInstance().getMainConfig().getBoolean("stripDiacriticsFromNames", true)) {
+                this.name = StringSimplifier.stripDiacritics(this.name);
+            }
+            if (this.name == null || this.name.equalsIgnoreCase("")) {
+                this.name = this.petType.getDefaultName(this.owner);
+            }
+            if (this.getCraftPet() != null) {
+                this.getCraftPet().setCustomName(this.name);
+                this.getCraftPet().setCustomNameVisible(EchoPetPlugin.getInstance().options.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
+            }
+            return true;
+        } else {
+            if (sendFailMessage) {
+                if (this.getOwner() != null) {
+                    Lang.sendTo(this.getOwner(), Lang.NAME_NOT_ALLOWED.toString().replace("%name%", name));
+                }
+            }
+            return false;
+        }
     }
 
     /**
@@ -194,34 +236,40 @@ public abstract class Pet {
     }
 
     /**
-     * Remove this Pet's mount
+     * Remove this Pet's rider
      */
-    public void removeMount() {
-        if (mount != null) {
-            mount.removePet(true);
-            this.mount = null;
+    public void removeRider() {
+        if (rider != null) {
+            rider.removePet(true);
+            this.rider = null;
         }
     }
 
     /**
      * Remove this {@link io.github.dsh105.echopet.entity.Pet}
      * <p/>
-     * Kills this {@link io.github.dsh105.echopet.entity.Pet} and removes any mounts
+     * Kills this {@link io.github.dsh105.echopet.entity.Pet} and removes any riders
      */
     public void removePet(boolean makeSound) {
-        Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
-        Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
-        removeMount();
-        this.getEntityPet().remove(makeSound);
+        if (this.getCraftPet() != null) {
+            Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
+            Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
+        }
+        removeRider();
+        if (this.getEntityPet() != null) {
+            this.getEntityPet().remove(makeSound);
+        }
     }
 
     /**
      * Teleports this {@link io.github.dsh105.echopet.entity.Pet} to its owner
      */
     public void teleportToOwner() {
-        if (this.getOwner() != null && this.getOwner().getLocation() != null) {
-            this.teleport(this.getOwner().getLocation());
+        if (this.getOwner() == null || this.getOwner().getLocation() == null) {
+            this.removePet(false);
+            return;
         }
+        this.teleport(this.getOwner().getLocation());
     }
 
     /**
@@ -244,13 +292,13 @@ public abstract class Pet {
         }
         Location l = teleportEvent.getTo();
         if (l.getWorld() == this.getLocation().getWorld()) {
-            if (this.getMount() != null) {
-                this.getMount().getCraftPet().eject();
-                this.getMount().getCraftPet().teleport(l);
+            if (this.getRider() != null) {
+                this.getRider().getCraftPet().eject();
+                this.getRider().getCraftPet().teleport(l);
             }
             this.getCraftPet().teleport(l);
-            if (this.getMount() != null) {
-                this.getCraftPet().setPassenger(this.getMount().getCraftPet());
+            if (this.getRider() != null) {
+                this.getCraftPet().setPassenger(this.getRider().getCraftPet());
             }
         }
     }
@@ -293,8 +341,8 @@ public abstract class Pet {
             }
             ownerIsMounting = false;
         } else {
-            if (this.getMount() != null) {
-                this.getMount().removePet(false);
+            if (this.getRider() != null) {
+                this.getRider().removePet(false);
             }
             new BukkitRunnable() {
                 @Override
@@ -308,6 +356,7 @@ public abstract class Pet {
             }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
         }
         this.teleportToOwner();
+        this.getEntityPet().resize(flag);
         this.ownerRiding = flag;
         try {
             Particle.PORTAL.sendTo(this.getLocation());
@@ -339,24 +388,25 @@ public abstract class Pet {
         this.teleportToOwner();
         Entity craftPet = ((Entity) this.getCraftPet().getHandle());
         if (!flag) {
-            if (this.getMount() != null) {
-                Entity mount = ((Entity) this.getMount().getCraftPet().getHandle());
-                mount.mount(null);
+            if (this.getRider() != null) {
+                Entity rider = ((Entity) this.getRider().getCraftPet().getHandle());
+                rider.mount(null);
                 craftPet.mount(null);
-                mount.mount(craftPet);
+                rider.mount(craftPet);
             } else {
                 craftPet.mount(null);
             }
         } else {
-            if (this.getMount() != null) {
-                Entity mount = ((Entity) this.getMount().getCraftPet().getHandle());
-                mount.mount(null);
+            if (this.getRider() != null) {
+                Entity rider = ((Entity) this.getRider().getCraftPet().getHandle());
+                rider.mount(null);
                 craftPet.mount(((CraftPlayer) this.getOwner()).getHandle());
-                this.getCraftPet().setPassenger(this.getMount().getCraftPet());
+                this.getCraftPet().setPassenger(this.getRider().getCraftPet());
             } else {
                 craftPet.mount(((CraftPlayer) this.getOwner()).getHandle());
             }
         }
+        this.getEntityPet().resize(flag);
         this.isHat = flag;
         try {
             Particle.PORTAL.sendTo(this.getLocation());
@@ -373,36 +423,44 @@ public abstract class Pet {
     }
 
     /**
-     * Creates a Mount for this {@link io.github.dsh105.echopet.entity.Pet}
+     * Creates a Rider for this {@link io.github.dsh105.echopet.entity.Pet}
      *
-     * @param pt              the {@link PetType} used to create a mount
-     * @param sendFailMessage whether to send a message to the owner if mounts are disabled
-     * @return a new Pet object that is mounting this {@link io.github.dsh105.echopet.entity.Pet}
+     * @param pt              the {@link PetType} used to create a rider for
+     * @param sendFailMessage whether to send a message to the owner if riders are disabled
+     * @return a new Pet object that is riding this {@link io.github.dsh105.echopet.entity.Pet}
      */
-    public Pet createMount(final PetType pt, boolean sendFailMessage) {
-        if (!EchoPetPlugin.getInstance().options.allowMounts(this.getPetType())) {
+    public Pet createRider(final PetType pt, boolean sendFailMessage) {
+        if (pt == PetType.HUMAN) {
             if (sendFailMessage) {
-                Lang.sendTo(this.getOwner(), Lang.MOUNTS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+                Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
+            }
+            return null;
+        }
+        if (!EchoPetPlugin.getInstance().options.allowRidersFor(this.getPetType())) {
+            if (sendFailMessage) {
+                Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", StringUtil.capitalise(this.getPetType().toString())));
             }
             return null;
         }
         if (this.isOwnerRiding()) {
             this.ownerRidePet(false);
         }
-        if (this.mount != null) {
-            this.removeMount();
+        if (this.rider != null) {
+            this.removeRider();
         }
-        Pet p = pt.getNewPetInstance(this.getNameOfOwner());
-        this.mount = p;
-        p.isMount = true;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                getCraftPet().setPassenger(mount.getCraftPet());
-                EchoPetPlugin.getInstance().SPH.saveToDatabase(mount, true);
-            }
-        }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
+        Pet newRider = pt.getNewPetInstance(this.getOwner());
+        if (newRider != null) {
+            this.rider = newRider;
+            newRider.isRider = true;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    getCraftPet().setPassenger(Pet.this.rider.getCraftPet());
+                    EchoPetPlugin.getInstance().SPH.saveToDatabase(Pet.this.rider, true);
+                }
+            }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
+        }
 
-        return this.mount;
+        return this.rider;
     }
 }

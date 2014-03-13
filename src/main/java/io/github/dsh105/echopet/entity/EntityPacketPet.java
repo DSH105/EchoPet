@@ -6,7 +6,6 @@ import net.minecraft.server.v1_7_R1.*;
 import org.bukkit.Location;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class EntityPacketPet extends EntityPet {
 
@@ -74,21 +73,7 @@ public abstract class EntityPacketPet extends EntityPet {
     public abstract Packet createPacket();
 
     public void updatePacket() {
-        try {
-            ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.createPacket());
-        } catch (SecurityException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
-        } catch (NoSuchMethodException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
-        } catch (IllegalArgumentException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
-        } catch (IllegalAccessException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
-        } catch (InvocationTargetException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
-        } catch (NoSuchFieldException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to upadte Packet for InanimatePet.", e, true);
-        }
+        ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.createPacket());
     }
 
     private void updateDatawatcher() {
@@ -96,22 +81,8 @@ public abstract class EntityPacketPet extends EntityPet {
         this.dw.watch(1, (Object) (short) 0);
         this.dw.watch(8, (Object) (byte) 0);
         this.dw.watch(10, (Object) (String) this.pet.getPetName());
-        try {
-            this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
-            ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.metaPacket);
-        } catch (SecurityException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        } catch (NoSuchMethodException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        } catch (IllegalArgumentException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        } catch (IllegalAccessException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        } catch (InvocationTargetException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        } catch (NoSuchFieldException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        }
+        this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
+        ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.metaPacket);
     }
 
     public boolean hasInititiated() {

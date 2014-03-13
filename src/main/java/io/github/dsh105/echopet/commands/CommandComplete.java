@@ -40,7 +40,7 @@ public class CommandComplete implements TabCompleter {
                 return new String[]{"bat", "blaze", "cavespider", "chicken", "cow", "creeper", "enderdragon",
                         "enderman", "ghast", "horse", "human", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig",
                         "pigzombie", "sheep", "silverfish", "skeleton", "slime", "snowman", "spider", "squid",
-                        "villager", "witch", "wither", "wolf", "zombie", "name", "mount", "list", "info", "default",
+                        "villager", "witch", "wither", "wolf", "zombie", "name", "rider", "list", "info", "default",
                         "ride", "hat", "call", "show", "hide", "menu", "select", "remove"};
         }
         return new String[0];
@@ -61,8 +61,8 @@ public class CommandComplete implements TabCompleter {
                 }
                 if (argBefore.equalsIgnoreCase("name")) {
                     list.add("Pet");
-                    list.add("mount");
-                } else if (argBefore.equalsIgnoreCase("mount")) {
+                    list.add("rider");
+                } else if (argBefore.equalsIgnoreCase("rider")) {
                     list.add("remove");
                     for (PetType pt : PetType.values()) {
                         list.add(pt.toString().toLowerCase());

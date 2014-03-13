@@ -1,10 +1,8 @@
 package io.github.dsh105.echopet.entity.type.sheep;
 
-import io.github.dsh105.echopet.entity.EntityPetType;
-import io.github.dsh105.echopet.entity.IAgeablePet;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.*;
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SHEEP)
 public class SheepPet extends Pet implements IAgeablePet {
@@ -13,8 +11,12 @@ public class SheepPet extends Pet implements IAgeablePet {
     boolean sheared;
     byte color;
 
-    public SheepPet(String owner) {
+    public SheepPet(Player owner) {
         super(owner);
+    }
+
+    public SheepPet(String owner, EntityPet entityPet) {
+        super(owner, entityPet);
     }
 
     @Override

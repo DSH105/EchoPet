@@ -14,11 +14,11 @@ public enum AdminHelpPage {
             ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type>",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " <player> <type>:[data],[data];[name] <mount>:[data],[data];[name]",
-            ChatColor.YELLOW + "    - Gives a Pet to a Player with the specified mount.",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " <player> <type>:[data],[data];[name] <rider>:[data],[data];[name]",
+            ChatColor.YELLOW + "    - Gives a Pet to a Player with the specified rider.",
             ChatColor.YELLOW + "    - Each data value is separated by a comma.",
             ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type> and echopet.petadmin.type.<mount>",
+            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type> and echopet.petadmin.type.<rider>",
 
             ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " name <player> <name>",
             ChatColor.YELLOW + "    - Set the name tag of a Player's pet.",
@@ -29,19 +29,19 @@ public enum AdminHelpPage {
             ChatColor.YELLOW + "    - Remove a Player's current pet.",
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
 
-    MOUNT(2, ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " mount <player> <type>:[data],[data];[name]",
-            ChatColor.YELLOW + "    - Changes the mount type of a Player's current pet.",
+    RIDER(2, ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " rider <player> <type>:[data],[data];[name]",
+            ChatColor.YELLOW + "    - Changes the rider type of a Player's current pet.",
             ChatColor.YELLOW + "    - Each data value is separated by a comma.",
             ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type>",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " name <player> mount <name>",
-            ChatColor.YELLOW + "    - Set the name tag of a Player's pet's mount.",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " name <player> rider <name>",
+            ChatColor.YELLOW + "    - Set the name tag of a Player's pet's rider.",
             ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.name",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " mount <player> remove",
-            ChatColor.YELLOW + "    - Remove a Player's pet's current mount.",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " rider <player> remove",
+            ChatColor.YELLOW + "    - Remove a Player's pet's current rider.",
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
 
     DEFAULT(3, ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " list",
@@ -52,9 +52,9 @@ public enum AdminHelpPage {
             ChatColor.YELLOW + "    - Provides info on a Player's current pet.",
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.info",
 
-            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " default <player> set <type>:[data],[data] [mount]:[data],[data]",
+            ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " default <player> set <type>:[data],[data] [rider]:[data],[data]",
             ChatColor.YELLOW + "    - Set the default pet for when a Player logs in.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.default.set.type.<type> and echopet.petadmin.default.set.type.<mount>",
+            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.default.set.type.<type> and echopet.petadmin.default.set.type.<rider>",
 
             ChatColor.GOLD + "/" + EchoPetPlugin.getInstance().adminCmdString + " default <player> set current",
             ChatColor.YELLOW + "    - Set the default pet of a Player to their current pet.",
@@ -135,9 +135,9 @@ public enum AdminHelpPage {
                 sender.sendMessage(s);
             }
             return true;
-        } else if (args[0].equalsIgnoreCase("mount")) {
+        } else if (args[0].equalsIgnoreCase("rider")) {
             sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help ------------");
-            for (String s : AdminHelpPage.MOUNT.getLines()) {
+            for (String s : AdminHelpPage.RIDER.getLines()) {
                 sender.sendMessage(s);
             }
             return true;

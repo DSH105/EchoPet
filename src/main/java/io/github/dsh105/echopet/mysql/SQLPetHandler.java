@@ -19,14 +19,14 @@ public class SQLPetHandler {
         return EchoPetPlugin.getInstance().SPH;
     }
 
-    public void updateDatabase(String player, List<PetData> list, Boolean result, boolean isMount) {
+    public void updateDatabase(String player, List<PetData> list, Boolean result, boolean isRider) {
         if (EchoPetPlugin.getInstance().options.useSql()) {
             Connection con = null;
             Statement statement = null;
 
             if (EchoPetPlugin.getInstance().dbPool != null) {
                 try {
-                    Map<String, String> updates = SQLUtil.constructUpdateMap(list, result, isMount);
+                    Map<String, String> updates = SQLUtil.constructUpdateMap(list, result, isRider);
                     if (!updates.isEmpty()) {
                         con = EchoPetPlugin.getInstance().dbPool.getConnection();
                         statement = con.createStatement();
@@ -56,7 +56,7 @@ public class SQLPetHandler {
         }
     }
 
-    public void saveToDatabase(Pet p, boolean isMount) {
+    public void saveToDatabase(Pet p, boolean isRider) {
         if (EchoPetPlugin.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -65,14 +65,14 @@ public class SQLPetHandler {
                 try {
                     con = EchoPetPlugin.getInstance().dbPool.getConnection();
                     // Delete any existing info
-                    if (!isMount) {
+                    if (!isRider) {
                         this.clearFromDatabase(p.getNameOfOwner());
                     }
 
                     // Deal with the pet metadata first
                     // This tends to be more problematic, so by shoving it out of the way, we can get the pet data saved.
-                    if (isMount)
-                        ps = con.prepareStatement("INSERT INTO Pets (OwnerName, MountPetType, MountPetName) VALUES (?, ?, ?)");
+                    if (isRider)
+                        ps = con.prepareStatement("INSERT INTO Pets (OwnerName, RiderPetType, RiderPetName) VALUES (?, ?, ?)");
                     else
                         ps = con.prepareStatement("INSERT INTO Pets (OwnerName, PetType, PetName) VALUES (?, ?, ?)");
 
@@ -81,9 +81,9 @@ public class SQLPetHandler {
                     ps.setString(3, p.getPetName());
                     ps.executeUpdate();
 
-                    this.updateDatabase(p.getNameOfOwner(), p.getPetData(), true, isMount);
+                    this.updateDatabase(p.getNameOfOwner(), p.getPetData(), true, isRider);
 
-                    this.saveToDatabase(p.getMount(), true);
+                    this.saveToDatabase(p.getRider(), true);
 
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getNameOfOwner() + " to MySQL Database", e, true);
@@ -141,38 +141,26 @@ public class SQLPetHandler {
                             return null;
                         }
                         pet.setPetName(name);
-                        PetData[] PDT = createArray(map, true);
-                        PetData[] PDF = createArray(map, false);
-                        if (PDT != null) {
-                            PetHandler.getInstance().setData(pet, PDT, true);
+                        for (Map.Entry<PetData, Boolean> entry : map.entrySet()) {
+                            PetHandler.getInstance().setData(pet, entry.getKey(), entry.getValue());
                         }
-                        if (PDF != null) {
-                            PetHandler.getInstance().setData(pet, PDF, false);
-                        }
-
-                        if (rs.getString("MountPetType") != null) {
-                            PetType mt = findPetType(rs.getString("MountPetType"));
+                        if (rs.getString("RiderPetType") != null) {
+                            PetType mt = findPetType(rs.getString("RiderPetType"));
                             if (mt == null) {
                                 return null;
                             }
-                            String mName = rs.getString("MountPetName").replace("\'", "'");
+                            String mName = rs.getString("RiderPetName").replace("\'", "'");
                             for (PetData pd : PetData.values()) {
-                                if (rs.getString("Mount" + pd.toString()) != null) {
-                                    map.put(pd, Boolean.valueOf(rs.getString("Mount" + pd.toString())));
+                                if (rs.getString("Rider" + pd.toString()) != null) {
+                                    map.put(pd, Boolean.valueOf(rs.getString("Rider" + pd.toString())));
                                 }
                             }
 
-                            Pet mount = pet.createMount(mt, false);
-                            if (mount != null) {
-                                mount.setPetName(mName);
-                                PetData[] MDT = createArray(map, true);
-                                PetData[] MDF = createArray(map, false);
-
-                                if (MDT != null) {
-                                    ph.setData(mount, MDT, true);
-                                }
-                                if (MDF != null) {
-                                    ph.setData(mount, MDF, false);
+                            Pet rider = pet.createRider(mt, false);
+                            if (rider != null) {
+                                rider.setPetName(mName);
+                                for (Map.Entry<PetData, Boolean> entry : map.entrySet()) {
+                                    PetHandler.getInstance().setData(rider, entry.getKey(), entry.getValue());
                                 }
                             }
                         }
@@ -194,16 +182,6 @@ public class SQLPetHandler {
             return pet;
         }
         return null;
-    }
-
-    private PetData[] createArray(Map<PetData, Boolean> map, boolean b) {
-        List<PetData> list = new ArrayList<PetData>();
-        for (PetData pd : map.keySet()) {
-            if (map.get(pd) == b) {
-                list.add(pd);
-            }
-        }
-        return list.isEmpty() ? null : list.toArray(new PetData[list.size()]);
     }
 
     private PetType findPetType(String s) {
@@ -240,7 +218,7 @@ public class SQLPetHandler {
         }
     }
 
-    public void clearMountFromDatabase(String name) {
+    public void clearRiderFromDatabase(String name) {
         if (EchoPetPlugin.getInstance().options.useSql()) {
             Connection con = null;
             PreparedStatement ps = null;

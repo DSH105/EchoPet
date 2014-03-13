@@ -3,14 +3,15 @@ package io.github.dsh105.echopet.listeners;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.Hook;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.CraftPet;
 import io.github.dsh105.echopet.entity.EntityPacketPet;
 import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.menu.selector.PetSelector;
-import io.github.dsh105.echopet.menu.selector.SelectorItem;
+import io.github.dsh105.echopet.menu.selector.SelectorLayout;
+import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.WorldUtil;
@@ -35,9 +36,8 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         ItemStack itemStack = event.getItem();
-        if (itemStack != null && itemStack.isSimilar(SelectorItem.SELECTOR.getItem())) {
-            PetSelector petSelector = new PetSelector(45, p);
-            petSelector.open(false);
+        if (itemStack != null && itemStack.isSimilar(SelectorLayout.getSelectorItem())) {
+            new SelectorMenu().showTo(p);
             event.setCancelled(true);
         }
     }
@@ -143,8 +143,7 @@ public class PetOwnerListener implements Listener {
 
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
-        Player p = event.getPlayer();
-        if (event.getItemDrop().getItemStack().isSimilar(SelectorItem.SELECTOR.getItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))) {
+        if (event.getItemDrop().getItemStack().isSimilar(SelectorLayout.getSelectorItem()) && !(ConfigOptions.instance.getConfig().getBoolean("petSelector.allowDrop", true))) {
             event.setCancelled(true);
         }
     }
@@ -160,7 +159,7 @@ public class PetOwnerListener implements Listener {
         }
 
         for (ItemStack item : inv.getContents()) {
-            if (item != null && item.isSimilar(SelectorItem.SELECTOR.getItem())) {
+            if (item != null && item.isSimilar(SelectorLayout.getSelectorItem())) {
                 inv.remove(item);
             }
         }
@@ -173,7 +172,7 @@ public class PetOwnerListener implements Listener {
                 || !(ec.options.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false)))) {
             int slot = (ec.options.getConfig().getInt("petSelector.giveOnJoin.slot", 9)) - 1;
             ItemStack i = inv.getItem(slot);
-            ItemStack selector = SelectorItem.SELECTOR.getItem();
+            ItemStack selector = SelectorLayout.getSelectorItem();
             if (i != null) {
                 inv.clear(slot);
                 inv.setItem(slot, selector);
@@ -190,7 +189,17 @@ public class PetOwnerListener implements Listener {
 
             @Override
             public void run() {
-                PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                if (p != null && p.isOnline()) {
+                    Pet pet = PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                    if (pet != null) {
+                        if (Hook.getVNP() != null) {
+                            if (Hook.getVNP().getManager().isVanished(p)) {
+                                pet.getEntityPet().vnp = true;
+                                pet.getEntityPet().setInvisible(true);
+                            }
+                        }
+                    }
+                }
             }
 
         }.runTaskLater(ec, 20);

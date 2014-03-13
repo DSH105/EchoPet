@@ -1,6 +1,5 @@
 package io.github.dsh105.echopet.entity;
 
-import com.dsh105.dshutils.Particle;
 import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
@@ -78,11 +77,22 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         return null;
     }
 
-    public void setSize() {
+    protected void resize(boolean flag) {
         EntitySize es = this.getClass().getAnnotation(EntitySize.class);
         if (es != null) {
-            this.a(es.width(), es.height());
+            this.setSize(flag ? (es.width() / 2) : es.width(), flag ? (es.height() / 2) : es.height());
         }
+    }
+
+    protected void setSize() {
+        EntitySize es = this.getClass().getAnnotation(EntitySize.class);
+        if (es != null) {
+            this.setSize(es.width(), es.height());
+        }
+    }
+
+    protected void setSize(float width, float height) {
+        this.a(width, height);
     }
 
     @Override
@@ -168,7 +178,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     @Override
     public CraftPet getBukkitEntity() {
         if (this.bukkitEntity == null) {
-            this.bukkitEntity = this.getPet().getPetType().getNewCraftInstance(this);
+            this.bukkitEntity = this.getEntityPetType().getNewCraftInstance(this);
         }
         return (CraftPet) this.bukkitEntity;
     }
@@ -244,8 +254,8 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         }
 
         if (this.isInvisible()) {
-            Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getPlayerOwner());
-            Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getPlayerOwner());
+            //Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getPlayerOwner());
+            //Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getPlayerOwner());
         }
 
         if (((CraftPlayer) this.getPlayerOwner()).getHandle().isSneaking() != this.isSneaking()) {
@@ -449,7 +459,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         if (pt != null) {
             this.pet = pt.getNewPetInstance(owner, this);
             if (this.pet != null) {
-                PetHandler.getInstance().loadMountFromFile(this.getPet());
+                PetHandler.getInstance().loadRiderFromFile(this.getPet());
                 this.initiateEntityPet();
             }
         }
