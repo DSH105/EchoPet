@@ -35,7 +35,7 @@ public class MenuListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (player.getOpenInventory().getTitle().equals("Pet Selector") || player.getOpenInventory().getTitle().contains("EchoPet DataMenu")) {
+        if (event.getView().getTitle().equals("Pet Selector") || event.getView().getTitle().contains("EchoPet DataMenu")) {
             event.setCancelled(true);
         }
 

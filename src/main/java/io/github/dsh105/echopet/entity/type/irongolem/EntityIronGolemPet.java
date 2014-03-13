@@ -5,6 +5,7 @@ import net.minecraft.server.v1_7_R1.Entity;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 1.4F, height = 1.9F)
+@EntityPetType(petType = PetType.IRONGOLEM)
 public class EntityIronGolemPet extends EntityPet {
 
     public EntityIronGolemPet(World world) {
@@ -13,11 +14,6 @@ public class EntityIronGolemPet extends EntityPet {
 
     public EntityIronGolemPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.IRONGOLEM;
     }
 
     @Override

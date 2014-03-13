@@ -8,6 +8,7 @@ import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 @EntitySize(width = 0.6F, height = 0.6F)
+@EntityPetType(petType = PetType.SKELETON)
 public class EntitySkeletonPet extends EntityPet {
 
     public EntitySkeletonPet(World world) {
@@ -27,11 +28,6 @@ public class EntitySkeletonPet extends EntityPet {
                 }
             }
         }.runTaskLater(EchoPetPlugin.getInstance(), 5L);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.SKELETON;
     }
 
     public void setWither(boolean flag) {

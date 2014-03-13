@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.9F, height = 4.0F)
+@EntityPetType(petType = PetType.WITHER)
 public class EntityWitherPet extends EntityPet {
 
     public EntityWitherPet(World world) {
@@ -15,11 +16,6 @@ public class EntityWitherPet extends EntityPet {
 
     public EntityWitherPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.WITHER;
     }
 
     @Override

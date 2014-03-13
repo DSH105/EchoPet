@@ -209,15 +209,10 @@ public abstract class Pet {
      * Kills this {@link io.github.dsh105.echopet.entity.Pet} and removes any mounts
      */
     public void removePet(boolean makeSound) {
-        try {
-            Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
-            Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
-            removeMount();
-            this.getEntityPet().remove(makeSound);
-            this.getCraftPet().remove();
-        } catch (Exception ex) {
-            Logger.getLogger(Pet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
+        Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
+        removeMount();
+        this.getEntityPet().remove(makeSound);
     }
 
     /**

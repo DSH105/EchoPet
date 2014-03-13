@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.7F, height = 0.5F)
+@EntityPetType(petType = PetType.CAVESPIDER)
 public class EntityCaveSpiderPet extends EntityPet {
 
     EntityCaveSpiderPet(World world) {
@@ -15,11 +16,6 @@ public class EntityCaveSpiderPet extends EntityPet {
 
     public EntityCaveSpiderPet(World world, Pet pet) {
         super(world, pet);
-    }
-
-    @Override
-    public PetType getEntityPetType() {
-        return PetType.CAVESPIDER;
     }
 
     @Override

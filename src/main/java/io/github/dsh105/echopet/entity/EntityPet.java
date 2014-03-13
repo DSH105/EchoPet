@@ -70,7 +70,13 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         this.setPathfinding();
     }
 
-    public abstract PetType getEntityPetType();
+    public PetType getEntityPetType() {
+        EntityPetType entityPetType = this.getClass().getAnnotation(EntityPetType.class);
+        if (entityPetType != null) {
+            return entityPetType.petType();
+        }
+        return null;
+    }
 
     public void setSize() {
         EntitySize es = this.getClass().getAnnotation(EntitySize.class);
@@ -213,7 +219,9 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     }
 
     public void remove(boolean makeSound) {
-        bukkitEntity.remove();
+        if (this.bukkitEntity != null) {
+            bukkitEntity.remove();
+        }
         if (makeSound) {
             String sound = this.getDeathSound();
             if (sound != null) {
@@ -223,6 +231,10 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     }
 
     public void onLive() {
+        if (this.pet == null) {
+            this.remove(false);
+        }
+
         if (this.getPlayerOwner() == null || !this.getPlayerOwner().isOnline() || Bukkit.getPlayerExact(this.getPlayerOwner().getName()) == null) {
             PetHandler.getInstance().removePet(this.getPet(), true);
         }
@@ -433,9 +445,14 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
         String owner = nbttagcompound.getString("EchoPet_OwnerName");
-        this.pet = this.getPet().getPetType().getNewPetInstance(owner, this);
-        PetHandler.getInstance().loadMountFromFile(this.getPet());
-        this.initiateEntityPet();
+        PetType pt = this.getEntityPetType();
+        if (pt != null) {
+            this.pet = pt.getNewPetInstance(owner, this);
+            if (this.pet != null) {
+                PetHandler.getInstance().loadMountFromFile(this.getPet());
+                this.initiateEntityPet();
+            }
+        }
     }
 
     // Whether to set entity position after loading custom NBT data
