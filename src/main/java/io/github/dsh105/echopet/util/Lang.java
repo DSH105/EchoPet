@@ -19,6 +19,8 @@ public enum Lang {
     COMMAND_ERROR("cmd_error", "&eError for input string: &6%cmd%&e. Use /" + EchoPetPlugin.getInstance().cmdString + " for help."),
     IN_GAME_ONLY("in_game_only", "&6%cmd% &ecan only be used in-game."),
     STRING_ERROR("string_error", "&eError parsing String: [&6%string%&e]. Please revise command arguments."),
+    HELP_INDEX_TOO_BIG("help_index_too_big", "&3Page &b%index% &3does not exist."),
+    TIP_HOVER_PREVIEW("hover_tip", "&e&oHover over to see more information about this command. Click to insert it into the chat window."),
 
     DIMENSION_CHANGE("dimension_change", "&eDimension change initiated. Warping space and time to retrieve your Pet..."),
     AUTOSAVE_PET_LOAD("autosave_pet_load", "&eYour last active pet (&6%petname%&e) now follows close behind you."),

@@ -13,6 +13,8 @@ import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.util.*;
+import io.github.dsh105.echopet.util.pagination.FancyPaginator;
+import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,6 +31,14 @@ public class PetCommand implements CommandExecutor {
     public PetCommand(String commandLabel) {
         this.ec = EchoPetPlugin.getInstance();
         this.cmdLabel = commandLabel;
+    }
+
+    private FancyPaginator getHelp(CommandSender sender) {
+        ArrayList<FancyMessage> helpMessages = new ArrayList<FancyMessage>();
+        for (HelpEntry he : HelpEntry.values()) {
+            helpMessages.add(he.getFancyMessage(sender));
+        }
+        return new FancyPaginator(helpMessages, 5);
     }
 
     @Override
@@ -240,10 +250,20 @@ public class PetCommand implements CommandExecutor {
             // Help page 1
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
-                    sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                    for (String s : HelpPage.getHelpPage(1)) {
-                        sender.sendMessage(s);
+                    if (sender instanceof Player) {
+                        FancyPaginator paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (FancyMessage fancy : paginator.getPage(1)) {
+                            fancy.send((Player) sender);
+                        }
+                        sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (String s : HelpPage.getHelpPage(1)) {
+                            sender.sendMessage(s);
+                        }
                     }
                     return true;
                 } else return true;
@@ -410,17 +430,41 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
                     if (StringUtil.isInt(args[1])) {
-                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
-                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                        for (String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))) {
-                            sender.sendMessage(s);
+                        if (sender instanceof Player) {
+                            FancyPaginator paginator = this.getHelp(sender);
+                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getIndex() + " ------------");
+                            sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                            if (Integer.parseInt(args[1]) > paginator.getIndex()) {
+                                Lang.sendTo(sender, Lang.HELP_INDEX_TOO_BIG.toString().replace("%index%", args[1]));
+                                return true;
+                            }
+                            for (FancyMessage fancy : paginator.getPage(Integer.parseInt(args[1]))) {
+                                fancy.send((Player) sender);
+                            }
+                            sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                        } else {
+                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
+                            sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                            for (String s : HelpPage.getHelpPage(Integer.parseInt(args[1]))) {
+                                sender.sendMessage(s);
+                            }
                         }
                         return true;
                     }
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
-                    sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                    for (String s : HelpPage.getHelpPage(1)) {
-                        sender.sendMessage(s);
+                    if (sender instanceof Player) {
+                        FancyPaginator paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (FancyMessage fancy : paginator.getPage(1)) {
+                            fancy.send((Player) sender);
+                        }
+                        sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
+                        sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
+                        for (String s : HelpPage.getHelpPage(1)) {
+                            sender.sendMessage(s);
+                        }
                     }
                     return true;
                 } else return true;
