@@ -2,19 +2,19 @@ package io.github.dsh105.echopet.entity.pathfinder;
 
 public class PetGoalSelectorItem {
 
-    public PetGoal petGoal;
-    public int priority;
-    final PetGoalSelector goalSelector;
+    private PetGoal petGoal;
+    private int priority;
 
-    public PetGoalSelectorItem(PetGoalSelector goalSelector, int priority, PetGoal goal) {
+    public PetGoalSelectorItem(int priority, PetGoal goal) {
         this.petGoal = goal;
         this.priority = priority;
-        this.goalSelector = goalSelector;
     }
 
-    public PetGoalSelectorItem(PetGoalSelector goalSelector, PetGoal goal) {
-        this.petGoal = goal;
-        this.goalSelector = goalSelector;
+    public PetGoal getPetGoal() {
+        return petGoal;
     }
 
+    public int getPriority() {
+        return priority;
+    }
 }

@@ -1,120 +1,170 @@
 package io.github.dsh105.echopet.entity.pathfinder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ListIterator;
-import java.util.Map;
+import io.github.dsh105.echopet.entity.Pet;
+
+import java.util.*;
+
+/*
+ * From EntityAPI :)
+ * Also means I coded it <3
+ */
 
 public class PetGoalSelector {
 
     private Map<String, PetGoalSelectorItem> goalMap = new HashMap<String, PetGoalSelectorItem>();
-    private ArrayList<PetGoalSelectorItem> goalList = new ArrayList<PetGoalSelectorItem>();
-    private ArrayList<PetGoalSelectorItem> activeGoalList = new ArrayList<PetGoalSelectorItem>();
+    private ArrayList<PetGoalSelectorItem> goals = new ArrayList<PetGoalSelectorItem>();
+    private ArrayList<PetGoalSelectorItem> activeGoals = new ArrayList<PetGoalSelectorItem>();
+    private Pet pet;
+    private int delay = 0;
 
-    public void addGoal(int i, String s, PetGoal goal) {
-        PetGoalSelectorItem goalItem = new PetGoalSelectorItem(this, i, goal);
-        if (this.goalMap.containsKey(s)) {
-            return;
-        }
-        this.goalMap.put(s, goalItem);
-        this.goalList.add(i, goalItem);
+    public PetGoalSelector(Pet pet) {
+        this.pet = pet;
     }
 
-    public void addGoal(String s, PetGoal goal) {
-        PetGoalSelectorItem goalItem = new PetGoalSelectorItem(this, goal);
-        if (this.goalMap.containsKey(goalItem)) {
-            return;
-        }
-        this.goalMap.put(s, goalItem);
-        this.goalList.add(goalItem);
+    public void addGoal(PetGoal petGoal, int priority) {
+        this.addGoal(petGoal.getDefaultKey(), petGoal, priority);
     }
 
-    public void removeGoal(String s) {
-        if (this.goalMap.containsKey(s)) {
-            PetGoalSelectorItem goalItem = this.goalMap.get(s);
-            PetGoal goal = goalItem.petGoal;
-            this.goalList.remove(goalItem);
-            this.goalMap.remove(goalItem);
-            if (this.activeGoalList.contains(goalItem)) {
-                goal.finish();
-            }
-            this.activeGoalList.remove(goalItem);
+    public void addGoal(String key, PetGoal petGoal, int priority) {
+        PetGoalSelectorItem goalItem = new PetGoalSelectorItem(priority, petGoal);
+        if (this.goalMap.containsKey(key)) {
+            return;
         }
+        this.goalMap.put(key, goalItem);
+        this.goals.add(goalItem);
+    }
+
+    public void addAndReplaceGoal(String key, PetGoal petGoal, int priority) {
+        if (this.goalMap.containsKey(key)) {
+            this.removeGoal(key);
+        }
+        this.addGoal(key, petGoal, priority);
     }
 
     public void removeGoal(PetGoal petGoal) {
-        if (goalList.isEmpty()) {
-            return;
-        }
-        ListIterator<PetGoalSelectorItem> i = goalList.listIterator();
-        while (i.hasNext()) {
-            PetGoalSelectorItem goalItem = i.next();
-            if (goalItem.petGoal == petGoal) {
-                i.remove();
-                this.goalMap.remove(goalItem);
-                if (this.activeGoalList.contains(goalItem)) {
-                    petGoal.finish();
+        Iterator<PetGoalSelectorItem> iterator = this.goals.iterator();
+
+        while (iterator.hasNext()) {
+            PetGoalSelectorItem goalItem = iterator.next();
+            PetGoal petGoal1 = goalItem.getPetGoal();
+
+            if (petGoal1 == petGoal) {
+                if (this.activeGoals.contains(goalItem)) {
+                    petGoal1.finish();
+                    this.activeGoals.remove(goalItem);
                 }
-                this.activeGoalList.remove(goalItem);
+
+                iterator.remove();
             }
         }
     }
 
-    public PetGoal getGoal(String s) {
-        PetGoalSelectorItem goalItem = this.goalMap.get(s);
-        if (goalItem != null) {
-            return goalItem.petGoal;
-        }
-        return null;
-    }
+    public void removeGoal(String key) {
+        Iterator<Map.Entry<String, PetGoalSelectorItem>> iterator = this.goalMap.entrySet().iterator();
 
-    public PetGoal getGoal(Class<? extends PetGoal> goalClass) {
-        for (PetGoalSelectorItem goalItem : this.goalList) {
-            PetGoal goal = goalItem.petGoal;
-            if (goalClass.isInstance(goal)) {
-                return goal;
+        while (iterator.hasNext()) {
+            Map.Entry<String, PetGoalSelectorItem> entry = iterator.next();
+            PetGoalSelectorItem goalItem = entry.getValue();
+            PetGoal petGoal1 = goalItem.getPetGoal();
+
+            if (key.equals(entry.getKey())) {
+                if (this.activeGoals.contains(goalItem)) {
+                    petGoal1.finish();
+                    this.activeGoals.remove(goalItem);
+                }
+                if (this.goals.contains(goalItem)) {
+                    this.goals.remove(goalItem);
+                }
+
+                iterator.remove();
             }
         }
-        return null;
     }
 
-    public void removeGoals() {
+    public void clearGoals(String key) {
         this.goalMap.clear();
-        this.goalList.clear();
-        for (PetGoalSelectorItem goalItem : this.activeGoalList) {
-            PetGoal goal = goalItem.petGoal;
-            goal.finish();
+        this.goals.clear();
+
+        Iterator<PetGoalSelectorItem> iterator = this.activeGoals.iterator();
+
+        while (iterator.hasNext()) {
+            iterator.next().getPetGoal().finish();
         }
-        this.activeGoalList.clear();
+        this.activeGoals.clear();
     }
 
-    public void run() {
-        ListIterator<PetGoalSelectorItem> i = this.goalList.listIterator();
-        while (i.hasNext()) {
-            PetGoalSelectorItem goalItem = i.next();
-            PetGoal goal = goalItem.petGoal;
-            if (!this.activeGoalList.contains(goalItem)) {
-                if (goal.shouldStart()) {
-                    this.activeGoalList.add(goalItem);
+    public PetGoal getGoal(String key) {
+        Iterator<Map.Entry<String, PetGoalSelectorItem>> iterator = this.goalMap.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry<String, PetGoalSelectorItem> entry = iterator.next();
+            PetGoalSelectorItem goalItem = entry.getValue();
+            PetGoal petGoal = goalItem.getPetGoal();
+
+            if (key.equals(entry.getKey())) {
+                return petGoal;
+            }
+        }
+        return null;
+    }
+
+    public void updateGoals() {
+        if (this.delay++ % 3 == 0) {
+            Iterator<PetGoalSelectorItem> iterator = this.goals.iterator();
+
+            while (iterator.hasNext()) {
+                PetGoalSelectorItem goalItem = iterator.next();
+                if (this.activeGoals.contains(goalItem)) {
+                    if (this.canUse(goalItem) && goalItem.getPetGoal().shouldContinue()) {
+                        continue;
+                    }
+                    goalItem.getPetGoal().finish();
+                    this.activeGoals.remove(goalItem);
+                }
+
+            }
+
+            this.delay = 0;
+        } else {
+            Iterator<PetGoalSelectorItem> iterator = this.activeGoals.iterator();
+
+            while (iterator.hasNext()) {
+                PetGoalSelectorItem goalItem = iterator.next();
+                if (!goalItem.getPetGoal().shouldContinue()) {
+                    goalItem.getPetGoal().finish();
+                    iterator.remove();
                 }
             }
         }
 
-        ListIterator<PetGoalSelectorItem> i2 = this.activeGoalList.listIterator();
-        while (i2.hasNext()) {
-            PetGoalSelectorItem goalItem = i2.next();
-            PetGoal goal = goalItem.petGoal;
-            if (goal.shouldFinish()) {
-                goal.finish();
-                i2.remove();
+        Iterator<PetGoalSelectorItem> iterator = this.activeGoals.iterator();
+
+        while (iterator.hasNext()) {
+            PetGoalSelectorItem goalItem = iterator.next();
+            goalItem.getPetGoal().tick();
+        }
+    }
+
+    private boolean canUse(PetGoalSelectorItem goalItem) {
+        Iterator<PetGoalSelectorItem> iterator = this.goals.iterator();
+
+        while (iterator.hasNext()) {
+            PetGoalSelectorItem goalItem1 = iterator.next();
+            if (goalItem1 != goalItem) {
+                if (goalItem.getPriority() > goalItem1.getPriority()) {
+                    if (!this.areCompatible(goalItem, goalItem1) && this.activeGoals.contains(goalItem1)) {
+                        return false;
+                    }
+                    //goal.i() -> isContinuous
+                } else if (!goalItem1.getPetGoal().isContinuous() && this.activeGoals.contains(goalItem1)) {
+                    return false;
+                }
             }
         }
+        return true;
+    }
 
-        ListIterator<PetGoalSelectorItem> i3 = this.activeGoalList.listIterator();
-        while (i3.hasNext()) {
-            PetGoalSelectorItem goalItem = i3.next();
-            PetGoal goal = goalItem.petGoal;
-            goal.tick();
-        }
+    protected boolean areCompatible(PetGoalSelectorItem goalItem, PetGoalSelectorItem goalItem1) {
+        return goalItem.getPetGoal().getType().isCompatibleWith(goalItem1.getPetGoal().getType());
     }
 }

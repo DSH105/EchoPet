@@ -2,6 +2,7 @@ package io.github.dsh105.echopet.entity.pathfinder.goals;
 
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
+import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 import net.minecraft.server.v1_7_R1.EntityLiving;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 
@@ -23,6 +24,16 @@ public class PetGoalAttack extends PetGoal {
     }
 
     @Override
+    public PetGoalType getType() {
+        return PetGoalType.THREE;
+    }
+
+    @Override
+    public String getDefaultKey() {
+        return "Attack";
+    }
+
+    @Override
     public boolean shouldStart() {
         EntityLiving entityLiving = this.pet.getGoalTarget();
         if (entityLiving == null) {
@@ -38,17 +49,17 @@ public class PetGoalAttack extends PetGoal {
     }
 
     @Override
-    public boolean shouldFinish() {
+    public boolean shouldContinue() {
         EntityLiving entityliving = this.pet.getGoalTarget();
 
         if (entityliving == null) {
-            return true;
+            return false;
         } else if (!entityliving.isAlive()) {
-            return true;
+            return false;
         } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport(this.pet.getPet().getPetType())) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override
