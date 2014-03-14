@@ -109,8 +109,10 @@ public class PetGoalSelector {
     }
 
     public void updateGoals() {
+        Iterator<PetGoalSelectorItem> iterator;
         if (this.delay++ % 3 == 0) {
-            Iterator<PetGoalSelectorItem> iterator = this.goals.iterator();
+
+            iterator = this.goals.iterator();
 
             while (iterator.hasNext()) {
                 PetGoalSelectorItem goalItem = iterator.next();
@@ -120,13 +122,18 @@ public class PetGoalSelector {
                     }
                     goalItem.getPetGoal().finish();
                     this.activeGoals.remove(goalItem);
+                } else {
+                    if (this.canUse(goalItem) && goalItem.getPetGoal().shouldStart()) {
+                        goalItem.getPetGoal().start();
+                        this.activeGoals.add(goalItem);
+                    }
                 }
 
             }
 
             this.delay = 0;
         } else {
-            Iterator<PetGoalSelectorItem> iterator = this.activeGoals.iterator();
+            iterator = this.activeGoals.iterator();
 
             while (iterator.hasNext()) {
                 PetGoalSelectorItem goalItem = iterator.next();
@@ -137,7 +144,7 @@ public class PetGoalSelector {
             }
         }
 
-        Iterator<PetGoalSelectorItem> iterator = this.activeGoals.iterator();
+        iterator = this.activeGoals.iterator();
 
         while (iterator.hasNext()) {
             PetGoalSelectorItem goalItem = iterator.next();
