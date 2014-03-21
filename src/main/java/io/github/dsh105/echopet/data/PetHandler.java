@@ -283,7 +283,7 @@ public class PetHandler {
     }
 
     public void loadRiderFromFile(String type, Pet pet) {
-        if (pet.getNameOfOwner() != null) {
+        if (pet.getNameOfOwner() != null && pet.getOwner() != null) {
             String path = type + "." + pet.getNameOfOwner();
             if (ec.getPetConfig().get(path + ".rider.type") != null) {
                 PetType riderPetType = PetType.valueOf(ec.getPetConfig().getString(path + ".rider.type"));
