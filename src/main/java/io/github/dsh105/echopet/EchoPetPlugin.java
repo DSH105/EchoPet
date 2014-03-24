@@ -267,6 +267,9 @@ public class EchoPetPlugin extends DSHPlugin {
             dbPool.shutdown();
         }
 
+        // Unregister the commands
+        this.COMMAND_MANAGER.unregister();
+
         // Don't nullify instance until after we're done
         super.onDisable();
     }

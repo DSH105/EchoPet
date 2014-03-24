@@ -238,13 +238,15 @@ public enum PetType {
 
     public Pet getNewPetInstance(Player owner) {
         Pet p = null;
-        try {
-            Object o = petClass.getConstructor(Player.class).newInstance(owner);
-            if (o instanceof Pet) {
-                p = (Pet) o;
+        if (owner != null) {
+            try {
+                Object o = petClass.getConstructor(Player.class).newInstance(owner);
+                if (o instanceof Pet) {
+                    p = (Pet) o;
+                }
+            } catch (Exception e) {
+                Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner.getName() + ".", e, true);
             }
-        } catch (Exception e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create new Pet instance for " + owner.getName() + ".", e, true);
         }
         return p;
     }
