@@ -9,12 +9,12 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.PetNames;
 import io.github.dsh105.echopet.util.StringSimplifier;
-import net.minecraft.server.v1_7_R1.Entity;
+import net.minecraft.server.v1_7_R2.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -72,7 +72,7 @@ public abstract class Pet {
                 return null;
             }
             l = spawnEvent.getSpawnLocation();
-            net.minecraft.server.v1_7_R1.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
+            net.minecraft.server.v1_7_R2.World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
             EntityPet entityPet = this.getPetType().getNewEntityPetInstance(mcWorld, this);
 
             entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());

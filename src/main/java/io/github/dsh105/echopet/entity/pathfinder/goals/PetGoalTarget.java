@@ -4,11 +4,13 @@ import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 import io.github.dsh105.echopet.util.NMSEntityUtil;
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R2.*;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 
 /**
  * Base target PetGoal
+ *
+ * TODO: finish this
  */
 
 public abstract class PetGoalTarget extends PetGoal {
@@ -129,7 +131,7 @@ public abstract class PetGoalTarget extends PetGoal {
     }
 
     private boolean attack(EntityLiving entityliving) {
-        this.ticksAfterLastAttack = 10 + this.handle.aI().nextInt(5);
+        this.ticksAfterLastAttack = 10 + this.handle.aH().nextInt(5);
         PathEntity pathentity = NMSEntityUtil.getNavigation(this.handle).a(entityliving);
 
         if (pathentity == null) {

@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity.type.slime;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.SLIME)
@@ -55,7 +55,7 @@ public class EntitySlimePet extends EntityPet {
 
         if (this.onGround && this.jumpDelay-- <= 0) {
             this.jumpDelay = this.random.nextInt(15) + 10;
-            this.makeSound(this.getDeathSound(), this.bf(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+            this.makeSound(this.getDeathSound(), this.be(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             getControllerJump().a();
         }
 

@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.type.giant;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 5.5F, height = 5.5F)
 @EntityPetType(petType = PetType.GIANT)

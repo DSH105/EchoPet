@@ -2,8 +2,8 @@ package io.github.dsh105.echopet.entity.type.enderman;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.Block;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.Block;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 0.6F, height = 2.9F)
 @EntityPetType(petType = PetType.ENDERMAN)

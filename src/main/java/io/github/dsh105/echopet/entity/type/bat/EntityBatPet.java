@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.entity.type.bat;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.MathHelper;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.MathHelper;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 0.5F, height = 0.9F)
 @EntityPetType(petType = PetType.BAT)
@@ -33,13 +33,13 @@ public class EntityBatPet extends EntityPet {
 
     @Override
     protected String getIdleSound() {
-        return this.bN() && this.random.nextInt(4) != 0 ? null : "mob.bat.idle";
+        return this.isStartled() && this.random.nextInt(4) != 0 ? null : "mob.bat.idle";
     }
 
     @Override
     public void onLive() {
         super.onLive();
-        if (this.bN()) {
+        if (this.isStartled()) {
             this.motX = this.motY = this.motZ = 0.0D;
             this.locY = (double) MathHelper.floor(this.locY) + 1.0D - (double) this.length;
         } else {
@@ -47,8 +47,7 @@ public class EntityBatPet extends EntityPet {
         }
     }
 
-    @Override
-    public boolean bN() {
+    public boolean isStartled() {
         return (this.datawatcher.getByte(16) & 1) != 0;
     }
 

@@ -1,9 +1,9 @@
 package io.github.dsh105.echopet.entity.type.wolf;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.BlockCloth;
-import net.minecraft.server.v1_7_R1.MathHelper;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.BlockCloth;
+import net.minecraft.server.v1_7_R2.MathHelper;
+import net.minecraft.server.v1_7_R2.World;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.8F)
@@ -77,7 +77,7 @@ public class EntityWolfPet extends EntityAgeablePet {
     @Override
     public void onLive() {
         super.onLive();
-        if (this.L()) {
+        if (this.K()) {
             this.wet = true;
             this.shaking = false;
             this.shakeCount = 0.0F;

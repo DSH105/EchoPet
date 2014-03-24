@@ -13,11 +13,11 @@ import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.util.MenuUtil;
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -56,7 +56,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         this.fireProof = true;
         if (this.FIELD_JUMP == null) {
             try {
-                this.FIELD_JUMP = EntityLiving.class.getDeclaredField("bd");
+                this.FIELD_JUMP = EntityLiving.class.getDeclaredField("bc");
                 this.FIELD_JUMP.setAccessible(true);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
@@ -137,11 +137,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         return this.attack(entity, (float) this.getPet().getPetType().getAttackDamage());
     }
 
-    public boolean attack(Entity entity, float f) {
+    public boolean attack(Entity entity, float damage) {
         return this.attack(entity, DamageSource.mobAttack(this), f);
     }
 
-    public boolean attack(Entity entity, DamageSource damageSource, float f) {
+    public boolean attack(Entity entity, DamageSource damageSource, float damage) {
         PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), damageSource, f);
         EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
@@ -171,7 +171,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     // EntityInsentient
     @Override
-    public boolean bk() {
+    public boolean bj() {
         return true;
     }
 
@@ -185,9 +185,9 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
     @Override
-    protected void bn() {
-        super.bn();
-        ++this.aV;
+    protected void bm() {
+        super.bm();
+        ++this.aU;
 
         this.w();
 
@@ -197,7 +197,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
         this.getNavigation().f();
 
-        this.bp();
+        this.bo();
 
         this.getControllerMove().c();
         this.getControllerLook().a();
@@ -309,25 +309,25 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
             super.e(sideMot, forwMot);
             // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityHorse.java#L914
-            this.X = 0.5F;
+            this.W = 0.5F;
             return;
         }
         EntityHuman human = (EntityHuman) this.passenger;
         if (human.getBukkitEntity() != this.getPlayerOwner().getPlayer()) {
             super.e(sideMot, forwMot);
-            this.X = 0.5F;
+            this.W = 0.5F;
             return;
         }
 
-        this.X = 1.0F;
+        this.W = 1.0F;
 
         this.lastYaw = this.yaw = this.passenger.yaw;
         this.pitch = this.passenger.pitch * 0.5F;
         this.b(this.yaw, this.pitch);
-        this.aP = this.aN = this.yaw;
+        this.aO = this.aM = this.yaw;
 
-        sideMot = ((EntityLiving) this.passenger).be * 0.5F;
-        forwMot = ((EntityLiving) this.passenger).bf;
+        sideMot = ((EntityLiving) this.passenger).bd * 0.5F;
+        forwMot = ((EntityLiving) this.passenger).be;
 
         if (forwMot <= 0.0F) {
             forwMot *= 0.25F;
@@ -392,7 +392,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     // EntityInsentient
     @Override
-    protected String aU() {
+    protected String aT() {
         return this.getDeathSound();
     }
 
@@ -467,7 +467,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     // Whether to set entity position after loading custom NBT data
     @Override
-    protected boolean V() {
+    protected boolean U() {
         return false;
     }
 }

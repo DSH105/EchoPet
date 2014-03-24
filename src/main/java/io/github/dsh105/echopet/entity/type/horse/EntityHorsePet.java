@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.type.horse;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R2.*;
 
 @EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.HORSE)
