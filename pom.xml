@@ -18,7 +18,7 @@
         <craftbukkit.version>R0.1</craftbukkit.version>
         <cb_package>v1_7_R2</cb_package>
         <slf4j.version>1.7.5</slf4j.version>
-        <bonecp.version>0.8.0-rc3</bonecp.version>
+        <bonecp.version>0.8.0.RELEASE</bonecp.version>
         <main.class>io.github.dsh105.echopet.EchoPetPlugin</main.class>
     </properties>
     <distributionManagement>

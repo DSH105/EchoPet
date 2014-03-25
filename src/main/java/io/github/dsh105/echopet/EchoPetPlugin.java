@@ -21,17 +21,15 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
-import io.github.dsh105.echopet.listeners.*;
+import io.github.dsh105.echopet.listeners.ChunkListener;
+import io.github.dsh105.echopet.listeners.MenuListener;
+import io.github.dsh105.echopet.listeners.PetEntityListener;
+import io.github.dsh105.echopet.listeners.PetOwnerListener;
+import io.github.dsh105.echopet.listeners.RegionListener;
+import io.github.dsh105.echopet.listeners.VanishListener;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.SQLUtil;
-import net.minecraft.server.v1_7_R2.EntityTypes;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -40,6 +38,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
+import net.minecraft.server.v1_7_R2.EntityTypes;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 
 public class EchoPetPlugin extends DSHPlugin {
 

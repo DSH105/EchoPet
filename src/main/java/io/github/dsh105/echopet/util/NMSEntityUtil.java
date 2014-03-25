@@ -1,6 +1,16 @@
 package io.github.dsh105.echopet.util;
 
-import net.minecraft.server.v1_7_R2.*;
+import net.minecraft.server.v1_7_R2.ChunkCoordinates;
+import net.minecraft.server.v1_7_R2.ControllerJump;
+import net.minecraft.server.v1_7_R2.ControllerLook;
+import net.minecraft.server.v1_7_R2.ControllerMove;
+import net.minecraft.server.v1_7_R2.EntityCreature;
+import net.minecraft.server.v1_7_R2.EntityInsentient;
+import net.minecraft.server.v1_7_R2.EntityLiving;
+import net.minecraft.server.v1_7_R2.EntityPlayer;
+import net.minecraft.server.v1_7_R2.EntitySenses;
+import net.minecraft.server.v1_7_R2.MathHelper;
+import net.minecraft.server.v1_7_R2.Navigation;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 

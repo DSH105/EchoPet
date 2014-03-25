@@ -2,7 +2,12 @@ package io.github.dsh105.echopet.entity.type.human;
 
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.ReflectionUtil;
-import io.github.dsh105.echopet.entity.*;
+import io.github.dsh105.echopet.entity.EntityPacketPet;
+import io.github.dsh105.echopet.entity.EntityPetType;
+import io.github.dsh105.echopet.entity.EntitySize;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R2.Packet;
 import net.minecraft.server.v1_7_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_7_R2.World;

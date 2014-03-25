@@ -4,13 +4,12 @@ import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.entity.PetType;
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SelectorLayout {
 

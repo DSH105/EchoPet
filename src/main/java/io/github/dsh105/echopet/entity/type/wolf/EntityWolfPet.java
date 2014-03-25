@@ -1,6 +1,11 @@
 package io.github.dsh105.echopet.entity.type.wolf;
 
-import io.github.dsh105.echopet.entity.*;
+import io.github.dsh105.echopet.entity.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.EntityPetType;
+import io.github.dsh105.echopet.entity.EntitySize;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetData;
+import io.github.dsh105.echopet.entity.PetType;
 import net.minecraft.server.v1_7_R2.BlockCloth;
 import net.minecraft.server.v1_7_R2.MathHelper;
 import net.minecraft.server.v1_7_R2.World;

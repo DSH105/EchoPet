@@ -4,7 +4,18 @@ import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 import io.github.dsh105.echopet.util.NMSEntityUtil;
-import net.minecraft.server.v1_7_R2.*;
+import net.minecraft.server.v1_7_R2.AttributeInstance;
+import net.minecraft.server.v1_7_R2.EntityCreeper;
+import net.minecraft.server.v1_7_R2.EntityGhast;
+import net.minecraft.server.v1_7_R2.EntityHuman;
+import net.minecraft.server.v1_7_R2.EntityInsentient;
+import net.minecraft.server.v1_7_R2.EntityLiving;
+import net.minecraft.server.v1_7_R2.EntityOwnable;
+import net.minecraft.server.v1_7_R2.EntityPlayer;
+import net.minecraft.server.v1_7_R2.GenericAttributes;
+import net.minecraft.server.v1_7_R2.MathHelper;
+import net.minecraft.server.v1_7_R2.PathEntity;
+import net.minecraft.server.v1_7_R2.PathPoint;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 
 /**

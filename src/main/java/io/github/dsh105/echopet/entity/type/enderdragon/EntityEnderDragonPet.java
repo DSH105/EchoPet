@@ -3,14 +3,28 @@ package io.github.dsh105.echopet.entity.type.enderdragon;
 import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
-import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R2.*;
+import io.github.dsh105.echopet.entity.EntityNoClipPet;
+import io.github.dsh105.echopet.entity.EntityPetType;
+import io.github.dsh105.echopet.entity.EntitySize;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.SizeCategory;
+import java.util.Iterator;
+import java.util.List;
+import net.minecraft.server.v1_7_R2.DamageSource;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.EntityComplexPart;
+import net.minecraft.server.v1_7_R2.EntityHuman;
+import net.minecraft.server.v1_7_R2.EntityLiving;
+import net.minecraft.server.v1_7_R2.EntityPlayer;
+import net.minecraft.server.v1_7_R2.IComplex;
+import net.minecraft.server.v1_7_R2.IMonster;
+import net.minecraft.server.v1_7_R2.MathHelper;
+import net.minecraft.server.v1_7_R2.Vec3D;
+import net.minecraft.server.v1_7_R2.World;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.util.Vector;
-
-import java.util.Iterator;
-import java.util.List;
 
 @EntitySize(width = 16.0F, height = 8.0F)
 @EntityPetType(petType = PetType.ENDERDRAGON)

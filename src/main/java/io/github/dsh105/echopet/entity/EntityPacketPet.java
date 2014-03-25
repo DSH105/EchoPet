@@ -2,10 +2,13 @@ package io.github.dsh105.echopet.entity;
 
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.ReflectionUtil;
-import net.minecraft.server.v1_7_R2.*;
-import org.bukkit.Location;
-
 import java.lang.reflect.Field;
+import net.minecraft.server.v1_7_R2.DataWatcher;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.Packet;
+import net.minecraft.server.v1_7_R2.PacketPlayOutEntityMetadata;
+import net.minecraft.server.v1_7_R2.World;
+import org.bukkit.Location;
 
 public abstract class EntityPacketPet extends EntityPet {
 

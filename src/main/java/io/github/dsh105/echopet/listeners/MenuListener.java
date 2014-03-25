@@ -17,6 +17,7 @@ import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.Perm;
+import java.util.logging.Level;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -159,10 +160,18 @@ public class MenuListener implements Listener {
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd)) {
                                         if (pet.getPetData().contains(pd)) {
                                             PetHandler.getInstance().setData(pet, pd, false);
-                                            Particle.RED_SMOKE.sendTo(pet.getLocation());
+                                            try {
+                                                Particle.RED_SMOKE.sendTo(pet.getLocation());
+                                            } catch (Exception ex) {
+                                                java.util.logging.Logger.getLogger(MenuListener.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
                                         } else {
                                             PetHandler.getInstance().setData(pet, pd, true);
-                                            Particle.SPARKLE.sendTo(pet.getLocation());
+                                            try {
+                                                Particle.SPARKLE.sendTo(pet.getLocation());
+                                            } catch (Exception ex) {
+                                                java.util.logging.Logger.getLogger(MenuListener.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
                                         }
                                     }
                                 } else {

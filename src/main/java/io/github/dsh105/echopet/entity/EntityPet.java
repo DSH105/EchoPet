@@ -13,17 +13,26 @@ import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.util.MenuUtil;
-import net.minecraft.server.v1_7_R2.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Random;
+import net.minecraft.server.v1_7_R2.Block;
+import net.minecraft.server.v1_7_R2.DamageSource;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.EntityCreature;
+import net.minecraft.server.v1_7_R2.EntityHuman;
+import net.minecraft.server.v1_7_R2.EntityLiving;
+import net.minecraft.server.v1_7_R2.EntityOwnable;
+import net.minecraft.server.v1_7_R2.EntityPlayer;
+import net.minecraft.server.v1_7_R2.IAnimal;
+import net.minecraft.server.v1_7_R2.NBTTagCompound;
+import net.minecraft.server.v1_7_R2.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class EntityPet extends EntityCreature implements EntityOwnable, IAnimal {
 

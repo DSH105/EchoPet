@@ -12,16 +12,19 @@ import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
-import io.github.dsh105.echopet.util.*;
+import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.MenuUtil;
+import io.github.dsh105.echopet.util.Perm;
+import io.github.dsh105.echopet.util.PetUtil;
+import io.github.dsh105.echopet.util.WorldUtil;
 import io.github.dsh105.echopet.util.pagination.FancyPaginator;
+import java.util.ArrayList;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class PetCommand implements CommandExecutor {
 

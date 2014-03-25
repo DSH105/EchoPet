@@ -1,8 +1,7 @@
 package io.github.dsh105.echopet.util.pagination;
 
-import mkremins.fanciful.FancyMessage;
-
 import java.util.ArrayList;
+import mkremins.fanciful.FancyMessage;
 
 
 public class FancyPaginator {

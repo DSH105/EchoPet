@@ -1,8 +1,10 @@
 package io.github.dsh105.echopet.entity.pathfinder;
 
 import io.github.dsh105.echopet.entity.Pet;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /*
  * From EntityAPI :)

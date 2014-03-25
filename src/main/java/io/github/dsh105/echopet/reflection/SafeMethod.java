@@ -2,7 +2,6 @@ package io.github.dsh105.echopet.reflection;
 
 import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

@@ -1,11 +1,10 @@
 package io.github.dsh105.echopet.util;
 
+import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 
 public class FancyItemUtil {
 
