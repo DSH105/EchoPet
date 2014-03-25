@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.util;
 
-import net.minecraft.server.v1_7_R1.*;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
+import net.minecraft.server.v1_7_R2.*;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
 /*
@@ -82,7 +82,7 @@ public class NMSEntityUtil {
 
     public static boolean hasGuardedArea(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
-            return ((EntityCreature) entityLiving).bW();
+            return ((EntityCreature) entityLiving).bY();
         } else return false;
     }
 
@@ -100,13 +100,13 @@ public class NMSEntityUtil {
 
     public static float getRangeOfGuardedAreaFor(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
-            return ((EntityCreature) entityLiving).bU();
+            return ((EntityCreature) entityLiving).bW();
         } else return 1.0F;
     }
 
     public static ChunkCoordinates getChunkCoordinates(EntityLiving inEntity) {
         if (inEntity instanceof EntityCreature) {
-            return ((EntityCreature) inEntity).bT();
+            return ((EntityCreature) inEntity).bV();
         } else if (inEntity instanceof EntityPlayer) {
             return ((EntityPlayer) inEntity).getChunkCoordinates();
         } else {

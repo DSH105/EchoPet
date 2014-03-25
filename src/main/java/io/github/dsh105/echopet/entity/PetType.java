@@ -93,8 +93,8 @@ import io.github.dsh105.echopet.entity.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.type.zombie.CraftZombiePet;
 import io.github.dsh105.echopet.entity.type.zombie.EntityZombiePet;
 import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
-import net.minecraft.server.v1_7_R1.World;
-import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
+import net.minecraft.server.v1_7_R2.World;
+import org.bukkit.craftbukkit.v1_7_R2.CraftServer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 

@@ -2,7 +2,7 @@ package io.github.dsh105.echopet.entity;
 
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.ReflectionUtil;
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Location;
 
 import java.lang.reflect.Field;
@@ -11,8 +11,8 @@ public abstract class EntityPacketPet extends EntityPet {
 
     private PacketPlayOutEntityMetadata metaPacket;
     protected DataWatcher dw;
-    protected byte b0 = 0;
-    protected boolean init;
+    protected byte packetData = 0;
+    protected boolean initiated;
     protected int id;
 
     public EntityPacketPet(World world) {
@@ -21,7 +21,7 @@ public abstract class EntityPacketPet extends EntityPet {
 
     public EntityPacketPet(World world, Pet pet) {
         super(world, pet);
-        Field f = null;
+        Field f;
         try {
             f = Entity.class.getDeclaredField("id");
             f.setAccessible(true);
@@ -51,17 +51,17 @@ public abstract class EntityPacketPet extends EntityPet {
     public void onLive() {
         super.onLive();
         if (this.isInvisible()) {
-            this.b0 = 32;
+            this.packetData = 32;
         } else if (this.isSneaking()) {
-            this.b0 = 2;
+            this.packetData = 2;
         } else if (this.isSprinting()) {
-            this.b0 = 8;
+            this.packetData = 8;
         } else {
-            this.b0 = 0;
+            this.packetData = 0;
         }
-        if (!this.init) {
+        if (!this.initiated) {
             this.init();
-            this.init = true;
+            this.initiated = true;
         }
         this.updateDatawatcher();
     }
@@ -77,7 +77,7 @@ public abstract class EntityPacketPet extends EntityPet {
     }
 
     private void updateDatawatcher() {
-        this.dw.watch(0, (Object) (byte) this.b0/*(this.isInvisible() ? 32 : this.isSneaking() ? 2 : this.isSprinting() ? 8 : 0)*/);
+        this.dw.watch(0, (Object) (byte) this.packetData/*(this.isInvisible() ? 32 : this.isSneaking() ? 2 : this.isSprinting() ? 8 : 0)*/);
         this.dw.watch(1, (Object) (short) 0);
         this.dw.watch(8, (Object) (byte) 0);
         this.dw.watch(10, (Object) (String) this.pet.getPetName());
@@ -86,7 +86,7 @@ public abstract class EntityPacketPet extends EntityPet {
     }
 
     public boolean hasInititiated() {
-        return this.init;
+        return this.initiated;
     }
 
     private void init() {

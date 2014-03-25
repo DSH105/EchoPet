@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.type.chicken;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 0.3F, height = 0.7F)
 @EntityPetType(petType = PetType.CHICKEN)

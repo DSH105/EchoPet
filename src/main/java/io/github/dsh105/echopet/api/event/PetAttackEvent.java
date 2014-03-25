@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.api.event;
 
 import io.github.dsh105.echopet.entity.Pet;
-import net.minecraft.server.v1_7_R1.DamageSource;
+import net.minecraft.server.v1_7_R2.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

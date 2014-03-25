@@ -2,9 +2,7 @@ package io.github.dsh105.echopet.entity.type.spider;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.entity.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 1.4F, height = 0.9F)
 @EntityPetType(petType = PetType.SPIDER)

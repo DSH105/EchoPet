@@ -1,7 +1,7 @@
 package io.github.dsh105.echopet.entity.type.sheep;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 0.9F, height = 1.3F)
 @EntityPetType(petType = PetType.SHEEP)

@@ -12,11 +12,11 @@
         <vnp.version>3.18.4-SNAPSHOT</vnp.version>
         <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
         <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
-        <vault.version>1.2.27</vault.version>
+        <vault.version>1.2.31</vault.version>
         <fanciful.version>0.1.3-RC2</fanciful.version>
         <minecraft.version>1.7.5</minecraft.version>
         <craftbukkit.version>R0.1</craftbukkit.version>
-        <cb_package>v1_7_R1</cb_package>
+        <cb_package>v1_7_R2</cb_package>
         <slf4j.version>1.7.5</slf4j.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
         <main.class>io.github.dsh105.echopet.EchoPetPlugin</main.class>
@@ -128,7 +128,7 @@
         </repository>
         <repository>
             <id>vault-repo</id>
-            <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
+            <url>http://nexus.theyeticave.net/content/repositories/pub_releases/</url>
         </repository>
         <repository>
             <id>fanciful-repo</id>

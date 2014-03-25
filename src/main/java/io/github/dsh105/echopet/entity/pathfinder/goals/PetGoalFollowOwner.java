@@ -6,11 +6,11 @@ import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
 import io.github.dsh105.echopet.entity.type.ghast.EntityGhastPet;
-import net.minecraft.server.v1_7_R1.EntityPlayer;
-import net.minecraft.server.v1_7_R1.GenericAttributes;
-import net.minecraft.server.v1_7_R1.Navigation;
-import net.minecraft.server.v1_7_R1.PathEntity;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import net.minecraft.server.v1_7_R2.EntityPlayer;
+import net.minecraft.server.v1_7_R2.GenericAttributes;
+import net.minecraft.server.v1_7_R2.Navigation;
+import net.minecraft.server.v1_7_R2.PathEntity;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 
 
 public class PetGoalFollowOwner extends PetGoal {
@@ -67,7 +67,7 @@ public class PetGoalFollowOwner extends PetGoal {
         } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance) {
             return false;
         }
-        PetGoalAttack attackGoal = (PetGoalAttack) this.pet.petGoalSelector.getGoal("Attack");
+        PetGoalMeleeAttack attackGoal = (PetGoalMeleeAttack) this.pet.petGoalSelector.getGoal("Attack");
         if (attackGoal != null && attackGoal.isActive) {
             return false;
         }
@@ -91,7 +91,7 @@ public class PetGoalFollowOwner extends PetGoal {
     public void tick() {
         //https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/PathfinderGoalFollowOwner.java#L57
         EntityPlayer owner = ((CraftPlayer) this.pet.getPlayerOwner()).getHandle();
-        this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.x());
+        this.pet.getControllerLook().a(owner, 10.0F, (float) this.pet.bv());
         if (--this.timer <= 0) {
             this.timer = 10;
             if (this.pet.getPlayerOwner().isFlying()) {

@@ -25,12 +25,12 @@ public class PetGoalFloat extends PetGoal {
 
     @Override
     public boolean shouldStart() {
-        return this.pet.M() || this.pet.P();
+        return this.pet.L() || this.pet.O();
     }
 
     @Override
     public void tick() {
-        if (this.pet.aI().nextFloat() < 0.8F) {
+        if (this.pet.aH().nextFloat() < 0.8F) {
             this.pet.getControllerJump().a();
         }
     }

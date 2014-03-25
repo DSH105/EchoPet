@@ -1,8 +1,8 @@
 package io.github.dsh105.echopet.entity.type.irongolem;
 
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.Entity;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 1.4F, height = 2.9F)
 @EntityPetType(petType = PetType.IRONGOLEM)

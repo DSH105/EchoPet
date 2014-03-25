@@ -1,6 +1,6 @@
 package io.github.dsh105.echopet.entity;
 
-import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_7_R2.CraftServer;
 import org.bukkit.entity.Ageable;
 
 /**

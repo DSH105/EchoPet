@@ -9,7 +9,7 @@ import io.github.dsh105.echopet.entity.Pet;
 import io.github.dsh105.echopet.entity.PetData;
 import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
-import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalAttack;
+import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalMeleeAttack;
 import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFloat;
 import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalFollowOwner;
 import io.github.dsh105.echopet.entity.pathfinder.goals.PetGoalLookAtPlayer;
@@ -19,7 +19,7 @@ import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
-import net.minecraft.server.v1_7_R1.EntityHuman;
+import net.minecraft.server.v1_7_R2.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -286,7 +286,7 @@ public class EchoPetAPI {
             return;
         }
         if (goalType == GoalType.ATTACK) {
-            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalAttack(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)), 3);
+            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalMeleeAttack(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)), 3);
         } else if (goalType == GoalType.FLOAT) {
             pet.getEntityPet().petGoalSelector.addGoal(new PetGoalFloat(pet.getEntityPet()), 0);
         } else if (goalType == GoalType.FOLLOW_OWNER) {

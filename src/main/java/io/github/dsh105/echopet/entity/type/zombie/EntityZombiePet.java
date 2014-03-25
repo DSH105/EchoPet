@@ -2,9 +2,9 @@ package io.github.dsh105.echopet.entity.type.zombie;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R1.ItemStack;
-import net.minecraft.server.v1_7_R1.Items;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R2.ItemStack;
+import net.minecraft.server.v1_7_R2.Items;
+import net.minecraft.server.v1_7_R2.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 @EntitySize(width = 0.6F, height = 1.8F)

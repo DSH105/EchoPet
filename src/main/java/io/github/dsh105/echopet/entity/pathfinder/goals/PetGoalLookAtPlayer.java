@@ -3,8 +3,8 @@ package io.github.dsh105.echopet.entity.pathfinder.goals;
 import io.github.dsh105.echopet.entity.EntityPet;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoal;
 import io.github.dsh105.echopet.entity.pathfinder.PetGoalType;
-import net.minecraft.server.v1_7_R1.Entity;
-import net.minecraft.server.v1_7_R1.EntityHuman;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.EntityHuman;
 
 public class PetGoalLookAtPlayer extends PetGoal {
 
@@ -72,7 +72,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 
     @Override
     public void tick() {
-        this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.x());
+        this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.bv());
         --this.ticksLeft;
     }
 }
