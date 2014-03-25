@@ -97,7 +97,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     @Override
     public boolean isPersistent() {
-        return false;
+        return true;
     }
 
     public Pet getPet() {
@@ -443,17 +443,26 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     protected void makeStepSound() {
     }
 
-    // Save NBT data
+
     @Override
     public void b(NBTTagCompound nbttagcompound) {
-        super.b(nbttagcompound);
-        nbttagcompound.setString("EchoPet_OwnerName", this.getPet().getNameOfOwner());
+        // Do nothing with NBT
+        // Pets should not be stored to world save files
     }
 
-    // Load NBT data
+    @Override
+    public boolean c(NBTTagCompound nbttagcompound) {
+        // Do nothing with NBT
+        // Pets should not be stored to world save files
+        return false;
+    }
+
     @Override
     public void a(NBTTagCompound nbttagcompound) {
-        super.a(nbttagcompound);
+        // Do nothing with NBT
+        // Pets should not be stored to world save files
+
+        /*super.a(nbttagcompound);
         String owner = nbttagcompound.getString("EchoPet_OwnerName");
         PetType pt = this.getEntityPetType();
         if (pt != null) {
@@ -462,12 +471,19 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
                 PetHandler.getInstance().loadRiderFromFile(this.getPet());
                 this.initiateEntityPet();
             }
-        }
+        }*/
     }
 
-    // Whether to set entity position after loading custom NBT data
     @Override
-    protected boolean U() {
+    public boolean d(NBTTagCompound nbttagcompound) {
+        // Do nothing with NBT
+        // Pets should not be stored to world save files
         return false;
+    }
+
+    @Override
+    public void e(NBTTagCompound nbttagcompound) {
+        // Do nothing with NBT
+        // Pets should not be stored to world save files
     }
 }
