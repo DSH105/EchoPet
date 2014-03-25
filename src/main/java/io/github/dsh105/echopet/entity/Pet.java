@@ -9,6 +9,9 @@ import io.github.dsh105.echopet.data.PetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.PetNames;
 import io.github.dsh105.echopet.util.StringSimplifier;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.minecraft.server.v1_7_R2.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,10 +21,6 @@ import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class Pet {
 

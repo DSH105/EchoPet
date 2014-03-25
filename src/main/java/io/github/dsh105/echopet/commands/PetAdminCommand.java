@@ -16,6 +16,7 @@ import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
 import io.github.dsh105.echopet.util.Perm;
 import io.github.dsh105.echopet.util.PetUtil;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,8 +24,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class PetAdminCommand implements CommandExecutor {
 

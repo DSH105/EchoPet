@@ -1,7 +1,16 @@
 package io.github.dsh105.echopet.entity.type.horse;
 
-import io.github.dsh105.echopet.entity.*;
-import net.minecraft.server.v1_7_R2.*;
+import io.github.dsh105.echopet.entity.EntityAgeablePet;
+import io.github.dsh105.echopet.entity.EntityPetType;
+import io.github.dsh105.echopet.entity.EntitySize;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.SizeCategory;
+import net.minecraft.server.v1_7_R2.Block;
+import net.minecraft.server.v1_7_R2.Blocks;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.StepSound;
+import net.minecraft.server.v1_7_R2.World;
 
 @EntitySize(width = 1.4F, height = 1.6F)
 @EntityPetType(petType = PetType.HORSE)

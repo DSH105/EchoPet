@@ -11,7 +11,11 @@ import io.github.dsh105.echopet.entity.PetType;
 import io.github.dsh105.echopet.entity.type.blaze.BlazePet;
 import io.github.dsh105.echopet.entity.type.creeper.CreeperPet;
 import io.github.dsh105.echopet.entity.type.enderman.EndermanPet;
-import io.github.dsh105.echopet.entity.type.horse.*;
+import io.github.dsh105.echopet.entity.type.horse.HorseArmour;
+import io.github.dsh105.echopet.entity.type.horse.HorseMarking;
+import io.github.dsh105.echopet.entity.type.horse.HorsePet;
+import io.github.dsh105.echopet.entity.type.horse.HorseType;
+import io.github.dsh105.echopet.entity.type.horse.HorseVariant;
 import io.github.dsh105.echopet.entity.type.magmacube.MagmaCubePet;
 import io.github.dsh105.echopet.entity.type.ocelot.OcelotPet;
 import io.github.dsh105.echopet.entity.type.pig.PigPet;
@@ -26,15 +30,14 @@ import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.PetUtil;
 import io.github.dsh105.echopet.util.WorldUtil;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 
 
 public class PetHandler {

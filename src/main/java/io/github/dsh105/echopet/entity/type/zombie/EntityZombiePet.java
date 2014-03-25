@@ -1,7 +1,12 @@
 package io.github.dsh105.echopet.entity.type.zombie;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.entity.*;
+import io.github.dsh105.echopet.entity.EntityPet;
+import io.github.dsh105.echopet.entity.EntityPetType;
+import io.github.dsh105.echopet.entity.EntitySize;
+import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.entity.SizeCategory;
 import net.minecraft.server.v1_7_R2.ItemStack;
 import net.minecraft.server.v1_7_R2.Items;
 import net.minecraft.server.v1_7_R2.World;

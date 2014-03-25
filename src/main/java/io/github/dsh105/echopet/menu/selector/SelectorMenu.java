@@ -4,9 +4,8 @@ import com.dsh105.dshutils.inventory.InventoryMenu;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
 import io.github.dsh105.echopet.config.ConfigOptions;
-import org.bukkit.entity.Player;
-
 import java.util.Map;
+import org.bukkit.entity.Player;
 
 public class SelectorMenu extends InventoryMenu {
 

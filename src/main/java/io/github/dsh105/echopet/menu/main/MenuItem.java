@@ -1,14 +1,13 @@
 package io.github.dsh105.echopet.menu.main;
 
 import io.github.dsh105.echopet.menu.main.DataMenu.DataMenuType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public enum MenuItem {
 

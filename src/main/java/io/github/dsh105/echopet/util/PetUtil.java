@@ -24,11 +24,10 @@ import io.github.dsh105.echopet.entity.type.villager.VillagerPet;
 import io.github.dsh105.echopet.entity.type.wither.WitherPet;
 import io.github.dsh105.echopet.entity.type.wolf.WolfPet;
 import io.github.dsh105.echopet.entity.type.zombie.ZombiePet;
+import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class PetUtil {
 

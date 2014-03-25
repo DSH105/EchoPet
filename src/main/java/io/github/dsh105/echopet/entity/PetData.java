@@ -1,7 +1,6 @@
 package io.github.dsh105.echopet.entity;
 
 import com.google.common.collect.ImmutableList;
-
 import java.util.List;
 
 public enum PetData {

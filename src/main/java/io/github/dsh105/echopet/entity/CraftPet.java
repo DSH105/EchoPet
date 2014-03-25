@@ -5,7 +5,12 @@ import net.minecraft.server.v1_7_R2.EntityLiving;
 import org.bukkit.craftbukkit.v1_7_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftLivingEntity;
-import org.bukkit.entity.*;
+import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Vehicle;
 
 public abstract class CraftPet extends CraftCreature implements Vehicle, Tameable {
 
