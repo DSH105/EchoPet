@@ -17,7 +17,7 @@
 
 package io.github.dsh105.echopet.util.pagination;
 
-import mkremins.fanciful.FancyMessage;
+import io.github.dsh105.echopet.util.fanciful.FancyMessage;
 
 import java.util.ArrayList;
 

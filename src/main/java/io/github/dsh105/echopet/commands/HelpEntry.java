@@ -20,7 +20,7 @@ package io.github.dsh105.echopet.commands;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.util.FancyItemUtil;
 import io.github.dsh105.echopet.util.Perm;
-import mkremins.fanciful.FancyMessage;
+import io.github.dsh105.echopet.util.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
