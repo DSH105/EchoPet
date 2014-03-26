@@ -43,6 +43,7 @@ import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.SQLUtil;
 import net.minecraft.server.v1_7_R2.EntityTypes;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -75,6 +76,8 @@ public class EchoPetPlugin extends DSHPlugin {
     public String cmdString = "pet";
     public String adminCmdString = "petadmin";
 
+    public static boolean isUsingNetty;
+
     // Update data
     public boolean update = false;
     public String name = "";
@@ -87,6 +90,13 @@ public class EchoPetPlugin extends DSHPlugin {
     public void onEnable() {
         super.onEnable();
         Logger.initiate(this, "EchoPet", "[EchoPet]");
+
+        // meh
+        if (Bukkit.getVersion().contains("1.7")) {
+            isUsingNetty = true;
+        } else if (Bukkit.getVersion().contains("1.6")) {
+            isUsingNetty = false;
+        }
 
         COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors

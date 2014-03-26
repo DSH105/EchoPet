@@ -13,7 +13,6 @@
         <worldguard.version>5.8.1-SNAPSHOT</worldguard.version>
         <worldedit.version>5.5.8-SNAPSHOT</worldedit.version>
         <vault.version>1.2.31</vault.version>
-        <fanciful.version>0.1.3-RC2</fanciful.version>
         <minecraft.version>1.7.5</minecraft.version>
         <craftbukkit.version>R0.1</craftbukkit.version>
         <cb_package>v1_7_R2</cb_package>
@@ -97,17 +96,6 @@
             <artifactId>bonecp</artifactId>
             <version>${bonecp.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20090211</version>
-        </dependency>
-        <dependency>
-            <groupId>mkremins</groupId>
-            <artifactId>fanciful</artifactId>
-            <version>${fanciful.version}</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -129,10 +117,6 @@
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases/</url>
-        </repository>
-        <repository>
-            <id>fanciful-repo</id>
-            <url>https://raw2.github.com/mkremins/fanciful/mvn-repo/</url>
         </repository>
     </repositories>
     <build>
@@ -192,8 +176,6 @@
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
                                     <include>com.dsh105:DSHUtils</include>
-                                    <include>org.json:json</include>
-                                    <include>mkremins:fanciful</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -208,17 +190,6 @@
                                 <relocation>
                                     <pattern>com.dsh105.dshutils</pattern>
                                     <shadedPattern>io.github.dsh105.echopet.libraries.dshutils</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.json</pattern>
-                                    <shadedPattern>io.github.dsh105.echopet.libraries.json</shadedPattern>
-                                    <excludes>
-                                        <exclude>org.json.simple.*</exclude>
-                                    </excludes>
-                                </relocation>
-                                <relocation>
-                                    <pattern>mkremins.fanciful</pattern>
-                                    <shadedPattern>io.github.dsh105.echopet.libraries.fanciful</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
