@@ -97,8 +97,8 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         if (this.passenger != null && (this.passenger instanceof EntityHuman)) {
             EntityHuman human = (EntityHuman) this.passenger;
             if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
-                float forw = ((EntityLiving) this.passenger).bd;
-                float side = ((EntityLiving) this.passenger).be;
+                float forw = ((EntityLiving) this.passenger).be;
+                float side = ((EntityLiving) this.passenger).bd;
 
                 Vector v = new Vector();
                 Location l = new Location(this.world.getWorld(), this.locX, this.locY, this.locZ);
