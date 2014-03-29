@@ -18,7 +18,7 @@
 package io.github.dsh105.echopet.commands;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

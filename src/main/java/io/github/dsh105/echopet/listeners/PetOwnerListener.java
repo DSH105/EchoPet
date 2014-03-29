@@ -24,16 +24,15 @@ import io.github.dsh105.echopet.Hook;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.CraftPet;
-import io.github.dsh105.echopet.entity.EntityPacketPet;
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.CraftPet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.EntityPacketPet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.WorldUtil;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,7 +68,7 @@ public class PetOwnerListener implements Listener {
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(iEvent);
             if (!iEvent.isCancelled()) {
-                pet.getEntityPet().a(((CraftPlayer) p).getHandle());
+                pet.getEntityPet().a(p);
             }
         }
     }

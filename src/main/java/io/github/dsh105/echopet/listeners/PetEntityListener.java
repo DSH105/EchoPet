@@ -21,9 +21,8 @@ import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetDamageEvent;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
-import io.github.dsh105.echopet.entity.CraftPet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.CraftPet;
 import io.github.dsh105.echopet.util.Lang;
-import net.minecraft.server.v1_7_R2.DamageSource;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -97,7 +96,7 @@ public class PetEntityListener implements Listener {
             }
         } else if (event.getDamager() instanceof CraftPet) {
             CraftPet craftPet = (CraftPet) event.getDamager();
-            PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, DamageSource.mobAttack(craftPet.getPet().getEntityPet()), event.getDamage());
+            PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, event.getDamage());
             EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(attackEvent);
             event.setDamage(attackEvent.getDamage());
             event.setCancelled(attackEvent.isCancelled());

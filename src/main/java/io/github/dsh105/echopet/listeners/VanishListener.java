@@ -18,7 +18,7 @@
 package io.github.dsh105.echopet.listeners;
 
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

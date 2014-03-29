@@ -17,14 +17,14 @@
 
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link Player} interacts with a {@link io.github.dsh105.echopet.entity.Pet}
+ * Called when a {@link Player} interacts with a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
  */
 
 public class PetInteractEvent extends Event implements Cancellable {
@@ -44,9 +44,9 @@ public class PetInteractEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.entity.Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.entity.Pet} involved
+     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved
      */
     public Pet getPet() {
         return this.pet;

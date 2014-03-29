@@ -19,8 +19,8 @@ package io.github.dsh105.echopet.config;
 
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.config.options.Options;
-import io.github.dsh105.echopet.entity.PetData;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
 import io.github.dsh105.echopet.menu.selector.SelectorIcon;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import org.bukkit.Bukkit;

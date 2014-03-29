@@ -35,14 +35,15 @@ import io.github.dsh105.echopet.commands.util.DynamicPluginCommand;
 import io.github.dsh105.echopet.config.ConfigOptions;
 import io.github.dsh105.echopet.data.AutoSave;
 import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.entity.EntityPet;
-import io.github.dsh105.echopet.entity.PetData;
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.EntityPet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
 import io.github.dsh105.echopet.listeners.*;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
+import io.github.dsh105.echopet.reflection.SafeField;
 import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.util.ReflectionUtil;
 import io.github.dsh105.echopet.util.SQLUtil;
-import net.minecraft.server.v1_7_R2.EntityTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -52,7 +53,6 @@ import org.bukkit.plugin.PluginManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -337,66 +337,47 @@ public class EchoPetPlugin extends DSHPlugin {
     }
 
     public void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
-        try {
-            Field field_c = EntityTypes.class.getDeclaredField("c");
-            Field field_d = EntityTypes.class.getDeclaredField("d");
-            Field field_f = EntityTypes.class.getDeclaredField("f");
-            Field field_g = EntityTypes.class.getDeclaredField("g");
-            field_c.setAccessible(true);
-            field_d.setAccessible(true);
-            field_f.setAccessible(true);
-            field_g.setAccessible(true);
+        Map<String, Class> c = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), "c").get(null);
+        Map<Class, String> d = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), "d").get(null);
+        Map<Class, Integer> f = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), "f").get(null);
+        Map<String, Integer> g = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), "g").get(null);
 
-            Map<String, Class> c = (Map) field_c.get(field_c);
-            Map<Class, String> d = (Map) field_d.get(field_d);
-            Map<Class, Integer> f = (Map) field_f.get(field_f);
-            Map<String, Integer> g = (Map) field_g.get(field_g);
-
-            Iterator<String> i = c.keySet().iterator();
-            while (i.hasNext()) {
-                String s = i.next();
-                if (s.equals(name)) {
-                    i.remove();
-                }
+        Iterator<String> i = c.keySet().iterator();
+        while (i.hasNext()) {
+            String s = i.next();
+            if (s.equals(name)) {
+                i.remove();
             }
-
-            Iterator<Class> i2 = d.keySet().iterator();
-            while (i2.hasNext()) {
-                Class cl = i2.next();
-                if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                    i2.remove();
-                }
-            }
-
-            Iterator<Class> i3 = f.keySet().iterator();
-            while (i2.hasNext()) {
-                Class cl = i3.next();
-                if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                    i3.remove();
-                }
-            }
-
-            Iterator<String> i4 = g.keySet().iterator();
-            while (i4.hasNext()) {
-                String s = i4.next();
-                if (s.equals(name)) {
-                    i4.remove();
-                }
-            }
-
-            c.put(name, clazz);
-            d.put(clazz, name);
-            f.put(clazz, id);
-            g.put(name, id);
-        } catch (NoSuchFieldException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
-        } catch (SecurityException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
-        } catch (IllegalArgumentException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
-        } catch (IllegalAccessException e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Registration of Pet Entity [" + name + "] has failed. This Pet will not be available.", e, true);
         }
+
+        Iterator<Class> i2 = d.keySet().iterator();
+        while (i2.hasNext()) {
+            Class cl = i2.next();
+            if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
+                i2.remove();
+            }
+        }
+
+        Iterator<Class> i3 = f.keySet().iterator();
+        while (i2.hasNext()) {
+            Class cl = i3.next();
+            if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
+                i3.remove();
+            }
+        }
+
+        Iterator<String> i4 = g.keySet().iterator();
+        while (i4.hasNext()) {
+            String s = i4.next();
+            if (s.equals(name)) {
+                i4.remove();
+            }
+        }
+
+        c.put(name, clazz);
+        d.put(clazz, name);
+        f.put(clazz, id);
+        g.put(name, id);
     }
 
     public static EchoPetPlugin getInstance() {

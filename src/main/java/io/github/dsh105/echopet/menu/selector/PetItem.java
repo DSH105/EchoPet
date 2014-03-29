@@ -17,7 +17,7 @@
 
 package io.github.dsh105.echopet.menu.selector;
 
-import io.github.dsh105.echopet.entity.PetType;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
 import org.bukkit.Material;
 
 
