@@ -39,7 +39,7 @@ public class SelectorLayout {
         int materialId = config.getInt("petSelector.item.materialId", Material.BONE.getId());
         int materialData = config.getInt("petSelector.item.materialData", 0);
         String l = config.getString("petSelector.item.lore");
-        String[] lore = new String[]{l};
+        String[] lore = null;
         if (l.contains(";")) {
             lore = l.split(";");
         }
@@ -49,12 +49,16 @@ public class SelectorLayout {
         }
         ItemMeta meta = i.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        ArrayList<String> loreList = new ArrayList<String>();
         if (lore != null && lore.length > 0) {
-            ArrayList<String> list = new ArrayList<String>();
             for (String s : lore) {
-                list.add(ChatColor.translateAlternateColorCodes('&', s));
+                loreList.add(ChatColor.translateAlternateColorCodes('&', s));
             }
-            meta.setLore(list);
+        } else if (l != null) {
+            loreList.add(ChatColor.translateAlternateColorCodes('&', l));
+        }
+        if (!loreList.isEmpty()) {
+            meta.setLore(loreList);
         }
         i.setItemMeta(meta);
         return i;
@@ -78,14 +82,17 @@ public class SelectorLayout {
                 continue;
             }
             String l = config.getString(s + ".slot-" + i + ".lore");
-            String[] lore;
-            if (l.contains(";")) {
-                lore = l.split(";");
-                for (int index = 0; index < lore.length; index++) {
-                    lore[index] = ChatColor.translateAlternateColorCodes('&', lore[index]);
+            String[] lore = null;
+            if (l != null) {
+                l = ChatColor.translateAlternateColorCodes('&', l);
+                if (l.contains(";")) {
+                    lore = l.split(";");
+                    for (int index = 0; index < lore.length; index++) {
+                        lore[index] = ChatColor.translateAlternateColorCodes('&', lore[index]);
+                    }
+                } else {
+                    lore = new String[]{ChatColor.translateAlternateColorCodes('&', l)};
                 }
-            } else {
-                lore = new String[]{ChatColor.translateAlternateColorCodes('&', l)};
             }
             if (lore == null || lore.length <= 0 || lore[0] == "") {
                 selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name));
