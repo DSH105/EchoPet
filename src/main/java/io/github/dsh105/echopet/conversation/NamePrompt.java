@@ -18,7 +18,7 @@
 package io.github.dsh105.echopet.conversation;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import io.github.dsh105.echopet.util.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;

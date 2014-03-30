@@ -17,13 +17,13 @@
 
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} jumps when their owner is riding
+ * Called when a {@link io.github.dsh105.echopet.api.entity.pet.Pet} jumps when their owner is riding
  */
 
 public class PetRideJumpEvent extends Event implements Cancellable {
@@ -40,16 +40,16 @@ public class PetRideJumpEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved
+     * @return the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved
      */
     public Pet getPet() {
         return this.pet;
     }
 
     /**
-     * Gets the height jumped by this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Gets the height jumped by this {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
      * @return height jumped
      */
@@ -58,7 +58,7 @@ public class PetRideJumpEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets the height this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} jumped
+     * Sets the height this {@link io.github.dsh105.echopet.api.entity.pet.Pet} jumped
      *
      * @param jumpHeight new jump height for this event
      */

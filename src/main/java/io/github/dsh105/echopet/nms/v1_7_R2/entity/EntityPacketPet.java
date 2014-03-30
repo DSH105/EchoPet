@@ -19,12 +19,14 @@ package io.github.dsh105.echopet.nms.v1_7_R2.entity;
 
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.ReflectionUtil;
+import io.github.dsh105.echopet.api.entity.nms.IEntityPacketPet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Location;
 
 import java.lang.reflect.Field;
 
-public abstract class EntityPacketPet extends EntityPet {
+public abstract class EntityPacketPet extends EntityPet implements IEntityPacketPet {
 
     private PacketPlayOutEntityMetadata metaPacket;
     protected DataWatcher dw;

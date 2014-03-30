@@ -20,7 +20,7 @@ package io.github.dsh105.echopet.menu.main;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.api.event.PetMenuOpenEvent;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import io.github.dsh105.echopet.menu.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

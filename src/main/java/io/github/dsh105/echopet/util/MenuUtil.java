@@ -17,7 +17,7 @@
 
 package io.github.dsh105.echopet.util;
 
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
+import io.github.dsh105.echopet.api.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuItem;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 

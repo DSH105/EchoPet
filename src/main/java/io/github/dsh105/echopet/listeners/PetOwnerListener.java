@@ -20,13 +20,12 @@ package io.github.dsh105.echopet.listeners;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.Hook;
+import io.github.dsh105.echopet.api.entity.nms.ICraftPet;
+import io.github.dsh105.echopet.api.entity.nms.IEntityPacketPet;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
 import io.github.dsh105.echopet.config.ConfigOptions;
-import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.CraftPet;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.EntityPacketPet;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.PetHandler;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
@@ -62,13 +61,13 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
-        if (e instanceof CraftPet) {
-            Pet pet = ((CraftPet) e).getPet();
+        if (e instanceof ICraftPet) {
+            Pet pet = ((ICraftPet) e).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(iEvent);
             if (!iEvent.isCancelled()) {
-                pet.getEntityPet().a(p);
+                pet.getEntityPet().onInteract(p);
             }
         }
     }
@@ -93,9 +92,9 @@ public class PetOwnerListener implements Listener {
         Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             Pet pet = i.next();
-            if (pet.getEntityPet() instanceof EntityPacketPet && ((EntityPacketPet) pet.getEntityPet()).hasInititiated()) {
+            if (pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
-                    ((EntityPacketPet) pet.getEntityPet()).updatePacket();
+                    ((IEntityPacketPet) pet.getEntityPet()).updatePacket();
                 }
             }
         }
@@ -208,11 +207,9 @@ public class PetOwnerListener implements Listener {
                 if (p != null && p.isOnline()) {
                     Pet pet = PetHandler.getInstance().loadPets(p, true, sendMessage, false);
                     if (pet != null) {
-                        if (Hook.getVNP() != null) {
-                            if (Hook.getVNP().getManager().isVanished(p)) {
-                                pet.getEntityPet().vnp = true;
-                                pet.getEntityPet().setInvisible(true);
-                            }
+                        if (EchoPetPlugin.getInstance().getVanishProvider().isVanished(p)) {
+                            pet.getEntityPet().setShouldVanish(true);
+                            pet.getEntityPet().setInvisible(true);
                         }
                     }
                 }
@@ -223,9 +220,9 @@ public class PetOwnerListener implements Listener {
         Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
         while (i.hasNext()) {
             Pet pet = i.next();
-            if (pet.getEntityPet() instanceof EntityPacketPet && ((EntityPacketPet) pet.getEntityPet()).hasInititiated()) {
+            if (pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
-                    ((EntityPacketPet) pet.getEntityPet()).updatePacket();
+                    ((IEntityPacketPet) pet.getEntityPet()).updatePacket();
                 }
             }
         }

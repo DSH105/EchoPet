@@ -17,7 +17,7 @@
 
 package io.github.dsh105.echopet.util;
 
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData;
+import io.github.dsh105.echopet.api.entity.PetData;
 
 import java.util.HashMap;
 import java.util.List;

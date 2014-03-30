@@ -19,14 +19,20 @@ package io.github.dsh105.echopet.nms.v1_7_R2.entity;
 
 import com.dsh105.dshutils.logger.Logger;
 import io.github.dsh105.echopet.EchoPetPlugin;
+import io.github.dsh105.echopet.api.entity.EntityPetType;
+import io.github.dsh105.echopet.api.entity.EntitySize;
+import io.github.dsh105.echopet.api.entity.PetType;
+import io.github.dsh105.echopet.api.entity.SizeCategory;
+import io.github.dsh105.echopet.api.entity.nms.IEntityPet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import io.github.dsh105.echopet.api.event.PetAttackEvent;
 import io.github.dsh105.echopet.api.event.PetRideJumpEvent;
 import io.github.dsh105.echopet.api.event.PetRideMoveEvent;
-import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoalSelector;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalFloat;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalFollowOwner;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalLookAtPlayer;
+import io.github.dsh105.echopet.api.PetHandler;
+import io.github.dsh105.echopet.api.ai.PetGoalSelector;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.ai.PetGoalFloat;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.ai.PetGoalFollowOwner;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.ai.PetGoalLookAtPlayer;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.util.MenuUtil;
@@ -34,7 +40,9 @@ import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -42,9 +50,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class EntityPet extends EntityCreature implements EntityOwnable, IAnimal {
+public abstract class EntityPet extends EntityCreature implements EntityOwnable, IAnimal, IEntityPet {
 
-    public boolean vnp;
+    public boolean shouldVanish;
 
     public EntityLiving goalTarget = null;
     protected Pet pet;
@@ -94,7 +102,8 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         return null;
     }
 
-    protected void resize(boolean flag) {
+    @Override
+    public void resizeBoundingBox(boolean flag) {
         EntitySize es = this.getClass().getAnnotation(EntitySize.class);
         if (es != null) {
             this.setSize(flag ? (es.width() / 2) : es.width(), flag ? (es.height() / 2) : es.height());
@@ -150,6 +159,31 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         return this.random;
     }
 
+    @Override
+    public PetGoalSelector getPetGoalSelector() {
+        return petGoalSelector;
+    }
+
+    @Override
+    public boolean isDead() {
+        return dead;
+    }
+
+    @Override
+    public void setShouldVanish(boolean flag) {
+        this.shouldVanish = flag;
+    }
+
+    @Override
+    public void setTarget(LivingEntity livingEntity) {
+        this.setGoalTarget(((CraftLivingEntity) livingEntity).getHandle());
+    }
+
+    @Override
+    public LivingEntity getTarget() {
+        return (LivingEntity) this.getGoalTarget().getBukkitEntity();
+    }
+
     public boolean attack(Entity entity) {
         return this.attack(entity, (float) this.getPet().getPetType().getAttackDamage());
     }
@@ -195,7 +229,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
     @Override
     public CraftPet getBukkitEntity() {
         if (this.bukkitEntity == null) {
-            this.bukkitEntity = this.getEntityPetType().getNewCraftInstance(this);
+            this.bukkitEntity = (CraftPet) this.getEntityPetType().getNewCraftInstance(this);
         }
         return (CraftPet) this.bukkitEntity;
     }
@@ -219,6 +253,11 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         this.getControllerMove().c();
         this.getControllerLook().a();
         this.getControllerJump().b();
+    }
+
+    @Override
+    public boolean onInteract(Player p) {
+        return a(p);
     }
 
     // EntityInsentient
@@ -249,6 +288,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
         this.getPet().getCraftPet().teleport(l);
     }
 
+    @Override
     public void remove(boolean makeSound) {
         if (this.bukkitEntity != null) {
             bukkitEntity.remove();
@@ -270,7 +310,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
             PetHandler.getInstance().removePet(this.getPet(), true);
         }
 
-        if (((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.vnp) {
+        if (((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
             this.setInvisible(!this.isInvisible());
         }
 

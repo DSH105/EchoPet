@@ -17,12 +17,12 @@
 
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.Location;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} teleports
+ * Called when a {@link io.github.dsh105.echopet.api.entity.pet.Pet} teleports
  */
 
 public class PetTeleportEvent extends PetMoveEvent {

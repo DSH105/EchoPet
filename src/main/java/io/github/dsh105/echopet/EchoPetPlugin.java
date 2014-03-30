@@ -27,19 +27,22 @@ import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.VersionUtil;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import io.github.dsh105.echopet.api.entity.nms.IEntityPet;
 import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
 import io.github.dsh105.echopet.commands.util.CommandManager;
 import io.github.dsh105.echopet.commands.util.DynamicPluginCommand;
 import io.github.dsh105.echopet.config.ConfigOptions;
-import io.github.dsh105.echopet.data.AutoSave;
-import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.EntityPet;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
+import io.github.dsh105.echopet.api.PetHandler;
+import io.github.dsh105.echopet.hook.VanishProvider;
+import io.github.dsh105.echopet.hook.WorldGuardProvider;
+import io.github.dsh105.echopet.nms.ISpawnUtil;
+import io.github.dsh105.echopet.api.entity.PetData;
+import io.github.dsh105.echopet.api.entity.PetType;
 import io.github.dsh105.echopet.listeners.*;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
+import io.github.dsh105.echopet.reflection.SafeConstructor;
 import io.github.dsh105.echopet.reflection.SafeField;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.ReflectionUtil;
@@ -61,23 +64,30 @@ import java.util.Map;
 
 public class EchoPetPlugin extends DSHPlugin {
 
-    private CommandManager COMMAND_MANAGER;
+    public static String BASE_NMS_PACKAGE = "io.github.dsh105.echopet.nms." + ReflectionUtil.getNMSPackageName() + ".";
+    private static ISpawnUtil SPAWN_UTIL;
+    public static boolean isUsingNetty;
 
+    public static final ModuleLogger LOGGER = new ModuleLogger("HoloAPI");
+    public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule("Reflection");
+
+    private CommandManager COMMAND_MANAGER;
     private YAMLConfig petConfig;
     private YAMLConfig mainConfig;
     private YAMLConfig langConfig;
     public ConfigOptions options;
-    public AutoSave AS;
     public PetHandler PH;
     public SQLPetHandler SPH;
     public BoneCP dbPool;
+
+    private VanishProvider vanishProvider;
+    private WorldGuardProvider worldGuardProvider;
+
     public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
     public String cmdString = "pet";
+
     public String adminCmdString = "petadmin";
-
-    public static boolean isUsingNetty;
-
     // Update data
     public boolean update = false;
     public String name = "";
@@ -100,26 +110,89 @@ public class EchoPetPlugin extends DSHPlugin {
 
         COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors
-        if (!VersionUtil.compareVersions()) {
+
+        try {
+            Class.forName(BASE_NMS_PACKAGE + "SpawnUtil");
+        } catch (ClassNotFoundException e) {
             ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
-                    + " is only compatible with:");
-            ConsoleLogger.log(ChatColor.RED + "    " + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion() + ".");
+                    + " is not compatible with this version of CraftBukkit");
             ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
                     new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
-                    "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is only compatible with "
-                    + ChatColor.GOLD + VersionUtil.getMinecraftVersion() + "-" + VersionUtil.getCraftBukkitVersion()
-                    + ChatColor.YELLOW + ". Please update the plugin.",
-                    "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
-                    null, this);
+                            "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
+                            "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
+                            null, this);
             COMMAND_MANAGER.register(cmd);
             return;
         }
 
+        SPAWN_UTIL = new SafeConstructor<ISpawnUtil>(ReflectionUtil.getVersionedClass("SpawnUtil")).newInstance();
+
+        this.loadConfiguration();
+
         PluginManager manager = getServer().getPluginManager();
 
+        PH = new PetHandler(this);
+        SPH = new SQLPetHandler();
+
+        if (options.useSql()) {
+            this.prepareSqlDatabase();
+        }
+
+        // Register custom entities
+        for (PetType pt : PetType.values()) {
+            this.registerEntity(pt.getEntityClass(), pt.getDefaultName().replace(" ", ""), pt.getRegistrationId());
+        }
+
+        // Register custom commands
+        // Command string based off the string defined in config.yml
+        // By default, set to 'pet'
+        // PetAdmin command draws from the original, with 'admin' on the end
+        this.cmdString = options.getCommandString();
+        this.adminCmdString = options.getCommandString() + "admin";
+        DynamicPluginCommand petCmd = new DynamicPluginCommand(this.cmdString, new String[0], "Create and manage your own custom pets.", "Use /" + this.cmdString + " help to see the command list.", new PetCommand(this.cmdString), null, this);
+        petCmd.setTabCompleter(new CommandComplete());
+        COMMAND_MANAGER.register(petCmd);
+        COMMAND_MANAGER.register(new DynamicPluginCommand(this.adminCmdString, new String[0], "Create and manage the pets of other players.", "Use /" + this.adminCmdString + " help to see the command list.", new PetAdminCommand(this.adminCmdString), null, this));
+
+        // Register listeners
+        manager.registerEvents(new MenuListener(), this);
+        manager.registerEvents(new PetEntityListener(), this);
+        manager.registerEvents(new PetOwnerListener(), this);
+        manager.registerEvents(new ChunkListener(), this);
+
+        this.vanishProvider = new VanishProvider(this);
+        this.worldGuardProvider = new WorldGuardProvider(this);
+
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException e) {
+            // Failed to submit the stats :(
+        }
+
+        this.checkUpdates();
+    }
+
+    @Override
+    public void onDisable() {
+        if (PH != null) {
+            PH.removeAllPets();
+        }
+        if (dbPool != null) {
+            dbPool.shutdown();
+        }
+
+        // Unregister the commands
+        this.COMMAND_MANAGER.unregister();
+
+        // Don't nullify instance until after we're done
+        super.onDisable();
+    }
+
+    private void loadConfiguration() {
         String[] header = {"EchoPet By DSH105", "---------------------",
                 "Configuration for EchoPet 2",
                 "See the EchoPet Wiki before editing this file"};
@@ -163,104 +236,56 @@ public class EchoPetPlugin extends DSHPlugin {
             langConfig.set(Lang.PREFIX.getPath(), "&4[&cEchoPet&4]&r ", Lang.PREFIX.getDescription());
         }
         this.prefix = Lang.PREFIX.toString();
+    }
 
-        PH = new PetHandler(this);
-        SPH = new SQLPetHandler();
-
-        if (options.useSql()) {
-            String host = mainConfig.getString("sql.host", "localhost");
-            int port = mainConfig.getInt("sql.port", 3306);
-            String db = mainConfig.getString("sql.database", "EchoPet");
-            String user = mainConfig.getString("sql.username", "none");
-            String pass = mainConfig.getString("sql.password", "none");
-            BoneCPConfig bcc = new BoneCPConfig();
-            bcc.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db);
-            bcc.setUsername(user);
-            bcc.setPassword(pass);
-            bcc.setPartitionCount(2);
-            bcc.setMinConnectionsPerPartition(3);
-            bcc.setMaxConnectionsPerPartition(7);
-            bcc.setConnectionTestStatement("SELECT 1");
+    private void prepareSqlDatabase() {
+        String host = mainConfig.getString("sql.host", "localhost");
+        int port = mainConfig.getInt("sql.port", 3306);
+        String db = mainConfig.getString("sql.database", "EchoPet");
+        String user = mainConfig.getString("sql.username", "none");
+        String pass = mainConfig.getString("sql.password", "none");
+        BoneCPConfig bcc = new BoneCPConfig();
+        bcc.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db);
+        bcc.setUsername(user);
+        bcc.setPassword(pass);
+        bcc.setPartitionCount(2);
+        bcc.setMinConnectionsPerPartition(3);
+        bcc.setMaxConnectionsPerPartition(7);
+        bcc.setConnectionTestStatement("SELECT 1");
+        try {
+            dbPool = new BoneCP(bcc);
+        } catch (SQLException e) {
+            Logger.log(Logger.LogLevel.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", e, true);
+        }
+        if (dbPool != null) {
+            Connection connection = null;
+            Statement statement = null;
             try {
-                dbPool = new BoneCP(bcc);
+                connection = dbPool.getConnection();
+                statement = connection.createStatement();
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS Pets (" +
+                        "OwnerName varchar(255)," +
+                        "PetType varchar(255)," +
+                        "PetName varchar(255)," +
+                        SQLUtil.serialise(PetData.values(), false) + ", " +
+                        "RiderPetType varchar(255), RiderPetName varchar(255), " +
+                        SQLUtil.serialise(PetData.values(), true) +
+                        ", PRIMARY KEY (OwnerName)" +
+                        ");");
             } catch (SQLException e) {
-                Logger.log(Logger.LogLevel.SEVERE, "Failed to connect to MySQL! [MySQL DataBase: " + db + "].", e, true);
-            }
-            if (dbPool != null) {
-                Connection connection = null;
-                Statement statement = null;
+                Logger.log(Logger.LogLevel.SEVERE, "`Pets` Table generation failed [MySQL DataBase: " + db + "].", e, true);
+            } finally {
                 try {
-                    connection = dbPool.getConnection();
-                    statement = connection.createStatement();
-                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS Pets (" +
-                            "OwnerName varchar(255)," +
-                            "PetType varchar(255)," +
-                            "PetName varchar(255)," +
-                            SQLUtil.serialise(PetData.values(), false) + ", " +
-                            "RiderPetType varchar(255), RiderPetName varchar(255), " +
-                            SQLUtil.serialise(PetData.values(), true) +
-                            ", PRIMARY KEY (OwnerName)" +
-                            ");");
-                } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "`Pets` Table generation failed [MySQL DataBase: " + db + "].", e, true);
-                } finally {
-                    try {
-                        if (statement != null) {
-                            statement.close();
-                        }
-                        if (connection != null) {
-                            connection.close();
-                        }
-                    } catch (SQLException ignored) {
+                    if (statement != null) {
+                        statement.close();
                     }
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException ignored) {
                 }
             }
         }
-
-        // Register custom entities
-        for (PetType pt : PetType.values()) {
-            this.registerEntity(pt.getEntityClass(), pt.getDefaultName().replace(" ", ""), pt.getRegistrationId());
-        }
-
-        // Check whether to start AutoSave
-        if (getMainConfig().getBoolean("autoSave")) {
-            AS = new AutoSave(getMainConfig().getInt("autoSaveTimer"));
-        }
-
-        // Register custom commands
-        // Command string based off the string defined in config.yml
-        // By default, set to 'pet'
-        // PetAdmin command draws from the original, with 'admin' on the end
-        this.cmdString = options.getCommandString();
-        this.adminCmdString = options.getCommandString() + "admin";
-        DynamicPluginCommand petCmd = new DynamicPluginCommand(this.cmdString, new String[0], "Create and manage your own custom pets.", "Use /" + this.cmdString + " help to see the command list.", new PetCommand(this.cmdString), null, this);
-        petCmd.setTabCompleter(new CommandComplete());
-        COMMAND_MANAGER.register(petCmd);
-        COMMAND_MANAGER.register(new DynamicPluginCommand(this.adminCmdString, new String[0], "Create and manage the pets of other players.", "Use /" + this.adminCmdString + " help to see the command list.", new PetAdminCommand(this.adminCmdString), null, this));
-
-        // Register listeners
-        manager.registerEvents(new MenuListener(), this);
-        manager.registerEvents(new PetEntityListener(), this);
-        manager.registerEvents(new PetOwnerListener(), this);
-        manager.registerEvents(new ChunkListener(), this);
-
-        if (Hook.getVNP() != null) {
-            manager.registerEvents(new VanishListener(), this);
-        }
-
-        if (Hook.getWorldGuard() != null && this.getMainConfig().getBoolean("worldguard.regionEnterCheck", true)) {
-            manager.registerEvents(new RegionListener(), this);
-        }
-
-
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            // Failed to submit the stats :(
-        }
-
-        this.checkUpdates();
     }
 
     protected void checkUpdates() {
@@ -283,22 +308,6 @@ public class EchoPetPlugin extends DSHPlugin {
                 }
             });
         }
-    }
-
-    @Override
-    public void onDisable() {
-        if (PH != null) {
-            PH.removeAllPets();
-        }
-        if (dbPool != null) {
-            dbPool.shutdown();
-        }
-
-        // Unregister the commands
-        this.COMMAND_MANAGER.unregister();
-
-        // Don't nullify instance until after we're done
-        super.onDisable();
     }
 
     @Override
@@ -336,7 +345,7 @@ public class EchoPetPlugin extends DSHPlugin {
         return false;
     }
 
-    public void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
+    public void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
         Map<String, Class> c = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), "c").get(null);
         Map<Class, String> d = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), "d").get(null);
         Map<Class, Integer> f = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), "f").get(null);
@@ -394,5 +403,17 @@ public class EchoPetPlugin extends DSHPlugin {
 
     public YAMLConfig getLangConfig() {
         return langConfig;
+    }
+
+    public static ISpawnUtil getSpawnUtil() {
+        return SPAWN_UTIL;
+    }
+
+    public VanishProvider getVanishProvider() {
+        return vanishProvider;
+    }
+
+    public WorldGuardProvider getWorldGuardProvider() {
+        return worldGuardProvider;
     }
 }

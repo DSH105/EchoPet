@@ -97,7 +97,7 @@ public class FancyMessage {
 
     public FancyMessage achievementTooltip(final Achievement which) {
         try {
-            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getOBCPackageName() + ".CraftStatistic"), "getNMSAchievement", Achievement.class).invoke(null, which);
+            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getCBCPackageName() + ".CraftStatistic"), "getNMSAchievement", Achievement.class).invoke(null, which);
             return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
         } catch (ClassNotFoundException e) {
             throw new FancyMessageFailedException();
@@ -111,7 +111,7 @@ public class FancyMessage {
         }
 
         try {
-            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getOBCPackageName() + ".CraftStatistic"), "getNMSStatistic", Statistic.class).invoke(null, which);
+            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getCBCPackageName() + ".CraftStatistic"), "getNMSStatistic", Statistic.class).invoke(null, which);
             return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
         } catch (ClassNotFoundException e) {
             throw new FancyMessageFailedException();
@@ -128,7 +128,7 @@ public class FancyMessage {
         }
 
         try {
-            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getOBCPackageName() + ".CraftStatistic"), "getMaterialStatistic", Statistic.class, Material.class).invoke(null, which, item);
+            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getCBCPackageName() + ".CraftStatistic"), "getMaterialStatistic", Statistic.class, Material.class).invoke(null, which, item);
             return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
         } catch (ClassNotFoundException e) {
             throw new FancyMessageFailedException();
@@ -145,7 +145,7 @@ public class FancyMessage {
         }
 
         try {
-            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getOBCPackageName() + ".CraftStatistic"), "getEntityStatistic", Statistic.class, EntityType.class).invoke(null, which, entity);
+            Object achievement = new SafeMethod(Class.forName(ReflectionUtil.getCBCPackageName() + ".CraftStatistic"), "getEntityStatistic", Statistic.class, EntityType.class).invoke(null, which, entity);
             return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
         } catch (ClassNotFoundException e) {
             throw new FancyMessageFailedException();
@@ -160,7 +160,7 @@ public class FancyMessage {
     public FancyMessage itemTooltip(final ItemStack itemStack) {
         Object nmsCopy;
         try {
-            nmsCopy = new SafeMethod(Class.forName(ReflectionUtil.getOBCPackageName() + ".inventory.CraftItemStack"), "asNMSCopy", ItemStack.class).invoke(null, itemStack);
+            nmsCopy = new SafeMethod(Class.forName(ReflectionUtil.getCBCPackageName() + ".inventory.CraftItemStack"), "asNMSCopy", ItemStack.class).invoke(null, itemStack);
         } catch (ClassNotFoundException e) {
             throw new FancyMessageFailedException();
         }

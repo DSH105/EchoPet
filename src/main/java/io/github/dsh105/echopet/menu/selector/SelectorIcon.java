@@ -18,7 +18,7 @@
 package io.github.dsh105.echopet.menu.selector;
 
 import com.dsh105.dshutils.inventory.MenuIcon;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
+import io.github.dsh105.echopet.api.entity.PetType;
 import io.github.dsh105.echopet.util.PetUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

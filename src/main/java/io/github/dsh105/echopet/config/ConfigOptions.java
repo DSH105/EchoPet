@@ -19,8 +19,8 @@ package io.github.dsh105.echopet.config;
 
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.config.options.Options;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
+import io.github.dsh105.echopet.api.entity.PetData;
+import io.github.dsh105.echopet.api.entity.PetType;
 import io.github.dsh105.echopet.menu.selector.SelectorIcon;
 import io.github.dsh105.echopet.menu.selector.SelectorLayout;
 import org.bukkit.Bukkit;
@@ -107,8 +107,6 @@ public class ConfigOptions extends Options {
         set("petNames.My Pet", "allow");
         set("stripDiacriticsFromNames", true);
 
-        set("autoSave", true, "If true, EchoPet will autosave all pet data to prevent data", "loss in the event of a server crash.");
-        set("autoSaveTimer", 180, "Interval between autosave of pet data (in seconds).");
         set("loadSavedPets", true, "Auto-load pets from last session");
         set("multiworldLoadOverride", true, "When true, if -loadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 

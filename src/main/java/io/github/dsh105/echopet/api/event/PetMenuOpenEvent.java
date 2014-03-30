@@ -23,7 +23,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link org.bukkit.entity.Player} opens a DataMenu for their {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+ * Called when a {@link org.bukkit.entity.Player} opens a DataMenu for their {@link io.github.dsh105.echopet.api.entity.pet.Pet}
  */
 
 public class PetMenuOpenEvent extends Event implements Cancellable {
@@ -40,9 +40,9 @@ public class PetMenuOpenEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved
+     * @return the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved
      */
     public Player getViewer() {
         return this.viewer;

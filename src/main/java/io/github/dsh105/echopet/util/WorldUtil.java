@@ -22,7 +22,6 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.Hook;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -35,7 +34,7 @@ public class WorldUtil {
     }
 
     public static boolean allowRegion(Location location) {
-        WorldGuardPlugin wg = Hook.getWorldGuard();
+        WorldGuardPlugin wg = EchoPetPlugin.getInstance().getWorldGuardProvider().getDependency();
         if (wg == null) {
             return true;
         }

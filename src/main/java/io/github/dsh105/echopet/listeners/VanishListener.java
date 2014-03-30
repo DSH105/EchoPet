@@ -17,8 +17,8 @@
 
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.PetHandler;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,7 +32,7 @@ public class VanishListener implements Listener {
         Player p = event.getPlayer();
         Pet pet = PetHandler.getInstance().getPet(p);
         if (pet != null) {
-            pet.getEntityPet().vnp = event.isVanishing();
+            pet.getEntityPet().setShouldVanish(event.isVanishing());
             pet.getEntityPet().setInvisible(event.isVanishing());
         }
     }

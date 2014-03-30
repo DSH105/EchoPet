@@ -21,22 +21,18 @@ import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.data.PetHandler;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalMeleeAttack;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalFloat;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalFollowOwner;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.goals.PetGoalLookAtPlayer;
+import io.github.dsh105.echopet.api.ai.*;
+import io.github.dsh105.echopet.api.entity.PetData;
+import io.github.dsh105.echopet.api.ai.APetGoalFloat;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
+import io.github.dsh105.echopet.api.entity.PetType;
 import io.github.dsh105.echopet.menu.main.MenuOption;
 import io.github.dsh105.echopet.menu.main.PetMenu;
 import io.github.dsh105.echopet.menu.selector.SelectorMenu;
 import io.github.dsh105.echopet.mysql.SQLPetHandler;
+import io.github.dsh105.echopet.reflection.SafeConstructor;
 import io.github.dsh105.echopet.util.Lang;
 import io.github.dsh105.echopet.util.MenuUtil;
-//import net.minecraft.server.v1_7_R2.EntityHuman;
 import io.github.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -56,14 +52,14 @@ public class EchoPetAPI {
     }
 
     /**
-     * Gives a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to the specified {@link Player}
+     * Gives a {@link io.github.dsh105.echopet.api.entity.pet.Pet} to the specified {@link Player}
      * <p/>
      * Pets will be spawned immediately next to the target player, linked until it is removed.
      *
-     * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
-     * @param petType     the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.PetType} (type of {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}) that will be given to the player
+     * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link io.github.dsh105.echopet.api.entity.pet.Pet}
+     * @param petType     the {@link io.github.dsh105.echopet.api.entity.PetType} (type of {@link io.github.dsh105.echopet.api.entity.pet.Pet}) that will be given to the player
      * @param sendMessage defines if the plugin sends a message to the target {@link Player}
-     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} created
+     * @return the {@link io.github.dsh105.echopet.api.entity.pet.Pet} created
      */
     public Pet givePet(Player player, PetType petType, boolean sendMessage) {
         if (player != null && petType != null) {
@@ -81,9 +77,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Removes a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} if the {@link org.bukkit.entity.Player} has one active
+     * Removes a {@link io.github.dsh105.echopet.api.entity.pet.Pet} if the {@link org.bukkit.entity.Player} has one active
      *
-     * @param player      the {@link org.bukkit.entity.Player} to remove their {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} from
+     * @param player      the {@link org.bukkit.entity.Player} to remove their {@link io.github.dsh105.echopet.api.entity.pet.Pet} from
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
@@ -100,29 +96,29 @@ public class EchoPetAPI {
     }
 
     /**
-     * Checks if a {@link org.bukkit.entity.Player} has a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Checks if a {@link org.bukkit.entity.Player} has a {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param player the {@link org.bukkit.entity.Player} used to check for {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
-     * @return true if {@link org.bukkit.entity.Player} has a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}, false if not
+     * @param player the {@link org.bukkit.entity.Player} used to check for {@link io.github.dsh105.echopet.api.entity.pet.Pet}
+     * @return true if {@link org.bukkit.entity.Player} has a {@link io.github.dsh105.echopet.api.entity.pet.Pet}, false if not
      */
     public boolean hasPet(Player player) {
         return EchoPetPlugin.getInstance().PH.getPet(player) != null;
     }
 
     /**
-     * Gets a {@link org.bukkit.entity.Player}'s {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Gets a {@link org.bukkit.entity.Player}'s {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param player the {@link org.bukkit.entity.Player} to get the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} of
-     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} instance linked to the {@link org.bukkit.entity.Player}
+     * @param player the {@link org.bukkit.entity.Player} to get the {@link io.github.dsh105.echopet.api.entity.pet.Pet} of
+     * @return the {@link io.github.dsh105.echopet.api.entity.pet.Pet} instance linked to the {@link org.bukkit.entity.Player}
      */
     public Pet getPet(Player player) {
         return EchoPetPlugin.getInstance().PH.getPet(player);
     }
 
     /**
-     * Gets all active {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Gets all active {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @return an array of all active {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}s
+     * @return an array of all active {@link io.github.dsh105.echopet.api.entity.pet.Pet}s
      */
 
     public Pet[] getAllPets() {
@@ -131,15 +127,15 @@ public class EchoPetAPI {
     }
 
     /**
-     * Teleports a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to a {@link org.bukkit.Location}
+     * Teleports a {@link io.github.dsh105.echopet.api.entity.pet.Pet} to a {@link org.bukkit.Location}
      *
-     * @param pet      the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to be teleported
-     * @param location the {@link org.bukkit.Location} to teleport the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to
+     * @param pet      the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to be teleported
+     * @param location the {@link org.bukkit.Location} to teleport the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to
      * @return success of teleportation
      */
     public boolean teleportPet(Pet pet, Location location) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to teleport Pet to Location through the EchoPetAPI. {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} cannot be null.");
+            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to teleport Pet to Location through the EchoPetAPI. {@link io.github.dsh105.echopet.api.entity.pet.Pet} cannot be null.");
             return false;
         }
         if (pet.isHat() || pet.isOwnerRiding()) {
@@ -149,9 +145,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Save a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to file or an SQL Database
+     * Save a {@link io.github.dsh105.echopet.api.entity.pet.Pet} to file or an SQL Database
      *
-     * @param pet      {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to be saved
+     * @param pet      {@link io.github.dsh105.echopet.api.entity.pet.Pet} to be saved
      * @param saveType whether to save to file or SQL database
      * @return success of save
      */
@@ -170,10 +166,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Adds {@link PetData} to a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Adds {@link io.github.dsh105.echopet.api.entity.PetData} to a {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param pet     the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to add the data to
-     * @param petData {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData} to add to the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * @param pet     the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to add the data to
+     * @param petData {@link io.github.dsh105.echopet.api.entity.PetData} to add to the {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      */
     public void addData(Pet pet, PetData petData) {
         if (pet == null) {
@@ -184,10 +180,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Removes {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData} from a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Removes {@link PetData} from a {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param pet     the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to remove the data from
-     * @param petData {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData} to remove to the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * @param pet     the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to remove the data from
+     * @param petData {@link PetData} to remove to the {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      */
     public void removeData(Pet pet, PetData petData) {
         if (pet == null) {
@@ -198,11 +194,11 @@ public class EchoPetAPI {
     }
 
     /**
-     * Checks if a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} has specific {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData}
+     * Checks if a {@link io.github.dsh105.echopet.api.entity.pet.Pet} has specific {@link PetData}
      *
-     * @param pet     the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to search
-     * @param petData the {@link PetData} searched for in the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} instance
-     * @return true if the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} has the specified {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.PetData}
+     * @param pet     the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to search
+     * @param petData the {@link PetData} searched for in the {@link io.github.dsh105.echopet.api.entity.pet.Pet} instance
+     * @return true if the {@link io.github.dsh105.echopet.api.entity.pet.Pet} has the specified {@link PetData}
      */
     public boolean hasData(Pet pet, PetData petData) {
         if (pet == null) {
@@ -260,10 +256,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Set a target for the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to attack
+     * Set a target for the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to attack
      *
      * @param pet    the attacker
-     * @param target the {@link org.bukkit.entity.LivingEntity} for the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to attack
+     * @param target the {@link org.bukkit.entity.LivingEntity} for the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to attack
      */
     public void setAttackTarget(Pet pet, LivingEntity target) {
         if (pet == null) {
@@ -274,13 +270,13 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to set attack target for Pet through the EchoPetAPI. Target cannot be null.");
             return;
         }
-        if (pet.getEntityPet().petGoalSelector.getGoal("Attack") != null) {
+        if (pet.getEntityPet().getPetGoalSelector().getGoal("Attack") != null) {
             pet.getCraftPet().setTarget(target);
         }
     }
 
     /**
-     * Get the {@link org.bukkit.entity.LivingEntity} that a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} is targeting
+     * Get the {@link org.bukkit.entity.LivingEntity} that a {@link io.github.dsh105.echopet.api.entity.pet.Pet} is targeting
      *
      * @param pet the attacker
      * @return {@link org.bukkit.entity.LivingEntity} being attacked, null if none
@@ -293,9 +289,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add a predefined {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal} to a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} from the API
+     * Add a predefined {@link io.github.dsh105.echopet.api.ai.PetGoal} to a {@link io.github.dsh105.echopet.api.entity.pet.Pet} from the API
      *
-     * @param pet      the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to add the goal to
+     * @param pet      the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to add the goal to
      * @param goalType type of goal
      */
     public void addGoal(Pet pet, GoalType goalType) {
@@ -304,21 +300,21 @@ public class EchoPetAPI {
             return;
         }
         if (goalType == GoalType.ATTACK) {
-            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalMeleeAttack(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)), 3);
+            pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalMeleeAttack>(ReflectionUtil.getVersionedClass("ai.PetGoalMeleeAttack"), ReflectionUtil.getVersionedClass("entity.EntityPet"), double.class, int.class).newInstance(pet.getEntityPet(), EchoPetPlugin.getInstance().options.getConfig().getDouble("attack.lockRange", 0.0D), EchoPetPlugin.getInstance().options.getConfig().getInt("attack.ticksBetweenAttacks", 20)), 3);
         } else if (goalType == GoalType.FLOAT) {
-            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalFloat(pet.getEntityPet()), 0);
+            pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalFloat>(ReflectionUtil.getVersionedClass("ai.PetGoalFloat"), ReflectionUtil.getVersionedClass("entity.EntityPet")).newInstance(pet.getEntityPet()), 0);
         } else if (goalType == GoalType.FOLLOW_OWNER) {
-            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalFollowOwner(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getStopWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getTeleport(pet.getPetType())), 1);
+            pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalFollowOwner>(ReflectionUtil.getVersionedClass("ai.PetGoalFollowOwner"), ReflectionUtil.getVersionedClass("entity.EntityPet"), double.class, double.class, double.class).newInstance(pet.getEntityPet(), pet.getEntityPet().getSizeCategory().getStartWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getStopWalk(pet.getPetType()), pet.getEntityPet().getSizeCategory().getTeleport(pet.getPetType())), 1);
         } else if (goalType == GoalType.LOOK_AT_PLAYER) {
-            pet.getEntityPet().petGoalSelector.addGoal(new PetGoalLookAtPlayer(pet.getEntityPet(), ReflectionUtil.getClass("EntityHuman"), 8.0F), 2);
+            pet.getEntityPet().getPetGoalSelector().addGoal(new SafeConstructor<APetGoalLookAtPlayer>(ReflectionUtil.getVersionedClass("ai.PetGoalLookAtPlayer"), ReflectionUtil.getVersionedClass("entity.EntityPet"), Class.class, float.class).newInstance(pet.getEntityPet(), ReflectionUtil.getNMSClass("EntityHuman"), 8.0F), 2);
         }
     }
 
     /**
-     * Add an implementation of {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal} to a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Add an implementation of {@link io.github.dsh105.echopet.api.ai.PetGoal} to a {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param pet        the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to add the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal} to
-     * @param goal       the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal} to add
+     * @param pet        the {@link io.github.dsh105.echopet.api.entity.pet.Pet} to add the {@link io.github.dsh105.echopet.api.ai.PetGoal} to
+     * @param goal       the {@link io.github.dsh105.echopet.api.ai.PetGoal} to add
      * @param identifier a {@link java.lang.String} to identify the goal
      */
     public void addGoal(Pet pet, PetGoal goal, String identifier, int priority) {
@@ -330,13 +326,13 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to ad PetGoal to Pet AI through the EchoPetAPI. Goal cannot be null.");
             return;
         }
-        pet.getEntityPet().petGoalSelector.addGoal(identifier, goal, priority);
+        pet.getEntityPet().getPetGoalSelector().addGoal(identifier, goal, priority);
     }
 
     /**
-     * Remove a predefined goal from a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}'s AI
+     * Remove a predefined goal from a {@link io.github.dsh105.echopet.api.entity.pet.Pet}'s AI
      *
-     * @param pet      {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to remove the goal from
+     * @param pet      {@link io.github.dsh105.echopet.api.entity.pet.Pet} to remove the goal from
      * @param goalType type of goal
      */
     public void removeGoal(Pet pet, GoalType goalType) {
@@ -344,30 +340,30 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
-        pet.getEntityPet().petGoalSelector.removeGoal(goalType.getGoalString());
+        pet.getEntityPet().getPetGoalSelector().removeGoal(goalType.getGoalString());
     }
 
     /**
-     * Remove a goal from a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}'s AI
+     * Remove a goal from a {@link io.github.dsh105.echopet.api.entity.pet.Pet}'s AI
      * <p/>
-     * The goal is identified using a string, initiated when the goal is added to the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * The goal is identified using a string, initiated when the goal is added to the {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param pet        {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to remove the goal from
-     * @param identifier String that identifies a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal}
+     * @param pet        {@link io.github.dsh105.echopet.api.entity.pet.Pet} to remove the goal from
+     * @param identifier String that identifies a {@link io.github.dsh105.echopet.api.ai.PetGoal}
      */
     public void removeGoal(Pet pet, String identifier) {
         if (pet == null) {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
-        pet.getEntityPet().petGoalSelector.removeGoal(identifier);
+        pet.getEntityPet().getPetGoalSelector().removeGoal(identifier);
     }
 
     /**
-     * Remove a goal from a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}'s AI
+     * Remove a goal from a {@link io.github.dsh105.echopet.api.entity.pet.Pet}'s AI
      *
-     * @param pet     {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} to remove the goal from
-     * @param petGoal {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal} to remove
+     * @param pet     {@link io.github.dsh105.echopet.api.entity.pet.Pet} to remove the goal from
+     * @param petGoal {@link io.github.dsh105.echopet.api.ai.PetGoal} to remove
      */
     public void removeGoal(Pet pet, PetGoal petGoal) {
         if (pet == null) {
@@ -378,11 +374,11 @@ public class EchoPetAPI {
             ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Goal cannot be null.");
             return;
         }
-        pet.getEntityPet().petGoalSelector.removeGoal(petGoal);
+        pet.getEntityPet().getPetGoalSelector().removeGoal(petGoal);
     }
 
     /**
-     * {@link Enum} of predefined {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.pathfinder.PetGoal}s
+     * {@link Enum} of predefined {@link io.github.dsh105.echopet.api.ai.PetGoal}s
      */
     public enum GoalType {
         ATTACK("Attack"),
@@ -402,7 +398,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * Types used for saving {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}s
+     * Types used for saving {@link io.github.dsh105.echopet.api.entity.pet.Pet}s
      */
     public enum SaveType {
         SQL, FILE;

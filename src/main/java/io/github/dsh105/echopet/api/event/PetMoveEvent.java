@@ -17,14 +17,14 @@
 
 package io.github.dsh105.echopet.api.event;
 
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} moves
+ * Called when a {@link io.github.dsh105.echopet.api.entity.pet.Pet} moves
  */
 
 public class PetMoveEvent extends Event implements Cancellable {
@@ -43,7 +43,7 @@ public class PetMoveEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} moved to
+     * Gets the {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.api.entity.pet.Pet} moved to
      *
      * @return {@link org.bukkit.Location} moved to
      */
@@ -52,7 +52,7 @@ public class PetMoveEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} moved from
+     * Gets the {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.api.entity.pet.Pet} moved from
      *
      * @return {@link org.bukkit.Location} moved from
      */
@@ -61,18 +61,18 @@ public class PetMoveEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets the {@link org.bukkit.Location} that this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} will move to
+     * Sets the {@link org.bukkit.Location} that this {@link io.github.dsh105.echopet.api.entity.pet.Pet} will move to
      *
-     * @param to new {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} will move to
+     * @param to new {@link org.bukkit.Location} this {@link io.github.dsh105.echopet.api.entity.pet.Pet} will move to
      */
     public void setTo(Location to) {
         this.to = to;
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved
+     * @return the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved
      */
     public Pet getPet() {
         return this.pet;

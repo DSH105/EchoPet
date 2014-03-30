@@ -19,7 +19,7 @@ package io.github.dsh105.echopet.util;
 
 import com.dsh105.dshutils.config.YAMLConfig;
 import io.github.dsh105.echopet.config.ConfigOptions;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 

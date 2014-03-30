@@ -18,14 +18,14 @@
 package io.github.dsh105.echopet.api.event;
 
 
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} spawns
+ * Called when a {@link io.github.dsh105.echopet.api.entity.pet.Pet} spawns
  */
 
 public class PetPreSpawnEvent extends Event implements Cancellable {
@@ -42,16 +42,16 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved in this event
+     * Gets the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved in this event
      *
-     * @return the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet} involved
+     * @return the {@link io.github.dsh105.echopet.api.entity.pet.Pet} involved
      */
     public Pet getPet() {
         return this.pet;
     }
 
     /**
-     * Gets the spawn {@link org.bukkit.Location} of the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Gets the spawn {@link org.bukkit.Location} of the {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      * <p/>
      * This {@link org.bukkit.Location} is most likely going to be the owner's {@link org.bukkit.Location}
      *
@@ -62,9 +62,9 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets the spawn Location of this {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * Sets the spawn Location of this {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      *
-     * @param spawnLocation new {@link org.bukkit.Location} to spawn the {@link io.github.dsh105.echopet.nms.v1_7_R2.entity.Pet}
+     * @param spawnLocation new {@link org.bukkit.Location} to spawn the {@link io.github.dsh105.echopet.api.entity.pet.Pet}
      */
     public void setSpawnLocation(Location spawnLocation) {
         this.spawnLocation = spawnLocation;

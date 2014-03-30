@@ -17,19 +17,22 @@
 
 package io.github.dsh105.echopet.nms.v1_7_R2.entity;
 
+import io.github.dsh105.echopet.api.entity.EntityPetType;
+import io.github.dsh105.echopet.api.entity.PetType;
+import io.github.dsh105.echopet.api.entity.nms.ICraftPet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import net.minecraft.server.v1_7_R2.EntityCreature;
 import net.minecraft.server.v1_7_R2.EntityLiving;
-import org.bukkit.craftbukkit.v1_7_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_7_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.*;
 
-public abstract class CraftPet extends CraftCreature implements Vehicle, Tameable {
+public abstract class CraftPet extends CraftCreature implements Vehicle, Tameable, ICraftPet {
 
     protected EntityPet entityPet;
 
-    public CraftPet(CraftServer server, EntityPet entity) {
-        super(server, entity);
+    public CraftPet(EntityPet entity) {
+        super(entity.world.getServer(), entity);
         this.entityPet = entity;
     }
 
