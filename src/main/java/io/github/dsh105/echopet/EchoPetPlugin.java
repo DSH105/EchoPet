@@ -64,7 +64,7 @@ import java.util.Map;
 
 public class EchoPetPlugin extends DSHPlugin {
 
-    public static String BASE_NMS_PACKAGE = "io.github.dsh105.echopet.nms." + ReflectionUtil.getNMSPackageName() + ".";
+    public static String BASE_NMS_PACKAGE = "io.github.dsh105.echopet.nms." + VersionUtil.getServerVersion() + ".";
     private static ISpawnUtil SPAWN_UTIL;
     public static boolean isUsingNetty;
 

@@ -52,7 +52,7 @@ public class ReflectionUtil {
     }
 
     public static Class getVersionedClass(String classPath) {
-        return getCBCClass(EchoPetPlugin.BASE_NMS_PACKAGE + classPath);
+        return getClass(EchoPetPlugin.BASE_NMS_PACKAGE + classPath);
     }
 
     public static Class getPetNMSClass(String classIdentifier) {
