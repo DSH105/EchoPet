@@ -64,7 +64,7 @@ public class HumanPet extends PacketPet {
 
     private void updateName(String name) {
         if (this.getEntityPet().hasInititiated()) {
-            this.getEntityPet().updatePacket();
+            this.getEntityPet().updatePosition();
         }
         IEntityHumanPet human = (IEntityHumanPet) this.getEntityPet();
         if (human.getGameProfile() != null) {
@@ -76,7 +76,7 @@ public class HumanPet extends PacketPet {
     public void teleport(Location to) {
         super.teleport(to);
         if (this.getEntityPet().hasInititiated()) {
-            this.getEntityPet().updatePacket();
+            this.getEntityPet().updatePosition();
         }
     }
 }

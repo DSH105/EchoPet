@@ -15,13 +15,12 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.util.wrapper.protocol;
+package io.github.dsh105.echopet.util.protocol;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.reflection.FieldAccessor;
 import io.github.dsh105.echopet.reflection.SafeField;
 import io.github.dsh105.echopet.util.MiscUtil;
-import io.github.dsh105.echopet.util.PacketFactory;
 import io.github.dsh105.echopet.util.PlayerUtil;
 import io.github.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.entity.Player;

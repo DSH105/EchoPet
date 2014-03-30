@@ -94,7 +94,7 @@ public class PetOwnerListener implements Listener {
             Pet pet = i.next();
             if (pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
-                    ((IEntityPacketPet) pet.getEntityPet()).updatePacket();
+                    ((IEntityPacketPet) pet.getEntityPet()).updatePosition();
                 }
             }
         }
@@ -222,7 +222,7 @@ public class PetOwnerListener implements Listener {
             Pet pet = i.next();
             if (pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
-                    ((IEntityPacketPet) pet.getEntityPet()).updatePacket();
+                    ((IEntityPacketPet) pet.getEntityPet()).updatePosition();
                 }
             }
         }

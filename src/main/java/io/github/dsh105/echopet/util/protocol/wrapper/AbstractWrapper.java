@@ -15,10 +15,24 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.util.wrapper.protocol;
+package io.github.dsh105.echopet.util.protocol.wrapper;
 
-public enum Sender {
+public class AbstractWrapper {
 
-    CLIENT,
-    SERVER
+    private Object handle;
+
+    public AbstractWrapper() {
+    }
+
+    protected void setHandle(Object handle) {
+        if (this.handle == null) {
+            this.handle = handle;
+            return;
+        }
+        throw new RuntimeException("Handle already set!");
+    }
+
+    public Object getHandle() {
+        return this.handle;
+    }
 }

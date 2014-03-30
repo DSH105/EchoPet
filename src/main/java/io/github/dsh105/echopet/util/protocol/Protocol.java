@@ -15,7 +15,7 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.util.wrapper.protocol;
+package io.github.dsh105.echopet.util.protocol;
 
 import io.github.dsh105.echopet.util.ReflectionUtil;
 

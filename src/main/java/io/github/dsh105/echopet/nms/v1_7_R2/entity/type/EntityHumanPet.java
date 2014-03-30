@@ -18,7 +18,6 @@
 package io.github.dsh105.echopet.nms.v1_7_R2.entity.type;
 
 import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.ReflectionUtil;
 import io.github.dsh105.echopet.api.entity.EntityPetType;
 import io.github.dsh105.echopet.api.entity.EntitySize;
 import io.github.dsh105.echopet.api.entity.PetType;
@@ -26,6 +25,7 @@ import io.github.dsh105.echopet.api.entity.SizeCategory;
 import io.github.dsh105.echopet.api.entity.nms.type.IEntityHumanPet;
 import io.github.dsh105.echopet.api.entity.pet.Pet;
 import io.github.dsh105.echopet.nms.v1_7_R2.entity.*;
+import io.github.dsh105.echopet.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
 import net.minecraft.server.v1_7_R2.Packet;
 import net.minecraft.server.v1_7_R2.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_7_R2.World;
@@ -47,24 +47,18 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     }
 
     @Override
-    public Packet createPacket() {
-        PacketPlayOutNamedEntitySpawn packet = new PacketPlayOutNamedEntitySpawn();
-        this.profile = new GameProfile(this.id + "", this.pet.getPetName());
-        try {
-            ReflectionUtil.setValue(packet, "a", this.id);
-            ReflectionUtil.setValue(packet, "b", this.profile);
-            ReflectionUtil.setValue(packet, "c", (int) this.locX * 32);
-            ReflectionUtil.setValue(packet, "d", (int) this.locY * 32);
-            ReflectionUtil.setValue(packet, "e", (int) this.locZ * 32);
-            ReflectionUtil.setValue(packet, "f", this.angle(this.pitch));
-            ReflectionUtil.setValue(packet, "g", this.angle(this.yaw));
-            ReflectionUtil.setValue(packet, "h", this.equipmentId);
-            ReflectionUtil.setValue(packet, "i", this.dw);
-            return packet;
-        } catch (Exception e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Human Pet packet.", e, true);
-        }
-        return null;
+    public WrapperPacketNamedEntitySpawn getSpawnPacket() {
+        WrapperPacketNamedEntitySpawn spawn = new WrapperPacketNamedEntitySpawn();
+        spawn.setEntityId(this.id);
+        spawn.setGameProfile(this.profile);
+        spawn.setX(this.locX);
+        spawn.setY(this.locY);
+        spawn.setZ(this.locZ);
+        spawn.setYaw(this.yaw);
+        spawn.setPitch(this.pitch);
+        spawn.setEquipmentId(this.equipmentId);
+        spawn.setMetadata(this.dataWatcher);
+        return spawn;
     }
 
     @Override

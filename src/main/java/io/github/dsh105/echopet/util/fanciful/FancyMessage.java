@@ -22,7 +22,7 @@ import io.github.dsh105.echopet.reflection.SafeConstructor;
 import io.github.dsh105.echopet.reflection.SafeField;
 import io.github.dsh105.echopet.reflection.SafeMethod;
 import io.github.dsh105.echopet.util.ReflectionUtil;
-import io.github.dsh105.echopet.util.wrapper.WrapperPacketPlayOutChat;
+import io.github.dsh105.echopet.util.protocol.wrapper.WrapperPacketPlayOutChat;
 import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

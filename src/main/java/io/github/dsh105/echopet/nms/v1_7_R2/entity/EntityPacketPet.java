@@ -17,20 +17,22 @@
 
 package io.github.dsh105.echopet.nms.v1_7_R2.entity;
 
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.ReflectionUtil;
+import com.dsh105.dshutils.util.GeometryUtil;
 import io.github.dsh105.echopet.api.entity.nms.IEntityPacketPet;
 import io.github.dsh105.echopet.api.entity.pet.Pet;
+import io.github.dsh105.echopet.reflection.SafeField;
+import io.github.dsh105.echopet.util.ReflectionUtil;
+import io.github.dsh105.echopet.util.protocol.wrapper.WrappedDataWatcher;
+import io.github.dsh105.echopet.util.protocol.wrapper.WrapperPacketEntityMetadata;
+import io.github.dsh105.echopet.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
 import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Location;
-
-import java.lang.reflect.Field;
+import org.bukkit.entity.*;
 
 public abstract class EntityPacketPet extends EntityPet implements IEntityPacketPet {
 
-    private PacketPlayOutEntityMetadata metaPacket;
-    protected DataWatcher dw;
-    protected byte packetData = 0;
+    protected WrappedDataWatcher dataWatcher;
+    protected byte entityStatus = 0;
     protected boolean initiated;
     protected int id;
 
@@ -40,25 +42,8 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
 
     public EntityPacketPet(World world, Pet pet) {
         super(world, pet);
-        Field f;
-        try {
-            f = Entity.class.getDeclaredField("id");
-            f.setAccessible(true);
-            this.id = (Integer) f.get(this);
-            this.dw = new DataWatcher(this);
-        } catch (NoSuchFieldException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityPacketPet.", e, true);
-            this.remove(false);
-        } catch (SecurityException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityPacketPet.", e, true);
-            this.remove(false);
-        } catch (IllegalArgumentException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityPacketPet.", e, true);
-            this.remove(false);
-        } catch (IllegalAccessException e) {
-            Logger.log(Logger.LogLevel.WARNING, "Error creating new EntityPacketPet.", e, true);
-            this.remove(false);
-        }
+        this.id = new SafeField<Integer>(ReflectionUtil.getNMSClass("Entity"), "id").get(this);
+        this.dataWatcher = new WrappedDataWatcher(this);
     }
 
     @Override
@@ -70,38 +55,42 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public void onLive() {
         super.onLive();
         if (this.isInvisible()) {
-            this.packetData = 32;
+            this.entityStatus = 32;
         } else if (this.isSneaking()) {
-            this.packetData = 2;
+            this.entityStatus = 2;
         } else if (this.isSprinting()) {
-            this.packetData = 8;
+            this.entityStatus = 8;
         } else {
-            this.packetData = 0;
+            this.entityStatus = 0;
         }
         if (!this.initiated) {
             this.init();
             this.initiated = true;
         }
-        this.updateDatawatcher();
+        this.updateDatawatcher(this.pet.getPetName());
     }
 
-    protected byte angle(float f) {
-        return (byte) (f * 256.0F / 360.0F);
+    public abstract WrapperPacketNamedEntitySpawn getSpawnPacket();
+
+    public void updatePosition() {
+        WrapperPacketNamedEntitySpawn spawn = this.getSpawnPacket();
+        for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
+            spawn.send(p);
+        }
     }
 
-    public abstract Packet createPacket();
+    private void updateDatawatcher(String name) {
+        dataWatcher.watch(0, (Object) (byte) this.entityStatus);
+        dataWatcher.watch(1, (Object) (short) 0);
+        dataWatcher.watch(8, (Object) (byte) 0);
+        dataWatcher.watch(10, (Object) (String) name);
+        WrapperPacketEntityMetadata meta = new WrapperPacketEntityMetadata();
+        meta.setEntityId(this.id);
+        meta.setMetadata(dataWatcher);
 
-    public void updatePacket() {
-        ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.createPacket());
-    }
-
-    private void updateDatawatcher() {
-        this.dw.watch(0, (Object) (byte) this.packetData/*(this.isInvisible() ? 32 : this.isSneaking() ? 2 : this.isSprinting() ? 8 : 0)*/);
-        this.dw.watch(1, (Object) (short) 0);
-        this.dw.watch(8, (Object) (byte) 0);
-        this.dw.watch(10, (Object) (String) this.pet.getPetName());
-        this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
-        ReflectionUtil.sendPacket(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), this.metaPacket);
+        for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
+            meta.send(p);
+        }
     }
 
     public boolean hasInititiated() {
@@ -109,15 +98,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     }
 
     private void init() {
-        this.dw.a(0, (Object) (byte) 0);
-        this.dw.a(1, (Object) (short) 0);
-        this.dw.a(8, (Object) (byte) 0);
-        this.dw.a(10, (Object) (String) "Human Pet");
-        try {
-            this.metaPacket = new PacketPlayOutEntityMetadata(this.id, this.dw, true);
-        } catch (Exception e) {
-            Logger.log(Logger.LogLevel.SEVERE, "Failed to create Metadata Packet for Human Pet.", e, true);
-        }
-        this.updatePacket();
+        this.updateDatawatcher("Human Pet");
+        this.updatePosition();
     }
 }

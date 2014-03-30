@@ -15,13 +15,13 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.util.wrapper;
+package io.github.dsh105.echopet.util.protocol.wrapper;
 
 import io.github.dsh105.echopet.EchoPetPlugin;
 import io.github.dsh105.echopet.reflection.SafeMethod;
-import io.github.dsh105.echopet.util.PacketFactory;
+import io.github.dsh105.echopet.util.protocol.PacketFactory;
 import io.github.dsh105.echopet.util.ReflectionUtil;
-import io.github.dsh105.echopet.util.wrapper.protocol.Packet;
+import io.github.dsh105.echopet.util.protocol.Packet;
 
 public class WrapperPacketPlayOutChat extends Packet {
 

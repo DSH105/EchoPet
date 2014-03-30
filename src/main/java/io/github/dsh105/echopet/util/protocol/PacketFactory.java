@@ -15,10 +15,10 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.util;
+package io.github.dsh105.echopet.util.protocol;
 
-import io.github.dsh105.echopet.util.wrapper.protocol.Protocol;
-import io.github.dsh105.echopet.util.wrapper.protocol.Sender;
+import io.github.dsh105.echopet.util.protocol.Protocol;
+import io.github.dsh105.echopet.util.protocol.Sender;
 
 public class PacketFactory {
 
@@ -29,7 +29,8 @@ public class PacketFactory {
         ENTITY_TELEPORT(Protocol.PLAY, Sender.SERVER, 0x18, 0x22),
         ENTITY_ATTACH(Protocol.PLAY, Sender.SERVER, 0x1B, 0x27),
         ENTITY_METADATA(Protocol.PLAY, Sender.SERVER, 0x1C, 0x28),
-        CHAT(Protocol.PLAY, Sender.SERVER, 0x02, 0x03);
+        CHAT(Protocol.PLAY, Sender.SERVER, 0x02, 0x03),
+        NAMED_ENTITY_SPAWN(Protocol.PLAY, Sender.SERVER, 0x0C, 0x14);
 
         private Protocol protocol;
         private Sender sender;

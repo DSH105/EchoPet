@@ -19,7 +19,7 @@ package io.github.dsh105.echopet.api.entity.nms;
 
 public interface IEntityPacketPet extends IEntityPet {
 
-    public void updatePacket();
+    public void updatePosition();
 
     public boolean hasInititiated();
 }
