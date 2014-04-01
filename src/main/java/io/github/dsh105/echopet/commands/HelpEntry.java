@@ -18,9 +18,9 @@
 package io.github.dsh105.echopet.commands;
 
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
+import io.github.dsh105.echopet.compat.api.util.Perm;
 import io.github.dsh105.echopet.compat.api.util.fanciful.FancyItemUtil;
 import io.github.dsh105.echopet.compat.api.util.fanciful.FancyMessage;
-import io.github.dsh105.echopet.compat.api.util.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

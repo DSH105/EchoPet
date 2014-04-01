@@ -19,6 +19,6 @@ package io.github.dsh105.echopet.compat.api.entity.type.pet;
 
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 
-public interface ISquidPet extends IPet  {
+public interface ISquidPet extends IPet {
 
 }

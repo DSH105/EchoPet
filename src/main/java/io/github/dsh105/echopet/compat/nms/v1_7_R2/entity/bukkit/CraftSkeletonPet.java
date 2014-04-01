@@ -17,10 +17,10 @@
 
 package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.bukkit;
 
-import io.github.dsh105.echopet.compat.api.entity.type.pet.ISkeletonPet;
 import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.entity.type.pet.ISkeletonPet;
 import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.CraftPet;
 import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
 import org.bukkit.entity.Skeleton;

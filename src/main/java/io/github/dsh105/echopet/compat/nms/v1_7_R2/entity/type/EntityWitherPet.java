@@ -19,9 +19,7 @@ package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.compat.api.entity.*;
-import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityWitchPet;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherPet;
-import io.github.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
 import net.minecraft.server.v1_7_R2.World;
 

@@ -35,11 +35,7 @@
 package io.github.dsh105.echopet.compat.api.util;
 
 import com.google.common.collect.BiMap;
-import net.minecraft.util.org.apache.commons.io.IOUtils;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Map;
 
 public class MiscUtil {

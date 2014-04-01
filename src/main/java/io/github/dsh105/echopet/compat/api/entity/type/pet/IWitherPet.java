@@ -19,7 +19,7 @@ package io.github.dsh105.echopet.compat.api.entity.type.pet;
 
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 
-public interface IWitherPet extends IPet  {
+public interface IWitherPet extends IPet {
 
     public void setShielded(boolean flag);
 

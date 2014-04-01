@@ -41,6 +41,7 @@ import io.github.dsh105.echopet.compat.api.entity.PetType;
 import io.github.dsh105.echopet.compat.api.plugin.*;
 import io.github.dsh105.echopet.compat.api.util.Lang;
 import io.github.dsh105.echopet.compat.api.util.ReflectionUtil;
+import io.github.dsh105.echopet.compat.api.util.SQLUtil;
 import io.github.dsh105.echopet.compat.api.util.reflection.SafeConstructor;
 import io.github.dsh105.echopet.compat.api.util.reflection.SafeField;
 import io.github.dsh105.echopet.compat.nms.ISpawnUtil;
@@ -50,7 +51,6 @@ import io.github.dsh105.echopet.listeners.ChunkListener;
 import io.github.dsh105.echopet.listeners.MenuListener;
 import io.github.dsh105.echopet.listeners.PetEntityListener;
 import io.github.dsh105.echopet.listeners.PetOwnerListener;
-import io.github.dsh105.echopet.compat.api.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -90,15 +90,13 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
     public String prefix = "" + ChatColor.DARK_RED + "[" + ChatColor.RED + "EchoPet" + ChatColor.DARK_RED + "] " + ChatColor.RESET;
 
     public String cmdString = "pet";
-
     public String adminCmdString = "petadmin";
+
     // Update data
     public boolean update = false;
     public String name = "";
     public long size = 0;
     public boolean updateChecked = false;
-
-    //public CommandMap CM;
 
     @Override
     public void onEnable() {

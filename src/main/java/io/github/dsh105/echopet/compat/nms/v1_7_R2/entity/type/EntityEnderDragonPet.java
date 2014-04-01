@@ -352,7 +352,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
             this.wing2.setPositionRotation(this.locX - (double) (f12 * 4.5F), this.locY + 2.0D, this.locZ - (double) (f11 * 4.5F), 0.0F, 0.0F);
 
 		/*if (!this.world.isStatic && this.hurtTicks == 0) {
-				PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
+                PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
 				if (attackGoal != null && attackGoal.isActive) {
 					this.launchEntities(this.world.getEntities(this, this.wing1.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
 					this.launchEntities(this.world.getEntities(this, this.wing2.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));

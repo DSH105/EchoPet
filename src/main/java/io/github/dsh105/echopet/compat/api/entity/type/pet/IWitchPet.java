@@ -19,6 +19,6 @@ package io.github.dsh105.echopet.compat.api.entity.type.pet;
 
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 
-public interface IWitchPet extends IPet  {
+public interface IWitchPet extends IPet {
 
 }

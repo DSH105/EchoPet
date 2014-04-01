@@ -35,6 +35,7 @@
 package io.github.dsh105.echopet.compat.api.plugin.hook;
 
 //import io.github.dsh105.echopet.EchoPetPlugin;
+
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
