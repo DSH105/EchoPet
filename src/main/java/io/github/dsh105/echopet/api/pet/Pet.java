@@ -314,7 +314,7 @@ public abstract class Pet implements IPet {
             if (this.getRider() != null) {
                 //Entity rider = ((Entity) this.getRider().getCraftPet().getHandle());
                 //rider.mount(null);
-                new SafeMethod(ReflectionUtil.getNMSClass("Entity").getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), new Object[] {null});
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), new Object[] {null});
 
                 //craftPet.mount(((CraftPlayer) this.getOwner()).getHandle());
                 new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), PlayerUtil.playerToEntityPlayer(this.getOwner()));
