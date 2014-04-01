@@ -118,7 +118,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         // Make sure that the plugin is running under the correct version to prevent errors
 
         try {
-            Class.forName(ReflectionUtil.COMPAT_NMS_PATH + "SpawnUtil");
+            Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".SpawnUtil");
         } catch (ClassNotFoundException e) {
             ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
