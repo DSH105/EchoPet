@@ -72,7 +72,7 @@ public enum Lang {
 
     RIDERS_DISABLED("riders_disabled", "&eRiders are disabled for &6%type%"),
     DATA_TYPE_DISABLED("data_type_disabled", "&6%data% &edata type is disabled."),
-    PET_TYPE_DISABLED("pet_type_disabled", "%6%type% &epet type is disabled."),
+    PET_TYPE_DISABLED("pet_type_disabled", "&6%type% &epet type is disabled."),
     INVALID_PET_TYPE("invalid_pet_type", "&6%type% &eis an invalid pet type."),
     INVALID_PET_DATA_TYPE("invalid_pet_data_type", "&6%data% &eis an invalid pet data type."),
     INVALID_PET_DATA_TYPE_FOR_PET("invalid_pet_data_type_for_pet", "&6%data% &e is invalid for the &6%type% &epet type."),
