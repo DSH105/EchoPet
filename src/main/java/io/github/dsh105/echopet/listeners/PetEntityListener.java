@@ -17,12 +17,12 @@
 
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.api.entity.nms.ICraftPet;
-import io.github.dsh105.echopet.api.event.PetAttackEvent;
-import io.github.dsh105.echopet.api.event.PetDamageEvent;
-import io.github.dsh105.echopet.api.event.PetInteractEvent;
-import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.compat.api.entity.ICraftPet;
+import io.github.dsh105.echopet.compat.api.event.PetAttackEvent;
+import io.github.dsh105.echopet.compat.api.event.PetDamageEvent;
+import io.github.dsh105.echopet.compat.api.event.PetInteractEvent;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
+import io.github.dsh105.echopet.compat.api.util.Lang;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -57,7 +57,7 @@ public class PetEntityListener implements Listener {
     public void onDismount(VehicleExitEvent event) {
         Entity e = event.getVehicle();
         if (e instanceof ICraftPet) {
-            if (((ICraftPet) e).getPet().isOwnerRiding() && !((ICraftPet) e).getPet().ownerIsMounting) {
+            if (((ICraftPet) e).getPet().isOwnerRiding() && !((ICraftPet) e).getPet().isOwnerInMountingProcess()) {
                 Lang.sendTo(((ICraftPet) e).getPet().getOwner(), Lang.RIDE_PET_OFF.toString());
                 ((ICraftPet) e).getPet().ownerRidePet(false);
             }
@@ -78,7 +78,7 @@ public class PetEntityListener implements Listener {
         if (e instanceof ICraftPet) {
             ICraftPet craftPet = (ICraftPet) e;
             PetDamageEvent damageEvent = new PetDamageEvent(craftPet.getPet(), event.getCause(), event.getDamage());
-            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(damageEvent);
+            EchoPet.getPlugin().getServer().getPluginManager().callEvent(damageEvent);
             event.setDamage(damageEvent.getDamage());
             event.setCancelled(damageEvent.isCancelled());
         }
@@ -91,13 +91,13 @@ public class PetEntityListener implements Listener {
             Entity damager = event.getDamager();
             if (damager instanceof Player) {
                 PetInteractEvent iEvent = new PetInteractEvent(((ICraftPet) e).getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
-                EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(iEvent);
+                EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);
                 event.setCancelled(iEvent.isCancelled());
             }
         } else if (event.getDamager() instanceof ICraftPet) {
             ICraftPet craftPet = (ICraftPet) event.getDamager();
             PetAttackEvent attackEvent = new PetAttackEvent(craftPet.getPet(), e, event.getDamage());
-            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(attackEvent);
+            EchoPet.getPlugin().getServer().getPluginManager().callEvent(attackEvent);
             event.setDamage(attackEvent.getDamage());
             event.setCancelled(attackEvent.isCancelled());
         }

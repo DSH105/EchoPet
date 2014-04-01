@@ -19,28 +19,12 @@ package io.github.dsh105.echopet.util;
 
 import com.dsh105.dshutils.util.EnumUtil;
 import com.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.api.UnorganisedPetData;
-import io.github.dsh105.echopet.api.entity.IAgeablePet;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
-import io.github.dsh105.echopet.api.entity.PetData;
-import io.github.dsh105.echopet.api.entity.PetType;
-import io.github.dsh105.echopet.api.entity.pet.type.BlazePet;
-import io.github.dsh105.echopet.api.entity.pet.type.CreeperPet;
-import io.github.dsh105.echopet.api.entity.pet.type.EndermanPet;
-import io.github.dsh105.echopet.api.entity.pet.type.HorsePet;
-import io.github.dsh105.echopet.api.entity.HorseType;
-import io.github.dsh105.echopet.api.entity.pet.type.MagmaCubePet;
-import io.github.dsh105.echopet.api.entity.pet.type.OcelotPet;
-import io.github.dsh105.echopet.api.entity.pet.type.PigPet;
-import io.github.dsh105.echopet.api.entity.pet.type.PigZombiePet;
-import io.github.dsh105.echopet.api.entity.pet.type.SheepPet;
-import io.github.dsh105.echopet.api.entity.pet.type.SkeletonPet;
-import io.github.dsh105.echopet.api.entity.pet.type.SlimePet;
-import io.github.dsh105.echopet.api.entity.pet.type.VillagerPet;
-import io.github.dsh105.echopet.api.entity.pet.type.WitherPet;
-import io.github.dsh105.echopet.api.entity.pet.type.WolfPet;
-import io.github.dsh105.echopet.api.entity.pet.type.ZombiePet;
+import io.github.dsh105.echopet.compat.api.entity.*;
+import io.github.dsh105.echopet.compat.api.entity.type.pet.*;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
+import io.github.dsh105.echopet.compat.api.plugin.PetStorage;
+import io.github.dsh105.echopet.compat.api.util.Lang;
+import io.github.dsh105.echopet.compat.api.util.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -53,7 +37,7 @@ public class PetUtil {
         return petType.toString().toLowerCase().replace("_", "");
     }
 
-    public static UnorganisedPetData formPetFromArgs(EchoPetPlugin ec, CommandSender sender, String s, boolean petAdmin) {
+    public static PetStorage formPetFromArgs(CommandSender sender, String s, boolean petAdmin) {
         String admin = petAdmin ? "admin" : "";
         String petString = s;
         String dataString = "";
@@ -191,7 +175,7 @@ public class PetUtil {
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", " "))));
                         return null;
                     }
-                    if (!ec.options.allowData(petType, dataTemp)) {
+                    if (!EchoPet.getOptions().allowData(petType, dataTemp)) {
                         Lang.sendTo(sender, Lang.DATA_TYPE_DISABLED.toString()
                                 .replace("%data%", StringUtil.capitalise(dataTemp.toString().replace("_", ""))));
                         return null;
@@ -200,7 +184,7 @@ public class PetUtil {
             }
         }
 
-        if (!ec.options.allowPetType(petType)) {
+        if (!EchoPet.getOptions().allowPetType(petType)) {
             Lang.sendTo(sender, Lang.PET_TYPE_DISABLED.toString()
                     .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
             return null;
@@ -212,8 +196,7 @@ public class PetUtil {
             }
         }
 
-        UnorganisedPetData UPD = new UnorganisedPetData(petDataList, petType, name);
-        return UPD;
+        return new PetStorage(petDataList, petType, name);
     }
 
 	/*private static boolean isPetType(String s) {
@@ -237,7 +220,7 @@ public class PetUtil {
         }
     }
 
-    public static ArrayList<String> generatePetInfo(Pet pt) {
+    public static ArrayList<String> generatePetInfo(IPet pt) {
         ArrayList<String> info = new ArrayList<String>();
         info.add(ChatColor.GOLD + " - Pet Type: " + ChatColor.YELLOW + StringUtil.capitalise(pt.getPetType().toString()));
         info.add(ChatColor.GOLD + " - Name: " + ChatColor.YELLOW + pt.getPetName());
@@ -245,10 +228,10 @@ public class PetUtil {
             info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + ((IAgeablePet) pt).isBaby());
         }
         if (pt.getPetType() == PetType.ZOMBIE) {
-            info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + ((ZombiePet) pt).isBaby());
+            info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + ((IZombiePet) pt).isBaby());
         }
         if (pt.getPetType() == PetType.PIGZOMBIE) {
-            info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + ((PigZombiePet) pt).isBaby());
+            info.add(ChatColor.GOLD + " - Baby: " + ChatColor.YELLOW + ((IPigZombiePet) pt).isBaby());
         }
         info.addAll(generatePetDataInfo(pt));
 
@@ -260,45 +243,45 @@ public class PetUtil {
         return info;
     }
 
-    public static ArrayList<String> generatePetDataInfo(Pet pt) {
+    public static ArrayList<String> generatePetDataInfo(IPet pt) {
         ArrayList<String> info = new ArrayList<String>();
         if (pt.getPetType() == PetType.BLAZE) {
-            info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + ((BlazePet) pt).isOnFire());
+            info.add(ChatColor.GOLD + " - On Fire: " + ChatColor.YELLOW + ((IBlazePet) pt).isOnFire());
         }
 
         if (pt.getPetType() == PetType.CREEPER) {
-            info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + ((CreeperPet) pt).isPowered());
+            info.add(ChatColor.GOLD + " - Powered: " + ChatColor.YELLOW + ((ICreeperPet) pt).isPowered());
         }
 
         if (pt.getPetType() == PetType.ENDERMAN) {
-            info.add(ChatColor.GOLD + " - Screaming: " + ChatColor.YELLOW + ((EndermanPet) pt).isScreaming());
+            info.add(ChatColor.GOLD + " - Screaming: " + ChatColor.YELLOW + ((IEndermanPet) pt).isScreaming());
         }
 
         if (pt.getPetType() == PetType.SHEEP) {
             String color = "";
-            color = ((SheepPet) pt).getColor() == null ? "Default" : StringUtil.capitalise(((SheepPet) pt).getColor().toString().replace("_", " "));
+            color = ((ISheepPet) pt).getColor() == null ? "Default" : StringUtil.capitalise(((ISheepPet) pt).getColor().toString().replace("_", " "));
             info.add(ChatColor.GOLD + " - Wool Colour: " + ChatColor.YELLOW + color);
         }
 
         if (pt.getPetType() == PetType.VILLAGER) {
             String prof = "";
-            prof = ((VillagerPet) pt).getProfession() == null ? "Farmer" : StringUtil.capitalise(((VillagerPet) pt).getProfession().toString().replace("_", " "));
+            prof = ((IVillagerPet) pt).getProfession() == null ? "Farmer" : StringUtil.capitalise(((IVillagerPet) pt).getProfession().toString().replace("_", " "));
             info.add(ChatColor.GOLD + " - Profession: " + ChatColor.YELLOW + prof);
         }
 
         if (pt.getPetType() == PetType.OCELOT) {
             String oType = "";
-            oType = ((OcelotPet) pt).getCatType() == null ? "Default" : StringUtil.capitalise(((OcelotPet) pt).getCatType().toString().replace("_", " "));
+            oType = ((IOcelotPet) pt).getCatType() == null ? "Default" : StringUtil.capitalise(((IOcelotPet) pt).getCatType().toString().replace("_", " "));
             info.add(ChatColor.GOLD + " - Ocelot Type: " + ChatColor.YELLOW + oType);
         }
 
         if (pt.getPetType() == PetType.PIG) {
-            info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((PigPet) pt).hasSaddle());
+            info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((IPigPet) pt).hasSaddle());
         }
 
         if (pt.getPetType() == PetType.SLIME) {
             String size = "";
-            size = StringUtil.capitalise(((SlimePet) pt).getSize() + "");
+            size = StringUtil.capitalise(((ISlimePet) pt).getSize() + "");
             String s = " (Small)";
             if (size.equals("2")) s = " (Medium)";
             if (size.equals("4")) s = " (Large)";
@@ -307,7 +290,7 @@ public class PetUtil {
 
         if (pt.getPetType() == PetType.MAGMACUBE) {
             String size = "";
-            size = StringUtil.capitalise(((MagmaCubePet) pt).getSize() + "");
+            size = StringUtil.capitalise(((IMagmaCubePet) pt).getSize() + "");
             String s = " (Small)";
             if (size.equals("2")) s = " (Medium)";
             if (size.equals("4")) s = " (Large)";
@@ -315,36 +298,36 @@ public class PetUtil {
         }
 
         if (pt.getPetType() == PetType.WOLF) {
-            info.add(ChatColor.GOLD + " - Tamed (Wolf): " + ChatColor.YELLOW + ((WolfPet) pt).isTamed());
-            info.add(ChatColor.GOLD + " - Angry (Wolf): " + ChatColor.YELLOW + ((WolfPet) pt).isAngry());
+            info.add(ChatColor.GOLD + " - Tamed (Wolf): " + ChatColor.YELLOW + ((IWolfPet) pt).isTamed());
+            info.add(ChatColor.GOLD + " - Angry (Wolf): " + ChatColor.YELLOW + ((IWolfPet) pt).isAngry());
             String color = "";
-            color = ((WolfPet) pt).getCollarColor() == null ? "Red" : StringUtil.capitalise(((WolfPet) pt).getCollarColor().toString().replace("_", " "));
+            color = ((IWolfPet) pt).getCollarColor() == null ? "Red" : StringUtil.capitalise(((IWolfPet) pt).getCollarColor().toString().replace("_", " "));
             info.add(ChatColor.GOLD + " - Collar Colour: " + ChatColor.YELLOW + color);
         }
 
         if (pt.getPetType() == PetType.SKELETON) {
-            info.add(ChatColor.GOLD + " - Wither: " + ChatColor.YELLOW + ((SkeletonPet) pt).isWither());
+            info.add(ChatColor.GOLD + " - Wither: " + ChatColor.YELLOW + ((ISkeletonPet) pt).isWither());
         }
 
         if (pt.getPetType() == PetType.WITHER) {
-            info.add(ChatColor.GOLD + " - Shielded: " + ChatColor.YELLOW + ((WitherPet) pt).isShielded());
+            info.add(ChatColor.GOLD + " - Shielded: " + ChatColor.YELLOW + ((IWitherPet) pt).isShielded());
         }
 
         if (pt.getPetType() == PetType.ZOMBIE) {
-            info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((ZombiePet) pt).isVillager());
+            info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((IZombiePet) pt).isVillager());
         }
         if (pt.getPetType() == PetType.PIGZOMBIE) {
-            info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((PigZombiePet) pt).isVillager());
+            info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((IPigZombiePet) pt).isVillager());
         }
         if (pt.getPetType() == PetType.HORSE) {
-            HorseType ht = ((HorsePet) pt).getHorseType();
-            info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((HorsePet) pt).isSaddled());
+            HorseType ht = ((IHorsePet) pt).getHorseType();
+            info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((IHorsePet) pt).isSaddled());
             info.add(ChatColor.GOLD + " - Type: " + ChatColor.YELLOW + StringUtil.capitalise(ht.toString().replace("_", " ")));
             if (ht == HorseType.NORMAL) {
-                info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(((HorsePet) pt).getVariant().toString().replace("_", " ")));
-                info.add(ChatColor.GOLD + " - Marking: " + ChatColor.YELLOW + StringUtil.capitalise(((HorsePet) pt).getMarking().toString().replace("_", " ")));
+                info.add(ChatColor.GOLD + " - Variant: " + ChatColor.YELLOW + StringUtil.capitalise(((IHorsePet) pt).getVariant().toString().replace("_", " ")));
+                info.add(ChatColor.GOLD + " - Marking: " + ChatColor.YELLOW + StringUtil.capitalise(((IHorsePet) pt).getMarking().toString().replace("_", " ")));
             }
-            info.add(ChatColor.GOLD + " - Chested: " + ChatColor.YELLOW + ((HorsePet) pt).isChested());
+            info.add(ChatColor.GOLD + " - Chested: " + ChatColor.YELLOW + ((IHorsePet) pt).isChested());
         }
 
         return info;

@@ -27,26 +27,30 @@ import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.VersionUtil;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
-import io.github.dsh105.echopet.api.entity.nms.IEntityPet;
+import io.github.dsh105.echopet.api.PetManager;
+import io.github.dsh105.echopet.api.SqlPetManager;
 import io.github.dsh105.echopet.commands.CommandComplete;
 import io.github.dsh105.echopet.commands.PetAdminCommand;
 import io.github.dsh105.echopet.commands.PetCommand;
 import io.github.dsh105.echopet.commands.util.CommandManager;
 import io.github.dsh105.echopet.commands.util.DynamicPluginCommand;
-import io.github.dsh105.echopet.config.ConfigOptions;
-import io.github.dsh105.echopet.api.PetHandler;
+import io.github.dsh105.echopet.compat.api.config.ConfigOptions;
+import io.github.dsh105.echopet.compat.api.entity.IEntityPet;
+import io.github.dsh105.echopet.compat.api.entity.PetData;
+import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.plugin.*;
+import io.github.dsh105.echopet.compat.api.util.Lang;
+import io.github.dsh105.echopet.compat.api.util.ReflectionUtil;
+import io.github.dsh105.echopet.compat.api.util.reflection.SafeConstructor;
+import io.github.dsh105.echopet.compat.api.util.reflection.SafeField;
+import io.github.dsh105.echopet.compat.nms.ISpawnUtil;
 import io.github.dsh105.echopet.hook.VanishProvider;
 import io.github.dsh105.echopet.hook.WorldGuardProvider;
-import io.github.dsh105.echopet.nms.ISpawnUtil;
-import io.github.dsh105.echopet.api.entity.PetData;
-import io.github.dsh105.echopet.api.entity.PetType;
-import io.github.dsh105.echopet.listeners.*;
-import io.github.dsh105.echopet.mysql.SQLPetHandler;
-import io.github.dsh105.echopet.reflection.SafeConstructor;
-import io.github.dsh105.echopet.reflection.SafeField;
-import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.ReflectionUtil;
-import io.github.dsh105.echopet.util.SQLUtil;
+import io.github.dsh105.echopet.listeners.ChunkListener;
+import io.github.dsh105.echopet.listeners.MenuListener;
+import io.github.dsh105.echopet.listeners.PetEntityListener;
+import io.github.dsh105.echopet.listeners.PetOwnerListener;
+import io.github.dsh105.echopet.compat.api.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -62,22 +66,23 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
 
-public class EchoPetPlugin extends DSHPlugin {
+public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
-    public static String BASE_NMS_PACKAGE = "io.github.dsh105.echopet.nms." + VersionUtil.getServerVersion() + ".";
-    private static ISpawnUtil SPAWN_UTIL;
     public static boolean isUsingNetty;
 
-    public static final ModuleLogger LOGGER = new ModuleLogger("HoloAPI");
-    public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule("Reflection");
+    private static ISpawnUtil SPAWN_UTIL;
+    private static PetManager MANAGER;
+
+    public static final ModuleLogger LOGGER = new ModuleLogger();
+    public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule();
 
     private CommandManager COMMAND_MANAGER;
     private YAMLConfig petConfig;
     private YAMLConfig mainConfig;
     private YAMLConfig langConfig;
     public ConfigOptions options;
-    public PetHandler PH;
-    public SQLPetHandler SPH;
+    public PetManager PH;
+    public SqlPetManager SPH;
     public BoneCP dbPool;
 
     private VanishProvider vanishProvider;
@@ -99,6 +104,7 @@ public class EchoPetPlugin extends DSHPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        EchoPet.setPlugin(this);
         Logger.initiate(this, "EchoPet", "[EchoPet]");
 
         // meh
@@ -112,7 +118,7 @@ public class EchoPetPlugin extends DSHPlugin {
         // Make sure that the plugin is running under the correct version to prevent errors
 
         try {
-            Class.forName(BASE_NMS_PACKAGE + "SpawnUtil");
+            Class.forName(ReflectionUtil.COMPAT_NMS_PATH + "SpawnUtil");
         } catch (ClassNotFoundException e) {
             ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
@@ -123,7 +129,7 @@ public class EchoPetPlugin extends DSHPlugin {
                     new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
                             "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
                             "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
-                            null, this);
+                    null, this);
             COMMAND_MANAGER.register(cmd);
             return;
         }
@@ -134,8 +140,8 @@ public class EchoPetPlugin extends DSHPlugin {
 
         PluginManager manager = getServer().getPluginManager();
 
-        PH = new PetHandler(this);
-        SPH = new SQLPetHandler();
+        PH = new PetManager();
+        SPH = new SqlPetManager();
 
         if (options.useSql()) {
             this.prepareSqlDatabase();
@@ -393,27 +399,102 @@ public class EchoPetPlugin extends DSHPlugin {
         return (EchoPetPlugin) getPluginInstance();
     }
 
+    @Override
     public YAMLConfig getPetConfig() {
         return this.petConfig;
     }
 
+    @Override
     public YAMLConfig getMainConfig() {
         return mainConfig;
     }
 
+    @Override
     public YAMLConfig getLangConfig() {
         return langConfig;
     }
 
-    public static ISpawnUtil getSpawnUtil() {
+    @Override
+    public ISpawnUtil getSpawnUtil() {
         return SPAWN_UTIL;
     }
 
+    @Override
     public VanishProvider getVanishProvider() {
         return vanishProvider;
     }
 
+    @Override
     public WorldGuardProvider getWorldGuardProvider() {
         return worldGuardProvider;
+    }
+
+    @Override
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public static PetManager getManager() {
+        return MANAGER;
+    }
+
+    @Override
+    public IPetManager getPetManager() {
+        return MANAGER;
+    }
+
+    @Override
+    public ConfigOptions getOptions() {
+        return options;
+    }
+
+    @Override
+    public ISqlPetManager getSqlPetManager() {
+        return SPH;
+    }
+
+    @Override
+    public BoneCP getDbPool() {
+        return dbPool;
+    }
+
+    @Override
+    public String getCommandString() {
+        return cmdString;
+    }
+
+    @Override
+    public String getAdminCommandString() {
+        return adminCmdString;
+    }
+
+    @Override
+    public boolean isUsingNetty() {
+        return isUsingNetty;
+    }
+
+    @Override
+    public ModuleLogger getModuleLogger() {
+        return LOGGER;
+    }
+
+    @Override
+    public ModuleLogger getReflectionLogger() {
+        return LOGGER_REFLECTION;
+    }
+
+    @Override
+    public boolean isUpdateAvailable() {
+        return update;
+    }
+
+    @Override
+    public String getUpdateName() {
+        return name;
+    }
+
+    @Override
+    public long getUpdateSize() {
+        return size;
     }
 }

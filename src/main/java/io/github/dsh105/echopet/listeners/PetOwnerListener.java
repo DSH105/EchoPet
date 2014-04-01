@@ -19,18 +19,16 @@ package io.github.dsh105.echopet.listeners;
 
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.api.entity.nms.ICraftPet;
-import io.github.dsh105.echopet.api.entity.nms.IEntityPacketPet;
-import io.github.dsh105.echopet.api.event.PetInteractEvent;
-import io.github.dsh105.echopet.config.ConfigOptions;
-import io.github.dsh105.echopet.api.PetHandler;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
-import io.github.dsh105.echopet.menu.selector.SelectorLayout;
-import io.github.dsh105.echopet.menu.selector.SelectorMenu;
-import io.github.dsh105.echopet.mysql.SQLPetHandler;
-import io.github.dsh105.echopet.util.Lang;
-import io.github.dsh105.echopet.util.WorldUtil;
+import io.github.dsh105.echopet.compat.api.config.ConfigOptions;
+import io.github.dsh105.echopet.compat.api.config.SelectorLayout;
+import io.github.dsh105.echopet.compat.api.entity.ICraftPet;
+import io.github.dsh105.echopet.compat.api.entity.IEntityPacketPet;
+import io.github.dsh105.echopet.compat.api.entity.IPet;
+import io.github.dsh105.echopet.compat.api.event.PetInteractEvent;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
+import io.github.dsh105.echopet.compat.api.util.Lang;
+import io.github.dsh105.echopet.compat.api.util.menu.SelectorMenu;
+import io.github.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -62,10 +60,10 @@ public class PetOwnerListener implements Listener {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
         if (e instanceof ICraftPet) {
-            Pet pet = ((ICraftPet) e).getPet();
+            IPet pet = ((ICraftPet) e).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
-            EchoPetPlugin.getInstance().getServer().getPluginManager().callEvent(iEvent);
+            EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);
             if (!iEvent.isCancelled()) {
                 pet.getEntityPet().onInteract(p);
             }
@@ -77,7 +75,7 @@ public class PetOwnerListener implements Listener {
         if (event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                Pet pet = PetHandler.getInstance().getPet(p);
+                IPet pet = EchoPet.getManager().getPet(p);
                 if (pet != null && pet.isOwnerRiding()) {
                     event.setCancelled(true);
                 }
@@ -88,10 +86,10 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerTeleport(final PlayerTeleportEvent event) {
         final Player p = event.getPlayer();
-        final Pet pi = PetHandler.getInstance().getPet(p);
-        Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
+        final IPet pi = EchoPet.getManager().getPet(p);
+        Iterator<IPet> i = EchoPet.getManager().getPets().iterator();
         while (i.hasNext()) {
-            Pet pet = i.next();
+            IPet pet = i.next();
             if (pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getTo(), 50).contains(pet)) {
                     ((IEntityPacketPet) pet.getEntityPet()).updatePosition();
@@ -101,45 +99,9 @@ public class PetOwnerListener implements Listener {
         if (pi != null) {
             if (!WorldUtil.allowPets(event.getTo())) {
                 Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
-                PetHandler.getInstance().saveFileData("autosave", pi);
-                SQLPetHandler.getInstance().saveToDatabase(pi, false);
-                PetHandler.getInstance().removePet(pi, false);
-                return;
-            }
-            //if (pi.ownerIsMounting) return;
-            if (event.getFrom().getWorld() == event.getTo().getWorld()) {
-                /*PetHandler.getInstance().saveFileData("autosave", pi);
-                SQLPetHandler.getInstance().saveToDatabase(pi, false);
-                PetHandler.getInstance().removePet(pi, false);
-                if (!WorldUtil.allowPets(event.getTo())) {
-                    Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
-                    return;
-                }
-                new BukkitRunnable() {
-
-                    @Override
-                    public void run() {
-                        PetHandler.getInstance().loadPets(p, false, false, false);
-                    }
-
-                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);*/
-            } else {
-                /*PetHandler.getInstance().saveFileData("autosave", pi);
-                SQLPetHandler.getInstance().saveToDatabase(pi, false);
-                PetHandler.getInstance().removePet(pi, false);
-                if (!WorldUtil.allowPets(event.getTo())) {
-                    Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
-                    return;
-                }
-                Lang.sendTo(p, Lang.DIMENSION_CHANGE.toString());
-                new BukkitRunnable() {
-
-                    @Override
-                    public void run() {
-                        PetHandler.getInstance().loadPets(p, false, false, false);
-                    }
-
-                }.runTaskLater(EchoPetPlugin.getInstance(), 20L);*/
+                EchoPet.getManager().saveFileData("autosave", pi);
+                EchoPet.getSqlManager().saveToDatabase(pi, false);
+                EchoPet.getManager().removePet(pi, false);
             }
         }
     }
@@ -147,12 +109,12 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player p = event.getPlayer();
-        Pet pi = PetHandler.getInstance().getPet(p);
+        IPet pi = EchoPet.getManager().getPet(p);
         if (pi != null) {
             //ec.PH.saveFileData("autosave", pi);
-            PetHandler.getInstance().saveFileData("autosave", pi);
-            SQLPetHandler.getInstance().saveToDatabase(pi, false);
-            PetHandler.getInstance().removePet(pi, true);
+            EchoPet.getManager().saveFileData("autosave", pi);
+            EchoPet.getSqlManager().saveToDatabase(pi, false);
+            EchoPet.getManager().removePet(pi, true);
         }
     }
 
@@ -165,12 +127,11 @@ public class PetOwnerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
-        EchoPetPlugin ec = EchoPetPlugin.getInstance();
         final Player p = event.getPlayer();
         Inventory inv = p.getInventory();
-        if (ec.update && p.hasPermission("echopet.update")) {
-            p.sendMessage(ec.prefix + ChatColor.GOLD + "An update is available: " + ec.name + " (" + ec.size + " bytes).");
-            p.sendMessage(ec.prefix + ChatColor.GOLD + "Type /ecupdate to update.");
+        if (EchoPet.getPlugin().isUpdateAvailable() && p.hasPermission("echopet.update")) {
+            p.sendMessage(EchoPet.getPrefix() + ChatColor.GOLD + "An update is available: " + EchoPet.getPlugin().getUpdateName() + " (" + EchoPet.getPlugin().getUpdateSize() + " bytes).");
+            p.sendMessage(EchoPet.getPrefix() + ChatColor.GOLD + "Type /ecupdate to update.");
         }
 
         for (ItemStack item : inv.getContents()) {
@@ -179,13 +140,13 @@ public class PetOwnerListener implements Listener {
             }
         }
 
-        if (ec.options.getConfig().getBoolean("petSelector.clearInvOnJoin", false)) {
+        if (EchoPet.getConfig().getBoolean("petSelector.clearInvOnJoin", false)) {
             inv.clear();
         }
-        if (ec.options.getConfig().getBoolean("petSelector.giveOnJoin.enable", true)
-                && ((ec.options.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false) && p.hasPermission(ec.options.getConfig().getString("petSelector.giveOnJoin.perm", "echopet.selector.join")))
-                || !(ec.options.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false)))) {
-            int slot = (ec.options.getConfig().getInt("petSelector.giveOnJoin.slot", 9)) - 1;
+        if (EchoPet.getConfig().getBoolean("petSelector.giveOnJoin.enable", true)
+                && ((EchoPet.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false) && p.hasPermission(EchoPet.getConfig().getString("petSelector.giveOnJoin.perm", "echopet.selector.join")))
+                || !(EchoPet.getConfig().getBoolean("petSelector.giveOnJoin.usePerm", false)))) {
+            int slot = (EchoPet.getConfig().getInt("petSelector.giveOnJoin.slot", 9)) - 1;
             ItemStack i = inv.getItem(slot);
             ItemStack selector = SelectorLayout.getSelectorItem();
             if (i != null) {
@@ -198,16 +159,16 @@ public class PetOwnerListener implements Listener {
         }
 
 
-        final boolean sendMessage = ec.options.getConfig().getBoolean("sendLoadMessage", true);
+        final boolean sendMessage = EchoPet.getConfig().getBoolean("sendLoadMessage", true);
 
         new BukkitRunnable() {
 
             @Override
             public void run() {
                 if (p != null && p.isOnline()) {
-                    Pet pet = PetHandler.getInstance().loadPets(p, true, sendMessage, false);
+                    IPet pet = EchoPet.getManager().loadPets(p, true, sendMessage, false);
                     if (pet != null) {
-                        if (EchoPetPlugin.getInstance().getVanishProvider().isVanished(p)) {
+                        if (EchoPet.getPlugin().getVanishProvider().isVanished(p)) {
                             pet.getEntityPet().setShouldVanish(true);
                             pet.getEntityPet().setInvisible(true);
                         }
@@ -215,11 +176,11 @@ public class PetOwnerListener implements Listener {
                 }
             }
 
-        }.runTaskLater(ec, 20);
+        }.runTaskLater(EchoPet.getPlugin(), 20);
 
-        Iterator<Pet> i = PetHandler.getInstance().getPets().iterator();
+        Iterator<IPet> i = EchoPet.getManager().getPets().iterator();
         while (i.hasNext()) {
-            Pet pet = i.next();
+            IPet pet = i.next();
             if (pet.getEntityPet() instanceof IEntityPacketPet && ((IEntityPacketPet) pet.getEntityPet()).hasInititiated()) {
                 if (GeometryUtil.getNearbyEntities(event.getPlayer().getLocation(), 50).contains(pet)) {
                     ((IEntityPacketPet) pet.getEntityPet()).updatePosition();
@@ -231,11 +192,11 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player p = event.getEntity();
-        Pet pet = PetHandler.getInstance().getPet(p);
+        IPet pet = EchoPet.getManager().getPet(p);
         if (pet != null) {
-            PetHandler.getInstance().saveFileData("autosave", pet);
-            SQLPetHandler.getInstance().saveToDatabase(pet, false);
-            PetHandler.getInstance().removePet(pet, true);
+            EchoPet.getManager().saveFileData("autosave", pet);
+            EchoPet.getSqlManager().saveToDatabase(pet, false);
+            EchoPet.getManager().removePet(pet, true);
             //p.sendMessage(Lang.REMOVE_PET_DEATH.toString());
         }
     }
@@ -243,25 +204,25 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player p = event.getPlayer();
-        PetHandler.getInstance().loadPets(p, true, false, true);
+        EchoPet.getManager().loadPets(p, true, false, true);
     }
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
         final Player p = event.getPlayer();
-        final Pet pi = PetHandler.getInstance().getPet(p);
+        final IPet pi = EchoPet.getManager().getPet(p);
         if (pi != null) {
-            PetHandler.getInstance().saveFileData("autosave", pi);
-            SQLPetHandler.getInstance().saveToDatabase(pi, false);
-            PetHandler.getInstance().removePet(pi, false);
+            EchoPet.getManager().saveFileData("autosave", pi);
+            EchoPet.getSqlManager().saveToDatabase(pi, false);
+            EchoPet.getManager().removePet(pi, false);
             new BukkitRunnable() {
 
                 @Override
                 public void run() {
-                    PetHandler.getInstance().loadPets(p, false, false, false);
+                    EchoPet.getManager().loadPets(p, false, false, false);
                 }
 
-            }.runTaskLater(EchoPetPlugin.getInstance(), 20L);
+            }.runTaskLater(EchoPet.getPlugin(), 20L);
         }
     }
 }

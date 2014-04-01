@@ -17,15 +17,15 @@
 
 package io.github.dsh105.echopet.conversation;
 
-import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
+import io.github.dsh105.echopet.compat.api.entity.IPet;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationFactory;
 
 public class NameFactory {
 
-    public static void askForName(Conversable whom, Pet pet, boolean admin) {
-        new ConversationFactory(EchoPetPlugin.getInstance())
+    public static void askForName(Conversable whom, IPet pet, boolean admin) {
+        new ConversationFactory(EchoPet.getPlugin())
                 .withModality(true)
                 .withLocalEcho(false)
                 .withPrefix(new NameConversationPrefix())

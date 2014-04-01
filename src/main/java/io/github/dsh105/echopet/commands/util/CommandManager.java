@@ -17,8 +17,9 @@
 
 package io.github.dsh105.echopet.commands.util;
 
-import io.github.dsh105.echopet.reflection.FieldAccessor;
-import io.github.dsh105.echopet.reflection.SafeField;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
+import io.github.dsh105.echopet.compat.api.util.reflection.FieldAccessor;
+import io.github.dsh105.echopet.compat.api.util.reflection.SafeField;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -55,7 +56,7 @@ public class CommandManager {
         if (knownCommands == null) {
             return false;
         }
-        for (Iterator<Command> i = knownCommands.values().iterator(); i.hasNext();) {
+        for (Iterator<Command> i = knownCommands.values().iterator(); i.hasNext(); ) {
             Command cmd = i.next();
             if (cmd instanceof DynamicPluginCommand) {
                 i.remove();
@@ -76,11 +77,11 @@ public class CommandManager {
     public CommandMap getCommandMap() {
         CommandMap map = SERVER_COMMAND_MAP.get(Bukkit.getPluginManager());
 
-        if(map == null) {
-            if(fallback != null) {
+        if (map == null) {
+            if (fallback != null) {
                 return fallback;
             } else {
-                fallback = map = new SimpleCommandMap(Bukkit.getServer());
+                fallback = map = new SimpleCommandMap(EchoPet.getPlugin().getServer());
                 Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(fallback), this.plugin);
             }
         }

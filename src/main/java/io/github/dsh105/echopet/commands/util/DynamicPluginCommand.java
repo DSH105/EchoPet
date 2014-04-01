@@ -37,7 +37,7 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
         super(name, desc, usage, Arrays.asList(aliases));
         this.owner = owner;
         this.owningPlugin = plugin;
-        this.registeredWith = registeredWith;
+        this.registeredWith = null;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
         if (registeredWith instanceof CommandManager) {
             try {
                 for (String permission : permissions) {
-                    if(sender.hasPermission(permission))
+                    if (sender.hasPermission(permission))
                         return true;
                 }
                 return false;

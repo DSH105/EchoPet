@@ -17,7 +17,7 @@
 
 package io.github.dsh105.echopet.listeners;
 
-import io.github.dsh105.echopet.api.entity.nms.ICraftPet;
+import io.github.dsh105.echopet.compat.api.entity.ICraftPet;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

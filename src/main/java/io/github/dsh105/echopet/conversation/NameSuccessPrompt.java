@@ -18,18 +18,18 @@
 package io.github.dsh105.echopet.conversation;
 
 import com.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
-import io.github.dsh105.echopet.util.Lang;
+import io.github.dsh105.echopet.compat.api.entity.IPet;
+import io.github.dsh105.echopet.compat.api.util.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
 
 public class NameSuccessPrompt extends MessagePrompt {
 
-    private Pet pet;
+    private IPet pet;
     private boolean admin;
 
-    public NameSuccessPrompt(Pet pet, boolean admin) {
+    public NameSuccessPrompt(IPet pet, boolean admin) {
         this.pet = pet;
         this.admin = admin;
     }

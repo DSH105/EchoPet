@@ -17,8 +17,8 @@
 
 package io.github.dsh105.echopet.commands;
 
-import io.github.dsh105.echopet.EchoPetPlugin;
-import io.github.dsh105.echopet.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -32,7 +32,7 @@ public class CommandComplete implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> list = new ArrayList<String>();
-        String cmdString = EchoPetPlugin.getInstance().cmdString;
+        String cmdString = EchoPet.getPlugin().getCommandString();
         if (cmd.getName().equalsIgnoreCase(cmdString)) {
             String[] completions;
             if (args.length >= 2) {
@@ -52,7 +52,7 @@ public class CommandComplete implements TabCompleter {
     private String[] getCompletions(int i) {
         switch (i) {
             case 0:
-                return new String[]{EchoPetPlugin.getInstance().cmdString, EchoPetPlugin.getInstance().adminCmdString};
+                return new String[]{EchoPet.getPlugin().getCommandString(), EchoPet.getPlugin().getCommandString() + "admin"};
             case 1:
                 return new String[]{"bat", "blaze", "cavespider", "chicken", "cow", "creeper", "enderdragon",
                         "enderman", "ghast", "horse", "human", "irongolem", "magmacube", "mushroomcow", "ocelot", "pig",

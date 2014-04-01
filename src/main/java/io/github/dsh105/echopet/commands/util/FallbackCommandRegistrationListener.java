@@ -27,12 +27,12 @@ public class FallbackCommandRegistrationListener implements Listener {
     protected final CommandMap fallback;
 
     public FallbackCommandRegistrationListener(CommandMap commandMap) {
-       this.fallback = commandMap;
+        this.fallback = commandMap;
     }
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        if(this.fallback.dispatch(event.getPlayer(), event.getMessage())) {
+        if (this.fallback.dispatch(event.getPlayer(), event.getMessage())) {
             event.setCancelled(true);
         }
     }

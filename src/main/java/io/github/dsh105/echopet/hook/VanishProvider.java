@@ -34,12 +34,14 @@
 
 package io.github.dsh105.echopet.hook;
 
+import io.github.dsh105.echopet.compat.api.plugin.hook.IVanishProvider;
+import io.github.dsh105.echopet.compat.api.plugin.hook.PluginDependencyProvider;
 import io.github.dsh105.echopet.listeners.VanishListener;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.kitteh.vanish.VanishPlugin;
 
-public class VanishProvider extends PluginDependencyProvider<VanishPlugin> {
+public class VanishProvider extends PluginDependencyProvider<VanishPlugin> implements IVanishProvider {
 
     public VanishProvider(Plugin myPluginInstance) {
         super(myPluginInstance, "VanishNoPacket");
@@ -55,10 +57,12 @@ public class VanishProvider extends PluginDependencyProvider<VanishPlugin> {
 
     }
 
+    @Override
     public boolean isVanished(Player player) {
         return this.isVanished(player.getName());
     }
 
+    @Override
     public boolean isVanished(String player) {
         return this.isHooked() && this.getDependency().getManager().isVanished(player);
     }
