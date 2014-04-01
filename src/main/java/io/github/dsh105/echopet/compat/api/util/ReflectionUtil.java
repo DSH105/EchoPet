@@ -154,6 +154,7 @@ public class ReflectionUtil {
             return null;
         } catch (InvocationTargetException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("Failed to invoke method: " + method.getName() + "!");
+            e.printStackTrace();
             return null;
         }
     }

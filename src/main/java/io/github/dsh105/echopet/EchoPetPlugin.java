@@ -68,7 +68,7 @@ import java.util.Map;
 
 public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
-    public static boolean isUsingNetty;
+    private static boolean isUsingNetty;
 
     private static ISpawnUtil SPAWN_UTIL;
     private static PetManager MANAGER;

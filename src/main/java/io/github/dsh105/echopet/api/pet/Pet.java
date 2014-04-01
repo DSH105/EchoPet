@@ -292,9 +292,7 @@ public abstract class Pet implements IPet {
         //Entity craftPet = ((Entity) this.getCraftPet().getHandle());
         if (!flag) {
             if (this.getRider() != null) {
-                if (getRider().getCraftPet().getVehicle() != null) {
-                    getRider().getCraftPet().getVehicle().setPassenger(null);
-                }
+                this.getCraftPet().setPassenger(null);
                 //Entity rider = ((Entity) this.getRider().getCraftPet().getHandle());
                 //rider.mount(null);
                 if (this.getCraftPet().getVehicle() != null) {

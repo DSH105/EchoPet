@@ -41,7 +41,6 @@ public class Packet {
     public Packet(Protocol protocol, Sender sender, int id, int legacyId) {
 
         if (EchoPet.isUsingNetty()) {
-
             this.packetClass = PacketUtil.getPacket(protocol, sender, id);
             try {
                 this.packetHandle = this.packetClass.newInstance();

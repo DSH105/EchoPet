@@ -49,7 +49,6 @@ public class EntityWitherPet extends EntityPet implements IEntityWitherPet {
     public void setShielded(boolean flag) {
         this.datawatcher.watch(20, new Integer((flag ? 1 : 0)));
         this.setHealth((float) (flag ? 150 : 300));
-        ((IWitherPet) pet).setShielded(flag);
     }
 
     @Override
