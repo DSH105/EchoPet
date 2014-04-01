@@ -50,7 +50,7 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
         spawn.setYaw(this.yaw);
         spawn.setPitch(this.pitch);
         spawn.setEquipmentId(this.equipmentId);
-        spawn.setMetadata(this.dataWatcher);
+        spawn.setMetadata(this.customDataWatcher);
         return spawn;
     }
 

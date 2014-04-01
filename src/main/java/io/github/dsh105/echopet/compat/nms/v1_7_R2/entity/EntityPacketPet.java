@@ -31,7 +31,7 @@ import org.bukkit.entity.Player;
 
 public abstract class EntityPacketPet extends EntityPet implements IEntityPacketPet {
 
-    protected WrappedDataWatcher dataWatcher;
+    protected WrappedDataWatcher customDataWatcher;
     protected byte entityStatus = 0;
     protected boolean initiated;
     protected int id;
@@ -43,7 +43,6 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public EntityPacketPet(World world, IPet pet) {
         super(world, pet);
         this.id = new SafeField<Integer>(ReflectionUtil.getNMSClass("Entity"), "id").get(this);
-        this.dataWatcher = new WrappedDataWatcher(this);
     }
 
     @Override
@@ -81,13 +80,14 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     }
 
     private void updateDatawatcher(String name) {
-        dataWatcher.watch(0, (Object) (byte) this.entityStatus);
-        dataWatcher.watch(1, (Object) (short) 0);
-        dataWatcher.watch(8, (Object) (byte) 0);
-        dataWatcher.watch(10, (Object) (String) name);
+        customDataWatcher = new WrappedDataWatcher(this);
+        customDataWatcher.watch(0, (Object) (byte) this.entityStatus);
+        customDataWatcher.watch(1, (Object) (short) 0);
+        customDataWatcher.watch(8, (Object) (byte) 0);
+        customDataWatcher.watch(10, (Object) (String) name);
         WrapperPacketEntityMetadata meta = new WrapperPacketEntityMetadata();
         meta.setEntityId(this.id);
-        meta.setMetadata(dataWatcher);
+        meta.setMetadata(customDataWatcher);
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
             meta.send(p);
