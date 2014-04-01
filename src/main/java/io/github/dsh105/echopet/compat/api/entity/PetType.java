@@ -134,7 +134,7 @@ public enum PetType {
     }
 
     public IEntityPet getNewEntityPetInstance(Object world, IPet pet) {
-        return new SafeConstructor<IEntityPet>(this.entityClass, ReflectionUtil.getNMSClass("World"), ReflectionUtil.getClass("io.github.dsh105.echopet.api.pet.Pet")).newInstance(world, pet);
+        return new SafeConstructor<IEntityPet>(this.entityClass, ReflectionUtil.getNMSClass("World"), IPet.class).newInstance(world, pet);
     }
 
     public IPet getNewPetInstance(Player owner) {
