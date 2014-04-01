@@ -255,7 +255,7 @@ public abstract class Pet implements IPet {
 
         final Object playerHandle = new SafeMethod(this.getOwner().getClass(), "getHandle").invoke(this.getOwner()).getClass();
         if (!flag) {
-            new SafeMethod(playerHandle.getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(playerHandle, new Object[] {null});
+            new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(playerHandle, new Object[] {null});
             //((CraftPlayer) this.getOwner()).getHandle().mount(null);
             if (this.getEntityPet() instanceof IEntityNoClipPet) {
                 ((IEntityNoClipPet) this.getEntityPet()).noClip(true);
@@ -268,7 +268,7 @@ public abstract class Pet implements IPet {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    new SafeMethod(playerHandle.getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(playerHandle, getEntityPet());
+                    new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(playerHandle, getEntityPet());
                     //((CraftPlayer) getOwner()).getHandle().mount(getEntityPet());
                     ownerIsMounting = false;
                     if (getEntityPet() instanceof IEntityNoClipPet) {
@@ -304,31 +304,31 @@ public abstract class Pet implements IPet {
             if (this.getRider() != null) {
                 //Entity rider = ((Entity) this.getRider().getCraftPet().getHandle());
                 //rider.mount(null);
-                new SafeMethod(this.getRider().getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), new Object[] {null});
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), new Object[] {null});
 
                 //craftPet.mount(null);
-                new SafeMethod(this.getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), new Object[] {null});
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), new Object[] {null});
 
                 //rider.mount(craftPet);
-                new SafeMethod(this.getRider().getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), this.getEntityPet());
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), this.getEntityPet());
             } else {
                 //craftPet.mount(null);
-                new SafeMethod(this.getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), new Object[] {null});
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), new Object[] {null});
             }
         } else {
             if (this.getRider() != null) {
                 //Entity rider = ((Entity) this.getRider().getCraftPet().getHandle());
                 //rider.mount(null);
-                new SafeMethod(this.getRider().getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), new Object[] {null});
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity").getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), new Object[] {null});
 
                 //craftPet.mount(((CraftPlayer) this.getOwner()).getHandle());
-                new SafeMethod(this.getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), playerHandle);
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), playerHandle);
 
                 //this.getCraftPet().setPassenger(this.getRider().getCraftPet());
-                new SafeMethod(this.getRider().getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), this.getEntityPet());
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getRider().getEntityPet(), this.getEntityPet());
             } else {
                 //craftPet.mount(((CraftPlayer) this.getOwner()).getHandle());
-                new SafeMethod(this.getEntityPet().getClass(), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), playerHandle);
+                new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(this.getEntityPet(), playerHandle);
             }
         }
         this.getEntityPet().resizeBoundingBox(flag);
