@@ -72,6 +72,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
     private static ISpawnUtil SPAWN_UTIL;
     private static PetManager MANAGER;
+    private static SqlPetManager SQL_MANAGER;
+    private static ConfigOptions OPTIONS;
 
     public static final ModuleLogger LOGGER = new ModuleLogger();
     public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule();
@@ -80,10 +82,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
     private YAMLConfig petConfig;
     private YAMLConfig mainConfig;
     private YAMLConfig langConfig;
-    public ConfigOptions options;
-    public PetManager PH;
-    public SqlPetManager SPH;
-    public BoneCP dbPool;
+    private BoneCP dbPool;
 
     private VanishProvider vanishProvider;
     private WorldGuardProvider worldGuardProvider;
@@ -140,10 +139,10 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
         PluginManager manager = getServer().getPluginManager();
 
-        PH = new PetManager();
-        SPH = new SqlPetManager();
+        MANAGER = new PetManager();
+        SQL_MANAGER = new SqlPetManager();
 
-        if (options.useSql()) {
+        if (OPTIONS.useSql()) {
             this.prepareSqlDatabase();
         }
 
@@ -156,8 +155,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         // Command string based off the string defined in config.yml
         // By default, set to 'pet'
         // PetAdmin command draws from the original, with 'admin' on the end
-        this.cmdString = options.getCommandString();
-        this.adminCmdString = options.getCommandString() + "admin";
+        this.cmdString = OPTIONS.getCommandString();
+        this.adminCmdString = OPTIONS.getCommandString() + "admin";
         DynamicPluginCommand petCmd = new DynamicPluginCommand(this.cmdString, new String[0], "Create and manage your own custom pets.", "Use /" + this.cmdString + " help to see the command list.", new PetCommand(this.cmdString), null, this);
         petCmd.setTabCompleter(new CommandComplete());
         COMMAND_MANAGER.register(petCmd);
@@ -184,8 +183,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
     @Override
     public void onDisable() {
-        if (PH != null) {
-            PH.removeAllPets();
+        if (MANAGER != null) {
+            MANAGER.removeAllPets();
         }
         if (dbPool != null) {
             dbPool.shutdown();
@@ -208,7 +207,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [config.yml] generation failed.", e, true);
         }
 
-        options = new ConfigOptions(mainConfig);
+        OPTIONS = new ConfigOptions(mainConfig);
 
         mainConfig.reloadConfig();
 
@@ -341,8 +340,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                 sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.YELLOW + pdFile.getWebsite());
                 sender.sendMessage(ChatColor.GOLD + "Commands are registered at runtime to provide you with more dynamic control over the command labels.");
                 sender.sendMessage(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Command Registration:");
-                sender.sendMessage(ChatColor.GOLD + "Main: " + this.options.getCommandString());
-                sender.sendMessage(ChatColor.GOLD + "Admin: " + this.options.getCommandString() + "admin");
+                sender.sendMessage(ChatColor.GOLD + "Main: " + this.OPTIONS.getCommandString());
+                sender.sendMessage(ChatColor.GOLD + "Admin: " + this.OPTIONS.getCommandString() + "admin");
             } else {
                 Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.petadmin"));
                 return true;
@@ -445,12 +444,12 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
     @Override
     public ConfigOptions getOptions() {
-        return options;
+        return OPTIONS;
     }
 
     @Override
     public ISqlPetManager getSqlPetManager() {
-        return SPH;
+        return SQL_MANAGER;
     }
 
     @Override
