@@ -264,7 +264,7 @@ public abstract class Pet implements IPet {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(PlayerUtil.playerToEntityPlayer(this.getOwner()), getEntityPet());
+                    new SafeMethod(ReflectionUtil.getNMSClass("Entity"), "mount", ReflectionUtil.getNMSClass("Entity")).invoke(PlayerUtil.playerToEntityPlayer(getOwner()), getEntityPet());
                     //((CraftPlayer) getOwner()).getHandle().mount(getEntityPet());
                     ownerIsMounting = false;
                     if (getEntityPet() instanceof IEntityNoClipPet) {
