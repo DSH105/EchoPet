@@ -11,7 +11,6 @@
 
 # Maven
 /target
-dependency-reduced-pom.xml
 
 # Vim
 .*.sw[a-p]
