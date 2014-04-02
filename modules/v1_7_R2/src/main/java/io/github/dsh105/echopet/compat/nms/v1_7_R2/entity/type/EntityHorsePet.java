@@ -54,7 +54,6 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
     @Override
     public void setSaddled(boolean flag) {
         this.horseVisual(4, flag);
-        ((IHorsePet) pet).setSaddled(flag);
     }
 
     @Override
