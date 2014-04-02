@@ -62,7 +62,7 @@ public class SelectorIcon extends MenuIcon {
 
     @Override
     public void onClick(Player viewer) {
-        viewer.performCommand(this.getCommand());
         viewer.closeInventory();
+        viewer.performCommand(this.getCommand());
     }
 }
