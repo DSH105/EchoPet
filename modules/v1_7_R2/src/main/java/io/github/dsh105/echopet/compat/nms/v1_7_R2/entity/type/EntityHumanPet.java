@@ -28,9 +28,6 @@ import net.minecraft.util.com.mojang.authlib.GameProfile;
 @EntityPetType(petType = PetType.HUMAN)
 public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
 
-    protected GameProfile profile;
-    protected int equipmentId = 0;
-
     public EntityHumanPet(World world) {
         super(world);
     }

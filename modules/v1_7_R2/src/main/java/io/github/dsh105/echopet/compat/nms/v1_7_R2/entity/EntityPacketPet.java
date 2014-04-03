@@ -26,6 +26,7 @@ import io.github.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEn
 import io.github.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
 import io.github.dsh105.echopet.compat.api.util.reflection.SafeField;
 import net.minecraft.server.v1_7_R2.World;
+import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -35,6 +36,8 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     protected byte entityStatus = 0;
     protected boolean initiated;
     protected int id;
+    protected GameProfile profile;
+    protected int equipmentId = 0;
 
     public EntityPacketPet(World world) {
         super(world);
@@ -43,6 +46,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public EntityPacketPet(World world, IPet pet) {
         super(world, pet);
         this.id = new SafeField<Integer>(ReflectionUtil.getNMSClass("Entity"), "id").get(this);
+        this.profile = new GameProfile(this.id + "", pet.getPetName());
     }
 
     @Override
