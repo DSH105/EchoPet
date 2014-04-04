@@ -306,11 +306,6 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
             this.setInvisible(!this.isInvisible());
         }
 
-        if (this.isInvisible()) {
-            //Particle.MAGIC_CRITIAL.sendToPlayer(this.getLocation(), this.getPlayerOwner());
-            //Particle.WITCH_MAGIC.sendToPlayer(this.getLocation(), this.getPlayerOwner());
-        }
-
         if (((CraftPlayer) this.getPlayerOwner()).getHandle().isSneaking() != this.isSneaking()) {
             this.setSneaking(!this.isSneaking());
         }

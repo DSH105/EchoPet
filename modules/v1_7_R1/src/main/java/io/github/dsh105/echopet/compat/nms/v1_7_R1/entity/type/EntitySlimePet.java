@@ -17,9 +17,10 @@
 
 package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
-import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
+import io.github.dsh105.echopet.compat.api.util.ParticleUtil;
+import io.github.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
 import net.minecraft.server.v1_7_R1.World;
 
@@ -81,9 +82,9 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet {
 
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             if (this instanceof EntityMagmaCubePet) {
-                Particle.FIRE.sendTo(pet.getLocation());
+                ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.FIRE, this.getLocation());
             } else {
-                Particle.SLIME_SPLAT.sendTo(pet.getLocation());
+                ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SLIME_SPLAT, this.getLocation());
             }
         }
     }

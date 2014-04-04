@@ -27,7 +27,8 @@ public class PacketFactory {
         ENTITY_ATTACH(Protocol.PLAY, Sender.SERVER, 0x1B, 0x27),
         ENTITY_METADATA(Protocol.PLAY, Sender.SERVER, 0x1C, 0x28),
         CHAT(Protocol.PLAY, Sender.SERVER, 0x02, 0x03),
-        NAMED_ENTITY_SPAWN(Protocol.PLAY, Sender.SERVER, 0x0C, 0x14);
+        NAMED_ENTITY_SPAWN(Protocol.PLAY, Sender.SERVER, 0x0C, 0x14),
+        WORLD_PARTICLES(Protocol.PLAY, Sender.SERVER, 0x3F, 0x2A);
 
         private Protocol protocol;
         private Sender sender;

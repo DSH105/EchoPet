@@ -71,7 +71,7 @@ public class HumanPet extends PacketPet implements IHumanPet {
         }
         IEntityHumanPet human = (IEntityHumanPet) this.getEntityPet();
         if (human.getGameProfile() != null) {
-            human.setGameProfile(new GameProfile(human.getGameProfile().getId(), name));
+            human.setGameProfile(new GameProfile(((GameProfile) human.getGameProfile()).getId(), name));
         }
     }
 

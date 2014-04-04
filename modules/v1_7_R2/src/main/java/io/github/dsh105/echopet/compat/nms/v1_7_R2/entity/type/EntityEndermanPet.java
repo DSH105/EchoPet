@@ -17,9 +17,10 @@
 
 package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
 
-import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
+import io.github.dsh105.echopet.compat.api.util.ParticleUtil;
+import io.github.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
 import net.minecraft.server.v1_7_R2.Block;
 import net.minecraft.server.v1_7_R2.World;
@@ -88,7 +89,7 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet {
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            Particle.PORTAL.sendTo(pet.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
         }
     }
 }

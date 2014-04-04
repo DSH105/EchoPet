@@ -17,13 +17,13 @@
 
 package io.github.dsh105.echopet.api.pet;
 
-import com.dsh105.dshutils.Particle;
 import com.dsh105.dshutils.util.StringUtil;
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import io.github.dsh105.echopet.compat.api.util.*;
 import io.github.dsh105.echopet.compat.api.util.reflection.SafeMethod;
+import io.github.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -183,8 +183,8 @@ public abstract class Pet implements IPet {
     @Override
     public void removePet(boolean makeSound) {
         if (this.getCraftPet() != null) {
-            Particle.CLOUD.sendTo(this.getCraftPet().getLocation());
-            Particle.LAVA_SPARK.sendTo(this.getCraftPet().getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.CLOUD, this.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.LAVA_SPARK, this.getLocation());
         }
         removeRider();
         if (this.getEntityPet() != null) {
@@ -276,10 +276,10 @@ public abstract class Pet implements IPet {
         this.teleportToOwner();
         this.getEntityPet().resizeBoundingBox(flag);
         this.ownerRiding = flag;
-        Particle.PORTAL.sendTo(this.getLocation());
+        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
+        ParticleUtil.showWithData(WrapperPacketWorldParticles.ParticleType.BLOCK_DUST, this.getLocation(), l.getBlock().getTypeId(), 0);
     }
 
     @Override
@@ -328,10 +328,10 @@ public abstract class Pet implements IPet {
         }
         this.getEntityPet().resizeBoundingBox(flag);
         this.isHat = flag;
-        Particle.PORTAL.sendTo(this.getLocation());
+        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        Particle.BLOCK_DUST.sendDataParticle(l, l.getBlock().getTypeId(), 0);
+        ParticleUtil.showWithData(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation(), l.getBlock().getTypeId(), 0);
     }
 
     @Override

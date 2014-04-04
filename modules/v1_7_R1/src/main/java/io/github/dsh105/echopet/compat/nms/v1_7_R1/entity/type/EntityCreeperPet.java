@@ -17,9 +17,10 @@
 
 package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
-import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityCreeperPet;
+import io.github.dsh105.echopet.compat.api.util.ParticleUtil;
+import io.github.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
 import net.minecraft.server.v1_7_R1.World;
 
@@ -72,7 +73,7 @@ public class EntityCreeperPet extends EntityPet implements IEntityCreeperPet {
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            Particle.SMOKE.sendTo(pet.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SMOKE, this.getLocation());
         }
     }
 }

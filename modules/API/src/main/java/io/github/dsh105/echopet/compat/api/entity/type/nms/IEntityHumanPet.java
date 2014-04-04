@@ -18,7 +18,6 @@
 package io.github.dsh105.echopet.compat.api.entity.type.nms;
 
 import io.github.dsh105.echopet.compat.api.entity.IEntityPacketPet;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
 
 public interface IEntityHumanPet extends IEntityPacketPet {
 
@@ -26,7 +25,7 @@ public interface IEntityHumanPet extends IEntityPacketPet {
 
     public int getEquipmentId();
 
-    public GameProfile getGameProfile();
+    public Object getGameProfile();
 
-    public void setGameProfile(GameProfile profile);
+    public void setGameProfile(Object profile);
 }

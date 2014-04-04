@@ -17,7 +17,6 @@
 
 package io.github.dsh105.echopet.listeners;
 
-import com.dsh105.dshutils.Particle;
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.EnumUtil;
 import io.github.dsh105.echopet.compat.api.config.SelectorLayout;
@@ -27,12 +26,14 @@ import io.github.dsh105.echopet.compat.api.entity.PetType;
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import io.github.dsh105.echopet.compat.api.util.Lang;
 import io.github.dsh105.echopet.compat.api.util.MenuUtil;
+import io.github.dsh105.echopet.compat.api.util.ParticleUtil;
 import io.github.dsh105.echopet.compat.api.util.Perm;
 import io.github.dsh105.echopet.compat.api.util.menu.DataMenu;
 import io.github.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
 import io.github.dsh105.echopet.compat.api.util.menu.DataMenuItem;
 import io.github.dsh105.echopet.compat.api.util.menu.MenuItem;
 import io.github.dsh105.echopet.compat.api.util.menu.PetMenu;
+import io.github.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -102,10 +103,10 @@ public class MenuListener implements Listener {
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
-                                            Particle.RED_SMOKE.sendTo(pet.getLocation());
+                                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.RED_SMOKE, pet.getLocation());
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
-                                            Particle.SPARKLE.sendTo(pet.getLocation());
+                                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, pet.getLocation());
                                         }
                                     }
                                 } else {

@@ -17,9 +17,10 @@
 
 package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
 
-import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntitySquidPet;
+import io.github.dsh105.echopet.compat.api.util.ParticleUtil;
+import io.github.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
 import net.minecraft.server.v1_7_R2.World;
 
@@ -55,9 +56,9 @@ public class EntitySquidPet extends EntityPet implements IEntitySquidPet {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
             if (this.L()) {
-                Particle.BUBBLE.sendTo(pet.getLocation());
+                ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.BUBBLE, this.getLocation());
             }
-            Particle.SPLASH.sendTo(pet.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPLASH, this.getLocation());
         }
     }
 }
