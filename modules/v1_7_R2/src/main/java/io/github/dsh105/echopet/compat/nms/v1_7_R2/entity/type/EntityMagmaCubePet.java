@@ -15,17 +15,24 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.bukkit;
+package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
 
 import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
+import io.github.dsh105.echopet.compat.api.entity.EntitySize;
+import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
-import org.bukkit.entity.MagmaCube;
+import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
+import net.minecraft.server.v1_7_R2.World;
 
+@EntitySize(width = 0.6F, height = 0.6F)
 @EntityPetType(petType = PetType.MAGMACUBE)
-public class CraftMagmaCubePet extends CraftSlimePet implements MagmaCube {
+public class EntityMagmaCubePet extends EntitySlimePet implements IEntityMagmaCubePet {
 
-    public CraftMagmaCubePet(EntityPet entity) {
-        super(entity);
+    public EntityMagmaCubePet(World world) {
+        super(world);
+    }
+
+    public EntityMagmaCubePet(World world, IPet pet) {
+        super(world, pet);
     }
 }

@@ -23,8 +23,6 @@ import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.pet.*;
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import io.github.dsh105.echopet.compat.api.plugin.PetStorage;
-import io.github.dsh105.echopet.compat.api.util.Lang;
-import io.github.dsh105.echopet.compat.api.util.Perm;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

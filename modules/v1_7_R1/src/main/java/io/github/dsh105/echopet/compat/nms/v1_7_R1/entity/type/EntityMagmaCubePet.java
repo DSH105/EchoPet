@@ -17,7 +17,10 @@
 
 package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
-import io.github.dsh105.echopet.compat.api.entity.*;
+import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
+import io.github.dsh105.echopet.compat.api.entity.EntitySize;
+import io.github.dsh105.echopet.compat.api.entity.IPet;
+import io.github.dsh105.echopet.compat.api.entity.PetType;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
 import net.minecraft.server.v1_7_R1.World;
 

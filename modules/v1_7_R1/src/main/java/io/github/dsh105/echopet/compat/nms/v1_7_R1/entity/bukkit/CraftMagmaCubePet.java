@@ -18,10 +18,7 @@
 package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.bukkit;
 
 import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
-import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
-import io.github.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
-import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.CraftPet;
 import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
 import org.bukkit.entity.MagmaCube;
 

@@ -19,13 +19,10 @@ package io.github.dsh105.echopet.compat.nms.v1_7_R2;
 
 import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.dshutils.Particle;
-import io.github.dsh105.echopet.compat.api.entity.IEntityPet;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import io.github.dsh105.echopet.compat.api.util.ISpawnUtil;
-import io.github.dsh105.echopet.compat.api.util.ReflectionUtil;
-import io.github.dsh105.echopet.compat.api.util.reflection.SafeField;
 import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
 import net.minecraft.server.v1_7_R2.World;
 import org.bukkit.ChatColor;
@@ -33,9 +30,6 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-
-import java.util.Iterator;
-import java.util.Map;
 
 public class SpawnUtil implements ISpawnUtil {
 
@@ -68,6 +62,6 @@ public class SpawnUtil implements ISpawnUtil {
 
     @Override
     public String[] getRegistrationMapNames() {
-        return new String[] {"c", "d", "f", "g"};
+        return new String[]{"c", "d", "f", "g"};
     }
 }

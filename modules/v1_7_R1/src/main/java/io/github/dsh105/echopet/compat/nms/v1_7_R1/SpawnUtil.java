@@ -62,6 +62,6 @@ public class SpawnUtil implements ISpawnUtil {
 
     @Override
     public String[] getRegistrationMapNames() {
-        return new String[] {"c", "d", "f", "g"};
+        return new String[]{"c", "d", "f", "g"};
     }
 }
