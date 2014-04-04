@@ -15,10 +15,12 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.api.config;
+package io.github.dsh105.echopet.compat.api.util.menu;
 
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.util.EnumUtil;
+import io.github.dsh105.echopet.compat.api.config.ConfigOptions;
+import io.github.dsh105.echopet.compat.api.config.PetItem;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

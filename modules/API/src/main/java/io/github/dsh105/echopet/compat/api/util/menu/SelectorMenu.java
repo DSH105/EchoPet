@@ -19,8 +19,6 @@ package io.github.dsh105.echopet.compat.api.util.menu;
 
 import com.dsh105.dshutils.inventory.InventoryMenu;
 import io.github.dsh105.echopet.compat.api.config.ConfigOptions;
-import io.github.dsh105.echopet.compat.api.config.SelectorIcon;
-import io.github.dsh105.echopet.compat.api.config.SelectorLayout;
 import io.github.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.entity.Player;

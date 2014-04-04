@@ -18,7 +18,7 @@
 package io.github.dsh105.echopet.commands;
 
 import com.dsh105.dshutils.util.StringUtil;
-import io.github.dsh105.echopet.compat.api.config.SelectorLayout;
+import io.github.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetData;
 import io.github.dsh105.echopet.compat.api.entity.PetType;

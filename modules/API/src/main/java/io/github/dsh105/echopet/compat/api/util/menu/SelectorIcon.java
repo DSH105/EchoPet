@@ -15,7 +15,7 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.api.config;
+package io.github.dsh105.echopet.compat.api.util.menu;
 
 import com.dsh105.dshutils.inventory.MenuIcon;
 import io.github.dsh105.echopet.compat.api.entity.PetType;

@@ -19,7 +19,7 @@ package io.github.dsh105.echopet.listeners;
 
 import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.dshutils.util.EnumUtil;
-import io.github.dsh105.echopet.compat.api.config.SelectorLayout;
+import io.github.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetData;
 import io.github.dsh105.echopet.compat.api.entity.PetType;

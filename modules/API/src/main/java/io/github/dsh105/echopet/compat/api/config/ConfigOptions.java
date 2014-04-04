@@ -21,6 +21,8 @@ import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.config.options.Options;
 import io.github.dsh105.echopet.compat.api.entity.PetData;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.util.menu.SelectorIcon;
+import io.github.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
