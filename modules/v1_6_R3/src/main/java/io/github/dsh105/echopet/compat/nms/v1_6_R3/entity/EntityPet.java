@@ -300,6 +300,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
         if (this.getPlayerOwner() == null || !this.getPlayerOwner().isOnline() || Bukkit.getPlayerExact(this.getPlayerOwner().getName()) == null) {
             EchoPet.getManager().removePet(this.getPet(), true);
+            return;
         }
 
         if (((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
