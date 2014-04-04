@@ -15,8 +15,23 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.api.entity.type.nms;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity;
 
-public interface IEntityMagmaCubePet extends IEntitySlimePet {
+import io.github.dsh105.echopet.compat.api.entity.IPet;
+import net.minecraft.server.v1_7_R1.World;
 
+
+public abstract class EntityNoClipPet extends EntityPet {
+
+    public EntityNoClipPet(World world, IPet pet) {
+        super(world, pet);
+    }
+
+    protected EntityNoClipPet(World world) {
+        super(world);
+    }
+
+    public void noClip(boolean b) {
+        this.Y = true;
+    }
 }

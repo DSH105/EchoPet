@@ -15,8 +15,18 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.api.entity.type.nms;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.bukkit;
 
-public interface IEntityMagmaCubePet extends IEntitySlimePet {
+import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
+import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.CraftPet;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
+import org.bukkit.entity.Blaze;
 
+@EntityPetType(petType = PetType.BLAZE)
+public class CraftBlazePet extends CraftPet implements Blaze {
+
+    public CraftBlazePet(EntityPet entity) {
+        super(entity);
+    }
 }

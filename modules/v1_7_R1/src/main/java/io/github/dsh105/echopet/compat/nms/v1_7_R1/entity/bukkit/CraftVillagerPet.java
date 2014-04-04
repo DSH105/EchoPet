@@ -15,20 +15,36 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.bukkit;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.bukkit;
 
 import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
-import io.github.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.CraftPet;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
-import org.bukkit.entity.MagmaCube;
+import io.github.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
+import org.bukkit.entity.Villager;
 
-@EntityPetType(petType = PetType.MAGMACUBE)
-public class CraftMagmaCubePet extends CraftSlimePet implements MagmaCube {
+@EntityPetType(petType = PetType.VILLAGER)
+public class CraftVillagerPet extends CraftAgeablePet implements Villager {
 
-    public CraftMagmaCubePet(EntityPet entity) {
+    public CraftVillagerPet(EntityPet entity) {
         super(entity);
+    }
+
+    @Override
+    public Profession getProfession() {
+        IPet p = this.getPet();
+        if (p instanceof IVillagerPet) {
+            return ((IVillagerPet) p).getProfession();
+        }
+        return null;
+    }
+
+    @Override
+    public void setProfession(Profession profession) {
+        /*Pet p = this.getPet();
+        if (p instanceof VillagerPet) {
+            ((VillagerPet) p).setProfession(profession);
+        }*/
     }
 }

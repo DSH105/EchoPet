@@ -15,15 +15,20 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.api.util;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.bukkit;
 
-import io.github.dsh105.echopet.compat.api.entity.IEntityPet;
+import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
-import org.bukkit.entity.Player;
+import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.CraftPet;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
+import org.bukkit.entity.MagmaCube;
 
-public interface ISpawnUtil {
+@EntityPetType(petType = PetType.MAGMACUBE)
+public class CraftMagmaCubePet extends CraftSlimePet implements MagmaCube {
 
-    public IEntityPet spawn(IPet pet, Player owner);
-
-    public String[] getRegistrationMapNames();
+    public CraftMagmaCubePet(EntityPet entity) {
+        super(entity);
+    }
 }

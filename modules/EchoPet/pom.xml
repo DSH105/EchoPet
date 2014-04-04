@@ -25,10 +25,6 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <minecraft.version>1.7.5</minecraft.version>
-        <craftbukkit.version>R0.1</craftbukkit.version>
-        <cb_package>v1_7_R2</cb_package>
-        <main.class>io.github.dsh105.echopet.EchoPetPlugin</main.class>
     </properties>
 
     <parent>
@@ -46,6 +42,18 @@
     </distributionManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.dsh105</groupId>
+            <artifactId>EchoPet-v1_7_R1</artifactId>
+            <version>v1_7_R1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>io.github.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R2</artifactId>
@@ -172,9 +180,6 @@
                     <archive>
                         <manifestEntries>
                             <Plugin-Version>${project.version}</Plugin-Version>
-                            <Minecraft-Version>${minecraft.version}</Minecraft-Version>
-                            <CraftBukkit-Version>${craftbukkit.version}</CraftBukkit-Version>
-                            <NMS-Package>${cb_package}</NMS-Package>
                         </manifestEntries>
                     </archive>
                 </configuration>

@@ -10,11 +10,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cb_package>v1_7_R2</cb_package>
     </properties>
 
     <modules>
         <module>modules/API</module>
+        <module>modules/v1_7_R1</module>
         <module>modules/v1_7_R2</module>
         <module>modules/EchoPet</module>
     </modules>

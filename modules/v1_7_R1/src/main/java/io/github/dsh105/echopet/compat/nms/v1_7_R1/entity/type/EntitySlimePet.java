@@ -15,25 +15,25 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
 import com.dsh105.dshutils.Particle;
 import io.github.dsh105.echopet.compat.api.entity.*;
-import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
-import net.minecraft.server.v1_7_R2.World;
+import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
+import net.minecraft.server.v1_7_R1.World;
 
 @EntitySize(width = 0.6F, height = 0.6F)
-@EntityPetType(petType = PetType.MAGMACUBE)
-public class EntityMagmaCubePet extends EntityPet implements IEntityMagmaCubePet {
+@EntityPetType(petType = PetType.SLIME)
+public class EntitySlimePet extends EntityPet implements IEntitySlimePet {
 
     int jumpDelay;
 
-    public EntityMagmaCubePet(World world) {
+    public EntitySlimePet(World world) {
         super(world);
     }
 
-    public EntityMagmaCubePet(World world, IPet pet) {
+    public EntitySlimePet(World world, IPet pet) {
         super(world, pet);
         int i = 1 << this.random.nextInt(3);
         this.setSize(i);
@@ -75,12 +75,16 @@ public class EntityMagmaCubePet extends EntityPet implements IEntityMagmaCubePet
 
         if (this.onGround && this.jumpDelay-- <= 0) {
             this.jumpDelay = this.random.nextInt(15) + 10;
-            this.makeSound(this.getDeathSound(), this.be(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+            this.makeSound(this.getDeathSound(), this.bf(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             getControllerJump().a();
         }
 
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            Particle.FIRE.sendTo(pet.getLocation());
+            if (this instanceof EntityMagmaCubePet) {
+                Particle.FIRE.sendTo(pet.getLocation());
+            } else {
+                Particle.SLIME_SPLAT.sendTo(pet.getLocation());
+            }
         }
     }
 

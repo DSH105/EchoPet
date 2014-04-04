@@ -24,7 +24,6 @@ import com.dsh105.dshutils.command.VersionIncompatibleCommand;
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.VersionUtil;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import io.github.dsh105.echopet.api.PetManager;
@@ -124,7 +123,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
                     new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
-                            "EchoPet " + ChatColor.GOLD + VersionUtil.getPluginVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
+                            "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
                             "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
                     null, this);
             COMMAND_MANAGER.register(cmd);
@@ -348,11 +347,12 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         return false;
     }
 
-    public void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
-        Map<String, Class> c = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), "c").get(null);
-        Map<Class, String> d = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), "d").get(null);
-        Map<Class, Integer> f = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), "f").get(null);
-        Map<String, Integer> g = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), "g").get(null);
+    private void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
+        String[] nmsMapNames = this.getSpawnUtil().getRegistrationMapNames();
+        Map<String, Class> c = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[0]).get(null);
+        Map<Class, String> d = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[1]).get(null);
+        Map<Class, Integer> f = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[2]).get(null);
+        Map<String, Integer> g = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[3]).get(null);
 
         Iterator<String> i = c.keySet().iterator();
         while (i.hasNext()) {

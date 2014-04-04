@@ -15,8 +15,21 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.api.entity.type.nms;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
-public interface IEntityMagmaCubePet extends IEntitySlimePet {
+import io.github.dsh105.echopet.compat.api.entity.*;
+import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
+import net.minecraft.server.v1_7_R1.World;
 
+@EntitySize(width = 0.6F, height = 0.6F)
+@EntityPetType(petType = PetType.MAGMACUBE)
+public class EntityMagmaCubePet extends EntitySlimePet implements IEntityMagmaCubePet {
+
+    public EntityMagmaCubePet(World world) {
+        super(world);
+    }
+
+    public EntityMagmaCubePet(World world, IPet pet) {
+        super(world, pet);
+    }
 }

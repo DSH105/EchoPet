@@ -17,18 +17,14 @@
 
 package io.github.dsh105.echopet.api.pet.type;
 
-import io.github.dsh105.echopet.api.pet.Pet;
 import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
 import io.github.dsh105.echopet.compat.api.entity.IEntityPet;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
-import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityMagmaCubePet;
 import io.github.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
 import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.MAGMACUBE)
-public class MagmaCubePet extends Pet implements IMagmaCubePet {
-
-    int size;
+public class MagmaCubePet extends SlimePet implements IMagmaCubePet {
 
     public MagmaCubePet(Player owner) {
         super(owner);
@@ -36,16 +32,5 @@ public class MagmaCubePet extends Pet implements IMagmaCubePet {
 
     public MagmaCubePet(String owner, IEntityPet entityPet) {
         super(owner, entityPet);
-    }
-
-    @Override
-    public void setSize(int i) {
-        ((IEntityMagmaCubePet) getEntityPet()).setSize(i);
-        this.size = i;
-    }
-
-    @Override
-    public int getSize() {
-        return this.size;
     }
 }

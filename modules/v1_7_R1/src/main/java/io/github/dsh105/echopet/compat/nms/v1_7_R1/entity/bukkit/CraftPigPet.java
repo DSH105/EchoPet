@@ -15,20 +15,36 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.bukkit;
+package io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.bukkit;
 
 import io.github.dsh105.echopet.compat.api.entity.EntityPetType;
 import io.github.dsh105.echopet.compat.api.entity.IPet;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
-import io.github.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.CraftPet;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPet;
-import org.bukkit.entity.MagmaCube;
+import io.github.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
+import io.github.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
+import org.bukkit.entity.Pig;
 
-@EntityPetType(petType = PetType.MAGMACUBE)
-public class CraftMagmaCubePet extends CraftSlimePet implements MagmaCube {
+@EntityPetType(petType = PetType.PIG)
+public class CraftPigPet extends CraftAgeablePet implements Pig {
 
-    public CraftMagmaCubePet(EntityPet entity) {
+    public CraftPigPet(EntityPet entity) {
         super(entity);
+    }
+
+    @Override
+    public boolean hasSaddle() {
+        IPet p = this.getPet();
+        if (p instanceof IPigPet) {
+            return ((IPigPet) p).hasSaddle();
+        }
+        return false;
+    }
+
+    @Override
+    public void setSaddle(boolean b) {
+        /*Pet p = this.getPet();
+        if (p instanceof PigPet) {
+            ((PigPet) p).setSaddle(b);
+        }*/
     }
 }
