@@ -19,11 +19,13 @@ package io.github.dsh105.echopet.compat.api.config;
 
 import com.dsh105.dshutils.inventory.MenuIcon;
 import io.github.dsh105.echopet.compat.api.entity.PetType;
+import io.github.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class SelectorIcon extends MenuIcon {
 
@@ -61,8 +63,18 @@ public class SelectorIcon extends MenuIcon {
     }
 
     @Override
-    public void onClick(Player viewer) {
+    public void onClick(final Player viewer) {
         viewer.closeInventory();
-        viewer.performCommand(this.getCommand());
+        if (this.command.equalsIgnoreCase(EchoPet.getPlugin().getCommandString() + " menu")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    viewer.performCommand(getCommand());
+
+                }
+            }.runTaskLater(EchoPet.getPlugin(), 5L);
+        } else {
+            viewer.performCommand(this.getCommand());
+        }
     }
 }
