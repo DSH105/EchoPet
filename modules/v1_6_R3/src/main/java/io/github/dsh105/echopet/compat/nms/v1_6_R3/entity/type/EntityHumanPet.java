@@ -15,14 +15,13 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
+package io.github.dsh105.echopet.compat.nms.v1_6_R3.entity.type;
 
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
 import io.github.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import io.github.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPacketPet;
-import net.minecraft.server.v1_7_R2.World;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
+import io.github.dsh105.echopet.compat.nms.v1_6_R3.entity.EntityPacketPet;
+import net.minecraft.server.v1_6_R3.World;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.HUMAN)
@@ -40,7 +39,7 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     public WrapperPacketNamedEntitySpawn getSpawnPacket() {
         WrapperPacketNamedEntitySpawn spawn = new WrapperPacketNamedEntitySpawn();
         spawn.setEntityId(this.id);
-        spawn.setGameProfile(this.profile);
+        spawn.setGameProfile(this.getPet().getPetName());
         spawn.setX(this.locX);
         spawn.setY(this.locY);
         spawn.setZ(this.locZ);
@@ -62,13 +61,13 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     }
 
     @Override
-    public GameProfile getGameProfile() {
-        return profile;
+    public Object getGameProfile() {
+        return null;
     }
 
     @Override
     public void setGameProfile(Object profile) {
-        this.profile = (GameProfile) profile;
+
     }
 
     @Override
