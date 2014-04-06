@@ -86,7 +86,7 @@ public class ParticleUtil {
 
     public static void showWithData(WrapperPacketWorldParticles.ParticleType type, Location l, int blockId, int blockMeta) {
         for (Player p : GeometryUtil.getNearbyPlayers(l, 50)) {
-            createPacket(type.getName() + "_" + blockId + "_" + blockMeta, l).send(p);
+            createPacket(type.getName() + "_" + blockId + "_" + blockMeta, l, r(), type.getDefaultSpeed(), type.getDefaultAmount()).send(p);
         }
     }
 
@@ -97,7 +97,7 @@ public class ParticleUtil {
     }
 
     public static void showWithDataToPlayer(WrapperPacketWorldParticles.ParticleType type, Location l, Player p, int blockId, int blockMeta) {
-        createPacket(type.getName() + "_" + blockId + blockMeta, l).send(p);
+        createPacket(type.getName() + "_" + blockId + blockMeta, l, r(), type.getDefaultSpeed(), type.getDefaultAmount()).send(p);
     }
 
     public static void showWithDataToPlayer(WrapperPacketWorldParticles.ParticleType type, Location l, Player p, Vector v, float speed, int amount, int blockId, int blockMeta) {
