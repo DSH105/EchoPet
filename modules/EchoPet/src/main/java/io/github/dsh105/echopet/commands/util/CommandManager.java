@@ -37,10 +37,8 @@ public class CommandManager {
     // This is a very ugly patch for PerWorldPlugins.
     protected static final FieldAccessor<CommandMap> SERVER_COMMAND_MAP = new SafeField<CommandMap>(Bukkit.getPluginManager().getClass() /*<- ugly because of PWP*/, "commandMap");
     protected static final FieldAccessor<Map<String, Command>> KNOWN_COMMANDS = new SafeField<Map<String, Command>>(SimpleCommandMap.class, "knownCommands");
-
-    private CommandMap fallback;
-
     private final Plugin plugin;
+    private CommandMap fallback;
 
     public CommandManager(Plugin plugin) {
         this.plugin = plugin;
@@ -76,14 +74,14 @@ public class CommandManager {
     }
 
     public CommandMap getCommandMap() {
-        if(!(Bukkit.getPluginManager() instanceof SimplePluginManager)) {
-            this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");    
+        if (!(Bukkit.getPluginManager() instanceof SimplePluginManager)) {
+            this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");
         }
-        
+
         CommandMap map = null;
-        
+
         try {
-        map = SERVER_COMMAND_MAP.get(Bukkit.getPluginManager());
+            map = SERVER_COMMAND_MAP.get(Bukkit.getPluginManager());
 
             if (map == null) {
                 if (fallback != null) {
