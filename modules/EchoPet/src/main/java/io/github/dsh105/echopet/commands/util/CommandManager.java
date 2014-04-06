@@ -34,7 +34,8 @@ import java.util.Map;
 
 public class CommandManager {
 
-    protected static final FieldAccessor<CommandMap> SERVER_COMMAND_MAP = new SafeField<CommandMap>(SimplePluginManager.class, "commandMap");
+    // This is a very ugly patch for PerWorldPlugins.
+    protected static final FieldAccessor<CommandMap> SERVER_COMMAND_MAP = new SafeField<CommandMap>(Bukkit.getPluginManager().getClass() /*<- ugly because of PWP*/, "commandMap");
     protected static final FieldAccessor<Map<String, Command>> KNOWN_COMMANDS = new SafeField<Map<String, Command>>(SimpleCommandMap.class, "knownCommands");
 
     private CommandMap fallback;
@@ -75,15 +76,28 @@ public class CommandManager {
     }
 
     public CommandMap getCommandMap() {
-        CommandMap map = SERVER_COMMAND_MAP.get(Bukkit.getPluginManager());
+        if(!Bukkit.getPluginManager() instanceof SimplePluginManager) {
+            this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");    
+        }
+        
+        CommandMap map = null;
+        
+        try {
+        map = SERVER_COMMAND_MAP.get(Bukkit.getPluginManager());
 
-        if (map == null) {
-            if (fallback != null) {
-                return fallback;
-            } else {
-                fallback = map = new SimpleCommandMap(EchoPet.getPlugin().getServer());
-                Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(fallback), this.plugin);
+            if (map == null) {
+                if (fallback != null) {
+                    return fallback;
+                } else {
+                    fallback = map = new SimpleCommandMap(EchoPet.getPlugin().getServer());
+                    Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(fallback), this.plugin);
+                }
             }
+        } catch (Exception pie) {
+            this.plugin.getLogger().warning("Failed to dynamically register the commands! Let's give it a last shot...");
+            // Hmmm.... Pie...
+            fallback = map = new SimpleCommandMap(EchoPet.getPlugin().getServer());
+            Bukkit.getPluginManager().registerEvents(new FallbackCommandRegistrationListener(fallback), this.plugin);
         }
         return map;
     }
