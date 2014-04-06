@@ -76,7 +76,7 @@ public class CommandManager {
     }
 
     public CommandMap getCommandMap() {
-        if(!Bukkit.getPluginManager() instanceof SimplePluginManager) {
+        if(!(Bukkit.getPluginManager() instanceof SimplePluginManager)) {
             this.plugin.getLogger().warning("Seems like your server is using a custom PluginManager? Well let's try injecting our custom commands anyways...");    
         }
         
