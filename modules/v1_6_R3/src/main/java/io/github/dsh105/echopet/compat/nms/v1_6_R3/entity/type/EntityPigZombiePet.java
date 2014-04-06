@@ -21,8 +21,8 @@ import com.dsh105.dshutils.DSHPlugin;
 import io.github.dsh105.echopet.compat.api.entity.*;
 import io.github.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
 import io.github.dsh105.echopet.compat.nms.v1_6_R3.entity.EntityPet;
+import net.minecraft.server.v1_6_R3.Item;
 import net.minecraft.server.v1_6_R3.ItemStack;
-import net.minecraft.server.v1_6_R3.Items;
 import net.minecraft.server.v1_6_R3.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -39,7 +39,7 @@ public class EntityPigZombiePet extends EntityPet implements IEntityPigZombiePet
         new BukkitRunnable() {
             @Override
             public void run() {
-                setEquipment(0, new ItemStack(Items.GOLD_SWORD));
+                setEquipment(0, new ItemStack(Item.GOLD_SWORD));
             }
         }.runTaskLater(DSHPlugin.getPluginInstance(), 5L);
     }
