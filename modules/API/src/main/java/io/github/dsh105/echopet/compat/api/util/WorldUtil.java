@@ -33,40 +33,43 @@ public class WorldUtil {
     }
 
     public static boolean allowRegion(Location location) {
-        WorldGuardPlugin wg = EchoPet.getPlugin().getWorldGuardProvider().getDependency();
-        if (wg == null) {
-            return true;
-        }
-        RegionManager regionManager = wg.getRegionManager(location.getWorld());
+        if (EchoPet.getPlugin().getWorldGuardProvider().isHooked()) {
+            WorldGuardPlugin wg = EchoPet.getPlugin().getWorldGuardProvider().getDependency();
+            if (wg == null) {
+                return true;
+            }
+            RegionManager regionManager = wg.getRegionManager(location.getWorld());
 
-        if (regionManager == null) {
-            return true;
-        }
+            if (regionManager == null) {
+                return true;
+            }
 
-        ApplicableRegionSet set = regionManager.getApplicableRegions(location);
+            ApplicableRegionSet set = regionManager.getApplicableRegions(location);
 
-        if (set.size() <= 0) {
-            return true;
-        }
+            if (set.size() <= 0) {
+                return true;
+            }
 
-        boolean result = true;
-        boolean hasSet = false;
-        boolean def = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
+            boolean result = true;
+            boolean hasSet = false;
+            boolean def = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions.allowByDefault", true);
 
-        ConfigurationSection cs = EchoPet.getPlugin().getMainConfig().getConfigurationSection("worldguard.regions");
-        for (ProtectedRegion region : set) {
-            for (String key : cs.getKeys(false)) {
-                if (!key.equalsIgnoreCase("allowByDefault") && !key.equalsIgnoreCase("regionEnterCheck")) {
-                    if (region.getId().equals(key)) {
-                        if (!hasSet) {
-                            result = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions." + key, true);
-                            hasSet = true;
+            ConfigurationSection cs = EchoPet.getPlugin().getMainConfig().getConfigurationSection("worldguard.regions");
+            for (ProtectedRegion region : set) {
+                for (String key : cs.getKeys(false)) {
+                    if (!key.equalsIgnoreCase("allowByDefault") && !key.equalsIgnoreCase("regionEnterCheck")) {
+                        if (region.getId().equals(key)) {
+                            if (!hasSet) {
+                                result = EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regions." + key, true);
+                                hasSet = true;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        return hasSet ? result : def;
+            return hasSet ? result : def;
+        }
+        return true;
     }
 }
