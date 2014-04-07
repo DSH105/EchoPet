@@ -18,7 +18,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.dsh105</groupId>
+    <groupId>com.dsh105</groupId>
     <artifactId>EchoPet</artifactId>
     <name>EchoPet</name>
     <version>2.3.0-SNAPSHOT</version>
@@ -28,7 +28,7 @@
     </properties>
 
     <parent>
-        <groupId>io.github.dsh105</groupId>
+        <groupId>com.dsh105</groupId>
         <artifactId>EchoPet-Parent</artifactId>
         <version>parent</version>
         <relativePath>../../</relativePath>
@@ -43,7 +43,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.dsh105</groupId>
+            <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R1</artifactId>
             <version>v1_7_R1</version>
             <exclusions>
@@ -55,7 +55,7 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.github.dsh105</groupId>
+            <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R2</artifactId>
             <version>v1_7_R2</version>
             <exclusions>
@@ -67,7 +67,7 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.github.dsh105</groupId>
+            <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
             <version>API</version>
             <exclusions>
@@ -199,7 +199,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
-                                    <include>io.github.dsh105:EchoPet*</include>
+                                    <include>com.dsh105:EchoPet*</include>
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
@@ -209,15 +209,15 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.jolbox</pattern>
-                                    <shadedPattern>io.github.dsh105.echopet.libraries</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libraries</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
-                                    <shadedPattern>io.github.dsh105.echopet.libraries.slf4j</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libraries.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.dsh105.dshutils</pattern>
-                                    <shadedPattern>io.github.dsh105.echopet.libraries.dshutils</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libraries.dshutils</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
