@@ -284,7 +284,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             this.remove(false);
         }
 
-        if (this.getPlayerOwner() == null || !this.getPlayerOwner().isOnline() || Bukkit.getPlayerExact(this.getPlayerOwner().getName()) == null) {
+        if (this.getPlayerOwner() == null || !this.getPlayerOwner().isOnline()) {
             EchoPet.getManager().removePet(this.getPet(), true);
             return;
         }

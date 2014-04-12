@@ -61,7 +61,7 @@ public class PetManager implements IPetManager {
                 }
             }
             return pet;
-        } else if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("default." + p.getName() + ".pet.type") != null && findDefault) {
+        } else if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("default." + SaveConversion.getSavePath(p) + ".pet.type") != null && findDefault) {
             IPet pi = this.createPetFromFile("default", p);
             if (pi == null) {
                 return null;
@@ -72,7 +72,7 @@ public class PetManager implements IPetManager {
             }
             return pi;
         } else if ((checkWorldOverride && EchoPet.getOptions().getConfig().getBoolean("multiworldLoadOverride", true)) || EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)) {
-            if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("autosave." + p.getName() + ".pet.type") != null) {
+            if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("autosave." + SaveConversion.getSavePath(p) + ".pet.type") != null) {
                 IPet pi = this.createPetFromFile("autosave", p);
                 if (pi == null) {
                     return null;
