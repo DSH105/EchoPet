@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBatPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBatPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.BAT)
 public class BatPet extends Pet implements IBatPet {
 
@@ -34,8 +36,8 @@ public class BatPet extends Pet implements IBatPet {
         super(owner);
     }
 
-    public BatPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public BatPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

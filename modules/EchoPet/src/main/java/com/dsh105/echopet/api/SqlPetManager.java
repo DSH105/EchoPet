@@ -24,6 +24,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
 import com.dsh105.echopet.compat.api.util.SQLUtil;
+import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -36,7 +37,7 @@ import java.util.Map;
 public class SqlPetManager implements ISqlPetManager {
 
     @Override
-    public void updateDatabase(String player, List<PetData> list, Boolean result, boolean isRider) {
+    public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isRider) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             Statement statement = null;
@@ -48,18 +49,11 @@ public class SqlPetManager implements ISqlPetManager {
                         con = EchoPet.getPlugin().getDbPool().getConnection();
                         statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
-                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE OwnerName = '" + player + "'");
+                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE Owner = '" + SaveConversion.getSavePath(player) + "'");
                         }
                     }
-
-				/*for (PetData pd : list) {
-                    PreparedStatement ps4 = con.prepareStatement("INSERT INTO Pets (OwnerName, " + s + "" + pd.toString() + ") VALUES (?, ?);");
-					ps4.setString(1, player.getName());
-					ps4.setString(2, b.toString());
-					ps4.executeUpdate();
-				}*/
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player + " to MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player.getName() + " to MySQL Database", e, true);
                 } finally {
                     try {
                         if (statement != null)
@@ -84,22 +78,22 @@ public class SqlPetManager implements ISqlPetManager {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     // Delete any existing info
                     if (!isRider) {
-                        this.clearFromDatabase(p.getNameOfOwner());
+                        this.clearFromDatabase(p.getOwner());
                     }
 
                     // Deal with the pet metadata first
                     // This tends to be more problematic, so by shoving it out of the way, we can get the pet data saved.
                     if (isRider)
-                        ps = con.prepareStatement("INSERT INTO Pets (OwnerName, RiderPetType, RiderPetName) VALUES (?, ?, ?)");
+                        ps = con.prepareStatement("INSERT INTO Pets (Owner, RiderPetType, RiderPetName) VALUES (?, ?, ?)");
                     else
-                        ps = con.prepareStatement("INSERT INTO Pets (OwnerName, PetType, PetName) VALUES (?, ?, ?)");
+                        ps = con.prepareStatement("INSERT INTO Pets (Owner, PetType, PetName) VALUES (?, ?, ?)");
 
-                    ps.setString(1, p.getNameOfOwner());
+                    ps.setString(1, SaveConversion.getSavePath(p.getOwner()));
                     ps.setString(2, p.getPetType().toString());
                     ps.setString(3, p.getPetName());
                     ps.executeUpdate();
 
-                    this.updateDatabase(p.getNameOfOwner(), p.getPetData(), true, isRider);
+                    this.updateDatabase(p.getOwner(), p.getPetData(), true, isRider);
 
                     this.saveToDatabase(p.getRider(), true);
 
@@ -119,7 +113,7 @@ public class SqlPetManager implements ISqlPetManager {
     }
 
     @Override
-    public IPet createPetFromDatabase(String player) {
+    public IPet createPetFromDatabase(Player player) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -133,11 +127,11 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("SELECT * FROM Pets WHERE OwnerName = ?;");
-                    ps.setString(1, player);
+                    ps = con.prepareStatement("SELECT * FROM Pets WHERE Owner = ?;");
+                    ps.setString(1, SaveConversion.getSavePath(player));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        owner = Bukkit.getPlayerExact(rs.getString("OwnerName"));
+                        owner = Bukkit.getPlayerExact(rs.getString("Owner"));
                         pt = findPetType(rs.getString("PetType"));
                         if (pt == null) {
                             return null;
@@ -184,7 +178,7 @@ public class SqlPetManager implements ISqlPetManager {
                         }
                     }
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -211,7 +205,7 @@ public class SqlPetManager implements ISqlPetManager {
     }
 
     @Override
-    public void clearFromDatabase(String name) {
+    public void clearFromDatabase(Player player) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -219,11 +213,11 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("DELETE FROM Pets WHERE OwnerName = ?;");
-                    ps.setString(1, name);
+                    ps = con.prepareStatement("DELETE FROM Pets WHERE Owner = ?;");
+                    ps.setString(1, SaveConversion.getSavePath(player));
                     ps.executeUpdate();
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + name + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -238,7 +232,7 @@ public class SqlPetManager implements ISqlPetManager {
     }
 
     @Override
-    public void clearRiderFromDatabase(String name) {
+    public void clearRiderFromDatabase(Player player) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -247,12 +241,12 @@ public class SqlPetManager implements ISqlPetManager {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     String list = SQLUtil.serialiseUpdate(Arrays.asList(PetData.values()), true);
-                    ps = con.prepareStatement("UPDATE Pets SET ? WHERE OwnerName = ?;");
+                    ps = con.prepareStatement("UPDATE Pets SET ? WHERE Owner = ?;");
                     ps.setString(1, list);
-                    ps.setString(2, name);
+                    ps.setString(2, SaveConversion.getSavePath(player));
                     ps.executeUpdate();
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + name + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)

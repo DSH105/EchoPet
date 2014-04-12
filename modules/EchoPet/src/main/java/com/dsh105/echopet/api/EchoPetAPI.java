@@ -81,7 +81,7 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
-        EchoPet.getManager().removePets(player.getName(), true);
+        EchoPet.getManager().removePets(player, true);
         if (save) {
             if (hasPet(player)) {
                 EchoPet.getManager().saveFileData("autosave", EchoPet.getManager().getPet(player));

@@ -23,6 +23,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHorsePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHorsePet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.HORSE)
 public class HorsePet extends Pet implements IHorsePet {
 
@@ -38,8 +40,8 @@ public class HorsePet extends Pet implements IHorsePet {
         super(owner);
     }
 
-    public HorsePet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public HorsePet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

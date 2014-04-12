@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySlimePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISlimePet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.SLIME)
 public class SlimePet extends Pet implements ISlimePet {
 
@@ -34,8 +36,8 @@ public class SlimePet extends Pet implements ISlimePet {
         super(owner);
     }
 
-    public SlimePet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public SlimePet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

@@ -27,6 +27,8 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IOcelotPet;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.OCELOT)
 public class OcelotPet extends Pet implements IOcelotPet {
 
@@ -37,8 +39,8 @@ public class OcelotPet extends Pet implements IOcelotPet {
         super(owner);
     }
 
-    public OcelotPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public OcelotPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

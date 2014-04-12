@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEnderDragonPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.ENDERDRAGON)
 public class EnderDragonPet extends Pet implements IEnderDragonPet {
 
@@ -31,7 +33,7 @@ public class EnderDragonPet extends Pet implements IEnderDragonPet {
         super(owner);
     }
 
-    public EnderDragonPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public EnderDragonPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityMushroomCowPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMushroomCowPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.MUSHROOMCOW)
 public class MushroomCowPet extends Pet implements IMushroomCowPet {
 
@@ -34,8 +36,8 @@ public class MushroomCowPet extends Pet implements IMushroomCowPet {
         super(owner);
     }
 
-    public MushroomCowPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public MushroomCowPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

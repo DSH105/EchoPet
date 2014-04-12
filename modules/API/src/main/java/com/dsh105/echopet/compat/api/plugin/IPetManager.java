@@ -41,7 +41,7 @@ public interface IPetManager {
 
     public IPet getPet(Entity pet);
 
-    public void forceAllValidData(IPet pi);
+    public void forceAllValidData(IPet pet);
 
     public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b);
 
@@ -51,25 +51,19 @@ public interface IPetManager {
 
     public void loadRiderFromFile(String type, IPet pet);
 
-    public void removePets(String player, boolean makeDeathSound);
+    public void removePets(Player player, boolean makeDeathSound);
 
-    public void removePet(IPet pi, boolean makeDeathSound);
+    public void removePet(IPet pet, boolean makeDeathSound);
 
-    public void saveFileData(String type, IPet pi);
+    public void saveFileData(String type, IPet pet);
 
     public void saveFileData(String type, Player p, PetStorage UPD, PetStorage UMD);
 
-    public void saveFileData(String type, String name, PetStorage UPD, PetStorage UMD);
-
     public void saveFileData(String type, Player p, PetStorage UPD);
-
-    public void saveFileData(String type, String name, PetStorage UPD);
 
     public void clearAllFileData();
 
-    public void clearFileData(String type, IPet pi);
-
-    public void clearFileData(String type, String pName);
+    public void clearFileData(String type, IPet pet);
 
     public void clearFileData(String type, Player p);
 

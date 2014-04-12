@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWitherPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.WITHER)
 public class WitherPet extends Pet implements IWitherPet {
 
@@ -34,8 +36,8 @@ public class WitherPet extends Pet implements IWitherPet {
         super(owner);
     }
 
-    public WitherPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public WitherPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

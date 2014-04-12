@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCreeperPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICreeperPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.CREEPER)
 public class CreeperPet extends Pet implements ICreeperPet {
 
@@ -35,8 +37,8 @@ public class CreeperPet extends Pet implements ICreeperPet {
         super(owner);
     }
 
-    public CreeperPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public CreeperPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

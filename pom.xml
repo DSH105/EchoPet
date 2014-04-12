@@ -34,6 +34,7 @@
         <module>modules/v1_6_R3</module>
         <module>modules/v1_7_R1</module>
         <module>modules/v1_7_R2</module>
+        <module>modules/v1_7_R3</module>
         <module>modules/EchoPet</module>
     </modules>
 

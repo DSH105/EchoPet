@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IIronGolemPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.IRONGOLEM)
 public class IronGolemPet extends Pet implements IIronGolemPet {
 
@@ -31,7 +33,7 @@ public class IronGolemPet extends Pet implements IIronGolemPet {
         super(owner);
     }
 
-    public IronGolemPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public IronGolemPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

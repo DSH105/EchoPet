@@ -26,6 +26,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.PIG)
 public class PigPet extends Pet implements IPigPet {
 
@@ -36,8 +38,8 @@ public class PigPet extends Pet implements IPigPet {
         super(owner);
     }
 
-    public PigPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public PigPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

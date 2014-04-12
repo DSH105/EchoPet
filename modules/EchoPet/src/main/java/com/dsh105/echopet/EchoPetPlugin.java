@@ -24,6 +24,7 @@ import com.dsh105.dshutils.command.VersionIncompatibleCommand;
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.logger.ConsoleLogger;
 import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import com.dsh105.echopet.api.PetManager;
@@ -215,6 +216,14 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
         }
 
+        // Make sure to convert those UUIDs!
+        if (ReflectionUtil.MC_VERSION_NUMERIC > 172 && mainConfig.getBoolean("convertDataFileToUniqueId", true)) {
+            LOGGER.info("Converting data files to UUID system...");
+            SaveConversion.convertToUniqueId(petConfig);
+            mainConfig.set("convertDataFileToUniqueId", false);
+            mainConfig.saveConfig();
+        }
+
         String[] langHeader = {"EchoPet By DSH105", "---------------------",
                 "Language Configuration File"};
         try {
@@ -266,13 +275,13 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                 connection = dbPool.getConnection();
                 statement = connection.createStatement();
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS Pets (" +
-                        "OwnerName varchar(255)," +
+                        "Owner varchar(255)," +
                         "PetType varchar(255)," +
                         "PetName varchar(255)," +
                         SQLUtil.serialise(PetData.values(), false) + ", " +
                         "RiderPetType varchar(255), RiderPetName varchar(255), " +
                         SQLUtil.serialise(PetData.values(), true) +
-                        ", PRIMARY KEY (OwnerName)" +
+                        ", PRIMARY KEY (Owner)" +
                         ");");
             } catch (SQLException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "`Pets` Table generation failed [MySQL DataBase: " + db + "].", e, true);

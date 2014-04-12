@@ -31,13 +31,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class Pet implements IPet {
 
     private IEntityPet entityPet;
     private PetType petType;
 
-    private String owner;
+    private UUID ownerUuid;
     private Pet rider;
     private String name;
     private ArrayList<PetData> petData = new ArrayList<PetData>();
@@ -48,8 +49,8 @@ public abstract class Pet implements IPet {
     private boolean ownerRiding = false;
     private boolean isHat = false;
 
-    public Pet(String owner, IEntityPet entityPet) {
-        this.owner = owner;
+    public Pet(UUID ownerUuid, IEntityPet entityPet) {
+        this.ownerUuid = ownerUuid;
         this.setPetType();
         this.entityPet = entityPet;
         this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
@@ -57,7 +58,7 @@ public abstract class Pet implements IPet {
 
     public Pet(Player owner) {
         if (owner != null) {
-            this.owner = owner.getName();
+            this.ownerUuid = owner.getUniqueId();
             this.setPetType();
             this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
             if (this.entityPet != null) {
@@ -91,16 +92,16 @@ public abstract class Pet implements IPet {
 
     @Override
     public Player getOwner() {
-        if (this.owner == null) {
+        if (this.ownerUuid == null) {
             return null;
         }
-        return Bukkit.getPlayerExact(owner);
+        return Bukkit.getPlayer(ownerUuid);
     }
 
 
     @Override
     public String getNameOfOwner() {
-        return this.owner;
+        return this.getOwner() == null ? null : this.getOwner().getName();
     }
 
     @Override
@@ -150,7 +151,7 @@ public abstract class Pet implements IPet {
                 this.name = StringSimplifier.stripDiacritics(this.name);
             }
             if (this.name == null || this.name.equalsIgnoreCase("")) {
-                this.name = this.petType.getDefaultName(this.owner);
+                this.name = this.petType.getDefaultName(this.getNameOfOwner());
             }
             if (this.getCraftPet() != null) {
                 this.getCraftPet().setCustomName(this.name);

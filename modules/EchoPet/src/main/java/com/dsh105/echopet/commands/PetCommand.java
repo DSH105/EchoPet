@@ -151,7 +151,7 @@ public class PetCommand implements CommandExecutor {
                     Player player = (Player) sender;
                     IPet p = EchoPet.getManager().getPet(player);
                     if (p == null) {
-                        EchoPet.getManager().removePets(player.getName(), true);
+                        EchoPet.getManager().removePets(player, true);
                         IPet pet = EchoPet.getManager().loadPets(player, false, false, false);
                         if (pet == null) {
                             Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
@@ -192,7 +192,7 @@ public class PetCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("show")) {
                 if (Perm.BASE_SHOW.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
-                    EchoPet.getManager().removePets(player.getName(), true);
+                    EchoPet.getManager().removePets(player, true);
                     IPet pet = EchoPet.getManager().loadPets(player, false, false, false);
                     if (pet == null) {
                         Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
@@ -316,7 +316,7 @@ public class PetCommand implements CommandExecutor {
                         return true;
                     }
                     EchoPet.getManager().clearFileData("autosave", pi);
-                    EchoPet.getSqlManager().clearFromDatabase(pi.getNameOfOwner());
+                    EchoPet.getSqlManager().clearFromDatabase(pi.getOwner());
                     EchoPet.getManager().removePet(pi, true);
                     Lang.sendTo(sender, Lang.REMOVE_PET.toString());
                     return true;
@@ -492,7 +492,7 @@ public class PetCommand implements CommandExecutor {
                         }
 
                         EchoPet.getManager().clearFileData("default", (Player) sender);
-                        EchoPet.getSqlManager().clearFromDatabase(sender.getName());
+                        EchoPet.getSqlManager().clearFromDatabase((Player) sender);
                         Lang.sendTo(sender, Lang.REMOVE_DEFAULT.toString());
                         return true;
                     } else return true;

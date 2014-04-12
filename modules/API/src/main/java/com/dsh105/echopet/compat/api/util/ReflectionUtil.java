@@ -30,6 +30,8 @@ public class ReflectionUtil {
     public static String CBC_PATH = getCBCPackageName();
     public static String COMPAT_NMS_PATH = "com.dsh105.echopet.compat.nms." + getServerVersion();
 
+    public static int MC_VERSION_NUMERIC = Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
+
     public static String getServerVersion() {
         return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }

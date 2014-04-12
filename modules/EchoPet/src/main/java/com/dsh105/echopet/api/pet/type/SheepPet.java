@@ -26,6 +26,8 @@ import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.SHEEP)
 public class SheepPet extends Pet implements ISheepPet {
 
@@ -37,8 +39,8 @@ public class SheepPet extends Pet implements ISheepPet {
         super(owner);
     }
 
-    public SheepPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public SheepPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

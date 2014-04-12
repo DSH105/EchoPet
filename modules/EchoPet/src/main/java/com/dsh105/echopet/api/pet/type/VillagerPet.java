@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IVillagerPet;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 import org.bukkit.entity.Villager.Profession;
 
 @EntityPetType(petType = PetType.VILLAGER)
@@ -36,8 +38,8 @@ public class VillagerPet extends Pet implements IVillagerPet {
         super(owner);
     }
 
-    public VillagerPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public VillagerPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISilverfishPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.SILVERFISH)
 public class SilverfishPet extends Pet implements ISilverfishPet {
 
@@ -31,7 +33,7 @@ public class SilverfishPet extends Pet implements ISilverfishPet {
         super(owner);
     }
 
-    public SilverfishPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public SilverfishPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

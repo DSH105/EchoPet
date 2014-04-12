@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEndermanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IEndermanPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.ENDERMAN)
 public class EndermanPet extends Pet implements IEndermanPet {
 
@@ -34,8 +36,8 @@ public class EndermanPet extends Pet implements IEndermanPet {
         super(owner);
     }
 
-    public EndermanPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public EndermanPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

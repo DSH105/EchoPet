@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.ICaveSpiderPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.CAVESPIDER)
 public class CaveSpiderPet extends Pet implements ICaveSpiderPet {
 
@@ -31,7 +33,7 @@ public class CaveSpiderPet extends Pet implements ICaveSpiderPet {
         super(owner);
     }
 
-    public CaveSpiderPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public CaveSpiderPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

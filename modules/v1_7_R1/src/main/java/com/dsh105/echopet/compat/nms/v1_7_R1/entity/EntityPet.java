@@ -44,7 +44,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class EntityPet extends EntityCreature implements EntityOwnable, IAnimal, IEntityPet {
+public abstract class EntityPet extends EntityCreature implements IAnimal, IEntityPet {
 
     protected IPet pet;
     public PetGoalSelector petGoalSelector;
@@ -124,16 +124,6 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     public Player getPlayerOwner() {
         return pet.getOwner();
-    }
-
-    @Override
-    public String getOwnerName() {
-        return this.getPlayerOwner().getName();
-    }
-
-    @Override
-    public Entity getOwner() {
-        return ((CraftPlayer) this.getPlayerOwner()).getHandle();
     }
 
     public Location getLocation() {
@@ -249,7 +239,7 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
 
     @Override
     public boolean onInteract(Player p) {
-        return a(p);
+        return this.a(((CraftPlayer) p).getHandle());
     }
 
     // EntityInsentient
@@ -265,10 +255,6 @@ public abstract class EntityPet extends EntityCreature implements EntityOwnable,
             return true;
         }
         return false;
-    }
-
-    public boolean a(Player player) {
-        return this.a(((CraftPlayer) player).getHandle());
     }
 
     public void setLocation(Location l) {

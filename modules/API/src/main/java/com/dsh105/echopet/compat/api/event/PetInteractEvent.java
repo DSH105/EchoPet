@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.event;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -76,7 +77,7 @@ public class PetInteractEvent extends Event implements Cancellable {
      * @return true if it is the owner
      */
     public boolean isPlayerOwner() {
-        return this.player.getName().equals(this.pet.getNameOfOwner());
+        return SaveConversion.getSavePath(this.player).equals(SaveConversion.getSavePath(this.pet.getOwner()));
     }
 
     /**

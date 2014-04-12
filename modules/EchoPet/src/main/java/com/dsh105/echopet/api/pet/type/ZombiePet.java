@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IZombiePet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.ZOMBIE)
 public class ZombiePet extends Pet implements IZombiePet {
 
@@ -35,8 +37,8 @@ public class ZombiePet extends Pet implements IZombiePet {
         super(owner);
     }
 
-    public ZombiePet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public ZombiePet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

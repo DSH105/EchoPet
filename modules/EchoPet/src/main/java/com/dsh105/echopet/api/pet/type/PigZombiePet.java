@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigZombiePet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.PIGZOMBIE)
 public class PigZombiePet extends Pet implements IPigZombiePet {
 
@@ -37,8 +39,8 @@ public class PigZombiePet extends Pet implements IPigZombiePet {
         //this.equipment = EchoPet.getInstance().options.shouldHaveEquipment(getPet().getPetType());
     }
 
-    public PigZombiePet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public PigZombiePet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

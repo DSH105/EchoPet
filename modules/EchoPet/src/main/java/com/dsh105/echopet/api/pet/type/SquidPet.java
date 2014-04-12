@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISquidPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.SQUID)
 public class SquidPet extends Pet implements ISquidPet {
 
@@ -31,7 +33,7 @@ public class SquidPet extends Pet implements ISquidPet {
         super(owner);
     }
 
-    public SquidPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public SquidPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

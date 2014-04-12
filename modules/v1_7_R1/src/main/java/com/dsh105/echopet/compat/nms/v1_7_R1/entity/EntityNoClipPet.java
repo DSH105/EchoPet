@@ -31,7 +31,7 @@ public abstract class EntityNoClipPet extends EntityPet {
         super(world);
     }
 
-    public void noClip(boolean b) {
-        this.Y = true;
+    public void noClip(boolean flag) {
+        this.Y = flag;
     }
 }

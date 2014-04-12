@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWitchPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.WITCH)
 public class WitchPet extends Pet implements IWitchPet {
 
@@ -31,7 +33,7 @@ public class WitchPet extends Pet implements IWitchPet {
         super(owner);
     }
 
-    public WitchPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public WitchPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

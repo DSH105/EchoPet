@@ -31,6 +31,7 @@ import com.dsh105.echopet.compat.api.util.PetUtil;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
+import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
 import com.dsh105.echopet.conversation.NameFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -312,13 +313,13 @@ public class PetAdminCommand implements CommandExecutor {
                 if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null || !target.isOnline()) {
-                        String path = "autosave." + args[1];
+                        String path = "autosave." + SaveConversion.getSavePath(target);
                         if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".pet.type") == null) {
                             Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[1]));
                             return true;
                         } else {
-                            EchoPet.getManager().clearFileData("autosave", args[1]);
-                            EchoPet.getSqlManager().clearFromDatabase(args[1]);
+                            EchoPet.getManager().clearFileData("autosave", target);
+                            EchoPet.getSqlManager().clearFromDatabase(target);
                             Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", args[1]));
                             return true;
                         }
@@ -331,7 +332,7 @@ public class PetAdminCommand implements CommandExecutor {
                         }
 
                         EchoPet.getManager().clearFileData("autosave", pet);
-                        EchoPet.getSqlManager().clearFromDatabase(target.getName());
+                        EchoPet.getSqlManager().clearFromDatabase(target);
                         EchoPet.getManager().removePet(pet, true);
 
                         Lang.sendTo(sender, Lang.ADMIN_PET_REMOVED.toString().replace("%player%", target.getName()));
@@ -438,14 +439,14 @@ public class PetAdminCommand implements CommandExecutor {
                     if (target != null && target.isOnline()) {
                         name = target.getName();
                     }
-                    String path = "default." + name + ".";
+                    String path = "default." + SaveConversion.getSavePath(target) + ".";
                     if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + "pet.type") == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_DEFAULT.toString().replace("%player%", name));
                         return true;
                     }
 
-                    EchoPet.getManager().clearFileData("default", name);
-                    EchoPet.getSqlManager().clearFromDatabase(name);
+                    EchoPet.getManager().clearFileData("default", target);
+                    EchoPet.getSqlManager().clearFromDatabase(target);
                     Lang.sendTo(sender, Lang.ADMIN_REMOVE_DEFAULT.toString().replace("%player%", name));
                     return true;
                 } else return true;
@@ -486,7 +487,7 @@ public class PetAdminCommand implements CommandExecutor {
                     }
 
                     if (Perm.hasTypePerm(sender, true, Perm.ADMIN_DEFAULT_SET_PETTYPE, true, petType)) {
-                        EchoPet.getManager().saveFileData("default", name, UPD);
+                        EchoPet.getManager().saveFileData("default", Bukkit.getPlayer(args[1]), UPD);
                         Lang.sendTo(sender, Lang.ADMIN_SET_DEFAULT.toString()
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
                                 .replace("%player%", name));
@@ -518,7 +519,7 @@ public class PetAdminCommand implements CommandExecutor {
                 }
 
                 if (Perm.hasTypePerm(sender, true, Perm.ADMIN_DEFAULT_SET_PETTYPE, true, petType) && Perm.hasTypePerm(sender, true, Perm.ADMIN_DEFAULT_SET_PETTYPE, true, riderType)) {
-                    EchoPet.getManager().saveFileData("default", name, UPD, UMD);
+                    EchoPet.getManager().saveFileData("default", Bukkit.getPlayer(args[1]), UPD, UMD);
                     Lang.sendTo(sender, Lang.ADMIN_SET_DEFAULT_WITH_RIDER.toString()
                             .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
                             .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", "")))
@@ -532,7 +533,7 @@ public class PetAdminCommand implements CommandExecutor {
                     if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                         Player target = Bukkit.getPlayer(args[2]);
                         if (target == null) {
-                            String path = "autosave." + "." + args[2];
+                            String path = "autosave." + "." + SaveConversion.getSavePath(target);
                             if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".rider.type") == null) {
                                 Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[2]));
                                 return true;
@@ -541,7 +542,7 @@ public class PetAdminCommand implements CommandExecutor {
                                     EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider" + key, null);
                                 }
 
-                                EchoPet.getSqlManager().clearRiderFromDatabase(args[2]);
+                                EchoPet.getSqlManager().clearRiderFromDatabase(target);
                                 Lang.sendTo(sender, Lang.ADMIN_REMOVE_RIDER.toString().replace("%player%", args[2]));
                                 return true;
                             }
@@ -559,7 +560,7 @@ public class PetAdminCommand implements CommandExecutor {
                             }
 
                             EchoPet.getManager().clearFileData("autosave", pet);
-                            EchoPet.getSqlManager().clearFromDatabase(target.getName());
+                            EchoPet.getSqlManager().clearFromDatabase(target);
                             EchoPet.getManager().removePet(pet, true);
 
                             Lang.sendTo(sender, Lang.ADMIN_REMOVE_RIDER.toString().replace("%player%", target.getName()));

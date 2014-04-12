@@ -28,6 +28,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.HUMAN)
 public class HumanPet extends PacketPet implements IHumanPet {
 
@@ -35,8 +37,8 @@ public class HumanPet extends PacketPet implements IHumanPet {
         super(owner);
     }
 
-    public HumanPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public HumanPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

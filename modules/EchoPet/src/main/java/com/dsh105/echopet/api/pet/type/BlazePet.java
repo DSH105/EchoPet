@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBlazePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IBlazePet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.BLAZE)
 public class BlazePet extends Pet implements IBlazePet {
 
@@ -34,8 +36,8 @@ public class BlazePet extends Pet implements IBlazePet {
         super(owner);
     }
 
-    public BlazePet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public BlazePet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

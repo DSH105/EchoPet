@@ -25,6 +25,8 @@ import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISkeletonPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.SKELETON)
 public class SkeletonPet extends Pet implements ISkeletonPet {
 
@@ -34,8 +36,8 @@ public class SkeletonPet extends Pet implements ISkeletonPet {
         super(owner);
     }
 
-    public SkeletonPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public SkeletonPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

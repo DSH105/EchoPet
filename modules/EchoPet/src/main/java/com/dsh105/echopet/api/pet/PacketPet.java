@@ -22,14 +22,16 @@ import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPacketPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class PacketPet extends Pet implements IPacketPet {
 
     public PacketPet(Player owner) {
         super(owner);
     }
 
-    public PacketPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public PacketPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

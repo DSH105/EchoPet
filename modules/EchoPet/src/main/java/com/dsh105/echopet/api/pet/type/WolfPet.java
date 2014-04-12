@@ -26,6 +26,8 @@ import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.WOLF)
 public class WolfPet extends Pet implements IWolfPet {
 
@@ -38,8 +40,8 @@ public class WolfPet extends Pet implements IWolfPet {
         super(owner);
     }
 
-    public WolfPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public WolfPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 
     @Override

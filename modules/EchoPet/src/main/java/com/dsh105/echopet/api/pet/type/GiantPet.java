@@ -24,6 +24,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IGiantPet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.GIANT)
 public class GiantPet extends Pet implements IGiantPet {
 
@@ -31,7 +33,7 @@ public class GiantPet extends Pet implements IGiantPet {
         super(owner);
     }
 
-    public GiantPet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public GiantPet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }

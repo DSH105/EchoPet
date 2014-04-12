@@ -23,6 +23,8 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.pet.IMagmaCubePet;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @EntityPetType(petType = PetType.MAGMACUBE)
 public class MagmaCubePet extends SlimePet implements IMagmaCubePet {
 
@@ -30,7 +32,7 @@ public class MagmaCubePet extends SlimePet implements IMagmaCubePet {
         super(owner);
     }
 
-    public MagmaCubePet(String owner, IEntityPet entityPet) {
-        super(owner, entityPet);
+    public MagmaCubePet(UUID ownerUuid, IEntityPet entityPet) {
+        super(ownerUuid, entityPet);
     }
 }
