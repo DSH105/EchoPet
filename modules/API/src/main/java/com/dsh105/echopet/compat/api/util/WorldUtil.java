@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 

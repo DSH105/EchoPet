@@ -27,19 +27,15 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 /**
  * @author evilmidget38
- *
- * http://forums.bukkit.org/threads/250926/
- *
- * https://gist.github.com/evilmidget38/df8dcd7855937e9d1e1f
+ *         <p/>
+ *         http://forums.bukkit.org/threads/250926/
+ *         <p/>
+ *         https://gist.github.com/evilmidget38/df8dcd7855937e9d1e1f
  */
 
 public class UUIDFetcher implements Callable<Map<String, UUID>> {

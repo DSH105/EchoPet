@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.hook;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.PluginDependencyProvider;
 import com.dsh105.echopet.listeners.RegionListener;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.plugin.Plugin;
 
 public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugin> implements IWorldGuardProvider {

@@ -18,7 +18,6 @@
 package com.dsh105.echopet.commands;
 
 import com.dsh105.dshutils.util.StringUtil;
-import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -28,6 +27,7 @@ import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.util.fanciful.FancyMessage;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
+import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
 import com.dsh105.echopet.compat.api.util.pagination.FancyPaginator;
 import com.dsh105.echopet.conversation.NameFactory;

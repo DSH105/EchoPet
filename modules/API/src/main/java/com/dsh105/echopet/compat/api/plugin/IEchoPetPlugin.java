@@ -18,11 +18,11 @@
 package com.dsh105.echopet.compat.api.plugin;
 
 import com.dsh105.dshutils.config.YAMLConfig;
-import com.jolbox.bonecp.BoneCP;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.plugin.hook.IVanishProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
+import com.jolbox.bonecp.BoneCP;
 import org.bukkit.plugin.Plugin;
 
 public interface IEchoPetPlugin extends Plugin {

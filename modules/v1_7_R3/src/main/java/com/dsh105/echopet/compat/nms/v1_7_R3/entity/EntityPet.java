@@ -31,7 +31,6 @@ import com.dsh105.echopet.compat.nms.v1_7_R3.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_7_R3.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_7_R3.entity.ai.PetGoalLookAtPlayer;
 import net.minecraft.server.v1_7_R3.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R3.entity.CraftLivingEntity;
