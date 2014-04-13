@@ -44,6 +44,12 @@ public class SaveConversion {
         if (cs != null) {
             final LinkedHashMap<String, LinkedHashMap<String, Object>> keyToValueMap = new LinkedHashMap<String, LinkedHashMap<String, Object>>();
             for (String key : cs.getKeys(false)) {
+                try {
+                    UUID.fromString(key);
+                    continue;
+                } catch (IllegalArgumentException e) {
+                    // Do nothing and keep migrating
+                }
                 ConfigurationSection petSection = config.getConfigurationSection("autosave." + key);
                 for (String fullPath : petSection.getKeys(true)) {
                     LinkedHashMap<String, Object> existingMap = keyToValueMap.get(key);
@@ -55,6 +61,7 @@ public class SaveConversion {
                     config.set("autosave." + key, null);
                 }
             }
+
 
             new BukkitRunnable() {
 
