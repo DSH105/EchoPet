@@ -44,6 +44,18 @@
     <dependencies>
         <dependency>
             <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-v1_6_R3</artifactId>
+            <version>v1_6_R3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R1</artifactId>
             <version>v1_7_R1</version>
             <exclusions>
@@ -209,9 +221,17 @@
                         <configuration>
                             <minimizeJar>true</minimizeJar>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>com.dsh105:EchoPet*</artifact>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </filter>
+                            </filters>
                             <artifactSet>
                                 <includes>
-                                    <include>com.dsh105:EchoPet*</include>
+                                    <artifact>com.dsh105:EchoPet*</artifact>
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
