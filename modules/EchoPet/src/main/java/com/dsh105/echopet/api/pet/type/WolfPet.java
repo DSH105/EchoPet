@@ -40,10 +40,6 @@ public class WolfPet extends Pet implements IWolfPet {
         super(owner);
     }
 
-    public WolfPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntityWolfPet) getEntityPet()).setBaby(flag);

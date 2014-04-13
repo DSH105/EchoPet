@@ -36,10 +36,6 @@ public class BlazePet extends Pet implements IBlazePet {
         super(owner);
     }
 
-    public BlazePet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setOnFire(boolean flag) {
         ((IEntityBlazePet) getEntityPet()).setOnFire(flag);

@@ -37,10 +37,6 @@ public class ZombiePet extends Pet implements IZombiePet {
         super(owner);
     }
 
-    public ZombiePet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntityZombiePet) getEntityPet()).setBaby(flag);

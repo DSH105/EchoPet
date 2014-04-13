@@ -37,10 +37,6 @@ public class CreeperPet extends Pet implements ICreeperPet {
         super(owner);
     }
 
-    public CreeperPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setPowered(boolean flag) {
         ((IEntityCreeperPet) getEntityPet()).setPowered(flag);

@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
-import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
+import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -49,7 +49,7 @@ public class SqlPetManager implements ISqlPetManager {
                         con = EchoPet.getPlugin().getDbPool().getConnection();
                         statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
-                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE Owner = '" + SaveConversion.getSavePath(player) + "'");
+                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE Owner = '" + UUIDMigration.getIdentificationFor(player) + "'");
                         }
                     }
                 } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class SqlPetManager implements ISqlPetManager {
                     else
                         ps = con.prepareStatement("INSERT INTO Pets (Owner, PetType, PetName) VALUES (?, ?, ?)");
 
-                    ps.setString(1, SaveConversion.getSavePath(p.getOwner()));
+                    ps.setString(1, UUIDMigration.getIdentificationFor(p.getOwner()));
                     ps.setString(2, p.getPetType().toString());
                     ps.setString(3, p.getPetName());
                     ps.executeUpdate();
@@ -128,7 +128,7 @@ public class SqlPetManager implements ISqlPetManager {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     ps = con.prepareStatement("SELECT * FROM Pets WHERE Owner = ?;");
-                    ps.setString(1, SaveConversion.getSavePath(player));
+                    ps.setString(1, UUIDMigration.getIdentificationFor(player));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
                         owner = Bukkit.getPlayerExact(rs.getString("Owner"));
@@ -214,7 +214,7 @@ public class SqlPetManager implements ISqlPetManager {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     ps = con.prepareStatement("DELETE FROM Pets WHERE Owner = ?;");
-                    ps.setString(1, SaveConversion.getSavePath(player));
+                    ps.setString(1, UUIDMigration.getIdentificationFor(player));
                     ps.executeUpdate();
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
@@ -243,7 +243,7 @@ public class SqlPetManager implements ISqlPetManager {
                     String list = SQLUtil.serialiseUpdate(Arrays.asList(PetData.values()), true);
                     ps = con.prepareStatement("UPDATE Pets SET ? WHERE Owner = ?;");
                     ps.setString(1, list);
-                    ps.setString(2, SaveConversion.getSavePath(player));
+                    ps.setString(2, UUIDMigration.getIdentificationFor(player));
                     ps.executeUpdate();
                 } catch (SQLException e) {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);

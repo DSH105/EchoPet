@@ -36,10 +36,6 @@ public class BatPet extends Pet implements IBatPet {
         super(owner);
     }
 
-    public BatPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setHanging(boolean flag) {
         ((IEntityBatPet) getEntityPet()).setHanging(flag);

@@ -38,10 +38,6 @@ public class PigPet extends Pet implements IPigPet {
         super(owner);
     }
 
-    public PigPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntityPigPet) getEntityPet()).setBaby(flag);

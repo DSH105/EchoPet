@@ -38,10 +38,6 @@ public class VillagerPet extends Pet implements IVillagerPet {
         super(owner);
     }
 
-    public VillagerPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public boolean isBaby() {
         return this.baby;

@@ -30,10 +30,6 @@ public class PacketPet extends Pet implements IPacketPet {
         super(owner);
     }
 
-    public PacketPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public IEntityPacketPet getEntityPet() {
         return (IEntityPacketPet) super.getEntityPet();

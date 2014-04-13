@@ -144,10 +144,6 @@ public enum PetType {
         return null;
     }
 
-    public IPet getNewPetInstance(String owner, IEntityPet entityPet) {
-        return new SafeConstructor<IPet>(this.petClass, String.class, ReflectionUtil.getVersionedClass("entity.EntityPet")).newInstance(owner, entityPet);
-    }
-
     public ICraftPet getNewCraftInstance(IEntityPet entityPet) {
         return new SafeConstructor<ICraftPet>(this.craftClass, ReflectionUtil.getVersionedClass("entity.EntityPet")).newInstance(entityPet);
     }

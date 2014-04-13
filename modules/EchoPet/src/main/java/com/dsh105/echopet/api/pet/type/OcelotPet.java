@@ -39,10 +39,6 @@ public class OcelotPet extends Pet implements IOcelotPet {
         super(owner);
     }
 
-    public OcelotPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntityOcelotPet) getEntityPet()).setBaby(flag);

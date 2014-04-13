@@ -32,8 +32,4 @@ public class GiantPet extends Pet implements IGiantPet {
     public GiantPet(Player owner) {
         super(owner);
     }
-
-    public GiantPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

@@ -36,10 +36,6 @@ public class SlimePet extends Pet implements ISlimePet {
         super(owner);
     }
 
-    public SlimePet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setSize(int i) {
         ((IEntitySlimePet) getEntityPet()).setSize(i);

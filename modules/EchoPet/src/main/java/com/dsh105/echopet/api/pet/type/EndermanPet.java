@@ -36,10 +36,6 @@ public class EndermanPet extends Pet implements IEndermanPet {
         super(owner);
     }
 
-    public EndermanPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setScreaming(boolean flag) {
         ((IEntityEndermanPet) getEntityPet()).setScreaming(flag);

@@ -36,10 +36,6 @@ public class ChickenPet extends Pet implements IChickenPet {
         super(owner);
     }
 
-    public ChickenPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntityChickenPet) getEntityPet()).setBaby(flag);

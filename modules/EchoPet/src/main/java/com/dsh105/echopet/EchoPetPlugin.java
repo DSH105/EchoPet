@@ -36,7 +36,7 @@ import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.*;
-import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
+import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -219,7 +219,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         // Make sure to convert those UUIDs!
         if (ReflectionUtil.MC_VERSION_NUMERIC > 172 && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null) {
             LOGGER.info("Converting data files to UUID system...");
-            SaveConversion.convertToUniqueId(petConfig);
+            UUIDMigration.convertToUniqueId(petConfig);
             mainConfig.set("convertDataFileToUniqueId", false);
             mainConfig.saveConfig();
         }

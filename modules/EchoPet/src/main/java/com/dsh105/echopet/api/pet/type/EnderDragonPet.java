@@ -32,8 +32,4 @@ public class EnderDragonPet extends Pet implements IEnderDragonPet {
     public EnderDragonPet(Player owner) {
         super(owner);
     }
-
-    public EnderDragonPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

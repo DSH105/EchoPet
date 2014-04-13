@@ -36,11 +36,6 @@ public class PigZombiePet extends Pet implements IPigZombiePet {
 
     public PigZombiePet(Player owner) {
         super(owner);
-        //this.equipment = EchoPet.getInstance().options.shouldHaveEquipment(getPet().getPetType());
-    }
-
-    public PigZombiePet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
     }
 
     @Override

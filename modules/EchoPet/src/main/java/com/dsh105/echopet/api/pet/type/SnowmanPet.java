@@ -32,8 +32,4 @@ public class SnowmanPet extends Pet implements ISnowmanPet {
     public SnowmanPet(Player owner) {
         super(owner);
     }
-
-    public SnowmanPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

@@ -39,10 +39,6 @@ public class SheepPet extends Pet implements ISheepPet {
         super(owner);
     }
 
-    public SheepPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntitySheepPet) getEntityPet()).setBaby(flag);

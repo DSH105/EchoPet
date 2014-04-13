@@ -40,10 +40,6 @@ public class HorsePet extends Pet implements IHorsePet {
         super(owner);
     }
 
-    public HorsePet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setHorseType(HorseType type) {
         ((IEntityHorsePet) getEntityPet()).setType(type);

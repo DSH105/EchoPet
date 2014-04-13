@@ -36,10 +36,6 @@ public class MushroomCowPet extends Pet implements IMushroomCowPet {
         super(owner);
     }
 
-    public MushroomCowPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setBaby(boolean flag) {
         ((IEntityMushroomCowPet) getEntityPet()).setBaby(flag);

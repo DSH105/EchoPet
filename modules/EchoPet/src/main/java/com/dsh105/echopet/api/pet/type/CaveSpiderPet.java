@@ -32,8 +32,4 @@ public class CaveSpiderPet extends Pet implements ICaveSpiderPet {
     public CaveSpiderPet(Player owner) {
         super(owner);
     }
-
-    public CaveSpiderPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

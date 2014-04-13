@@ -32,8 +32,4 @@ public class SilverfishPet extends Pet implements ISilverfishPet {
     public SilverfishPet(Player owner) {
         super(owner);
     }
-
-    public SilverfishPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

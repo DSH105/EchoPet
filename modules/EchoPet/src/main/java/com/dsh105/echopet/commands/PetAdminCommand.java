@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
-import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
+import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
@@ -313,7 +313,7 @@ public class PetAdminCommand implements CommandExecutor {
                 if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null || !target.isOnline()) {
-                        String path = "autosave." + SaveConversion.getSavePath(target);
+                        String path = "autosave." + UUIDMigration.getIdentificationFor(target);
                         if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".pet.type") == null) {
                             Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[1]));
                             return true;
@@ -439,7 +439,7 @@ public class PetAdminCommand implements CommandExecutor {
                     if (target != null && target.isOnline()) {
                         name = target.getName();
                     }
-                    String path = "default." + SaveConversion.getSavePath(target) + ".";
+                    String path = "default." + UUIDMigration.getIdentificationFor(target) + ".";
                     if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + "pet.type") == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_DEFAULT.toString().replace("%player%", name));
                         return true;
@@ -533,7 +533,7 @@ public class PetAdminCommand implements CommandExecutor {
                     if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                         Player target = Bukkit.getPlayer(args[2]);
                         if (target == null) {
-                            String path = "autosave." + "." + SaveConversion.getSavePath(target);
+                            String path = "autosave." + "." + UUIDMigration.getIdentificationFor(target);
                             if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".rider.type") == null) {
                                 Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[2]));
                                 return true;

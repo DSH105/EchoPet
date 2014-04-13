@@ -32,8 +32,4 @@ public class GhastPet extends Pet implements IGhastPet {
     public GhastPet(Player owner) {
         super(owner);
     }
-
-    public GhastPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

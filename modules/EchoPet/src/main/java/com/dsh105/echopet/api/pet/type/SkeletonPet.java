@@ -36,10 +36,6 @@ public class SkeletonPet extends Pet implements ISkeletonPet {
         super(owner);
     }
 
-    public SkeletonPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setWither(boolean flag) {
         ((IEntitySkeletonPet) getEntityPet()).setWither(flag);

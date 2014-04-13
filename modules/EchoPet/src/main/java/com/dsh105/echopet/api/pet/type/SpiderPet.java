@@ -32,8 +32,4 @@ public class SpiderPet extends Pet implements ISpiderPet {
     public SpiderPet(Player owner) {
         super(owner);
     }
-
-    public SpiderPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

@@ -25,7 +25,7 @@ import com.dsh105.echopet.compat.api.entity.type.pet.*;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
-import com.dsh105.echopet.compat.api.plugin.uuid.SaveConversion;
+import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
@@ -61,7 +61,7 @@ public class PetManager implements IPetManager {
                 }
             }
             return pet;
-        } else if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("default." + SaveConversion.getSavePath(p) + ".pet.type") != null && findDefault) {
+        } else if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("default." + UUIDMigration.getIdentificationFor(p) + ".pet.type") != null && findDefault) {
             IPet pi = this.createPetFromFile("default", p);
             if (pi == null) {
                 return null;
@@ -72,7 +72,7 @@ public class PetManager implements IPetManager {
             }
             return pi;
         } else if ((checkWorldOverride && EchoPet.getOptions().getConfig().getBoolean("multiworldLoadOverride", true)) || EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)) {
-            if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("autosave." + SaveConversion.getSavePath(p) + ".pet.type") != null) {
+            if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get("autosave." + UUIDMigration.getIdentificationFor(p) + ".pet.type") != null) {
                 IPet pi = this.createPetFromFile("autosave", p);
                 if (pi == null) {
                     return null;
@@ -141,7 +141,7 @@ public class PetManager implements IPetManager {
     @Override
     public IPet getPet(Player player) {
         for (IPet pi : pets) {
-            if (SaveConversion.getSavePath(player).equals(SaveConversion.getSavePath(pi.getOwner()))) {
+            if (UUIDMigration.getIdentificationFor(player).equals(UUIDMigration.getIdentificationFor(pi.getOwner()))) {
                 return pi;
             }
         }
@@ -194,7 +194,7 @@ public class PetManager implements IPetManager {
     public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b) {
         EchoPet.getSqlManager().updateDatabase(pet.getOwner(), list, b, pet.isRider());
         String w = pet.getOwner().getWorld().getName();
-        String path = type + "." + w + "." + SaveConversion.getSavePath(pet.getOwner());
+        String path = type + "." + w + "." + UUIDMigration.getIdentificationFor(pet.getOwner());
         for (PetData pd : list) {
             EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), b);
         }
@@ -204,7 +204,7 @@ public class PetManager implements IPetManager {
     @Override
     public IPet createPetFromFile(String type, Player p) {
         if (EchoPet.getOptions().getConfig().getBoolean("loadSavedPets", true)) {
-            String path = type + "." + SaveConversion.getSavePath(p);
+            String path = type + "." + UUIDMigration.getIdentificationFor(p);
             if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path) != null) {
                 PetType petType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.type"));
                 String name = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".pet.name");
@@ -258,7 +258,7 @@ public class PetManager implements IPetManager {
     @Override
     public void loadRiderFromFile(String type, IPet pet) {
         if (pet.getOwner() != null) {
-            String path = type + "." + SaveConversion.getSavePath(pet.getOwner());
+            String path = type + "." + UUIDMigration.getIdentificationFor(pet.getOwner());
             if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".rider.type") != null) {
                 PetType riderPetType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".rider.type"));
                 String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".rider.name");
@@ -296,7 +296,7 @@ public class PetManager implements IPetManager {
         Iterator<IPet> i = pets.listIterator();
         while (i.hasNext()) {
             IPet p = i.next();
-            if (SaveConversion.getSavePath(player).equals(SaveConversion.getSavePath(p.getOwner()))) {
+            if (UUIDMigration.getIdentificationFor(player).equals(UUIDMigration.getIdentificationFor(p.getOwner()))) {
                 p.removePet(makeDeathSound);
                 i.remove();
             }
@@ -312,7 +312,7 @@ public class PetManager implements IPetManager {
     public void saveFileData(String type, IPet pi) {
         clearFileData(type, pi);
         //String oName = pi.getNameOfOwner();
-        String path = type + "." + SaveConversion.getSavePath(pi.getOwner());
+        String path = type + "." + UUIDMigration.getIdentificationFor(pi.getOwner());
         PetType petType = pi.getPetType();
 
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
@@ -350,7 +350,7 @@ public class PetManager implements IPetManager {
             riderName = pt.getDefaultName(p.getName());
         }
 
-        String path = type + "." + SaveConversion.getSavePath(p);
+        String path = type + "." + UUIDMigration.getIdentificationFor(p);
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
 
@@ -376,7 +376,7 @@ public class PetManager implements IPetManager {
         PetData[] data = UPD.petDataList.toArray(new PetData[UPD.petDataList.size()]);
         String petName = UPD.petName;
 
-        String path = type + "." + SaveConversion.getSavePath(p);
+        String path = type + "." + UUIDMigration.getIdentificationFor(p);
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", pt.toString());
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", petName);
 
@@ -403,7 +403,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public void clearFileData(String type, Player p) {
-        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(type + "." + SaveConversion.getSavePath(p), null);
+        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(type + "." + UUIDMigration.getIdentificationFor(p), null);
         EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
     }
 

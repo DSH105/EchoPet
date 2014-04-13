@@ -36,10 +36,6 @@ public class WitherPet extends Pet implements IWitherPet {
         super(owner);
     }
 
-    public WitherPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setShielded(boolean flag) {
         ((IEntityWitherPet) getEntityPet()).setShielded(flag);

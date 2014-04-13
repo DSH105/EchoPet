@@ -32,8 +32,4 @@ public class IronGolemPet extends Pet implements IIronGolemPet {
     public IronGolemPet(Player owner) {
         super(owner);
     }
-
-    public IronGolemPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

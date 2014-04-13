@@ -32,8 +32,4 @@ public class WitchPet extends Pet implements IWitchPet {
     public WitchPet(Player owner) {
         super(owner);
     }
-
-    public WitchPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

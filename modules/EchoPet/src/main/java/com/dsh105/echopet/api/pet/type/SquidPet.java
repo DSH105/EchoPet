@@ -32,8 +32,4 @@ public class SquidPet extends Pet implements ISquidPet {
     public SquidPet(Player owner) {
         super(owner);
     }
-
-    public SquidPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

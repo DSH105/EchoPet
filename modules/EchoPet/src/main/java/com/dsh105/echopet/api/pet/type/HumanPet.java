@@ -37,10 +37,6 @@ public class HumanPet extends PacketPet implements IHumanPet {
         super(owner);
     }
 
-    public HumanPet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
-
     @Override
     public void setEquipment(Material material) {
         ((IEntityHumanPet) this.getEntityPet()).setEquipmentId(material.getId());

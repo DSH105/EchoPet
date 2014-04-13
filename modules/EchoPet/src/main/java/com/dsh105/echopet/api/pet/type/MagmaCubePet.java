@@ -31,8 +31,4 @@ public class MagmaCubePet extends SlimePet implements IMagmaCubePet {
     public MagmaCubePet(Player owner) {
         super(owner);
     }
-
-    public MagmaCubePet(UUID ownerUuid, IEntityPet entityPet) {
-        super(ownerUuid, entityPet);
-    }
 }

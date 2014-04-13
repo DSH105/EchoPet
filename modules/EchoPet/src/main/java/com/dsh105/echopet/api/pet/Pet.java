@@ -21,6 +21,7 @@ import com.dsh105.dshutils.util.StringUtil;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.util.reflection.SafeMethod;
 import com.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
@@ -38,7 +39,7 @@ public abstract class Pet implements IPet {
     private IEntityPet entityPet;
     private PetType petType;
 
-    private UUID ownerUuid;
+    private Object ownerIdentification;
     private Pet rider;
     private String name;
     private ArrayList<PetData> petData = new ArrayList<PetData>();
@@ -49,16 +50,9 @@ public abstract class Pet implements IPet {
     private boolean ownerRiding = false;
     private boolean isHat = false;
 
-    public Pet(UUID ownerUuid, IEntityPet entityPet) {
-        this.ownerUuid = ownerUuid;
-        this.setPetType();
-        this.entityPet = entityPet;
-        this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
-    }
-
     public Pet(Player owner) {
         if (owner != null) {
-            this.ownerUuid = owner.getUniqueId();
+            this.ownerIdentification = UUIDMigration.getIdentificationFor(owner);
             this.setPetType();
             this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
             if (this.entityPet != null) {
@@ -92,10 +86,14 @@ public abstract class Pet implements IPet {
 
     @Override
     public Player getOwner() {
-        if (this.ownerUuid == null) {
+        if (this.ownerIdentification == null) {
             return null;
         }
-        return Bukkit.getPlayer(ownerUuid);
+        if (this.ownerIdentification instanceof UUID) {
+            return Bukkit.getPlayer((UUID) ownerIdentification);
+        } else {
+            return Bukkit.getPlayerExact((String) this.ownerIdentification);
+        }
     }
 
 

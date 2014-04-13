@@ -29,9 +29,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SaveConversion {
+public class UUIDMigration {
 
-    public static String getSavePath(Player player) {
+    public static String getIdentificationFor(Player player) {
         if (ReflectionUtil.MC_VERSION_NUMERIC >= 172) {
             return player.getUniqueId().toString();
         } else {
