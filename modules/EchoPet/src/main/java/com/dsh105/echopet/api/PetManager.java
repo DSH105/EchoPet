@@ -183,13 +183,10 @@ public class PetManager implements IPetManager {
         }
 
         if (EchoPet.getOptions().getConfig().getBoolean("sendForceMessage", true)) {
-            String dataToString;
-            if (!tempRiderData.isEmpty()) {
-                dataToString = PetUtil.dataToString(tempData);
-            } else {
-                dataToString = PetUtil.dataToString(tempData, tempRiderData);
+            String dataToString = tempRiderData.isEmpty() ? PetUtil.dataToString(tempData, tempRiderData) : PetUtil.dataToString(tempData);;
+            if (dataToString != null) {
+                Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
             }
-            Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
         }
     }
 

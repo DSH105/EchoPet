@@ -382,7 +382,7 @@ public class PetUtil {
 
     public static String dataToString(ArrayList<PetData> data) {
         if (data.isEmpty()) {
-            return " ";
+            return null;
         }
         StringBuilder builder = new StringBuilder();
         for (PetData pd : data) {
@@ -395,7 +395,7 @@ public class PetUtil {
 
     public static String dataToString(ArrayList<PetData> data, ArrayList<PetData> riderData) {
         if (data.isEmpty()) {
-            return " ";
+            return null;
         }
         StringBuilder builder = new StringBuilder();
         for (PetData pd : data) {
