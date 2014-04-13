@@ -28,6 +28,7 @@ import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.PetUtil;
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -101,6 +102,12 @@ public class PetManager implements IPetManager {
 
     @Override
     public IPet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC > 173 && petType == PetType.HUMAN) {
+            if (sendMessageOnFail) {
+                Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
+            }
+            return null;
+        }
         removePets(owner, true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendMessageOnFail) {
@@ -122,6 +129,10 @@ public class PetManager implements IPetManager {
 
     @Override
     public IPet createPet(Player owner, PetType petType, PetType riderType) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC > 173 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN) {
+            Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
+            return null;
+        }
         removePets(owner, true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             Lang.sendTo(owner, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(owner.getWorld().getName())));
