@@ -34,7 +34,7 @@ public class ReflectionUtil {
     public static int MC_VERSION_NUMERIC = Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
 
     public static Object getEntityHandle(Entity entity) {
-        return invokeMethod(getMethod(getNMSClass("entity.CraftEntity"), "getHandle"), entity);
+        return invokeMethod(getMethod(getCBCClass("entity.CraftEntity"), "getHandle"), entity);
     }
 
     public static String getServerVersion() {
