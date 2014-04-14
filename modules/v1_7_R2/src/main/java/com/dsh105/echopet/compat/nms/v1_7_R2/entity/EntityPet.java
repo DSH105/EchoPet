@@ -211,7 +211,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     @Override
     public CraftCreature getBukkitEntity() {
-        return this.getBukkitEntity();
+        return (CraftCreature) super.getBukkitEntity();
     }
 
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
