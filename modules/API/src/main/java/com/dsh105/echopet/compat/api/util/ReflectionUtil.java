@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.util;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +32,10 @@ public class ReflectionUtil {
     public static String COMPAT_NMS_PATH = "com.dsh105.echopet.compat.nms." + getServerVersion();
 
     public static int MC_VERSION_NUMERIC = Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
+
+    public static Object getEntityHandle(Entity entity) {
+        return invokeMethod(getMethod(getNMSClass("entity.CraftEntity"), "getHandle"), entity);
+    }
 
     public static String getServerVersion() {
         return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];

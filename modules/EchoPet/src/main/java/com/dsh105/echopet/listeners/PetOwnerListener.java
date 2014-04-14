@@ -20,12 +20,13 @@ package com.dsh105.echopet.listeners;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.dshutils.util.StringUtil;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
-import com.dsh105.echopet.compat.api.entity.ICraftPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetInteractEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
@@ -59,8 +60,8 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
-        if (e instanceof ICraftPet) {
-            IPet pet = ((ICraftPet) e).getPet();
+        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+            IPet pet = ((IEntityPet) ReflectionUtil.getEntityHandle(e)).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);

@@ -34,6 +34,7 @@ import net.minecraft.server.v1_6_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
@@ -209,11 +210,8 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     }
 
     @Override
-    public CraftPet getBukkitEntity() {
-        if (this.bukkitEntity == null) {
-            this.bukkitEntity = (CraftPet) this.getEntityPetType().getNewCraftInstance(this);
-        }
-        return (CraftPet) this.bukkitEntity;
+    public CraftCreature getBukkitEntity() {
+        return this.getBukkitEntity();
     }
 
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors

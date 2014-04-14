@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.entity;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public interface IPet {
 
     public IEntityPet getEntityPet();
 
-    public ICraftPet getCraftPet();
+    public Creature getCraftPet();
 
     public Location getLocation();
 
@@ -56,9 +57,9 @@ public interface IPet {
 
     public void removePet(boolean makeSound);
 
-    public void teleportToOwner();
+    public boolean teleportToOwner();
 
-    public void teleport(Location to);
+    public boolean teleport(Location to);
 
     public boolean isOwnerRiding();
 

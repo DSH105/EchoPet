@@ -81,7 +81,6 @@ public enum PetType {
 
     private Class<? extends IEntityPet> entityClass;
     private Class<? extends IPet> petClass;
-    private Class<? extends ICraftPet> craftClass;
     private String defaultName;
     private double maxHealth;
     private double attackDamage;
@@ -92,7 +91,6 @@ public enum PetType {
     PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
         this.entityClass = ReflectionUtil.getPetNMSClass(classIdentifier);
         this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
-        this.craftClass = ReflectionUtil.getVersionedClass("entity.bukkit.Craft" + classIdentifier + "Pet");
         this.id = registrationId;
         this.allowedData = ImmutableList.copyOf(allowedData);
         this.maxHealth = maxHealth;
@@ -144,19 +142,11 @@ public enum PetType {
         return null;
     }
 
-    public ICraftPet getNewCraftInstance(IEntityPet entityPet) {
-        return new SafeConstructor<ICraftPet>(this.craftClass, ReflectionUtil.getVersionedClass("entity.EntityPet")).newInstance(entityPet);
-    }
-
     public Class<? extends IEntityPet> getEntityClass() {
         return this.entityClass;
     }
 
     public Class<? extends IPet> getPetClass() {
         return this.petClass;
-    }
-
-    public Class<? extends ICraftPet> getCraftClass() {
-        return this.craftClass;
     }
 }

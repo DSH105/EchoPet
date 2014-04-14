@@ -28,6 +28,7 @@ import com.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -75,8 +76,8 @@ public abstract class Pet implements IPet {
     }
 
     @Override
-    public ICraftPet getCraftPet() {
-        return this.getEntityPet() == null ? null : this.getEntityPet().getBukkitEntity();
+    public Creature getCraftPet() {
+        return this.getEntityPet().getBukkitEntity();
     }
 
     @Override
@@ -192,27 +193,27 @@ public abstract class Pet implements IPet {
     }
 
     @Override
-    public void teleportToOwner() {
+    public boolean teleportToOwner() {
         if (this.getOwner() == null || this.getOwner().getLocation() == null) {
             this.removePet(false);
-            return;
+            return false;
         }
-        this.teleport(this.getOwner().getLocation());
+        return this.teleport(this.getOwner().getLocation());
     }
 
     @Override
-    public void teleport(Location to) {
+    public boolean teleport(Location to) {
         if (this.getEntityPet() == null || this.getEntityPet().isDead()) {
             EchoPet.getManager().saveFileData("autosave", this);
             EchoPet.getSqlManager().saveToDatabase(this, false);
             EchoPet.getManager().removePet(this, false);
             EchoPet.getManager().createPetFromFile("autosave", this.getOwner());
-            return;
+            return false;
         }
         PetTeleportEvent teleportEvent = new PetTeleportEvent(this, this.getLocation(), to);
         EchoPet.getPlugin().getServer().getPluginManager().callEvent(teleportEvent);
         if (teleportEvent.isCancelled()) {
-            return;
+            return false;
         }
         Location l = teleportEvent.getTo();
         if (l.getWorld() == this.getLocation().getWorld()) {
@@ -224,7 +225,9 @@ public abstract class Pet implements IPet {
             if (this.getRider() != null) {
                 this.getCraftPet().setPassenger(this.getRider().getCraftPet());
             }
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -360,7 +363,7 @@ public abstract class Pet implements IPet {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    getCraftPet().setPassenger(Pet.this.rider.getCraftPet());
+                    getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
                     EchoPet.getSqlManager().saveToDatabase(Pet.this.rider, true);
                 }
             }.runTaskLater(EchoPet.getPlugin(), 5L);

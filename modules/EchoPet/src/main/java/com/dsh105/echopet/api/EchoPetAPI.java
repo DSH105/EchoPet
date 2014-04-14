@@ -139,7 +139,7 @@ public class EchoPetAPI {
         if (pet.isHat() || pet.isOwnerRiding()) {
             return false;
         }
-        return pet.getCraftPet().teleport(location);
+        return pet.teleport(location);
     }
 
     /**

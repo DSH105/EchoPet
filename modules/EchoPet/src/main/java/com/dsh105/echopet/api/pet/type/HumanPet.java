@@ -74,10 +74,11 @@ public class HumanPet extends PacketPet implements IHumanPet {
     }
 
     @Override
-    public void teleport(Location to) {
-        super.teleport(to);
+    public boolean teleport(Location to) {
+        boolean success = super.teleport(to);
         if (this.getEntityPet().hasInititiated()) {
             this.getEntityPet().updatePosition();
         }
+        return success;
     }
 }
