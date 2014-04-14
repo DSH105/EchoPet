@@ -284,7 +284,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <file>target/classes/plugin.yml</file>
+                    <file>../../target/classes/plugin.yml</file>
                     <replacements>
                         <replacement>
                             <token>jenkins-build-number</token>
