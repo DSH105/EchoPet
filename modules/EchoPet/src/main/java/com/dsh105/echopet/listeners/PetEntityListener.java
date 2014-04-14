@@ -78,7 +78,8 @@ public class PetEntityListener implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
-            PetDamageEvent damageEvent = new PetDamageEvent(((IEntityPet) e).getPet(), event.getCause(), event.getDamage());
+            IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
+            PetDamageEvent damageEvent = new PetDamageEvent(entityPet.getPet(), event.getCause(), event.getDamage());
             EchoPet.getPlugin().getServer().getPluginManager().callEvent(damageEvent);
             event.setDamage(damageEvent.getDamage());
             event.setCancelled(damageEvent.isCancelled());
@@ -89,17 +90,13 @@ public class PetEntityListener implements Listener {
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+            IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
             Entity damager = event.getDamager();
             if (damager instanceof Player) {
-                PetInteractEvent iEvent = new PetInteractEvent(((IEntityPet) e).getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
+                PetInteractEvent iEvent = new PetInteractEvent(entityPet.getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
                 EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);
                 event.setCancelled(iEvent.isCancelled());
             }
-        } else if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
-            PetAttackEvent attackEvent = new PetAttackEvent(((IEntityPet) ReflectionUtil.getEntityHandle(e)).getPet(), e, event.getDamage());
-            EchoPet.getPlugin().getServer().getPluginManager().callEvent(attackEvent);
-            event.setDamage(attackEvent.getDamage());
-            event.setCancelled(attackEvent.isCancelled());
         }
     }
 
