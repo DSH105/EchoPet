@@ -22,6 +22,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public interface IPet {
 
@@ -34,6 +35,10 @@ public interface IPet {
     public Player getOwner();
 
     public String getNameOfOwner();
+
+    public UUID getOwnerUUID();
+
+    public Object getOwnerIdentification();
 
     public PetType getPetType();
 

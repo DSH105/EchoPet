@@ -97,10 +97,27 @@ public abstract class Pet implements IPet {
         }
     }
 
-
     @Override
     public String getNameOfOwner() {
-        return this.getOwner() == null ? null : this.getOwner().getName();
+        if (this.ownerIdentification instanceof String) {
+            return (String) this.ownerIdentification;
+        } else {
+            return this.getOwner() == null ? null : this.getOwner().getName();
+        }
+    }
+
+    @Override
+    public UUID getOwnerUUID() {
+        if (this.ownerIdentification instanceof UUID) {
+            return (UUID) this.ownerIdentification;
+        } else {
+            return this.getOwner() == null ? null : this.getOwner().getUniqueId();
+        }
+    }
+
+    @Override
+    public Object getOwnerIdentification() {
+        return ownerIdentification;
     }
 
     @Override

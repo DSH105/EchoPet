@@ -151,7 +151,7 @@ public class PetCommand implements CommandExecutor {
                     Player player = (Player) sender;
                     IPet p = EchoPet.getManager().getPet(player);
                     if (p == null) {
-                        EchoPet.getManager().removePets(player, true);
+                        EchoPet.getManager().removePet(p, true);
                         IPet pet = EchoPet.getManager().loadPets(player, false, false, false);
                         if (pet == null) {
                             Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());

@@ -152,7 +152,7 @@ public class PetManager implements IPetManager {
     @Override
     public IPet getPet(Player player) {
         for (IPet pi : pets) {
-            if (UUIDMigration.getIdentificationFor(player).equals(UUIDMigration.getIdentificationFor(pi.getOwner()))) {
+            if (UUIDMigration.getIdentificationFor(player).equals(pi.getOwnerIdentification())) {
                 return pi;
             }
         }
@@ -205,7 +205,7 @@ public class PetManager implements IPetManager {
     public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b) {
         EchoPet.getSqlManager().updateDatabase(pet.getOwner(), list, b, pet.isRider());
         String w = pet.getOwner().getWorld().getName();
-        String path = type + "." + w + "." + UUIDMigration.getIdentificationFor(pet.getOwner());
+        String path = type + "." + w + "." + pet.getOwnerIdentification();
         for (PetData pd : list) {
             EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), b);
         }
@@ -269,7 +269,7 @@ public class PetManager implements IPetManager {
     @Override
     public void loadRiderFromFile(String type, IPet pet) {
         if (pet.getOwner() != null) {
-            String path = type + "." + UUIDMigration.getIdentificationFor(pet.getOwner());
+            String path = type + "." + pet.getOwnerIdentification();
             if (EchoPet.getConfig(EchoPet.ConfigType.DATA).get(path + ".rider.type") != null) {
                 PetType riderPetType = PetType.valueOf(EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".rider.type"));
                 String riderName = EchoPet.getConfig(EchoPet.ConfigType.DATA).getString(path + ".rider.name");
@@ -307,7 +307,7 @@ public class PetManager implements IPetManager {
         Iterator<IPet> i = pets.listIterator();
         while (i.hasNext()) {
             IPet p = i.next();
-            if (UUIDMigration.getIdentificationFor(player).equals(UUIDMigration.getIdentificationFor(p.getOwner()))) {
+            if (UUIDMigration.getIdentificationFor(player).equals(p.getOwnerIdentification())) {
                 p.removePet(makeDeathSound);
                 i.remove();
             }
@@ -316,14 +316,21 @@ public class PetManager implements IPetManager {
 
     @Override
     public void removePet(IPet pi, boolean makeDeathSound) {
-        removePets(pi.getOwner(), makeDeathSound);
+        Iterator<IPet> i = pets.listIterator();
+        while (i.hasNext()) {
+            IPet p = i.next();
+            if (pi.getOwnerIdentification().equals(p.getOwnerIdentification())) {
+                p.removePet(makeDeathSound);
+                i.remove();
+            }
+        }
     }
 
     @Override
     public void saveFileData(String type, IPet pi) {
         clearFileData(type, pi);
         //String oName = pi.getNameOfOwner();
-        String path = type + "." + UUIDMigration.getIdentificationFor(pi.getOwner());
+        String path = type + "." + pi.getOwnerIdentification();
         PetType petType = pi.getPetType();
 
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
