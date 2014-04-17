@@ -102,7 +102,7 @@ public abstract class Pet implements IPet {
         if (this.ownerIdentification instanceof String) {
             return (String) this.ownerIdentification;
         } else {
-            return this.getOwner() == null ? null : this.getOwner().getName();
+            return this.getOwner() == null ? "" : this.getOwner().getName();
         }
     }
 
