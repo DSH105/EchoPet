@@ -29,15 +29,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isRider) {
+        this.updateDatabase(UUIDMigration.getIdentificationForAsString(player), list, result, isRider);
+    }
+
+    @Override
+    public void updateDatabase(String playerIdent, List<PetData> list, Boolean result, boolean isRider) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             Statement statement = null;
@@ -49,11 +51,11 @@ public class SqlPetManager implements ISqlPetManager {
                         con = EchoPet.getPlugin().getDbPool().getConnection();
                         statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
-                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE Owner = '" + UUIDMigration.getIdentificationFor(player) + "'");
+                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE Owner = '" + playerIdent + "'");
                         }
                     }
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + player.getName() + " to MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + playerIdent + " to MySQL Database", e, true);
                 } finally {
                     try {
                         if (statement != null)
@@ -69,16 +71,22 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void saveToDatabase(IPet p, boolean isRider) {
+        this.saveToDatabase(p.getOwnerIdentification().toString(), p.getPetType(), p.getPetName(), p.getPetData(), false);
+        this.saveToDatabase(p.getOwnerIdentification().toString(), p.getRider().getPetType(), p.getRider().getPetName(), p.getRider().getPetData(), true);
+    }
+
+    @Override
+    public void saveToDatabase(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
 
-            if (EchoPet.getPlugin().getDbPool() != null && p != null) {
+            if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     // Delete any existing info
                     if (!isRider) {
-                        this.clearFromDatabase(p.getOwner());
+                        this.clearFromDatabase(playerIdent);
                     }
 
                     // Deal with the pet metadata first
@@ -88,17 +96,17 @@ public class SqlPetManager implements ISqlPetManager {
                     else
                         ps = con.prepareStatement("INSERT INTO Pets (Owner, PetType, PetName) VALUES (?, ?, ?)");
 
-                    ps.setString(1, String.valueOf(UUIDMigration.getIdentificationFor(p.getOwner())));
-                    ps.setString(2, p.getPetType().toString());
-                    ps.setString(3, p.getPetName());
+                    ps.setString(1, String.valueOf(playerIdent));
+                    ps.setString(2, petType.toString());
+                    ps.setString(3, petName);
                     ps.executeUpdate();
 
-                    this.updateDatabase(p.getOwner(), p.getPetData(), true, isRider);
+                    this.updateDatabase(playerIdent, petData, true, isRider);
 
-                    this.saveToDatabase(p.getRider(), true);
+                    //this.saveToDatabase(playerIdent, true);
 
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + p.getNameOfOwner() + " to MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + playerIdent + " to MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -114,6 +122,11 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public IPet createPetFromDatabase(Player player) {
+        return this.createPetFromDatabase(UUIDMigration.getIdentificationForAsString(player));
+    }
+
+    @Override
+    public IPet createPetFromDatabase(String playerIdent) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -128,10 +141,14 @@ public class SqlPetManager implements ISqlPetManager {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     ps = con.prepareStatement("SELECT * FROM Pets WHERE Owner = ?;");
-                    ps.setString(1, String.valueOf(UUIDMigration.getIdentificationFor(player)));
+                    ps.setString(1, String.valueOf(playerIdent));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        owner = Bukkit.getPlayerExact(rs.getString("Owner"));
+                        owner = UUIDMigration.getPlayerOf(rs.getString("Owner"));
+                        if (owner == null) {
+                            return null;
+                        }
+
                         pt = findPetType(rs.getString("PetType"));
                         if (pt == null) {
                             return null;
@@ -142,10 +159,6 @@ public class SqlPetManager implements ISqlPetManager {
                             if (rs.getString(pd.toString()) != null) {
                                 map.put(pd, Boolean.valueOf(rs.getString(pd.toString())));
                             }
-                        }
-
-                        if (owner == null) {
-                            return null;
                         }
 
                         pet = EchoPet.getManager().createPet(owner, pt, false);
@@ -178,7 +191,7 @@ public class SqlPetManager implements ISqlPetManager {
                         }
                     }
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + playerIdent + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -206,6 +219,11 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void clearFromDatabase(Player player) {
+        this.clearFromDatabase(UUIDMigration.getIdentificationForAsString(player));
+    }
+
+    @Override
+    public void clearFromDatabase(String playerIdent) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -214,10 +232,10 @@ public class SqlPetManager implements ISqlPetManager {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     ps = con.prepareStatement("DELETE FROM Pets WHERE Owner = ?;");
-                    ps.setString(1, String.valueOf(UUIDMigration.getIdentificationFor(player)));
+                    ps.setString(1, String.valueOf(playerIdent));
                     ps.executeUpdate();
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + playerIdent + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)
@@ -233,6 +251,11 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void clearRiderFromDatabase(Player player) {
+        this.clearRiderFromDatabase(UUIDMigration.getIdentificationForAsString(player));
+    }
+
+    @Override
+    public void clearRiderFromDatabase(String playerIdent) {
         if (EchoPet.getOptions().useSql()) {
             Connection con = null;
             PreparedStatement ps = null;
@@ -243,10 +266,10 @@ public class SqlPetManager implements ISqlPetManager {
                     String list = SQLUtil.serialiseUpdate(Arrays.asList(PetData.values()), true);
                     ps = con.prepareStatement("UPDATE Pets SET ? WHERE Owner = ?;");
                     ps.setString(1, list);
-                    ps.setString(2, String.valueOf(UUIDMigration.getIdentificationFor(player)));
+                    ps.setString(2, String.valueOf(playerIdent));
                     ps.executeUpdate();
                 } catch (SQLException e) {
-                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + player.getName() + " in MySQL Database", e, true);
+                    Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + playerIdent + " in MySQL Database", e, true);
                 } finally {
                     try {
                         if (ps != null)

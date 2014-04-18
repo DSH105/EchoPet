@@ -18,16 +18,21 @@
 package com.dsh105.echopet.compat.api.plugin.uuid;
 
 import com.dsh105.dshutils.config.YAMLConfig;
+import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.compat.api.util.SQLUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.sql.*;
+import java.util.*;
 
 public class UUIDMigration {
 
@@ -39,7 +44,28 @@ public class UUIDMigration {
         }
     }
 
-    public static void convertToUniqueId(final YAMLConfig config) {
+    public static String getIdentificationForAsString(Player player) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172) {
+            return player.getUniqueId().toString();
+        } else {
+            return player.getName();
+        }
+    }
+
+    public static Player getPlayerOf(Object identification) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172) {
+            if (identification instanceof UUID) {
+                return Bukkit.getPlayer((UUID) identification);
+            } else if (identification instanceof String) {
+                return Bukkit.getPlayer(UUID.fromString((String) identification));
+            }
+        } else if (identification instanceof String) {
+            return Bukkit.getPlayerExact((String) identification);
+        }
+        return null;
+    }
+
+    public static void migrateConfig(final YAMLConfig config) {
         ConfigurationSection cs = config.getConfigurationSection("autosave");
         if (cs != null) {
             final LinkedHashMap<String, LinkedHashMap<String, Object>> keyToValueMap = new LinkedHashMap<String, LinkedHashMap<String, Object>>();
@@ -88,6 +114,88 @@ public class UUIDMigration {
                 }
 
             }.runTaskAsynchronously(EchoPet.getPlugin());
+        }
+    }
+
+    public static void migrateSqlTable() {
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        if (EchoPet.getPlugin().getDbPool() != null) {
+            try {
+                ps = con.prepareStatement("SELECT * FROM Pets;");
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String ownerName = rs.getString("Owner");
+                    if (ownerName == null) {
+                        continue;
+                    }
+
+                    UUID playerUuid;
+                    try {
+                        playerUuid = UUIDFetcher.getUUIDOf(ownerName);
+                    } catch (Exception e) {
+                        continue;
+                    }
+                    if (playerUuid == null) {
+                        continue;
+                    }
+
+                    PetType pt = findPetType(rs.getString("PetType"));
+                    if (pt == null) {
+                        continue;
+                    }
+                    String petName = rs.getString("PetName").replace("\'", "'");
+
+                    List<PetData> petData = new ArrayList<PetData>();
+                    for (PetData pd : PetData.values()) {
+                        if (rs.getString(pd.toString()) != null) {
+                            if (Boolean.valueOf(rs.getString(pd.toString()))) {
+                                petData.add(pd);
+                            }
+                        }
+                    }
+
+                    EchoPet.getSqlManager().saveToDatabase(playerUuid.toString(), pt, petName, petData, false);
+
+                    if (rs.getString("RiderPetType") != null) {
+                        PetType mt = findPetType(rs.getString("RiderPetType"));
+                        if (mt == null) {
+                            continue;
+                        }
+                        String mName = rs.getString("RiderPetName").replace("\'", "'");
+
+                        List<PetData> mountData = new ArrayList<PetData>();
+                        for (PetData pd : PetData.values()) {
+                            if (rs.getString("Rider" + pd.toString()) != null) {
+                                if (Boolean.valueOf(rs.getString("Rider" + pd.toString()))) {
+                                    mountData.add(pd);
+                                }
+                            }
+                        }
+                        EchoPet.getSqlManager().saveToDatabase(playerUuid.toString(), mt, mName, mountData, true);
+                    }
+
+                }
+            } catch (SQLException e) {
+                Logger.log(Logger.LogLevel.SEVERE, "Failed to migrate SQL database", e, true);
+            } finally {
+                try {
+                    if (ps != null)
+                        ps.close();
+                    if (con != null)
+                        con.close();
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+    }
+
+    private static PetType findPetType(String s) {
+        try {
+            return PetType.valueOf(s.toUpperCase());
+        } catch (Exception e) {
+            return null;
         }
     }
 }

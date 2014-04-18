@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.plugin;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -27,11 +28,21 @@ public interface ISqlPetManager {
 
     public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isRider);
 
+    void updateDatabase(String playerIdent, List<PetData> list, Boolean result, boolean isRider);
+
     public void saveToDatabase(IPet p, boolean isRider);
+
+    void saveToDatabase(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider);
 
     public IPet createPetFromDatabase(Player player);
 
+    IPet createPetFromDatabase(String playerIdent);
+
     public void clearFromDatabase(Player player);
 
+    void clearFromDatabase(String playerIdent);
+
     public void clearRiderFromDatabase(Player player);
+
+    void clearRiderFromDatabase(String playerIdent);
 }
