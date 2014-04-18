@@ -19,7 +19,6 @@ package com.dsh105.echopet;
 
 import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.dshutils.Metrics;
-import com.dsh105.dshutils.Updater;
 import com.dsh105.dshutils.command.VersionIncompatibleCommand;
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.dshutils.logger.ConsoleLogger;
@@ -36,6 +35,7 @@ import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.*;
+import com.dsh105.echopet.compat.api.plugin.data.Updater;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
