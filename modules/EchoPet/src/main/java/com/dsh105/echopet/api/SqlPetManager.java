@@ -72,7 +72,9 @@ public class SqlPetManager implements ISqlPetManager {
     @Override
     public void saveToDatabase(IPet p, boolean isRider) {
         this.saveToDatabase(p.getOwnerIdentification().toString(), p.getPetType(), p.getPetName(), p.getPetData(), false);
-        this.saveToDatabase(p.getOwnerIdentification().toString(), p.getRider().getPetType(), p.getRider().getPetName(), p.getRider().getPetData(), true);
+        if (p.getRider() != null) {
+            this.saveToDatabase(p.getOwnerIdentification().toString(), p.getRider().getPetType(), p.getRider().getPetName(), p.getRider().getPetData(), true);
+        }
     }
 
     @Override
