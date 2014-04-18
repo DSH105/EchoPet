@@ -203,7 +203,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b) {
-        EchoPet.getSqlManager().updateDatabase(pet.getOwner(), list, b, pet.isRider());
+        EchoPet.getSqlManager().updateDatabase(pet.getOwnerIdentification().toString(), list, b, pet.isRider());
         String w = pet.getOwner().getWorld().getName();
         String path = type + "." + w + "." + pet.getOwnerIdentification();
         for (PetData pd : list) {
@@ -327,25 +327,25 @@ public class PetManager implements IPetManager {
     }
 
     @Override
-    public void saveFileData(String type, IPet pi) {
-        clearFileData(type, pi);
-        //String oName = pi.getNameOfOwner();
-        String path = type + "." + pi.getOwnerIdentification();
-        PetType petType = pi.getPetType();
+    public void saveFileData(String type, IPet pet) {
+        clearFileData(type, pet);
+
+        String path = type + "." + pet.getOwnerIdentification();
+        PetType petType = pet.getPetType();
 
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
-        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pi.getPetNameWithoutColours());
+        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.getPetNameWithoutColours());
 
-        for (PetData pd : pi.getPetData()) {
+        for (PetData pd : pet.getPetData()) {
             EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
         }
 
-        if (pi.getRider() != null) {
-            PetType riderType = pi.getRider().getPetType();
+        if (pet.getRider() != null) {
+            PetType riderType = pet.getRider().getPetType();
 
             EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
-            EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pi.getRider().getPetNameWithoutColours());
-            for (PetData pd : pi.getRider().getPetData()) {
+            EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pet.getRider().getPetNameWithoutColours());
+            for (PetData pd : pet.getRider().getPetData()) {
                 EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
             }
         }
@@ -416,7 +416,8 @@ public class PetManager implements IPetManager {
 
     @Override
     public void clearFileData(String type, IPet pi) {
-        clearFileData(type, pi.getOwner());
+        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(type + "." + pi.getOwnerIdentification(), null);
+        EchoPet.getConfig(EchoPet.ConfigType.DATA).saveConfig();
     }
 
     @Override
