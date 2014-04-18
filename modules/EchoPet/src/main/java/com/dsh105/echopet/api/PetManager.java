@@ -102,7 +102,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public IPet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
-        if (ReflectionUtil.MC_VERSION_NUMERIC > 173 && petType == PetType.HUMAN) {
+        if (ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN) {
             if (sendMessageOnFail) {
                 Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
             }
@@ -129,7 +129,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public IPet createPet(Player owner, PetType petType, PetType riderType) {
-        if (ReflectionUtil.MC_VERSION_NUMERIC > 173 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN) {
+        if (ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN) {
             Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
             return null;
         }
