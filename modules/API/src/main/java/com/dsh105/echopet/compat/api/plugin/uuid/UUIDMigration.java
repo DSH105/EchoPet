@@ -131,6 +131,14 @@ public class UUIDMigration {
                         continue;
                     }
 
+                    // Check if it already is a UUID
+                    try {
+                        UUID.fromString(ownerName);
+                        continue;
+                    } catch (IllegalArgumentException e) {
+                        // Do nothing and keep migrating
+                    }
+
                     UUID playerUuid;
                     try {
                         playerUuid = UUIDFetcher.getUUIDOf(ownerName);
