@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import org.bukkit.entity.Player;
 
@@ -26,7 +27,7 @@ import java.lang.reflect.Method;
 
 public class PlayerUtil {
 
-    private static final Method sendPacket = ReflectionUtil.getMethod(ReflectionUtil.getNMSClass("PlayerConnection"), "sendPacket", ReflectionUtil.getNMSClass("Packet"));
+    private static final Method sendPacket = ReflectionUtil.getMethod(ReflectionUtil.getNMSClass("PlayerConnection"), ReflectionConstants.PLAYER_FUNC_SENDPACKET.getName(), ReflectionUtil.getNMSClass("Packet"));
 
     public static void sendPacket(Player player, Object packet) {
         Object playerConnection = getPlayerConnection(player);
@@ -58,6 +59,6 @@ public class PlayerUtil {
     }
 
     public static Object getPlayerConnection(Player player) {
-        return ReflectionUtil.getField(ReflectionUtil.getNMSClass("EntityPlayer"), "playerConnection", playerToEntityPlayer(player));
+        return ReflectionUtil.getField(ReflectionUtil.getNMSClass("EntityPlayer"), ReflectionConstants.PLAYER_FIELD_CONNECTION.getName(), playerToEntityPlayer(player));
     }
 }

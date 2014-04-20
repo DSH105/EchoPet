@@ -26,6 +26,8 @@ import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
 import com.dsh105.echopet.compat.api.reflection.SafeField;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class Packet {
@@ -65,29 +67,14 @@ public class Packet {
     }
 
     public Object read(String fieldName) {
-        if (this.getPacketClass() == null) {
-            return null;
-        }
-        return ReflectionUtil.getField(getPacketClass(),
-                fieldName,
-                this.getPacketHandle());
+        return ReflectionUtil.getField(getPacketClass(), fieldName, this.getPacketHandle());
     }
 
     public void write(String fieldName, Object value) {
-        if (this.getPacketClass() == null) {
-            return;
-        }
-        System.out.println("Getting " + fieldName + " and setting to " + value + " for " + getPacketClass() + " -> " + getPacketHandle());
-        ReflectionUtil.setField(getPacketClass(),
-                fieldName,
-                getPacketHandle(),
-                value);
+        ReflectionUtil.setField(getPacketClass(), fieldName, getPacketHandle(), value);
     }
 
     public void send(Player receiver) {
-        if (this.getPacketClass() == null) {
-            return;
-        }
         PlayerUtil.sendPacket(receiver, getPacketHandle());
     }
 

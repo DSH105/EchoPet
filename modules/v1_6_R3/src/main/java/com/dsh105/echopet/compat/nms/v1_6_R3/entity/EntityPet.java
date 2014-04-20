@@ -197,7 +197,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             petGoalSelector.addGoal(new PetGoalFloat(this), 0);
             petGoalSelector.addGoal(new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())), 1);
             petGoalSelector.addGoal(new PetGoalLookAtPlayer(this, EntityHuman.class), 2);
-
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Could not add PetGoals to Pet AI.", e, true);
         }
@@ -217,7 +216,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
     @Override
     protected void bi() {
-        super.bi();
         ++this.aV;
 
         this.u();
@@ -300,7 +298,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         }
 
         if (this.getPet().isHat()) {
-
             this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
         }
 
@@ -440,7 +437,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     @Override
     public void l_() {
         super.l_();
-        //this.C();
         onLive();
     }
 

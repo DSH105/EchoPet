@@ -37,6 +37,7 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.*;
 import com.dsh105.echopet.compat.api.plugin.data.Updater;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
@@ -360,16 +361,10 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
     }
 
     private void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
-        String[] nmsMapNames;
-        if (Bukkit.getVersion().contains("MCPC-Plus")) {
-            nmsMapNames = new String[] {"field_75625_b", "field_75626_c", "field_75624_e", "field_75622_f"};
-        } else {
-            nmsMapNames = this.getSpawnUtil().getRegistrationMapNames();
-        }
-        Map<String, Class> entityNameToClassMapping = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[0]).get(null);
-        Map<Class, String> classToEntityNameMapping = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[1]).get(null);
-        Map<Class, Integer> classToIdMapping = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[2]).get(null);
-        Map<String, Integer> entityNameToIdMapping = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[3]).get(null);
+        Map<String, Class> entityNameToClassMapping = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOCLASSMAP.getName()).get(null);
+        Map<Class, String> classToEntityNameMapping = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTONAMEMAP.getName()).get(null);
+        Map<Class, Integer> classToIdMapping = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTOIDMAP.getName()).get(null);
+        Map<String, Integer> entityNameToIdMapping = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOIDMAP.getName()).get(null);
 
         Iterator i = entityNameToClassMapping.keySet().iterator();
         while (i.hasNext()) {

@@ -17,21 +17,11 @@
 
 package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
 
 public class WrapperPacketWorldParticles extends Packet {
-
-    private static String field_a = ReflectionUtil.isServerMCPC() ? "field_98209_a" : "a";
-    private static String field_b = ReflectionUtil.isServerMCPC() ? "field_98207_b" : "b";
-    private static String field_c = ReflectionUtil.isServerMCPC() ? "field_98208_c" : "c";
-    private static String field_d = ReflectionUtil.isServerMCPC() ? "field_98205_d" : "d";
-    private static String field_e = ReflectionUtil.isServerMCPC() ? "field_98206_e" : "e";
-    private static String field_f = ReflectionUtil.isServerMCPC() ? "field_98203_f" : "f";
-    private static String field_g = ReflectionUtil.isServerMCPC() ? "field_98204_g" : "g";
-    private static String field_h = ReflectionUtil.isServerMCPC() ? "field_98210_h" : "h";
-    private static String field_i = ReflectionUtil.isServerMCPC() ? "field_98211_i" : "i";
 
     public WrapperPacketWorldParticles() {
         super(PacketFactory.PacketType.WORLD_PARTICLES);
@@ -48,75 +38,75 @@ public class WrapperPacketWorldParticles extends Packet {
     }
 
     public void setParticle(String value) {
-        this.write(field_a, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_NAME.getName(), value);
     }
 
     public String getParticle() {
-        return (String) this.read(field_a);
+        return (String) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_NAME.getName());
     }
 
     public void setX(float value) {
-        this.write(field_b, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_X.getName(), value);
     }
 
     public float getX() {
-        return (Float) this.read(field_b);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_X.getName());
     }
 
     public void setY(float value) {
-        this.write(field_c, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_Y.getName(), value);
     }
 
     public float getY() {
-        return (Float) this.read(field_c);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_Y.getName());
     }
 
     public void setZ(float value) {
-        this.write(field_d, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_Z.getName(), value);
     }
 
     public float getZ() {
-        return (Float) this.read(field_d);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_Z.getName());
     }
 
     public void setOffsetX(float value) {
-        this.write(field_e, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_OFFSETX.getName(), value);
     }
 
     public float getOffsetX() {
-        return (Float) this.read(field_e);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_OFFSETX.getName());
     }
 
     public void setOffsetY(float value) {
-        this.write(field_f, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_OFFSETY.getName(), value);
     }
 
     public float getOffsetY() {
-        return (Float) this.read(field_f);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_OFFSETY.getName());
     }
 
     public void setOffsetZ(float value) {
-        this.write(field_g, value);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_OFFSETZ.getName(), value);
     }
 
     public float getOffsetZ() {
-        return (Float) this.read(field_g);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_OFFSETZ.getName());
     }
 
     public void setParticleSpeed(float speed) {
-        this.write(field_h, speed);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_SPEED.getName(), speed);
     }
 
     public float getParticleSpeed() {
-        return (Float) this.read(field_h);
+        return (Float) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_SPEED.getName());
     }
 
     public void setParticleAmount(int amount) {
-        this.write(field_i, amount);
+        this.write(ReflectionConstants.PACKET_PARTICLES_FIELD_QUANTITY.getName(), amount);
     }
 
     public int getParticleAmount() {
-        return (Integer) this.read(field_i);
+        return (Integer) this.read(ReflectionConstants.PACKET_PARTICLES_FIELD_QUANTITY.getName());
     }
 
     public enum ParticleType {

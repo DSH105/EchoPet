@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.util.fanciful;
 
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketPlayOutChat;
@@ -97,7 +98,7 @@ public class FancyMessage {
 
     public FancyMessage achievementTooltip(final Achievement which) {
         Object achievement = new SafeMethod(ReflectionUtil.getCBCClass("CraftStatistic"), "getNMSAchievement", Achievement.class).invoke(null, which);
-        return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
+        return achievementTooltip(new SafeField<String>(achievement.getClass(), ReflectionConstants.ACHIEVEMENT_FIELD_NAME.getName()).get(achievement));
     }
 
     public FancyMessage statisticTooltip(final Statistic which) {
@@ -107,7 +108,7 @@ public class FancyMessage {
         }
 
         Object achievement = new SafeMethod(ReflectionUtil.getCBCClass("CraftStatistic"), "getNMSStatistic", Statistic.class).invoke(null, which);
-        return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
+        return achievementTooltip(new SafeField<String>(achievement.getClass(), ReflectionConstants.ACHIEVEMENT_FIELD_NAME.getName()).get(achievement));
     }
 
     public FancyMessage statisticTooltip(final Statistic which, Material item) {
@@ -120,7 +121,7 @@ public class FancyMessage {
         }
 
         Object achievement = new SafeMethod(ReflectionUtil.getCBCClass("CraftStatistic"), "getMaterialStatistic", Statistic.class, Material.class).invoke(null, which, item);
-        return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
+        return achievementTooltip(new SafeField<String>(achievement.getClass(), ReflectionConstants.ACHIEVEMENT_FIELD_NAME.getName()).get(achievement));
     }
 
     public FancyMessage statisticTooltip(final Statistic which, EntityType entity) {
@@ -133,7 +134,7 @@ public class FancyMessage {
         }
 
         Object achievement = new SafeMethod(ReflectionUtil.getCBCClass("CraftStatistic"), "getEntityStatistic", Statistic.class, EntityType.class).invoke(null, which, entity);
-        return achievementTooltip(new SafeField<String>(achievement.getClass(), "name").get(achievement));
+        return achievementTooltip(new SafeField<String>(achievement.getClass(), ReflectionConstants.ACHIEVEMENT_FIELD_NAME.getName()).get(achievement));
     }
 
     public FancyMessage itemTooltip(final String itemJSON) {
@@ -144,7 +145,7 @@ public class FancyMessage {
     public FancyMessage itemTooltip(final ItemStack itemStack) {
         Object nmsCopy;
         nmsCopy = new SafeMethod(ReflectionUtil.getCBCClass("inventory.CraftItemStack"), "asNMSCopy", ItemStack.class).invoke(null, itemStack);
-        Object nbtData = new SafeMethod(nmsCopy.getClass(), "save", ReflectionUtil.getNMSClass("NBTTagCompound")).invoke(nmsCopy, new SafeConstructor(ReflectionUtil.getNMSClass("NBTTagCompound")).newInstance());
+        Object nbtData = new SafeMethod(nmsCopy.getClass(), ReflectionConstants.ITEMSTACK_FUNC_SAVE.getName(), ReflectionUtil.getNMSClass("NBTTagCompound")).invoke(nmsCopy, new SafeConstructor(ReflectionUtil.getNMSClass("NBTTagCompound")).newInstance());
         return itemTooltip(nbtData.toString());
     }
 

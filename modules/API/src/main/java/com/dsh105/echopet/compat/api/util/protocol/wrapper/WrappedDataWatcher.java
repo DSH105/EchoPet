@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -60,7 +61,11 @@ public class WrappedDataWatcher extends AbstractWrapper {
         }
     }
 
+    public void initiate(int index, Object value) {
+        ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.DATAWATCHER_FUNC_INITIATE.getName(), int.class, Object.class), getHandle(), index, value);
+    }
+
     public void watch(int index, Object value) {
-        ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionUtil.isServerMCPC() ? "field_92086_a" : "a", int.class, Object.class), getHandle(), index, value);
+        ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.DATAWATCHER_FUNC_WATCH.getName(), int.class, Object.class), getHandle(), index, value);
     }
 }

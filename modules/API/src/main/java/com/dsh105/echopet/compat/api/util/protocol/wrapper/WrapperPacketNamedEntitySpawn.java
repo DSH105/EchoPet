@@ -17,95 +17,86 @@
 
 package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
 
 public class WrapperPacketNamedEntitySpawn extends Packet {
 
-    private static String field_a = ReflectionUtil.isServerMCPC() ? "field_73516_a" : "a";
-    private static String field_b = ReflectionUtil.isServerMCPC() ? "field_73514_b" : "b";
-    private static String field_c = ReflectionUtil.isServerMCPC() ? "field_73515_c" : "c";
-    private static String field_d = ReflectionUtil.isServerMCPC() ? "field_73512_d" : "d";
-    private static String field_e = ReflectionUtil.isServerMCPC() ? "field_73513_e" : "e";
-    private static String field_f = ReflectionUtil.isServerMCPC() ? "field_73510_f" : "f";
-    private static String field_g = ReflectionUtil.isServerMCPC() ? "field_73511_g" : "g";
-    private static String field_h = ReflectionUtil.isServerMCPC() ? "field_73518_h" : "h";
-    private static String field_i = ReflectionUtil.isServerMCPC() ? "field_73519_i" : "i";
-
     public WrapperPacketNamedEntitySpawn() {
         super(PacketFactory.PacketType.NAMED_ENTITY_SPAWN);
     }
 
     public void setEntityId(int id) {
-        this.write(field_a, id);
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_ID.getName(), id);
     }
 
     public int getEntityId() {
-        return (Integer) this.read(field_a);
+        return (Integer) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_ID.getName());
     }
 
     public void setGameProfile(Object profile) {
-        this.write(field_b, profile);
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PROFILE.getName(), profile);
     }
 
     public Object getGameProfile() {
-        return this.read(field_b);
+        return this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PROFILE.getName());
     }
 
     public void setX(double value) {
-        this.write(field_c, (int) Math.floor(value * 32.0D));
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_X.getName(), (int) Math.floor(value * 32.0D));
     }
 
     public double getX() {
-        return (((Integer) this.read(field_c)) / 32.0D);
+        return (((Integer) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_X.getName())) / 32.0D);
     }
 
     public void setY(double value) {
-        this.write(field_d, (int) Math.floor(value * 32.0D));
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_Y.getName(), (int) Math.floor(value * 32.0D));
     }
 
     public double getY() {
-        return (((Integer) this.read(field_d)) / 32.0D);
+        return (((Integer) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_Y.getName())) / 32.0D);
     }
 
     public void setZ(double value) {
-        this.write(field_e, (int) Math.floor(value * 32.0D));
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_Z.getName(), (int) Math.floor(value * 32.0D));
     }
 
     public double getZ() {
-        return (((Integer) this.read(field_e)) / 32.0D);
+        return (((Integer) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_Z.getName())) / 32.0D);
     }
 
     public void setYaw(float value) {
-        this.write(field_f, (byte) (value * 256.0F / 360.0F));
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_YAW.getName(), (byte) (value * 256.0F / 360.0F));
     }
 
     public float getYaw() {
-        return (((Byte) this.read(field_f)) * 360.0F / 256.0F);
+        return (((Byte) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_YAW.getName())) * 360.0F / 256.0F);
     }
 
     public void setPitch(float value) {
-        this.write(field_g, (byte) (value * 256.0F / 360.0F));
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PITCH.getName(), (byte) (value * 256.0F / 360.0F));
     }
 
     public float getPitch() {
-        return (((Byte) this.read(field_g)) * 360.0F / 256.0F);
+        return (((Byte) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PITCH.getName())) * 360.0F / 256.0F);
     }
 
     public void setEquipmentId(int id) {
-        this.write(field_h, id);
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_EQUIPMENT.getName(), id);
     }
 
     public int getEquipmentId() {
-        return (Integer) this.read(field_h);
+        return (Integer) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_EQUIPMENT.getName());
     }
 
     public void setMetadata(WrappedDataWatcher metadata) {
-        this.write(field_i, metadata.getHandle());
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_META.getName(), metadata.getHandle());
     }
 
     public Object getMetadata() {
-        return this.read(field_i);
+        return this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_META.getName());
     }
 }

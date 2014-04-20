@@ -60,9 +60,4 @@ public class SpawnUtil implements ISpawnUtil {
         }
         return entityPet;
     }
-
-    @Override
-    public String[] getRegistrationMapNames() {
-        return new String[]{"b", "c", "e", "f"};
-    }
 }

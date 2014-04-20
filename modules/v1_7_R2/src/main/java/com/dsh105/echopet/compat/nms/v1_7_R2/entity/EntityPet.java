@@ -217,7 +217,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
     @Override
     protected void bm() {
-        super.bm();
         ++this.aU;
 
         this.w();

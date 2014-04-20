@@ -24,6 +24,4 @@ import org.bukkit.entity.Player;
 public interface ISpawnUtil {
 
     public IEntityPet spawn(IPet pet, Player owner);
-
-    public String[] getRegistrationMapNames();
 }

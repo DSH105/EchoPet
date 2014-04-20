@@ -48,7 +48,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
 
     public EntityPacketPet(World world, IPet pet) {
         super(world, pet);
-        this.id = new SafeField<Integer>(ReflectionUtil.getNMSClass("Entity"), "id").get(this);
+        this.id = this.hashCode();
         this.profileUuid = UUID.randomUUID();
         this.profile = new GameProfile(this.profileUuid, pet.getPetName());
     }
@@ -89,10 +89,10 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
 
     private void updateDatawatcher(String name) {
         customDataWatcher = new WrappedDataWatcher(this);
-        customDataWatcher.watch(0, (Object) (byte) this.entityStatus);
-        customDataWatcher.watch(1, (Object) (short) 0);
-        customDataWatcher.watch(8, (Object) (byte) 0);
-        customDataWatcher.watch(10, (Object) (String) name);
+        customDataWatcher.initiate(0, (Object) (byte) this.entityStatus);
+        customDataWatcher.initiate(1, (Object) (short) 0);
+        customDataWatcher.initiate(8, (Object) (byte) 0);
+        customDataWatcher.initiate(10, (Object) (String) name);
         WrapperPacketEntityMetadata meta = new WrapperPacketEntityMetadata();
         meta.setEntityId(this.id);
         meta.setMetadata(customDataWatcher);
