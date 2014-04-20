@@ -89,8 +89,7 @@ public class ReflectionUtil {
     }
 
     public static Class getNMSClass(String className) {
-        return getClass(getNMSPackageName() + "." + className);
-        //return CommonReflection.getMinecraftClass(className);
+        return CommonReflection.getMinecraftClass(className);
     }
 
     public static Class getCBCClass(String className) {
