@@ -18,8 +18,8 @@
 package com.dsh105.echopet.commands.util;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.reflection.FieldAccessor;
-import com.dsh105.echopet.compat.api.util.reflection.SafeField;
+import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
+import com.dsh105.echopet.compat.api.reflection.SafeField;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;

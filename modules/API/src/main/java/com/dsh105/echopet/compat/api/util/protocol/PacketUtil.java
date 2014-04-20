@@ -24,9 +24,9 @@ import java.util.Map;
 
 public class PacketUtil {
 
-    public static final Class CLASS_TEMPLATE = ReflectionUtil.getNMSClass("EnumProtocol");
-    private static final Field SERVER_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, "i");
-    private static final Field CLIENT_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, "h");
+    public static final Class CLASS_TEMPLATE = ReflectionUtil.getNMSClass("EnumProtocol"); // EnumConnectionState in MCPC
+    private static final Field SERVER_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, ReflectionUtil.isServerMCPC() ? "field_150770_i" : "i");
+    private static final Field CLIENT_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, ReflectionUtil.isServerMCPC() ? "field_150769_h" : "h");
 
     public static Class getPacket(Protocol protocol, Sender sender, int id) {
         if (sender == Sender.CLIENT) {

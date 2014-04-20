@@ -31,7 +31,7 @@ import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
-import com.dsh105.echopet.compat.api.util.reflection.SafeConstructor;
+import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

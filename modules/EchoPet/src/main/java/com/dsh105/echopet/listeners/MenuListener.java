@@ -29,7 +29,7 @@ import com.dsh105.echopet.compat.api.util.ParticleUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.*;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
-import com.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

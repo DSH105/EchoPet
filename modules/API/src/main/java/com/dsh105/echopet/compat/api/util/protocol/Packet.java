@@ -18,11 +18,12 @@
 package com.dsh105.echopet.compat.api.util.protocol;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.MiscUtil;
 import com.dsh105.echopet.compat.api.util.PlayerUtil;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.reflection.FieldAccessor;
-import com.dsh105.echopet.compat.api.util.reflection.SafeField;
+import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
+import com.dsh105.echopet.compat.api.reflection.SafeField;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -50,7 +51,7 @@ public class Packet {
                 e.printStackTrace();
             }
         } else {
-            FieldAccessor<Map> mapField = new SafeField<Map>(ReflectionUtil.getNMSClass("Packet"), "a");
+            FieldAccessor<Map> mapField = new SafeField<Map>(ReflectionUtil.getNMSClass("Packet"), ReflectionUtil.isServerMCPC() ? "field_73291_a" : "a");
             Map map = mapField.get(null);
             this.packetClass = (Class) MiscUtil.getKeyAtValue(map, legacyId);
             try {
@@ -64,14 +65,29 @@ public class Packet {
     }
 
     public Object read(String fieldName) {
-        return ReflectionUtil.getField(getPacketClass(), fieldName, this.getPacketHandle());
+        if (this.getPacketClass() == null) {
+            return null;
+        }
+        return ReflectionUtil.getField(getPacketClass(),
+                fieldName,
+                this.getPacketHandle());
     }
 
     public void write(String fieldName, Object value) {
-        ReflectionUtil.setField(getPacketClass(), fieldName, getPacketHandle(), value);
+        if (this.getPacketClass() == null) {
+            return;
+        }
+        System.out.println("Getting " + fieldName + " and setting to " + value + " for " + getPacketClass() + " -> " + getPacketHandle());
+        ReflectionUtil.setField(getPacketClass(),
+                fieldName,
+                getPacketHandle(),
+                value);
     }
 
     public void send(Player receiver) {
+        if (this.getPacketClass() == null) {
+            return;
+        }
         PlayerUtil.sendPacket(receiver, getPacketHandle());
     }
 

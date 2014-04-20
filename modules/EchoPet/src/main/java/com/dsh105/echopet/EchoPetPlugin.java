@@ -37,12 +37,13 @@ import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.*;
 import com.dsh105.echopet.compat.api.plugin.data.Updater;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
+import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.SQLUtil;
-import com.dsh105.echopet.compat.api.util.reflection.SafeConstructor;
-import com.dsh105.echopet.compat.api.util.reflection.SafeField;
+import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
+import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.ChunkListener;
@@ -103,13 +104,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         super.onEnable();
         EchoPet.setPlugin(this);
         Logger.initiate(this, "EchoPet", "[EchoPet]");
-
-        // meh
-        if (Bukkit.getVersion().contains("1.7")) {
-            isUsingNetty = true;
-        } else if (Bukkit.getVersion().contains("1.6")) {
-            isUsingNetty = false;
-        }
+        isUsingNetty = CommonReflection.isUsingNetty();
 
         COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors
@@ -365,48 +360,53 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
     }
 
     private void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
-        String[] nmsMapNames = this.getSpawnUtil().getRegistrationMapNames();
-        Map<String, Class> c = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[0]).get(null);
-        Map<Class, String> d = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[1]).get(null);
-        Map<Class, Integer> f = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[2]).get(null);
-        Map<String, Integer> g = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[3]).get(null);
+        String[] nmsMapNames;
+        if (Bukkit.getVersion().contains("MCPC-Plus")) {
+            nmsMapNames = new String[] {"field_75625_b", "field_75626_c", "field_75624_e", "field_75622_f"};
+        } else {
+            nmsMapNames = this.getSpawnUtil().getRegistrationMapNames();
+        }
+        Map<String, Class> entityNameToClassMapping = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[0]).get(null);
+        Map<Class, String> classToEntityNameMapping = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[1]).get(null);
+        Map<Class, Integer> classToIdMapping = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[2]).get(null);
+        Map<String, Integer> entityNameToIdMapping = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), nmsMapNames[3]).get(null);
 
-        Iterator<String> i = c.keySet().iterator();
+        Iterator i = entityNameToClassMapping.keySet().iterator();
         while (i.hasNext()) {
-            String s = i.next();
+            String s = (String) i.next();
             if (s.equals(name)) {
                 i.remove();
             }
         }
 
-        Iterator<Class> i2 = d.keySet().iterator();
-        while (i2.hasNext()) {
-            Class cl = i2.next();
+        i = classToEntityNameMapping.keySet().iterator();
+        while (i.hasNext()) {
+            Class cl = (Class) i.next();
             if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                i2.remove();
+                i.remove();
             }
         }
 
-        Iterator<Class> i3 = f.keySet().iterator();
-        while (i2.hasNext()) {
-            Class cl = i3.next();
+        i = classToIdMapping.keySet().iterator();
+        while (i.hasNext()) {
+            Class cl = (Class) i.next();
             if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                i3.remove();
+                i.remove();
             }
         }
 
-        Iterator<String> i4 = g.keySet().iterator();
-        while (i4.hasNext()) {
-            String s = i4.next();
+        i = entityNameToIdMapping.keySet().iterator();
+        while (i.hasNext()) {
+            String s = (String) i.next();
             if (s.equals(name)) {
-                i4.remove();
+                i.remove();
             }
         }
 
-        c.put(name, clazz);
-        d.put(clazz, name);
-        f.put(clazz, id);
-        g.put(name, id);
+        entityNameToClassMapping.put(name, clazz);
+        classToEntityNameMapping.put(clazz, name);
+        classToIdMapping.put(clazz, id);
+        entityNameToIdMapping.put(name, id);
     }
 
     public static EchoPetPlugin getInstance() {

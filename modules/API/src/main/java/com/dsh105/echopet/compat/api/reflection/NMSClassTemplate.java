@@ -15,9 +15,10 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.util.reflection;
+package com.dsh105.echopet.compat.api.reflection;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
 public class NMSClassTemplate extends ClassTemplate {

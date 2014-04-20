@@ -264,7 +264,7 @@ public class PetCommand implements CommandExecutor {
             // Help page 1
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
-                    if (sender instanceof Player) {
+                    if (sender instanceof Player && EchoPet.isUsingNetty() && !ReflectionUtil.isServerMCPC()) {
                         FancyPaginator paginator = this.getHelp(sender);
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
@@ -444,7 +444,7 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
                     if (StringUtil.isInt(args[1])) {
-                        if (sender instanceof Player) {
+                        if (sender instanceof Player && EchoPet.isUsingNetty() && !ReflectionUtil.isServerMCPC()) {
                             FancyPaginator paginator = this.getHelp(sender);
                             sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getIndex() + " ------------");
                             sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
@@ -465,7 +465,7 @@ public class PetCommand implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (sender instanceof Player) {
+                    if (sender instanceof Player && EchoPet.isUsingNetty() && !ReflectionUtil.isServerMCPC()) {
                         FancyPaginator paginator = this.getHelp(sender);
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");

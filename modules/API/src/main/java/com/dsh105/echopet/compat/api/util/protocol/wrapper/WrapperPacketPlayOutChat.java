@@ -21,9 +21,11 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
-import com.dsh105.echopet.compat.api.util.reflection.SafeMethod;
+import com.dsh105.echopet.compat.api.reflection.SafeMethod;
 
 public class WrapperPacketPlayOutChat extends Packet {
+
+    private static String field_a = ReflectionUtil.isServerMCPC() ? "field_73476_b" : "a";
 
     public WrapperPacketPlayOutChat() {
         super(PacketFactory.PacketType.CHAT);
@@ -35,13 +37,13 @@ public class WrapperPacketPlayOutChat extends Packet {
                 throw new IllegalArgumentException("Chat component for 1.6 chat packet must be a String!");
             }
         }
-        this.write("a", new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), "a", String.class).invoke(null, chatComponent));
+        this.write(field_a, new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), "a", String.class).invoke(null, chatComponent));
     }
 
     public String getMessage() {
         if (!EchoPet.isUsingNetty()) {
             return (String) this.read("message");
         }
-        return (String) new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), "a", ReflectionUtil.getNMSClass("IChatBaseComponent")).invoke(null, this.read("a"));
+        return (String) new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), "a", ReflectionUtil.getNMSClass("IChatBaseComponent")).invoke(null, this.read(field_a));
     }
 }

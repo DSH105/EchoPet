@@ -15,12 +15,23 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.util.wrapper;
+package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
 
 public class WrapperPacketWorldParticles extends Packet {
+
+    private static String field_a = ReflectionUtil.isServerMCPC() ? "field_98209_a" : "a";
+    private static String field_b = ReflectionUtil.isServerMCPC() ? "field_98207_b" : "b";
+    private static String field_c = ReflectionUtil.isServerMCPC() ? "field_98208_c" : "c";
+    private static String field_d = ReflectionUtil.isServerMCPC() ? "field_98205_d" : "d";
+    private static String field_e = ReflectionUtil.isServerMCPC() ? "field_98206_e" : "e";
+    private static String field_f = ReflectionUtil.isServerMCPC() ? "field_98203_f" : "f";
+    private static String field_g = ReflectionUtil.isServerMCPC() ? "field_98204_g" : "g";
+    private static String field_h = ReflectionUtil.isServerMCPC() ? "field_98210_h" : "h";
+    private static String field_i = ReflectionUtil.isServerMCPC() ? "field_98211_i" : "i";
 
     public WrapperPacketWorldParticles() {
         super(PacketFactory.PacketType.WORLD_PARTICLES);
@@ -37,67 +48,75 @@ public class WrapperPacketWorldParticles extends Packet {
     }
 
     public void setParticle(String value) {
-        this.write("a", value);
+        this.write(field_a, value);
     }
 
     public String getParticle() {
-        return (String) this.read("a");
+        return (String) this.read(field_a);
     }
 
     public void setX(float value) {
-        this.write("b", value);
+        this.write(field_b, value);
     }
 
     public float getX() {
-        return (Float) this.read("b");
+        return (Float) this.read(field_b);
     }
 
     public void setY(float value) {
-        this.write("c", value);
+        this.write(field_c, value);
     }
 
     public float getY() {
-        return (Float) this.read("c");
+        return (Float) this.read(field_c);
     }
 
     public void setZ(float value) {
-        this.write("d", value);
+        this.write(field_d, value);
     }
 
     public float getZ() {
-        return (Float) this.read("d");
+        return (Float) this.read(field_d);
     }
 
     public void setOffsetX(float value) {
-        this.write("e", value);
+        this.write(field_e, value);
     }
 
     public float getOffsetX() {
-        return (Float) this.read("e");
+        return (Float) this.read(field_e);
     }
 
     public void setOffsetY(float value) {
-        this.write("f", value);
+        this.write(field_f, value);
     }
 
     public float getOffsetY() {
-        return (Float) this.read("f");
+        return (Float) this.read(field_f);
     }
 
     public void setOffsetZ(float value) {
-        this.write("g", value);
+        this.write(field_g, value);
     }
 
     public float getOffsetZ() {
-        return (Float) this.read("g");
+        return (Float) this.read(field_g);
     }
 
     public void setParticleSpeed(float speed) {
-        this.write("h", speed);
+        this.write(field_h, speed);
+    }
+
+    public float getParticleSpeed() {
+        return (Float) this.read(field_h);
     }
 
     public void setParticleAmount(int amount) {
-        this.write("i", amount);
+        this.write(field_i, amount);
+    }
+
+    public int getParticleAmount() {
+        return (Integer) this.read(field_i);
     }
 
     public enum ParticleType {

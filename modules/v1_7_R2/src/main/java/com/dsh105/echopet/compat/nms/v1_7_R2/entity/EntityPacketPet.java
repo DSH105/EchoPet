@@ -24,7 +24,7 @@ import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.compat.api.util.reflection.SafeField;
+import com.dsh105.echopet.compat.api.reflection.SafeField;
 import net.minecraft.server.v1_7_R2.World;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Location;

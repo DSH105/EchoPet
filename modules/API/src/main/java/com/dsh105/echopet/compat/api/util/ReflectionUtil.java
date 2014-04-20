@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
@@ -29,8 +30,6 @@ import java.util.regex.Pattern;
 
 public class ReflectionUtil {
 
-    public static String NMS_PATH = getNMSPackageName();
-    public static String CBC_PATH = getCBCPackageName();
     public static String COMPAT_NMS_PATH = "com.dsh105.echopet.compat.nms." + getServerVersion();
 
     public static int MC_VERSION_NUMERIC = Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
@@ -41,7 +40,7 @@ public class ReflectionUtil {
     }
 
     public static String getServerVersion() {
-        return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        return CommonReflection.getVersionTag();
     }
 
     // Thanks ProtocolLib <3
@@ -54,6 +53,10 @@ public class ReflectionUtil {
         } else {
             return "";
         }
+    }
+
+    public static boolean isServerMCPC() {
+        return Bukkit.getVersion().contains("MCPC-Plus");
     }
 
     public static String getNMSPackageName() {
@@ -86,11 +89,12 @@ public class ReflectionUtil {
     }
 
     public static Class getNMSClass(String className) {
-        return getClass(NMS_PATH + "." + className);
+        return getClass(getNMSPackageName() + "." + className);
+        //return CommonReflection.getMinecraftClass(className);
     }
 
-    public static Class getCBCClass(String classPath) {
-        return getClass(CBC_PATH + "." + classPath);
+    public static Class getCBCClass(String className) {
+        return CommonReflection.getCraftBukkitClass(className);
     }
 
     /**

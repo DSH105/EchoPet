@@ -61,6 +61,6 @@ public class WrappedDataWatcher extends AbstractWrapper {
     }
 
     public void watch(int index, Object value) {
-        ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), "a", int.class, Object.class), getHandle(), index, value);
+        ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionUtil.isServerMCPC() ? "field_92086_a" : "a", int.class, Object.class), getHandle(), index, value);
     }
 }

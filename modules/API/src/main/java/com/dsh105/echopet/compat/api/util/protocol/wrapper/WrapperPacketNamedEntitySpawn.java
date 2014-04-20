@@ -17,84 +17,95 @@
 
 package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
 
 public class WrapperPacketNamedEntitySpawn extends Packet {
+
+    private static String field_a = ReflectionUtil.isServerMCPC() ? "field_73516_a" : "a";
+    private static String field_b = ReflectionUtil.isServerMCPC() ? "field_73514_b" : "b";
+    private static String field_c = ReflectionUtil.isServerMCPC() ? "field_73515_c" : "c";
+    private static String field_d = ReflectionUtil.isServerMCPC() ? "field_73512_d" : "d";
+    private static String field_e = ReflectionUtil.isServerMCPC() ? "field_73513_e" : "e";
+    private static String field_f = ReflectionUtil.isServerMCPC() ? "field_73510_f" : "f";
+    private static String field_g = ReflectionUtil.isServerMCPC() ? "field_73511_g" : "g";
+    private static String field_h = ReflectionUtil.isServerMCPC() ? "field_73518_h" : "h";
+    private static String field_i = ReflectionUtil.isServerMCPC() ? "field_73519_i" : "i";
 
     public WrapperPacketNamedEntitySpawn() {
         super(PacketFactory.PacketType.NAMED_ENTITY_SPAWN);
     }
 
     public void setEntityId(int id) {
-        this.write("a", id);
+        this.write(field_a, id);
     }
 
     public int getEntityId() {
-        return (Integer) this.read("a");
+        return (Integer) this.read(field_a);
     }
 
     public void setGameProfile(Object profile) {
-        this.write("b", profile);
+        this.write(field_b, profile);
     }
 
     public Object getGameProfile() {
-        return this.read("b");
+        return this.read(field_b);
     }
 
     public void setX(double value) {
-        this.write("c", (int) Math.floor(value * 32.0D));
+        this.write(field_c, (int) Math.floor(value * 32.0D));
     }
 
     public double getX() {
-        return (((Integer) this.read("c")) / 32.0D);
+        return (((Integer) this.read(field_c)) / 32.0D);
     }
 
     public void setY(double value) {
-        this.write("d", (int) Math.floor(value * 32.0D));
+        this.write(field_d, (int) Math.floor(value * 32.0D));
     }
 
     public double getY() {
-        return (((Integer) this.read("d")) / 32.0D);
+        return (((Integer) this.read(field_d)) / 32.0D);
     }
 
     public void setZ(double value) {
-        this.write("e", (int) Math.floor(value * 32.0D));
+        this.write(field_e, (int) Math.floor(value * 32.0D));
     }
 
     public double getZ() {
-        return (((Integer) this.read("e")) / 32.0D);
+        return (((Integer) this.read(field_e)) / 32.0D);
     }
 
     public void setYaw(float value) {
-        this.write("f", (byte) (value * 256.0F / 360.0F));
+        this.write(field_f, (byte) (value * 256.0F / 360.0F));
     }
 
     public float getYaw() {
-        return (((Byte) this.read("f")) * 360.0F / 256.0F);
+        return (((Byte) this.read(field_f)) * 360.0F / 256.0F);
     }
 
     public void setPitch(float value) {
-        this.write("g", (byte) (value * 256.0F / 360.0F));
+        this.write(field_g, (byte) (value * 256.0F / 360.0F));
     }
 
     public float getPitch() {
-        return (((Byte) this.read("g")) * 360.0F / 256.0F);
+        return (((Byte) this.read(field_g)) * 360.0F / 256.0F);
     }
 
     public void setEquipmentId(int id) {
-        this.write("h", id);
+        this.write(field_h, id);
     }
 
     public int getEquipmentId() {
-        return (Integer) this.read("h");
+        return (Integer) this.read(field_h);
     }
 
     public void setMetadata(WrappedDataWatcher metadata) {
-        this.write("i", metadata.getHandle());
+        this.write(field_i, metadata.getHandle());
     }
 
     public Object getMetadata() {
-        return this.read("i");
+        return this.read(field_i);
     }
 }

@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
 import net.minecraft.server.v1_7_R1.World;
 import org.bukkit.ChatColor;

@@ -15,18 +15,13 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.api.util.reflection;
+package com.dsh105.echopet.compat.api.reflection;
 
-public abstract class SafeDirectField<T> implements FieldAccessor<T> {
+public interface MethodAccessor<T> {
 
-    public boolean isValid() {
-        return true;
-    }
+    T invoke(Object instance, Object... args);
 
-    @Override
-    public T transfer(Object from, Object to) {
-        T old = get(to);
-        set(to, get(from));
-        return old;
-    }
+    public Class<?> getReturnType();
+
+    public Class[] getArguments();
 }

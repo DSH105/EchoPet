@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
 import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityAgeablePet;
 import net.minecraft.server.v1_7_R2.World;
 

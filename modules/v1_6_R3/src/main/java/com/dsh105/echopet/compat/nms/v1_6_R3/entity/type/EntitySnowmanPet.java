@@ -20,7 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_6_R3.entity.type;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
 import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.EntityPet;
 import net.minecraft.server.v1_6_R3.World;
 
