@@ -166,12 +166,12 @@ public class ConfigOptions extends Options {
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 4);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 30);
 
-            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.canDamagePlayers", false);
+            /*set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.canDamagePlayers", false);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.lockRange", 10);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.ticksBetweenAttacks", 20);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.damage", petType.getAttackDamage());
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.loseHealth", false);
-            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.health", petType.getMaxHealth());
+            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.health", petType.getMaxHealth());*/
 
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".rideSpeed", 0.25D);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".jumpHeight", 0.6D);
