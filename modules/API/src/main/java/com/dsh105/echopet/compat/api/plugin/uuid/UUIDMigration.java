@@ -132,6 +132,7 @@ public class UUIDMigration {
 
         if (EchoPet.getPlugin().getDbPool() != null) {
             try {
+                con = EchoPet.getPlugin().getDbPool().getConnection();
                 ps = con.prepareStatement("SELECT * FROM Pets;");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
