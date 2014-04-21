@@ -76,6 +76,7 @@ public class ReflectionUtil {
             return Class.forName(name);
         } catch (ClassNotFoundException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("Could not find class: " + name + "!");
+            e.printStackTrace();
             return null;
         }
     }
@@ -111,6 +112,7 @@ public class ReflectionUtil {
             return field;
         } catch (NoSuchFieldException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("No such field: " + fieldName + "!");
+            e.printStackTrace();
             return null;
         }
     }
@@ -120,6 +122,7 @@ public class ReflectionUtil {
             return (T) getField(clazz, fieldName).get(instance);
         } catch (IllegalAccessException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("Failed to access field: " + fieldName + "!");
+            e.printStackTrace();
             return null;
         }
     }
@@ -129,6 +132,7 @@ public class ReflectionUtil {
             getField(clazz, fieldName).set(instance, value);
         } catch (IllegalAccessException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("Could not set new field value for: " + fieldName);
+            e.printStackTrace();
         }
     }
 
@@ -137,6 +141,7 @@ public class ReflectionUtil {
             return (T) field.get(instance);
         } catch (IllegalAccessException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve field: " + field.getName());
+            e.printStackTrace();
             return null;
         }
     }
@@ -150,6 +155,7 @@ public class ReflectionUtil {
             return clazz.getDeclaredMethod(methodName, params);
         } catch (NoSuchMethodException e) {
             EchoPet.getPlugin().getReflectionLogger().warning("No such method: " + methodName + "!");
+            e.printStackTrace();
             return null;
         }
     }

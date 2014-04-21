@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.util.protocol;
 
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
@@ -25,8 +26,8 @@ import java.util.Map;
 public class PacketUtil {
 
     public static final Class CLASS_TEMPLATE = ReflectionUtil.getNMSClass("EnumProtocol"); // EnumConnectionState in MCPC
-    private static final Field SERVER_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, ReflectionUtil.isServerMCPC() ? "field_150770_i" : "i");
-    private static final Field CLIENT_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, ReflectionUtil.isServerMCPC() ? "field_150769_h" : "h");
+    private static final Field SERVER_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, ReflectionConstants.PROTOCOL_FIELD_SERVERPACKETMAP.getName());
+    private static final Field CLIENT_PACKET_MAP = ReflectionUtil.getField(CLASS_TEMPLATE, ReflectionConstants.PROTOCOL_FIELD_CLIENTPACKETMAP.getName());
 
     public static Class getPacket(Protocol protocol, Sender sender, int id) {
         if (sender == Sender.CLIENT) {

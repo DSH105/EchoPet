@@ -31,18 +31,18 @@ public class WrapperPacketPlayOutChat extends Packet {
     }
 
     public void setMessage(String chatComponent) {
-        if (!EchoPet.isUsingNetty()) {
-            if (!(chatComponent instanceof String)) {
-                throw new IllegalArgumentException("Chat component for 1.6 chat packet must be a String!");
-            }
+        if (EchoPet.isUsingNetty()) {
+            this.write(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName(), new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), ReflectionConstants.PACKET_CHAT_FUNC_SETCOMPONENT.getName(), String.class).invoke(null, chatComponent));
+        } else {
+            this.write(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName(), chatComponent);
         }
-        this.write(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName(), new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), ReflectionConstants.PACKET_CHAT_FUNC_SETCOMPONENT.getName(), String.class).invoke(null, chatComponent));
     }
 
     public String getMessage() {
-        if (!EchoPet.isUsingNetty()) {
-            return (String) this.read("message");
+        Object value = this.read(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName());
+        if (value instanceof String) {
+            return (String) value;
         }
-        return (String) new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), ReflectionConstants.PACKET_CHAT_FUNC_GETMESSAGE.getName(), ReflectionUtil.getNMSClass("IChatBaseComponent")).invoke(null, this.read(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName()));
+        return (String) new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), ReflectionConstants.PACKET_CHAT_FUNC_GETMESSAGE.getName(), ReflectionUtil.getNMSClass("IChatBaseComponent")).invoke(null, value);
     }
 }

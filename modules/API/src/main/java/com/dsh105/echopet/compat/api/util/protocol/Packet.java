@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util.protocol;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.MiscUtil;
 import com.dsh105.echopet.compat.api.util.PlayerUtil;
@@ -53,7 +54,7 @@ public class Packet {
                 e.printStackTrace();
             }
         } else {
-            FieldAccessor<Map> mapField = new SafeField<Map>(ReflectionUtil.getNMSClass("Packet"), ReflectionUtil.isServerMCPC() ? "field_73291_a" : "a");
+            FieldAccessor<Map> mapField = new SafeField<Map>(ReflectionUtil.getNMSClass("Packet"), ReflectionConstants.PROTOCOL_FIELD_PACKETMAP.getName());
             Map map = mapField.get(null);
             this.packetClass = (Class) MiscUtil.getKeyAtValue(map, legacyId);
             try {

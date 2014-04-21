@@ -25,10 +25,6 @@ import com.dsh105.echopet.compat.api.reflection.SafeMethod;
 
 public class WrapperPacketEntityMetadata extends Packet {
 
-    /*private static String field_a = ReflectionUtil.isServerMCPC() ? "field_73393_a" : "a";
-    private static String field_b = ReflectionUtil.isServerMCPC() ? "field_73392_b" : "b";
-    private static String func_c = ReflectionUtil.isServerMCPC() ? "func_75685_c" : "c";*/
-
     public WrapperPacketEntityMetadata() {
         super(PacketFactory.PacketType.ENTITY_METADATA);
     }

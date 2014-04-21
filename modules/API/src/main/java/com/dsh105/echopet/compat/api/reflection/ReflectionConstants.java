@@ -41,9 +41,9 @@ public enum ReflectionConstants {
     PACKET_NAMEDSPAWN_FIELD_EQUIPMENT(new String[] {"h"}, "field_73518_h", "field_148959_h"),
     PACKET_NAMEDSPAWN_FIELD_META(new String[] {"i"}, "field_73519_i", "field_148960_i"),
 
-    PACKET_CHAT_FIELD_MESSAGE(new String[] {"a"}, "field_73476_b", "field_148919_a"),
-    PACKET_CHAT_FUNC_SETCOMPONENT(new String[] {"a"}, "", "func_150699_a"),
-    PACKET_CHAT_FUNC_GETMESSAGE(new String[] {"a"}, "", "func_150696_a"),
+    PACKET_CHAT_FIELD_MESSAGE(new String[] {"message", "a"}, "field_73476_b", "field_148919_a"),
+    PACKET_CHAT_FUNC_SETCOMPONENT(new String[] {"a"}, "func_150699_a"),
+    PACKET_CHAT_FUNC_GETMESSAGE(new String[] {"a"}, "func_150696_a"),
 
     PACKET_ENTITYMETADATA_FIELD_ID(new String[] {"a"}, "field_73393_a", "field_149379_a"),
     PACKET_ENTITYMETADATA_FIELD_META(new String[] {"b"}, "field_73392_b", "field_149378_b"),
@@ -62,7 +62,11 @@ public enum ReflectionConstants {
 
     ACHIEVEMENT_FIELD_NAME(new String[] {"name"}, "field_75996_k"),
 
-    ITEMSTACK_FUNC_SAVE(new String[] {"save"}, "func_77955_b")
+    ITEMSTACK_FUNC_SAVE(new String[] {"save"}, "func_77955_b"),
+
+    PROTOCOL_FIELD_CLIENTPACKETMAP(new String[] {"h"}, "field_150769_h"),
+    PROTOCOL_FIELD_SERVERPACKETMAP(new String[] {"i"}, "field_150770_i"),
+    PROTOCOL_FIELD_PACKETMAP(new String[] {"a"}, "field_73291_a"),
     ;
 
     /*
