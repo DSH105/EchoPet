@@ -253,6 +253,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         return false;
     }
 
+    @Override
+    public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
+        super.setPositionRotation(d0, d1, d2, f, f1);
+    }
+
     public void setLocation(Location l) {
         this.setLocation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
         this.world = ((CraftWorld) l.getWorld()).getHandle();
