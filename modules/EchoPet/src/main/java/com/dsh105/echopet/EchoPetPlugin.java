@@ -213,7 +213,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         }
 
         // Make sure to convert those UUIDs!
-        if (ReflectionUtil.MC_VERSION_NUMERIC > 172 && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID() && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null) {
             LOGGER.info("Converting data files to UUID system...");
             UUIDMigration.migrateConfig(petConfig);
             mainConfig.set("convertDataFileToUniqueId", false);
@@ -295,7 +295,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         }
 
         // Make sure to convert those UUIDs!
-        if (ReflectionUtil.MC_VERSION_NUMERIC > 172 && mainConfig.getBoolean("convertSqlTableToUniqueId", true)) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID() && mainConfig.getBoolean("convertSqlTableToUniqueId", true)) {
             LOGGER.info("Converting SQL table to UUID system...");
             UUIDMigration.migrateSqlTable();
             mainConfig.set("convertSqlTableToUniqueId", false);

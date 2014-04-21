@@ -36,8 +36,17 @@ import java.util.*;
 
 public class UUIDMigration {
 
+    public static boolean canReturnUUID() {
+        try {
+            Bukkit.class.getDeclaredMethod("getPlayer", UUID.class);
+            return true;
+        } catch (NoSuchMethodException e) {
+            return false;
+        }
+    }
+
     public static Object getIdentificationFor(Player player) {
-        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && canReturnUUID()) {
             return player.getUniqueId();
         } else {
             return player.getName();
@@ -45,7 +54,7 @@ public class UUIDMigration {
     }
 
     public static String getIdentificationForAsString(Player player) {
-        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && canReturnUUID()) {
             return player.getUniqueId().toString();
         } else {
             return player.getName();
@@ -53,7 +62,7 @@ public class UUIDMigration {
     }
 
     public static Player getPlayerOf(Object identification) {
-        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && canReturnUUID()) {
             if (identification instanceof UUID) {
                 return Bukkit.getPlayer((UUID) identification);
             } else if (identification instanceof String) {
