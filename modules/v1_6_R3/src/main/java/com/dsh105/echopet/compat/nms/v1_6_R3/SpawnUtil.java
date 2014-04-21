@@ -48,7 +48,7 @@ public class SpawnUtil implements ISpawnUtil {
         World mcWorld = ((CraftWorld) l.getWorld()).getHandle();
         EntityPet entityPet = (EntityPet) pet.getPetType().getNewEntityPetInstance(mcWorld, pet);
 
-        entityPet.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
+        entityPet.setLocation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
         if (!l.getChunk().isLoaded()) {
             l.getChunk().load();
         }
