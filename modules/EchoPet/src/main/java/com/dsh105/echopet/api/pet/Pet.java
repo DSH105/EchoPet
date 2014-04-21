@@ -270,7 +270,7 @@ public abstract class Pet implements IPet {
 
         // Ew...This stuff is UGLY :c
 
-        SafeMethod method = new SafeMethod(ReflectionUtil.getNMSClass("Entity"), ReflectionConstants.ENTITY_FUNC_MOUNT.getName(), ReflectionUtil.getNMSClass("Entity"));
+        final SafeMethod method = new SafeMethod(ReflectionUtil.getNMSClass("Entity"), ReflectionConstants.ENTITY_FUNC_MOUNT.getName(), ReflectionUtil.getNMSClass("Entity"));
 
         if (!flag) {
             method.invoke(PlayerUtil.playerToEntityPlayer(this.getOwner()), new Object[]{null});
