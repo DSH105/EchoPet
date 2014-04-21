@@ -20,11 +20,9 @@ package com.dsh105.echopet.compat.nms.v1_6_R3.entity;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
 import net.minecraft.server.v1_6_R3.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -34,7 +32,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     protected WrappedDataWatcher customDataWatcher;
     protected byte entityStatus = 0;
     protected boolean initiated;
-    protected int id;
+    protected int entityId;
     protected int equipmentId = 0;
 
     public EntityPacketPet(World world) {
@@ -43,7 +41,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
 
     public EntityPacketPet(World world, IPet pet) {
         super(world, pet);
-        this.id = this.hashCode();
+        this.entityId = this.hashCode();
     }
 
     @Override
@@ -87,7 +85,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         customDataWatcher.initiate(8, (Object) (byte) 0);
         customDataWatcher.initiate(10, (Object) (String) name);
         WrapperPacketEntityMetadata meta = new WrapperPacketEntityMetadata();
-        meta.setEntityId(this.id);
+        meta.setEntityId(this.entityId);
         meta.setMetadata(customDataWatcher);
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {

@@ -38,7 +38,7 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     @Override
     public WrapperPacketNamedEntitySpawn getSpawnPacket() {
         WrapperPacketNamedEntitySpawn spawn = new WrapperPacketNamedEntitySpawn();
-        spawn.setEntityId(this.id);
+        spawn.setEntityId(this.entityId);
         spawn.setGameProfile(this.getPet().getPetName());
         spawn.setX(this.locX);
         spawn.setY(this.locY);
