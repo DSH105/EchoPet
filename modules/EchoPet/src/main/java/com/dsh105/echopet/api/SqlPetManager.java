@@ -33,6 +33,8 @@ import java.util.*;
 
 public class SqlPetManager implements ISqlPetManager {
 
+    private String tableName = "EchoPet";
+
     @Override
     public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isRider) {
         this.updateDatabase(UUIDMigration.getIdentificationForAsString(player), list, result, isRider);
@@ -51,7 +53,7 @@ public class SqlPetManager implements ISqlPetManager {
                         con = EchoPet.getPlugin().getDbPool().getConnection();
                         statement = con.createStatement();
                         for (Map.Entry<String, String> updateEntry : updates.entrySet()) {
-                            statement.executeUpdate("UPDATE Pets SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE Owner = '" + playerIdent + "'");
+                            statement.executeUpdate("UPDATE " + this.tableName + " SET " + updateEntry.getKey() + "='" + updateEntry.getValue() + "' WHERE OwnerName = '" + playerIdent + "'");
                         }
                     }
                 } catch (SQLException e) {
@@ -94,9 +96,9 @@ public class SqlPetManager implements ISqlPetManager {
                     // Deal with the pet metadata first
                     // This tends to be more problematic, so by shoving it out of the way, we can get the pet data saved.
                     if (isRider)
-                        ps = con.prepareStatement("INSERT INTO Pets (Owner, RiderPetType, RiderPetName) VALUES (?, ?, ?)");
+                        ps = con.prepareStatement("INSERT INTO " + this.tableName + " (OwnerName, RiderPetType, RiderPetName) VALUES (?, ?, ?)");
                     else
-                        ps = con.prepareStatement("INSERT INTO Pets (Owner, PetType, PetName) VALUES (?, ?, ?)");
+                        ps = con.prepareStatement("INSERT INTO " + this.tableName + " (OwnerName, PetType, PetName) VALUES (?, ?, ?)");
 
                     ps.setString(1, String.valueOf(playerIdent));
                     ps.setString(2, petType.toString());
@@ -142,11 +144,11 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("SELECT * FROM Pets WHERE Owner = ?;");
+                    ps = con.prepareStatement("SELECT * FROM " + this.tableName + " WHERE OwnerName = ?;");
                     ps.setString(1, String.valueOf(playerIdent));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        owner = UUIDMigration.getPlayerOf(rs.getString("Owner"));
+                        owner = UUIDMigration.getPlayerOf(rs.getString("OwnerName"));
                         if (owner == null) {
                             return null;
                         }
@@ -233,7 +235,7 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("DELETE FROM Pets WHERE Owner = ?;");
+                    ps = con.prepareStatement("DELETE FROM " + this.tableName + " WHERE OwnerName = ?;");
                     ps.setString(1, String.valueOf(playerIdent));
                     ps.executeUpdate();
                 } catch (SQLException e) {
@@ -266,7 +268,7 @@ public class SqlPetManager implements ISqlPetManager {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
                     String list = SQLUtil.serialiseUpdate(Arrays.asList(PetData.values()), true);
-                    ps = con.prepareStatement("UPDATE Pets SET ? WHERE Owner = ?;");
+                    ps = con.prepareStatement("UPDATE " + this.tableName + " SET ? WHERE OwnerName = ?;");
                     ps.setString(1, list);
                     ps.setString(2, String.valueOf(playerIdent));
                     ps.executeUpdate();

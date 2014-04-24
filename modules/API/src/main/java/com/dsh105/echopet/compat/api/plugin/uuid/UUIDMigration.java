@@ -127,6 +127,7 @@ public class UUIDMigration {
     }
 
     public static void migrateSqlTable() {
+        ArrayList<String> toRemove = new ArrayList<String>();
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -136,7 +137,12 @@ public class UUIDMigration {
                 ps = con.prepareStatement("SELECT * FROM Pets;");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    String ownerName = rs.getString("Owner");
+                    String ownerName;
+                    try {
+                        ownerName = rs.getString("OwnerName");
+                    } catch (SQLException e) {
+                        continue;
+                    }
                     if (ownerName == null) {
                         continue;
                     }
@@ -194,6 +200,7 @@ public class UUIDMigration {
                         EchoPet.getSqlManager().saveToDatabase(playerUuid.toString(), mt, mName, mountData, true);
                     }
 
+                    toRemove.add(ownerName);
                 }
             } catch (SQLException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "Failed to migrate SQL database", e, true);
@@ -205,6 +212,12 @@ public class UUIDMigration {
                         con.close();
                 } catch (SQLException ignored) {
                 }
+            }
+        }
+
+        if (!toRemove.isEmpty()) {
+            for (String name : toRemove) {
+                EchoPet.getSqlManager().clearFromDatabase(name);
             }
         }
     }

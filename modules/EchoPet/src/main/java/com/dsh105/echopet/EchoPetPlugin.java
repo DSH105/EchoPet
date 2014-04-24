@@ -63,6 +63,7 @@ import org.bukkit.plugin.PluginManager;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
@@ -270,8 +271,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             try {
                 connection = dbPool.getConnection();
                 statement = connection.createStatement();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS Pets (" +
-                        "Owner varchar(255)," +
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS EchoPet (" +
+                        "OwnerName varchar(255)," +
                         "PetType varchar(255)," +
                         "PetName varchar(255)," +
                         SQLUtil.serialise(PetData.values(), false) + ", " +
@@ -279,8 +280,16 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                         SQLUtil.serialise(PetData.values(), true) +
                         ", PRIMARY KEY (Owner)" +
                         ");");
+
+                // Convert those UUIDs!
+                if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID() && connection.getMetaData().getTables(null, null, "Pets", null).next()) {
+                    LOGGER.info("Converting SQL table to UUID system...");
+                    UUIDMigration.migrateSqlTable();
+                    //mainConfig.set("convertSqlTableToUniqueId", false);
+                    //mainConfig.saveConfig();
+                }
             } catch (SQLException e) {
-                Logger.log(Logger.LogLevel.SEVERE, "`Pets` Table generation failed [MySQL DataBase: " + db + "].", e, true);
+                Logger.log(Logger.LogLevel.SEVERE, "Table generation failed [MySQL DataBase: " + db + "].", e, true);
             } finally {
                 try {
                     if (statement != null) {
@@ -295,12 +304,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         }
 
         // Make sure to convert those UUIDs!
-        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID() && mainConfig.getBoolean("convertSqlTableToUniqueId", true)) {
-            LOGGER.info("Converting SQL table to UUID system...");
-            UUIDMigration.migrateSqlTable();
-            mainConfig.set("convertSqlTableToUniqueId", false);
-            mainConfig.saveConfig();
-        }
+
     }
 
     protected void checkUpdates() {
