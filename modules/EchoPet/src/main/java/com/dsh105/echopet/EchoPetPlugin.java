@@ -278,7 +278,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                         SQLUtil.serialise(PetData.values(), false) + ", " +
                         "RiderPetType varchar(255), RiderPetName varchar(255), " +
                         SQLUtil.serialise(PetData.values(), true) +
-                        ", PRIMARY KEY (Owner)" +
+                        ", PRIMARY KEY (OwnerName)" +
                         ");");
 
                 // Convert those UUIDs!
