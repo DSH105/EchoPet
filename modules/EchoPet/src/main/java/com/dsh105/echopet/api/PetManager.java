@@ -162,10 +162,11 @@ public class PetManager implements IPetManager {
     @Override
     public IPet getPet(Entity pet) {
         for (IPet pi : pets) {
-            if (pi.getEntityPet().equals(pet) || pi.getRider().getEntityPet().equals(pet)) {
+            IPet rider = pi.getRider();
+            if (pi.getEntityPet().equals(pet) || (rider != null && rider.getEntityPet().equals(pet))) {
                 return pi;
             }
-            if (pi.getCraftPet().equals(pet) || pi.getRider().getCraftPet().equals(pet)) {
+            if (pi.getCraftPet().equals(pet) || (rider != null && rider.getCraftPet().equals(pet))) {
                 return pi;
             }
         }
