@@ -32,19 +32,17 @@ import com.dsh105.echopet.commands.util.CommandManager;
 import com.dsh105.echopet.commands.util.DynamicPluginCommand;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.*;
 import com.dsh105.echopet.compat.api.plugin.data.Updater;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
+import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
+import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.SQLUtil;
-import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.ChunkListener;
@@ -53,7 +51,6 @@ import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -63,7 +60,6 @@ import org.bukkit.plugin.PluginManager;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
@@ -275,10 +271,11 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                         "OwnerName varchar(255)," +
                         "PetType varchar(255)," +
                         "PetName varchar(255)," +
-                        SQLUtil.serialise(PetData.values(), false) + ", " +
-                        "RiderPetType varchar(255), RiderPetName varchar(255), " +
-                        SQLUtil.serialise(PetData.values(), true) +
-                        ", PRIMARY KEY (OwnerName)" +
+                        "PetData BIGINT," +
+                        "RiderPetType varchar(255)," +
+                        "RiderPetName varchar(255), " +
+                        "RiderPetData BIGINT," +
+                        "PRIMARY KEY (OwnerName)" +
                         ");");
 
                 // Convert those UUIDs!

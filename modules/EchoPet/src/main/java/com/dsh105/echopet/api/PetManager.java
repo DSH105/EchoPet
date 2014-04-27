@@ -204,7 +204,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b) {
-        EchoPet.getSqlManager().updateDatabase(pet.getOwnerIdentification().toString(), list, b, pet.isRider());
+        EchoPet.getSqlManager().saveToDatabase(pet, pet.isRider());
         String w = pet.getOwner().getWorld().getName();
         String path = type + "." + w + "." + pet.getOwnerIdentification();
         for (PetData pd : list) {
