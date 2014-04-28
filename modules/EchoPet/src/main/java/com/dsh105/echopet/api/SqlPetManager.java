@@ -25,14 +25,13 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.util.SQLUtil;
+import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.*;
 
 public class SqlPetManager implements ISqlPetManager {
-
-    private String tableName = "EchoPet";
 
     @Override
     public void saveToDatabase(IPet p, boolean isRider) {
@@ -59,7 +58,7 @@ public class SqlPetManager implements ISqlPetManager {
                     // Deal with the pet metadata first
                     // This tends to be more problematic, so by shoving it out of the way, we can get the pet data saved.
                     if (isRider) {
-                        ps = con.prepareStatement("UPDATE " + this.tableName + " SET RiderPetType = ?, RiderPetName = ?, RiderPetData = ? WHERE OwnerName = ?");
+                        ps = con.prepareStatement("UPDATE " + TableMigrationUtil.LATEST_TABLE + " SET RiderPetType = ?, RiderPetName = ?, RiderPetData = ? WHERE OwnerName = ?");
 
                         ps.setString(1, petType.toString());
                         ps.setString(2, petName);
@@ -67,7 +66,7 @@ public class SqlPetManager implements ISqlPetManager {
                         ps.setString(4, String.valueOf(playerIdent));
                         ps.executeUpdate();
                     } else {
-                        ps = con.prepareStatement("INSERT INTO " + this.tableName + " (OwnerName, PetType, PetName, PetData) VALUES (?, ?, ?, ?)");
+                        ps = con.prepareStatement("INSERT INTO " + TableMigrationUtil.LATEST_TABLE + " (OwnerName, PetType, PetName, PetData) VALUES (?, ?, ?, ?)");
 
                         ps.setString(1, String.valueOf(playerIdent));
                         ps.setString(2, petType.toString());
@@ -110,7 +109,7 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("SELECT * FROM " + this.tableName + " WHERE OwnerName = ?;");
+                    ps = con.prepareStatement("SELECT * FROM " + TableMigrationUtil.LATEST_TABLE + " WHERE OwnerName = ?;");
                     ps.setString(1, String.valueOf(playerIdent));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
@@ -194,7 +193,7 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("DELETE FROM " + this.tableName + " WHERE OwnerName = ?;");
+                    ps = con.prepareStatement("DELETE FROM " + TableMigrationUtil.LATEST_TABLE + " WHERE OwnerName = ?;");
                     ps.setString(1, String.valueOf(playerIdent));
                     ps.executeUpdate();
                 } catch (SQLException e) {
@@ -226,7 +225,7 @@ public class SqlPetManager implements ISqlPetManager {
             if (EchoPet.getPlugin().getDbPool() != null) {
                 try {
                     con = EchoPet.getPlugin().getDbPool().getConnection();
-                    ps = con.prepareStatement("UPDATE " + this.tableName + " SET RiderData = ? WHERE OwnerName = ?;");
+                    ps = con.prepareStatement("UPDATE " + TableMigrationUtil.LATEST_TABLE + " SET RiderData = ? WHERE OwnerName = ?;");
                     ps.setLong(1, SQLUtil.serializePetData(Arrays.asList(PetData.values())));
                     ps.setString(2, String.valueOf(playerIdent));
                     ps.executeUpdate();

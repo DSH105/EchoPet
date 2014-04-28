@@ -43,6 +43,7 @@ import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.ChunkListener;
@@ -267,8 +268,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             try {
                 connection = dbPool.getConnection();
                 statement = connection.createStatement();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS EchoPet (" +
-                        "OwnerName varchar(255)," +
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS EchoPet_version3 (" +
+                        "OwnerName varchar(36)," +
                         "PetType varchar(255)," +
                         "PetName varchar(255)," +
                         "PetData BIGINT," +
@@ -278,13 +279,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                         "PRIMARY KEY (OwnerName)" +
                         ");");
 
-                // Convert those UUIDs!
-                if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID() && connection.getMetaData().getTables(null, null, "Pets", null).next()) {
-                    LOGGER.info("Converting SQL table to UUID system...");
-                    UUIDMigration.migrateSqlTable();
-                    //mainConfig.set("convertSqlTableToUniqueId", false);
-                    //mainConfig.saveConfig();
-                }
+                // Convert previous database versions
+                TableMigrationUtil.migrateTables();
             } catch (SQLException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "Table generation failed [MySQL DataBase: " + db + "].", e, true);
             } finally {
