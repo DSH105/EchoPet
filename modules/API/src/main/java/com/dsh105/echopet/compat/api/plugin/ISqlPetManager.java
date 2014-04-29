@@ -26,10 +26,6 @@ import java.util.List;
 
 public interface ISqlPetManager {
 
-    public void updateDatabase(Player player, List<PetData> list, Boolean result, boolean isRider);
-
-    void updateDatabase(String playerIdent, List<PetData> list, Boolean result, boolean isRider);
-
     public void saveToDatabase(IPet p, boolean isRider);
 
     void saveToDatabase(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider);
