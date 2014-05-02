@@ -27,6 +27,7 @@ import net.minecraft.server.v1_7_R1.*;
 @EntityPetType(petType = PetType.HORSE)
 public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet {
 
+    private int rearingCounter = 0;
     int bP = 0;
 
     public EntityHorsePet(World world) {
@@ -183,5 +184,20 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
         } else {
             return SizeCategory.LARGE;
         }
+    }
+
+    @Override
+    public void onLive() {
+        super.onLive();
+        if (rearingCounter > 0 && ++rearingCounter > 20) {
+            horseVisual(64, false);
+        }
+    }
+
+    @Override
+    protected void doJumpAnimation() {
+        this.makeSound("mob.horse.jump", 0.4F, 1.0F);
+        this.rearingCounter = 1;
+        horseVisual(64, true);
     }
 }
