@@ -68,7 +68,9 @@ public enum ReflectionConstants {
     PROTOCOL_FIELD_SERVERPACKETMAP(new String[] {"i"}, "field_150770_i"),
     PROTOCOL_FIELD_PACKETMAP(new String[] {"a"}, "field_73291_a"),
 
-    ENTITY_FUNC_MOUNT(new String[] {"mount"}, "func_70078_a")
+    ENTITY_FUNC_MOUNT(new String[] {"mount"}, "func_70078_a"),
+
+    GAMEPROFILE_FUNC_ID(new String[] {"getId"})
     ;
 
     /*

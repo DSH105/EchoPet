@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.entity.type.nms;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 
 public interface IEntityHumanPet extends IEntityPacketPet {
 
@@ -25,7 +26,7 @@ public interface IEntityHumanPet extends IEntityPacketPet {
 
     public int getEquipmentId();
 
-    public Object getGameProfile();
+    public WrappedGameProfile getGameProfile();
 
-    public void setGameProfile(Object profile);
+    public void setGameProfile(WrappedGameProfile profile);
 }

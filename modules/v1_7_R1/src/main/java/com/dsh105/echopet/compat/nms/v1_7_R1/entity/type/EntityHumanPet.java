@@ -19,10 +19,10 @@ package com.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
 import com.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPacketPet;
 import net.minecraft.server.v1_7_R1.World;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.HUMAN)
@@ -62,13 +62,13 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     }
 
     @Override
-    public GameProfile getGameProfile() {
+    public WrappedGameProfile getGameProfile() {
         return profile;
     }
 
     @Override
-    public void setGameProfile(Object profile) {
-        this.profile = (GameProfile) profile;
+    public void setGameProfile(WrappedGameProfile profile) {
+        this.profile = profile;
     }
 
     @Override

@@ -23,7 +23,7 @@ import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHumanPet;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -69,7 +69,7 @@ public class HumanPet extends PacketPet implements IHumanPet {
         }
         IEntityHumanPet human = (IEntityHumanPet) this.getEntityPet();
         if (human.getGameProfile() != null) {
-            human.setGameProfile(new GameProfile(((GameProfile) human.getGameProfile()).getId(), name));
+            human.setGameProfile(WrappedGameProfile.getNewProfile(human.getGameProfile(), name));
         }
     }
 

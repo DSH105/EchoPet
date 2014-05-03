@@ -22,11 +22,11 @@ import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
 import com.dsh105.echopet.compat.api.reflection.SafeField;
 import net.minecraft.server.v1_7_R3.World;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -39,7 +39,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     protected boolean initiated;
     protected int id;
     protected UUID profileUuid;
-    protected GameProfile profile;
+    protected WrappedGameProfile profile;
     protected int equipmentId = 0;
 
     public EntityPacketPet(World world) {
@@ -50,7 +50,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         super(world, pet);
         this.id = this.hashCode();
         this.profileUuid = UUID.randomUUID();
-        this.profile = new GameProfile(this.profileUuid, pet.getPetName());
+        this.profile = new WrappedGameProfile(this.profileUuid, pet.getPetName());
     }
 
     @Override

@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.nms.v1_6_R3.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
+import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.EntityPacketPet;
 import net.minecraft.server.v1_6_R3.World;
@@ -61,12 +62,12 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     }
 
     @Override
-    public Object getGameProfile() {
+    public WrappedGameProfile getGameProfile() {
         return null;
     }
 
     @Override
-    public void setGameProfile(Object profile) {
+    public void setGameProfile(WrappedGameProfile profile) {
 
     }
 

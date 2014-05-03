@@ -36,8 +36,13 @@ public class WrapperPacketNamedEntitySpawn extends Packet {
         return (Integer) this.read(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_ID.getName());
     }
 
-    public void setGameProfile(Object profile) {
-        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PROFILE.getName(), profile);
+    @Deprecated
+    public void setGameProfile(String profileName) {
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PROFILE.getName(), profileName);
+    }
+
+    public void setGameProfile(WrappedGameProfile profile) {
+        this.write(ReflectionConstants.PACKET_NAMEDSPAWN_FIELD_PROFILE.getName(), profile.getHandle());
     }
 
     public Object getGameProfile() {
