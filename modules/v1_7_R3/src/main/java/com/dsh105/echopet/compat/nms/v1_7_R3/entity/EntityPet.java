@@ -408,6 +408,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
                         EchoPet.getPlugin().getServer().getPluginManager().callEvent(rideEvent);
                         if (!rideEvent.isCancelled()) {
                             this.motY = rideEvent.getJumpHeight();
+                            doJumpAnimation();
                         }
                     }
                 } catch (IllegalArgumentException e) {
@@ -470,6 +471,9 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     }
 
     protected void makeStepSound() {
+    }
+
+    protected void doJumpAnimation() {
     }
 
 
