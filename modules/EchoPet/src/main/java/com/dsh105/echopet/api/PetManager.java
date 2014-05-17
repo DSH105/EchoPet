@@ -320,9 +320,11 @@ public class PetManager implements IPetManager {
         Iterator<IPet> i = pets.listIterator();
         while (i.hasNext()) {
             IPet p = i.next();
-            if (pi.getOwnerIdentification().equals(p.getOwnerIdentification())) {
-                p.removePet(makeDeathSound);
-                i.remove();
+            if (pi != null && p != null) {
+                if (pi.getOwnerIdentification().equals(p.getOwnerIdentification())) {
+                    p.removePet(makeDeathSound);
+                    i.remove();
+                }
             }
         }
     }
