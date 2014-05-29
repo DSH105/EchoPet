@@ -51,7 +51,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public EntityPacketPet(World world, IPet pet) {
         super(world, pet);
         this.id = this.hashCode();
-        if (EchoPet.getConfig().getBoolean("enableHumanSkinFixing"), true) {
+        if (EchoPet.getConfig().getBoolean("enableHumanSkinFixing", true)) {
             try {
                 this.profileUuid = UUIDFetcher.getUUIDOf(pet.getPetName());
             } catch (Exception e) {
