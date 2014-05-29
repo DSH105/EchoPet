@@ -20,6 +20,8 @@ package com.dsh105.echopet.compat.nms.v1_7_R3.entity;
 import com.dsh105.dshutils.util.GeometryUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
@@ -49,7 +51,15 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public EntityPacketPet(World world, IPet pet) {
         super(world, pet);
         this.id = this.hashCode();
-        this.profileUuid = UUID.randomUUID();
+        if (EchoPet.getConfig().getBoolean("enableHumanSkinFixing"), true) {
+            try {
+                this.profileUuid = UUIDFetcher.getUUIDOf(pet.getPetName());
+            } catch (Exception e) {
+            }
+        }
+        if (this.profileUuid == null) {
+            this.profileUuid = UUID.randomUUID();
+        }
         this.profile = new WrappedGameProfile(this.profileUuid, pet.getPetName());
     }
 
