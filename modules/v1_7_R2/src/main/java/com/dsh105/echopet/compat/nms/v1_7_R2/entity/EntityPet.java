@@ -381,7 +381,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
         PetType pt = this.getPet().getPetType();
-        if (FIELD_JUMP != null) {
+        if (FIELD_JUMP != null && this.passenger != null) {
             if (EchoPet.getOptions().canFly(pt)) {
                 try {
                     if (((Player) (human.getBukkitEntity())).isFlying()) {
