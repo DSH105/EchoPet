@@ -385,7 +385,9 @@ public abstract class Pet implements IPet {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
+                    if (getCraftPet() != null) {
+                        getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
+                    }
                     EchoPet.getSqlManager().saveToDatabase(Pet.this.rider, true);
                 }
             }.runTaskLater(EchoPet.getPlugin(), 5L);
