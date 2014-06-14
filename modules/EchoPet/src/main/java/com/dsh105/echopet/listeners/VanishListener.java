@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.echopet.compat.api.entity.pet.Pet;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

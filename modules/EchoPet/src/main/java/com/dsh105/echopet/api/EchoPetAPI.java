@@ -17,16 +17,16 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.echopet.compat.api.ai.*;
-import com.dsh105.echopet.compat.api.entity.pet.Pet;
-import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.inventory.DataMenu;
-import com.dsh105.echopet.compat.api.inventory.PetSelector;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.api.ai.*;
+import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.inventory.DataMenu;
+import com.dsh105.echopet.api.inventory.PetSelector;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.reflection.SafeConstructor;
+import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ public class EchoPetAPI {
      *
      * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link
      *                    src.main.java.com.dsh105.echopet.api.pet.Pet}
-     * @param petType     the {@link com.dsh105.echopet.compat.api.entity.PetType} (type of {@link
+     * @param petType     the {@link com.dsh105.echopet.api.entity.PetType} (type of {@link
      *                    src.main.java.com.dsh105.echopet.api.pet.Pet}) that will be given to the player
      * @param sendMessage defines if the plugin sends a message to the target {@link Player}
      * @return the {@link src.main.java.com.dsh105.echopet.api.pet.Pet} created
@@ -136,7 +136,7 @@ public class EchoPetAPI {
      */
     public boolean teleportPet(Pet pet, Location location) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to teleport Pet to Location through the EchoPetAPI. {@link com.dsh105.echopet.api.pet.Pet} cannot be null.");
+            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to teleport Pet to Location through the EchoPetAPI. {@link com.dsh105.echopet.api.entity.pet.Pet} cannot be null.");
             return false;
         }
         if (pet.isHat() || pet.isOwnerRiding()) {
@@ -167,10 +167,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link src.main.java.com.dsh105.echopet.api.pet.Pet}
+     * Adds {@link com.dsh105.echopet.api.entity.PetData} to a {@link src.main.java.com.dsh105.echopet.api.pet.Pet}
      *
      * @param pet     the {@link src.main.java.com.dsh105.echopet.api.pet.Pet} to add the data to
-     * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link
+     * @param petData {@link com.dsh105.echopet.api.entity.PetData} to add to the {@link
      *                src.main.java.com.dsh105.echopet.api.pet.Pet}
      */
     public void addData(Pet pet, PetData petData) {
@@ -293,7 +293,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add a predefined {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link
+     * Add a predefined {@link com.dsh105.echopet.api.ai.PetGoal} to a {@link
      * src.main.java.com.dsh105.echopet.api.pet.Pet} from the API
      *
      * @param pet      the {@link src.main.java.com.dsh105.echopet.api.pet.Pet} to add the goal to
@@ -316,12 +316,12 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add an implementation of {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link
+     * Add an implementation of {@link com.dsh105.echopet.api.ai.PetGoal} to a {@link
      * src.main.java.com.dsh105.echopet.api.pet.Pet}
      *
      * @param pet        the {@link src.main.java.com.dsh105.echopet.api.pet.Pet} to add the {@link
-     *                   com.dsh105.echopet.compat.api.ai.PetGoal} to
-     * @param goal       the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to add
+     *                   com.dsh105.echopet.api.ai.PetGoal} to
+     * @param goal       the {@link com.dsh105.echopet.api.ai.PetGoal} to add
      * @param identifier a {@link java.lang.String} to identify the goal
      */
     public void addGoal(Pet pet, PetGoal goal, String identifier, int priority) {
@@ -357,7 +357,7 @@ public class EchoPetAPI {
      * src.main.java.com.dsh105.echopet.api.pet.Pet}
      *
      * @param pet        {@link src.main.java.com.dsh105.echopet.api.pet.Pet} to remove the goal from
-     * @param identifier String that identifies a {@link com.dsh105.echopet.compat.api.ai.PetGoal}
+     * @param identifier String that identifies a {@link com.dsh105.echopet.api.ai.PetGoal}
      */
     public void removeGoal(Pet pet, String identifier) {
         if (pet == null) {
@@ -371,7 +371,7 @@ public class EchoPetAPI {
      * Remove a goal from a {@link src.main.java.com.dsh105.echopet.api.pet.Pet}'s AI
      *
      * @param pet     {@link src.main.java.com.dsh105.echopet.api.pet.Pet} to remove the goal from
-     * @param petGoal {@link com.dsh105.echopet.compat.api.ai.PetGoal} to remove
+     * @param petGoal {@link com.dsh105.echopet.api.ai.PetGoal} to remove
      */
     public void removeGoal(Pet pet, PetGoal petGoal) {
         if (pet == null) {
@@ -386,7 +386,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * {@link Enum} of predefined {@link com.dsh105.echopet.compat.api.ai.PetGoal}s
+     * {@link Enum} of predefined {@link com.dsh105.echopet.api.ai.PetGoal}s
      */
     public enum GoalType {
         ATTACK("Attack"),

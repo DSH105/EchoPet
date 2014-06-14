@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 

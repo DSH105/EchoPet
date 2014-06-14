@@ -17,12 +17,12 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.echopet.compat.api.entity.nms.EntityPet;
-import com.dsh105.echopet.compat.api.event.PetDamageEvent;
-import com.dsh105.echopet.compat.api.event.PetInteractEvent;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.api.entity.nms.EntityPet;
+import com.dsh105.echopet.api.event.PetDamageEvent;
+import com.dsh105.echopet.api.event.PetInteractEvent;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

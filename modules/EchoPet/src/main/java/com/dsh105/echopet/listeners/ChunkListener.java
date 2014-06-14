@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.echopet.compat.api.entity.nms.EntityPet;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.api.entity.nms.EntityPet;
+import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

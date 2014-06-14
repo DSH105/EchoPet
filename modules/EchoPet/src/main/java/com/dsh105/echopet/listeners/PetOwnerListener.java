@@ -18,15 +18,15 @@
 package com.dsh105.echopet.listeners;
 
 import com.dsh105.commodus.GeometryUtil;
-import com.dsh105.echopet.compat.api.config.MenuSettings;
-import com.dsh105.echopet.compat.api.entity.nms.EntityPacketPet;
-import com.dsh105.echopet.compat.api.entity.nms.EntityPet;
-import com.dsh105.echopet.compat.api.entity.pet.Pet;
-import com.dsh105.echopet.compat.api.event.PetInteractEvent;
-import com.dsh105.echopet.compat.api.inventory.PetSelector;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.dsh105.echopet.api.config.MenuSettings;
+import com.dsh105.echopet.api.entity.nms.EntityPacketPet;
+import com.dsh105.echopet.api.entity.nms.EntityPet;
+import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.event.PetInteractEvent;
+import com.dsh105.echopet.api.inventory.PetSelector;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

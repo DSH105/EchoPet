@@ -18,14 +18,14 @@
 package com.dsh105.echopet.api;
 
 import com.dsh105.commodus.PlayerIdent;
-import com.dsh105.echopet.compat.api.config.Settings;
-import com.dsh105.echopet.compat.api.entity.pet.Pet;
-import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
-import com.dsh105.echopet.compat.api.util.SQLUtil;
-import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
+import com.dsh105.echopet.api.config.Settings;
+import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.api.plugin.ISqlPetManager;
+import com.dsh105.echopet.util.SQLUtil;
+import com.dsh105.echopet.util.TableMigrationUtil;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;

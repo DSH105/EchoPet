@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

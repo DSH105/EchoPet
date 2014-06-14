@@ -17,10 +17,10 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.fanciful.FancyItemUtil;
-import com.dsh105.echopet.compat.api.util.fanciful.FancyMessage;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.util.Perm;
+import com.dsh105.echopet.util.fanciful.FancyItemUtil;
+import com.dsh105.echopet.util.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
