@@ -48,7 +48,7 @@ permissions:
     echopet.pet.name:
         default: op
         description: Set the name tag of your current pet
-    echopet.pet.default.pet.set.current:
+    echopet.pet.default.set.current:
         default: op
         description: Set the default pet to your current pet
     echopet.pet.default.remove:
@@ -90,7 +90,7 @@ permissions:
     echopet.petadmin.name:
         default: op
         description: Set the name tag of a player's pet
-    echopet.petadmin.default.pet.set.current:
+    echopet.petadmin.default.set.current:
         default: op
         description: Set the default pet of a player to their current pet
     echopet.petadmin.default.remove:
@@ -881,7 +881,7 @@ permissions:
         default: op
         description: 'All permissions under /pet default <...>'
         children:
-            echopet.pet.default.pet.set.current: true
+            echopet.pet.default.set.current: true
             echopet.pet.default.remove: true
             echopet.pet.default.set.type.*: true
     echopet.pet.default.set.type.*:
@@ -1041,7 +1041,7 @@ permissions:
         default: op
         description: 'All permissions under /petadmin default <...>'
         children:
-            echopet.petadmin.default.petadmin.set.current: true
+            echopet.petadmin.default.set.current: true
             echopet.petadmin.default.remove: true
             echopet.petadmin.default.set.type.*: true
     echopet.petadmin.default.set.type.*:

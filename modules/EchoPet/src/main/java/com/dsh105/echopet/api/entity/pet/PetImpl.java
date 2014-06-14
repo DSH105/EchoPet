@@ -440,8 +440,10 @@ public abstract class PetImpl implements Pet {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    getCraftPet().setPassenger(PetImpl.this.getRider().getCraftPet());
-                    EchoPet.getSqlManager().saveToDatabase(PetImpl.this.rider, true);
+                    if (getCraftPet() != null) {
+                        getCraftPet().setPassenger(getRider().getCraftPet());
+                    }
+                    EchoPet.getSqlManager().saveToDatabase(getRider(), true);
                 }
             }.runTaskLater(EchoPet.getPlugin(), 5L);
         }
