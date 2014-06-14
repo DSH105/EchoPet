@@ -17,137 +17,152 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
+import com.dsh105.commodus.StringUtil;
+import com.dsh105.echopet.compat.api.entity.nms.EntityPet;
+import com.dsh105.echopet.compat.api.entity.pet.Pet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
-import com.google.common.collect.ImmutableList;
+import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum PetType {
 
     // Aggressive mobs
-    BLAZE("Blaze", 61, "Blaze Pet", 20D, 6D, EntityType.BLAZE, PetData.FIRE),
-    CAVESPIDER("CaveSpider", 59, "Cave Spider Pet", 12D, 5D, EntityType.CAVE_SPIDER),
-    CREEPER("Creeper", 50, "Creeper Pet", 20D, 6D, EntityType.CREEPER, PetData.POWER),
-    ENDERDRAGON("EnderDragon", 63, "EnderDragon Pet", 200D, 0D, EntityType.ENDER_DRAGON),
-    ENDERMAN("Enderman", 58, "Enderman Pet", 40D, 6D, EntityType.ENDERMAN, PetData.SCREAMING),
-    GHAST("Ghast", 56, "Ghast Pet", 10D, 7D, EntityType.GHAST),
-    GIANT("Giant", 53, "Giant Pet", 100D, 0D, EntityType.GIANT),
-    MAGMACUBE("MagmaCube", 62, "Magma Cube Pet", 20D, 5D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-    PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, EntityType.PIG_ZOMBIE, PetData.BABY, PetData.VILLAGER),
-    SILVERFISH("Silverfish", 60, "Silverfish Pet", 8D, 4D, EntityType.SILVERFISH),
-    SKELETON("Skeleton", 51, "Skeleton Pet", 20D, 5D, EntityType.SKELETON, PetData.WITHER),
-    SLIME("Slime", 55, "Slime Pet", 20D, 4D, EntityType.SLIME, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-    SPIDER("Spider", 52, "Spider Pet", 16D, 5D, EntityType.SPIDER),
-    WITCH("Witch", 66, "Witch Pet", 26D, 5D, EntityType.WITCH),
-    WITHER("Wither", 64, "Wither Pet", 300D, 8D, EntityType.WITHER, PetData.SHIELD),
-    ZOMBIE("Zombie", 54, "Zombie Pet", 20D, 5D, EntityType.ZOMBIE, PetData.BABY, PetData.VILLAGER),
+    BAT(65, 6D, 3D, 65, true),
+    BLAZE(61, 20D, 6D, 6, false),
+    CAVE_SPIDER(59, 12D, 5D, 59, false),
+    CREEPER(50, 20D, 6D, 50, false),
+    ENDER_DRAGON(63, 200D, 0D, Material.DRAGON_EGG, false),
+    ENDERMAN(58, 40D, 6D, 58, false),
+    GHAST(56, 10D, 7D, 56, false),
+    GIANT(53, 100D, 0D, 54, false),
+    MAGMA_CUBE(62, 20D, 5D, 62, false),
+    PIG_ZOMBIE(57, 20D, 6D, 57, false),
+    SILVERFISH(60, 8D, 4D, 60, false),
+    SKELETON(51, 20D, 5D, 5, false),
+    SLIME(55, 20D, 4D, 55, false),
+    SPIDER(52, 16D, 5D, 52, false),
+    CHICKEN(93, 4D, 3D, 93, true),
+    COW(92, 10D, 4D, 92, true),
+    WITCH(66, 26D, 5D, 66, false),
+    WITHER(64, 300D, 8D, Material.NETHER_STAR, false),
+    ZOMBIE(54, 20D, 5D, 54, false),
 
     // Passive mobs
-    BAT("Bat", 65, "Bat Pet", 6D, 3D, EntityType.BAT),
-    CHICKEN("Chicken", 93, "Chicken Pet", 4D, 3D, EntityType.CHICKEN, PetData.BABY),
-    COW("Cow", 92, "Cow Pet", 10D, 4D, EntityType.COW, PetData.BABY),
-    HORSE("Horse", 100, "Horse Pet", 30D, 4D, EntityType.HORSE, PetData.BABY, PetData.CHESTED, PetData.SADDLE,
-            PetData.NORMAL, PetData.DONKEY,
-            PetData.MULE, PetData.SKELETON, PetData.ZOMBIE, PetData.WHITE,
-            PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK,
-            PetData.GRAY, PetData.DARKBROWN, PetData.NONE, PetData.SOCKS,
-            PetData.WHITEPATCH, PetData.WHITESPOT, PetData.BLACKSPOT,
-            PetData.NOARMOUR, PetData.IRON, PetData.GOLD, PetData.DIAMOND),
-    IRONGOLEM("IronGolem", 99, "Iron Golem Pet", 100D, 7D, EntityType.IRON_GOLEM),
-    MUSHROOMCOW("MushroomCow", 96, "Mushroom Cow Pet", 10D, 3D, EntityType.MUSHROOM_COW, PetData.BABY),
-    OCELOT("Ocelot", 98, "Ocelot Pet", 10D, 4D, EntityType.OCELOT, PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
-    PIG("Pig", 90, "Pig Pet", 10D, 3D, EntityType.PIG, PetData.BABY, PetData.SADDLE),
-    SHEEP("Sheep", 91, "Sheep Pet", 8D, 3D, EntityType.SHEEP, PetData.BABY, PetData.SHEARED,
-            PetData.BLACK, PetData.BLUE, PetData.BROWN,
-            PetData.CYAN, PetData.GRAY, PetData.GREEN,
-            PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
-            PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
-            PetData.SILVER, PetData.WHITE, PetData.YELLOW),
-    SNOWMAN("Snowman", 97, "Snowman Pet", 4D, 4D, EntityType.SNOWMAN),
-    SQUID("Squid", 94, "Squid Pet", 10D, 4D, EntityType.SQUID),
-    VILLAGER("Villager", 120, "Villager Pet", 20D, 4D, EntityType.VILLAGER, PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
-    WOLF("Wolf", 95, "Wolf Pet", 20D, 6D, EntityType.WOLF, PetData.BABY, PetData.TAMED, PetData.ANGRY,
-            PetData.BLACK, PetData.BLUE, PetData.BROWN,
-            PetData.CYAN, PetData.GRAY, PetData.GREEN,
-            PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
-            PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
-            PetData.SILVER, PetData.WHITE, PetData.YELLOW),
+    HORSE(100, 30D, 4D, 50, true),
+    IRON_GOLEM(99, 100D, 7D, Material.PUMPKIN, true),
+    MUSHROOM_COW(96, 10D, 3D, 96, true),
+    OCELOT(98, 10D, 4D, 98, true),
+    PIG(90, 10D, 3D, 90, true),
+    SHEEP(91, 8D, 3D, 9, true),
+    SNOWMAN(97, 4D, 4D, Material.SNOW_BALL, true),
+    SQUID(94, 10D, 4D, 94, true),
+    VILLAGER(120, 20D, 4D, 120, true),
+    WOLF(95, 20D, 6D, 95, true),
 
-    HUMAN("Human", 54, "Human Pet", 20D, 6D, EntityType.UNKNOWN);
+    HUMAN(54, 20D, 6D, Material.SKULL_ITEM, 3, true);
 
-    private Class<? extends IEntityPet> entityClass;
-    private Class<? extends IPet> petClass;
-    private String defaultName;
+    private int registrationId;
     private double maxHealth;
     private double attackDamage;
-    private EntityType entityType;
-    private List<PetData> allowedData;
-    private int id;
+    private Class<? extends Pet> petClass;
+    private Class<? extends EntityPet> entityClass;
 
-    PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
-        this.entityClass = ReflectionUtil.getPetNMSClass(classIdentifier);
-        this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
-        this.id = registrationId;
-        this.allowedData = ImmutableList.copyOf(allowedData);
+    private String command;
+    private Material material;
+    private short materialData;
+
+    PetType(int registrationId, double maxHealth, double attackDamage, Material material, boolean passive) {
+        init(registrationId, maxHealth, attackDamage, material, 0, passive);
+    }
+
+    PetType(int registrationId, double maxHealth, double attackDamage, Material material, int materialData, boolean passive) {
+        init(registrationId, maxHealth, attackDamage, material, materialData, passive);
+    }
+
+    PetType(int registrationId, double maxHealth, double attackDamage, int materialData, boolean passive) {
+        init(registrationId, maxHealth, attackDamage, Material.MONSTER_EGG, materialData, passive);
+    }
+
+    private void init(int registrationId, double maxHealth, double attackDamage, Material material, int materialData, boolean passive) {
+        this.registrationId = registrationId;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
-        this.entityType = entityType;
-        this.defaultName = defaultName;
+        this.material = material;
+        this.materialData = (short) materialData;
+
+        String classIdentifier = humanName().replace(" Pet", "").replace(" ", "");
+        this.entityClass = ReflectionUtil.getPetNMSClass(classIdentifier);
+        this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "PetImpl");
+
+        this.command = "pet " + toString().toLowerCase();
     }
 
     public int getRegistrationId() {
-        return this.id;
+        return this.registrationId;
     }
 
     public double getMaxHealth() {
         return this.maxHealth;
     }
 
-    public String getDefaultName(String name) {
-        return EchoPet.getConfig().getString("pets." + this.toString().toLowerCase().replace("_", " ") + ".defaultName", this.defaultName).replace("(user)", name).replace("(userApos)", name + "'s");
+    public String getCommand() {
+        return command;
     }
 
-    public String getDefaultName() {
-        return this.defaultName;
+    public Material getMaterial() {
+        return material;
+    }
+
+    public short getMaterialData() {
+        return materialData;
+    }
+
+    public String getDefaultName(String name) {
+        return EchoPet.getConfig().getString("pets." + storageName() + ".defaultName", humanName() + " Pet").replaceAll("(user|owner)", name).replaceAll("(userApos|ownerApos)", name + "\'s");
     }
 
     public double getAttackDamage() {
-        return EchoPet.getConfig().getDouble("pets." + this.toString().toLowerCase().replace("_", " ") + ".attackDamage", this.attackDamage);
+        return EchoPet.getConfig().getDouble("pets." + storageName() + ".attackDamage", this.attackDamage);
     }
 
-    public EntityType getEntityType() {
-        return this.entityType;
+    public EntityPet getNewEntityPetInstance(Object world, Pet pet) {
+        return new SafeConstructor<EntityPet>(this.entityClass, ReflectionUtil.getNMSClass("World"), Pet.class).newInstance(world, pet);
     }
 
-    public List<PetData> getAllowedDataTypes() {
-        return this.allowedData;
-    }
-
-    public boolean isDataAllowed(PetData data) {
-        return getAllowedDataTypes().contains(data);
-    }
-
-    public IEntityPet getNewEntityPetInstance(Object world, IPet pet) {
-        return new SafeConstructor<IEntityPet>(this.entityClass, ReflectionUtil.getNMSClass("World"), IPet.class).newInstance(world, pet);
-    }
-
-    public IPet getNewPetInstance(Player owner) {
+    public Pet getNewPetInstance(Player owner) {
         if (owner != null) {
-            return new SafeConstructor<IPet>(this.petClass, Player.class).newInstance(owner);
+            return new SafeConstructor<Pet>(this.petClass, Player.class).newInstance(owner);
         }
         return null;
     }
 
-    public Class<? extends IEntityPet> getEntityClass() {
+    public Class<? extends EntityPet> getEntityClass() {
         return this.entityClass;
     }
 
-    public Class<? extends IPet> getPetClass() {
+    public Class<? extends Pet> getPetClass() {
         return this.petClass;
+    }
+
+    public String storageName() {
+        return toString().toLowerCase().replace("_", "");
+    }
+
+    public String humanName() {
+        return StringUtil.capitalise(toString().replace("_", " "));
+    }
+
+    public static List<PetType> sortAlphabetically() {
+        List<PetType> types = Arrays.asList(values());
+        Collections.sort(types);
+        return types;
     }
 }

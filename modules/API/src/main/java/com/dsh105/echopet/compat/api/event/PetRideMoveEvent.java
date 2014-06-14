@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.event;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.Pet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -31,11 +31,11 @@ public class PetRideMoveEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    private IPet pet;
+    private Pet pet;
     private float forwardSpeed;
     private float sidewardSpeed;
 
-    public PetRideMoveEvent(IPet pet, float forwardSpeed, float sidewardSpeed) {
+    public PetRideMoveEvent(Pet pet, float forwardSpeed, float sidewardSpeed) {
         this.pet = pet;
         this.forwardSpeed = forwardSpeed;
         this.sidewardSpeed = sidewardSpeed;
@@ -46,7 +46,7 @@ public class PetRideMoveEvent extends Event implements Cancellable {
      *
      * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
      */
-    public IPet getPet() {
+    public Pet getPet() {
         return this.pet;
     }
 

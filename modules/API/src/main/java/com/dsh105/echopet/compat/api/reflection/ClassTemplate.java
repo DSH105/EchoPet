@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.reflection;
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
@@ -88,7 +89,7 @@ public class ClassTemplate<T> {
 
     public static ClassTemplate<?> create(Class<?> type) {
         if (type == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Cannot create a ClassTemplate with a null type!");
+            EchoPet.LOG.console(Level.WARNING, "Cannot create a ClassTemplate with a null type!");
             return null;
         }
         return new ClassTemplate(type);
@@ -98,7 +99,7 @@ public class ClassTemplate<T> {
         Class clazz = ReflectionUtil.getClass(className);
 
         if (clazz == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching class with name: " + className);
+            EchoPet.LOG.console(Level.WARNING, "Failed to find a matching class with name: " + className);
             return null;
         }
         return new ClassTemplate<Object>(clazz);

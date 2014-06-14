@@ -72,8 +72,8 @@ public class CommandComplete implements TabCompleter {
             case 2:
                 ArrayList<String> list = new ArrayList<String>();
                 for (PetType pt : PetType.values()) {
-                    if (argBefore.equalsIgnoreCase(pt.toString().toLowerCase())) {
-                        list.add(pt.toString().toLowerCase());
+                    if (argBefore.equalsIgnoreCase(pt.storageName().toLowerCase())) {
+                        list.add(pt.storageName().toLowerCase());
                     }
                 }
                 if (argBefore.equalsIgnoreCase("name")) {
@@ -82,7 +82,7 @@ public class CommandComplete implements TabCompleter {
                 } else if (argBefore.equalsIgnoreCase("rider")) {
                     list.add("remove");
                     for (PetType pt : PetType.values()) {
-                        list.add(pt.toString().toLowerCase());
+                        list.add(pt.storageName().toLowerCase());
                     }
                 } else if (argBefore.equalsIgnoreCase("default")) {
                     list.add("set");

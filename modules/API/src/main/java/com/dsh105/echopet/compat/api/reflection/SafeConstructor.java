@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.reflection;
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 
 import java.lang.reflect.Constructor;
@@ -36,7 +37,7 @@ public class SafeConstructor<T> {
             Constructor constructor = coreClass.getConstructor(params);
             setConstructor(constructor);
         } catch (NoSuchMethodException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("No such constructor!");
+            EchoPet.LOG.console(Level.WARNING, "No such constructor!");
         }
     }
 

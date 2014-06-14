@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.event;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.Pet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -32,11 +32,11 @@ public class PetDamageEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = true; // cancelled by default
 
-    private IPet pet;
+    private Pet pet;
     private double damage;
     private DamageCause damageCause;
 
-    public PetDamageEvent(IPet pet, DamageCause damageCause, final double damage) {
+    public PetDamageEvent(Pet pet, DamageCause damageCause, final double damage) {
         this.pet = pet;
         this.damage = damage;
         this.damageCause = damageCause;
@@ -65,7 +65,7 @@ public class PetDamageEvent extends Event implements Cancellable {
      *
      * @return the {@link com.dsh105.echopet.api.pet.Pet} involved
      */
-    public IPet getPet() {
+    public Pet getPet() {
         return this.pet;
     }
 

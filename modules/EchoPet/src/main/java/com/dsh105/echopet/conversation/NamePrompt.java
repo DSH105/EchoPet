@@ -17,33 +17,32 @@
 
 package com.dsh105.echopet.conversation;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.config.Lang;
+import com.dsh105.echopet.compat.api.entity.pet.Pet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 
 public class NamePrompt extends StringPrompt {
 
-    private IPet pet;
+    private Pet pet;
     private boolean admin;
 
-    public NamePrompt(IPet pet, boolean admin) {
+    public NamePrompt(Pet pet, boolean admin) {
         this.pet = pet;
         this.admin = admin;
     }
 
     @Override
     public String getPromptText(ConversationContext conversationContext) {
-        return this.admin ? Lang.ADMIN_NAME_PET_PROMPT.toString().replace("%player%", pet.getNameOfOwner())
-                : Lang.NAME_PET_PROMPT.toString();
+        return this.admin ? Lang.ADMIN_NAME_PET_PROMPT.getValue("%player%", pet.getNameOfOwner()) : Lang.NAME_PET_PROMPT.getValue();
     }
 
     @Override
     public Prompt acceptInput(ConversationContext conversationContext, String s) {
         if (s.length() > 32) {
-            conversationContext.getForWhom().sendRawMessage(EchoPet.getPrefix() + Lang.PET_NAME_TOO_LONG.toString());
+            Lang.PET_NAME_TOO_LONG.send(conversationContext.getForWhom());
             return this;
         }
         conversationContext.setSessionData("name", s);

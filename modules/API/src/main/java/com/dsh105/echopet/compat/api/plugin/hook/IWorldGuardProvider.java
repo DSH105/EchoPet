@@ -35,7 +35,11 @@
 package com.dsh105.echopet.compat.api.plugin.hook;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import org.bukkit.Location;
 
 public interface IWorldGuardProvider extends IPluginDependencyProvider<WorldGuardPlugin> {
 
+    boolean allowPets(Location location);
+
+    boolean allowRegion(Location location);
 }

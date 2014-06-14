@@ -17,13 +17,15 @@
 
 package com.dsh105.echopet.compat.api.event;
 
+import com.dsh105.echopet.compat.api.config.LangSetting;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when this plugin attempts to send a message to a {@link org.bukkit.command.CommandSender}. Plugin prefix is appended automatically.
+ * Called when this plugin attempts to send a message to a {@link org.bukkit.command.CommandSender}. Plugin prefix is
+ * appended automatically.
  */
 
 public class EchoPetSendMessageEvent extends Event implements Cancellable {
@@ -33,10 +35,21 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
 
     private String messageToSend;
     private CommandSender recipient;
+    private LangSetting langSetting;
 
-    public EchoPetSendMessageEvent(String messageToSend, CommandSender recipient) {
+    public EchoPetSendMessageEvent(String messageToSend, LangSetting langSetting, CommandSender recipient) {
         this.messageToSend = messageToSend;
         this.recipient = recipient;
+        this.langSetting = langSetting;
+    }
+
+    /**
+     * Gets the appropriate setting for the message being sent
+     *
+     * @return Setting representing the message being sent
+     */
+    public LangSetting getLangSetting() {
+        return langSetting;
     }
 
     /**

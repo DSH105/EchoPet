@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.reflection;
 
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 
 import java.lang.reflect.Field;
@@ -37,7 +38,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             Field field = coreClass.getDeclaredField(fieldName);
             setField(field);
         } catch (NoSuchFieldException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching field with name: " + fieldName);
+            EchoPet.LOG.console(Level.WARNING, "Failed to find a matching field with name: " + fieldName);
             e.printStackTrace();
         }
     }
@@ -70,7 +71,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             this.field.set(instance, value);
             return true;
         } catch (IllegalAccessException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to access field: " + toString());
+            EchoPet.LOG.console(Level.WARNING, "Failed to access field: " + toString());
             e.printStackTrace();
         }
         return false;
@@ -84,7 +85,7 @@ public class SafeField<T> implements FieldAccessor<T> {
         try {
             return (T) this.field.get(instance);
         } catch (IllegalAccessException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to access field: " + toString());
+            EchoPet.LOG.console(Level.WARNING, "Failed to access field: " + toString());
             e.printStackTrace();
         }
         return null;

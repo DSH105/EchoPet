@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
+import com.dsh105.echopet.compat.api.entity.nms.EntityPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -31,7 +31,7 @@ public class ChunkListener implements Listener {
         if (event.getChunk().getEntities().length > 0) {
             for (int i = 0; i < event.getChunk().getEntities().length; i++) {
                 Entity e = event.getChunk().getEntities()[i];
-                if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+                if (ReflectionUtil.getEntityHandle(e) instanceof EntityPet) {
                     e.remove();
                     event.setCancelled(true);
                 }

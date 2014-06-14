@@ -34,6 +34,7 @@
 
 package com.dsh105.echopet.compat.api.reflection.utility;
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.*;
 import com.google.common.base.Strings;
@@ -157,8 +158,8 @@ public class CommonReflection {
                             }
                         }
                     } catch (Exception e) {
-                        if(VERSION_TAG == null)
-                            EchoPet.getPlugin().getReflectionLogger().warning("Version tag is null and it appears the server is modded but does not contain the expected method(s)! HoloAPI may not work correctly!");
+                        if (VERSION_TAG == null)
+                            EchoPet.LOG.console(Level.WARNING, "Version tag is null and it appears the server is modded but does not contain the expected method(s)! HoloAPI may not work correctly!");
                     }
 
                     MINECARFT_PACKAGE = combine(MINECARFT_PACKAGE_PREFIX, VERSION_TAG);

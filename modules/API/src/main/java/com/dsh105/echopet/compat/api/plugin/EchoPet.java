@@ -17,26 +17,26 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import com.dsh105.dshutils.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.commodus.config.Options;
+import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.commodus.logging.Log;
+import com.dsh105.echopet.compat.api.config.ConfigType;
 
 public final class EchoPet {
 
     private static IEchoPetPlugin PLUGIN;
+    public static Log LOG;
 
     public static void setPlugin(IEchoPetPlugin plugin) {
         if (PLUGIN != null) {
             return;
         }
         PLUGIN = plugin;
+        LOG = new Log("EchoPet");
     }
 
     public static IEchoPetPlugin getPlugin() {
         return PLUGIN;
-    }
-
-    public static String getPrefix() {
-        return PLUGIN.getPrefix();
     }
 
     public static IPetManager getManager() {
@@ -47,12 +47,12 @@ public final class EchoPet {
         return PLUGIN.getSqlPetManager();
     }
 
-    public static ConfigOptions getOptions() {
-        return PLUGIN.getOptions();
+    public static <T extends Options> T getSettings(Class<T> settingsClass) {
+        return PLUGIN.getSettings(settingsClass);
     }
 
-    public static boolean isUsingNetty() {
-        return PLUGIN.isUsingNetty();
+    public static Options getSettings(ConfigType configType){
+        return PLUGIN.getSettings(configType);
     }
 
     public static YAMLConfig getConfig() {
@@ -60,17 +60,7 @@ public final class EchoPet {
     }
 
     public static YAMLConfig getConfig(ConfigType type) {
-        switch (type) {
-            case DATA:
-                return PLUGIN.getPetConfig();
-            case LANG:
-                return PLUGIN.getLangConfig();
-            default:
-                return PLUGIN.getMainConfig();
-        }
+        return PLUGIN.getConfig(type);
     }
 
-    public enum ConfigType {
-        MAIN, DATA, LANG
-    }
 }

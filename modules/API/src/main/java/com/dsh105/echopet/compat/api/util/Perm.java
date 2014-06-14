@@ -134,7 +134,7 @@ public enum Perm {
     }
 
     private static boolean hasTypePerm(Player player, boolean sendMessage, Perm base, PetType petType) {
-        String perm = "echopet.pet." + base.perm.split("!")[1] + "." + petType.toString().toLowerCase();
+        String perm = "echopet.pet." + base.perm.split("!")[1] + "." + petType.storageName();
         if (player.hasPermission(perm)) {
             return true;
         }
@@ -150,7 +150,7 @@ public enum Perm {
         if (!hasTypePerm) {
             return false;
         }
-        String dataPerm = "echopet.pet.type." + petType.toString().toLowerCase() + "." + petData.getConfigOptionString().toLowerCase();
+        String dataPerm = "echopet.pet.type." + petType.storageName() + "." + petData.storageName().toLowerCase();
         if (player.hasPermission(dataPerm)) {
             return true;
         }

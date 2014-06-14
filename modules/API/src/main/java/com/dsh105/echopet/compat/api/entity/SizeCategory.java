@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.config.PetSettings;
 
 public enum SizeCategory {
 
@@ -33,15 +33,15 @@ public enum SizeCategory {
         this.modifier = modifier;
     }
 
-    public float getStartWalk(PetType petType) {
-        return (EchoPet.getConfig().getInt("pets." + petType.toString().toLowerCase().replace("_", " ") + ".startFollowDistance", 12) * this.modifier) / 2;
+    public float startFollowDistance(PetType petType) {
+        return (PetSettings.START_FOLLOW_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2;
     }
 
-    public float getStopWalk(PetType petType) {
-        return (EchoPet.getConfig().getInt("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 4) * this.modifier) / 2;
+    public float stopFollowDistance(PetType petType) {
+        return (PetSettings.STOP_FOLLOW_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2;
     }
 
-    public float getTeleport(PetType petType) {
-        return (EchoPet.getConfig().getInt("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 30) * this.modifier) / 2;
+    public float teleportDistance(PetType petType) {
+        return (PetSettings.TELEPORT_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2;
     }
 }

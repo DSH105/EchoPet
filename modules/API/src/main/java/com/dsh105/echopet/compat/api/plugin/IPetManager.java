@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.entity.Entity;
@@ -27,35 +27,35 @@ import java.util.ArrayList;
 
 public interface IPetManager {
 
-    public ArrayList<IPet> getPets();
+    public ArrayList<Pet> getPets();
 
-    public IPet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride);
+    public Pet loadPets(Player p, boolean findDefault, boolean sendMessage, boolean checkWorldOverride);
 
     public void removeAllPets();
 
-    public IPet createPet(Player owner, PetType petType, boolean sendMessageOnFail);
+    public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail);
 
-    public IPet createPet(Player owner, PetType petType, PetType riderType);
+    public Pet createPet(Player owner, PetType petType, PetType riderType);
 
-    public IPet getPet(Player player);
+    public Pet getPet(Player player);
 
-    public IPet getPet(Entity pet);
+    public Pet getPet(Entity pet);
 
-    public void forceAllValidData(IPet pet);
+    public void forceAllValidData(Pet pet);
 
-    public void updateFileData(String type, IPet pet, ArrayList<PetData> list, boolean b);
+    public void updateFileData(String type, Pet pet, ArrayList<PetData> list, boolean b);
 
-    public IPet createPetFromFile(String type, Player p);
+    public Pet createPetFromFile(String type, Player p);
 
-    public void loadRiderFromFile(IPet pet);
+    public void loadRiderFromFile(Pet pet);
 
-    public void loadRiderFromFile(String type, IPet pet);
+    public void loadRiderFromFile(String type, Pet pet);
 
     public void removePets(Player player, boolean makeDeathSound);
 
-    public void removePet(IPet pet, boolean makeDeathSound);
+    public void removePet(Pet pet, boolean makeDeathSound);
 
-    public void saveFileData(String type, IPet pet);
+    public void saveFileData(String type, Pet pet);
 
     public void saveFileData(String type, Player p, PetStorage UPD, PetStorage UMD);
 
@@ -63,11 +63,7 @@ public interface IPetManager {
 
     public void clearAllFileData();
 
-    public void clearFileData(String type, IPet pet);
+    public void clearFileData(String type, Pet pet);
 
     public void clearFileData(String type, Player p);
-
-    public void setData(IPet pet, PetData[] data, boolean b);
-
-    public void setData(IPet pet, PetData pd, boolean b);
 }

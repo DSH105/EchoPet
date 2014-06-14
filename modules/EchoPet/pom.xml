@@ -21,8 +21,9 @@
     <groupId>com.dsh105</groupId>
     <artifactId>EchoPet</artifactId>
     <name>EchoPet</name>
-    <version>2.3.4-SNAPSHOT</version>
+    <version>2.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -34,6 +35,7 @@
         <relativePath>../../</relativePath>
     </parent>
 
+    <!-- Distribution -->
     <distributionManagement>
         <repository>
             <id>hawk-repo</id>
@@ -42,6 +44,15 @@
     </distributionManagement>
 
     <dependencies>
+        <!-- API Module -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-API</artifactId>
+            <version>API</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- v1_6_R3 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_6_R3</artifactId>
@@ -51,9 +62,15 @@
                     <groupId>org.bukkit</groupId>
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
             </exclusions>
             <optional>true</optional>
         </dependency>
+
+        <!-- v1_7_R1 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R1</artifactId>
@@ -66,6 +83,8 @@
             </exclusions>
             <optional>true</optional>
         </dependency>
+
+        <!-- v1_7_R2 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R2</artifactId>
@@ -78,6 +97,8 @@
             </exclusions>
             <optional>true</optional>
         </dependency>
+
+        <!-- v1_7_R3 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R3</artifactId>
@@ -90,93 +111,13 @@
             </exclusions>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-API</artifactId>
-            <version>API</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.7.9-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>DSHUtils</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kitteh</groupId>
-            <artifactId>VanishNoPacket</artifactId>
-            <version>3.18.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.daboross.vault</groupId>
-            <artifactId>vault-api</artifactId>
-            <version>1.2.27</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
-            <version>1.2.32</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>5.5.8</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>5.8.1-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <version>0.8.0-rc3</version>
-        </dependency>
     </dependencies>
 
     <build>
         <directory>../../target</directory>
         <sourceDirectory>src/main/java</sourceDirectory>
         <finalName>${project.name}</finalName>
+
         <resources>
             <resource>
                 <targetPath>.</targetPath>
@@ -187,7 +128,9 @@
                 </includes>
             </resource>
         </resources>
+
         <plugins>
+            <!-- Compiler -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
@@ -196,6 +139,8 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+
+            <!-- Jar Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -208,6 +153,8 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- Shade -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -232,30 +179,38 @@
                             <artifactSet>
                                 <includes>
                                     <artifact>com.dsh105:EchoPet*</artifact>
+                                    <artifact>com.dsh105:Commodus</artifact>
+                                    <artifact>com.dsh105:PowerMessage</artifact>
+                                    <artifact>com.captainbern.minecraft:Minecraft-Reflection</artifact>
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
-                                    <include>com.dsh105:DSHUtils</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>com.jolbox</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries.slf4j</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>com.dsh105.dshutils</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries.dshutils</shadedPattern>
+                                    <pattern>com.dsh105.commodus</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.dsh105.powermessage</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Clean up -->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
@@ -271,6 +226,8 @@
                 </configuration>
                 <version>2.5</version>
             </plugin>
+
+            <!-- Replacer -->
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>maven-replacer-plugin</artifactId>

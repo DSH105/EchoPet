@@ -17,51 +17,41 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import com.dsh105.dshutils.config.YAMLConfig;
-import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.commodus.config.Options;
+import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopet.compat.api.config.ConfigType;
 import com.dsh105.echopet.compat.api.plugin.hook.IVanishProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
-import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.jolbox.bonecp.BoneCP;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public interface IEchoPetPlugin extends Plugin {
+public abstract class IEchoPetPlugin extends JavaPlugin {
 
-    public ISpawnUtil getSpawnUtil();
+    public abstract YAMLConfig getConfig(ConfigType type);
 
-    public String getPrefix();
+    public abstract IPetManager getPetManager();
 
-    public String getCommandString();
+    public abstract <T extends Options> T getSettings(Class<T> settingsClass);
 
-    public String getAdminCommandString();
+    public abstract Options getSettings(ConfigType configType);
 
-    public IPetManager getPetManager();
+    public abstract ISqlPetManager getSqlPetManager();
 
-    public ISqlPetManager getSqlPetManager();
+    public abstract BoneCP getDbPool();
 
-    public BoneCP getDbPool();
+    public abstract IVanishProvider getVanishProvider();
 
-    public IVanishProvider getVanishProvider();
+    public abstract IWorldGuardProvider getWorldGuardProvider();
 
-    public IWorldGuardProvider getWorldGuardProvider();
+    public abstract YAMLConfig getDataConfig();
 
-    public YAMLConfig getPetConfig();
+    public abstract YAMLConfig getMainConfig();
 
-    public YAMLConfig getMainConfig();
+    public abstract YAMLConfig getLangConfig();
 
-    public YAMLConfig getLangConfig();
+    public abstract boolean isUpdateAvailable();
 
-    public ConfigOptions getOptions();
+    public abstract String getUpdateName();
 
-    public boolean isUsingNetty();
-
-    public ModuleLogger getModuleLogger();
-
-    public ModuleLogger getReflectionLogger();
-
-    public boolean isUpdateAvailable();
-
-    public String getUpdateName();
-
-    public long getUpdateSize();
+    public abstract long getUpdateSize();
 }

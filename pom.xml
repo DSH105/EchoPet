@@ -18,6 +18,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.dsh105</groupId>
     <artifactId>EchoPet-Parent</artifactId>
     <name>EchoPet Parent</name>
@@ -38,26 +39,32 @@
         <module>modules/EchoPet</module>
     </modules>
 
-    <dependencies>
-    </dependencies>
-
     <repositories>
+        <!-- Bukkit -->
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
+
+        <!-- Hawk repo -->
         <repository>
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
         </repository>
+
+        <!-- sk89q repo -->
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
+
+        <!-- mbax repo - VanishNoPacket -->
         <repository>
             <id>kitteh-repo</id>
             <url>http://repo.kitteh.org/content/groups/public</url>
         </repository>
+
+        <!-- Vault -->
         <repository>
             <id>repo-daboross-net</id>
             <url>http://repo.daboross.net/</url>
@@ -72,6 +79,7 @@
         <defaultGoal>clean package install</defaultGoal>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
+
         <resources>
             <resource>
                 <targetPath>.</targetPath>
@@ -82,12 +90,16 @@
                 </includes>
             </resource>
         </resources>
+
         <plugins>
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
             </plugin>
+
+            <!-- Jar plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

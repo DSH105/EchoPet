@@ -17,8 +17,7 @@
 
 package com.dsh105.echopet.conversation;
 
-import com.dsh105.dshutils.util.StringUtil;
-import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.pet.Pet;
 import com.dsh105.echopet.compat.api.util.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
@@ -26,10 +25,10 @@ import org.bukkit.conversations.Prompt;
 
 public class NameSuccessPrompt extends MessagePrompt {
 
-    private IPet pet;
+    private Pet pet;
     private boolean admin;
 
-    public NameSuccessPrompt(IPet pet, boolean admin) {
+    public NameSuccessPrompt(Pet pet, boolean admin) {
         this.pet = pet;
         this.admin = admin;
     }
@@ -46,11 +45,11 @@ public class NameSuccessPrompt extends MessagePrompt {
         if (success) {
             return this.admin ? Lang.ADMIN_NAME_PET.toString()
                     .replace("%player%", this.pet.getNameOfOwner())
-                    .replace("%type%", StringUtil.capitalise(this.pet.getPetType().toString().replace("_", " ")))
+                    .replace("%type%", pet.getPetType().humanName())
                     .replace("%name%", name)
 
                     : Lang.NAME_PET.toString()
-                    .replace("%type%", StringUtil.capitalise(this.pet.getPetType().toString().replace("_", " ")))
+                    .replace("%type%", pet.getPetType().humanName())
                     .replace("%name%", name);
         } else {
             return Lang.NAME_NOT_ALLOWED.toString().replace("%name%", name);

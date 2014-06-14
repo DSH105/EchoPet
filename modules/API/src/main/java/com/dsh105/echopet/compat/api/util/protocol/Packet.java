@@ -17,18 +17,15 @@
 
 package com.dsh105.echopet.compat.api.util.protocol;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.captainbern.minecraft.reflection.MinecraftReflection;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
-import com.dsh105.echopet.compat.api.util.MiscUtil;
+import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.compat.api.util.PlayerUtil;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 public class Packet {
@@ -44,7 +41,7 @@ public class Packet {
 
     public Packet(Protocol protocol, Sender sender, int id, int legacyId) {
 
-        if (EchoPet.isUsingNetty()) {
+        if (MinecraftReflection.isUsingNetty()) {
             this.packetClass = PacketUtil.getPacket(protocol, sender, id);
             try {
                 this.packetHandle = this.packetClass.newInstance();
@@ -56,7 +53,7 @@ public class Packet {
         } else {
             FieldAccessor<Map> mapField = new SafeField<Map>(ReflectionUtil.getNMSClass("Packet"), ReflectionConstants.PROTOCOL_FIELD_PACKETMAP.getName());
             Map map = mapField.get(null);
-            this.packetClass = (Class) MiscUtil.getKeyAtValue(map, legacyId);
+            this.packetClass = (Class) GeneralUtil.getKeyAtValue(map, legacyId);
             try {
                 this.packetHandle = this.packetClass.newInstance();
             } catch (InstantiationException e) {

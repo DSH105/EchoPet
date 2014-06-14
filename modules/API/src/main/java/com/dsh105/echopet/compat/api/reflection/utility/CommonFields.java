@@ -34,6 +34,7 @@
 
 package com.dsh105.echopet.compat.api.reflection.utility;
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.FieldAccessor;
 import com.dsh105.echopet.compat.api.reflection.SafeField;
@@ -51,11 +52,11 @@ public class CommonFields {
     public static Object getNetworkManager(Player player) {
         Object vanillaPlayer = CommonMethods.getVanillaObject(player);
 
-        if(NETWORK_ACCESSOR == null) {
-           NETWORK_ACCESSOR = new SafeField<Object>(CommonReflection.getPlayerConnectionClass(), "networkManager");
+        if (NETWORK_ACCESSOR == null) {
+            NETWORK_ACCESSOR = new SafeField<Object>(CommonReflection.getPlayerConnectionClass(), "networkManager");
 
-            if(!NETWORK_ACCESSOR.getField().getType().equals(CommonReflection.getNetworkManagerClass())) {
-                EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve a valid NetworkManager!");
+            if (!NETWORK_ACCESSOR.getField().getType().equals(CommonReflection.getNetworkManagerClass())) {
+                EchoPet.LOG.console(Level.WARNING, "Failed to retrieve a valid NetworkManager!");
                 NETWORK_ACCESSOR = null;
                 return null;
             }
@@ -66,11 +67,11 @@ public class CommonFields {
     public static Object getPlayerConnection(Player player) {
         Object vanillaPlayer = CommonMethods.getVanillaObject(player);
 
-        if(CONNECTION_ACCESSOR == null) {
+        if (CONNECTION_ACCESSOR == null) {
             CONNECTION_ACCESSOR = new SafeField<Object>(CommonReflection.getEntityPlayerClass(), "playerConnection");
 
-            if(!CONNECTION_ACCESSOR.getField().getType().equals(CommonReflection.getPlayerConnectionClass())) {
-                EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve a valid PlayerConnection!");
+            if (!CONNECTION_ACCESSOR.getField().getType().equals(CommonReflection.getPlayerConnectionClass())) {
+                EchoPet.LOG.console(Level.WARNING, "Failed to retrieve a valid PlayerConnection!");
                 CONNECTION_ACCESSOR = null;
                 return null;
             }

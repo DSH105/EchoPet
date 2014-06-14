@@ -17,12 +17,12 @@
 
 package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
+import com.dsh105.echopet.compat.api.reflection.SafeMethod;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
-import com.dsh105.echopet.compat.api.reflection.SafeMethod;
 
 public class WrapperPacketPlayOutChat extends Packet {
 
@@ -31,7 +31,7 @@ public class WrapperPacketPlayOutChat extends Packet {
     }
 
     public void setMessage(String chatComponent) {
-        if (EchoPet.isUsingNetty()) {
+        if (MinecraftReflection.isUsingNetty()) {
             this.write(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName(), new SafeMethod(ReflectionUtil.getNMSClass("ChatSerializer"), ReflectionConstants.PACKET_CHAT_FUNC_SETCOMPONENT.getName(), String.class).invoke(null, chatComponent));
         } else {
             this.write(ReflectionConstants.PACKET_CHAT_FIELD_MESSAGE.getName(), chatComponent);

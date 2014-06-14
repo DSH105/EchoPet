@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.reflection;
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 
 import java.lang.reflect.InvocationTargetException;
@@ -41,14 +42,14 @@ public class SafeMethod<T> implements MethodAccessor<T> {
             Method method = coreClass.getDeclaredMethod(methodname, params);
             setMethod(method);
         } catch (NoSuchMethodException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching method with name: " + methodname);
+            EchoPet.LOG.console(Level.WARNING, "Failed to find a matching method with name: " + methodname);
             e.printStackTrace();
         }
     }
 
     protected void setMethod(Method method) {
         if (method == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Cannot create a SafeMethod with a null method!");
+            EchoPet.LOG.console(Level.WARNING, "Cannot create a SafeMethod with a null method!");
         }
         if (!method.isAccessible()) {
             method.setAccessible(true);

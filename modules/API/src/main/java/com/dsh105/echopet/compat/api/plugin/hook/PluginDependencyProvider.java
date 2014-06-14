@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.api.plugin.hook;
 
+import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -50,10 +51,10 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
                 if (this.dependency != null && this.dependency.isEnabled()) {
                     this.hooked = true;
                     onHook();
-                    EchoPet.getPlugin().getModuleLogger().info("[" + this.dependency.getName() + "] Successfully hooked");
+                    EchoPet.LOG.console("[" + this.dependency.getName() + "] Successfully hooked");
                 }
             } catch (Exception e) {
-                EchoPet.getPlugin().getReflectionLogger().warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?)");
+                EchoPet.LOG.console(Level.WARNING, "Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?)");
             }
         }
 
@@ -66,7 +67,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
                         dependency = (T) event.getPlugin();
                         hooked = true;
                         onHook();
-                        EchoPet.getPlugin().getModuleLogger().info("[" + getDependencyName() + "] Successfully hooked");
+                        EchoPet.LOG.console("[" + getDependencyName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new RuntimeException("Failed to hook plugin: " + event.getPlugin().getName());
                     }
@@ -79,7 +80,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
                     dependency = null;
                     hooked = false;
                     onUnhook();
-                    EchoPet.getPlugin().getModuleLogger().info("[" + getDependencyName() + "] Successfully unhooked");
+                    EchoPet.LOG.console("[" + getDependencyName() + "] Successfully unhooked");
                 }
             }
         }, getHandlingPlugin());

@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
@@ -27,7 +27,7 @@ public class WrappedDataWatcher extends AbstractWrapper {
 
     public WrappedDataWatcher() {
         try {
-            if (EchoPet.isUsingNetty()) {
+            if (MinecraftReflection.isUsingNetty()) {
                 super.setHandle(ReflectionUtil.getNMSClass("DataWatcher").getConstructor(ReflectionUtil.getNMSClass("Entity")).newInstance(new Object[]{null}));
             } else {
                 super.setHandle(ReflectionUtil.getNMSClass("DataWatcher").newInstance());
@@ -45,7 +45,7 @@ public class WrappedDataWatcher extends AbstractWrapper {
 
     public WrappedDataWatcher(Object entity) {
         try {
-            if (EchoPet.isUsingNetty()) {
+            if (MinecraftReflection.isUsingNetty()) {
                 super.setHandle(ReflectionUtil.getNMSClass("DataWatcher").getConstructor(ReflectionUtil.getNMSClass("Entity")).newInstance(entity));
             } else {
                 super.setHandle(ReflectionUtil.getNMSClass("DataWatcher").newInstance());
