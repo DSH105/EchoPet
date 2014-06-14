@@ -183,6 +183,10 @@ public class EchoPetPlugin extends IEchoPetPlugin {
         CONFIG_FILES.put(ConfigType.MENU_CONFIG, menuConfig);
         CONFIG_FILES.put(ConfigType.DATA, dataConfig);
 
+        for (YAMLConfig yamlConfig : CONFIG_FILES.values()) {
+            yamlConfig.reloadConfig();
+        }
+
         SETTINGS.put(ConfigType.MAIN, new Settings(config));
         SETTINGS.put(ConfigType.PETS_CONFIG, new PetSettings(petsConfig));
         SETTINGS.put(ConfigType.MENU_CONFIG, new MenuSettings(menuConfig));
