@@ -41,7 +41,7 @@ permissions:
         description: Hide your current pet
     echopet.pet.toggle:
         default: op
-        description: Hide your current pet
+        description: Toggle your pet's status (hide/show)
     echopet.pet.call:
         default: op
         description: Call your pet to your side
