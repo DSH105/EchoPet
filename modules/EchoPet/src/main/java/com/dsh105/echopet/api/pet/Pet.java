@@ -260,10 +260,12 @@ public abstract class Pet implements IPet {
 
     @Override
     public void ownerRidePet(boolean flag) {
-        this.ownerIsMounting = true;
         if (this.ownerRiding == flag) {
             return;
         }
+
+        this.ownerIsMounting = true;
+
         if (this.isHat) {
             this.setAsHat(false);
         }
