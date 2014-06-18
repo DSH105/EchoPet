@@ -282,6 +282,10 @@ public abstract class EntityPetImpl extends EntityCreature implements IAnimal, E
             return;
         }
 
+        if (pet.isOwnerRiding() && this.passenger == null && !pet.isOwnerInMountingProcess()) {
+            pet.ownerRidePet(false);
+        }
+
         if (((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
             this.setInvisible(!this.isInvisible());
         }
