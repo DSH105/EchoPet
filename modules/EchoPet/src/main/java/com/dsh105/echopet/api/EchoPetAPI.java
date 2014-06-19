@@ -25,7 +25,7 @@ import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.reflection.SafeConstructor;
-import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;

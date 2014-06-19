@@ -112,66 +112,6 @@ public class PetCommand implements CommandExecutor {
                 }
             } else return true;
         } else if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("debug")) {
-                System.out.println("DEBUG Particles:");
-                for (Field f : new WrapperPacketWorldParticles().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Chat:");
-                for (Field f : new WrapperPacketPlayOutChat().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Meta:");
-                for (Field f : new WrapperPacketEntityMetadata().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Named Spawn:");
-                for (Field f : new WrapperPacketNamedEntitySpawn().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Chat Serializer:");
-                for (Method m : ReflectionUtil.getNMSClass("ChatSerializer").getDeclaredMethods()) {
-                    /*if (ReflectionUtil.getNMSClass("IChatBaseComponent").isAssignableFrom(m.getReturnType())) {
-                        System.out.println("set component: " + m.getName());
-                    } else*/
-                    if (String.class.isAssignableFrom(m.getReturnType())) {
-                        System.out.println("get component: " + m.getName());
-                    }
-                }
-                System.out.println("DEBUG DataWatcher:");
-                for (Method m : ReflectionUtil.getNMSClass("DataWatcher").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG EntityTypes:");
-                for (Field f : ReflectionUtil.getNMSClass("EntityTypes").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Packet:");
-                for (Method m : ReflectionUtil.getNMSClass("PlayerConnection").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG Player:");
-                for (Field f : ReflectionUtil.getNMSClass("EntityPlayer").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG ItemStack:");
-                for (Method m : ReflectionUtil.getNMSClass("ItemStack").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG Achievement:");
-                for (Field f : ReflectionUtil.getNMSClass("Achievement").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-            }
             if (args[0].equalsIgnoreCase("select")) {
                 if (sender instanceof Player) {
                     // We can exempt the player from having the appropriate permission here

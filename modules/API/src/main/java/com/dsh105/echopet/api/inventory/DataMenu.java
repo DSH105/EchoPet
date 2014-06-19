@@ -18,12 +18,11 @@
 package com.dsh105.echopet.api.inventory;
 
 import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.util.ParticleUtil;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.menuapi.api.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -83,7 +82,7 @@ public class DataMenu {
                                 menu.show(viewer);
                             } else {
                                 pet.invertDataValue(petData);
-                                ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.RED_SMOKE, pet.getLocation());
+                                Particle.RED_SMOKE.builder().show(pet.getLocation());
                             }
                         }
                     }
@@ -116,7 +115,7 @@ public class DataMenu {
                     public void run(Player viewer) {
                         if (pet != null && pet.getOwner() != null) {
                             pet.setDataValue(petData);
-                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.RED_SMOKE, pet.getLocation());
+                            Particle.RED_SMOKE.builder().show(pet.getLocation());
                         }
                     }
                 });

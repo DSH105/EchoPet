@@ -17,12 +17,15 @@
 
 package com.dsh105.echopet.api.plugin;
 
+import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.api.config.ConfigType;
 
 public final class EchoPet {
+
+    public static String INTERNAL_NMS_PATH = "com.dsh105.echopet.nms." + MinecraftReflection.getVersionTag();
 
     private static IEchoPetPlugin PLUGIN;
     public static Log LOG;

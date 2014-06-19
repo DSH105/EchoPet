@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet;
 
+import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.dsh105.commodus.PlayerIdent;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
@@ -38,7 +39,6 @@ import com.dsh105.echopet.api.plugin.*;
 import com.dsh105.echopet.api.plugin.UUIDMigration;
 import com.dsh105.echopet.reflection.ReflectionConstants;
 import com.dsh105.echopet.reflection.SafeField;
-import com.dsh105.echopet.util.ReflectionUtil;
 import com.dsh105.echopet.util.TableMigrationUtil;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
@@ -89,7 +89,7 @@ public class EchoPetPlugin extends IEchoPetPlugin {
 
         // Simple check for a class that should be here if EchoPet is compatible...
         try {
-            Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.EntityPetImpl");
+            Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EntityPetImpl");
         } catch (ClassNotFoundException e) {
             // Make sure the server owner is aware
             EchoPet.LOG.console(Level.WARNING, "+----------------------+");
@@ -286,7 +286,7 @@ public class EchoPetPlugin extends IEchoPetPlugin {
                     return true;
                 }
             } else {
-                Lang.NO_PERMISSION.send(sender, "%perm%", Perm.UPDATE.getValue());
+                Lang.NO_PERMISSION.send(sender, "%perm%", Permission.UPDATE.getValue());
                 return true;
             }
         } else if (commandLabel.equalsIgnoreCase("echopet")) {
@@ -295,7 +295,7 @@ public class EchoPetPlugin extends IEchoPetPlugin {
                 sender.sendMessage(ChatColor.YELLOW + "Currently running " + ChatColor.GOLD + "EchoPet " + getDescription().getVersion() + ChatColor.YELLOW + " by DSH105");
                 sender.sendMessage(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "Commands: " + Settings.COMMAND.getValue() + ", " + Settings.COMMAND.getValue() + "admin");
             } else {
-                Lang.NO_PERMISSION.send(sender, "%perm%", Perm.ADMIN.getValue());
+                Lang.NO_PERMISSION.send(sender, "%perm%", Permission.ADMIN.getValue());
                 return true;
             }
         }
@@ -304,10 +304,10 @@ public class EchoPetPlugin extends IEchoPetPlugin {
 
     private void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
         // Initiate all our fields
-        Map<String, Class> entityNameToClassMapping = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOCLASSMAP.getName()).get(null);
-        Map<Class, String> classToEntityNameMapping = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTONAMEMAP.getName()).get(null);
-        Map<Class, Integer> classToIdMapping = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTOIDMAP.getName()).get(null);
-        Map<String, Integer> entityNameToIdMapping = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOIDMAP.getName()).get(null);
+        Map<String, Class> entityNameToClassMapping = new SafeField<Map<String, Class>>(MinecraftReflection.getMinecraftClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOCLASSMAP.getName()).get(null);
+        Map<Class, String> classToEntityNameMapping = new SafeField<Map<Class, String>>(MinecraftReflection.getMinecraftClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTONAMEMAP.getName()).get(null);
+        Map<Class, Integer> classToIdMapping = new SafeField<Map<Class, Integer>>(MinecraftReflection.getMinecraftClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTOIDMAP.getName()).get(null);
+        Map<String, Integer> entityNameToIdMapping = new SafeField<Map<String, Integer>>(MinecraftReflection.getMinecraftClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOIDMAP.getName()).get(null);
 
         // First make sure we don't register something twice
         Iterator mapIter = entityNameToClassMapping.keySet().iterator();

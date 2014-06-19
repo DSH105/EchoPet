@@ -20,7 +20,6 @@ package com.dsh105.echopet.nms.v1_6_R3.entity.type;
 import com.dsh105.echopet.api.entity.*;
 import com.dsh105.echopet.api.entity.nms.type.EntitySpiderPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.util.ParticleUtil;
 import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.nms.v1_6_R3.entity.EntityPetImpl;
 import net.minecraft.server.v1_6_R3.World;

@@ -28,7 +28,6 @@ import com.dsh105.echopet.api.event.PetTeleportEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.reflection.ReflectionConstants;
 import com.dsh105.echopet.reflection.SafeMethod;
-import com.dsh105.echopet.util.*;
 import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -419,6 +418,7 @@ public abstract class PetImpl implements Pet {
     public PetImpl createRider(final PetType pt, boolean sendFailMessage) {
         if (pt == PetType.HUMAN) {
             if (sendFailMessage) {
+                Lang.RIDERS_DISABLED
                 Lang.sendTo(this.getOwner(), Lang.RIDERS_DISABLED.toString().replace("%type%", getPetType().humanName()));
             }
             return null;

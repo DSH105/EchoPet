@@ -19,6 +19,7 @@ package com.dsh105.echopet.api;
 
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.commodus.ServerUtil;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.config.Settings;
@@ -28,7 +29,7 @@ import com.dsh105.echopet.api.entity.type.pet.*;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.IPetManager;
 import com.dsh105.echopet.api.plugin.PetStorage;
-import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.util.PetUtil;
 import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.configuration.ConfigurationSection;
@@ -100,7 +101,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public Pet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
-        if (ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN) {
+        if (ServerUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN) {
             if (sendMessageOnFail) {
                 Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
             }
@@ -127,7 +128,7 @@ public class PetManager implements IPetManager {
 
     @Override
     public Pet createPet(Player owner, PetType petType, PetType riderType) {
-        if (ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN) {
+        if (ServerUtil.BUKKIT_VERSION_NUMERIC == 178 && (petType == PetType.HUMAN) || riderType == PetType.HUMAN) {
             Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
             return null;
         }

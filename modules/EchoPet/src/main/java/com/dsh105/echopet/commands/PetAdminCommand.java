@@ -28,7 +28,7 @@ import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.PetStorage;
-import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.echopet.util.PetUtil;
 import com.dsh105.echopet.conversation.NameFactory;

@@ -40,14 +40,14 @@ public class Lang extends Options {
      */
     public static final LangSetting HELP = new LangSetting("help", "&eUse &6/%cmd% &efor help.", "Command help message");
 
-    public static final LangSetting NO_PERMISSION = new LangSetting("no_permission", "&6%perm% &epermission needed to do that.", "No permission message");
-    public static final LangSetting ADMIN_COMMAND_ERROR = new LangSetting("invalid_command", "&eInvalid command: &6%cmd%&e. Use /" + Settings.COMMAND.getValue() + " for help");
-    public static final LangSetting COMMAND_ERROR = new LangSetting("admin_invalid_command", "&eInvalid command: &6%cmd%&e. Use /" + Settings.COMMAND.getValue() + "admin for help");
+    public static final LangSetting NO_PERMISSION = new LangSetting("no_permission", "&6You are not allowed to do that.", "No permission message");
+    public static final LangSetting ADMIN_COMMAND_ERROR = new LangSetting("invalid_command", "&eInvalid command: &6%cmd%&e. Use /" + Settings.COMMAND.getValue() + " for help", "Sent when a command is invalid");
+    public static final LangSetting COMMAND_ERROR = new LangSetting("admin_invalid_command", "&eInvalid command: &6%cmd%&e. Use /" + Settings.COMMAND.getValue() + "admin for help", "Sent when a command is invalid");
     public static final LangSetting PETS_DISABLED_HERE = new LangSetting("pets_disabled_here", "&ePets are not allowed here.", "Sent when pets are disabled in a certain area");
-    public static final LangSetting UPDATE_NOT_AVAILABLE = new LangSetting("update_not_available", "&eAn update is not available.");
+    public static final LangSetting UPDATE_NOT_AVAILABLE = new LangSetting("update_not_available", "&eAn update is not available.", "Updates the plugin");
 
     public static final LangSetting ENTER_PET_DISABLED_REGION = new LangSetting("enter_pet_disabled_region", "&eEntering region that does not allow Pets. Yours has been hidden.");
-    public static final LangSetting IN_GAME_ONLY = new LangSetting("in_game_only", "&6%cmd% &ecan only be used in-game.");
+    public static final LangSetting IN_GAME_ONLY = new LangSetting("in_game_only", "&eThat command can only be used in-game.");
     public static final LangSetting STRING_ERROR = new LangSetting("string_error", "&eError parsing String: [&6%string%&e]. Please revise command arguments.");
     public static final LangSetting HELP_INDEX_TOO_BIG = new LangSetting("help_index_too_big", "&3Page &b%index% &3does not exist.");
     public static final LangSetting TIP_HOVER_PREVIEW = new LangSetting("hover_tip", "&e&oHover over to see more information about this command. Click to insert it into the chat window.");

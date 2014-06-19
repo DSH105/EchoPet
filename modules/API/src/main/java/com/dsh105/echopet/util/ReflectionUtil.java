@@ -31,41 +31,12 @@ import java.util.regex.Pattern;
 
 public class ReflectionUtil {
 
-    public static String COMPAT_NMS_PATH = "com.dsh105.echopet.compat.nms." + getServerVersion();
-
-    public static int MC_VERSION_NUMERIC = Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
-    public static int BUKKIT_VERSION_NUMERIC = Integer.valueOf(getBukkitVersion().replaceAll("[^0-9]", ""));
-
     public static Object getEntityHandle(Entity entity) {
         return invokeMethod(getMethod(getCBCClass("entity.CraftEntity"), "getHandle"), entity);
     }
 
-    public static String getServerVersion() {
-        return CommonReflection.getVersionTag();
-    }
-
-    // Thanks ProtocolLib <3
-    public static String getBukkitVersion() {
-        Pattern versionPattern = Pattern.compile(".*\\(.*MC.\\s*([a-zA-z0-9\\-\\.]+)\\s*\\)");
-        Matcher version = versionPattern.matcher(Bukkit.getServer().getVersion());
-
-        if (version.matches() && version.group(1) != null) {
-            return version.group(1);
-        } else {
-            return "";
-        }
-    }
-
     public static boolean isServerMCPC() {
         return Bukkit.getVersion().contains("MCPC-Plus");
-    }
-
-    public static String getNMSPackageName() {
-        return "net.minecraft.server." + getServerVersion();
-    }
-
-    public static String getCBCPackageName() {
-        return "org.bukkit.craftbukkit." + getServerVersion();
     }
 
     /**
@@ -80,14 +51,6 @@ public class ReflectionUtil {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static Class getVersionedClass(String classPath) {
-        return getClass(COMPAT_NMS_PATH + "." + classPath);
-    }
-
-    public static Class getPetNMSClass(String classIdentifier) {
-        return getVersionedClass("entity.type.Entity" + classIdentifier + "PetImpl");
     }
 
     public static Class getNMSClass(String className) {

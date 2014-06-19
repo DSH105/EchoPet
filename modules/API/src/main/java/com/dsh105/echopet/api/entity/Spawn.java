@@ -24,8 +24,6 @@ import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.util.ParticleUtil;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -52,7 +50,6 @@ public class Spawn {
             EchoPet.getManager().removePet(pet, true);
             return null;
         }
-        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.MAGIC_RUNES, spawnLocation);
         return entityPet;
     }
 }

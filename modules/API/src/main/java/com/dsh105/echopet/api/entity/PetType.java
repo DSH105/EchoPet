@@ -17,6 +17,8 @@
 
 package com.dsh105.echopet.api.entity;
 
+import com.captainbern.minecraft.reflection.MinecraftReflection;
+import com.captainbern.reflection.Reflection;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
@@ -97,8 +99,8 @@ public enum PetType {
         this.materialData = (short) materialData;
 
         String classIdentifier = humanName().replace(" Pet", "").replace(" ", "");
-        this.entityClass = ReflectionUtil.getPetNMSClass(classIdentifier);
-        this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.entity.pet.type." + classIdentifier + "PetImpl");
+        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type." + classIdentifier + "Impl").getReflectedClass();
+        this.petClass = new Reflection().reflect("com.dsh105.echopet.api.entity.pet.type." + classIdentifier + "PetImpl").getReflectedClass();
 
         this.command = "pet " + toString().toLowerCase();
     }
@@ -132,12 +134,12 @@ public enum PetType {
     }
 
     public EntityPet getNewEntityPetInstance(Object world, Pet pet) {
-        return new SafeConstructor<EntityPet>(this.entityClass, ReflectionUtil.getNMSClass("World"), Pet.class).newInstance(world, pet);
+        return new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), Pet.class).getAccessor().invoke(world, pet);
     }
 
     public Pet getNewPetInstance(Player owner) {
         if (owner != null) {
-            return new SafeConstructor<Pet>(this.petClass, Player.class).newInstance(owner);
+            return new Reflection().reflect(this.petClass).getSafeConstructor(Player.class).getAccessor().invoke(owner);
         }
         return null;
     }

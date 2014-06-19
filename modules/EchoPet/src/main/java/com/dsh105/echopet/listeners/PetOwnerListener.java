@@ -17,7 +17,9 @@
 
 package com.dsh105.echopet.listeners;
 
+import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.commodus.GeometryUtil;
+import com.dsh105.commodus.SimpleNMSUtil;
 import com.dsh105.echopet.api.config.MenuSettings;
 import com.dsh105.echopet.api.entity.nms.EntityPacketPet;
 import com.dsh105.echopet.api.entity.nms.EntityPet;
@@ -25,7 +27,7 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetInteractEvent;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -47,8 +49,8 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
-        if (ReflectionUtil.getEntityHandle(e) instanceof EntityPet) {
-            Pet pet = ((EntityPet) ReflectionUtil.getEntityHandle(e)).getPet();
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
+            Pet pet = ((EntityPet) BukkitUnwrapper.getInstance().unwrap(e)).getPet();
             event.setCancelled(true);
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);

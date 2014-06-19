@@ -17,43 +17,21 @@
 
 package com.dsh105.echopet.util.protocol.wrapper;
 
-import com.dsh105.echopet.reflection.ReflectionConstants;
-import com.dsh105.echopet.util.ReflectionUtil;
+import com.captainbern.reflection.ClassTemplate;
+import com.captainbern.reflection.Reflection;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-public class WrappedGameProfile extends AbstractWrapper {
+public class WrappedGameProfile extends com.captainbern.minecraft.wrapper.AbstractWrapper {
+
+    private static ClassTemplate GAME_PROFILE_TEMPLATE = new Reflection().reflect("net.minecraft.util.com.mojang.authlib.GameProfile");
 
     private WrappedGameProfile(Object ident, String name) {
-        if (ident instanceof UUID) {
-            try {
-                super.setHandle(Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile").getConstructor(ident.getClass(), String.class).newInstance(ident, name));
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else if (ident instanceof String) {
-            try {
-                super.setHandle(Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile").getConstructor(String.class, String.class).newInstance(ident, name));
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        super(GAME_PROFILE_TEMPLATE.getReflectedClass());
+        if (ident instanceof UUID || ident instanceof String) {
+            super.setHandle(GAME_PROFILE_TEMPLATE.getSafeConstructor(ident.getClass(), String.class).getAccessor().invoke(ident, name));
+        } else {
+            throw new IllegalArgumentException("Invalid ident entered!");
         }
     }
 
@@ -78,6 +56,6 @@ public class WrappedGameProfile extends AbstractWrapper {
     }
 
     private <T> T getId() {
-        return ReflectionUtil.invokeMethod(ReflectionUtil.getMethod(getHandle().getClass(), ReflectionConstants.GAMEPROFILE_FUNC_ID.getName()), getHandle());
+        return (T) GAME_PROFILE_TEMPLATE.getSafeMethod("getId").getAccessor().invoke(getHandle());
     }
 }
