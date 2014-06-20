@@ -19,23 +19,59 @@
     </parent>
 
     <dependencies>
+        <!-- Bukkit -->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.7.9-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+
+        <!-- CraftBukkit and its libraries -->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.7.8-R0.1-SNAPSHOT</version>
+            <version>1.7.9-R0.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+
+        <!-- Reflection -->
+        <dependency>
+            <groupId>com.captainbern</groupId>
+            <artifactId>Minecraft-Reflection</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- Commodus -->
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>DSHUtils</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>Commodus</artifactId>
+            <version>1.0.0</version>
         </dependency>
+
+        <!-- Commodus -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>MenuAPI</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- PowerMessage -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>PowerMessage</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- VanishNoPacket -->
         <dependency>
             <groupId>org.kitteh</groupId>
             <artifactId>VanishNoPacket</artifactId>
             <version>3.18.7</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Vault -->
         <dependency>
             <groupId>net.daboross.vault</groupId>
             <artifactId>vault-api</artifactId>
@@ -48,6 +84,8 @@
             <version>1.2.32</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- WorldEdit -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
@@ -60,6 +98,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- WorldGuard -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
@@ -72,6 +112,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
@@ -88,17 +129,23 @@
         <directory>../../target</directory>
         <sourceDirectory>src/main/java/</sourceDirectory>
         <finalName>${project.name}</finalName>
+
         <plugins>
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
             </plugin>
+
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
+
+            <!-- Clean up -->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>

@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.conversation;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.api.config.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationPrefix;
 
@@ -25,6 +25,6 @@ public class NameConversationPrefix implements ConversationPrefix {
 
     @Override
     public String getPrefix(ConversationContext conversationContext) {
-        return EchoPet.getPrefix();
+        return Lang.PREFIX.getValue();
     }
 }

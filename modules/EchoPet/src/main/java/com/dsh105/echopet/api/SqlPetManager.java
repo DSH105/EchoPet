@@ -17,33 +17,37 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetData;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.util.SQLUtil;
-import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
+import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.echopet.api.config.Settings;
+import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.api.plugin.ISqlPetManager;
+import com.dsh105.echopet.util.SQLUtil;
+import com.dsh105.echopet.util.TableMigrationUtil;
 import org.bukkit.entity.Player;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 public class SqlPetManager implements ISqlPetManager {
 
     @Override
-    public void saveToDatabase(IPet p, boolean isRider) {
-        this.saveToDatabase(p.getOwnerIdentification().toString(), p.getPetType(), p.getPetName(), p.getPetData(), false);
+    public void saveToDatabase(Pet p, boolean isRider) {
+        this.saveToDatabase(p.getOwnerIdentification().toString(), p.getPetType(), p.getPetName(), p.getActiveData(), false);
         if (p.getRider() != null) {
-            this.saveToDatabase(p.getOwnerIdentification().toString(), p.getRider().getPetType(), p.getRider().getPetName(), p.getRider().getPetData(), true);
+            this.saveToDatabase(p.getOwnerIdentification().toString(), p.getRider().getPetType(), p.getRider().getPetName(), p.getRider().getActiveData(), true);
         }
     }
 
     @Override
     public void saveToDatabase(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider) {
-        if (EchoPet.getOptions().useSql()) {
+        if (Settings.SQL_ENABLE.getValue()) {
             Connection con = null;
             PreparedStatement ps = null;
 
@@ -60,7 +64,7 @@ public class SqlPetManager implements ISqlPetManager {
                     if (isRider) {
                         ps = con.prepareStatement("UPDATE " + TableMigrationUtil.LATEST_TABLE + " SET RiderPetType = ?, RiderPetName = ?, RiderPetData = ? WHERE OwnerName = ?");
 
-                        ps.setString(1, petType.toString());
+                        ps.setString(1, petType.storageName());
                         ps.setString(2, petName);
                         ps.setLong(3, SQLUtil.serializePetData(petData));
                         ps.setString(4, String.valueOf(playerIdent));
@@ -69,7 +73,7 @@ public class SqlPetManager implements ISqlPetManager {
                         ps = con.prepareStatement("INSERT INTO " + TableMigrationUtil.LATEST_TABLE + " (OwnerName, PetType, PetName, PetData) VALUES (?, ?, ?, ?)");
 
                         ps.setString(1, String.valueOf(playerIdent));
-                        ps.setString(2, petType.toString());
+                        ps.setString(2, petType.storageName());
                         ps.setString(3, petName);
                         ps.setLong(4, SQLUtil.serializePetData(petData));
                         ps.executeUpdate();
@@ -91,17 +95,17 @@ public class SqlPetManager implements ISqlPetManager {
     }
 
     @Override
-    public IPet createPetFromDatabase(Player player) {
-        return this.createPetFromDatabase(UUIDMigration.getIdentificationForAsString(player));
+    public Pet createPetFromDatabase(Player player) {
+        return this.createPetFromDatabase(PlayerIdent.getIdentificationForAsString(player));
     }
 
     @Override
-    public IPet createPetFromDatabase(String playerIdent) {
-        if (EchoPet.getOptions().useSql()) {
+    public Pet createPetFromDatabase(String playerIdent) {
+        if (Settings.SQL_ENABLE.getValue()) {
             Connection con = null;
             PreparedStatement ps = null;
 
-            IPet pet = null;
+            Pet pet = null;
             Player owner;
             PetType pt;
             String name;
@@ -113,7 +117,7 @@ public class SqlPetManager implements ISqlPetManager {
                     ps.setString(1, String.valueOf(playerIdent));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        owner = UUIDMigration.getPlayerOf(rs.getString("OwnerName"));
+                        owner = PlayerIdent.getPlayerOf(rs.getString("OwnerName"));
                         if (owner == null) {
                             return null;
                         }
@@ -132,7 +136,7 @@ public class SqlPetManager implements ISqlPetManager {
                         }
                         pet.setPetName(name);
                         for (PetData data : dataList) {
-                            EchoPet.getManager().setData(pet, data, true);
+                            pet.setDataValue(data);
                         }
                         if (rs.getString("RiderPetType") != null) {
                             PetType mt = findPetType(rs.getString("RiderPetType"));
@@ -143,11 +147,11 @@ public class SqlPetManager implements ISqlPetManager {
 
                             List<PetData> riderDataList = SQLUtil.deserializePetData(rs.getLong("RiderPetData"));
 
-                            IPet rider = pet.createRider(mt, false);
+                            Pet rider = pet.createRider(mt, false);
                             if (rider != null) {
                                 rider.setPetName(mName);
                                 for (PetData data : riderDataList) {
-                                    EchoPet.getManager().setData(rider, data, true);
+                                    rider.setDataValue(data);
                                 }
                             }
                         }
@@ -181,12 +185,12 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void clearFromDatabase(Player player) {
-        this.clearFromDatabase(UUIDMigration.getIdentificationForAsString(player));
+        this.clearFromDatabase(PlayerIdent.getIdentificationForAsString(player));
     }
 
     @Override
     public void clearFromDatabase(String playerIdent) {
-        if (EchoPet.getOptions().useSql()) {
+        if (Settings.SQL_ENABLE.getValue()) {
             Connection con = null;
             PreparedStatement ps = null;
 
@@ -213,12 +217,12 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void clearRiderFromDatabase(Player player) {
-        this.clearRiderFromDatabase(UUIDMigration.getIdentificationForAsString(player));
+        this.clearRiderFromDatabase(PlayerIdent.getIdentificationForAsString(player));
     }
 
     @Override
     public void clearRiderFromDatabase(String playerIdent) {
-        if (EchoPet.getOptions().useSql()) {
+        if (Settings.SQL_ENABLE.getValue()) {
             Connection con = null;
             PreparedStatement ps = null;
 

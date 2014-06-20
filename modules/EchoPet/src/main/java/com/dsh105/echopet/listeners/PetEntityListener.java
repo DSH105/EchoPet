@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import com.dsh105.echopet.compat.api.event.PetAttackEvent;
-import com.dsh105.echopet.compat.api.event.PetDamageEvent;
-import com.dsh105.echopet.compat.api.event.PetInteractEvent;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
+import com.captainbern.minecraft.conversion.BukkitUnwrapper;
+import com.dsh105.commodus.SimpleNMSUtil;
+import com.dsh105.echopet.api.entity.nms.EntityPet;
+import com.dsh105.echopet.api.event.PetDamageEvent;
+import com.dsh105.echopet.api.event.PetInteractEvent;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.api.config.Lang;
+import com.dsh105.echopet.util.ReflectionUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -39,7 +40,7 @@ public class PetEntityListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
             event.setCancelled(true);
         }
     }
@@ -47,7 +48,7 @@ public class PetEntityListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCreatureSpawnUnBlock(CreatureSpawnEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
             if (event.isCancelled()) {
                 event.setCancelled(false);
             }
@@ -57,8 +58,8 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onDismount(VehicleExitEvent event) {
         Entity e = event.getVehicle();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
-            IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
+            EntityPet entityPet = (EntityPet) BukkitUnwrapper.getInstance().unwrap(e);
             if (entityPet.getPet().isOwnerRiding() && !entityPet.getPet().isOwnerInMountingProcess()) {
                 Lang.sendTo(entityPet.getPet().getOwner(), Lang.RIDE_PET_OFF.toString());
                 entityPet.getPet().ownerRidePet(false);
@@ -69,7 +70,7 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onPetEnterPortal(EntityPortalEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
             event.setCancelled(true);
         }
     }
@@ -77,8 +78,8 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
-            IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
+            EntityPet entityPet = (EntityPet) BukkitUnwrapper.getInstance().unwrap(e);
             PetDamageEvent damageEvent = new PetDamageEvent(entityPet.getPet(), event.getCause(), event.getDamage());
             EchoPet.getPlugin().getServer().getPluginManager().callEvent(damageEvent);
             event.setDamage(damageEvent.getDamage());
@@ -89,8 +90,8 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
-            IEntityPet entityPet = (IEntityPet) ReflectionUtil.getEntityHandle(e);
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
+            EntityPet entityPet = (EntityPet) BukkitUnwrapper.getInstance().unwrap(e);
             Entity damager = event.getDamager();
             if (damager instanceof Player) {
                 PetInteractEvent iEvent = new PetInteractEvent(entityPet.getPet(), (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
@@ -103,7 +104,7 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onEntityInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
             event.setCancelled(true);
         }
     }
@@ -111,7 +112,7 @@ public class PetEntityListener implements Listener {
     @EventHandler
     public void onBlockForm(EntityBlockFormEvent event) {
         Entity e = event.getEntity();
-        if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet && event.getNewState().getType().equals(Material.SNOW)) {
+        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet && event.getNewState().getType().equals(Material.SNOW)) {
             event.setCancelled(true);
             event.getNewState().setType(Material.AIR);
         }

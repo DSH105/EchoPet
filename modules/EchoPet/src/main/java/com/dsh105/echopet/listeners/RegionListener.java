@@ -17,10 +17,9 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.WorldUtil;
+import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.api.config.Lang;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,9 +31,9 @@ public class RegionListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
-        IPet pet = EchoPet.getManager().getPet(p);
+        Pet pet = EchoPet.getManager().getPet(p);
         if (pet != null) {
-            if (!WorldUtil.allowRegion(event.getTo())) {
+            if (!EchoPet.getPlugin().getWorldGuardProvider().allowRegion(event.getTo())) {
                 EchoPet.getManager().removePet(pet, true);
                 Lang.sendTo(p, Lang.ENTER_PET_DISABLED_REGION.toString());
             }

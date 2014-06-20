@@ -17,11 +17,18 @@
 
 package com.dsh105.echopet.hook;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
-import com.dsh105.echopet.compat.api.plugin.hook.PluginDependencyProvider;
+import com.dsh105.echopet.api.config.ConfigType;
+import com.dsh105.echopet.api.config.Settings;
+import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.api.plugin.hook.IWorldGuardProvider;
+import com.dsh105.echopet.api.plugin.hook.PluginDependencyProvider;
 import com.dsh105.echopet.listeners.RegionListener;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
 public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugin> implements IWorldGuardProvider {
@@ -40,5 +47,39 @@ public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugi
     @Override
     public void onUnhook() {
 
+    }
+
+    @Override
+    public boolean allowPets(Location location) {
+        return Settings.WORLD.getValue(location.getWorld().getName()) && allowRegion(location);
+    }
+
+    @Override
+    public boolean allowRegion(Location location) {
+        boolean result = true;
+        if (EchoPet.getPlugin().getWorldGuardProvider().isHooked()) {
+            WorldGuardPlugin wg = EchoPet.getPlugin().getWorldGuardProvider().getDependency();
+            if (wg == null) {
+                return true;
+            }
+            RegionManager regionManager = wg.getRegionManager(location.getWorld());
+            if (regionManager == null) {
+                return true;
+            }
+            ApplicableRegionSet set = regionManager.getApplicableRegions(location);
+            if (set.size() <= 0) {
+                return true;
+            }
+
+            ConfigurationSection cs = EchoPet.getPlugin().getMainConfig().getConfigurationSection("worldguard.regions");
+            for (ProtectedRegion region : set) {
+                if (EchoPet.getConfig(ConfigType.MAIN).get(Settings.WORLDGUARD_REGION.getPath(region.getId())) != null) {
+                    // Defaults are handled by the Settings manager
+                    result = Settings.WORLDGUARD_REGION.getValue(region.getId());
+                }
+            }
+
+        }
+        return result;
     }
 }
