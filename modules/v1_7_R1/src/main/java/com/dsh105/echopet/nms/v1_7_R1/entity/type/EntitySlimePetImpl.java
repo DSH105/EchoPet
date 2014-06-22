@@ -36,8 +36,15 @@ public class EntitySlimePetImpl extends EntityPetImpl implements EntitySlimePet 
 
     public EntitySlimePetImpl(World world, Pet pet) {
         super(world, pet);
-        int i = 1 << this.random.nextInt(3);
-        this.setSize(i);
+        if (!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.MEDIUM, false)) {
+            if (!Perm.hasDataPerm(pet.getOwner(), false, pet.getPetType(), PetData.SMALL, false)) {
+                this.setSize(4);
+            } else {
+                this.setSize(1);
+            }
+        } else {
+            this.setSize(2);
+        }
         this.jumpDelay = this.random.nextInt(15) + 10;
     }
 
