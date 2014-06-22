@@ -304,7 +304,7 @@ public class PetAdminCommand implements CommandExecutor {
                 if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null || !target.isOnline()) {
-                        String path = "autosave." + PlayerIdent.getIdentificationFor(target);
+                        String path = "autosave." + PlayerIdent.getIdentificationFor(args[1]);
                         if (EchoPet.getConfig(ConfigType.DATA).get(path + ".pet.type") == null) {
                             Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[1]));
                             return true;
@@ -430,7 +430,7 @@ public class PetAdminCommand implements CommandExecutor {
                     if (target != null && target.isOnline()) {
                         name = target.getName();
                     }
-                    String path = "default." + PlayerIdent.getIdentificationFor(target) + ".";
+                    String path = "default." + PlayerIdent.getIdentificationFor(args[1]) + ".";
                     if (EchoPet.getConfig(ConfigType.DATA).get(path + "pet.type") == null) {
                         Lang.sendTo(sender, Lang.ADMIN_NO_DEFAULT.toString().replace("%player%", name));
                         return true;
@@ -524,7 +524,7 @@ public class PetAdminCommand implements CommandExecutor {
                     if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                         Player target = Bukkit.getPlayer(args[2]);
                         if (target == null) {
-                            String path = "autosave." + "." + PlayerIdent.getIdentificationFor(target);
+                            String path = "autosave." + "." + PlayerIdent.getIdentificationFor(args[1]);
                             if (EchoPet.getConfig(ConfigType.DATA).get(path + ".rider.type") == null) {
                                 Lang.sendTo(sender, Lang.ADMIN_NULL_PLAYER_DATA.toString().replace("%player%", args[2]));
                                 return true;
