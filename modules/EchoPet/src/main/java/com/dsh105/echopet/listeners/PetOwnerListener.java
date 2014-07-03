@@ -208,8 +208,7 @@ public class PetOwnerListener implements Listener {
         new BukkitRunnable() { 
             
             @Override
-            public void run()
-            {
+            public void run() {
                 EchoPet.getManager().loadPets(p, true, false, true);
             }
             
