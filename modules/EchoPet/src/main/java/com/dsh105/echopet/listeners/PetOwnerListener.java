@@ -204,7 +204,7 @@ public class PetOwnerListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        Player p = event.getPlayer();
+        final Player p = event.getPlayer();
         new BukkitRunnable() { 
             
             @Override
