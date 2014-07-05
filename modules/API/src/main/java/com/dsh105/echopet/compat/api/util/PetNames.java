@@ -37,6 +37,18 @@ public class PetNames {
                 }
             }
         }
+
+        if (config.getBoolean("petNamesRegexMatching")) {
+            ConfigurationSection csRegex = config.getConfigurationSection("petNamesRegex");
+            if (csRegex != null) {
+                for (String key : csRegex.getKeys(false)) {
+                    if (key.matches(nameToCheck)) {
+                        String value = config.getString("petNames." + key);
+                        return pet.getOwner().hasPermission("echopet.pet.name.override") || !(value.equalsIgnoreCase("deny") || value.equalsIgnoreCase("false"));
+                    }
+                }
+            }
+        }
         return true;
     }
 }

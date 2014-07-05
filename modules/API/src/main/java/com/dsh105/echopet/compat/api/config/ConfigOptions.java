@@ -105,6 +105,8 @@ public class ConfigOptions extends Options {
         set("sql.password", "none");
 
         set("petNames.My Pet", "allow");
+        set("petNamesRegexMatching", true);
+        set("petNamesRegex.*fuck*", "deny");
         set("stripDiacriticsFromNames", true);
 
         set("enableHumanSkinFixing", true, "Connects to Mojang session servers to attempt fto fix human skins");
