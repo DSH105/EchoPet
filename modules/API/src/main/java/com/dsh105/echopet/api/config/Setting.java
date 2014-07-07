@@ -27,12 +27,12 @@ public class Setting<T> extends Option<T> {
     private ConfigType configType;
 
     public Setting(ConfigType configType, String path, Class<T> returnType, String... comments) {
-        super(configType.getPath(), path, returnType, comments);
+        super(EchoPet.getSettings(configType).getConfig().config(), path, returnType, comments);
         this.configType = configType;
     }
 
     public Setting(ConfigType configType, String path, T defaultValue, String... comments) {
-        super(configType.getPath(), path, defaultValue, comments);
+        super(EchoPet.getSettings(configType).getConfig().config(), path, defaultValue, comments);
         this.configType = configType;
     }
 
@@ -50,9 +50,5 @@ public class Setting<T> extends Option<T> {
 
     public void setValue(T value, Object... replacements) {
         super.setValue(EchoPet.getSettings(configType), value, replacements);
-    }
-
-    public static ArrayList<Setting> getOptions(ConfigType configType) {
-        return getOptions(Settings.class, Setting.class, configType.getPath());
     }
 }

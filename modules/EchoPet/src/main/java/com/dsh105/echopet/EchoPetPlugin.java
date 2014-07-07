@@ -18,7 +18,7 @@
 package com.dsh105.echopet;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
-import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.config.YAMLConfigManager;
@@ -190,10 +190,10 @@ public class EchoPetPlugin extends IEchoPetPlugin {
         SETTINGS.put(ConfigType.MAIN, new Settings(config));
         SETTINGS.put(ConfigType.PETS_CONFIG, new PetSettings(petsConfig));
         SETTINGS.put(ConfigType.MENU_CONFIG, new MenuSettings(menuConfig));
-        SETTINGS.put(ConfigType.LANG_CONFIG, new Lang(menuConfig));
+        SETTINGS.put(ConfigType.LANG_CONFIG, new Lang(langConfig));
 
         // Handle any UUID conversion
-        if (PlayerIdent.supportsUuid() && Settings.CONVERT_DATA_FILE_TO_UUID.getValue() && dataConfig.getConfigurationSection("autosave") != null) {
+        if (IdentUtil.supportsUuid() && Settings.CONVERT_DATA_FILE_TO_UUID.getValue() && dataConfig.getConfigurationSection("autosave") != null) {
             EchoPet.LOG.console("Converting data files to UUID system...");
             UUIDMigration.migrateConfig(dataConfig);
             Settings.CONVERT_DATA_FILE_TO_UUID.setValue(false);
@@ -391,7 +391,7 @@ public class EchoPetPlugin extends IEchoPetPlugin {
     @Override
     public <T extends Options> T getSettings(Class<T> settingsClass) {
         for (Options options : SETTINGS.values()) {
-            if (options.getClass().equals(options)) {
+            if (options.getClass().equals(settingsClass)) {
                 return (T) options;
             }
         }

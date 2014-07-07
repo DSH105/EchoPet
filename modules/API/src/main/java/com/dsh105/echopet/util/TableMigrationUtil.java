@@ -1,6 +1,6 @@
 package com.dsh105.echopet.util;
 
-import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.UUIDFetcher;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.plugin.EchoPet;
@@ -48,7 +48,7 @@ public class TableMigrationUtil {
                 copyStatement.executeUpdate();
 
                 // Migrate to UUIDs in the new table if necessary
-                if (PlayerIdent.supportsUuid()) {
+                if (IdentUtil.supportsUuid()) {
                     PreparedStatement getOwnerStatement = conn.prepareStatement("SELECT OwnerName FROM EchoPet");
 
                     PreparedStatement updateNameStatement = conn.prepareStatement("UPDATE EchoPet SET OwnerName = ? WHERE OwnerName = ?");

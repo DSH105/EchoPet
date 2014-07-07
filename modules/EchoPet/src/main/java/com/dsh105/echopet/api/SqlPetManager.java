@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.api.config.Settings;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.PetData;
@@ -96,7 +96,7 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public Pet createPetFromDatabase(Player player) {
-        return this.createPetFromDatabase(PlayerIdent.getIdentificationForAsString(player));
+        return this.createPetFromDatabase(IdentUtil.getIdentificationForAsString(player));
     }
 
     @Override
@@ -117,7 +117,7 @@ public class SqlPetManager implements ISqlPetManager {
                     ps.setString(1, String.valueOf(playerIdent));
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        owner = PlayerIdent.getPlayerOf(rs.getString("OwnerName"));
+                        owner = IdentUtil.getPlayerOf(rs.getString("OwnerName"));
                         if (owner == null) {
                             return null;
                         }
@@ -185,7 +185,7 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void clearFromDatabase(Player player) {
-        this.clearFromDatabase(PlayerIdent.getIdentificationForAsString(player));
+        this.clearFromDatabase(IdentUtil.getIdentificationForAsString(player));
     }
 
     @Override
@@ -217,7 +217,7 @@ public class SqlPetManager implements ISqlPetManager {
 
     @Override
     public void clearRiderFromDatabase(Player player) {
-        this.clearRiderFromDatabase(PlayerIdent.getIdentificationForAsString(player));
+        this.clearRiderFromDatabase(IdentUtil.getIdentificationForAsString(player));
     }
 
     @Override

@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.config.Settings;
@@ -55,7 +55,7 @@ public abstract class PetImpl implements Pet {
 
     public PetImpl(Player owner) {
         if (owner != null) {
-            this.ownerIdentification = PlayerIdent.getIdentificationFor(owner);
+            this.ownerIdentification = IdentUtil.getIdentificationFor(owner);
             this.petType = getEntityType().type();
             this.entityPet = Spawn.spawn(this);
             if (this.entityPet != null) {

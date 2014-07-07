@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.event;
 
-import com.dsh105.commodus.PlayerIdent;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -77,7 +77,7 @@ public class PetInteractEvent extends Event implements Cancellable {
      * @return true if it is the owner
      */
     public boolean isPlayerOwner() {
-        return PlayerIdent.getIdentificationFor(this.player).equals(PlayerIdent.getIdentificationFor(this.pet.getOwner()));
+        return IdentUtil.getIdentificationFor(this.player).equals(IdentUtil.getIdentificationFor(this.pet.getOwner()));
     }
 
     /**
