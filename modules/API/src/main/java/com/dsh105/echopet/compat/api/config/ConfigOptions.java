@@ -27,6 +27,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class ConfigOptions extends Options {
 
@@ -105,6 +108,16 @@ public class ConfigOptions extends Options {
         set("sql.password", "none");
 
         set("petNames.My Pet", "allow");
+        set("petNamesRegexMatching", true);
+        set("petNamesRegex", new ArrayList<HashMap<String, String>>() {
+            {
+                add(new HashMap<String, String>(){
+                    {
+                        put(".*administrator.*", "deny");
+                    }
+                });
+            }
+        });
         set("stripDiacriticsFromNames", true);
 
         set("enableHumanSkinFixing", true, "Connects to Mojang session servers to attempt fto fix human skins");
