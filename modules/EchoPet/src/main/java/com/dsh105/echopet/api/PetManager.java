@@ -317,16 +317,8 @@ public class PetManager implements IPetManager {
 
     @Override
     public void removePet(IPet pi, boolean makeDeathSound) {
-        Iterator<IPet> i = pets.listIterator();
-        while (i.hasNext()) {
-            IPet p = i.next();
-            if (pi != null && p != null) {
-                if (pi.getOwnerIdentification().equals(p.getOwnerIdentification())) {
-                    p.removePet(makeDeathSound);
-                    i.remove();
-                }
-            }
-        }
+        pi.removePet(makeDeathSound);
+        pets.remove(pi);
     }
 
     @Override
