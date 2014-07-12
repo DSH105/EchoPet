@@ -30,8 +30,6 @@ public interface SQLPetManager extends PetManager {
 
     void save(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider);
 
-    Pet load(Player player);
-
     List<Pet> load(String playerIdent);
 
     void clearRider(Player player);
