@@ -410,7 +410,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             }
             getBukkitEntity().setPassenger(getOwner());
             if (this instanceof EnderDragonPet) {
-                getEntity().setNoClipEnabled(true);
+                getEntity().setNoClipEnabled(false);
             }
 
             this.ownerInMountingProcess = false;
@@ -418,7 +418,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             getEntity().modifyBoundingBox(width() / 2, height() / 2);
         } else {
             if (this instanceof EnderDragonPet) {
-                getEntity().setNoClipEnabled(false);
+                getEntity().setNoClipEnabled(true);
             }
             EchoPet.getManager().loadRider(this);
             getEntity().modifyBoundingBox(width(), height());

@@ -15,7 +15,7 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopetv3.nms.v1_7_R3.entity;
+package com.dsh105.echopetv3.nms.v1_7_R1.entity;
 
 import com.dsh105.echopetv3.api.config.PetSettings;
 import com.dsh105.echopetv3.api.entity.ai.PetGoalSelector;
@@ -23,10 +23,10 @@ import com.dsh105.echopetv3.api.entity.entitypet.EntityPet;
 import com.dsh105.echopetv3.api.entity.pet.Pet;
 import com.dsh105.echopetv3.api.event.PetAttackEvent;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
-import com.dsh105.echopetv3.nms.v1_7_R3.NMSEntityUtil;
-import net.minecraft.server.v1_7_R3.*;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftLivingEntity;
+import com.dsh105.echopetv3.nms.v1_7_R1.NMSEntityUtil;
+import net.minecraft.server.v1_7_R1.*;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
 public class EntityPetBase<T extends Pet> extends EntityCreature implements IAnimal, EntityPet<T> {
@@ -51,14 +51,14 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     // Whether to use the new NMS AI or not
     @Override
-    protected boolean bj() {
-        return super.bj();
+    protected boolean bk() {
+        return super.bk();
     }
 
     // 'on tick' function
     @Override
-    protected void bm() {
-        super.bm();
+    protected void bn() {
+        super.bn();
 
         // Check despawn - Persistent entities won't 'age' or despawn when there are no players around
         this.w();
@@ -73,7 +73,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
         this.getNavigation().f();
 
         // Mob tick
-        this.bo();
+        this.bp();
 
         // Other movement updates
         this.getControllerMove().c();
@@ -150,7 +150,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     }
 
     @Override
-    protected String aT() {
+    protected String aU() {
         return getPet().getDeathSound();
     }
 
@@ -279,46 +279,46 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public boolean inLava() {
-        return this.O();
+        return this.P();
     }
 
     @Override
     public boolean inWater() {
-        return this.L();
+        return this.M();
     }
 
     @Override
     public boolean isWet() {
-        return this.K();
+        return this.L();
     }
 
     @Override
     public void setNoClipEnabled(boolean flag) {
-        this.X = flag;
+        this.Y = flag;
     }
 
     @Override
-    public void setTarget(org.bukkit.entity.LivingEntity livingEntity) {
+    public void setTarget(LivingEntity livingEntity) {
         setGoalTarget(((CraftLivingEntity) livingEntity).getHandle());
     }
 
     @Override
-    public org.bukkit.entity.LivingEntity getTarget() {
+    public LivingEntity getTarget() {
         return (LivingEntity) this.getGoalTarget().getBukkitEntity();
     }
 
     @Override
-    public boolean attack(org.bukkit.entity.LivingEntity entity) {
+    public boolean attack(LivingEntity entity) {
         // TODO
         return false;
     }
 
     @Override
-    public boolean attack(org.bukkit.entity.LivingEntity entity, float damage) {
+    public boolean attack(LivingEntity entity, float damage) {
         return attack(entity, DamageSource.mobAttack((EntityLiving) ((CraftEntity) entity).getHandle()), damage);
     }
 
-    private boolean attack(org.bukkit.entity.LivingEntity entity, DamageSource damageSource, float damage) {
+    private boolean attack(LivingEntity entity, DamageSource damageSource, float damage) {
         PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity, damage);
         EchoPet.getCore().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
@@ -349,7 +349,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public void setBlockClimbHeight(float height) {
-        this.W = height;
+        this.X = height;
     }
 
     @Override
@@ -362,17 +362,17 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
         this.lastYaw = this.yaw = yaw;
         this.pitch = pitch;
         this.b(this.yaw, this.pitch);
-        this.aO = this.aM = this.yaw;
+        this.aP = this.aN = this.yaw;
     }
 
     @Override
     public float getPassengerSideMotion() {
-        return ((EntityLiving) this.passenger).bd;
+        return ((EntityLiving) this.passenger).be;
     }
 
     @Override
     public float getPassengerForwardMotion() {
-        return ((EntityLiving) this.passenger).be;
+        return ((EntityLiving) this.passenger).bf;
     }
 
     @Override
@@ -383,7 +383,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     @Override
     public String getJumpField() {
         // TODO: this isn't compatible with Cauldron :\
-        return "bc";
+        return "bd";
     }
 
     @Override
@@ -428,7 +428,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public float getSoundVolume() {
-        return be();
+        return bf();
     }
 
     @Override
@@ -478,7 +478,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public float distanceTo(org.bukkit.entity.Entity entity) {
-        return this.e(((CraftEntity) entity).getHandle());
+        return (float) this.e(((CraftEntity) entity).getHandle());
     }
 
     @Override

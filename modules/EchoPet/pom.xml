@@ -51,24 +51,6 @@
             <version>API</version>
         </dependency>
 
-        <!-- v1_6_R3 NMS Module -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-v1_6_R3</artifactId>
-            <version>v1_6_R3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
-        </dependency>
-
         <!-- v1_7_R1 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
