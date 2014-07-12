@@ -82,6 +82,23 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     }
 
     @Override
+    public void move(double x, double y, double z) {
+        if (getPet().isStationary()) {
+            return;
+        }
+        super.move(x, y, z);
+    }
+
+    @Override
+    public void g(double x, double y, double z) {
+        if (getPet().isStationary()) {
+            super.g(0, 0, 0);
+            return;
+        }
+        super.g(x, y, z);
+    }
+
+    @Override
     protected boolean a(EntityHuman entityhuman) {
         if (entityhuman.getBukkitEntity() instanceof org.bukkit.entity.Player) {
             try {

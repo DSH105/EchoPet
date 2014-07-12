@@ -80,6 +80,10 @@ public class EntityEnderDragonPetBase extends EntityPetBase<EnderDragonPet> impl
 
     @Override
     public void e() {
+        if (getPet().isStationary()) {
+            return;
+        }
+
         float f;
         float f1;
 

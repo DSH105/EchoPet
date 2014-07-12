@@ -68,8 +68,10 @@ public class PetGoalFollowOwner extends PetGoal {
             return false;
         } else if (getEntity().distanceTo(getPet().getOwner()) <= stopDistance) {
             return false;
+        } else if (getPet().isStationary()) {
+            return false;
         }
-        // Is attack goal active
+        // TODO: Is attack goal active
         return true;
     }
 

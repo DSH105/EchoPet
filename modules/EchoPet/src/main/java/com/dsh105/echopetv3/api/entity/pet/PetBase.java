@@ -66,6 +66,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     private boolean ownerInMountingProcess;
     private boolean owningRiding;
     private boolean hat;
+    private boolean stationary;
 
     private boolean despawned;
 
@@ -244,6 +245,16 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     @Override
     public void invertDataValue(PetData petData) {
         AttributeAccessor.invertDataValue(this, petData);
+    }
+
+    @Override
+    public boolean isStationary() {
+        return stationary;
+    }
+
+    @Override
+    public void setStationary(boolean flag) {
+        this.stationary = flag;
     }
 
     @Override

@@ -76,6 +76,10 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     void invertDataValue(PetData petData);
 
+    boolean isStationary();
+
+    void setStationary(boolean flag);
+
     void despawn(boolean makeDeathSound);
 
     Pet spawnRider(final PetType type, boolean sendFailMessage);
