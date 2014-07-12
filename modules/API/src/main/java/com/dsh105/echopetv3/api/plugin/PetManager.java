@@ -22,6 +22,7 @@ import com.dsh105.echopetv3.api.entity.pet.Pet;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PetManager {
 
@@ -30,6 +31,14 @@ public interface PetManager {
     List<Pet> getPetsFor(String playerIdent);
 
     List<Pet> getPetsFor(Player player);
+
+    Map<String, Pet> getPetNameMapFor(String playerIdent);
+
+    Map<String, Pet> getPetNameMapFor(Player player);
+
+    Pet getPetByName(String playerIdent, String petName);
+
+    Pet getPetByName(Player player, String petName);
 
     List<Pet> getAllPets();
 

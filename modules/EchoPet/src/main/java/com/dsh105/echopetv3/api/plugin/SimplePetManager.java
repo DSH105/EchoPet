@@ -74,6 +74,36 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
+    public Map<String, Pet> getPetNameMapFor(String playerIdent) {
+        Map<String, Pet> petNameMap = new HashMap<>();
+        List<Pet> pets = getPetsFor(playerIdent);
+        int index = 0;
+        for (Pet pet : pets) {
+            String name = pet.getName();
+            if (petNameMap.containsKey(name)) {
+                name = name + "-" + index++;
+            }
+            petNameMap.put(name, pet);
+        }
+        return Collections.unmodifiableMap(petNameMap);
+    }
+
+    @Override
+    public Map<String, Pet> getPetNameMapFor(Player player) {
+        return getPetNameMapFor(IdentUtil.getIdentificationForAsString(player));
+    }
+
+    @Override
+    public Pet getPetByName(String playerIdent, String petName) {
+        return getPetNameMapFor(playerIdent).get(petName);
+    }
+
+    @Override
+    public Pet getPetByName(Player player, String petName) {
+        return getPetByName(IdentUtil.getIdentificationForAsString(player), petName);
+    }
+
+    @Override
     public List<Pet> getAllPets() {
         ArrayList<Pet> pets = new ArrayList<>();
         for (ArrayList<Pet> petsForPlayer : IDENT_TO_PET_MAP.values()) {
