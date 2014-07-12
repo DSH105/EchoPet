@@ -108,7 +108,7 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     boolean isOwnerInMountingProcess();
 
-    void setOwningRiding(boolean flag);
+    void setOwnerRiding(boolean flag);
 
     void setHat(boolean flag);
 

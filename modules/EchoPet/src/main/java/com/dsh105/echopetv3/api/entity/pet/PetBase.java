@@ -34,6 +34,7 @@ import com.dsh105.echopetv3.api.entity.ai.goal.PetGoalFloat;
 import com.dsh105.echopetv3.api.entity.ai.goal.PetGoalFollowOwner;
 import com.dsh105.echopetv3.api.entity.ai.goal.PetGoalLookAtPlayer;
 import com.dsh105.echopetv3.api.entity.entitypet.EntityPet;
+import com.dsh105.echopetv3.api.entity.pet.type.EnderDragonPet;
 import com.dsh105.echopetv3.api.event.PetRideJumpEvent;
 import com.dsh105.echopetv3.api.event.PetRideMoveEvent;
 import com.dsh105.echopetv3.api.inventory.DataMenu;
@@ -290,7 +291,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             failMessage = Lang.RIDERS_DISABLED.getValue("type", getType().humanName());
         } else {
             if (isOwnerRiding()) {
-                setOwningRiding(false);
+                setOwnerRiding(false);
             }
 
             Pet newRider = type.getNewPetInstance(getOwner());
@@ -393,8 +394,38 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     }
 
     @Override
-    public void setOwningRiding(boolean flag) {
-        // TODO
+    public void setOwnerRiding(boolean flag) {
+        if (isOwnerRiding() == flag) {
+            return;
+        }
+        if (isHat()) {
+            setHat(false);
+        }
+
+        if (flag) {
+            this.ownerInMountingProcess = true;
+
+            if (getRider() != null) {
+                getRider().despawn(false);
+            }
+            getBukkitEntity().setPassenger(getOwner());
+            if (this instanceof EnderDragonPet) {
+                getEntity().setNoClipEnabled(true);
+            }
+
+            this.ownerInMountingProcess = false;
+
+            getEntity().modifyBoundingBox(width() / 2, height() / 2);
+        } else {
+            if (this instanceof EnderDragonPet) {
+                getEntity().setNoClipEnabled(false);
+            }
+            EchoPet.getManager().loadRider(this);
+            getEntity().modifyBoundingBox(width(), height());
+            teleportToOwner();
+        }
+
+        this.owningRiding = flag;
     }
 
     @Override
@@ -404,7 +435,26 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void setHat(boolean flag) {
-        // TODO
+        if (isHat() == flag) {
+            return;
+        }
+        if (isOwnerRiding()) {
+            setOwnerRiding(false);
+        }
+
+        if (flag) {
+            if (getRider() != null) {
+                getRider().despawn(false);
+            }
+            getOwner().setPassenger(getBukkitEntity());
+        } else {
+            getOwner().setPassenger(null);
+            EchoPet.getManager().loadRider(this);
+            getEntity().modifyBoundingBox(width(), height());
+            teleportToOwner();
+        }
+
+        this.hat = flag;
     }
 
     private PetInfo entityInfo() {
@@ -425,10 +475,10 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
         }
 
         if (isOwnerRiding() && entity.getPassenger() == null && !isOwnerInMountingProcess()) {
-            setOwningRiding(false);
+            setOwnerRiding(false);
         }
 
-        for (String status : new String[]{""}) {
+        for (String status : new String[]{"isInvisible", "isSprinting", "isSneaking"}) {
             boolean entityStatus = status(getBukkitEntity(), status);
             if (status(getOwner(), status) != entityStatus) {
                 if (!status.equalsIgnoreCase("isInvisible") || !shouldVanish()) {

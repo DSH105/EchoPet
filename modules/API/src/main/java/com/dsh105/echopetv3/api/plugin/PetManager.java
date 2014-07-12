@@ -56,6 +56,8 @@ public interface PetManager {
 
     List<Pet> load(Player player, boolean sendMessage);
 
+    Pet loadRider(Pet pet);
+
     Pet create(Player owner, PetType type, boolean sendFailMessage);
 
     List<Pet> loadPets(Player owner);

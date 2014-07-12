@@ -180,6 +180,30 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
+    public Pet loadRider(Pet pet) {
+        String petStorageName = getStorageNameOf(pet);
+        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(pet.getOwnerIdent(), petStorageName));
+        if (riderType != null) {
+            Pet rider = pet.spawnRider(riderType, true);
+
+            if (rider != null) {
+                String riderName = Data.RIDER_NAME.getValue(pet.getOwnerIdent(), petStorageName);
+                if (riderName == null) {
+                    riderName = PetSettings.DEFAULT_NAME.getValue(riderType.storageName());
+                }
+                rider.setName(riderName);
+
+                for (String value : Data.RIDER_DATA.getValue(pet.getOwnerIdent(), petStorageName)) {
+                    PetData petData = PetData.valueOf(value);
+                    rider.setDataValue(petData);
+                }
+            }
+            forceData(rider);
+        }
+        return pet;
+    }
+
+    @Override
     public Pet create(Player owner, PetType type, boolean sendFailMessage) {
         String failMessage;
         if (!PetSettings.ENABLE.getValue(type.storageName())) {
@@ -240,23 +264,7 @@ public class SimplePetManager implements PetManager {
             pet.setDataValue(petData);
         }
 
-        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(ident, petStorageName));
-        if (riderType != null) {
-            Pet rider = pet.spawnRider(riderType, true);
-
-            if (rider != null) {
-                String riderName = Data.RIDER_NAME.getValue(ident, petStorageName);
-                if (riderName == null) {
-                    riderName = PetSettings.DEFAULT_NAME.getValue(riderType.storageName());
-                }
-                rider.setName(riderName);
-
-                for (String value : Data.RIDER_DATA.getValue(ident, petStorageName)) {
-                    PetData petData = PetData.valueOf(value);
-                    rider.setDataValue(petData);
-                }
-            }
-        }
+        loadRider(pet);
 
         // Re-force everything again
         forceData(pet);

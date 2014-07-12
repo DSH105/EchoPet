@@ -53,7 +53,7 @@ public class EntityEnderDragonPetBase extends EntityPetBase<EnderDragonPet> impl
     public EntityEnderDragonPetBase(World world, EnderDragonPet pet) {
         super(world, pet);
         this.children = new EntityComplexPart[]{this.head = new EntityComplexPart(this, "head", 6.0F, 6.0F), this.body = new EntityComplexPart(this, "body", 8.0F, 8.0F), this.tail1 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail2 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.tail3 = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.wing1 = new EntityComplexPart(this, "wing", 4.0F, 4.0F), this.wing2 = new EntityComplexPart(this, "wing", 4.0F, 4.0F)};
-        this.setNoClip(true);
+        this.setNoClipEnabled(true);
         this.i = 100.0D;
         this.al = true;
     }

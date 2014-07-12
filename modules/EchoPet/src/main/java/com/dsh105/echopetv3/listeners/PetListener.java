@@ -67,7 +67,7 @@ public class PetListener implements Listener {
             Pet pet = ((EntityPet) nmsEntity).getPet();
             if (pet.isOwnerRiding() && !pet.isOwnerInMountingProcess()) {
                 Lang.RIDE_PET_OFF.send(pet.getOwner());
-                pet.setOwningRiding(false);
+                pet.setOwnerRiding(false);
             }
         }
     }

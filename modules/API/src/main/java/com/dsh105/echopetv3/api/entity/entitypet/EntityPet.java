@@ -69,7 +69,7 @@ public interface EntityPet<T extends Pet> {
 
     boolean isWet();
 
-    public void setNoClip(boolean flag);
+    public void setNoClipEnabled(boolean flag);
 
     void setTarget(LivingEntity livingEntity);
 

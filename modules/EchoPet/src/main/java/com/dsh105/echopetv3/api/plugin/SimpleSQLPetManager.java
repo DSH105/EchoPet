@@ -77,6 +77,8 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
         return loadedPets;
     }
 
+
+
     @Override
     public void save(Pet pet, boolean isRider) {
         save(pet.getOwnerIdent(), pet.getType(), pet.getName(), AttributeAccessor.getActiveDataValues(pet), false);
@@ -139,11 +141,11 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
     }
 
     @Override
-    public Pet load(String playerIdent) {
+    public List<Pet> load(String playerIdent) {
         Connection con = null;
         PreparedStatement ps = null;
 
-        Pet pet = null;
+        Pet pet;
         Player owner;
         PetType petType;
         String name;

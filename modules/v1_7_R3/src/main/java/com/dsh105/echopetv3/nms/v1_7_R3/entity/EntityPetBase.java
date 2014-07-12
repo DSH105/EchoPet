@@ -293,8 +293,8 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     }
 
     @Override
-    public void setNoClip(boolean flag) {
-        this.X = flag;
+    public void setNoClipEnabled(boolean flag) {
+        this.X = !flag;
     }
 
     @Override
