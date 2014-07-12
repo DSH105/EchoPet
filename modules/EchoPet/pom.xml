@@ -172,11 +172,11 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.jolbox</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopetv3.libs</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.slf4j</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopetv3.libs.slf4j</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

@@ -18,8 +18,8 @@
 package com.dsh105.echopetv3.api.entity.pet.type;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.api.entity.AttributeHandler;
-import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopetv3.api.entity.AttributeHandler;
+import com.dsh105.echopetv3.api.entity.PetData;
 import com.dsh105.echopetv3.api.entity.PetInfo;
 import com.dsh105.echopetv3.api.entity.PetType;
 import com.dsh105.echopetv3.api.entity.entitypet.type.EntityVillagerPet;

@@ -17,11 +17,7 @@
 
 package com.dsh105.echopetv3.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.AttributeHandler;
-import com.dsh105.echopet.api.entity.PetData;
-import com.dsh105.echopetv3.api.entity.PetInfo;
-import com.dsh105.echopetv3.api.entity.PetType;
-import com.dsh105.echopetv3.api.entity.SizeCategory;
+import com.dsh105.echopetv3.api.entity.*;
 import com.dsh105.echopetv3.api.entity.entitypet.type.EntityWitherPet;
 import com.dsh105.echopetv3.api.entity.pet.PetBase;
 import org.bukkit.entity.Player;

@@ -18,10 +18,10 @@
 package com.dsh105.echopetv3.api.entity.pet.type;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.util.Perm;
 import com.dsh105.echopetv3.api.entity.*;
 import com.dsh105.echopetv3.api.entity.entitypet.type.EntitySlimePet;
 import com.dsh105.echopetv3.api.entity.pet.PetBase;
+import com.dsh105.echopetv3.util.Perm;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 
@@ -34,15 +34,8 @@ public class SlimePetBase<T extends Slime, S extends EntitySlimePet> extends Pet
         super(owner);
         this.jumpDelay = GeneralUtil.random().nextInt(15) + 10;
 
-        if (!Perm.hasDataPerm(getOwner(), false, getType(), PetData.MEDIUM, false)) {
-            if (!Perm.hasDataPerm(getOwner(), false, getType(), PetData.SMALL, false)) {
-                this.setSize(4);
-            } else {
-                this.setSize(1);
-            }
-        } else {
-            this.setSize(2);
-        }
+        this.setSize(!getOwner().hasPermission(Perm.DATA.replace("<type>", getType().storageName()).replace("<data>", PetData.MEDIUM.storageName()))
+                ? (!getOwner().hasPermission(Perm.DATA.replace("<type>", getType().storageName()).replace("<data>", PetData.SMALL.storageName())) ? 4 : 1): 2);
     }
 
     @AttributeHandler(dataType = PetData.Type.SLIME_SIZE)

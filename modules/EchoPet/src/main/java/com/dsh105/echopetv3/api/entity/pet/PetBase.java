@@ -20,11 +20,10 @@ package com.dsh105.echopetv3.api.entity.pet;
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.Reflection;
+import com.captainbern.reflection.SafeField;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.particle.Particle;
-import com.dsh105.echopet.reflection.SafeField;
-import com.dsh105.echopet.util.Perm;
 import com.dsh105.echopetv3.api.config.Lang;
 import com.dsh105.echopetv3.api.config.PetSettings;
 import com.dsh105.echopetv3.api.config.Settings;
@@ -39,6 +38,7 @@ import com.dsh105.echopetv3.api.event.PetRideJumpEvent;
 import com.dsh105.echopetv3.api.event.PetRideMoveEvent;
 import com.dsh105.echopetv3.api.inventory.DataMenu;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
+import com.dsh105.echopetv3.util.Perm;
 import org.apache.commons.lang.BooleanUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -80,7 +80,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             this.entity = Spawn.spawn(this);
             if (this.entity != null) {
                 // Begin initiating our EntityPet
-                JUMP_FIELD = (SafeField<Boolean>) new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityLiving")).getSafeFieldByName(entity.getJumpField());
+                JUMP_FIELD = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityLiving")).getSafeFieldByName(entity.getJumpField());
 
                 entity.modifyBoundingBox(width(), height());
                 entity.setFireProof(true);
@@ -484,7 +484,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             boolean canFly = PetSettings.CAN_FLY.getValue(getType().storageName());
             double jumpHeight = canFly ? 0.5D : getJumpHeight();
             if (canFly || entity.isGrounded()) {
-                if (JUMP_FIELD.get(entity.getPassenger())) {
+                if (JUMP_FIELD.getAccessor().get(entity.getPassenger())) {
                     if (getOwner().isFlying()) {
                         getOwner().setFlying(false);
                     }
@@ -503,7 +503,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void onInteract(Player player) {
-        if (Perm.BASE_MENU.hasPerm(player, false, false)) {
+        if (player.hasPermission(Perm.MENU)) {
             DataMenu.prepare(this).show(player);
         }
     }
