@@ -42,7 +42,7 @@ public enum MenuPreset {
     BACK(Material.BOOK, "Back", "Return to the main menu.", MenuType.DATA),
     CLOSE_DATA(Material.BOOK, "Close", "Close the Pet Menu", MenuType.DATA),
 
-    ARMOUR(Material.IRON_CHESTPLATE,  MenuType.DATA, PetData.Type.HORSE_ARMOUR),
+    ARMOUR(Material.IRON_CHESTPLATE, MenuType.DATA, PetData.Type.HORSE_ARMOUR),
     CAT_TYPE(Material.RAW_FISH, MenuType.DATA, PetData.Type.CAT_TYPE),
     COLOUR(Material.WOOL, MenuType.DATA, PetData.Type.COLOUR),
     MARKING(Material.INK_SACK, MenuType.DATA, PetData.Type.HORSE_MARKING),
@@ -62,8 +62,7 @@ public enum MenuPreset {
     SHIELD(Material.GLASS, MenuType.DATA, PetData.SHIELD),
     TAMED(Material.BONE, MenuType.DATA, PetData.TAMED),
     VILLAGER(Material.EMERALD, MenuType.DATA, PetData.VILLAGER),
-    WITHER(Material.SKULL_ITEM, 1, MenuType.DATA, PetData.WITHER),
-    ;
+    WITHER(Material.SKULL_ITEM, 1, MenuType.DATA, PetData.WITHER),;
 
     public static ItemStack SELECTOR_PRESET;
 

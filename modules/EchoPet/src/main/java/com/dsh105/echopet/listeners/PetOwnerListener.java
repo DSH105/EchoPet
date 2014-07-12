@@ -19,16 +19,14 @@ package com.dsh105.echopet.listeners;
 
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.commodus.GeometryUtil;
-import com.dsh105.commodus.SimpleNMSUtil;
-import com.dsh105.echopet.api.config.MenuSettings;
 import com.dsh105.echopet.api.entity.nms.EntityPacketPet;
 import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetInteractEvent;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.api.config.Lang;
-import com.dsh105.echopet.util.ReflectionUtil;
+import com.dsh105.echopetv3.api.config.Lang;
+import com.dsh105.echopetv3.api.config.MenuSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -195,14 +193,14 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         final Player p = event.getPlayer();
-        new BukkitRunnable() { 
-            
+        new BukkitRunnable() {
+
             @Override
             public void run() {
                 EchoPet.getManager().loadPets(p, true, false, true);
             }
-            
-        }.runTaskLater(EchoPet.getPlugin(),20L);
+
+        }.runTaskLater(EchoPet.getPlugin(), 20L);
     }
 
     @EventHandler

@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.nms.v1_7_R2.entity.type;
 
-import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntityOcelotPet;
+import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.nms.v1_7_R2.entity.EntityAgeablePetImpl;
 import net.minecraft.server.v1_7_R2.World;
 

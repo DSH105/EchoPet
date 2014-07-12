@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.nms.v1_6_R3.entity.type;
 
-import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntityCowPet;
+import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.nms.v1_6_R3.entity.EntityAgeablePetImpl;
 import net.minecraft.server.v1_6_R3.World;
 

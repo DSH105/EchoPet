@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.entity;
 
-import com.dsh105.echopet.api.config.PetSettings;
+import com.dsh105.echopetv3.api.config.PetSettings;
 
 public enum SizeCategory {
 

@@ -17,10 +17,10 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.PacketPetImpl;
 import com.dsh105.echopet.api.entity.PetInfo;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntityHumanPet;
+import com.dsh105.echopet.api.entity.pet.PacketPetImpl;
 import com.dsh105.echopet.util.protocol.wrapper.WrappedGameProfile;
 import org.bukkit.Location;
 import org.bukkit.Material;

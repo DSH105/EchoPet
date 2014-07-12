@@ -17,7 +17,10 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.HorseArmour;
+import com.dsh105.echopet.api.entity.HorseMarking;
+import com.dsh105.echopet.api.entity.HorseType;
+import com.dsh105.echopet.api.entity.HorseVariant;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
 
 public interface HorsePet extends AgeablePet {

@@ -18,8 +18,8 @@
 package com.dsh105.echopet.nms.v1_7_R3.entity;
 
 import com.dsh105.echopet.api.ai.PetGoalSelector;
-import com.dsh105.echopet.api.config.PetSettings;
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.SizeCategory;
 import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetAttackEvent;
@@ -27,10 +27,11 @@ import com.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.util.Perm;
 import com.dsh105.echopet.nms.v1_7_R3.entity.ai.PetGoalFloatImpl;
 import com.dsh105.echopet.nms.v1_7_R3.entity.ai.PetGoalFollowOwnerImpl;
 import com.dsh105.echopet.nms.v1_7_R3.entity.ai.PetGoalLookAtPlayerImpl;
+import com.dsh105.echopet.util.Perm;
+import com.dsh105.echopetv3.api.config.PetSettings;
 import net.minecraft.server.v1_7_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;

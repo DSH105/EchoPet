@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.nms.EntityPet;
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;

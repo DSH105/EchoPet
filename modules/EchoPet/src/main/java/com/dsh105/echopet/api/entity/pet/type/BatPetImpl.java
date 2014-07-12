@@ -17,9 +17,10 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.PetImpl;
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.PetInfo;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntityBatPet;
+import com.dsh105.echopet.api.entity.pet.PetImpl;
 import org.bukkit.entity.Player;
 
 @PetInfo(type = PetType.BAT, width = 0.5F, height = 0.9F)

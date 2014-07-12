@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.PetInfo;
+import com.dsh105.echopet.api.entity.PetType;
 import org.bukkit.entity.Player;
 
 @PetInfo(type = PetType.PIG_ZOMBIE, width = 0.6F, height = 1.8F)

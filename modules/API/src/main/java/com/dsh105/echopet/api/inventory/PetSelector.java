@@ -18,9 +18,11 @@
 package com.dsh105.echopet.api.inventory;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.api.config.*;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopetv3.api.config.ConfigType;
+import com.dsh105.echopetv3.api.config.MenuSettings;
+import com.dsh105.echopetv3.api.config.PetSettings;
 import com.dsh105.menuapi.api.CommandIcon;
 import com.dsh105.menuapi.api.Icon;
 import com.dsh105.menuapi.api.Layout;

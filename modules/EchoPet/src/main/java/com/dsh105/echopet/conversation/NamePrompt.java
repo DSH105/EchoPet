@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.conversation;
 
-import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopetv3.api.config.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;

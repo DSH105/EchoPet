@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.PetImpl;
 import com.dsh105.echopet.api.entity.PetInfo;
 import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.pet.PetImpl;
 import org.bukkit.entity.Player;
 
 @PetInfo(type = PetType.ENDER_DRAGON, width = 16.0F, height = 8.0F)

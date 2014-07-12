@@ -19,29 +19,25 @@ package com.dsh105.echopet.commands;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.api.config.ConfigType;
-import com.dsh105.echopet.api.config.PetSettings;
-import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.PetStorage;
-import com.dsh105.echopet.util.*;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketEntityMetadata;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketPlayOutChat;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.conversation.NameFactory;
+import com.dsh105.echopet.util.Lang;
+import com.dsh105.echopet.util.Perm;
+import com.dsh105.echopet.util.PetUtil;
+import com.dsh105.echopetv3.api.config.ConfigType;
+import com.dsh105.echopetv3.api.config.PetSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class PetCommand implements CommandExecutor {

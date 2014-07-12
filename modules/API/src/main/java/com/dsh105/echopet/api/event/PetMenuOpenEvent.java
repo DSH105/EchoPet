@@ -23,7 +23,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when a {@link org.bukkit.entity.Player} opens a DataMenu for their {@link com.dsh105.echopet.api.entity.pet.Pet}
+ * Called when a {@link org.bukkit.entity.Player} opens a DataMenu for their {@link
+ * com.dsh105.echopet.api.entity.pet.Pet}
  */
 
 public class PetMenuOpenEvent extends Event implements Cancellable {

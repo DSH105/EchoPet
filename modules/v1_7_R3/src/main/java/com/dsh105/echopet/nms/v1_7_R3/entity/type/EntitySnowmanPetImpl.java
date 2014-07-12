@@ -17,11 +17,12 @@
 
 package com.dsh105.echopet.nms.v1_7_R3.entity.type;
 
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.SizeCategory;
 import com.dsh105.echopet.api.entity.nms.type.EntitySnowmanPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.nms.v1_7_R3.entity.EntityPetImpl;
+import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
 import net.minecraft.server.v1_7_R3.World;
 
 @EntitySize(width = 0.4F, height = 1.8F)

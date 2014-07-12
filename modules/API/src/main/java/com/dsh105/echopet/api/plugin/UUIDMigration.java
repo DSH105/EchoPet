@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.api.plugin;
 
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.UUIDFetcher;
 import com.dsh105.commodus.config.YAMLConfig;
 import org.bukkit.configuration.ConfigurationSection;
@@ -35,7 +36,7 @@ public class UUIDMigration {
             final LinkedHashMap<String, LinkedHashMap<String, Object>> keyToValueMap = new LinkedHashMap<String, LinkedHashMap<String, Object>>();
             for (String key : cs.getKeys(false)) {
                 try {
-                    UUID.fromString(key);
+                    StringUtil.convertUUID(key);
                     continue;
                 } catch (IllegalArgumentException e) {
                     // Do nothing and keep migrating
@@ -44,7 +45,7 @@ public class UUIDMigration {
                 for (String fullPath : petSection.getKeys(true)) {
                     LinkedHashMap<String, Object> existingMap = keyToValueMap.get(key);
                     if (existingMap == null) {
-                        existingMap = new LinkedHashMap<String, Object>();
+                        existingMap = new LinkedHashMap<>();
                     }
                     existingMap.put(fullPath, petSection.get(fullPath));
                     keyToValueMap.put(key, existingMap);
@@ -73,7 +74,7 @@ public class UUIDMigration {
                             }
                         }.runTask(EchoPet.getPlugin());
 
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                 }
 

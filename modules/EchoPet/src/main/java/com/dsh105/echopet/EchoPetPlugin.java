@@ -27,24 +27,23 @@ import com.dsh105.commodus.data.Updater;
 import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.api.PetManager;
 import com.dsh105.echopet.api.SqlPetManager;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.nms.EntityPet;
+import com.dsh105.echopet.api.plugin.*;
 import com.dsh105.echopet.commands.CommandComplete;
 import com.dsh105.echopet.commands.PetAdminCommand;
 import com.dsh105.echopet.commands.PetCommand;
 import com.dsh105.echopet.commands.util.CommandManager;
 import com.dsh105.echopet.commands.util.DynamicPluginCommand;
-import com.dsh105.echopet.api.config.*;
-import com.dsh105.echopet.api.entity.nms.EntityPet;
-import com.dsh105.echopet.api.entity.PetType;
-import com.dsh105.echopet.api.plugin.*;
-import com.dsh105.echopet.api.plugin.UUIDMigration;
-import com.dsh105.echopet.reflection.ReflectionConstants;
-import com.dsh105.echopet.reflection.SafeField;
-import com.dsh105.echopet.util.TableMigrationUtil;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.ChunkListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
+import com.dsh105.echopet.reflection.ReflectionConstants;
+import com.dsh105.echopet.reflection.SafeField;
+import com.dsh105.echopet.util.TableMigrationUtil;
+import com.dsh105.echopetv3.api.config.*;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import org.bukkit.ChatColor;
@@ -168,12 +167,12 @@ public class EchoPetPlugin extends IEchoPetPlugin {
                 langConfig,
                 menuConfig;
 
-        config = CONFIG_MANAGER.getNewConfig("config.yml", new String[] {"EchoPet By DSH105", "---------------------",
+        config = CONFIG_MANAGER.getNewConfig("config.yml", new String[]{"EchoPet By DSH105", "---------------------",
                 "Configuration for EchoPet 2.x",
                 "See the EchoPet Wiki before editing this file",
                 "https://github.com/DSH105/EchoPet/wiki/"});
         petsConfig = CONFIG_MANAGER.getNewConfig("pets-config.yml");
-        langConfig = CONFIG_MANAGER.getNewConfig("language.yml", new String[] {"EchoPet By DSH105", "---------------------", "Language Configuration File"});
+        langConfig = CONFIG_MANAGER.getNewConfig("language.yml", new String[]{"EchoPet By DSH105", "---------------------", "Language Configuration File"});
         menuConfig = CONFIG_MANAGER.getNewConfig("menu-config.yml");
         dataConfig = CONFIG_MANAGER.getNewConfig("pets.yml");
 

@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.PetImpl;
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.AttributeHandler;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetInfo;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntitySlimePet;
+import com.dsh105.echopet.api.entity.pet.PetImpl;
 import org.bukkit.entity.Player;
 
 @PetInfo(type = PetType.SLIME, width = 0.6F, height = 0.6F)

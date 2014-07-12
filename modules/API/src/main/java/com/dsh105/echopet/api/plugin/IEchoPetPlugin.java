@@ -19,9 +19,9 @@ package com.dsh105.echopet.api.plugin;
 
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
-import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.plugin.hook.IVanishProvider;
 import com.dsh105.echopet.api.plugin.hook.IWorldGuardProvider;
+import com.dsh105.echopetv3.api.config.ConfigType;
 import com.jolbox.bonecp.BoneCP;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -17,12 +17,12 @@
 
 package com.dsh105.echopet.hook;
 
-import com.dsh105.echopet.api.config.ConfigType;
-import com.dsh105.echopet.api.config.Settings;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.hook.IWorldGuardProvider;
 import com.dsh105.echopet.api.plugin.hook.PluginDependencyProvider;
 import com.dsh105.echopet.listeners.RegionListener;
+import com.dsh105.echopetv3.api.config.ConfigType;
+import com.dsh105.echopetv3.api.config.Settings;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;

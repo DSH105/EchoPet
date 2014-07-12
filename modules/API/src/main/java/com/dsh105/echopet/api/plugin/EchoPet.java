@@ -21,7 +21,7 @@ import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.logging.Log;
-import com.dsh105.echopet.api.config.ConfigType;
+import com.dsh105.echopetv3.api.config.ConfigType;
 
 public final class EchoPet {
 
@@ -54,7 +54,7 @@ public final class EchoPet {
         return PLUGIN.getSettings(settingsClass);
     }
 
-    public static Options getSettings(ConfigType configType){
+    public static Options getSettings(ConfigType configType) {
         return PLUGIN.getSettings(configType);
     }
 

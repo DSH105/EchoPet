@@ -33,6 +33,7 @@ public enum DataPreset {
     HORSE_VARIANT(Material.LEASH, 1, (short) 0, DataMenuType.HORSE_VARIANT, "Variant"),
     HORSE_MARKING(Material.INK_SACK, 1, (short) 0, DataMenuType.HORSE_MARKING, "Marking"),
     HORSE_ARMOUR(Material.IRON_CHESTPLATE, 1, (short) 0, DataMenuType.HORSE_ARMOUR, "Armour"),
+
     CHESTED(Material.CHEST, 1, (short) 0, DataMenuType.BOOLEAN, "Chested"),
     FIRE(Material.FIRE, 1, (short) 0, DataMenuType.BOOLEAN, "Fire"),
     SADDLE(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Saddle"),
@@ -43,11 +44,12 @@ public enum DataPreset {
     POWER(Material.BEACON, 1, (short) 0, DataMenuType.BOOLEAN, "Powered"),
     SIZE(Material.SLIME_BALL, 1, (short) 0, DataMenuType.SIZE, "Size"),
     BABY(Material.WHEAT, 1, (short) 0, DataMenuType.BOOLEAN, "Baby"),
-    CAT_TYPE(Material.RAW_FISH, 1, (short) 0, DataMenuType.CAT_TYPE, "Cat Type"),
     ANGRY(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Angry"),
     TAMED(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Tamed"),
     WITHER(Material.getMaterial(397), 1, (short) 1, DataMenuType.BOOLEAN, "Wither"),
     VILLAGER(Material.EMERALD, 1, (short) 0, DataMenuType.BOOLEAN, "Villager"),
+
+    CAT_TYPE(Material.RAW_FISH, 1, (short) 0, DataMenuType.CAT_TYPE, "Cat Type"),
     COLOR(Material.WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep"),
     PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Profession"),
     RIDE(Material.CARROT_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet"),

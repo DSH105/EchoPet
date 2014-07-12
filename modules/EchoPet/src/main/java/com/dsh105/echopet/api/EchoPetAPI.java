@@ -18,15 +18,15 @@
 package com.dsh105.echopet.api;
 
 import com.dsh105.echopet.api.ai.*;
-import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.reflection.SafeConstructor;
-import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.util.ReflectionUtil;
+import com.dsh105.echopetv3.api.config.Lang;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

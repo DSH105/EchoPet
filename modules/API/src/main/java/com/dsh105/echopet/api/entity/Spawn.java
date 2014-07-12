@@ -19,11 +19,11 @@ package com.dsh105.echopet.api.entity;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.Reflection;
-import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopetv3.api.config.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -46,7 +46,7 @@ public class Spawn {
             spawnLocation.getChunk().load();
         }
         if (!((Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("World")).getSafeMethod("addEntity", MinecraftReflection.getMinecraftClass("Entity"), CreatureSpawnEvent.SpawnReason.class).getAccessor().invoke(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM))) {
-            Lang.PET_SPAWN_BLOCKED.send(pet.getOwner());
+            Lang.SPAWN_BLOCKED.send(pet.getOwner());
             EchoPet.getManager().removePet(pet, true);
             return null;
         }

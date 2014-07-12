@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.event;
 
-import com.dsh105.echopet.api.config.LangSetting;
+import com.dsh105.echopetv3.api.config.LangSetting;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

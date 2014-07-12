@@ -20,17 +20,18 @@ package com.dsh105.echopet.api;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.ServerUtil;
-import com.dsh105.echopet.api.config.ConfigType;
-import com.dsh105.echopet.api.config.PetSettings;
-import com.dsh105.echopet.api.config.Settings;
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.type.pet.*;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.IPetManager;
 import com.dsh105.echopet.api.plugin.PetStorage;
-import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.util.PetUtil;
+import com.dsh105.echopetv3.api.config.ConfigType;
+import com.dsh105.echopetv3.api.config.Lang;
+import com.dsh105.echopetv3.api.config.PetSettings;
+import com.dsh105.echopetv3.api.config.Settings;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -70,7 +71,8 @@ public class PetManager implements IPetManager {
                 }
             }
             return pi;
-        } else if ((checkWorldOverride && Settings.LOAD_SAVED_PETS_ON_WORLD_CHANGE.getValue() || Settings.LOAD_SAVED_PETS.getValue()) {
+        } else if ((checkWorldOverride && Settings.LOAD_SAVED_PETS_ON_WORLD_CHANGE.getValue() || Settings.LOAD_SAVED_PETS.getValue())
+        {
             if (EchoPet.getConfig(ConfigType.DATA).get("autosave." + IdentUtil.getIdentificationFor(p) + ".pet.type") != null) {
                 Pet pi = this.createPetFromFile("autosave", p);
                 if (pi == null) {

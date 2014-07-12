@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.nms.v1_7_R3.entity;
 
-import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.pet.Pet;
 import net.minecraft.server.v1_7_R3.World;
 
 public abstract class EntityAgeablePetImpl extends EntityPetImpl {

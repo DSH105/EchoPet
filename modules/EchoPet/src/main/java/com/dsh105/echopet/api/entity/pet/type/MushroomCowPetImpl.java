@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.AgeablePetImpl;
-import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.PetInfo;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.pet.AgeablePetImpl;
 import org.bukkit.entity.Player;
 
 @PetInfo(type = PetType.MUSHROOM_COW, width = 0.9F, height = 1.3F)

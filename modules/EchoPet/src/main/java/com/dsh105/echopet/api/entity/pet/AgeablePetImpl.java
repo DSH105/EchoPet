@@ -18,8 +18,8 @@
 package com.dsh105.echopet.api.entity.pet;
 
 import com.dsh105.echopet.api.entity.AttributeHandler;
-import com.dsh105.echopet.api.entity.nms.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.nms.EntityAgeablePet;
 import org.bukkit.entity.Player;
 
 public abstract class AgeablePetImpl extends PetImpl implements AgeablePet {

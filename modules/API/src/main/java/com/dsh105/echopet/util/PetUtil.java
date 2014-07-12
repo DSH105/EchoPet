@@ -19,12 +19,15 @@ package com.dsh105.echopet.util;
 
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.api.config.PetSettings;
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.HorseType;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.pet.type.*;
 import com.dsh105.echopet.api.plugin.PetStorage;
+import com.dsh105.echopetv3.api.config.PetSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -87,7 +87,7 @@ public enum PetData {
 
     private String storageName;
     private List<Type> validTypes;
-    
+
     private HashMap<Type, Object> typeToObjectMap = new HashMap<Type, Object>();
 
     PetData(String storageName, Type... validTypes) {

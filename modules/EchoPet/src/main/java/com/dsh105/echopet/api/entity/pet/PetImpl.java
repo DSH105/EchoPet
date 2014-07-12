@@ -19,16 +19,15 @@ package com.dsh105.echopet.api.entity.pet;
 
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.api.config.PetSettings;
-import com.dsh105.echopet.api.config.Settings;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.api.entity.*;
 import com.dsh105.echopet.api.entity.nms.EntityNoClipPet;
 import com.dsh105.echopet.api.entity.nms.EntityPet;
 import com.dsh105.echopet.api.event.PetTeleportEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.reflection.ReflectionConstants;
-import com.dsh105.echopet.reflection.SafeMethod;
-import com.dsh105.echopet.util.protocol.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopetv3.api.config.PetSettings;
+import com.dsh105.echopetv3.api.config.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -36,7 +35,8 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class PetImpl implements Pet {
 
@@ -255,8 +255,8 @@ public abstract class PetImpl implements Pet {
     @Override
     public void removePet(boolean makeSound) {
         if (this.getCraftPet() != null) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.CLOUD, this.getLocation());
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.LAVA_SPARK, this.getLocation());
+            Particle.CLOUD.builder().show(getLocation());
+            Particle.LAVA_SPARK.builder().show(getLocation());
         }
         removeRider();
         if (this.getEntityPet() != null) {

@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.AgeablePetImpl;
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.AttributeHandler;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetInfo;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntityVillagerPet;
+import com.dsh105.echopet.api.entity.pet.AgeablePetImpl;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 

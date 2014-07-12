@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.pet.AgeablePetImpl;
 import com.dsh105.echopet.api.entity.*;
 import com.dsh105.echopet.api.entity.nms.type.EntityHorsePet;
+import com.dsh105.echopet.api.entity.pet.AgeablePetImpl;
 import org.bukkit.entity.Player;
 
 @PetInfo(type = PetType.HORSE, width = 1.4F, height = 1.6F)

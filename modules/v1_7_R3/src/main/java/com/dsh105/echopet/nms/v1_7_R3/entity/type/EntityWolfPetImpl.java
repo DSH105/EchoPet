@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.nms.v1_7_R3.entity.type;
 
-import com.dsh105.echopet.api.entity.*;
+import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.nms.type.EntityWolfPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.pet.type.WolfPet;
