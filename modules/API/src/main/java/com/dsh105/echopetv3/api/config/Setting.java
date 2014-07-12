@@ -35,7 +35,7 @@ public class Setting<T> extends Option<T> {
     }
 
     public Setting(String path, T defaultValue, String... comments) {
-        this(ConfigType.MAIN, path, defaultValue, comments);
+        this(ConfigType.GENERAL, path, defaultValue, comments);
     }
 
     public T getValue(Object... replacements) {

@@ -64,22 +64,22 @@ public class PetSettings extends Options {
         }
     }
 
-    public static final Setting<Boolean> ENABLE = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.enable", true);
-    public static final Setting<Boolean> TAG_VISIBLE = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.tagVisible", true);
-    public static final Setting<String> DEFAULT_NAME = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.defaultName");
-    public static final Setting<Float> START_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.startFollowDistance", 12.0F);
-    public static final Setting<Float> STOP_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.stopFollowDistance", 4.0F);
-    public static final Setting<Float> TELEPORT_DISTANCE = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.teleportDistance", 30.0F);
-    public static final Setting<Boolean> DAMAGE_PLAYERS = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.ai.damagePlayers", false);
-    public static final Setting<Double> LOCK_RANGE = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.ai.lockRange", 10.0D);
-    public static final Setting<Integer> TICKS_BETWEEN_ATTACKS = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.ai.ticksBetweenAttacks", 20);
-    public static final Setting<Double> DAMAGE_DEALT = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.ai.damage");
-    public static final Setting<Boolean> LOSE_HEALTH = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.ai.loseHealth", false);
-    public static final Setting<Double> HEALTH = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.ai.health");
-    public static final Setting<Double> RIDE_SPEED = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.rideSpeed", 0.25D);
-    public static final Setting<Double> JUMP_HEIGHT = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.jumpHeight", 0.6D);
-    public static final Setting<Boolean> CAN_FLY = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.canFly");
-    public static final Setting<Boolean> ALLOW_RIDERS = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.allow.riders", true);
-    public static final Setting<Boolean> ALLOW_DATA = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.allow.%s", true);
-    public static final Setting<Boolean> FORCE_DATA = new Setting<>(ConfigType.PETS_CONFIG, "pets.%s.force.%s", true);
+    public static final Setting<Boolean> ENABLE = new Setting<>(ConfigType.PETS, "pets.%s.enable", true);
+    public static final Setting<Boolean> TAG_VISIBLE = new Setting<>(ConfigType.PETS, "pets.%s.tagVisible", true);
+    public static final Setting<String> DEFAULT_NAME = new Setting<>(ConfigType.PETS, "pets.%s.defaultName");
+    public static final Setting<Float> START_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.startFollowDistance", 12.0F);
+    public static final Setting<Float> STOP_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.stopFollowDistance", 4.0F);
+    public static final Setting<Float> TELEPORT_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.teleportDistance", 30.0F);
+    public static final Setting<Boolean> DAMAGE_PLAYERS = new Setting<>(ConfigType.PETS, "pets.%s.ai.damagePlayers", false);
+    public static final Setting<Double> LOCK_RANGE = new Setting<>(ConfigType.PETS, "pets.%s.ai.lockRange", 10.0D);
+    public static final Setting<Integer> TICKS_BETWEEN_ATTACKS = new Setting<>(ConfigType.PETS, "pets.%s.ai.ticksBetweenAttacks", 20);
+    public static final Setting<Double> DAMAGE_DEALT = new Setting<>(ConfigType.PETS, "pets.%s.ai.damage");
+    public static final Setting<Boolean> LOSE_HEALTH = new Setting<>(ConfigType.PETS, "pets.%s.ai.loseHealth", false);
+    public static final Setting<Double> HEALTH = new Setting<>(ConfigType.PETS, "pets.%s.ai.health");
+    public static final Setting<Double> RIDE_SPEED = new Setting<>(ConfigType.PETS, "pets.%s.rideSpeed", 0.25D);
+    public static final Setting<Double> JUMP_HEIGHT = new Setting<>(ConfigType.PETS, "pets.%s.jumpHeight", 0.6D);
+    public static final Setting<Boolean> CAN_FLY = new Setting<>(ConfigType.PETS, "pets.%s.canFly");
+    public static final Setting<Boolean> ALLOW_RIDERS = new Setting<>(ConfigType.PETS, "pets.%s.allow.riders", true);
+    public static final Setting<Boolean> ALLOW_DATA = new Setting<>(ConfigType.PETS, "pets.%s.allow.%s", true);
+    public static final Setting<Boolean> FORCE_DATA = new Setting<>(ConfigType.PETS, "pets.%s.force.%s", true);
 }

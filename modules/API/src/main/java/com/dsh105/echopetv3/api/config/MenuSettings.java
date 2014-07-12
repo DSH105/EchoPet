@@ -43,11 +43,11 @@ public class MenuSettings extends Options {
         }
     }
 
-    public static final Setting<Boolean> SELECTOR_ALLOW_DROP = new Setting<Boolean>(ConfigType.MENU_CONFIG, "selector.allowDrop", true);
-    public static final Setting<Boolean> SELECTOR_SHOW_DISABLED_PETS = new Setting<Boolean>(ConfigType.MENU_CONFIG, "selector.showDisabledPets", true);
-    public static final Setting<Boolean> SELECTOR_ONJOIN_ENABLE = new Setting<Boolean>(ConfigType.MENU_CONFIG, "selector.giveOnJoin.enable", false);
-    public static final Setting<Boolean> SELECTOR_ONJOIN_USE_PERM = new Setting<Boolean>(ConfigType.MENU_CONFIG, "selector.giveOnJoin.usePerm", false);
-    public static final Setting<String> SELECTOR_ONJOIN_PERM = new Setting<String>(ConfigType.MENU_CONFIG, "selector.giveOnJoin.perm", "echopet.selector.join", new String[0]);
-    public static final Setting<Integer> SELECTOR_ONJOIN_SLOT = new Setting<Integer>(ConfigType.MENU_CONFIG, "selector.giveOnJoin.slot", 9);
-    public static final Setting<Boolean> SELECTOR_ONJOIN_CLEAR = new Setting<Boolean>(ConfigType.MENU_CONFIG, "selector.clearInvOnJoin", false);
+    public static final Setting<Boolean> SELECTOR_ALLOW_DROP = new Setting<Boolean>(ConfigType.MENU, "selector.allowDrop", true);
+    public static final Setting<Boolean> SELECTOR_SHOW_DISABLED_PETS = new Setting<Boolean>(ConfigType.MENU, "selector.showDisabledPets", true);
+    public static final Setting<Boolean> SELECTOR_ONJOIN_ENABLE = new Setting<Boolean>(ConfigType.MENU, "selector.giveOnJoin.enable", false);
+    public static final Setting<Boolean> SELECTOR_ONJOIN_USE_PERM = new Setting<Boolean>(ConfigType.MENU, "selector.giveOnJoin.usePerm", false);
+    public static final Setting<String> SELECTOR_ONJOIN_PERM = new Setting<String>(ConfigType.MENU, "selector.giveOnJoin.perm", "echopet.selector.join", new String[0]);
+    public static final Setting<Integer> SELECTOR_ONJOIN_SLOT = new Setting<Integer>(ConfigType.MENU, "selector.giveOnJoin.slot", 9);
+    public static final Setting<Boolean> SELECTOR_ONJOIN_CLEAR = new Setting<Boolean>(ConfigType.MENU, "selector.clearInvOnJoin", false);
 }

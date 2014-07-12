@@ -31,7 +31,7 @@ public class EchoPet {
     private static EchoPetCore CORE;
     public static Log LOG;
 
-    public static void setPlugin(EchoPetCore core) {
+    public static void setCore(EchoPetCore core) {
         if (CORE != null) {
             throw new RuntimeException("Core cannot be set twice!");
         }
@@ -56,7 +56,7 @@ public class EchoPet {
     }
 
     public static YAMLConfig getConfig() {
-        return getConfig(ConfigType.MAIN);
+        return getConfig(ConfigType.GENERAL);
     }
 
     public static YAMLConfig getConfig(ConfigType configType) {

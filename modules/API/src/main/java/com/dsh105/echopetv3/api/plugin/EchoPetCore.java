@@ -37,13 +37,9 @@ public interface EchoPetCore extends Plugin {
 
     public abstract boolean isUpdateAvailable();
 
-    public abstract String getUpdateName();
-
-    public abstract long getUpdateSize();
-
     public abstract <T extends Options> T getSettings(Class<T> settingsClass);
 
     public abstract Options getSettings(ConfigType configType);
 
-    public abstract YAMLConfig getConfig(ConfigType type);
+    public abstract YAMLConfig getConfig(ConfigType configType);
 }

@@ -44,6 +44,8 @@ public interface PetManager {
 
     List<Pet> getAllPets();
 
+    void removeAllPets();
+
     void removePets(String playerIdent);
 
     void removePets(Player player);

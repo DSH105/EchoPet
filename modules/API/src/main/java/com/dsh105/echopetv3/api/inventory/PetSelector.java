@@ -56,7 +56,7 @@ public class PetSelector {
 
     public static Layout getLayout() {
         if (LAYOUT == null) {
-            LAYOUT = new Layout().loadFromFile(EchoPet.getConfig(ConfigType.MENU_CONFIG).config(), "selector");
+            LAYOUT = new Layout().loadFromFile(EchoPet.getConfig(ConfigType.MENU).config(), "selector");
 
             if (LAYOUT == null) {
                 LAYOUT = getDefaultLayout();

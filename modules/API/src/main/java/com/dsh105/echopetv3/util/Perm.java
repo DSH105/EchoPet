@@ -20,6 +20,7 @@ package com.dsh105.echopetv3.util;
 public class Perm {
 
     public static final String
+            ECHOPET = "echopet.echopet",
             UPDATE = "echopet.update",
             PET = "echopet.pet",
             PETADMIN = "echopet.petadmin",

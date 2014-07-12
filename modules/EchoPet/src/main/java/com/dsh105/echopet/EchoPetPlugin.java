@@ -176,20 +176,20 @@ public class EchoPetPlugin extends IEchoPetPlugin {
         menuConfig = CONFIG_MANAGER.getNewConfig("menu-config.yml");
         dataConfig = CONFIG_MANAGER.getNewConfig("pets.yml");
 
-        CONFIG_FILES.put(ConfigType.MAIN, config);
-        CONFIG_FILES.put(ConfigType.PETS_CONFIG, petsConfig);
-        CONFIG_FILES.put(ConfigType.LANG_CONFIG, langConfig);
-        CONFIG_FILES.put(ConfigType.MENU_CONFIG, menuConfig);
+        CONFIG_FILES.put(ConfigType.GENERAL, config);
+        CONFIG_FILES.put(ConfigType.PETS, petsConfig);
+        CONFIG_FILES.put(ConfigType.MESSAGES, langConfig);
+        CONFIG_FILES.put(ConfigType.MENU, menuConfig);
         CONFIG_FILES.put(ConfigType.DATA, dataConfig);
 
         for (YAMLConfig yamlConfig : CONFIG_FILES.values()) {
             yamlConfig.reloadConfig();
         }
 
-        SETTINGS.put(ConfigType.MAIN, new Settings(config));
-        SETTINGS.put(ConfigType.PETS_CONFIG, new PetSettings(petsConfig));
-        SETTINGS.put(ConfigType.MENU_CONFIG, new MenuSettings(menuConfig));
-        SETTINGS.put(ConfigType.LANG_CONFIG, new Lang(langConfig));
+        SETTINGS.put(ConfigType.GENERAL, new Settings(config));
+        SETTINGS.put(ConfigType.PETS, new PetSettings(petsConfig));
+        SETTINGS.put(ConfigType.MENU, new MenuSettings(menuConfig));
+        SETTINGS.put(ConfigType.MESSAGES, new Lang(langConfig));
 
         // Handle any UUID conversion
         if (IdentUtil.supportsUuid() && Settings.CONVERT_DATA_FILE_TO_UUID.getValue() && dataConfig.getConfigurationSection("autosave") != null) {
@@ -355,12 +355,12 @@ public class EchoPetPlugin extends IEchoPetPlugin {
 
     @Override
     public YAMLConfig getMainConfig() {
-        return getConfig(ConfigType.MAIN);
+        return getConfig(ConfigType.GENERAL);
     }
 
     @Override
     public YAMLConfig getLangConfig() {
-        return getConfig(ConfigType.LANG_CONFIG);
+        return getConfig(ConfigType.MESSAGES);
     }
 
     @Override

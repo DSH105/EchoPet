@@ -73,7 +73,7 @@ public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugi
 
             ConfigurationSection cs = EchoPet.getPlugin().getMainConfig().getConfigurationSection("worldguard.regions");
             for (ProtectedRegion region : set) {
-                if (EchoPet.getConfig(ConfigType.MAIN).get(Settings.WORLDGUARD_REGION.getPath(region.getId())) != null) {
+                if (EchoPet.getConfig(ConfigType.GENERAL).get(Settings.WORLDGUARD_REGION.getPath(region.getId())) != null) {
                     // Defaults are handled by the Settings manager
                     result = Settings.WORLDGUARD_REGION.getValue(region.getId());
                 }

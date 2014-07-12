@@ -34,7 +34,7 @@ import java.util.List;
 
 @Command(
         command = "pet",
-        description = "Manage your own pets.",
+        description = "Manage your own pets",
         permission = Perm.PET,
         usage = "Use \"/pet help\" for help."
 )

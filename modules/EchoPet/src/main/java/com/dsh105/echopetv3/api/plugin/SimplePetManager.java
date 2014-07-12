@@ -121,6 +121,15 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
+    public void removeAllPets() {
+        for (String ident : IDENT_TO_PET_MAP.keySet()) {
+            for (Pet pet : getPetsFor(ident)) {
+                removePet(pet);
+            }
+        }
+    }
+
+    @Override
     public List<Pet> getAllPets() {
         ArrayList<Pet> pets = new ArrayList<>();
         for (ArrayList<Pet> petsForPlayer : IDENT_TO_PET_MAP.values()) {

@@ -59,7 +59,7 @@ public final class EchoPet {
     }
 
     public static YAMLConfig getConfig() {
-        return getConfig(ConfigType.MAIN);
+        return getConfig(ConfigType.GENERAL);
     }
 
     public static YAMLConfig getConfig(ConfigType type) {
