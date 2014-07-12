@@ -17,6 +17,7 @@
 
 package com.dsh105.echopetv3.api.entity;
 
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopetv3.api.entity.pet.HorseArmour;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.DyeColor;
@@ -51,12 +52,12 @@ public enum PetData {
     IRON("iron", Type.HORSE_ARMOUR),
     LARGE("large", Type.SLIME_SIZE),
     LIBRARIAN("librarian", Type.VILLAGER_PROFESSION),
-    LIGHTBLUE("lightBlue", Type.COLOUR),
+    LIGHT_BLUE("lightBlue", Type.COLOUR),
     LIME("lime", Type.COLOUR),
     MAGENTA("magenta", Type.COLOUR),
     MEDIUM("medium", Type.SLIME_SIZE),
     MULE("mule", Type.VARIANT),
-    NOARMOUR("noarmour", Type.HORSE_ARMOUR),
+    NO_ARMOUR("noarmour", Type.HORSE_ARMOUR),
     NONE("noMarking", Type.HORSE_STYLE),
     HORSE("normal", Type.VARIANT),
     ORANGE("orange", Type.COLOUR),
@@ -120,6 +121,10 @@ public enum PetData {
         return this.storageName;
     }
 
+    public String humanName() {
+        return StringUtil.capitalise(name().replace("_", " "));
+    }
+
     public List<Type> getTypes() {
         return this.validTypes;
     }
@@ -149,7 +154,7 @@ public enum PetData {
         COLOUR {
             @Override
             public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, DyeColor.valueOf(petData == PetData.LIGHTBLUE ? "LIGHT_BLUE" : petData.toString()));
+                petData.typeToObjectMap.put(this, DyeColor.valueOf(petData.toString()));
             }
         },
 
@@ -197,7 +202,7 @@ public enum PetData {
         HORSE_ARMOUR {
             @Override
             public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, petData == PetData.NOARMOUR ? HorseArmour.NONE : HorseArmour.valueOf(petData.toString()));
+                petData.typeToObjectMap.put(this, petData == PetData.NO_ARMOUR ? HorseArmour.NONE : HorseArmour.valueOf(petData.toString()));
             }
         };
 

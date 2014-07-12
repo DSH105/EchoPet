@@ -320,6 +320,12 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     }
 
     @Override
+    public void despawnRider() {
+        getRider().despawn(true);
+        rider = null;
+    }
+
+    @Override
     public boolean teleportToOwner() {
         return getOwner() != null && teleport(getOwner().getLocation());
     }

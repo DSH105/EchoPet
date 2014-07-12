@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+// TODO: Some caching here for performance
 public class AttributeAccessor {
 
     public static <T extends Pet> ArrayList<AttributeHandler> attributeGetters(Class<T> petClass) {

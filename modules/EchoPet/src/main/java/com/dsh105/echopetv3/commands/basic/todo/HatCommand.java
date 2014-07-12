@@ -15,22 +15,22 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopetv3.commands.basic.sub;
+package com.dsh105.echopetv3.commands.basic.todo;
 
 import com.dsh105.command.Command;
 import com.dsh105.command.CommandEvent;
 import com.dsh105.command.CommandListener;
-import org.bukkit.entity.Player;
+import com.dsh105.echopetv3.util.Perm;
 
-public class RiderCommand implements CommandListener {
+public class HatCommand implements CommandListener {
 
     @Command(
-            command = "<pet_name> rider <type> [name] [data]",
-            description = "Creates a rider for an existing pet (specific by <pet_name>",
-            permission = "echopet.pet.type.<type>",
-            help = {"<pet_name> is the name of an existing pet", "Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"name\" command"}
+            command = "",
+            description = "",
+            permission = Perm.HAT
     )
-    public boolean create(CommandEvent<Player> event) {
+    public boolean command(CommandEvent event) {
 
+        return true;
     }
 }

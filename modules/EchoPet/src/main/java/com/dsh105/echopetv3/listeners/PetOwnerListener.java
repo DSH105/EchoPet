@@ -97,7 +97,7 @@ public class PetOwnerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         if (EchoPet.getCore().isUpdateAvailable() && player.hasPermission("echopet.update")) {
-            Lang.UPDATE_AVAILABLE.send(player, "command", "echopet update");
+            Lang.UPDATE_AVAILABLE.send(player);
         }
 
         Inventory inventory = player.getInventory();

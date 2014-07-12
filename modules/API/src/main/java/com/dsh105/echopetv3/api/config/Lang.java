@@ -35,20 +35,37 @@ public class Lang extends Options {
 
     public static final LangSetting PREFIX = new LangSetting("prefix", "&4[&cEchopet&4]&r ", "Plugin prefix appended to all messages."),
 
-    PETS_DISABLED_HERE = new LangSetting("pets_disabled_here", "{c1}pets are not allowed here.", "Sent when pets are disabled in a certain area"),
             UPDATE_NOT_AVAILABLE = new LangSetting("update_not_available", "{c1}An update is not available.", "Sent when an update is not available"),
-            UPDATE_AVAILABLE = new LangSetting("update_available", "{c1}An update is available.\n{c1}Type /%command% to update", "Sent when an update is not available"),
-            PLUGIN_INFORMATION = new LangSetting("plugin_information", "{c1}Running EchoPet v{c2}%version%{c1}. Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
-            HOVER_TIP = new LangSetting("hover_tip", "{c1}&oHover over to see more information about each command. Click to insert it into the chat window.", "Reminds players to hover over commands to see more information"),
+                    UPDATE_AVAILABLE = new LangSetting("update_available", "{c1}An update is available.\n{c1}Type \"{c2}/" + Settings.COMMAND.getValue() + " update{c1}\" to update", "Sent when an update is not available"),
+                    PLUGIN_INFORMATION = new LangSetting("plugin_information", "{c1}Running EchoPet v{c2}%version%{c1}. Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
+                    COMMAND_HOVER_TIP = new LangSetting("commandhover_tip", "&e&oHover over to see more information about each command. Click to insert it into the chat window.", "Reminds players to hover over commands to see more information"),
+                    HOVER_TIP = new LangSetting("hover_tip", "&e&oHover over to see more information."),
 
+    PETS_DISABLED_HERE = new LangSetting("pets_disabled_here", "{c1}pets are not allowed here.", "Sent when pets are disabled in a certain area"),
+            PET_TYPE_DISABLED = new LangSetting("pet_type_disabled", "{c2}%type% {c1}pets are disabled."),
+            RIDERS_DISABLED = new LangSetting("riders_disabled", "{c1}Riders are disabled for {c2}%type% {c1}pets."),
             ENTER_PET_DISABLED_REGION = new LangSetting("enter_pet_disabled_region", "{c1}This region disables pets. Yours has been hidden."),
+            INVALID_PET_TYPE = new LangSetting("invalid_pet_type", "{c2}%type% {c1}is not a valid pet type. See \"{c2}/pet list{c1}\" {c1}for a list of pet types."),
+            INVALID_PET_DATA = new LangSetting("invalid_pet_data", "{c1}Invalid data types entered: {c2}%data%"),
+            NAME_NOT_ALLOWED = new LangSetting("name_not_allowed", "{c1}You are not permitted to name your pet {c2}%name%{c1}."),
+
     PET_LOADED = new LangSetting("pet_loaded", "{c2}%name% {c1}was retrieved from your last session.", "Sent when a pet is loaded."),
             PET_NOT_LOADED = new LangSetting("pet_not_loaded", "{c1}Pet loading cancelled by the server.", "Sent when pet loading is disabled."),
             SPAWN_BLOCKED = new LangSetting("spawn_blocked", "{c1}Your pet was blocked from spawning by another plugin.", "Sent when a pet could not be safely spawned."),
-    PET_NOT_FOUND = new LangSetting("pet_not_found", "{c1}Your pet, {c2}%name%{c1}, could not be found"),
-    PET_CREATED = new LangSetting("pet_created", "{c1}Your new {c2}%type% {c1}pet follows behind you."),
+    PET_NOT_FOUND = new LangSetting("pet_not_found", "{c1}Your pet, {c2}%name%{c1}, could not be found. Use \"{c2}/" + Settings.COMMAND.getValue() + " info{c1}\" to see your active pets."),
+    NO_PETS_FOUND = new LangSetting("no_pets_found", "{c1}You don't have any pets active."),
+    NO_RIDER_FOUND = new LangSetting("no_rider_found", "{c1}Your pet, {c2}%name%{c1}, does not have a rider."),
+            MORE_PETS_FOUND = new LangSetting("more_pets_found", "{c1}You have more than one pet active. Please specify a pet name using \"{c2}/" + Settings.COMMAND + " %command%{c1}\" Use \"{c2}/" + Settings.COMMAND + " info{c1} for pet names to reference."),
+            PET_CREATED = new LangSetting("pet_created", "{c1}Your new {c2}%type% {c1}pet follows behind you."),
+            RIDER_CREATED = new LangSetting("rider_created", "{c1}Your new {c2}%type% {c1}pet rides on {c2}%name%{c1}."),
+    RIDER_REMOVED = new LangSetting("rider_removed", "The rider of your pet, {c2}%name% has been removed."),
+    PET_REMOVED = new LangSetting("pet_removed", "Your pet, {c2}%name% has been removed."),
+    PET_ALREADY_SITTING = new LangSetting("pet_already_sitting", "Your pet, {c2}%name%{c1}, is already sitting."),
+    PET_ALREADY_NOT_SITTING = new LangSetting("pet_already_not_sitting", "Your pet, {c2}%name%{c1}, is not currently sitting."),
+    PET_SITTING = new LangSetting("pet_sitting", "Your pet, {c2}%name%{c1}, is now sitting."),
+    PET_NOT_SITTING = new LangSetting("pet_not_sitting", "Your pet, {c2}%name%{c1}, is no longer sitting."),
 
-    NO_PET = new LangSetting("no_pet", "{c1}You don't currently have a pet."),
+    /*NO_PET = new LangSetting("no_pet", "{c1}You don't currently have a pet."),
             PET_CALL = new LangSetting("pet_call", "{c1}Your pet has been called to your side."),
             NO_HIDDEN_PET = new LangSetting("no_hidden_pet", "{c1}Your pet is not currently hidden."),
             SHOW_PET = new LangSetting("show_pet", "{c1}Your hidden pet magically reappears!"),
@@ -117,5 +134,6 @@ public class Lang extends Options {
             ADMIN_ADD_SELECTOR = new LangSetting("admin_add_selector", "{c1}The {c2}pet Selector {c1}has been added to {c2}%player%{c1}'s inventory."),
             ADMIN_OPEN_SELECTOR = new LangSetting("admin_open_selector", "{c1}The {c2}pet Selector {c1}Menu has been opened for {c2}%player%."),
             ADMIN_CLOSE_SELECTOR = new LangSetting("admin_close_selector", "{c1}The {c2}pet Selector {c1}Menu has been closed for {c2}%player%."),
-            ADMIN_RELOAD_CONFIG = new LangSetting("admin_reload_config", "{c1}Configuration File reloaded.");
+            ADMIN_RELOAD_CONFIG = new LangSetting("admin_reload_config", "{c1}Configuration File reloaded.");*/
+    ;
 }
