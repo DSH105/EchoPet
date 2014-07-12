@@ -101,7 +101,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>5.6.2</version>
+            <version>5.5.8</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -115,7 +115,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.8</version>
+            <version>5.8.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
