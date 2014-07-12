@@ -69,12 +69,12 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
     }
 
     @Override
-    public Pet load(Player player, boolean sendMessage) {
-        Pet pet = load(player);
-        if (pet == null) {
+    public List<Pet> load(Player player, boolean sendMessage) {
+        List<Pet> loadedPets = loadPets(player);
+        if (loadedPets == null) {
             return super.load(player, sendMessage);
         }
-        return pet;
+        return loadedPets;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
     }
 
     @Override
-    public Pet load(Player player) {
+    public List<Pet> loadPets(Player player) {
         return load(IdentUtil.getIdentificationForAsString(player));
     }
 

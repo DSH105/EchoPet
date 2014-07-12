@@ -40,6 +40,8 @@ public interface PetManager {
 
     Pet getPetByName(Player player, String petName);
 
+    String getStorageNameOf(Pet pet);
+
     List<Pet> getAllPets();
 
     void removePets(String playerIdent);
@@ -50,11 +52,13 @@ public interface PetManager {
 
     void removePet(Pet pet, boolean makeDeathSound);
 
-    Pet load(Player player, boolean sendMessage);
+    List<Pet> load(Player player, boolean sendMessage);
 
     Pet create(Player owner, PetType type, boolean sendFailMessage);
 
-    Pet create(Player owner);
+    List<Pet> loadPets(Player owner);
+
+    Pet loadPet(Player owner, String petStorageName);
 
     void forceData(Pet pet);
 

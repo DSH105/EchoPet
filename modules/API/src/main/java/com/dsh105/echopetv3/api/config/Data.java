@@ -34,10 +34,11 @@ public class Data extends Options {
     }
 
     public static Setting<String> SECTION = new Setting<>(ConfigType.DATA, "%s");
-    public static Setting<String> PET_TYPE = new Setting<>(ConfigType.DATA, "%s.pet.type");
-    public static Setting<String> PET_NAME = new Setting<>(ConfigType.DATA, "%s.pet.name");
-    public static Setting<String[]> PET_DATA = new Setting<>(ConfigType.DATA, "%s.pet.data");
-    public static Setting<String> RIDER_TYPE = new Setting<>(ConfigType.DATA, "%s.rider.type");
-    public static Setting<String> RIDER_NAME = new Setting<>(ConfigType.DATA, "%s.rider.name");
-    public static Setting<String[]> RIDER_DATA = new Setting<>(ConfigType.DATA, "%s.rider.data");
+    public static Setting<String> PET_SECTION = new Setting<>(ConfigType.DATA, "%s.%s");
+    public static Setting<String> PET_TYPE = new Setting<>(ConfigType.DATA, "%s.%s.pet.type");
+    public static Setting<String> PET_NAME = new Setting<>(ConfigType.DATA, "%s.%s.pet.name");
+    public static Setting<String[]> PET_DATA = new Setting<>(ConfigType.DATA, "%s.%s.pet.data");
+    public static Setting<String> RIDER_TYPE = new Setting<>(ConfigType.DATA, "%s.%s.rider.type");
+    public static Setting<String> RIDER_NAME = new Setting<>(ConfigType.DATA, "%s.%s.rider.name");
+    public static Setting<String[]> RIDER_DATA = new Setting<>(ConfigType.DATA, "%s.%s.rider.data");
 }

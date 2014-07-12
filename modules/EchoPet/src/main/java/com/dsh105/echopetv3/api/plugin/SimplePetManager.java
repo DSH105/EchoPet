@@ -29,6 +29,7 @@ import com.dsh105.echopetv3.api.entity.PetData;
 import com.dsh105.echopetv3.api.entity.PetType;
 import com.dsh105.echopetv3.api.entity.pet.Pet;
 import com.dsh105.echopetv3.api.hook.WorldGuardProvider;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -36,6 +37,7 @@ import java.util.*;
 public class SimplePetManager implements PetManager {
 
     private HashMap<String, ArrayList<Pet>> IDENT_TO_PET_MAP = new HashMap<>();
+    private HashMap<String, HashMap<String, Pet>> IDENT_TO_PET_NAME_MAP = new HashMap<>();
 
     private void modify(Pet pet, boolean add) {
         ArrayList<Pet> existing = IDENT_TO_PET_MAP.get(pet.getOwnerIdent());
@@ -48,6 +50,22 @@ public class SimplePetManager implements PetManager {
             existing.remove(pet);
         }
         IDENT_TO_PET_MAP.put(pet.getOwnerIdent(), existing);
+
+        HashMap<String, Pet> petNameMap = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
+        if (petNameMap == null) {
+            petNameMap = new HashMap<>();
+        }
+        if (add) {
+            String name = pet.getName();
+            int index = 0;
+            while (petNameMap.containsKey(name)) {
+                name = pet.getName() + "-" + index++;
+            }
+            petNameMap.put(name, pet);
+        } else {
+            petNameMap.remove(getStorageNameOf(pet));
+        }
+        IDENT_TO_PET_NAME_MAP.put(pet.getOwnerIdent(), petNameMap);
     }
 
     @Override
@@ -75,15 +93,9 @@ public class SimplePetManager implements PetManager {
 
     @Override
     public Map<String, Pet> getPetNameMapFor(String playerIdent) {
-        Map<String, Pet> petNameMap = new HashMap<>();
-        List<Pet> pets = getPetsFor(playerIdent);
-        int index = 0;
-        for (Pet pet : pets) {
-            String name = pet.getName();
-            if (petNameMap.containsKey(name)) {
-                name = name + "-" + index++;
-            }
-            petNameMap.put(name, pet);
+        HashMap<String, Pet> petNameMap = IDENT_TO_PET_NAME_MAP.get(playerIdent);
+        if (petNameMap == null) {
+            petNameMap = new HashMap<>();
         }
         return Collections.unmodifiableMap(petNameMap);
     }
@@ -101,6 +113,11 @@ public class SimplePetManager implements PetManager {
     @Override
     public Pet getPetByName(Player player, String petName) {
         return getPetByName(IdentUtil.getIdentificationForAsString(player), petName);
+    }
+
+    @Override
+    public String getStorageNameOf(Pet pet) {
+        return GeneralUtil.getKeyAtValue(getPetNameMapFor(pet.getOwnerIdent()), pet);
     }
 
     @Override
@@ -139,13 +156,18 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
-    public Pet load(Player player, boolean sendMessage) {
-        Pet pet = create(player);
+    public List<Pet> load(Player player, boolean sendMessage) {
+        List<Pet> loadedPets = loadPets(player);
 
-        if (pet != null && sendMessage) {
-            Lang.PET_LOADED.send(player, "petname", pet.getName());
+        if (sendMessage && !loadedPets.isEmpty()) {
+            if (loadedPets.size() == 1) {
+                Lang.PET_LOADED.send(player, "name", loadedPets.get(0).getName());
+            } else {
+                Lang.PETS_LOADED.send(player, "number", loadedPets.size()  + "");
+            }
         }
-        return pet;
+
+        return loadedPets;
     }
 
     @Override
@@ -169,7 +191,22 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
-    public Pet create(Player owner) {
+    public List<Pet> loadPets(Player owner) {
+        ArrayList<Pet> loadedPets = new ArrayList<>();
+        ConfigurationSection section = EchoPet.getCore().getSettings(Data.class).getConfig().getConfigurationSection(Data.SECTION.getPath(IdentUtil.getIdentificationForAsString(owner)));
+        if (section != null) {
+            for (String key : section.getKeys(false)) {
+                Pet pet = loadPet(owner, key);
+                if (pet != null) {
+                    loadedPets.add(pet);
+                }
+            }
+        }
+        return Collections.unmodifiableList(loadedPets);
+    }
+
+    @Override
+    public Pet loadPet(Player owner, String petStorageName) {
         if (!Settings.LOAD_SAVED_PETS.getValue()) {
             Lang.PET_LOADED.send(owner);
             return null;
@@ -177,35 +214,35 @@ public class SimplePetManager implements PetManager {
 
         String ident = IdentUtil.getIdentificationForAsString(owner);
 
-        PetType type = PetType.valueOf(Data.PET_TYPE.getValue(ident));
+        PetType type = PetType.valueOf(Data.PET_TYPE.getValue(ident, petStorageName));
         Pet pet = create(owner, type, true);
         if (pet == null) {
             return null;
         }
 
-        String name = Data.PET_NAME.getValue(ident);
+        String name = Data.PET_NAME.getValue(ident, petStorageName);
         if (name == null) {
             name = PetSettings.DEFAULT_NAME.getValue(type.storageName());
         }
         pet.setName(name);
 
-        for (String value : Data.PET_DATA.getValue(ident)) {
+        for (String value : Data.PET_DATA.getValue(ident, petStorageName)) {
             PetData petData = PetData.valueOf(value);
             pet.setDataValue(petData);
         }
 
-        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(ident));
+        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(ident, petStorageName));
         if (riderType != null) {
             Pet rider = pet.spawnRider(riderType, true);
 
             if (rider != null) {
-                String riderName = Data.RIDER_NAME.getValue(ident);
+                String riderName = Data.RIDER_NAME.getValue(ident, petStorageName);
                 if (riderName == null) {
                     riderName = PetSettings.DEFAULT_NAME.getValue(riderType.storageName());
                 }
                 rider.setName(riderName);
 
-                for (String value : Data.RIDER_DATA.getValue(ident)) {
+                for (String value : Data.RIDER_DATA.getValue(ident, petStorageName)) {
                     PetData petData = PetData.valueOf(value);
                     rider.setDataValue(petData);
                 }
@@ -247,8 +284,10 @@ public class SimplePetManager implements PetManager {
         clear(pet);
 
         String ident = pet.getOwnerIdent();
-        Data.PET_TYPE.setValue(pet.getType().storageName(), ident);
-        Data.PET_NAME.setValue(pet.getName(), ident);
+        String petStorageName = getStorageNameOf(pet);
+
+        Data.PET_TYPE.setValue(pet.getType().storageName(), ident, petStorageName);
+        Data.PET_NAME.setValue(pet.getName(), ident, petStorageName);
 
         List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
         if (!activeData.isEmpty()) {
@@ -256,13 +295,13 @@ public class SimplePetManager implements PetManager {
             for (PetData petData : activeData) {
                 converted.add(petData.storageName());
             }
-            Data.PET_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY));
+            Data.PET_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petStorageName);
         }
 
         if (pet.getRider() != null) {
             Pet rider = pet.getRider();
-            Data.RIDER_TYPE.setValue(rider.getType().storageName(), ident);
-            Data.RIDER_NAME.setValue(rider.getName(), ident);
+            Data.RIDER_TYPE.setValue(rider.getType().storageName(), ident, petStorageName);
+            Data.RIDER_NAME.setValue(rider.getName(), ident, petStorageName);
 
             List<PetData> activeRiderData = AttributeAccessor.getActiveDataValues(rider);
             if (!activeRiderData.isEmpty()) {
@@ -270,7 +309,7 @@ public class SimplePetManager implements PetManager {
                 for (PetData petData : activeRiderData) {
                     converted.add(petData.storageName());
                 }
-                Data.RIDER_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY));
+                Data.RIDER_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petStorageName);
             }
         }
     }

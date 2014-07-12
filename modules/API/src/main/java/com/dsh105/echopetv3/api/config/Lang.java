@@ -48,8 +48,10 @@ public class Lang extends Options {
             INVALID_PET_TYPE = new LangSetting("invalid_pet_type", "{c2}%type% {c1}is not a valid pet type. See \"{c2}/pet list{c1}\" {c1}for a list of pet types."),
             INVALID_PET_DATA = new LangSetting("invalid_pet_data", "{c1}Invalid data types entered: {c2}%data%"),
             NAME_NOT_ALLOWED = new LangSetting("name_not_allowed", "{c1}You are not permitted to name your pet {c2}%name%{c1}."),
+            DATA_FORCED = new LangSetting("data_forced", "{c1}The following data types have been forced: {c2}%data%"),
 
     PET_LOADED = new LangSetting("pet_loaded", "{c2}%name% {c1}was retrieved from your last session.", "Sent when a pet is loaded."),
+    PETS_LOADED = new LangSetting("pets_loaded", "{c2}%number% {c1}pets were retrieved from your last session.", "Sent when a pet is loaded."),
             PET_NOT_LOADED = new LangSetting("pet_not_loaded", "{c1}Pet loading cancelled by the server.", "Sent when pet loading is disabled."),
             SPAWN_BLOCKED = new LangSetting("spawn_blocked", "{c1}Your pet was blocked from spawning by another plugin.", "Sent when a pet could not be safely spawned."),
     PET_NOT_FOUND = new LangSetting("pet_not_found", "{c1}Your pet, {c2}%name%{c1}, could not be found. Use \"{c2}/" + Settings.COMMAND.getValue() + " info{c1}\" to see your active pets."),
