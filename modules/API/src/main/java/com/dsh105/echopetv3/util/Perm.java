@@ -38,6 +38,7 @@ public class Perm {
             SELECT = "echopet.pet.select",
             SELECTOR = "echopet.pet.selector",
             TOGGLE = "echopet.pet.toggle",
-            SIT = "echopet.pet.sit";
+            SIT = "echopet.pet.sit",
+            RELOAD = "echopet.pet.reload";
 
 }

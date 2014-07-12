@@ -42,7 +42,7 @@ public class NameSuccessPrompt extends MessagePrompt {
     public String getPromptText(ConversationContext context) {
         String name = (String) context.getSessionData("name");
         if (pet.setName(name, false)) {
-            return (this.admin ? Lang.ADMIN_NAME_PET : Lang.NAME_PET).getValue("player", pet.getOwnerName(), "type", pet.getType().humanName(), "name", pet.getName());
+            return (this.admin ? Lang.ADMIN_NAME_PET : Lang.NAME_PET).getValue("player", pet.getOwnerName(), "name", pet.getType().humanName(), "newname", pet.getName());
         }
         return Lang.NAME_NOT_ALLOWED.getValue("name", name);
     }

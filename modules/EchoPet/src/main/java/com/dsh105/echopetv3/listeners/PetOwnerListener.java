@@ -131,11 +131,13 @@ public class PetOwnerListener implements Listener {
             @Override
             public void run() {
                 if (player != null && player.isOnline()) {
-                    Pet pet = EchoPet.getManager().load(player, Settings.SEND_LOAD_MESSAGE.getValue());
-                    if (pet != null) {
+                    List<Pet> pets = EchoPet.getManager().load(player, Settings.SEND_LOAD_MESSAGE.getValue());
+                    if (!pets.isEmpty()) {
                         if (EchoPet.getCore().getProvider(VanishProvider.class).isVanished(player)) {
-                            pet.setShouldVanish(true);
-                            pet.getEntity().setInvisible(true);
+                            for (Pet pet : pets) {
+                                pet.setShouldVanish(true);
+                                pet.getEntity().setInvisible(true);
+                            }
                         }
                     }
                 }

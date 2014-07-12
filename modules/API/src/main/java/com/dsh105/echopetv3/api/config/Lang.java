@@ -66,6 +66,15 @@ public class Lang extends Options {
             PET_ALREADY_NOT_SITTING = new LangSetting("pet_already_not_sitting", "Your pet, {c2}%name%{c1}, is not currently sitting."),
             PET_SITTING = new LangSetting("pet_sitting", "Your pet, {c2}%name%{c1}, is now sitting."),
             PET_NOT_SITTING = new LangSetting("pet_not_sitting", "Your pet, {c2}%name%{c1}, is no longer sitting."),
+            NAME_PET = new LangSetting("name_pet", "{c1}Your pet, {c2}%name%{c1}, has been named &r%newname%{c1}."),
+
+    NAME_PET_PROMPT = new LangSetting("name_pet_prompt", "{c1}What would you like to name your pet?"),
+
+    RIDE_PET_ON = new LangSetting("ride_pet_on", "{c1}You are now riding your pet. Use {c2}WASD {c1}and the {c2}Space Bar {c1}to control it."),
+            RIDE_PET_OFF = new LangSetting("ride_pet_off", "{c1}You are no longer riding your pet."),
+
+    ADMIN_NAME_PET_PROMPT = new LangSetting("admin_name_pet_prompt", "{c1}What would you like to name {c2}%player%{c1}'s pet?"),
+    ADMIN_NAME_PET = new LangSetting("admin_name_pet", "{c2}%player%{c1}'s pet, {c2}%name%{c1}, has been named &r%newname%{c1}.");
 
     /*NO_PET = new LangSetting("no_pet", "{c1}You don't currently have a pet."),
             PET_CALL = new LangSetting("pet_call", "{c1}Your pet has been called to your side."),

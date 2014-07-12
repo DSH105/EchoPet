@@ -48,6 +48,7 @@ public class NameCommand implements CommandListener {
         } else {
             pet.setName(event.variable("name"), true);
         }
+        event.respond(Lang.NAME_PET.getValue("name", event.variable("pet_name"), "newname", event.variable("name")));
         return true;
     }
 
@@ -68,6 +69,7 @@ public class NameCommand implements CommandListener {
         } else {
             pet.setName(event.variable("name"), true);
         }
+        event.respond(Lang.NAME_PET.getValue("name", pet.getName(), "newname", event.variable("name")));
         return true;
     }
 }

@@ -32,7 +32,7 @@ public interface SQLPetManager extends PetManager {
 
     Pet load(Player player);
 
-    Pet load(String playerIdent);
+    List<Pet> load(String playerIdent);
 
     void clearRider(Player player);
 

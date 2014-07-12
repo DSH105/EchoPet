@@ -82,7 +82,7 @@ public class EnderDragonPetBase extends PetBase<EnderDragon, EntityEnderDragonPe
         getEntity().applyPitchAndYawChanges(getEntity().getPassenger().getLocation().getPitch() * 0.5F, getEntity().getPassenger().getLocation().getYaw() - 180);
 
         if (JUMP_FIELD != null) {
-            if (JUMP_FIELD.get(getEntity().getPassenger())) {
+            if (JUMP_FIELD.getAccessor().get(getEntity().getPassenger())) {
                 if (getOwner().isFlying()) {
                     getOwner().setFlying(false);
                 }
