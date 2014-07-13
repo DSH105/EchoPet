@@ -35,13 +35,13 @@ public class Settings extends Options {
     public void setDefaults() {
         for (Setting setting : Setting.getOptions(Settings.class, Setting.class)) {
             if (setting.equals(PET_NAME)) {
-                set(setting.getPath("My Pet"), get(setting), setting.getComments());
+                set(setting, "My Pet");
             } else if (setting.equals(WORLD)) {
-                set(setting.getPath(Bukkit.getWorlds().get(0).getName()), get(setting), setting.getComments());
+                set(setting, Bukkit.getWorlds().get(0).getName());
             } else if (setting.equals(WORLDGUARD_REGION)) {
-                set(setting.getPath("echopet"), get(setting), setting.getComments());
+                set(setting, "echopet");
             } else if (setting.equals(PET_NAME_REGEX)) {
-                PET_NAME_REGEX.setValue(new ArrayList<Map<String, String>>() {
+                PET_NAME_REGEX.setValue(this, new ArrayList<Map<String, String>>() {
                     {
                         add(new HashMap<String, String>() {
                             {
@@ -51,7 +51,7 @@ public class Settings extends Options {
                     }
                 });
             } else {
-                set(setting.getPath(), setting.getDefaultValue(), setting.getComments());
+                set(setting);
             }
         }
     }
@@ -78,9 +78,9 @@ public class Settings extends Options {
     public static final Setting<Boolean> PET_NAME_REGEX_MATCHING = new Setting<>("petNamesRegexMatching", true);
     public static final Setting<ArrayList<Map<String, String>>> PET_NAME_REGEX = new Setting<>("petNamesRegex", new ArrayList<Map<String, String>>());
     public static final Setting<Boolean> WORLDS_DEFAULT = new Setting<>("worlds.enableByDefault", true);
-    public static final Setting<Boolean> WORLD = new Setting<>("worlds.%s", WORLDS_DEFAULT.getValue());
+    public static final Setting<Boolean> WORLD = new Setting<>("worlds.%s", null);
     public static final Setting<Boolean> WORLDGUARD_REGION_DEFAULT = new Setting<>("worldguard.regions.allowByDefault", true);
-    public static final Setting<Boolean> WORLDGUARD_REGION = new Setting<>("worldguard.regions.%s", WORLDGUARD_REGION_DEFAULT.getValue());
+    public static final Setting<Boolean> WORLDGUARD_REGION = new Setting<>("worldguard.regions.%s", null);
     public static final Setting<Boolean> WORLDGUARD_REGION_ENTER = new Setting<>("worldguard.regionEnterCheck", true);
 
 }

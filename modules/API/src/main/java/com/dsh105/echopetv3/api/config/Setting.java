@@ -25,12 +25,12 @@ public class Setting<T> extends Option<T> {
     private ConfigType configType;
 
     public Setting(ConfigType configType, String path, String... comments) {
-        super(EchoPet.getCore().getSettings(configType).getConfig().config(), path, comments);
+        super(EchoPet.getCore().getConfig(configType).config(), path, comments);
         this.configType = configType;
     }
 
     public Setting(ConfigType configType, String path, T defaultValue, String... comments) {
-        super(EchoPet.getCore().getSettings(configType).getConfig().config(), path, defaultValue, comments);
+        super(EchoPet.getCore().getConfig(configType).config(), path, defaultValue, comments);
         this.configType = configType;
     }
 

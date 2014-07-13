@@ -29,7 +29,7 @@ public class Lang extends Options {
     @Override
     public void setDefaults() {
         for (LangSetting setting : Setting.getOptions(Lang.class, LangSetting.class)) {
-            set(setting.getPath(), setting.getDefaultValue(), setting.getComments());
+            set(setting);
         }
     }
 
@@ -40,6 +40,7 @@ public class Lang extends Options {
             PLUGIN_INFORMATION = new LangSetting("plugin_information", "{c1}Running EchoPet v{c2}%version%{c1}. Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
             COMMAND_HOVER_TIP = new LangSetting("commandhover_tip", "&e&oHover over to see more information about each command. Click to insert it into the chat window.", "Reminds players to hover over commands to see more information"),
             HOVER_TIP = new LangSetting("hover_tip", "&e&oHover over to see more information."),
+            HELP_INDEX_TOO_BIG = new LangSetting("help_index_too_big", "{c1}Page {c2}%index% {c1}does not exist."),
 
     PETS_DISABLED_HERE = new LangSetting("pets_disabled_here", "{c1}pets are not allowed here.", "Sent when pets are disabled in a certain area"),
             PET_TYPE_DISABLED = new LangSetting("pet_type_disabled", "{c2}%type% {c1}pets are disabled."),

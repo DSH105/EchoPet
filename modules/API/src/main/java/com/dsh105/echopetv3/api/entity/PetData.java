@@ -90,14 +90,14 @@ public enum PetData {
     private static PetData[] VALUES;
 
     static {
-        List<PetData> valid = Arrays.asList(PetData.values());
+        ArrayList<PetData> valid = new ArrayList<>(Arrays.asList(PetData.values()));
         valid.remove(PetData.DEFAULT);
         VALUES = valid.toArray(new PetData[0]);
     }
 
     private String storageName;
     private List<Type> validTypes;
-    private HashMap<Type, Object> typeToObjectMap = new HashMap<>();
+    private HashMap<Type, Object> typeToObjectMap;
 
     PetData() {
 
@@ -106,14 +106,17 @@ public enum PetData {
     PetData(String storageName, Type... validTypes) {
         this.storageName = storageName;
         this.validTypes = ImmutableList.copyOf(validTypes);
-
-        // Setup any default values (etc.) for each data type
-        for (Type type : validTypes) {
-            type.setup(this);
-        }
     }
 
     public Map<Type, Object> getTypeToObjectMap() {
+        if (typeToObjectMap == null) {
+            typeToObjectMap = new HashMap<>();
+
+            // Setup any default values (etc.) for each data type
+            for (Type type : getTypes()) {
+                type.setup(this);
+            }
+        }
         return Collections.unmodifiableMap(typeToObjectMap);
     }
 
@@ -126,11 +129,11 @@ public enum PetData {
     }
 
     public List<Type> getTypes() {
-        return this.validTypes;
+        return Collections.unmodifiableList(this.validTypes);
     }
 
     public boolean isType(Type t) {
-        return this.validTypes.contains(t);
+        return this.getTypes().contains(t);
     }
 
     public static ArrayList<PetData> allOfType(Type type) {
@@ -202,7 +205,7 @@ public enum PetData {
         HORSE_ARMOUR {
             @Override
             public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, petData == PetData.NO_ARMOUR ? HorseArmour.NONE : HorseArmour.valueOf(petData.toString()));
+                petData.typeToObjectMap.put(this, petData == NO_ARMOUR ? HorseArmour.NONE : HorseArmour.valueOf(petData.toString()));
             }
         };
 

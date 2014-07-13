@@ -8,12 +8,6 @@ website: ${project.url}
 main: com.dsh105.echopetv3.EchoPetPlugin
 softdepend: [WorldGuard, VanishNoPacket]
 
-commands:
-    ecupdate:
-        description: Update the EchoPet plugin
-        permission: echopet.update
-    echopet:
-        description: View plugin information and general help
 permissions:
     echopet.update:
         default: op

@@ -39,7 +39,7 @@ public class PetSelector {
         Layout layout = new Layout(45, "Pets", MenuPreset.SELECTOR_PRESET);
 
         List<PetType> types = PetType.sortAlphabetically();
-        for (int i = 0; i < MenuPreset.values().length; i++) {
+        for (int i = 0; i < types.size(); i++) {
             PetType petType = types.get(i);
             layout.setSlot(i, new CommandIcon("echopet.pet.type." + petType.storageName(), petType.getCommand(), petType.getMaterial(), 1, petType.getMaterialData(), petType.humanName()));
         }
@@ -65,7 +65,7 @@ public class PetSelector {
             for (Map.Entry<Integer, Icon> entry : LAYOUT.getSlots().entrySet()) {
                 if (entry.getValue() instanceof CommandIcon) {
                     CommandIcon icon = (CommandIcon) entry.getValue();
-                    if (!MenuSettings.SELECTOR_SHOW_DISABLED_PETS.getValue()) {
+                    if (!MenuSettings.SELECTOR_SHOW_DISABLED_PETS.getValue(EchoPet.getCore().getConfig(ConfigType.MENU).config())) {
                         String[] parts = icon.getCommand().split("\\s+");
                         if (parts.length <= 1) {
                             continue;

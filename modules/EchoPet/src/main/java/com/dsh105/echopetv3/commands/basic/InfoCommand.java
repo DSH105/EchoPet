@@ -38,8 +38,8 @@ import java.util.Map;
 public class InfoCommand implements CommandListener {
 
     @Command(
-            command = "Retrieve info on all of your active pets",
-            description = "",
+            command = "info",
+            description = "Retrieve info on all of your active pets",
             permission = Perm.INFO
     )
     public boolean command(CommandEvent<Player> event) {

@@ -48,7 +48,8 @@ public class WorldGuardProviderBase extends PluginDependencyProviderBase<WorldGu
     }
 
     public boolean allowPets(Location location) {
-        return Settings.WORLD.getValue(location.getWorld().getName()) && allowRegion(location);
+        Boolean allowWorld = Settings.WORLD.getValue(location.getWorld().getName());
+        return (allowWorld == null ? Settings.WORLDS_DEFAULT.getValue() : allowWorld) && allowRegion(location);
     }
 
     public boolean allowRegion(Location location) {
@@ -69,8 +70,8 @@ public class WorldGuardProviderBase extends PluginDependencyProviderBase<WorldGu
 
             for (ProtectedRegion region : set) {
                 if (EchoPet.getConfig(ConfigType.GENERAL).get(Settings.WORLDGUARD_REGION.getPath(region.getId())) != null) {
-                    // Defaults are handled by the Settings manager
-                    result = Settings.WORLDGUARD_REGION.getValue(region.getId());
+                    Boolean allow = Settings.WORLDGUARD_REGION.getValue(region.getId());
+                    result = allow == null ? Settings.WORLDGUARD_REGION_DEFAULT.getValue() : allow;
                 }
             }
 

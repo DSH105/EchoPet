@@ -98,11 +98,11 @@ public enum PetType {
         this.material = material;
         this.materialData = (short) materialData;
 
-        String classIdentifier = humanName().replace(" Pet", "").replace(" ", "");
-        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type." + classIdentifier + "Base").getReflectedClass();
+        String classIdentifier = humanName().replace(" ", "");
+        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type.Entity" + classIdentifier + "PetBase").getReflectedClass();
         this.petClass = new Reflection().reflect("com.dsh105.echopetv3.api.entity.pet.type." + classIdentifier + "PetBase").getReflectedClass();
 
-        this.command = "pet " + toString().toLowerCase();
+        this.command = "pet " + storageName();
     }
 
     public int getRegistrationId() {
@@ -153,7 +153,7 @@ public enum PetType {
     }
 
     public String humanName() {
-        return StringUtil.capitalise(toString().replace("_", " "));
+        return StringUtil.capitalise(toString().toLowerCase().replace("_", " "));
     }
 
     public static List<PetType> sortAlphabetically() {

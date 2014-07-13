@@ -19,23 +19,23 @@ package com.dsh105.echopetv3.api.config;
 
 public enum ConfigType {
 
-    GENERAL("config.yml",
+    GENERAL("config/config.yml",
             "EchoPet By DSH105",
             "---------------------",
             "Configuration for EchoPet 2.x",
             "See the EchoPet Wiki before editing this file",
             "https://github.com/DSH105/EchoPet/wiki/"),
 
-    PETS("pets-config.yml"),
+    PETS("config/pets-config.yml"),
 
-    DATA("pet-data.yml"),
+    DATA("data/pet-data.yml"),
 
-    MESSAGES("messages.yml",
+    MESSAGES("config/messages.yml",
             "EchoPet By DSH105",
             "---------------------",
             "Language Configuration File"),
 
-    MENU("menu-config.yml");
+    MENU("config/menu-config.yml");
 
     private String path;
     private String[] header;

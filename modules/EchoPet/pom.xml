@@ -167,6 +167,7 @@
                                 <includes>
                                     <artifact>com.dsh105:EchoPet*</artifact>
                                     <artifact>com.dsh105:CommandManager</artifact>
+                                    <artifact>com.dsh105:MenuAPI</artifact>
                                     <artifact>com.captainbern.minecraft:Minecraft-Reflection</artifact>
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>

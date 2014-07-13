@@ -32,13 +32,13 @@ public class MenuSettings extends Options {
     public void setDefaults() {
         if (EchoPet.getCore().getSettings(Settings.class).getConfig().get("petSelector.menu.slots") != null) {
             // Migrate data so it's neater
-            PetSelector.getLayout().moveFileDataTo(EchoPet.getCore().getSettings(Settings.class).getConfig().config(), "petSelector", getConfig().config(), "selector");
+            PetSelector.getLayout().moveFileDataTo(EchoPet.getCore().getConfig(), "petSelector", getConfig().config(), "selector");
             this.getConfig().set("petSelector", null);
         } else {
             PetSelector.getLayout().saveToFile(getConfig().config(), "selector");
 
             for (Setting setting : Setting.getOptions(MenuSettings.class, Setting.class)) {
-                set(setting.getPath(), setting.getValue(), setting.getComments());
+                set(setting);
             }
         }
     }

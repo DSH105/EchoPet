@@ -37,6 +37,6 @@ public abstract class EntityEquipablePetBase<T extends EquipablePet> extends Ent
 
     @Override
     public void setWeapon(org.bukkit.inventory.ItemStack stack) {
-        setEquipment(0, new ItemStack((Item) Item.REGISTRY.a(stack.getType().name().toLowerCase())));
+        setEquipment(0, new ItemStack((Item) Item.REGISTRY.get(stack.getType().name().toLowerCase())));
     }
 }
