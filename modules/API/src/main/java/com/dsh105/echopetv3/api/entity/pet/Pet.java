@@ -60,6 +60,8 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     String getIdleSound();
 
+    String getHurtSound();
+
     String getDeathSound();
 
     void makeStepSound();

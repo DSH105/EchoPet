@@ -52,7 +52,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     // Whether to use the new NMS AI or not
     @Override
     protected boolean bj() {
-        return super.bj();
+        return true;
     }
 
     // 'on tick' function
@@ -147,6 +147,11 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     @Override
     protected String t() {
         return getPet().getIdleSound();
+    }
+
+    @Override
+    protected String aS() {
+        return getPet().getHurtSound();
     }
 
     @Override

@@ -572,4 +572,9 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     public void doJumpAnimation() {
 
     }
+
+    @Override
+    public String getHurtSound() {
+        return "";
+    }
 }
