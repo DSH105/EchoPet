@@ -66,7 +66,7 @@ public class PetCommand implements CommandListener {
         return true;
     }
 
-    public class Create {
+    public class Create implements CommandListener {
         @Command(
                 command = "<type> [data] [name...]",
                 description = "Creates a new pet of the given type",

@@ -377,7 +377,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         )
         public boolean onUpdateCommand(CommandEvent event) {
             if (updateChecked) {
-                new Updater(this, 53655, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+                new Updater(EchoPet.getCore(), 53655, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
             } else {
                 event.respond(Lang.UPDATE_NOT_AVAILABLE.getValue());
             }
