@@ -30,6 +30,7 @@ import com.dsh105.echopetv3.api.hook.VanishProvider;
 import com.dsh105.echopetv3.api.inventory.PetSelector;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,14 +51,16 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         Entity entity = event.getRightClicked();
-        Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
-        if (nmsEntity instanceof EntityPet) {
-            Pet pet = ((EntityPet) nmsEntity).getPet();
-            event.setCancelled(true);
-            PetInteractEvent interactEvent = new PetInteractEvent(pet, player, PetInteractEvent.Action.RIGHT_CLICK, false);
-            EchoPet.getCore().getServer().getPluginManager().callEvent(interactEvent);
-            if (!interactEvent.isCancelled()) {
-                pet.onInteract(player);
+        if (entity instanceof LivingEntity) {
+            Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
+            if (nmsEntity instanceof EntityPet) {
+                Pet pet = ((EntityPet) nmsEntity).getPet();
+                event.setCancelled(true);
+                PetInteractEvent interactEvent = new PetInteractEvent(pet, player, PetInteractEvent.Action.RIGHT_CLICK, false);
+                EchoPet.getCore().getServer().getPluginManager().callEvent(interactEvent);
+                if (!interactEvent.isCancelled()) {
+                    pet.onInteract(player);
+                }
             }
         }
     }

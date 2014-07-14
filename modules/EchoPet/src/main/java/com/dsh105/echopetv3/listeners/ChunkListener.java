@@ -20,6 +20,7 @@ package com.dsh105.echopetv3.listeners;
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.echopetv3.api.entity.entitypet.EntityPet;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,10 +33,12 @@ public class ChunkListener implements Listener {
         if (event.getChunk().getEntities().length > 0) {
             for (int i = 0; i < event.getChunk().getEntities().length; i++) {
                 Entity entity = event.getChunk().getEntities()[i];
-                Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
-                if (nmsEntity instanceof EntityPet) {
-                    ((EntityPet) nmsEntity).getPet().despawn(false);
-                    event.setCancelled(true);
+                if (entity instanceof LivingEntity) {
+                    Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
+                    if (nmsEntity instanceof EntityPet) {
+                        ((EntityPet) nmsEntity).getPet().despawn(false);
+                        event.setCancelled(true);
+                    }
                 }
             }
         }

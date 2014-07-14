@@ -25,6 +25,7 @@ import com.dsh105.echopetv3.api.event.PetInteractEvent;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -74,23 +75,27 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPetEnterPortal(EntityPortalEvent event) {
-        Entity e = event.getEntity();
-        if (BukkitUnwrapper.getInstance().unwrap(e) instanceof EntityPet) {
-            event.setCancelled(true);
+        Entity entity = event.getEntity();
+        if (entity instanceof LivingEntity) {
+            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
+                event.setCancelled(true);
+            }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
-        Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
-        if (nmsEntity instanceof EntityPet) {
-            Pet pet = ((EntityPet) nmsEntity).getPet();
-            Entity damager = event.getDamager();
-            if (damager instanceof Player) {
-                PetInteractEvent interactEvent = new PetInteractEvent(pet, (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
-                EchoPet.getCore().getServer().getPluginManager().callEvent(interactEvent);
-                event.setCancelled(interactEvent.isCancelled());
+        if (entity instanceof LivingEntity) {
+            Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
+            if (nmsEntity instanceof EntityPet) {
+                Pet pet = ((EntityPet) nmsEntity).getPet();
+                Entity damager = event.getDamager();
+                if (damager instanceof Player) {
+                    PetInteractEvent interactEvent = new PetInteractEvent(pet, (Player) damager, PetInteractEvent.Action.LEFT_CLICK, true);
+                    EchoPet.getCore().getServer().getPluginManager().callEvent(interactEvent);
+                    event.setCancelled(interactEvent.isCancelled());
+                }
             }
         }
     }
@@ -98,17 +103,21 @@ public class PetListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityInteract(EntityInteractEvent event) {
         Entity entity = event.getEntity();
-        if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
-            event.setCancelled(true);
+        if (entity instanceof LivingEntity) {
+            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
+                event.setCancelled(true);
+            }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockForm(EntityBlockFormEvent event) {
         Entity entity = event.getEntity();
-        if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet && event.getNewState().getType().equals(Material.SNOW)) {
-            event.setCancelled(true);
-            event.getNewState().setType(Material.AIR);
+        if (entity instanceof LivingEntity) {
+            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet && event.getNewState().getType().equals(Material.SNOW)) {
+                event.setCancelled(true);
+                event.getNewState().setType(Material.AIR);
+            }
         }
     }
 }
