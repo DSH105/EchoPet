@@ -169,7 +169,7 @@
                                     <artifact>com.dsh105:Commodus</artifact>
                                     <artifact>com.dsh105:CommandManager</artifact>
                                     <artifact>com.dsh105:MenuAPI</artifact>
-                                    <artifact>com.captainbern.minecraft:Minecraft-Reflection</artifact>
+                                    <artifact>com.captainbern:Minecraft-Reflection</artifact>
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
