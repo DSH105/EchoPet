@@ -43,6 +43,8 @@ public class PetCommand implements CommandListener {
     public PetCommand() {
         CommandManager manager = EchoPet.getCommandManager();
         manager.register(this);
+        manager.registerSubCommands(this, new Create());
+        manager.registerSubCommands(this, new HelpCommand());
         manager.registerSubCommands(this, new RiderCommand());
         manager.registerSubCommands(this, new NameCommand());
         manager.registerSubCommands(this, new RemoveCommand());
@@ -64,37 +66,38 @@ public class PetCommand implements CommandListener {
         return true;
     }
 
-    @SubCommand
-    @Command(
-            command = "<type> [data] [name...]",
-            description = "Creates a new pet of the given type",
-            permission = Perm.TYPE,
-            help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"name\" command"}
-    )
-    public boolean create(CommandEvent<Player> event) {
-        if (!GeneralUtil.isEnumType(PetType.class, event.variable("type"))) {
-            event.respond(Lang.INVALID_PET_TYPE.getValue("type", event.variable("type")));
+    public class Create {
+        @Command(
+                command = "<type> [data] [name...]",
+                description = "Creates a new pet of the given type",
+                permission = Perm.TYPE,
+                help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"name\" command"}
+        )
+        public boolean create(CommandEvent<Player> event) {
+            if (!GeneralUtil.isEnumType(PetType.class, event.variable("type"))) {
+                event.respond(Lang.INVALID_PET_TYPE.getValue("type", event.variable("type")));
+                return true;
+            }
+
+            PetTemp temp = PetTemp.build(event.variable("type"), event.variable("name"), event.variable("data"), event.sender());
+
+            Pet pet = EchoPet.getManager().create(event.sender(), temp.getPetType(), true);
+            if (pet == null) {
+                return true;
+            }
+            pet.setName(temp.getName());
+
+            if (!temp.getValidPetData().isEmpty()) {
+                pet.setDataValue(temp.getValidPetData().toArray(new PetData[0]));
+            }
+            if (!temp.getInvalidPetData().isEmpty()) {
+                event.respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", temp.getInvalidPetData())));
+            }
+
+            EchoPet.getManager().save(pet);
+            event.respond(Lang.PET_CREATED.getValue("type", temp.getPetType().humanName()));
             return true;
         }
-
-        PetTemp temp = PetTemp.build(event.variable("type"), event.variable("name"), event.variable("data"), event.sender());
-
-        Pet pet = EchoPet.getManager().create(event.sender(), temp.getPetType(), true);
-        if (pet == null) {
-            return true;
-        }
-        pet.setName(temp.getName());
-
-        if (!temp.getValidPetData().isEmpty()) {
-            pet.setDataValue(temp.getValidPetData().toArray(new PetData[0]));
-        }
-        if (!temp.getInvalidPetData().isEmpty()) {
-            event.respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", temp.getInvalidPetData())));
-        }
-
-        EchoPet.getManager().save(pet);
-        event.respond(Lang.PET_CREATED.getValue("type", temp.getPetType().humanName()));
-        return true;
     }
 
     protected static Pet getPetByName(Player owner, String petName) {

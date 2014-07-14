@@ -369,18 +369,19 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         return true;
     }
 
-    @SubCommand
-    @Command(
-            command = "update",
-            description = "Update the EchoPet plugin",
-            permission = Perm.UPDATE
-    )
-    public boolean onUpdateCommand(CommandEvent event) {
-        if (updateChecked) {
-            new Updater(this, 53655, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-        } else {
-            event.respond(Lang.UPDATE_NOT_AVAILABLE.getValue());
+    public class Update {
+        @Command(
+                command = "update",
+                description = "Update the EchoPet plugin",
+                permission = Perm.UPDATE
+        )
+        public boolean onUpdateCommand(CommandEvent event) {
+            if (updateChecked) {
+                new Updater(this, 53655, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+            } else {
+                event.respond(Lang.UPDATE_NOT_AVAILABLE.getValue());
+            }
+            return true;
         }
-        return true;
     }
 }

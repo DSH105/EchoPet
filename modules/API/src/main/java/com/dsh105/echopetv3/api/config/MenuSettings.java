@@ -30,7 +30,7 @@ public class MenuSettings extends Options {
 
     @Override
     public void setDefaults() {
-        if (EchoPet.getCore().getSettings(Settings.class).getConfig().get("petSelector.menu.slots") != null) {
+        if (EchoPet.getCore().getConfig().get("petSelector.menu.slots") != null) {
             // Migrate data so it's neater
             PetSelector.getLayout().moveFileDataTo(EchoPet.getCore().getConfig(), "petSelector", getConfig().config(), "selector");
             EchoPet.getCore().getConfig().set("petSelector", null);
