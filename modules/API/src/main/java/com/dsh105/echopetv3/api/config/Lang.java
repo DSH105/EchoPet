@@ -19,6 +19,7 @@ package com.dsh105.echopetv3.api.config;
 
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopetv3.api.plugin.EchoPetCore;
 
 public class Lang extends Options {
 
@@ -33,7 +34,8 @@ public class Lang extends Options {
         }
     }
 
-    public static final LangSetting PREFIX = new LangSetting("prefix", "&4[&cEchopet&4]&r ", "Plugin prefix appended to all messages."),
+    public static final LangSetting
+            PREFIX = new LangSetting("prefix", EchoPetCore.DEFAULT_PREFIX, "Plugin prefix appended to all messages."),
 
     UPDATE_NOT_AVAILABLE = new LangSetting("update_not_available", "{c1}An update is not available.", "Sent when an update is not available"),
             UPDATE_AVAILABLE = new LangSetting("update_available", "{c1}An update is available.\n{c1}Type \"{c2}/echopet update{c1}\" to update", "Sent when an update is not available"),

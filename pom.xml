@@ -66,6 +66,12 @@
             <groupId>com.dsh105</groupId>
             <artifactId>PowerMessage</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>Commodus</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- CommandManager -->
@@ -73,6 +79,12 @@
             <groupId>com.dsh105</groupId>
             <artifactId>CommandManager</artifactId>
             <version>1.0.2-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>Commodus</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- VanishNoPacket -->

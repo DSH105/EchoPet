@@ -21,10 +21,7 @@ import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.ClassTemplate;
 import com.captainbern.reflection.Reflection;
 import com.captainbern.reflection.SafeField;
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
-import com.dsh105.command.CommandManager;
+import com.dsh105.command.*;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
@@ -50,6 +47,7 @@ import com.dsh105.echopetv3.util.TableMigrationUtil;
 import com.dsh105.echopetv3.util.UUIDMigration;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -62,6 +60,12 @@ import java.util.*;
 
 import static com.captainbern.reflection.matcher.Matchers.withType;
 
+@Command(
+        command = "echopet",
+        description = "EchoPet - custom entities at your control",
+        permission = Perm.ECHOPET,
+        aliases = "ec"
+)
 public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandListener {
 
     private CommandManager commandManager;
@@ -83,7 +87,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     public void onEnable() {
         EchoPet.setCore(this);
 
-        commandManager = new CommandManager(this, "[EchoPet]");
+        commandManager = new CommandManager(this, DEFAULT_PREFIX);
 
         try {
             Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EntityPetBase");
@@ -163,6 +167,10 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
             UUIDMigration.migrateConfig(getConfig(ConfigType.DATA));
             Settings.CONVERT_DATA_FILE_TO_UUID.setValue(false);
         }
+
+        commandManager.setResponsePrefix(Lang.PREFIX.getValue());
+        commandManager.setFormatColour(ChatColor.getByChar(Settings.BASE_CHAT_COLOUR.getValue()));
+        commandManager.setHighlightColour(ChatColor.getByChar(Settings.HIGHLIGHT_CHAT_COLOUR.getValue()));
     }
 
     private void prepareSqlDatabase() {
@@ -255,10 +263,10 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         // Initiate all our fields
         ClassTemplate entityTypesTemplate = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityTypes"));
         List<SafeField<Map>> fields = entityTypesTemplate.getSafeFields(withType(Map.class));
-        Map<String, Class> entityNameToClassMapping = (Map<String, Class>) fields.get(0);
-        Map<Class, String> classToEntityNameMapping = (Map<Class, String>) fields.get(1);
-        Map<Class, Integer> classToIdMapping = (Map<Class, Integer>) fields.get(3);
-        Map<String, Integer> entityNameToIdMapping = (Map<String, Integer>) fields.get(4);
+        Map<String, Class> entityNameToClassMapping = (Map<String, Class>) fields.get(0).getAccessor().getStatic();
+        Map<Class, String> classToEntityNameMapping = (Map<Class, String>) fields.get(1).getAccessor().getStatic();
+        Map<Class, Integer> classToIdMapping = (Map<Class, Integer>) fields.get(3).getAccessor().getStatic();
+        Map<String, Integer> entityNameToIdMapping = (Map<String, Integer>) fields.get(4).getAccessor().getStatic();
 
         // First make sure we don't register something twice
         Iterator mapIter = entityNameToClassMapping.keySet().iterator();
@@ -355,22 +363,17 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         return configFiles.get(configType);
     }
 
-    @Command(
-            command = "echopet",
-            description = "EchoPet - custom entities at your control",
-            permission = Perm.ECHOPET,
-            aliases = "ec"
-    )
+    @ParentCommand
     public boolean onCommand(CommandEvent event) {
         event.respond(Lang.PLUGIN_INFORMATION.getValue("version", EchoPet.getCore().getDescription().getVersion()));
         return true;
     }
 
+    @SubCommand
     @Command(
-            command = "echopet update",
+            command = "update",
             description = "Update the EchoPet plugin",
-            permission = Perm.UPDATE,
-            aliases = "ec"
+            permission = Perm.UPDATE
     )
     public boolean onUpdateCommand(CommandEvent event) {
         if (updateChecked) {

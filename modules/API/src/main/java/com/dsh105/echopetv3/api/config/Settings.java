@@ -57,6 +57,8 @@ public class Settings extends Options {
     }
 
     public static final Setting<String> COMMAND = new Setting<>("command", "pet");
+    public static final Setting<String> BASE_CHAT_COLOUR = new Setting<>("baseChatColour", "e");
+    public static final Setting<String> HIGHLIGHT_CHAT_COLOUR = new Setting<>("highlightChatColour", "6");
     public static final Setting<Boolean> AUTO_UPDATE = new Setting<>("autoUpdate", false, "If set to true, EchoPet will automatically download and install new updates from BukkitDev.");
     public static final Setting<Boolean> CHECK_FOR_UPDATES = new Setting<>("checkForUpdates", true, "Notifies when new updates are available");
     public static final Setting<Boolean> SQL_OVERRIDE = new Setting<>("sql.overrideFile", true);

@@ -27,6 +27,8 @@ import org.bukkit.plugin.Plugin;
 
 public interface EchoPetCore extends Plugin {
 
+    public static final String DEFAULT_PREFIX = "&4[&cEchoPet&4]&r ";
+
     CommandManager getCommandManager();
 
     PetManager getPetManager();

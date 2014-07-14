@@ -166,6 +166,7 @@
                             <artifactSet>
                                 <includes>
                                     <artifact>com.dsh105:EchoPet*</artifact>
+                                    <artifact>com.dsh105:Commodus</artifact>
                                     <artifact>com.dsh105:CommandManager</artifact>
                                     <artifact>com.dsh105:MenuAPI</artifact>
                                     <artifact>com.captainbern.minecraft:Minecraft-Reflection</artifact>
