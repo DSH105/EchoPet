@@ -38,35 +38,43 @@ import java.util.List;
 public class RiderCommand implements CommandListener {
 
     @Command(
-            command = "rider <type> [data] [name...]",
+            command = "rider <r:" + PetCommand.PET_REGEX_STRING + ",n:" + PetCommand.PET_VARIABLE_NAME + ">",
             description = "Creates a rider for an existing pet",
             permission = Perm.TYPE,
-            help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
+            help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "Names can be more than one word", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
     )
     public boolean rider(CommandEvent<Player> event) {
-        if (!GeneralUtil.isEnumType(PetType.class, event.variable("type"))) {
-            event.respond(Lang.INVALID_PET_TYPE.getValue("type", event.variable("type")));
+        String[] inputParts = PetCommand.petFromVariables(event.variable(PetCommand.PET_VARIABLE_NAME));
+        String petType = inputParts[0];
+        String data = inputParts[1];
+        String name = inputParts[2];
+        if (!GeneralUtil.isEnumType(PetType.class, petType)) {
+            event.respond(Lang.INVALID_PET_TYPE.getValue("type", petType));
             return true;
         }
 
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> rider <type> [data] [name...]");
-        return pet == null || createRider(pet, PetCommand.PetTemp.build(event.variable("type"), event.variable("name"), event.variable("data"), event.sender()), event);
+        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> rider " + PetCommand.PET_VARIABLE_NAME);
+        return pet == null || createRider(pet, PetCommand.PetTemp.build(petType, name, data, event.sender()), event);
     }
 
     @Command(
-            command = "<pet_name> rider <type> [data] [name...]",
+            command = "<pet_name> rider <r:" + PetCommand.PET_REGEX_STRING + ",n:" + PetCommand.PET_VARIABLE_NAME + ">",
             description = "Creates a rider for an existing pet (specified by <pet_name>)",
             permission = Perm.TYPE,
-            help = {"<pet_name> is the name of an existing pet", "Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
+            help = {"<pet_name> is the name of an existing pet", "Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "Names can be more than one word", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
     )
     public boolean riderForPet(CommandEvent<Player> event) {
-        if (!GeneralUtil.isEnumType(PetType.class, event.variable("type"))) {
-            event.respond(Lang.INVALID_PET_TYPE.getValue("type", event.variable("type")));
+        String[] inputParts = PetCommand.petFromVariables(event.variable(PetCommand.PET_VARIABLE_NAME));
+        String petType = inputParts[0];
+        String data = inputParts[1];
+        String name = inputParts[2];
+        if (!GeneralUtil.isEnumType(PetType.class, petType)) {
+            event.respond(Lang.INVALID_PET_TYPE.getValue("type", petType));
             return true;
         }
 
         Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
-        return pet == null || createRider(pet, PetCommand.PetTemp.build(event.variable("type"), event.variable("name"), event.variable("data"), event.sender()), event);
+        return pet == null || createRider(pet, PetCommand.PetTemp.build(petType, name, data, event.sender()), event);
     }
 
     @Command(

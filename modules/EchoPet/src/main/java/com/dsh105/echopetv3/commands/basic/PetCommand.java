@@ -31,6 +31,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Command(
         command = "pet",
@@ -39,6 +40,10 @@ import java.util.List;
         usage = "Use \"/pet help\" for help."
 )
 public class PetCommand implements CommandListener {
+
+    protected static final String PET_REGEX_STRING = "([^\\s]+)(:[^\\s]+)?(;.+)?";
+    protected static final String PET_VARIABLE_NAME = "<type>:[data];[name...]";
+    protected static final Pattern PET_REGEX_PATTERN = Pattern.compile(PET_REGEX_STRING);
 
     public PetCommand() {
         CommandManager manager = EchoPet.getCommandManager();
@@ -50,14 +55,15 @@ public class PetCommand implements CommandListener {
         manager.registerSubCommands(this, new RemoveCommand());
         manager.registerSubCommands(this, new InfoCommand());
         manager.registerSubCommands(this, new ListCommand());
-        manager.registerSubCommands(this, new CallCommand());
-        manager.registerSubCommands(this, new HatCommand());
-        manager.registerSubCommands(this, new MenuCommand());
-        manager.registerSubCommands(this, new RiderCommand());
-        manager.registerSubCommands(this, new SelectCommand());
-        manager.registerSubCommands(this, new SelectorCommand());
-        manager.registerSubCommands(this, new ToggleCommand());
+        //manager.registerSubCommands(this, new CallCommand());
+        //manager.registerSubCommands(this, new HatCommand());
+        //manager.registerSubCommands(this, new MenuCommand());
+        //manager.registerSubCommands(this, new RideCommand());
+        //manager.registerSubCommands(this, new SelectCommand());
+        //manager.registerSubCommands(this, new SelectorCommand());
+        //manager.registerSubCommands(this, new ToggleCommand());
         manager.registerSubCommands(this, new SitCommand());
+        //manager.registerSubCommands(this, new ReloadCommand());
     }
 
     @ParentCommand
@@ -68,18 +74,23 @@ public class PetCommand implements CommandListener {
 
     public class Create implements CommandListener {
         @Command(
-                command = "<type> [data] [name...]",
+                command = "<r:" + PET_REGEX_STRING + ",n:" + PET_VARIABLE_NAME + ">",
                 description = "Creates a new pet of the given type",
                 permission = Perm.TYPE,
-                help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"name\" command"}
+                help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "Names can be more than one word", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"name\" command"}
         )
         public boolean create(CommandEvent<Player> event) {
-            if (!GeneralUtil.isEnumType(PetType.class, event.variable("type"))) {
-                event.respond(Lang.INVALID_PET_TYPE.getValue("type", event.variable("type")));
+            String[] inputParts = petFromVariables(event.variable("<type>:[data];[name...]"));
+            String petType = inputParts[0];
+            String data = inputParts[1];
+            String name = inputParts[2];
+
+            if (!GeneralUtil.isEnumType(PetType.class, petType)) {
+                event.respond(Lang.INVALID_PET_TYPE.getValue("type", petType));
                 return true;
             }
 
-            PetTemp temp = PetTemp.build(event.variable("type"), event.variable("name"), event.variable("data"), event.sender());
+            PetTemp temp = PetTemp.build(petType, name, data, event.sender());
 
             Pet pet = EchoPet.getManager().create(event.sender(), temp.getPetType(), true);
             if (pet == null) {
@@ -98,6 +109,15 @@ public class PetCommand implements CommandListener {
             event.respond(Lang.PET_CREATED.getValue("type", temp.getPetType().humanName()));
             return true;
         }
+    }
+
+    protected static String[] petFromVariables(String input) {
+        String[] parts = input.split(":");
+        String petType = parts[0];
+        String[] dataParts = parts.length == 1 ? new String[]{"", ""} : parts[1].split(";");
+        String data = dataParts[0];
+        String name = StringUtil.combineArray(1, " ", dataParts);
+        return new String[] {petType, data, name};
     }
 
     protected static Pet getPetByName(Player owner, String petName) {
@@ -157,9 +177,9 @@ public class PetCommand implements CommandListener {
 
         public static PetTemp build(String petTypeVar, String nameVar, String dataVar, Player owner) {
             PetType petType = PetType.valueOf(petTypeVar.toUpperCase());
-            String name = nameVar == null ? petType.getDefaultName(owner.getName()) : nameVar;
+            String name = nameVar == null || nameVar.isEmpty() ? petType.getDefaultName(owner.getName()) : nameVar;
 
-            if (dataVar == null) {
+            if (dataVar == null || dataVar.isEmpty()) {
                 return new PetTemp(petType, name);
             }
 
