@@ -153,6 +153,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         }
 
         settings.put(ConfigType.GENERAL, new Settings(configFiles.get(ConfigType.GENERAL)));
+        settings.put(ConfigType.DATA, new PetSettings(configFiles.get(ConfigType.PETS)));
         settings.put(ConfigType.DATA, new Data(configFiles.get(ConfigType.DATA)));
         settings.put(ConfigType.MESSAGES, new Lang(configFiles.get(ConfigType.MESSAGES)));
         settings.put(ConfigType.MENU, new MenuSettings(configFiles.get(ConfigType.MENU)));

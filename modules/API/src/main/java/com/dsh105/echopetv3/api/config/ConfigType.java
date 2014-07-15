@@ -22,7 +22,7 @@ public enum ConfigType {
     GENERAL("config/config.yml",
             "EchoPet By DSH105",
             "---------------------",
-            "Configuration for EchoPet 2.x",
+            "Configuration for EchoPet 3.x",
             "See the EchoPet Wiki before editing this file",
             "https://github.com/DSH105/EchoPet/wiki/"),
 

@@ -19,6 +19,8 @@ package com.dsh105.echopetv3.api.config;
 
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.echopetv3.api.entity.PetType;
+import com.dsh105.echopetv3.api.inventory.DataMenu;
 import com.dsh105.echopetv3.api.inventory.PetSelector;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
 
@@ -36,6 +38,10 @@ public class MenuSettings extends Options {
             EchoPet.getCore().getConfig().set("petSelector", null);
         } else {
             PetSelector.getLayout().saveToFile(getConfig().config(), "selector");
+
+            for (PetType petType : PetType.values()) {
+                DataMenu.getDefaultLayout(petType).saveToFile(getConfig().config(), "petMenu." + petType.storageName());
+            }
 
             for (Setting setting : Setting.getOptions(MenuSettings.class, Setting.class)) {
                 set(setting);

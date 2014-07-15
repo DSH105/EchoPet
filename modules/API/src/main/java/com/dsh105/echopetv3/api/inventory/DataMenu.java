@@ -19,6 +19,7 @@ package com.dsh105.echopetv3.api.inventory;
 
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.particle.Particle;
+import com.dsh105.echopetv3.api.config.ConfigType;
 import com.dsh105.echopetv3.api.entity.PetData;
 import com.dsh105.echopetv3.api.entity.PetType;
 import com.dsh105.echopetv3.api.entity.pet.Pet;
@@ -59,7 +60,11 @@ public class DataMenu {
     public static Layout getLayout(final Pet pet) {
         Layout layout = LAYOUTS.get(pet.getType());
         if (layout == null) {
-            layout = getDefaultLayout(pet.getType());
+            layout = new Layout().loadFromFile(EchoPet.getConfig(ConfigType.MENU).config(), "petMenu." + pet.getType().storageName());
+
+            if (layout == null) {
+                layout = getDefaultLayout(pet.getType());
+            }
         }
 
         final ArrayList<MenuPreset> typePresets = MenuPreset.getPresets(pet.getType());
