@@ -40,6 +40,7 @@ public class TableMigrationUtil {
     public static final String LATEST_TABLE = "EchoPet_version3";
     private static final List<MigrationStrategy> tableMigrationStrategies = new ArrayList<MigrationStrategy>();
 
+    // TODO: auto-incrementing IDs
     // TODO: Perhaps migration strategies should be moved to their own classes.
     static {
         // Pets -> EchoPet
