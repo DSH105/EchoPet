@@ -84,7 +84,7 @@ public enum ReflectionConstants {
 
     private String[] vanilla;
     private String[] mcpc;
-    private int[] knownVersions = new int[] {163, 171, 172, 173};
+    private int[] knownVersions = new int[] {163, 171, 172, 173, 174};
     private int[] knownMCPCVersions = new int[] {16, 17};
     private int versionIndex = -1;
     private int mcpcVersionIndex = -1;
