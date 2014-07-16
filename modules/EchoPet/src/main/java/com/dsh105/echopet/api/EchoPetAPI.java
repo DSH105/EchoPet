@@ -50,14 +50,14 @@ public class EchoPetAPI {
     }
 
     /**
-     * Gives a {@link .com.dsh105.echopet.api.pet.Pet} to the specified {@link Player}
+     * Gives a {@link com.dsh105.echopet.api.pet.Pet} to the specified {@link Player}
      * <p/>
      * Pets will be spawned immediately next to the target player, linked until it is removed.
      *
-     * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link .com.dsh105.echopet.api.pet.Pet}
-     * @param petType     the {@link com.dsh105.echopet.compat.api.entity.PetType} (type of {@link .com.dsh105.echopet.api.pet.Pet}) that will be given to the player
+     * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link com.dsh105.echopet.api.pet.Pet}
+     * @param petType     the {@link com.dsh105.echopet.compat.api.entity.PetType} (type of {@link com.dsh105.echopet.api.pet.Pet}) that will be given to the player
      * @param sendMessage defines if the plugin sends a message to the target {@link Player}
-     * @return the {@link .com.dsh105.echopet.api.pet.Pet} created
+     * @return the {@link com.dsh105.echopet.api.pet.Pet} created
      */
     public IPet givePet(Player player, PetType petType, boolean sendMessage) {
         if (player != null && petType != null) {
@@ -75,9 +75,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Removes a {@link .com.dsh105.echopet.api.pet.Pet} if the {@link org.bukkit.entity.Player} has one active
+     * Removes a {@link com.dsh105.echopet.api.pet.Pet} if the {@link org.bukkit.entity.Player} has one active
      *
-     * @param player      the {@link org.bukkit.entity.Player} to remove their {@link .com.dsh105.echopet.api.pet.Pet} from
+     * @param player      the {@link org.bukkit.entity.Player} to remove their {@link com.dsh105.echopet.api.pet.Pet} from
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
@@ -94,29 +94,29 @@ public class EchoPetAPI {
     }
 
     /**
-     * Checks if a {@link org.bukkit.entity.Player} has a {@link .com.dsh105.echopet.api.pet.Pet}
+     * Checks if a {@link org.bukkit.entity.Player} has a {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @param player the {@link org.bukkit.entity.Player} used to check for {@link .com.dsh105.echopet.api.pet.Pet}
-     * @return true if {@link org.bukkit.entity.Player} has a {@link .com.dsh105.echopet.api.pet.Pet}, false if not
+     * @param player the {@link org.bukkit.entity.Player} used to check for {@link com.dsh105.echopet.api.pet.Pet}
+     * @return true if {@link org.bukkit.entity.Player} has a {@link com.dsh105.echopet.api.pet.Pet}, false if not
      */
     public boolean hasPet(Player player) {
         return EchoPet.getManager().getPet(player) != null;
     }
 
     /**
-     * Gets a {@link org.bukkit.entity.Player}'s {@link .com.dsh105.echopet.api.pet.Pet}
+     * Gets a {@link org.bukkit.entity.Player}'s {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @param player the {@link org.bukkit.entity.Player} to get the {@link .com.dsh105.echopet.api.pet.Pet} of
-     * @return the {@link .com.dsh105.echopet.api.pet.Pet} instance linked to the {@link org.bukkit.entity.Player}
+     * @param player the {@link org.bukkit.entity.Player} to get the {@link com.dsh105.echopet.api.pet.Pet} of
+     * @return the {@link com.dsh105.echopet.api.pet.Pet} instance linked to the {@link org.bukkit.entity.Player}
      */
     public IPet getPet(Player player) {
         return EchoPet.getManager().getPet(player);
     }
 
     /**
-     * Gets all active {@link .com.dsh105.echopet.api.pet.Pet}
+     * Gets all active {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @return an array of all active {@link .com.dsh105.echopet.api.pet.Pet}s
+     * @return an array of all active {@link com.dsh105.echopet.api.pet.Pet}s
      */
 
     public IPet[] getAllPets() {
@@ -125,10 +125,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Teleports a {@link .com.dsh105.echopet.api.pet.Pet} to a {@link org.bukkit.Location}
+     * Teleports a {@link com.dsh105.echopet.api.pet.Pet} to a {@link org.bukkit.Location}
      *
-     * @param pet      the {@link .com.dsh105.echopet.api.pet.Pet} to be teleported
-     * @param location the {@link org.bukkit.Location} to teleport the {@link .com.dsh105.echopet.api.pet.Pet} to
+     * @param pet      the {@link com.dsh105.echopet.api.pet.Pet} to be teleported
+     * @param location the {@link org.bukkit.Location} to teleport the {@link com.dsh105.echopet.api.pet.Pet} to
      * @return success of teleportation
      */
     public boolean teleportPet(IPet pet, Location location) {
@@ -143,9 +143,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Save a {@link .com.dsh105.echopet.api.pet.Pet} to file or an SQL Database
+     * Save a {@link com.dsh105.echopet.api.pet.Pet} to file or an SQL Database
      *
-     * @param pet      {@link .com.dsh105.echopet.api.pet.Pet} to be saved
+     * @param pet      {@link com.dsh105.echopet.api.pet.Pet} to be saved
      * @param saveType whether to save to file or SQL database
      * @return success of save
      */
@@ -164,10 +164,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link .com.dsh105.echopet.api.pet.Pet}
+     * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @param pet     the {@link .com.dsh105.echopet.api.pet.Pet} to add the data to
-     * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link .com.dsh105.echopet.api.pet.Pet}
+     * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to add the data to
+     * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link com.dsh105.echopet.api.pet.Pet}
      */
     public void addData(IPet pet, PetData petData) {
         if (pet == null) {
@@ -178,10 +178,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Removes {@link PetData} from a {@link .com.dsh105.echopet.api.pet.Pet}
+     * Removes {@link PetData} from a {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @param pet     the {@link .com.dsh105.echopet.api.pet.Pet} to remove the data from
-     * @param petData {@link PetData} to remove to the {@link .com.dsh105.echopet.api.pet.Pet}
+     * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to remove the data from
+     * @param petData {@link PetData} to remove to the {@link com.dsh105.echopet.api.pet.Pet}
      */
     public void removeData(IPet pet, PetData petData) {
         if (pet == null) {
@@ -192,11 +192,11 @@ public class EchoPetAPI {
     }
 
     /**
-     * Checks if a {@link .com.dsh105.echopet.api.pet.Pet} has specific {@link PetData}
+     * Checks if a {@link com.dsh105.echopet.api.pet.Pet} has specific {@link PetData}
      *
-     * @param pet     the {@link .com.dsh105.echopet.api.pet.Pet} to search
-     * @param petData the {@link PetData} searched for in the {@link .com.dsh105.echopet.api.pet.Pet} instance
-     * @return true if the {@link .com.dsh105.echopet.api.pet.Pet} has the specified {@link PetData}
+     * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to search
+     * @param petData the {@link PetData} searched for in the {@link com.dsh105.echopet.api.pet.Pet} instance
+     * @return true if the {@link com.dsh105.echopet.api.pet.Pet} has the specified {@link PetData}
      */
     public boolean hasData(IPet pet, PetData petData) {
         if (pet == null) {
@@ -254,10 +254,10 @@ public class EchoPetAPI {
     }
 
     /**
-     * Set a target for the {@link .com.dsh105.echopet.api.pet.Pet} to attack
+     * Set a target for the {@link com.dsh105.echopet.api.pet.Pet} to attack
      *
      * @param pet    the attacker
-     * @param target the {@link org.bukkit.entity.LivingEntity} for the {@link .com.dsh105.echopet.api.pet.Pet} to attack
+     * @param target the {@link org.bukkit.entity.LivingEntity} for the {@link com.dsh105.echopet.api.pet.Pet} to attack
      */
     public void setAttackTarget(IPet pet, LivingEntity target) {
         if (pet == null) {
@@ -274,7 +274,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * Get the {@link org.bukkit.entity.LivingEntity} that a {@link .com.dsh105.echopet.api.pet.Pet} is targeting
+     * Get the {@link org.bukkit.entity.LivingEntity} that a {@link com.dsh105.echopet.api.pet.Pet} is targeting
      *
      * @param pet the attacker
      * @return {@link org.bukkit.entity.LivingEntity} being attacked, null if none
@@ -287,9 +287,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add a predefined {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link .com.dsh105.echopet.api.pet.Pet} from the API
+     * Add a predefined {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link com.dsh105.echopet.api.pet.Pet} from the API
      *
-     * @param pet      the {@link .com.dsh105.echopet.api.pet.Pet} to add the goal to
+     * @param pet      the {@link com.dsh105.echopet.api.pet.Pet} to add the goal to
      * @param goalType type of goal
      */
     public void addGoal(IPet pet, GoalType goalType) {
@@ -309,9 +309,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add an implementation of {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link .com.dsh105.echopet.api.pet.Pet}
+     * Add an implementation of {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @param pet        the {@link .com.dsh105.echopet.api.pet.Pet} to add the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to
+     * @param pet        the {@link com.dsh105.echopet.api.pet.Pet} to add the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to
      * @param goal       the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to add
      * @param identifier a {@link java.lang.String} to identify the goal
      */
@@ -328,9 +328,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Remove a predefined goal from a {@link .com.dsh105.echopet.api.pet.Pet}'s AI
+     * Remove a predefined goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
      *
-     * @param pet      {@link .com.dsh105.echopet.api.pet.Pet} to remove the goal from
+     * @param pet      {@link com.dsh105.echopet.api.pet.Pet} to remove the goal from
      * @param goalType type of goal
      */
     public void removeGoal(IPet pet, GoalType goalType) {
@@ -342,11 +342,11 @@ public class EchoPetAPI {
     }
 
     /**
-     * Remove a goal from a {@link .com.dsh105.echopet.api.pet.Pet}'s AI
+     * Remove a goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
      * <p/>
-     * The goal is identified using a string, initiated when the goal is added to the {@link .com.dsh105.echopet.api.pet.Pet}
+     * The goal is identified using a string, initiated when the goal is added to the {@link com.dsh105.echopet.api.pet.Pet}
      *
-     * @param pet        {@link .com.dsh105.echopet.api.pet.Pet} to remove the goal from
+     * @param pet        {@link com.dsh105.echopet.api.pet.Pet} to remove the goal from
      * @param identifier String that identifies a {@link com.dsh105.echopet.compat.api.ai.PetGoal}
      */
     public void removeGoal(IPet pet, String identifier) {
@@ -358,9 +358,9 @@ public class EchoPetAPI {
     }
 
     /**
-     * Remove a goal from a {@link .com.dsh105.echopet.api.pet.Pet}'s AI
+     * Remove a goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
      *
-     * @param pet     {@link .com.dsh105.echopet.api.pet.Pet} to remove the goal from
+     * @param pet     {@link com.dsh105.echopet.api.pet.Pet} to remove the goal from
      * @param petGoal {@link com.dsh105.echopet.compat.api.ai.PetGoal} to remove
      */
     public void removeGoal(IPet pet, PetGoal petGoal) {
@@ -396,7 +396,7 @@ public class EchoPetAPI {
     }
 
     /**
-     * Types used for saving {@link .com.dsh105.echopet.api.pet.Pet}s
+     * Types used for saving {@link com.dsh105.echopet.api.pet.Pet}s
      */
     public enum SaveType {
         SQL, FILE
