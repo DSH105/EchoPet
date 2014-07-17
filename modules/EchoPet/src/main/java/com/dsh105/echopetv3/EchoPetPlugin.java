@@ -88,7 +88,8 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         EchoPet.setCore(this);
 
         commandManager = new CommandManager(this, DEFAULT_PREFIX);
-        commandManager.getHelpService().setIncludePermissionsInHelp(false);
+        commandManager.getHelpService().setIncludePermissionListing(false);
+        commandManager.getHelpService().setIgnoreCommandAccess(false);
 
         try {
             Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EntityPetBase");
