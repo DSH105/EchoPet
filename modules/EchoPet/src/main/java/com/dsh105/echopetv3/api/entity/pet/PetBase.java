@@ -51,12 +51,14 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class PetBase<T extends LivingEntity, S extends EntityPet> implements Pet<T, S> {
 
     protected SafeField<Boolean> JUMP_FIELD;
 
     private S entity;
+    private UUID petId;
 
     private String ownerIdent;
     private String name;
@@ -78,6 +80,11 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     protected PetBase(Player owner) {
         if (owner != null) {
             this.ownerIdent = IdentUtil.getIdentificationForAsString(owner);
+            petId = UUID.randomUUID();
+            while (EchoPet.getManager().getPetUniqueIdMap().containsKey(petId)) {
+                petId = UUID.randomUUID();
+            }
+
             this.entity = Spawn.spawn(this);
             if (this.entity != null) {
                 // Begin initiating our EntityPet
@@ -110,6 +117,11 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     @Override
     public S getEntity() {
         return entity;
+    }
+
+    @Override
+    public UUID getPetId() {
+        return petId;
     }
 
     @Override

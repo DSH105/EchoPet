@@ -36,8 +36,20 @@ import java.util.*;
 
 public class SimplePetManager implements PetManager {
 
+    /**
+     * Maps player owner to a list of active pets
+     */
     private HashMap<String, ArrayList<Pet>> IDENT_TO_PET_MAP = new HashMap<>();
+
+    /**
+     * Maps player owner to a map of human readable names for pets
+     */
     private HashMap<String, HashMap<String, Pet>> IDENT_TO_PET_NAME_MAP = new HashMap<>();
+
+    /**
+     * Maps pet unique ID to pet
+     */
+    private HashMap<UUID, Pet> PET_ID_TO_PET_MAP = new HashMap<>();
 
     private void modify(Pet pet, boolean add) {
         ArrayList<Pet> existing = IDENT_TO_PET_MAP.get(pet.getOwnerIdent());
@@ -50,6 +62,8 @@ public class SimplePetManager implements PetManager {
             existing.remove(pet);
         }
         IDENT_TO_PET_MAP.put(pet.getOwnerIdent(), existing);
+
+        PET_ID_TO_PET_MAP.put(pet.getPetId(), pet);
 
         HashMap<String, Pet> petNameMap = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
         if (petNameMap == null) {
@@ -113,6 +127,16 @@ public class SimplePetManager implements PetManager {
     @Override
     public Pet getPetByName(Player player, String petName) {
         return getPetByName(IdentUtil.getIdentificationForAsString(player), petName);
+    }
+
+    @Override
+    public Map<UUID, Pet> getPetUniqueIdMap() {
+        return Collections.unmodifiableMap(PET_ID_TO_PET_MAP);
+    }
+
+    @Override
+    public Pet getPetById(UUID uniqueId) {
+        return getPetUniqueIdMap().get(uniqueId);
     }
 
     @Override
@@ -181,19 +205,19 @@ public class SimplePetManager implements PetManager {
 
     @Override
     public Pet loadRider(Pet pet) {
-        String petStorageName = getStorageNameOf(pet);
-        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(pet.getOwnerIdent(), petStorageName));
+        String petId = pet.getPetId().toString();
+        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(pet.getOwnerIdent(), petId));
         if (riderType != null) {
             Pet rider = pet.spawnRider(riderType, true);
 
             if (rider != null) {
-                String riderName = Data.RIDER_NAME.getValue(pet.getOwnerIdent(), petStorageName);
+                String riderName = Data.RIDER_NAME.getValue(pet.getOwnerIdent(), petId);
                 if (riderName == null) {
                     riderName = PetSettings.DEFAULT_NAME.getValue(riderType.storageName());
                 }
                 rider.setName(riderName);
 
-                for (String value : Data.RIDER_DATA.getValue(pet.getOwnerIdent(), petStorageName)) {
+                for (String value : Data.RIDER_DATA.getValue(pet.getOwnerIdent(), petId)) {
                     PetData petData = PetData.valueOf(value);
                     rider.setDataValue(petData);
                 }
@@ -301,10 +325,10 @@ public class SimplePetManager implements PetManager {
         clear(pet);
 
         String ident = pet.getOwnerIdent();
-        String petStorageName = getStorageNameOf(pet);
+        String petId = pet.getPetId().toString();
 
-        Data.PET_TYPE.setValue(pet.getType().storageName(), ident, petStorageName);
-        Data.PET_NAME.setValue(pet.getName(), ident, petStorageName);
+        Data.PET_TYPE.setValue(pet.getType().storageName(), ident, petId);
+        Data.PET_NAME.setValue(pet.getName(), ident, petId);
 
         List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
         if (!activeData.isEmpty()) {
@@ -312,13 +336,13 @@ public class SimplePetManager implements PetManager {
             for (PetData petData : activeData) {
                 converted.add(petData.storageName());
             }
-            Data.PET_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petStorageName);
+            Data.PET_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petId);
         }
 
         if (pet.getRider() != null) {
             Pet rider = pet.getRider();
-            Data.RIDER_TYPE.setValue(rider.getType().storageName(), ident, petStorageName);
-            Data.RIDER_NAME.setValue(rider.getName(), ident, petStorageName);
+            Data.RIDER_TYPE.setValue(rider.getType().storageName(), ident, petId);
+            Data.RIDER_NAME.setValue(rider.getName(), ident, petId);
 
             List<PetData> activeRiderData = AttributeAccessor.getActiveDataValues(rider);
             if (!activeRiderData.isEmpty()) {
@@ -326,7 +350,7 @@ public class SimplePetManager implements PetManager {
                 for (PetData petData : activeRiderData) {
                     converted.add(petData.storageName());
                 }
-                Data.RIDER_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petStorageName);
+                Data.RIDER_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petId);
             }
         }
     }

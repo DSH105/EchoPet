@@ -27,12 +27,15 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     T getBukkitEntity();
 
     S getEntity();
+
+    UUID getPetId();
 
     String getName();
 

@@ -23,6 +23,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public interface PetManager {
 
@@ -39,6 +40,10 @@ public interface PetManager {
     Pet getPetByName(String playerIdent, String petName);
 
     Pet getPetByName(Player player, String petName);
+
+    Map<UUID, Pet> getPetUniqueIdMap();
+
+    Pet getPetById(UUID uniqueId);
 
     String getStorageNameOf(Pet pet);
 
