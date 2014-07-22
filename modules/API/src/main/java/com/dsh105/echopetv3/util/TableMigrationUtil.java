@@ -37,7 +37,7 @@ import java.util.UUID;
  * the table will be migrated twice (once for each version).
  */
 public class TableMigrationUtil {
-    public static final String LATEST_TABLE = "EchoPet_version3";
+    public static final String LATEST_TABLE = "EchoPet_version4";
     private static final List<MigrationStrategy> tableMigrationStrategies = new ArrayList<MigrationStrategy>();
 
     // TODO: auto-incrementing IDs
@@ -165,6 +165,39 @@ public class TableMigrationUtil {
                     }
 
                     statement.setLong(7, SQLUtil.serializePetData(riderDataList));
+                    statement.addBatch();
+                }
+                statement.executeBatch();
+            }
+        });
+
+        // EchoPet_version3 -> EchoPet_version4
+        // Pets are now referenced by a UUID to implement support for multiple pets per player
+        tableMigrationStrategies.add(new MigrationStrategy("EchoPet_version3") {
+            @Override
+            public String getMigratedTableSchema() {
+                return "EchoPet_version4 ("
+                        + "    PetId varchar(36) NOT NULL,"
+                        + "    OwnerName varchar(36),"
+                        + "    PetType varchar(255),"
+                        + "    PetName varchar(255),"
+                        + "    PetData BIGINT,"
+                        + "    RiderPetType varchar(255),"
+                        + "    RiderPetName varchar(255), "
+                        + "    RiderPetData BIGINT,"
+                        + "    PRIMARY KEY (PetId)"
+                        + ");";
+            }
+
+            @Override
+            public void migrate(Connection conn) throws SQLException {
+                PreparedStatement selectAll = conn.prepareStatement("SELECT * FROM EchoPet_version3");
+                ResultSet resultSet = selectAll.executeQuery();
+
+                PreparedStatement statement = conn.prepareStatement("INSERT INTO EchoPet_version4 (PetId, OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData) SELECT ?, OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData FROM EchoPet_version3 WHERE OwnerName = ?");
+                while (resultSet.next()) {
+                    statement.setString(1, UUID.randomUUID().toString());
+                    statement.setString(2, resultSet.getString("OwnerName"));
                     statement.addBatch();
                 }
                 statement.executeBatch();
