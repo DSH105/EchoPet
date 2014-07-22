@@ -18,6 +18,7 @@
 package com.dsh105.echopetv3.api.config;
 
 import com.dsh105.commodus.ServerUtil;
+import com.dsh105.commodus.Version;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopetv3.api.entity.AttributeAccessor;
@@ -29,7 +30,7 @@ public class PetSettings extends Options {
     public PetSettings(YAMLConfig config) {
         super(config);
         this.lockValue(ALLOW_RIDERS, false, PetType.ENDER_DRAGON.storageName());
-        if (ServerUtil.BUKKIT_VERSION_NUMERIC == 178) {
+        if (new Version("1.7.8").isIdentical()) {
             // Lock human pets - they crash 1.7.8 clients
             this.lockValue(ENABLE, false, PetType.HUMAN.storageName());
         }
