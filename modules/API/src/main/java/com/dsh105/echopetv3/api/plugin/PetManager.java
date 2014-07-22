@@ -33,9 +33,15 @@ public interface PetManager {
 
     List<Pet> getPetsFor(Player player);
 
-    Map<String, Pet> getPetNameMapFor(String playerIdent);
+    void mapPetName(Pet pet);
 
-    Map<String, Pet> getPetNameMapFor(Player player);
+    void unmapPetName(String playerIdent, String name);
+
+    void updatePetNameMap(String playerIdent);
+
+    Map<String, UUID> getPetNameMapFor(String playerIdent);
+
+    Map<String, UUID> getPetNameMapFor(Player player);
 
     Pet getPetByName(String playerIdent, String petName);
 
@@ -44,8 +50,6 @@ public interface PetManager {
     Map<UUID, Pet> getPetUniqueIdMap();
 
     Pet getPetById(UUID uniqueId);
-
-    String getStorageNameOf(Pet pet);
 
     List<Pet> getAllPets();
 

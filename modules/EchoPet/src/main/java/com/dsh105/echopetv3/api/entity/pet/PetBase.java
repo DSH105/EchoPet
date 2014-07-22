@@ -21,6 +21,7 @@ import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.Reflection;
 import com.captainbern.reflection.SafeField;
+import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.particle.Particle;
@@ -39,6 +40,7 @@ import com.dsh105.echopetv3.api.event.PetRideJumpEvent;
 import com.dsh105.echopetv3.api.event.PetRideMoveEvent;
 import com.dsh105.echopetv3.api.inventory.DataMenu;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
+import com.dsh105.echopetv3.api.plugin.SQLPetManager;
 import com.dsh105.echopetv3.util.Perm;
 import org.apache.commons.lang.BooleanUtils;
 import org.bukkit.ChatColor;
@@ -52,8 +54,12 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class PetBase<T extends LivingEntity, S extends EntityPet> implements Pet<T, S> {
+
+    private static Pattern PREVIOUS_NAME_PATTERN = Pattern.compile(".+\\s([0-9])\\b");
 
     protected SafeField<Boolean> JUMP_FIELD;
 
@@ -144,6 +150,17 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             name = name.substring(0, 32);
         }
 
+        if (EchoPet.getManager().getPetNameMapFor(getOwnerIdent()).containsKey(name)) {
+            Matcher matcher = PREVIOUS_NAME_PATTERN.matcher(name);
+            if (matcher.matches()) {
+                // Append a number onto the end to prevent duplicate names
+                // This is especially problematic for multiple pets with the default name
+                name += " " + (GeneralUtil.toInteger(matcher.group(1)) + 1);
+            } else {
+                name += " 1";
+            }
+        }
+
         boolean allow = true;
         if (Settings.PET_NAME_REGEX_MATCHING.getValue()) {
             List<Map<String, String>> csRegex = Settings.PET_NAME_REGEX.getValue();
@@ -162,9 +179,13 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             if (Settings.STRIP_DIACRITICS.getValue()) {
                 name = StringUtil.stripDiacritics(name);
             }
+            EchoPet.getManager().unmapPetName(getOwnerIdent(), this.name);
+
             this.name = name;
             getBukkitEntity().setCustomName(this.name);
             getBukkitEntity().setCustomNameVisible(PetSettings.TAG_VISIBLE.getValue(getType().storageName()));
+
+            EchoPet.getManager().mapPetName(this);
             return true;
         }
 
@@ -335,6 +356,9 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     @Override
     public void despawnRider() {
         getRider().despawn(true);
+        if (EchoPet.getManager() instanceof SQLPetManager) {
+            ((SQLPetManager) EchoPet.getManager()).clearRider(this);
+        }
         rider = null;
     }
 

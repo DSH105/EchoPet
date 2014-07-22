@@ -42,14 +42,14 @@ public class SimplePetManager implements PetManager {
     private HashMap<String, ArrayList<Pet>> IDENT_TO_PET_MAP = new HashMap<>();
 
     /**
-     * Maps player owner to a map of human readable names for pets
-     */
-    private HashMap<String, HashMap<String, Pet>> IDENT_TO_PET_NAME_MAP = new HashMap<>();
-
-    /**
      * Maps pet unique ID to pet
      */
     private HashMap<UUID, Pet> PET_ID_TO_PET_MAP = new HashMap<>();
+
+    /**
+     * Maps player ident to [pet name to pet ID]
+     */
+    private HashMap<String, HashMap<String, UUID>> IDENT_TO_PET_NAME_MAP = new HashMap<>();
 
     private void modify(Pet pet, boolean add) {
         ArrayList<Pet> existing = IDENT_TO_PET_MAP.get(pet.getOwnerIdent());
@@ -65,21 +65,11 @@ public class SimplePetManager implements PetManager {
 
         PET_ID_TO_PET_MAP.put(pet.getPetId(), pet);
 
-        HashMap<String, Pet> petNameMap = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
-        if (petNameMap == null) {
-            petNameMap = new HashMap<>();
+        HashMap<String, UUID> existingPetName = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
+        if (existingPetName == null) {
+            existingPetName = new HashMap<>();
         }
-        if (add) {
-            String name = pet.getName();
-            int index = 0;
-            while (petNameMap.containsKey(name)) {
-                name = pet.getName() + "-" + index++;
-            }
-            petNameMap.put(name, pet);
-        } else {
-            petNameMap.remove(getStorageNameOf(pet));
-        }
-        IDENT_TO_PET_NAME_MAP.put(pet.getOwnerIdent(), petNameMap);
+        existingPetName.put(pet.getName(), pet.getPetId());
     }
 
     @Override
@@ -106,8 +96,40 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
-    public Map<String, Pet> getPetNameMapFor(String playerIdent) {
-        HashMap<String, Pet> petNameMap = IDENT_TO_PET_NAME_MAP.get(playerIdent);
+    public void mapPetName(Pet pet) {
+        HashMap<String, UUID> petNameMap = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
+        petNameMap.put(pet.getName(), pet.getPetId());
+        IDENT_TO_PET_NAME_MAP.put(pet.getOwnerIdent(), petNameMap);
+    }
+
+    @Override
+    public void unmapPetName(String playerIdent, String name) {
+        HashMap<String, UUID> petNameMap = IDENT_TO_PET_NAME_MAP.get(playerIdent);
+        petNameMap.remove(name);
+        IDENT_TO_PET_NAME_MAP.put(playerIdent, petNameMap);
+    }
+
+    @Override
+    public void updatePetNameMap(String playerIdent) {
+        Map<String, UUID> petNameMap = getPetNameMapFor(playerIdent);
+        HashMap<String, UUID> petNameMapClone = new HashMap<>();
+        if (petNameMap.isEmpty()) {
+            return;
+        }
+
+        for (Map.Entry<String, UUID> entry : petNameMap.entrySet()) {
+            Pet pet = getPetById(entry.getValue());
+            if (pet != null) {
+                petNameMapClone.put(pet.getName(), entry.getValue());
+            }
+        }
+
+        IDENT_TO_PET_NAME_MAP.put(playerIdent, petNameMapClone);
+    }
+
+    @Override
+    public Map<String, UUID> getPetNameMapFor(String playerIdent) {
+        HashMap<String, UUID> petNameMap = IDENT_TO_PET_NAME_MAP.get(playerIdent);
         if (petNameMap == null) {
             petNameMap = new HashMap<>();
         }
@@ -115,13 +137,13 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
-    public Map<String, Pet> getPetNameMapFor(Player player) {
+    public Map<String, UUID> getPetNameMapFor(Player player) {
         return getPetNameMapFor(IdentUtil.getIdentificationForAsString(player));
     }
 
     @Override
     public Pet getPetByName(String playerIdent, String petName) {
-        return getPetNameMapFor(playerIdent).get(petName);
+        return getPetById(getPetNameMapFor(playerIdent).get(petName));
     }
 
     @Override
@@ -137,11 +159,6 @@ public class SimplePetManager implements PetManager {
     @Override
     public Pet getPetById(UUID uniqueId) {
         return getPetUniqueIdMap().get(uniqueId);
-    }
-
-    @Override
-    public String getStorageNameOf(Pet pet) {
-        return GeneralUtil.getKeyAtValue(getPetNameMapFor(pet.getOwnerIdent()), pet);
     }
 
     @Override
@@ -263,7 +280,7 @@ public class SimplePetManager implements PetManager {
     }
 
     @Override
-    public Pet loadPet(Player owner, String petStorageName) {
+    public Pet loadPet(Player owner, String petUniqueId) {
         if (!Settings.LOAD_SAVED_PETS.getValue()) {
             Lang.PET_LOADED.send(owner);
             return null;
@@ -271,19 +288,19 @@ public class SimplePetManager implements PetManager {
 
         String ident = IdentUtil.getIdentificationForAsString(owner);
 
-        PetType type = PetType.valueOf(Data.PET_TYPE.getValue(ident, petStorageName));
+        PetType type = PetType.valueOf(Data.PET_TYPE.getValue(ident, petUniqueId));
         Pet pet = create(owner, type, true);
         if (pet == null) {
             return null;
         }
 
-        String name = Data.PET_NAME.getValue(ident, petStorageName);
+        String name = Data.PET_NAME.getValue(ident, petUniqueId);
         if (name == null) {
             name = PetSettings.DEFAULT_NAME.getValue(type.storageName());
         }
         pet.setName(name);
 
-        for (String value : Data.PET_DATA.getValue(ident, petStorageName)) {
+        for (String value : Data.PET_DATA.getValue(ident, petUniqueId)) {
             PetData petData = PetData.valueOf(value);
             pet.setDataValue(petData);
         }

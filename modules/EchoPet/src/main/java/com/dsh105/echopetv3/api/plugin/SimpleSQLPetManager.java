@@ -32,6 +32,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManager {
 
@@ -81,14 +82,14 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
 
     @Override
     public void save(Pet pet, boolean isRider) {
-        save(pet.getOwnerIdent(), pet.getType(), pet.getName(), AttributeAccessor.getActiveDataValues(pet), false);
+        save(pet.getPetId().toString(), pet.getOwnerIdent(), pet.getType(), pet.getName(), AttributeAccessor.getActiveDataValues(pet), false);
         if (pet.getRider() != null) {
             save(pet.getRider(), true);
         }
     }
 
     @Override
-    public void save(String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider) {
+    public void save(String petUniqueId, String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider) {
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -217,12 +218,22 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
     }
 
     @Override
-    public void clearRider(Player player) {
-        clearRider(IdentUtil.getIdentificationForAsString(player));
+    public Pet load(String petUniqueId, String playerIdent) {
+        return null;
     }
 
     @Override
-    public void clearRider(String playerIdent) {
+    public void clearRider(Pet pet) {
+        clearRider(pet.getPetId().toString(), pet.getOwnerIdent());
+    }
+
+    @Override
+    public void clearRider(String petUniqueId, Player player) {
+        clearRider(petUniqueId, IdentUtil.getIdentificationForAsString(player));
+    }
+
+    @Override
+    public void clearRider(String petUniqueId, String playerIdent) {
         Connection con = null;
         PreparedStatement ps = null;
 

@@ -34,6 +34,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class InfoCommand implements CommandListener {
 
@@ -52,10 +53,10 @@ public class InfoCommand implements CommandListener {
             return true;
         }
 
-        Map<Pet, String> petNames = GeneralUtil.invertMap(EchoPet.getManager().getPetNameMapFor(event.sender()));
+        Map<UUID, String> petNames = GeneralUtil.invertMap(EchoPet.getManager().getPetNameMapFor(event.sender()));
 
         for (Pet pet : pets) {
-            PowerMessage message = new PowerMessage("• " + format + pet.getType().humanName() + " (" + highlight + petNames.get(pet) + format + ")");
+            PowerMessage message = new PowerMessage("• " + format + pet.getType().humanName() + " (" + highlight + petNames.get(pet.getPetId()) + format + ")");
 
             StringBuilder dataBuilder = new StringBuilder();
             List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
