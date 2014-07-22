@@ -15,22 +15,31 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopetv3.commands.basic.todo;
+package com.dsh105.echopetv3.commands.admin;
 
 import com.dsh105.command.Command;
 import com.dsh105.command.CommandEvent;
 import com.dsh105.command.CommandListener;
+import com.dsh105.echopetv3.api.config.ConfigType;
+import com.dsh105.echopetv3.api.config.Lang;
+import com.dsh105.echopetv3.api.plugin.EchoPet;
 import com.dsh105.echopetv3.util.Perm;
 
-public class CallCommand implements CommandListener {
+public class ReloadCommand implements CommandListener {
 
     @Command(
-            command = "",
-            description = "",
-            permission = Perm.CALL
+            command = "reload",
+            description = "Reload all EchoPet configuration files",
+            permission = Perm.RELOAD,
+            help = {"This does NOT refresh any pets", "This might not have an effect on certain configuration options - those will require a server restart"}
     )
     public boolean command(CommandEvent event) {
+        EchoPet.getConfig(ConfigType.GENERAL).reloadConfig();
+        EchoPet.getConfig(ConfigType.MESSAGES).reloadConfig();
+        EchoPet.getConfig(ConfigType.MENU).reloadConfig();
+        EchoPet.getConfig(ConfigType.PETS).reloadConfig();
 
+        event.respond(Lang.CONFIGS_RELOADED.getValue());
         return true;
     }
 }

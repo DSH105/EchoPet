@@ -25,7 +25,7 @@ import com.dsh105.echopetv3.api.entity.PetData;
 import com.dsh105.echopetv3.api.entity.PetType;
 import com.dsh105.echopetv3.api.entity.pet.Pet;
 import com.dsh105.echopetv3.api.plugin.EchoPet;
-import com.dsh105.echopetv3.commands.basic.todo.*;
+import com.dsh105.echopetv3.commands.admin.ReloadCommand;
 import com.dsh105.echopetv3.util.Perm;
 import org.bukkit.entity.Player;
 
@@ -55,15 +55,14 @@ public class PetCommand implements CommandListener {
         manager.registerSubCommands(this, new RemoveCommand());
         manager.registerSubCommands(this, new InfoCommand());
         manager.registerSubCommands(this, new ListCommand());
-        //manager.registerSubCommands(this, new CallCommand());
-        //manager.registerSubCommands(this, new HatCommand());
-        //manager.registerSubCommands(this, new MenuCommand());
-        //manager.registerSubCommands(this, new RideCommand());
-        //manager.registerSubCommands(this, new SelectCommand());
-        //manager.registerSubCommands(this, new SelectorCommand());
+        manager.registerSubCommands(this, new CallCommand());
+        manager.registerSubCommands(this, new HatCommand());
+        manager.registerSubCommands(this, new MenuCommand());
+        manager.registerSubCommands(this, new RideCommand());
+        manager.registerSubCommands(this, new SelectCommand());
+        manager.registerSubCommands(this, new SelectorCommand());
         //manager.registerSubCommands(this, new ToggleCommand());
         manager.registerSubCommands(this, new SitCommand());
-        //manager.registerSubCommands(this, new ReloadCommand());
     }
 
     @ParentCommand

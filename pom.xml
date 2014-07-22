@@ -59,6 +59,12 @@
             <groupId>com.dsh105</groupId>
             <artifactId>MenuAPI</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>Commodus</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- PowerMessage -->

@@ -40,6 +40,7 @@ public class Lang extends Options {
     UPDATE_NOT_AVAILABLE = new LangSetting("update_not_available", "{c1}An update is not available.", "Sent when an update is not available"),
             UPDATE_AVAILABLE = new LangSetting("update_available", "{c1}An update is available.\n{c1}Type \"{c2}/echopet update{c1}\" to update", "Sent when an update is not available"),
             PLUGIN_INFORMATION = new LangSetting("plugin_information", "{c1}Running EchoPet v{c2}%version%{c1}. Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
+            CONFIGS_RELOADED = new LangSetting("configs_reloaded", "{c1}Configuration files reloaded."),
             COMMAND_HOVER_TIP = new LangSetting("commandhover_tip", "&e&oHover over to see more information about each command. Click to insert it into the chat window.", "Reminds players to hover over commands to see more information"),
             HOVER_TIP = new LangSetting("hover_tip", "&e&oHover over to see more information."),
             HELP_INDEX_TOO_BIG = new LangSetting("help_index_too_big", "{c1}Page {c2}%index% {c1}does not exist."),
@@ -70,11 +71,15 @@ public class Lang extends Options {
             PET_SITTING = new LangSetting("pet_sitting", "Your pet, {c2}%name%{c1}, is now sitting."),
             PET_NOT_SITTING = new LangSetting("pet_not_sitting", "Your pet, {c2}%name%{c1}, is no longer sitting."),
             NAME_PET = new LangSetting("name_pet", "{c1}Your pet, {c2}%name%{c1}, has been named &r%newname%{c1}."),
+            PET_CALLED = new LangSetting("pet_called", "{c1}Your pet, {c2}%name%{c1}, has been called."),
+            PET_HAT_ON = new LangSetting("pet_hat_on", "{c1}Your pet, {c2}%name%{c1}, has been placed on your head."),
+            PET_HAT_OFF = new LangSetting("pet_hat_off", "{c1}Your pet, {c2}%name%{c1}, has been taken off your head."),
+            PET_RIDE_ON = new LangSetting("pet_ride_on", "{c1}You are now riding your pet, {c2}%name%{c1}."),
+            PET_RIDE_OFF = new LangSetting("pet_ride_off", "{c1}You are no longer riding your pet, {c2}%name%{c1}."),
 
     NAME_PET_PROMPT = new LangSetting("name_pet_prompt", "{c1}What would you like to name your pet?"),
 
-    RIDE_PET_ON = new LangSetting("ride_pet_on", "{c1}You are now riding your pet. Use {c2}WASD {c1}and the {c2}Space Bar {c1}to control it."),
-            RIDE_PET_OFF = new LangSetting("ride_pet_off", "{c1}You are no longer riding your pet."),
+    SELECTOR_ITEM_ADDED = new LangSetting("selector_item_added", "The Selector item has been added to your inventory."),
 
     ADMIN_NAME_PET_PROMPT = new LangSetting("admin_name_pet_prompt", "{c1}What would you like to name {c2}%player%{c1}'s pet?"),
     ADMIN_NAME_PET = new LangSetting("admin_name_pet", "{c2}%player%{c1}'s pet, {c2}%name%{c1}, has been named &r%newname%{c1}.");

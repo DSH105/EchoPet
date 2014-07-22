@@ -102,6 +102,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
 
             // If it isn't already obvious enough...
             commandManager.register(new IncompatiblePluginCommand());
+            return;
         }
 
         loadConfiguration();

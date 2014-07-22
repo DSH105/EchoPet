@@ -15,22 +15,24 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopetv3.commands.basic.todo;
+package com.dsh105.echopetv3.commands.basic;
 
 import com.dsh105.command.Command;
 import com.dsh105.command.CommandEvent;
 import com.dsh105.command.CommandListener;
+import com.dsh105.echopetv3.api.inventory.PetSelector;
 import com.dsh105.echopetv3.util.Perm;
+import org.bukkit.entity.Player;
 
 public class SelectCommand implements CommandListener {
 
     @Command(
-            command = "",
-            description = "",
+            command = "select",
+            description = "Open the pet selection menu to create a new pet",
             permission = Perm.SELECT
     )
-    public boolean command(CommandEvent event) {
-
+    public boolean command(CommandEvent<Player> event) {
+        PetSelector.prepare().show(event.sender());
         return true;
     }
 }
