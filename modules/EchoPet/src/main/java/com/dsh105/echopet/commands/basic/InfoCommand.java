@@ -42,35 +42,59 @@ public class InfoCommand implements CommandListener {
             description = "Retrieve info on all of your active pets",
             permission = Perm.INFO
     )
-    public boolean command(CommandEvent<Player> event) {
-        ChatColor format = EchoPet.getCommandManager().getFormatColour();
-        ChatColor highlight = EchoPet.getCommandManager().getHighlightColour();
-
+    public boolean info(CommandEvent<Player> event) {
         List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender());
         if (pets.size() <= 0){
             event.respond(Lang.NO_PETS_FOUND.getValue());
             return true;
         }
 
-        Map<UUID, String> petNames = GeneralUtil.invertMap(EchoPet.getManager().getPetNameMapFor(event.sender()));
-
         for (Pet pet : pets) {
-            PowerMessage message = new PowerMessage("• " + format + pet.getType().humanName() + " (" + highlight + petNames.get(pet.getPetId()) + format + ")");
-
-            StringBuilder dataBuilder = new StringBuilder();
-            List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
-            if (!activeData.isEmpty()) {
-                dataBuilder.append(format).append("Valid data types: ");
-                for (PetData data : activeData) {
-                    if (dataBuilder.length() >= 35) {
-                        dataBuilder.append("\n");
-                    }
-                    dataBuilder.append(highlight).append(data.humanName()).append(format).append(", ");
-                }
-                message.tooltip(dataBuilder.substring(0, dataBuilder.length() - 2));
-            }
+            displayInfo(pet);
         }
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
+    }
+
+    @Command(
+            command = "<pet_name> info",
+            description = "Retrieve info on one of your active pets (specified by <pet_name>)",
+            permission = Perm.INFO,
+            help = "<pet_name> is the name of an existing pet"
+    )
+    public boolean infoForPet(CommandEvent<Player> event) {
+        List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender());
+        if (pets.size() <= 0){
+            event.respond(Lang.NO_PETS_FOUND.getValue());
+            return true;
+        }
+        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+        if (pet == null) {
+            return true;
+        }
+
+        displayInfo(pet);
+        event.respond(Lang.HOVER_TIP.getValue());
+        return true;
+    }
+
+    private void displayInfo(Pet pet) {
+        ChatColor format = EchoPet.getCommandManager().getFormatColour();
+        ChatColor highlight = EchoPet.getCommandManager().getHighlightColour();
+
+        PowerMessage message = new PowerMessage("• " + format + pet.getType().humanName() + " (" + highlight + pet.getName() + format + ")");
+
+        StringBuilder dataBuilder = new StringBuilder();
+        List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
+        if (!activeData.isEmpty()) {
+            dataBuilder.append(format).append("Valid data types: ");
+            for (PetData data : activeData) {
+                if (dataBuilder.length() >= 35) {
+                    dataBuilder.append("\n");
+                }
+                dataBuilder.append(highlight).append(data.humanName()).append(format).append(", ");
+            }
+            message.tooltip(dataBuilder.substring(0, dataBuilder.length() - 2));
+        }
     }
 }
