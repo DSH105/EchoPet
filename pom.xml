@@ -51,14 +51,14 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>Commodus</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
         <!-- MenuAPI -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>MenuAPI</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>com.dsh105</artifactId>
@@ -71,7 +71,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>PowerMessage</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>com.dsh105</artifactId>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>CommandManager</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.3-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>com.dsh105</artifactId>
@@ -162,6 +162,11 @@
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
 
+        <repository>
+            <id>dsh-repo</id>
+            <url>http://repo.dsh105.com/</url>
+        </repository>
+
         <!-- Hawk repo -->
         <repository>
             <id>hawk-repo</id>
@@ -232,6 +237,34 @@
                     </archive>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
     </build>
+
+    <!-- Distribution -->
+    <distributionManagement>
+        <repository>
+            <id>dsh105-ftp</id>
+            <url>ftp://repo.dsh105.com/</url>
+        </repository>
+    </distributionManagement>
 </project>

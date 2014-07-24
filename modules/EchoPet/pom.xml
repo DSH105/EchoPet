@@ -35,14 +35,6 @@
         <relativePath>../../</relativePath>
     </parent>
 
-    <!-- Distribution -->
-    <distributionManagement>
-        <repository>
-            <id>hawk-repo</id>
-            <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
-        </repository>
-    </distributionManagement>
-
     <dependencies>
         <!-- API Module -->
         <dependency>
