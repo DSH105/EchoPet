@@ -374,7 +374,7 @@ public class SimplePetManager implements PetManager {
 
     @Override
     public void clear(Pet pet) {
-        clear(pet.getOwnerIdent());
+        Data.PET_SECTION.setValue((String) null, pet.getOwnerIdent(), pet.getPetId());
     }
 
     @Override
