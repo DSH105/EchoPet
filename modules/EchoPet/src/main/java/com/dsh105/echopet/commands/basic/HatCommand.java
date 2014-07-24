@@ -29,7 +29,7 @@ public class HatCommand implements CommandListener {
 
     @Command(
             command = "<pet_name> hat",
-            description = "Places your pet on your head",
+            description = "Places your pet on your head (specified by <pet_name>)",
             permission = Perm.HAT,
             help = {"<pet_name> is the name of an existing pet", "Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
     )

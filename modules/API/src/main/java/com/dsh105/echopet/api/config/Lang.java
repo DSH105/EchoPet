@@ -57,9 +57,10 @@ public class Lang extends Options {
     PET_LOADED = new LangSetting("pet_loaded", "{c2}%name% {c1}was retrieved from your last session.", "Sent when a pet is loaded."),
             PETS_LOADED = new LangSetting("pets_loaded", "{c2}%number% {c1}pets were retrieved from your last session.", "Sent when a pet is loaded."),
             PET_NOT_LOADED = new LangSetting("pet_not_loaded", "{c1}Pet loading cancelled by the server.", "Sent when pet loading is disabled."),
+            PET_NOT_LOADED_UNEXPECTED = new LangSetting("pet_not_loaded_unexpected", "{c1}Pet loading unexpectedly cancelled.", "Sent when pet loading is disabled."),
             SPAWN_BLOCKED = new LangSetting("spawn_blocked", "{c1}Your pet was blocked from spawning by another plugin.", "Sent when a pet could not be safely spawned."),
             PET_NOT_FOUND = new LangSetting("pet_not_found", "{c1}Your pet, {c2}%name%{c1}, could not be found. Use \"{c2}/" + Settings.COMMAND.getValue() + " info{c1}\" to see your active pets."),
-            NO_PETS_FOUND = new LangSetting("no_pets_found", "{c1}You don't have any pets active."),
+            NO_PETS_FOUND = new LangSetting("no_pets_found", "{c1}You don't have any pets."),
             NO_RIDER_FOUND = new LangSetting("no_rider_found", "{c1}Your pet, {c2}%name%{c1}, does not have a rider."),
             MORE_PETS_FOUND = new LangSetting("more_pets_found", "{c1}You have more than one pet active. Please specify a pet name using \"{c2}/" + Settings.COMMAND + " %command%{c1}\" Use \"{c2}/" + Settings.COMMAND + " info{c1} for pet names to reference."),
             PET_CREATED = new LangSetting("pet_created", "{c1}Your new {c2}%type% {c1}pet follows behind you."),
@@ -82,7 +83,7 @@ public class Lang extends Options {
     SELECTOR_ITEM_ADDED = new LangSetting("selector_item_added", "The Selector item has been added to your inventory."),
 
     ADMIN_NAME_PET_PROMPT = new LangSetting("admin_name_pet_prompt", "{c1}What would you like to name {c2}%player%{c1}'s pet?"),
-    ADMIN_NAME_PET = new LangSetting("admin_name_pet", "{c2}%player%{c1}'s pet, {c2}%name%{c1}, has been named &r%newname%{c1}.");
+            ADMIN_NAME_PET = new LangSetting("admin_name_pet", "{c2}%player%{c1}'s pet, {c2}%name%{c1}, has been named &r%newname%{c1}.");
 
     /*NO_PET = new LangSetting("no_pet", "{c1}You don't currently have a pet."),
             PET_CALL = new LangSetting("pet_call", "{c1}Your pet has been called to your side."),

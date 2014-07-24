@@ -30,7 +30,7 @@ public class RemoveCommand implements CommandListener {
 
     @Command(
             command = "<pet_name> remove",
-            description = "Removes an existing pet (specified by <pet_name>",
+            description = "Removes an existing pet (specified by <pet_name>)",
             permission = Perm.REMOVE,
             help = {"<pet_name> is the name of an existing pet", "Removes an existing pet"}
     )

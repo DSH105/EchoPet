@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 public class RideCommand implements CommandListener {
 
     @Command(
-            command = "<pet_name> ride",
+            command = "<pet_name> ride (specified by <pet_name>)",
             description = "Ride your pet",
             permission = Perm.RIDE,
             help = {"<pet_name> is the name of an existing pet", "Ride your pet", "Control your pet using the WASD keys and the space bar (to jump)", "Remember, some pets might be able to fly!"}

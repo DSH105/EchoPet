@@ -281,7 +281,7 @@ public class SimplePetManager implements PetManager {
     @Override
     public Pet loadPet(Player owner, String petUniqueId) {
         if (!Settings.LOAD_SAVED_PETS.getValue()) {
-            Lang.PET_LOADED.send(owner);
+            Lang.PET_NOT_LOADED.send(owner);
             return null;
         }
 

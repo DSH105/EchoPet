@@ -29,7 +29,7 @@ public class CallCommand implements CommandListener {
 
     @Command(
             command = "<pet_name> call",
-            description = "Calls your pet to your side",
+            description = "Calls your pet to your side (specified by <pet_name>)",
             permission = Perm.CALL,
             help = {"<pet_name> is the name of an existing pet", "In most cases, this will work when your pet has unexpectedly disappeared"}
     )

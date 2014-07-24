@@ -59,7 +59,7 @@ public class SitCommand implements CommandListener {
 
     @Command(
             command = "<pet_name> <r:(?i)yes|true|no|false,n:state>",
-            description = "Sets the state of rest that a pet exhibits",
+            description = "Sets the state of rest that a pet exhibits (specified by <pet_name>)",
             permission = Perm.SIT,
             help = {"<pet_name> is the name of an existing pet", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
     )

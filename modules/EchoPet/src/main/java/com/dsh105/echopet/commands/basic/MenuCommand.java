@@ -28,7 +28,7 @@ public class MenuCommand implements CommandListener {
 
     @Command(
             command = "<pet_name> menu",
-            description = "Opens the pet data menu for a pet",
+            description = "Opens the pet data menu for a pet (specified by <pet_name>)",
             permission = Perm.MENU,
             help = {"<pet_name> is the name of an existing pet"}
     )

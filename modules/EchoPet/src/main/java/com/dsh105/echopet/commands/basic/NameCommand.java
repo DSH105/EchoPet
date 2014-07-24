@@ -30,7 +30,7 @@ public class NameCommand implements CommandListener {
 
     @Command(
             command = "<pet_name> name [name...]",
-            description = "Sets the name of your pet",
+            description = "Sets the name of your pet (specified by <pet_name>)",
             permission = Perm.NAME,
             help = {"<pet_name> is the name of an existing pet", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word"}
     )
