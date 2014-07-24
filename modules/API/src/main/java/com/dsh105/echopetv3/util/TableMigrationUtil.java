@@ -237,6 +237,31 @@ public class TableMigrationUtil {
     }
 
     /**
+     * Creates the newest table registered to TableMigrationUtil
+     */
+    public static void createNewestTable() {
+        Connection conn = null;
+
+        try {
+            conn = EchoPet.getCore().getDbPool().getConnection();
+
+            if (tableMigrationStrategies.size() > 0) {
+                MigrationStrategy strategy = tableMigrationStrategies.get(tableMigrationStrategies.size() - 1);
+                strategy.createTargetTable(conn);
+            }
+        } catch (SQLException e) {
+            EchoPet.LOG.console("Failed to create latest table");
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ignored) {}
+            }
+        }
+    }
+
+    /**
      * Represents a table schema transition
      */
     abstract static class MigrationStrategy {

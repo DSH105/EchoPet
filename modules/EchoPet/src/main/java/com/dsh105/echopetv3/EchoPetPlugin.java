@@ -193,38 +193,8 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
             e.printStackTrace();
         }
         if (dbPool != null) {
-            Connection connection = null;
-            Statement statement = null;
-            try {
-                connection = dbPool.getConnection();
-                statement = connection.createStatement();
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS EchoPet_version3 (" +
-                        "OwnerName varchar(36)," +
-                        "PetType varchar(255)," +
-                        "PetName varchar(255)," +
-                        "PetData BIGINT," +
-                        "RiderPetType varchar(255)," +
-                        "RiderPetName varchar(255), " +
-                        "RiderPetData BIGINT," +
-                        "PRIMARY KEY (OwnerName)" +
-                        ");");
-
-                // Convert previous database versions
-                TableMigrationUtil.migrateTables();
-            } catch (SQLException e) {
-                EchoPet.LOG.console(Level.WARNING, "Failed to generate MySQL table.");
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    if (connection != null) {
-                        connection.close();
-                    }
-                } catch (SQLException ignored) {
-                }
-            }
+            TableMigrationUtil.migrateTables();
+            TableMigrationUtil.createNewestTable();
         }
     }
 
