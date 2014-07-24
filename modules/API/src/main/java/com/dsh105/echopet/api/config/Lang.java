@@ -77,6 +77,8 @@ public class Lang extends Options {
             PET_HAT_OFF = new LangSetting("pet_hat_off", "{c1}Your pet, {c2}%name%{c1}, has been taken off your head."),
             PET_RIDE_ON = new LangSetting("pet_ride_on", "{c1}You are now riding your pet, {c2}%name%{c1}."),
             PET_RIDE_OFF = new LangSetting("pet_ride_off", "{c1}You are no longer riding your pet, {c2}%name%{c1}."),
+            PET_HIDDEN = new LangSetting("pet_hidden", "{c1}Your pet, {c2}%name% {c1}, has been hidden."),
+            PET_SHOWN = new LangSetting("pet_shown", "{c1}Your pet, {c2}%name% {c1}, has come out of hiding."),
 
     NAME_PET_PROMPT = new LangSetting("name_pet_prompt", "{c1}What would you like to name your pet?"),
 
