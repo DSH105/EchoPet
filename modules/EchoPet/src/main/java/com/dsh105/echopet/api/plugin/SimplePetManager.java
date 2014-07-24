@@ -55,20 +55,14 @@ public class SimplePetManager implements PetManager {
         if (existing == null) {
             existing = new ArrayList<>();
         }
+
         if (add) {
             existing.add(pet);
         } else {
             existing.remove(pet);
         }
         IDENT_TO_PET_MAP.put(pet.getOwnerIdent(), existing);
-
         PET_ID_TO_PET_MAP.put(pet.getPetId(), pet);
-
-        HashMap<String, UUID> existingPetName = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
-        if (existingPetName == null) {
-            existingPetName = new HashMap<>();
-        }
-        existingPetName.put(pet.getName(), pet.getPetId());
     }
 
     @Override
@@ -99,6 +93,11 @@ public class SimplePetManager implements PetManager {
         HashMap<String, UUID> petNameMap = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
         petNameMap.put(pet.getName(), pet.getPetId());
         IDENT_TO_PET_NAME_MAP.put(pet.getOwnerIdent(), petNameMap);
+    }
+
+    @Override
+    public void unmapPetNames(String playerIdent) {
+        IDENT_TO_PET_NAME_MAP.remove(playerIdent);
     }
 
     @Override
@@ -254,6 +253,7 @@ public class SimplePetManager implements PetManager {
             Pet pet = type.getNewPetInstance(owner);
             forceData(pet);
             modify(pet, true);
+            mapPetName(pet);
             return pet;
         }
 
@@ -331,7 +331,7 @@ public class SimplePetManager implements PetManager {
         if (sb.length() > 0) {
             sb.delete(sb.length() - 2, sb.length());
             if (Settings.SEND_FORCE_MESSAGE.getValue()) {
-                Lang.DATA_FORCED.getValue("data", sb.toString());
+                Lang.DATA_FORCED.send(pet.getOwner(), "data", sb.toString());
             }
         }
     }
@@ -374,6 +374,7 @@ public class SimplePetManager implements PetManager {
     @Override
     public void clear(Pet pet) {
         Data.PET_SECTION.setValue((String) null, pet.getOwnerIdent(), pet.getPetId());
+        unmapPetName(pet.getOwnerIdent(), pet.getName());
     }
 
     @Override
@@ -384,5 +385,6 @@ public class SimplePetManager implements PetManager {
     @Override
     public void clear(String playerIdent) {
         Data.SECTION.setValue((String) null, playerIdent);
+        unmapPetNames(playerIdent);
     }
 }

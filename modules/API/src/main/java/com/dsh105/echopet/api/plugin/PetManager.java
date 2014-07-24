@@ -35,6 +35,8 @@ public interface PetManager {
 
     void mapPetName(Pet pet);
 
+    void unmapPetNames(String playerIdent);
+
     void unmapPetName(String playerIdent, String name);
 
     void updatePetNameMap(String playerIdent);

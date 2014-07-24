@@ -102,8 +102,7 @@ public class ToggleCommand implements CommandListener {
             return true;
         }
 
-        // TODO: Cache all inactive pets
-        pet = EchoPet.getManager().loadPet(event.sender(), ""/*TODO: Load the name*/);
+        pet = EchoPet.getManager().loadPet(event.sender(), EchoPet.getManager().getPetNameMapFor(event.sender()).get(event.variable("pet_name")).toString());
         if (pet == null) {
             event.respond(Lang.PET_NOT_FOUND.getValue("name", event.variable("pet_name")));
             return true;
