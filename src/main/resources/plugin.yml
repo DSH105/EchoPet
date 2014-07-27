@@ -5,7 +5,7 @@ description: >
 
 author: DSH105
 website: ${project.url}
-main: com.dsh105.echopetchoPetPlugin
+main: com.dsh105.echopet.EchoPetPlugin
 softdepend: [WorldGuard, VanishNoPacket]
 
 permissions:
