@@ -48,6 +48,7 @@ public class HelpCommand implements CommandListener {
 
     @Command(
             command = "help",
+            aliases = {"?"},
             description = "Retrieve help for all EchoPet commands",
             permission = Perm.PET
     )
@@ -61,6 +62,7 @@ public class HelpCommand implements CommandListener {
 
     @Command(
             command = "help <index>",
+            aliases = {"? <index>"},
             description = "Retrieve a certain help page of all EchoPet commands",
             permission = Perm.PET
     )
