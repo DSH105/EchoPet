@@ -48,6 +48,10 @@
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
         <repository>
+            <id>dsh-repo</id>
+            <url>http://repo.dsh105.com/</url>
+        </repository>
+        <repository>
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
         </repository>
