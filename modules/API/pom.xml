@@ -4,7 +4,7 @@
     <groupId>com.dsh105</groupId>
     <artifactId>EchoPet-API</artifactId>
     <name>EchoPet API</name>
-    <version>API</version>
+    <version>v2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>com.dsh105</groupId>
         <artifactId>EchoPet-Parent</artifactId>
-        <version>parent</version>
+        <version>v2</version>
         <relativePath>../../</relativePath>
     </parent>
 

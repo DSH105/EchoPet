@@ -22,7 +22,7 @@
     <artifactId>EchoPet-Parent</artifactId>
     <name>EchoPet Parent</name>
     <packaging>pom</packaging>
-    <version>2</version>
+    <version>v2</version>
     <url>http://github.com/DSH105/EchoPet</url>
 
     <properties>
