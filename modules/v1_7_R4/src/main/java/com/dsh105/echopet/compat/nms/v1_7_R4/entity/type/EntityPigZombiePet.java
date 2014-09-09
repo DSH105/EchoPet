@@ -25,6 +25,7 @@ import net.minecraft.server.v1_7_R4.ItemStack;
 import net.minecraft.server.v1_7_R4.Items;
 import net.minecraft.server.v1_7_R4.World;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.spigotmc.ProtocolData;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.PIGZOMBIE)
@@ -46,7 +47,8 @@ public class EntityPigZombiePet extends EntityPet implements IEntityPigZombiePet
 
     @Override
     public void setBaby(boolean flag) {
-        this.datawatcher.watch(12, (byte) (flag ? 1 : 0));
+        byte value = (byte) (flag ? 1 : 0);
+        this.datawatcher.watch(12, new ProtocolData.IntByte((int)value, value));
     }
 
     @Override
@@ -57,7 +59,7 @@ public class EntityPigZombiePet extends EntityPet implements IEntityPigZombiePet
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(12, new Byte((byte) 0));
+        this.datawatcher.a(12, new ProtocolData.IntByte(0, (byte)0));
         this.datawatcher.a(13, new Byte((byte) 0));
     }
 

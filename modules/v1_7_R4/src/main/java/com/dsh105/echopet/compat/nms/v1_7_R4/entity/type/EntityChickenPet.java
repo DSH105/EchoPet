@@ -38,12 +38,6 @@ public class EntityChickenPet extends EntityAgeablePet implements IEntityChicken
     }
 
     @Override
-    protected void initDatawatcher() {
-        super.initDatawatcher();
-        this.datawatcher.watch(12, new Integer(0));
-    }
-
-    @Override
     protected void makeStepSound() {
         this.makeSound("mob.chicken.step", 0.15F, 1.0F);
     }

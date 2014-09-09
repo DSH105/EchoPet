@@ -45,15 +45,6 @@ public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillag
     }
 
     @Override
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-    }
-
-    @Override
     protected String getIdleSound() {
         return this.random.nextBoolean() ? "mob.villager.haggle" : "mob.villager.idle";
     }

@@ -1,4 +1,4 @@
-name: EchoPet
+name: EchoPatch
 version: ${project.version}-bjenkins-build-number
 description: >
   EchoPet is an advanced, easy to use plugin, designed to handle custom-tailored pets with more unique behaviours than vanilla Minecraft entities. Perfect for donation perks.

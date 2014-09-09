@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_7_R4.entity;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import net.minecraft.server.v1_7_R4.World;
+import org.spigotmc.ProtocolData;
 
 public abstract class EntityAgeablePet extends EntityPet {
 
@@ -38,7 +39,7 @@ public abstract class EntityAgeablePet extends EntityPet {
     }
 
     public void setAge(int i) {
-        this.datawatcher.watch(12, Integer.valueOf(i));
+        this.datawatcher.watch(12, new ProtocolData.IntByte(i, (byte) ( i < 0 ? -1 : (i >= 6000 ? 1 : 0))));
     }
 
     public boolean isAgeLocked() {
@@ -52,7 +53,7 @@ public abstract class EntityAgeablePet extends EntityPet {
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(12, new Integer(0));
+        this.datawatcher.a(12, new ProtocolData.IntByte(0, (byte)0));
     }
 
     @Override
@@ -73,9 +74,9 @@ public abstract class EntityAgeablePet extends EntityPet {
 
     public void setBaby(boolean flag) {
         if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
+            this.datawatcher.watch(12, new ProtocolData.IntByte(-24000, (byte) -1));
         } else {
-            this.datawatcher.watch(12, new Integer(0));
+            this.datawatcher.watch(12, new ProtocolData.IntByte(0, (byte) 0));
         }
     }
 
