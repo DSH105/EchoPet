@@ -15,56 +15,61 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_7_R4.entity.type;
+package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
+import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherPet;
 import com.dsh105.echopet.compat.api.util.ParticleUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
-import com.dsh105.echopet.compat.nms.v1_7_R4.entity.EntityAgeablePet;
+import com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.EntityPet;
 import net.minecraft.server.v1_7_R4.World;
 
-@EntitySize(width = 0.6F, height = 1.8F)
-@EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillagerPet {
+@EntitySize(width = 0.9F, height = 4.0F)
+@EntityPetType(petType = PetType.WITHER)
+public class EntityWitherPet extends EntityPet implements IEntityWitherPet {
 
-    public EntityVillagerPet(World world) {
+    public EntityWitherPet(World world) {
         super(world);
     }
 
-    public EntityVillagerPet(World world, IPet pet) {
+    public EntityWitherPet(World world, IPet pet) {
         super(world, pet);
     }
 
     @Override
-    public void setProfession(int i) {
-        this.datawatcher.watch(16, i);
+    protected void initDatawatcher() {
+        super.initDatawatcher();
+        this.datawatcher.a(17, new Integer(0));
+        this.datawatcher.a(18, new Integer(0));
+        this.datawatcher.a(19, new Integer(0));
+        this.datawatcher.a(20, new Integer(0));
+    }
+
+    public void setShielded(boolean flag) {
+        this.datawatcher.watch(20, new Integer((flag ? 1 : 0)));
+        this.setHealth((float) (flag ? 150 : 300));
     }
 
     @Override
     protected String getIdleSound() {
-        return this.random.nextBoolean() ? "mob.villager.haggle" : "mob.villager.idle";
+        return "mob.wither.idle";
     }
 
     @Override
     protected String getDeathSound() {
-        return "mob.villager.death";
+        return "mob.wither.death";
     }
 
     @Override
-    public void initDatawatcher() {
-        super.initDatawatcher();
-        this.datawatcher.a(16, new Integer(0));
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.LARGE;
     }
 
     @Override
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, this.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.VOID, this.getLocation());
         }
     }
 }

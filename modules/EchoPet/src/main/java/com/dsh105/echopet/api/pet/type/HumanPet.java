@@ -64,6 +64,9 @@ public class HumanPet extends PacketPet implements IHumanPet {
     }
 
     private void updateName(String name) {
+        if (this.getEntityPet() == null) {
+            return;
+        }
         if (this.getEntityPet().hasInititiated()) {
             this.getEntityPet().updatePosition();
         }

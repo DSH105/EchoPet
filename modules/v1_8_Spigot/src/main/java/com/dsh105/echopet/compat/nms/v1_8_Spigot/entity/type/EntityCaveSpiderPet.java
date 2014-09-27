@@ -15,56 +15,58 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_7_R4.entity.type;
+package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
+import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityCaveSpiderPet;
 import com.dsh105.echopet.compat.api.util.ParticleUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
-import com.dsh105.echopet.compat.nms.v1_7_R4.entity.EntityAgeablePet;
+import com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.EntityPet;
 import net.minecraft.server.v1_7_R4.World;
 
-@EntitySize(width = 0.6F, height = 1.8F)
-@EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillagerPet {
+@EntitySize(width = 0.7F, height = 0.5F)
+@EntityPetType(petType = PetType.CAVESPIDER)
+public class EntityCaveSpiderPet extends EntityPet implements IEntityCaveSpiderPet {
 
-    public EntityVillagerPet(World world) {
+    EntityCaveSpiderPet(World world) {
         super(world);
     }
 
-    public EntityVillagerPet(World world, IPet pet) {
+    public EntityCaveSpiderPet(World world, IPet pet) {
         super(world, pet);
     }
 
     @Override
-    public void setProfession(int i) {
-        this.datawatcher.watch(16, i);
+    protected void initDatawatcher() {
+        super.initDatawatcher();
+        this.datawatcher.a(16, new Byte((byte) 0));
+    }
+
+    @Override
+    protected void makeStepSound() {
+        makeSound("mob.spider.step", 0.15F, 1.0F);
     }
 
     @Override
     protected String getIdleSound() {
-        return this.random.nextBoolean() ? "mob.villager.haggle" : "mob.villager.idle";
+        return "mob.spider.say";
     }
 
     @Override
     protected String getDeathSound() {
-        return "mob.villager.death";
+        return "mob.spider.death";
     }
 
     @Override
-    public void initDatawatcher() {
-        super.initDatawatcher();
-        this.datawatcher.a(16, new Integer(0));
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.REGULAR;
     }
 
     @Override
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, this.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPELL_AMBIENT, this.getLocation());
         }
     }
 }

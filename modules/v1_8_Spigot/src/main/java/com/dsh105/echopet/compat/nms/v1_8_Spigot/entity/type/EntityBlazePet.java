@@ -15,56 +15,59 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_7_R4.entity.type;
+package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
-import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
+import com.dsh105.echopet.compat.api.entity.*;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntityBlazePet;
 import com.dsh105.echopet.compat.api.util.ParticleUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
-import com.dsh105.echopet.compat.nms.v1_7_R4.entity.EntityAgeablePet;
+import com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.EntityPet;
 import net.minecraft.server.v1_7_R4.World;
 
-@EntitySize(width = 0.6F, height = 1.8F)
-@EntityPetType(petType = PetType.VILLAGER)
-public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillagerPet {
+@EntitySize(width = 0.6F, height = 1.7F)
+@EntityPetType(petType = PetType.BLAZE)
+public class EntityBlazePet extends EntityPet implements IEntityBlazePet {
 
-    public EntityVillagerPet(World world) {
+    public EntityBlazePet(World world) {
         super(world);
     }
 
-    public EntityVillagerPet(World world, IPet pet) {
+    public EntityBlazePet(World world, IPet pet) {
         super(world, pet);
     }
 
     @Override
-    public void setProfession(int i) {
-        this.datawatcher.watch(16, i);
+    public void setOnFire(boolean flag) {
+        this.datawatcher.watch(16, (byte) (flag ? 1 : 0));
+    }
+
+    @Override
+    protected void initDatawatcher() {
+        super.initDatawatcher();
+        this.datawatcher.a(16, new Byte((byte) 0));
     }
 
     @Override
     protected String getIdleSound() {
-        return this.random.nextBoolean() ? "mob.villager.haggle" : "mob.villager.idle";
+        return "mob.blaze.breathe";
     }
 
     @Override
     protected String getDeathSound() {
-        return "mob.villager.death";
+        return "mob.blaze.death";
     }
 
     @Override
-    public void initDatawatcher() {
-        super.initDatawatcher();
-        this.datawatcher.a(16, new Integer(0));
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.REGULAR;
     }
 
     @Override
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, this.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.FIRE, this.getLocation());
+            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SMOKE, this.getLocation());
         }
     }
 }

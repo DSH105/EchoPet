@@ -30,10 +30,19 @@ import java.util.regex.Pattern;
 
 public class ReflectionUtil {
 
-    public static String COMPAT_NMS_PATH = "com.dsh105.echopet.compat.nms." + getServerVersion();
+    public static String COMPAT_NMS_PATH = prepareCompatNmsPath();
 
     public static int MC_VERSION_NUMERIC = Integer.valueOf(getServerVersion().replaceAll("[^0-9]", ""));
     public static int BUKKIT_VERSION_NUMERIC = Integer.valueOf(getBukkitVersion().replaceAll("[^0-9]", ""));
+
+    private static String prepareCompatNmsPath() {
+        String versionTag = getServerVersion();
+        if (Bukkit.getVersion().contains("Spigot") && versionTag.equals("v1_7_R4")) {
+            // At least it works
+            versionTag = "v1_8_Spigot";
+        }
+        return "com.dsh105.echopet.compat.nms." + versionTag;
+    }
 
     public static Object getEntityHandle(Entity entity) {
         return invokeMethod(getMethod(getCBCClass("entity.CraftEntity"), "getHandle"), entity);

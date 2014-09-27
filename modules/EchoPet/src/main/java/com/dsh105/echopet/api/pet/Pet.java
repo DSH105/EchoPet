@@ -56,9 +56,10 @@ public abstract class Pet implements IPet {
         if (owner != null) {
             this.ownerIdentification = UUIDMigration.getIdentificationFor(owner);
             this.setPetType();
+            this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
             this.entityPet = EchoPet.getPlugin().getSpawnUtil().spawn(this, owner);
             if (this.entityPet != null) {
-                this.setPetName(this.getPetType().getDefaultName(this.getNameOfOwner()));
+                this.applyPetName();
                 this.teleportToOwner();
             }
         }
@@ -170,10 +171,7 @@ public abstract class Pet implements IPet {
             if (this.name == null || this.name.equalsIgnoreCase("")) {
                 this.name = this.petType.getDefaultName(this.getNameOfOwner());
             }
-            if (this.getCraftPet() != null) {
-                this.getCraftPet().setCustomName(this.name);
-                this.getCraftPet().setCustomNameVisible(EchoPet.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
-            }
+            this.applyPetName();
             return true;
         } else {
             if (sendFailMessage) {
@@ -182,6 +180,13 @@ public abstract class Pet implements IPet {
                 }
             }
             return false;
+        }
+    }
+
+    private void applyPetName() {
+        if (this.getEntityPet() != null && this.getCraftPet() != null) {
+            this.getCraftPet().setCustomName(this.name);
+            this.getCraftPet().setCustomNameVisible(EchoPet.getConfig().getBoolean("pets." + this.getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true));
         }
     }
 

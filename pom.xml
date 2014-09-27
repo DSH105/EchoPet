@@ -36,6 +36,7 @@
         <module>modules/v1_7_R2</module>
         <module>modules/v1_7_R3</module>
         <module>modules/v1_7_R4</module>
+        <module>modules/v1_8_Spigot</module>
         <module>modules/EchoPet</module>
     </modules>
 
@@ -46,6 +47,10 @@
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>http://repo.md-5.net/content/groups/public/</url>
         </repository>
         <repository>
             <id>dsh-repo</id>
