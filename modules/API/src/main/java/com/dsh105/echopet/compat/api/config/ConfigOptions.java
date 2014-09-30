@@ -159,15 +159,11 @@ public class ConfigOptions extends Options {
                 set("petSelector.menu.slot-" + friendlySlot + ".materialId", icon.getMaterialId());
                 set("petSelector.menu.slot-" + friendlySlot + ".materialData", icon.getMaterialData());
                 set("petSelector.menu.slot-" + friendlySlot + ".name", (icon.getName() == null ? "" : icon.getName()).replace(ChatColor.COLOR_CHAR, '&'));
-                String l = null;
+                ArrayList<String> lore = new ArrayList<String>();
                 for (String s : icon.getLore()) {
-                    if (l == null) {
-                        l = s.replace(ChatColor.COLOR_CHAR, '&');
-                    } else {
-                        l += ";" + s.replace(ChatColor.COLOR_CHAR, '&');
-                    }
+                    lore.add(s.replace(ChatColor.COLOR_CHAR, '&'));
                 }
-                set("petSelector.menu.slot-" + friendlySlot + ".lore", l == null ? "" : l);
+                set("petSelector.menu.slot-" + friendlySlot + ".lore", lore);
             }
         }
 

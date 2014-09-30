@@ -29,6 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SelectorLayout {
 
@@ -39,21 +40,18 @@ public class SelectorLayout {
         String name = config.getString("petSelector.item.name", "&aPets");
         int materialId = config.getInt("petSelector.item.materialId", Material.BONE.getId());
         int materialData = config.getInt("petSelector.item.materialData", 0);
-        String l = config.getString("petSelector.item.lore");
-        String[] lore = null;
-        if (l.contains(";")) {
-            lore = l.split(";");
+        List<String> lore = config.getConfig().getStringList("petSelector.item.lore");
+        if (lore == null) {
+            lore = new ArrayList<String>();
         }
         ItemStack i = new ItemStack(materialId, 1, (short) materialData);
         ItemMeta meta = i.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         ArrayList<String> loreList = new ArrayList<String>();
-        if (lore != null && lore.length > 0) {
+        if (lore.size() > 0) {
             for (String s : lore) {
                 loreList.add(ChatColor.translateAlternateColorCodes('&', s));
             }
-        } else if (l != null) {
-            loreList.add(ChatColor.translateAlternateColorCodes('&', l));
         }
         if (!loreList.isEmpty()) {
             meta.setLore(loreList);
@@ -80,24 +78,17 @@ public class SelectorLayout {
             if (name == null) {
                 continue;
             }
-            String l = config.getString(s + ".slot-" + i + ".lore");
-            String[] lore = null;
-            if (l != null) {
-                l = ChatColor.translateAlternateColorCodes('&', l);
-                if (l.contains(";")) {
-                    lore = l.split(";");
-                    for (int index = 0; index < lore.length; index++) {
-                        lore[index] = ChatColor.translateAlternateColorCodes('&', lore[index]);
-                    }
-                } else {
-                    lore = new String[]{ChatColor.translateAlternateColorCodes('&', l)};
+            List<String> lore = config.getConfig().getStringList(s + ".slot-" + i + ".lore");
+            if (lore == null) {
+                lore = new ArrayList<String>();
+            }
+            ArrayList<String> loreList = new ArrayList<String>();
+            if (lore.size() > 0) {
+                for (String part : lore) {
+                    loreList.add(ChatColor.translateAlternateColorCodes('&', part));
                 }
             }
-            if (lore == null || lore.length <= 0 || lore[0] == "") {
-                selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name));
-            } else {
-                selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name, lore));
-            }
+            selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name, loreList.toArray(new String[0])));
         }
     }
 
