@@ -211,7 +211,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         }
 
         // Make sure to convert those UUIDs!
-        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID() && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null) {
+        if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.supportsUuid() && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null) {
             LOGGER.info("Converting data files to UUID system...");
             UUIDMigration.migrateConfig(petConfig);
             mainConfig.set("convertDataFileToUniqueId", false);

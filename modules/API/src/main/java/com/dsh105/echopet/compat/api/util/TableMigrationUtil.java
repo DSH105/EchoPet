@@ -49,7 +49,7 @@ public class TableMigrationUtil {
                 copyStatement.executeUpdate();
 
                 // Migrate to UUIDs in the new table if necessary
-                if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.canReturnUUID()) {
+                if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.supportsUuid()) {
                     PreparedStatement getOwnerStatement = conn.prepareStatement("SELECT OwnerName FROM EchoPet");
 
                     PreparedStatement updateNameStatement = conn.prepareStatement("UPDATE EchoPet SET OwnerName = ? WHERE OwnerName = ?");
