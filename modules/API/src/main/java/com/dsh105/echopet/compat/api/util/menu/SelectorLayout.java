@@ -66,6 +66,7 @@ public class SelectorLayout {
     }
 
     public static void loadLayout() {
+        selectorLayout.clear();
         YAMLConfig config = ConfigOptions.instance.getConfig();
         String s = "petSelector.menu";
         int size = config.getInt(s + ".slots");
