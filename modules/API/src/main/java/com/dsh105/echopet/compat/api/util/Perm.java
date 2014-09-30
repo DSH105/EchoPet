@@ -28,14 +28,14 @@ public enum Perm {
     ADMIN_CALL("echopet.petadmin.call"),
     ADMIN_DEFAULT_REMOVE("echopet.petadmin.default.remove"),
     ADMIN_DEFAULT_SET_CURRENT("echopet.petadmin.default.set.current"),
-    ADMIN_DEFAULT_SET_PETTYPE("echopet.petadmin!default.set.type"),
-    ADMIN_HAT("echopet.petadmin!hat"),
-    ADMIN_RIDE("echopet.petadmin!ride"),
+    ADMIN_DEFAULT_SET_PETTYPE("echopet.petadmin.default.set.type"),
+    ADMIN_HAT("echopet.petadmin.hat"),
+    ADMIN_RIDE("echopet.petadmin.ride"),
     ADMIN_HIDE("echopet.petadmin.hide"),
     ADMIN_INFO("echopet.petadmin.info"),
     ADMIN_MENU("echopet.petadmin.menu"),
     ADMIN_NAME("echopet.petadmin.name"),
-    ADMIN_PETTYPE("echopet.petadmin!type"),
+    ADMIN_PETTYPE("echopet.petadmin.type"),
     ADMIN_RELOAD("echopet.petadmin.reload"),
     ADMIN_REMOVE("echopet.petadmin.remove"),
     ADMIN_SHOW("echopet.petadmin.show"),
@@ -47,14 +47,14 @@ public enum Perm {
     BASE_CALL("echopet.pet.call"),
     BASE_DEFAULT_REMOVE("echopet.pet.default.remove"),
     BASE_DEFAULT_SET_CURRENT("echopet.pet.default.set.current"),
-    BASE_DEFAULT_SET_PETTYPE("echopet.pet!default.set.type"),
-    BASE_HAT("echopet.pet!hat"),
+    BASE_DEFAULT_SET_PETTYPE("echopet.pet.default.set.type"),
+    BASE_HAT("echopet.pet.hat"),
     BASE_HIDE("echopet.pet.hide"),
-    BASE_RIDE("echopet.pet!ride"),
+    BASE_RIDE("echopet.pet.ride"),
     BASE_INFO("echopet.pet.info"),
     BASE_MENU("echopet.pet.menu"),
     BASE_NAME("echopet.pet.name"),
-    BASE_PETTYPE("echopet.pet!type"),
+    BASE_PETTYPE("echopet.pet.type"),
     BASE_REMOVE("echopet.pet.remove"),
     BASE_SHOW("echopet.pet.show"),
     BASE_SELECT("echopet.pet.select"),
@@ -134,7 +134,7 @@ public enum Perm {
     }
 
     private static boolean hasTypePerm(Player player, boolean sendMessage, Perm base, PetType petType) {
-        String perm = "echopet.pet." + base.perm.split("!")[1] + "." + petType.toString().toLowerCase();
+        String perm = base.perm + "." + petType.toString().toLowerCase();
         if (player.hasPermission(perm)) {
             return true;
         }
