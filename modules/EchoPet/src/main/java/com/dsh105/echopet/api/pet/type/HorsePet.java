@@ -28,10 +28,10 @@ import java.util.UUID;
 @EntityPetType(petType = PetType.HORSE)
 public class HorsePet extends Pet implements IHorsePet {
 
-    HorseType horseType;
-    HorseVariant variant;
-    HorseMarking marking;
-    HorseArmour armour;
+    HorseType horseType = HorseType.NORMAL;
+    HorseVariant variant = HorseVariant.WHITE;
+    HorseMarking marking = HorseMarking.NONE;
+    HorseArmour armour = HorseArmour.NONE;
     boolean baby = false;
     boolean chested = false;
     boolean saddle = false;
