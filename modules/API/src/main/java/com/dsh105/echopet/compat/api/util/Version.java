@@ -89,12 +89,16 @@ public class Version implements Comparable<Version> {
     public static int[] getNumericVersion(String serverVersion) {
         String[] versionParts = serverVersion.split("[.-]");
         int[] numericVersionParts = new int[versionParts.length];
+        int diff = 0;
         for (int i = 0; i < versionParts.length; i++) {
             try {
-                numericVersionParts[i] = toInteger(versionParts[i]);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid version: " + serverVersion);
+                numericVersionParts[i - diff] = toInteger(versionParts[i]);
+            } catch (NumberFormatException ignored) {
+                diff++;
             }
+        }
+        if (numericVersionParts.length <= 0) {
+            throw new IllegalArgumentException("Invalid version: " + serverVersion);
         }
         return numericVersionParts;
     }

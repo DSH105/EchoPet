@@ -33,11 +33,12 @@ public class WorldGuardProvider extends PluginDependencyProvider<WorldGuardPlugi
 
     @Override
     public void onHook() {
-        // Only WorldGuard 6.0 is supported
         if (new Version(getDependency().getDescription().getVersion()).isCompatible("6.0")) {
             if (EchoPet.getPlugin().getMainConfig().getBoolean("worldguard.regionEnterCheck", true)) {
                 this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new RegionListener(), this.getHandlingPlugin());
             }
+        } else {
+            throw new IllegalStateException("Only WorldGuard 6.0 and after are supported");
         }
     }
 
