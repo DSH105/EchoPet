@@ -67,7 +67,13 @@ public class PetOwnerListener implements Listener {
             EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);
             if (!iEvent.isCancelled()) {
                 pet.getEntityPet().onInteract(p);
+                return;
             }
+        }
+
+        if (p.getItemInHand() != null && p.getItemInHand().isSimilar(SelectorLayout.getSelectorItem())) {
+            new SelectorMenu().showTo(p);
+            event.setCancelled(true);
         }
     }
 
