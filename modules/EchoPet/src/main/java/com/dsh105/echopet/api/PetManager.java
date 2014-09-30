@@ -58,7 +58,7 @@ public class PetManager implements IPetManager {
                 return null;
             } else {
                 if (sendMessage) {
-                    Lang.sendTo(p, Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName().toString()));
+                    Lang.sendTo(p, Lang.DATABASE_PET_LOAD.toString().replace("%petname%", pet.getPetName()));
                 }
             }
             return pet;
@@ -68,7 +68,7 @@ public class PetManager implements IPetManager {
                 return null;
             } else {
                 if (sendMessage) {
-                    Lang.sendTo(p, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+                    Lang.sendTo(p, Lang.DEFAULT_PET_LOAD.toString().replace("%petname%", pi.getPetName()));
                 }
             }
             return pi;
@@ -79,7 +79,7 @@ public class PetManager implements IPetManager {
                     return null;
                 } else {
                     if (sendMessage) {
-                        Lang.sendTo(p, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName().toString()));
+                        Lang.sendTo(p, Lang.AUTOSAVE_PET_LOAD.toString().replace("%petname%", pi.getPetName()));
                     }
                 }
                 return pi;

@@ -217,7 +217,6 @@ public class PetCommand implements CommandExecutor {
                     Player player = (Player) sender;
                     IPet p = EchoPet.getManager().getPet(player);
                     if (p == null) {
-                        EchoPet.getManager().removePet(p, true);
                         IPet pet = EchoPet.getManager().loadPets(player, false, false, false);
                         if (pet == null) {
                             Lang.sendTo(sender, Lang.NO_HIDDEN_PET.toString());
@@ -228,9 +227,7 @@ public class PetCommand implements CommandExecutor {
                             return true;
                         } else {
                             Lang.sendTo(sender, Lang.PETS_DISABLED_HERE.toString().replace("%world%", player.getWorld().getName()));
-                            if (pet != null) {
-                                EchoPet.getManager().removePet(pet, true);
-                            }
+                            EchoPet.getManager().removePet(pet, true);
                             return true;
                         }
                     } else {
