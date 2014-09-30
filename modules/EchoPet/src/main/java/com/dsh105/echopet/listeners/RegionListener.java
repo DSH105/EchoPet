@@ -36,7 +36,7 @@ public class RegionListener implements Listener {
         Player owner = event.getPlayer();
         List<Pet> pets = EchoPet.getManager().getPetsFor(owner);
         if (!pets.isEmpty()) {
-            if (!EchoPet.getProvider(WorldGuardProvider.class).allowRegion(event.getTo())) {
+            if (!EchoPet.getProvider(WorldGuardProvider.class).allowPets(event.getTo())) {
                 EchoPet.getManager().removePets(owner);
                 Lang.ENTER_PET_DISABLED_REGION.send(owner);
             }

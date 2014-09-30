@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.api.plugin.hook;
 
+import com.dsh105.commodus.Version;
 import com.dsh105.commodus.dependency.PluginDependencyProviderBase;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.config.Settings;
@@ -37,8 +38,12 @@ public class WorldGuardProviderBase extends PluginDependencyProviderBase<WorldGu
 
     @Override
     public void onHook() {
-        if (Settings.WORLDGUARD_REGION_ENTER.getValue()) {
-            this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new RegionListener(), this.getHandlingPlugin());
+        if (new Version(getDependency().getDescription().getVersion()).isCompatible("6.0")) {
+            if (Settings.WORLDGUARD_REGION_ENTER.getValue()) {
+                this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new RegionListener(), this.getHandlingPlugin());
+            }
+        } else {
+            throw new IllegalStateException("Only WorldGuard 6.0 and after are supported");
         }
     }
 
