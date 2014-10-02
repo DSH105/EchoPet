@@ -84,6 +84,10 @@ public class PetSelector {
         return LAYOUT;
     }
 
+    public static void reloadLayout() {
+        LAYOUT = null;
+    }
+
     public static Menu prepare() {
         return getLayout().toMenu(EchoPet.getCore());
     }

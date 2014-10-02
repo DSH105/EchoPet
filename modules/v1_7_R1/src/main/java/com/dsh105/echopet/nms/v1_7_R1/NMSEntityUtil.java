@@ -112,7 +112,9 @@ public class NMSEntityUtil {
     public static float getRangeOfGuardedAreaFor(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).bU();
-        } else return 1.0F;
+        } else {
+            return 1.0F;
+        }
     }
 
     public static ChunkCoordinates getChunkCoordinates(EntityLiving inEntity) {

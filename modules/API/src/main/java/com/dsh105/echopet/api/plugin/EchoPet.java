@@ -18,11 +18,11 @@
 package com.dsh105.echopet.api.plugin;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
-import com.dsh105.command.CommandManager;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.dependency.PluginDependencyProvider;
 import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.api.config.ConfigType;
+import com.dsh105.influx.InfluxBukkitManager;
 
 public class EchoPet {
 
@@ -47,7 +47,7 @@ public class EchoPet {
         return CORE.getPetManager();
     }
 
-    public static CommandManager getCommandManager() {
+    public static InfluxBukkitManager getCommandManager() {
         return CORE.getCommandManager();
     }
 

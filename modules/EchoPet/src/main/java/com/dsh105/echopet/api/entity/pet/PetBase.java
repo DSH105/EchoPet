@@ -354,6 +354,44 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     }
 
     @Override
+    public Pet spawnRider(Pet pet, boolean sendFailMessage) {
+        if (pet == null) {
+            return null;
+        }
+        String failMessage;
+        if (!PetSettings.ENABLE.getValue(pet.getType().storageName())) {
+            failMessage = Lang.PET_TYPE_DISABLED.getValue("type", pet.getType().humanName());
+        } else if (!PetSettings.ALLOW_RIDERS.getValue(getType().storageName())) {
+            failMessage = Lang.RIDERS_DISABLED.getValue("type", getType().humanName());
+        } else {
+            if (isOwnerRiding()) {
+                setOwnerRiding(false);
+            }
+
+            if (rider != null) {
+                rider.despawn(false);
+            }
+
+            rider = pet;
+            ((PetBase) rider).isRider = true;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (getBukkitEntity() != null) {
+                        getBukkitEntity().setPassenger(getRider().getBukkitEntity());
+                    }
+                }
+            }.runTaskLater(EchoPet.getCore(), 5L);
+            return rider;
+        }
+
+        if (sendFailMessage) {
+            getOwner().sendMessage(failMessage);
+        }
+        return null;
+    }
+
+    @Override
     public void despawnRider() {
         getRider().despawn(true);
         if (EchoPet.getManager() instanceof SQLPetManager) {

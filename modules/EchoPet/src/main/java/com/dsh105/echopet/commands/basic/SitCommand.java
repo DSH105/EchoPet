@@ -17,72 +17,57 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class SitCommand implements CommandListener {
 
     @Command(
-            command = "<r:(?i)yes|true|no|false,n:state>",
-            description = "Sets the state of rest that a pet exhibits",
-            permission = Perm.SIT,
-            help = {"<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
+            syntax = "<pet_name> sit <flag>",
+            desc = "Sets the state of rest that a pet exhibits (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
     )
-    public boolean sit(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> sit");
+    @Authorize(Perm.SIT)
+    public boolean sitPet(BukkitCommandEvent<Player> event, @Bind("flag") boolean flag, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
 
-        if (event.variable("state").equalsIgnoreCase("yes") || event.variable("state").equalsIgnoreCase("true")) {
-            if (pet.isStationary()) {
-                event.respond(Lang.PET_ALREADY_SITTING.getValue("name", pet.getName()));
-                return true;
-            }
-            pet.setStationary(true);
-            event.respond(Lang.PET_SITTING.getValue("name", pet.getName()));
+        pet.setStationary(flag);
+        if (flag) {
+            event.respond((pet.isStationary() ? Lang.PET_ALREADY_SITTING : Lang.PET_SITTING).getValue("name", pet.getName()));
         } else {
-            if (!pet.isStationary()) {
-                event.respond(Lang.PET_ALREADY_NOT_SITTING.getValue("name", pet.getName()));
-                return true;
-            }
-            pet.setStationary(false);
-            event.respond(Lang.PET_NOT_SITTING.getValue("name", pet.getName()));
+            event.respond((pet.isStationary() ? Lang.PET_NOT_SITTING : Lang.PET_ALREADY_NOT_SITTING).getValue("name", pet.getName()));
         }
         return true;
     }
 
     @Command(
-            command = "<pet_name> <r:(?i)yes|true|no|false,n:state>",
-            description = "Sets the state of rest that a pet exhibits (specified by <pet_name>)",
-            permission = Perm.SIT,
-            help = {"<pet_name> is the name of an existing pet", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
+            syntax = "sit <flag>",
+            desc = "Sets the state of rest that a pet exhibits",
+            help = {"<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
     )
-    public boolean sitPet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+    @Authorize(Perm.SIT)
+    public boolean sit(BukkitCommandEvent<Player> event, @Bind("flag") boolean flag, @Convert(PetConverters.OnlyPet.class) Pet pet) {
         if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> sit"));
             return true;
         }
 
-        if (event.variable("state").equalsIgnoreCase("yes") || event.variable("state").equalsIgnoreCase("true")) {
-            if (pet.isStationary()) {
-                event.respond(Lang.PET_ALREADY_SITTING.getValue("name", pet.getName()));
-                return true;
-            }
-            pet.setStationary(true);
-            event.respond(Lang.PET_SITTING.getValue("name", event.variable("pet_name")));
+        pet.setStationary(flag);
+        if (flag) {
+            event.respond((pet.isStationary() ? Lang.PET_ALREADY_SITTING : Lang.PET_SITTING).getValue("name", pet.getName()));
         } else {
-            if (!pet.isStationary()) {
-                event.respond(Lang.PET_ALREADY_NOT_SITTING.getValue("name", event.variable("pet_name")));
-                return true;
-            }
-            pet.setStationary(false);
-            event.respond(Lang.PET_NOT_SITTING.getValue("name", event.variable("pet_name")));
+            event.respond((pet.isStationary() ? Lang.PET_NOT_SITTING : Lang.PET_ALREADY_NOT_SITTING).getValue("name", pet.getName()));
         }
         return true;
     }

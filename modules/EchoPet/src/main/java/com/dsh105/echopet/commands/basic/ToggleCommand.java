@@ -17,9 +17,6 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.ConfigType;
@@ -27,8 +24,14 @@ import com.dsh105.echopet.api.config.Data;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.commands.basic.PetCommand;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -38,11 +41,11 @@ import java.util.Map;
 public class ToggleCommand implements CommandListener {
 
     @Command(
-            command = "toggle",
-            description = "Toggles an existing pet",
-            permission = Perm.TOGGLE
+            syntax = "toggle",
+            desc = "Toggles an existing pet"
     )
-    public boolean toggle(CommandEvent<Player> event) {
+    @Authorize(Perm.TOGGLE)
+    public boolean toggle(BukkitCommandEvent<Player> event) {
         List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender());
         // Is there a pet to hide?
         if (pets.size() > 0) {
@@ -86,14 +89,12 @@ public class ToggleCommand implements CommandListener {
     }
 
     @Command(
-            command = "<pet_name> toggle",
-            description = "Toggles an existing pet (specified by <pet_name>)",
-            permission = Perm.TOGGLE,
-            help = "<pet_name> is the name of an existing pet"
+            syntax = "<pet_name> toggle",
+            desc = "Toggles an existing pet (specified by <pet_name>)",
+            help = "<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"
     )
-    public boolean togglePet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
-
+    @Authorize(Perm.TOGGLE)
+    public boolean togglePet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         // Does it exist?
         if (pet != null) {
             EchoPet.getManager().save(pet);
@@ -102,9 +103,9 @@ public class ToggleCommand implements CommandListener {
             return true;
         }
 
-        pet = EchoPet.getManager().loadPet(event.sender(), EchoPet.getManager().getPetNameMapFor(event.sender()).get(event.variable("pet_name")).toString());
+        pet = EchoPet.getManager().loadPet(event.sender(), EchoPet.getManager().getPetNameMapFor(event.sender()).get(event.var("pet_name")).toString());
         if (pet == null) {
-            event.respond(Lang.PET_NOT_FOUND.getValue("name", event.variable("pet_name")));
+            // Error shown through above messages
             return true;
         }
 

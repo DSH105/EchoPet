@@ -88,6 +88,8 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     Pet spawnRider(final PetType type, boolean sendFailMessage);
 
+    Pet spawnRider(Pet pet, boolean sendFailMessage);
+
     void despawnRider();
 
     boolean teleportToOwner();

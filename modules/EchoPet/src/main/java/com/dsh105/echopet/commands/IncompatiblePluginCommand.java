@@ -17,33 +17,34 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
-import com.dsh105.command.ResponseLevel;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
+import com.dsh105.influx.response.ResponseLevel;
 
 public class IncompatiblePluginCommand implements CommandListener {
 
     @Command(
-            command = "pet",
-            description = "Manage your own pets",
-            permission = Perm.PET,
+            syntax = "pet [args...]",
+            desc = "Manage your own pets",
             usage = "Use \"/pet help\" for help."
     )
-    public boolean pet(CommandEvent event) {
-        event.respond(ResponseLevel.SEVERE, "EchoPet is not compatible with this server version. Please upgrade/downgrade to the appropriate version.");
+    @Authorize(Perm.PET)
+    public boolean pet(BukkitCommandEvent event) {
+        event.respond("EchoPet is not compatible with this server version. Please upgrade/downgrade to the appropriate version.", ResponseLevel.SEVERE);
         return true;
     }
 
     @Command(
-            command = "petadmin",
-            description = "Admin access to pet management",
-            permission = Perm.PETADMIN,
+            syntax = "petadmin [args...]",
+            desc = "Admin access to pet management",
             usage = "Use \"/petadmin help\" for help."
     )
-    public boolean petadmin(CommandEvent event) {
-        event.respond(ResponseLevel.SEVERE, "EchoPet is not compatible with this server version. Please upgrade/downgrade to the appropriate version.");
+    @Authorize(Perm.PETADMIN)
+    public boolean petadmin(BukkitCommandEvent event) {
+        event.respond("EchoPet is not compatible with this server version. Please upgrade/downgrade to the appropriate version.", ResponseLevel.SEVERE);
         return true;
     }
 }

@@ -37,6 +37,7 @@ import java.util.UUID;
  * the table will be migrated twice (once for each version).
  */
 public class TableMigrationUtil {
+
     public static final String LATEST_TABLE = "EchoPet_version4";
     private static final List<MigrationStrategy> tableMigrationStrategies = new ArrayList<MigrationStrategy>();
 
@@ -256,7 +257,8 @@ public class TableMigrationUtil {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException ignored) {}
+                } catch (SQLException ignored) {
+                }
             }
         }
     }
@@ -265,6 +267,7 @@ public class TableMigrationUtil {
      * Represents a table schema transition
      */
     abstract static class MigrationStrategy {
+
         private final String tableName;
 
         /**

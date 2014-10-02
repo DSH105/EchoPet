@@ -58,10 +58,12 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                 e.printStackTrace();
             } finally {
                 try {
-                    if (ps != null)
+                    if (ps != null) {
                         ps.close();
-                    if (con != null)
+                    }
+                    if (con != null) {
                         con.close();
+                    }
                 } catch (SQLException ignored) {
                 }
             }
@@ -76,7 +78,6 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
         }
         return loadedPets;
     }
-
 
 
     @Override
@@ -125,10 +126,12 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                 e.printStackTrace();
             } finally {
                 try {
-                    if (ps != null)
+                    if (ps != null) {
                         ps.close();
-                    if (con != null)
+                    }
+                    if (con != null) {
                         con.close();
+                    }
                 } catch (SQLException ignored) {
                 }
             }
@@ -205,10 +208,12 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                 e.printStackTrace();
             } finally {
                 try {
-                    if (ps != null)
+                    if (ps != null) {
                         ps.close();
-                    if (con != null)
+                    }
+                    if (con != null) {
                         con.close();
+                    }
                 } catch (SQLException ignored) {
                 }
             }
@@ -248,10 +253,12 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                 e.printStackTrace();
             } finally {
                 try {
-                    if (ps != null)
+                    if (ps != null) {
                         ps.close();
-                    if (con != null)
+                    }
+                    if (con != null) {
                         con.close();
+                    }
                 } catch (SQLException ignored) {
                 }
             }

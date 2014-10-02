@@ -57,6 +57,10 @@ public class DataMenu {
         return getLayout(pet).toMenu(EchoPet.getCore());
     }
 
+    public static void reloadLayouts() {
+        LAYOUTS.clear();
+    }
+
     public static Layout getLayout(final Pet pet) {
         Layout layout = LAYOUTS.get(pet.getType());
         if (layout == null) {

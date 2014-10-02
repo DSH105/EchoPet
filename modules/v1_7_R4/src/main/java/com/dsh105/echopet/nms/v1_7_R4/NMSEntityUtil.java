@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.nms.v1_7_R4;
 
-import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
@@ -112,7 +111,9 @@ public class NMSEntityUtil {
     public static float getRangeOfGuardedAreaFor(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).bW();
-        } else return 1.0F;
+        } else {
+            return 1.0F;
+        }
     }
 
     public static ChunkCoordinates getChunkCoordinates(EntityLiving inEntity) {

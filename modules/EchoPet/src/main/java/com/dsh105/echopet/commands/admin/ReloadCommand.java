@@ -17,27 +17,32 @@
 
 package com.dsh105.echopet.commands.admin;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.config.Lang;
+import com.dsh105.echopet.api.inventory.DataMenu;
+import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 
 public class ReloadCommand implements CommandListener {
 
     @Command(
-            command = "reload",
-            description = "Reload all EchoPet configuration files",
-            permission = Perm.RELOAD,
+            syntax = "reload",
+            desc = "Reload all EchoPet configuration files",
             help = {"This does NOT refresh any pets", "This might not have an effect on certain configuration options - those will require a server restart"}
     )
-    public boolean command(CommandEvent event) {
+    @Authorize(Perm.RELOAD)
+    public boolean command(BukkitCommandEvent event) {
         EchoPet.getConfig(ConfigType.GENERAL).reloadConfig();
         EchoPet.getConfig(ConfigType.MESSAGES).reloadConfig();
         EchoPet.getConfig(ConfigType.MENU).reloadConfig();
         EchoPet.getConfig(ConfigType.PETS).reloadConfig();
+        PetSelector.reloadLayout();
+        DataMenu.reloadLayouts();
 
         event.respond(Lang.CONFIGS_RELOADED.getValue());
         return true;

@@ -17,14 +17,15 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.AttributeAccessor;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 
@@ -33,13 +34,13 @@ import java.util.List;
 public class ListCommand implements CommandListener {
 
     @Command(
-            command = "list",
-            description = "View available pet and data types",
-            permission = Perm.LIST
+            syntax = "list",
+            desc = "View available pet and data types"
     )
-    public boolean list(CommandEvent event) {
+    @Authorize(Perm.LIST)
+    public boolean list(BukkitCommandEvent event) {
         for (PetType type : PetType.values()) {
-            boolean access = event.sender().hasPermission("echopet.pet.type." + type.storageName());
+            boolean access = event.sender().hasPermission(Perm.TYPE.replace("<type>", type.storageName()));
             PowerMessage message = new PowerMessage("• " + (access ? ChatColor.GREEN : ChatColor.RED) + type.humanName());
             ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
             ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;

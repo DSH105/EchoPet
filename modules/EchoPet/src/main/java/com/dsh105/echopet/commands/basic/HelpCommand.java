@@ -34,46 +34,70 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.captainbern.minecraft.reflection.MinecraftReflection;
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
-import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.api.config.Lang;
-import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.util.Perm;
-import org.bukkit.entity.Player;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.Controller;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
+import org.bukkit.command.CommandSender;
+
+import java.util.SortedMap;
 
 public class HelpCommand implements CommandListener {
 
     @Command(
-            command = "help",
+            syntax = "help",
             aliases = {"?"},
-            description = "Retrieve help for all EchoPet commands",
-            permission = Perm.PET
+            desc = "Retrieve help for all EchoPet commands",
+            help = {
+                    "Commands are listed in alphabetical order",
+                    "Use \"/pet help <index>\" for a certain page of help",
+                    "Use \"/pet help <command>\" for more help on a certain command"
+            }
     )
-    public boolean help(CommandEvent event) {
-        EchoPet.getCommandManager().getHelpService().sendPage(event.sender(), 1);
-        if (MinecraftReflection.isUsingNetty() && event.sender() instanceof Player) {
-            event.respond(Lang.COMMAND_HOVER_TIP.getValue());
-        }
+    public boolean help(BukkitCommandEvent event) {
+        event.getManager().getHelp().sendPage(event.sender());
         return true;
     }
 
     @Command(
-            command = "help <index>",
+            syntax = "help <index>",
             aliases = {"? <index>"},
-            description = "Retrieve a certain help page of all EchoPet commands",
-            permission = Perm.PET
-    )
-    public boolean helpPage(CommandEvent event) {
-        try {
-            EchoPet.getCommandManager().getHelpService().sendPage(event.sender(), GeneralUtil.toInteger(event.variable("index")));
-            if (MinecraftReflection.isUsingNetty() && event.sender() instanceof Player) {
-                event.respond(Lang.COMMAND_HOVER_TIP.getValue());
+            desc = "Retrieve a certain help page of all EchoPet commands",
+            help = {
+                    "Commands are listed in alphabetical order",
+                    "Use \"/pet help <index>\" for a certain page of help",
+                    "Use \"/pet help <command>\" for more help on a certain command"
             }
-        } catch (NumberFormatException e) {
-            event.respond(Lang.HELP_INDEX_TOO_BIG.getValue("index", event.variable("index")));
+    )
+    public boolean helpPage(BukkitCommandEvent event, @Bind("index") int index) {
+        event.getManager().getHelp().sendPage(event.sender(), index);
+        return true;
+    }
+
+    @Command(
+            syntax = "help <command>",
+            aliases = {"? <command>"},
+            desc = "Retrieve help on a certain EchoPet command",
+            help = {
+                    "Commands are listed in alphabetical order",
+                    "Use \"/pet help\" for general help and a command listing",
+                    "Use \"/pet help <index>\" for a certain page of help"
+            }
+    )
+    public boolean commandHelp(BukkitCommandEvent<CommandSender> event) {
+        String command = event.getInput();
+        SortedMap<Controller, String[]> matches = event.getManager().getHelp().getHelpFor(command);
+        if (matches.isEmpty()) {
+            event.respond("No help found for \"" + command + "\".");
+            return true;
+        }
+
+        event.respond(matches.size() + " matches found for \"" + command + "\":");
+
+        for (Controller controller : matches.keySet()) {
+            System.out.println('\n');
+            event.getManager().getHelp().sendHelpFor(event.sender(), controller);
         }
         return true;
     }

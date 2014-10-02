@@ -31,7 +31,7 @@
     <parent>
         <groupId>com.dsh105</groupId>
         <artifactId>EchoPet-Parent</artifactId>
-        <version>parent-v3</version>
+        <version>v3</version>
         <relativePath>../../</relativePath>
     </parent>
 
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R1</artifactId>
-            <version>v1_7_R1-v3</version>
+            <version>v3</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R2</artifactId>
-            <version>v1_7_R2-v3</version>
+            <version>v3</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R3</artifactId>
-            <version>v1_7_R3-v3</version>
+            <version>v3</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -94,7 +94,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_7_R4</artifactId>
-            <version>v1_7_R4-v3</version>
+            <version>v3</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -112,7 +112,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
-            <version>API-v3</version>
+            <version>v3</version>
         </dependency>
     </dependencies>
 
@@ -175,7 +175,7 @@
                                 <includes>
                                     <artifact>com.dsh105:EchoPet*</artifact>
                                     <artifact>com.dsh105:Commodus</artifact>
-                                    <artifact>com.dsh105:CommandManager</artifact>
+                                    <artifact>com.dsh105:Influx</artifact>
                                     <artifact>com.dsh105:MenuAPI</artifact>
                                     <artifact>com.captainbern:Minecraft-Reflection</artifact>
                                     <include>com.jolbox:bonecp</include>

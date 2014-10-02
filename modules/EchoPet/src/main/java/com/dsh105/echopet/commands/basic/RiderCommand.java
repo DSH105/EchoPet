@@ -17,70 +17,91 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
-import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.Lang;
-import com.dsh105.echopet.api.entity.PetData;
-import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.conversation.NameFactory;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.*;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class RiderCommand implements CommandListener {
 
     @Command(
-            command = "rider <r:" + PetCommand.PET_REGEX_STRING + ",n:" + PetCommand.PET_VARIABLE_NAME + ">",
-            description = "Creates a rider for an existing pet",
-            permission = Perm.TYPE,
-            help = {"Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "Names can be more than one word", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
+            syntax = "rider <pet>",
+            desc = "Creates a rider for an existing pet",
+            help = {"Data values can be separated by a comma", "e.g. blue,baby (for a sheep)", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\"", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
     )
-    public boolean rider(CommandEvent<Player> event) {
-        String[] inputParts = PetCommand.petFromVariables(event.variable(PetCommand.PET_VARIABLE_NAME));
-        String petType = inputParts[0];
-        String data = inputParts[1];
-        String name = inputParts[2];
-        if (!GeneralUtil.isEnumType(PetType.class, petType)) {
-            event.respond(Lang.INVALID_PET_TYPE.getValue("type", petType));
+    @Authorize(Perm.RIDER_TYPE)
+    public boolean rider(BukkitCommandEvent<Player> event,
+                         @Bind("pet") @Accept(value = 3, showAs = "<type> name:[name] data:[data]")
+                         @Convert(PetConverters.Create.class) Pet rider,
+                         @Convert(PetConverters.OnlyPet.class) Pet pet) {
+        if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> rider <type> name:[name] data:[data]"));
             return true;
         }
-
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> rider " + PetCommand.PET_VARIABLE_NAME);
-        return pet == null || createRider(pet, PetCommand.PetTemp.build(petType, name, data, event.sender()), event);
+        if (rider != null) {
+            pet.spawnRider(rider, true);
+        }
+        return true;
     }
 
     @Command(
-            command = "<pet_name> rider <r:" + PetCommand.PET_REGEX_STRING + ",n:" + PetCommand.PET_VARIABLE_NAME + ">",
-            description = "Creates a rider for an existing pet (specified by <pet_name>)",
-            permission = Perm.TYPE,
-            help = {"<pet_name> is the name of an existing pet", "Data values can be separated by a space", "e.g. blue,baby (for a sheep)", "Names can be more than one word", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
+            syntax = "<pet_name> rider <pet>",
+            desc = "Creates a rider for an existing pet (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "Data values can be separated by a comma", "e.g. blue,baby (for a sheep)", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\"", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
     )
-    public boolean riderForPet(CommandEvent<Player> event) {
-        String[] inputParts = PetCommand.petFromVariables(event.variable(PetCommand.PET_VARIABLE_NAME));
-        String petType = inputParts[0];
-        String data = inputParts[1];
-        String name = inputParts[2];
-        if (!GeneralUtil.isEnumType(PetType.class, petType)) {
-            event.respond(Lang.INVALID_PET_TYPE.getValue("type", petType));
+    @Authorize(Perm.RIDER_TYPE)
+    public boolean riderForPet(BukkitCommandEvent<Player> event,
+                               @Bind("pet") @Accept(value = 3, showAs = "<type> name:[name] data:[data]")
+                               @Convert(PetConverters.Create.class) Pet rider,
+                               @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+        if (pet == null) {
             return true;
         }
-
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
-        return pet == null || createRider(pet, PetCommand.PetTemp.build(petType, name, data, event.sender()), event);
+        if (rider != null) {
+            pet.spawnRider(rider, true);
+        }
+        return true;
     }
 
     @Command(
-            command = "name rider [name...]",
-            description = "Sets the name of the rider of an existing pet",
-            permission = Perm.NAME,
-            help = {"If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word"}
+            syntax = "name rider [name]",
+            desc = "Sets the name of the rider of an existing pet",
+            help = {"If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
     )
-    public boolean riderName(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> name rider [name...]");
+    @Authorize(Perm.NAME)
+    public boolean riderName(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
+        if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> name rider [name]"));
+            return true;
+        }
+
+        String name = event.var("name");
+
+        if (pet.getRider() == null) {
+            event.respond(Lang.NO_RIDER_FOUND.getValue("name", pet.getName()));
+            return true;
+        }
+
+        if (name == null) {
+            NameFactory.askForName(event.sender(), pet.getRider(), false);
+        } else {
+            pet.getRider().setName(name, true);
+        }
+        return true;
+    }
+
+    @Command(
+            syntax = "<pet_name> name rider [name]",
+            desc = "Sets the name of the rider of an existing pet (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
+    )
+    @Authorize(Perm.NAME)
+    public boolean riderNameForPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
@@ -90,48 +111,25 @@ public class RiderCommand implements CommandListener {
             return true;
         }
 
-        if (event.variable("name") == null) {
+        String name = event.var("name");
+
+        if (name == null) {
             NameFactory.askForName(event.sender(), pet.getRider(), false);
         } else {
-            pet.getRider().setName(event.variable("name"), true);
+            pet.getRider().setName(name, true);
         }
         return true;
     }
 
     @Command(
-            command = "<pet_name> name rider [name...]",
-            description = "Sets the name of the rider of an existing pet (specified by <pet_name>)",
-            permission = Perm.NAME,
-            help = {"<pet_name> is the name of an existing pet", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word"}
-    )
-    public boolean riderNameForPet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
-        if (pet == null) {
-            return true;
-        }
-
-        if (pet.getRider() == null) {
-            event.respond(Lang.NO_RIDER_FOUND.getValue("name", event.variable("pet_name")));
-            return true;
-        }
-
-        if (event.variable("name") == null) {
-            NameFactory.askForName(event.sender(), pet.getRider(), false);
-        } else {
-            pet.getRider().setName(event.variable("name"), true);
-        }
-        return true;
-    }
-
-    @Command(
-            command = "rider remove",
-            description = "Removes the rider of an existing pet",
-            permission = Perm.REMOVE,
+            syntax = "rider remove",
+            desc = "Removes the rider of an existing pet",
             help = {"Removes the rider of a pet"}
     )
-    public boolean removeRider(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> rider remove");
+    @Authorize(Perm.REMOVE)
+    public boolean removeRider(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
         if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> rider remove"));
             return true;
         }
 
@@ -146,43 +144,23 @@ public class RiderCommand implements CommandListener {
     }
 
     @Command(
-            command = "<pet_name> rider remove",
-            description = "Removes the rider of a pet (specified by <pet_name>)",
-            permission = Perm.REMOVE,
-            help = {"<pet_name> is the name of an existing pet", "Removes the rider of a pet"}
+            syntax = "<pet_name> rider remove",
+            desc = "Removes the rider of a pet (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "Removes the rider of a pet"}
     )
-    public boolean removeRiderForPet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+    @Authorize(Perm.REMOVE)
+    public boolean removeRiderForPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
 
         if (pet.getRider() == null) {
-            event.respond(Lang.NO_RIDER_FOUND.getValue("name", event.variable("pet_name")));
+            event.respond(Lang.NO_RIDER_FOUND.getValue("name", pet.getName()));
             return true;
         }
 
         pet.despawnRider();
-        event.respond(Lang.RIDER_REMOVED.getValue("name", event.variable("pet_name")));
-        return true;
-    }
-
-    private boolean createRider(Pet pet, PetCommand.PetTemp temp, CommandEvent<Player> event) {
-        Pet rider = EchoPet.getManager().create(event.sender(), temp.getPetType(), true);
-        if (pet == null) {
-            return true;
-        }
-        rider.setName(temp.getName());
-
-        if (!temp.getValidPetData().isEmpty()) {
-            rider.setDataValue(temp.getValidPetData().toArray(new PetData[0]));
-        }
-        if (!temp.getInvalidPetData().isEmpty()) {
-            event.respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", temp.getInvalidPetData())));
-        }
-
-        EchoPet.getManager().save(pet);
-        event.respond(Lang.RIDER_CREATED.getValue("type", temp.getPetType().humanName(), "name", pet.getName()));
+        event.respond(Lang.RIDER_REMOVED.getValue("name", pet.getName()));
         return true;
     }
 }

@@ -17,42 +17,45 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class HatCommand implements CommandListener {
 
     @Command(
-            command = "<pet_name> hat",
-            description = "Places your pet on your head (specified by <pet_name>)",
-            permission = Perm.HAT,
-            help = {"<pet_name> is the name of an existing pet", "Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
+            syntax = "<pet_name> hat",
+            desc = "Places your pet on your head (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
     )
-    public boolean hatPet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+    @Authorize(Perm.HAT)
+    public boolean hatPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
         boolean status = pet.isHat();
         pet.setHat(!status);
-        event.respond((status ? Lang.PET_HAT_ON : Lang.PET_HAT_OFF).getValue("name", event.variable("pet_name")));
+        event.respond((status ? Lang.PET_HAT_ON : Lang.PET_HAT_OFF).getValue("name", pet.getName()));
         return true;
     }
 
     @Command(
-            command = "hat",
-            description = "Places your pet on your head",
-            permission = Perm.HAT,
+            syntax = "hat",
+            desc = "Places your pet on your head",
             help = {"Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
     )
-    public boolean hat(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> hat");
+    @Authorize(Perm.HAT)
+    public boolean hat(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
         if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> hat"));
             return true;
         }
         boolean status = pet.isHat();

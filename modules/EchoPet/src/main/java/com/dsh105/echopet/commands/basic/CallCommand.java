@@ -17,41 +17,44 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class CallCommand implements CommandListener {
 
     @Command(
-            command = "<pet_name> call",
-            description = "Calls your pet to your side (specified by <pet_name>)",
-            permission = Perm.CALL,
-            help = {"<pet_name> is the name of an existing pet", "In most cases, this will work when your pet has unexpectedly disappeared"}
+            syntax = "<pet_name> call",
+            desc = "Calls your pet to your side (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "In most cases, this will work when your pet has unexpectedly disappeared"}
     )
-    public boolean callPet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+    @Authorize(Perm.CALL)
+    public boolean callPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
         pet.teleportToOwner();
-        event.respond(Lang.PET_CALLED.getValue("name", event.variable("pet_name")));
+        event.respond(Lang.PET_CALLED.getValue("name", pet.getName()));
         return true;
     }
 
     @Command(
-            command = "call",
-            description = "Calls your pet to your side",
-            permission = Perm.CALL,
+            syntax = "call",
+            desc = "Calls your pet to your side",
             help = {"In most cases, this will work when your pet has unexpectedly disappeared"}
     )
-    public boolean call(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> call");
+    @Authorize(Perm.CALL)
+    public boolean call(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
         if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> call"));
             return true;
         }
         pet.teleportToOwner();

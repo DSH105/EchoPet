@@ -17,25 +17,28 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class RemoveCommand implements CommandListener {
 
     @Command(
-            command = "<pet_name> remove",
-            description = "Removes an existing pet (specified by <pet_name>)",
-            permission = Perm.REMOVE,
-            help = {"<pet_name> is the name of an existing pet", "Removes an existing pet"}
+            syntax = "<pet_name> remove",
+            desc = "Removes an existing pet (specified by <pet_name>)",
+            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "Removes an existing pet"}
     )
-    public boolean removePet(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+    @Authorize(Perm.REMOVE)
+    public boolean removePet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
@@ -45,14 +48,14 @@ public class RemoveCommand implements CommandListener {
     }
 
     @Command(
-            command = "remove",
-            description = "Removes an existing pet",
-            permission = Perm.REMOVE,
+            syntax = "remove",
+            desc = "Removes an existing pet",
             help = {"Removes an existing pet"}
     )
-    public boolean remove(CommandEvent<Player> event) {
-        Pet pet = PetCommand.getSinglePet(event.sender(), "<pet_name> remove");
+    @Authorize(Perm.REMOVE)
+    public boolean remove(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
         if (pet == null) {
+            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> remove"));
             return true;
         }
         EchoPet.getManager().removePet(pet);

@@ -31,9 +31,9 @@ public enum ConfigType {
     DATA("data/pet-data.yml"),
 
     MESSAGES("config/messages.yml",
-            "EchoPet By DSH105",
-            "---------------------",
-            "Language Configuration File"),
+             "EchoPet By DSH105",
+             "---------------------",
+             "Language Configuration File"),
 
     MENU("config/menu-config.yml");
 

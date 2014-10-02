@@ -23,7 +23,7 @@
     <artifactId>EchoPet-Parent</artifactId>
     <name>EchoPet Parent</name>
     <packaging>pom</packaging>
-    <version>parent-v3</version>
+    <version>v3</version>
     <url>http://github.com/DSH105/EchoPet</url>
 
     <properties>
@@ -80,15 +80,19 @@
             </exclusions>
         </dependency>
 
-        <!-- CommandManager -->
+        <!-- Influx -->
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>CommandManager</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
+            <artifactId>Influx</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>com.dsh105</artifactId>
                     <groupId>Commodus</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>PowerMessage</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

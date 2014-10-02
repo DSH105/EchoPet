@@ -21,7 +21,6 @@ import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.ClassTemplate;
 import com.captainbern.reflection.Reflection;
 import com.captainbern.reflection.SafeField;
-import com.dsh105.command.*;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
@@ -45,6 +44,15 @@ import com.dsh105.echopet.listeners.PetOwnerListener;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.echopet.util.TableMigrationUtil;
 import com.dsh105.echopet.util.UUIDMigration;
+import com.dsh105.influx.BukkitCommandManager;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.InfluxBukkitManager;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Nest;
+import com.dsh105.influx.annotation.Nested;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
+import com.dsh105.influx.response.BukkitResponder;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import org.bukkit.ChatColor;
@@ -57,15 +65,11 @@ import java.util.*;
 
 import static com.captainbern.reflection.matcher.Matchers.withType;
 
-@Command(
-        command = "echopet",
-        description = "EchoPet - custom entities at your control",
-        permission = Perm.ECHOPET,
-        aliases = "ec"
-)
+@Nest(nests = {"echopet", "ec"})
+@Authorize(Perm.ECHOPET)
 public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandListener {
 
-    private CommandManager commandManager;
+    private InfluxBukkitManager commandManager;
     private PetManager manager;
     private BoneCP dbPool;
 
@@ -84,9 +88,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     public void onEnable() {
         EchoPet.setCore(this);
 
-        commandManager = new CommandManager(this, DEFAULT_PREFIX);
-        commandManager.getHelpService().setIncludePermissionListing(false);
-        commandManager.getHelpService().setIgnoreCommandAccess(false);
+        commandManager = new BukkitCommandManager(this);
 
         try {
             Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EntityPetBase");
@@ -98,7 +100,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
             EchoPet.LOG.console(Level.WARNING, "+----------------------+");
 
             // If it isn't already obvious enough...
-            commandManager.register(new IncompatiblePluginCommand());
+            commandManager.nestCommandsIn(this, new IncompatiblePluginCommand(), false);
             return;
         }
 
@@ -153,7 +155,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         }
 
         settings.put(ConfigType.GENERAL, new Settings(configFiles.get(ConfigType.GENERAL)));
-        settings.put(ConfigType.DATA, new PetSettings(configFiles.get(ConfigType.PETS)));
+        settings.put(ConfigType.PETS, new PetSettings(configFiles.get(ConfigType.PETS)));
         settings.put(ConfigType.DATA, new Data(configFiles.get(ConfigType.DATA)));
         settings.put(ConfigType.MESSAGES, new Lang(configFiles.get(ConfigType.MESSAGES)));
         settings.put(ConfigType.MENU, new MenuSettings(configFiles.get(ConfigType.MENU)));
@@ -169,9 +171,8 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
             Settings.CONVERT_DATA_FILE_TO_UUID.setValue(false);
         }
 
-        commandManager.setResponsePrefix(Lang.PREFIX.getValue());
-        commandManager.setFormatColour(ChatColor.getByChar(Settings.BASE_CHAT_COLOUR.getValue()));
-        commandManager.setHighlightColour(ChatColor.getByChar(Settings.HIGHLIGHT_CHAT_COLOUR.getValue()));
+        commandManager.getResponder().setResponsePrefix(Lang.PREFIX.getValue());
+        ((BukkitResponder) commandManager.getResponder()).setMessageFormats(ChatColor.getByChar(Settings.BASE_CHAT_COLOUR.getValue()), ChatColor.getByChar(Settings.HIGHLIGHT_CHAT_COLOUR.getValue()));
     }
 
     private void prepareSqlDatabase() {
@@ -280,7 +281,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     }
 
     @Override
-    public CommandManager getCommandManager() {
+    public InfluxBukkitManager getCommandManager() {
         return commandManager;
     }
 
@@ -334,25 +335,27 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         return configFiles.get(configType);
     }
 
-    @ParentCommand
-    public boolean onCommand(CommandEvent event) {
+    @Command(
+            syntax = "echopet [args...]",
+            desc = "EchoPet - custom entities at your control"
+    )
+    public boolean onCommand(BukkitCommandEvent event) {
         event.respond(Lang.PLUGIN_INFORMATION.getValue("version", EchoPet.getCore().getDescription().getVersion()));
         return true;
     }
 
-    public class Update {
-        @Command(
-                command = "update",
-                description = "Update the EchoPet plugin",
-                permission = Perm.UPDATE
-        )
-        public boolean onUpdateCommand(CommandEvent event) {
-            if (updateChecked) {
-                new Updater(EchoPet.getCore(), 53655, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-            } else {
-                event.respond(Lang.UPDATE_NOT_AVAILABLE.getValue());
-            }
-            return true;
+    @Command(
+            syntax = "update",
+            desc = "Update the EchoPet plugin"
+    )
+    @Authorize(Perm.UPDATE)
+    @Nested
+    public boolean onUpdateCommand(BukkitCommandEvent event) {
+        if (updateChecked) {
+            new Updater(EchoPet.getCore(), 53655, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+        } else {
+            event.respond(Lang.UPDATE_NOT_AVAILABLE.getValue());
         }
+        return true;
     }
 }

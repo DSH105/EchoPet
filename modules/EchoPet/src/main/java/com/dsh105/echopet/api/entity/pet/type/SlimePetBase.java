@@ -35,7 +35,7 @@ public class SlimePetBase<T extends Slime, S extends EntitySlimePet> extends Pet
         this.jumpDelay = GeneralUtil.random().nextInt(15) + 10;
 
         this.setSize(!getOwner().hasPermission(Perm.DATA.replace("<type>", getType().storageName()).replace("<data>", PetData.MEDIUM.storageName()))
-                ? (!getOwner().hasPermission(Perm.DATA.replace("<type>", getType().storageName()).replace("<data>", PetData.SMALL.storageName())) ? 4 : 1): 2);
+                             ? (!getOwner().hasPermission(Perm.DATA.replace("<type>", getType().storageName()).replace("<data>", PetData.SMALL.storageName())) ? 4 : 1) : 2);
     }
 
     @AttributeHandler(dataType = PetData.Type.SLIME_SIZE)

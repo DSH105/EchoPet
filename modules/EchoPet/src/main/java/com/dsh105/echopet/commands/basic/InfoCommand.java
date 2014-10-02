@@ -17,34 +17,35 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.command.Command;
-import com.dsh105.command.CommandEvent;
-import com.dsh105.command.CommandListener;
-import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.AttributeAccessor;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
+import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class InfoCommand implements CommandListener {
 
     @Command(
-            command = "info",
-            description = "Retrieve info on all of your active pets",
-            permission = Perm.INFO
+            syntax = "info",
+            desc = "Retrieve info on all of your active pets"
     )
-    public boolean info(CommandEvent<Player> event) {
+    @Authorize(Perm.INFO)
+    public boolean info(BukkitCommandEvent<Player> event) {
         List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender());
-        if (pets.size() <= 0){
+        if (pets.size() <= 0) {
             event.respond(Lang.NO_PETS_FOUND.getValue());
             return true;
         }
@@ -57,18 +58,12 @@ public class InfoCommand implements CommandListener {
     }
 
     @Command(
-            command = "<pet_name> info",
-            description = "Retrieve info on one of your active pets (specified by <pet_name>)",
-            permission = Perm.INFO,
-            help = "<pet_name> is the name of an existing pet"
+            syntax = "<pet_name> info",
+            desc = "Retrieve info on one of your active pets (specified by <pet_name>)",
+            help = "<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"
     )
-    public boolean infoForPet(CommandEvent<Player> event) {
-        List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender());
-        if (pets.size() <= 0){
-            event.respond(Lang.NO_PETS_FOUND.getValue());
-            return true;
-        }
-        Pet pet = PetCommand.getPetByName(event.sender(), event.variable("pet_name"));
+    @Authorize(Perm.INFO)
+    public boolean infoForPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
         if (pet == null) {
             return true;
         }
@@ -79,20 +74,17 @@ public class InfoCommand implements CommandListener {
     }
 
     private void displayInfo(Pet pet) {
-        ChatColor format = EchoPet.getCommandManager().getFormatColour();
-        ChatColor highlight = EchoPet.getCommandManager().getHighlightColour();
-
-        PowerMessage message = new PowerMessage("• " + format + pet.getType().humanName() + " (" + highlight + pet.getName() + format + ")");
+        PowerMessage message = new PowerMessage(ChatColor.WHITE + "• {c1}" + pet.getType().humanName() + " ({c2}" + pet.getName() + "{c1})");
 
         StringBuilder dataBuilder = new StringBuilder();
         List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
         if (!activeData.isEmpty()) {
-            dataBuilder.append(format).append("Valid data types: ");
+            dataBuilder.append("{c1}Valid data types: ");
             for (PetData data : activeData) {
                 if (dataBuilder.length() >= 35) {
                     dataBuilder.append("\n");
                 }
-                dataBuilder.append(highlight).append(data.humanName()).append(format).append(", ");
+                dataBuilder.append("{c2}").append(data.humanName()).append("{c1}, ");
             }
             message.tooltip(dataBuilder.substring(0, dataBuilder.length() - 2));
         }

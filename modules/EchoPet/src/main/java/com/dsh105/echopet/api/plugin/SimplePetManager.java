@@ -211,7 +211,7 @@ public class SimplePetManager implements PetManager {
             if (loadedPets.size() == 1) {
                 Lang.PET_LOADED.send(player, "name", loadedPets.get(0).getName());
             } else {
-                Lang.PETS_LOADED.send(player, "number", loadedPets.size()  + "");
+                Lang.PETS_LOADED.send(player, "number", loadedPets.size() + "");
             }
         }
 

@@ -21,7 +21,7 @@
 
     <artifactId>EchoPet-v1_7_R3</artifactId>
     <name>EchoPet for v1_7_R3</name>
-    <version>v1_7_R3-v3</version>
+    <version>v3</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -31,7 +31,7 @@
     <parent>
         <groupId>com.dsh105</groupId>
         <artifactId>EchoPet-Parent</artifactId>
-        <version>parent-v3</version>
+        <version>v3</version>
         <relativePath>../../</relativePath>
     </parent>
 
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
-            <version>API-v3</version>
+            <version>v3</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.bukkit</groupId>
