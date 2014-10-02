@@ -66,6 +66,10 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
         this.getEntitySenses().a();
 
         // Update/run our custom AI
+        if (this.petGoalSelector == null) {
+            this.getBukkitEntity().remove();
+            return;
+        }
         this.petGoalSelector.updateGoals();
 
         // Some navigation updates
