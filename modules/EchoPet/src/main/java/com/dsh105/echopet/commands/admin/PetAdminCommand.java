@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.commands.admin;
 
-import com.dsh105.command.CommandListener;
+import com.dsh105.influx.CommandListener;
 
 public class PetAdminCommand implements CommandListener {
 
