@@ -87,7 +87,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         this.setPathfinding();
 
         // Set name visible
-        this.datawatcher.watch(3, (byte) (EchoPet.getConfig().getBoolean("pets." + getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true) ? 0 : 1));
+        //this.datawatcher.watch(3, (byte) (EchoPet.getConfig().getBoolean("pets." + getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".tagVisible", true) ? 0 : 1));
     }
 
     public PetType getEntityPetType() {
