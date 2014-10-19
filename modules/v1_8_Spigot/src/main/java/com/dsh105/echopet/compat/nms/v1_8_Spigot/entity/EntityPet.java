@@ -293,6 +293,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     public void onLive() {
         if (this.pet == null) {
             this.remove(false);
+            return;
         }
 
         if (this.getPlayerOwner() == null || !this.getPlayerOwner().isOnline()) {
