@@ -57,13 +57,13 @@
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
             <version>v3</version>
+            <optional>true</optional>
             <exclusions>
                 <exclusion>
                     <groupId>org.bukkit</groupId>
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 

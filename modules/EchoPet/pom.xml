@@ -36,6 +36,13 @@
     </parent>
 
     <dependencies>
+        <!-- API Module -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-API</artifactId>
+            <version>v3</version>
+        </dependency>
+
         <!-- v1_7_R1 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
@@ -107,13 +114,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- API Module -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-API</artifactId>
-            <version>v3</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -174,9 +174,10 @@
                             <artifactSet>
                                 <includes>
                                     <artifact>com.dsh105:EchoPet*</artifact>
-                                    <artifact>com.dsh105:Commodus</artifact>
                                     <artifact>com.dsh105:Influx</artifact>
                                     <artifact>com.dsh105:MenuAPI</artifact>
+                                    <artifact>com.dsh105:Commodus</artifact>
+                                    <artifact>com.dsh105:PowerMessage</artifact>
                                     <artifact>com.captainbern:Minecraft-Reflection</artifact>
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
@@ -191,6 +192,26 @@
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
                                     <shadedPattern>com.dsh105.echopet.libs.slf4j</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.captainbern</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.captainbern</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.dsh105.commodus</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.dsh105.influx</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.dsh105.menuapi</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.dsh105.powermessage</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

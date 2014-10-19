@@ -57,13 +57,13 @@
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
             <version>v3</version>
+            <optional>true</optional>
             <exclusions>
                 <exclusion>
                     <groupId>org.bukkit</groupId>
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -94,6 +94,7 @@
             <!-- Clean up -->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
                 <configuration>
                     <excludeDefaultDirectories>true</excludeDefaultDirectories>
                     <filesets>
@@ -105,7 +106,6 @@
                         </fileset>
                     </filesets>
                 </configuration>
-                <version>2.5</version>
             </plugin>
         </plugins>
     </build>
