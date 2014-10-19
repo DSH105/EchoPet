@@ -24,6 +24,7 @@ public class EntityMapModifier<K, V> {
 
     private final Map<K, V> map;
     private Map<V, Map<K, V>> results = new HashMap<>();
+    private Map<K, V> modifications = new HashMap<>();
 
     public EntityMapModifier(Map<K, V> map) {
         this.map = map;
@@ -31,6 +32,23 @@ public class EntityMapModifier<K, V> {
 
     public Map<K, V> getMap() {
         return map;
+    }
+
+    public void modify(K key, V value) {
+        modifications.put(key, value);
+    }
+
+    public void applyModifications() {
+        for (Map.Entry<K, V> entry : modifications.entrySet()) {
+            map.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public void removeModifications() {
+        for (K key : modifications.keySet()) {
+            map.remove(key);
+        }
+        modifications.clear();
     }
 
     public boolean clear(V value) {

@@ -69,11 +69,17 @@ public class PetRegistry {
         // Just to be sure, remove any existing mappings and replace them afterwards
         CLASS_TO_NAME_MODIFIER.clear(registrationEntry.getName());
         CLASS_TO_ID_MODIFIER.clear(registrationEntry.getRegistrationId());
+        CLASS_TO_NAME_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getName());
+        CLASS_TO_ID_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getRegistrationId());
 
         try {
+            CLASS_TO_NAME_MODIFIER.applyModifications();
+            CLASS_TO_ID_MODIFIER.applyModifications();
             return registrationEntry.createFor(owner);
         } finally {
             // Ensure everything is back to normal
+            CLASS_TO_NAME_MODIFIER.removeModifications();
+            CLASS_TO_ID_MODIFIER.removeModifications();
             CLASS_TO_NAME_MODIFIER.add(registrationEntry.getName());
             CLASS_TO_ID_MODIFIER.add(registrationEntry.getRegistrationId());
         }

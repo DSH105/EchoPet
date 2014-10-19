@@ -129,10 +129,6 @@ public enum PetType {
         return PetSettings.DEFAULT_NAME.getValue(storageName()).replaceAll("(user|owner)", name).replaceAll("(userApos|ownerApos)", name + "\'s");
     }
 
-    public <T extends LivingEntity, S extends EntityPet> S getNewEntityPetInstance(Object world, Pet<T, S> pet) {
-        return (S) new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), pet.getClass()).getAccessor().invoke(world, pet);
-    }
-
     public Class<? extends EntityPet> getEntityClass() {
         return this.entityClass;
     }
