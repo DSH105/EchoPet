@@ -31,8 +31,7 @@ public class ChunkListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
         if (event.getChunk().getEntities().length > 0) {
-            for (int i = 0; i < event.getChunk().getEntities().length; i++) {
-                Entity entity = event.getChunk().getEntities()[i];
+            for (Entity entity : event.getChunk().getEntities()) {
                 if (entity instanceof LivingEntity) {
                     Object nmsEntity = BukkitUnwrapper.getInstance().unwrap(entity);
                     if (nmsEntity instanceof EntityPet) {

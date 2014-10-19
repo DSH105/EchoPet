@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.nms.v1_7_R4;
 
+import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 

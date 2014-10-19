@@ -35,6 +35,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.plugin.*;
 import com.dsh105.echopet.api.plugin.hook.VanishProviderBase;
 import com.dsh105.echopet.api.plugin.hook.WorldGuardProviderBase;
+import com.dsh105.echopet.api.registration.PetRegistry;
 import com.dsh105.echopet.commands.IncompatiblePluginCommand;
 import com.dsh105.echopet.commands.admin.PetAdminCommand;
 import com.dsh105.echopet.commands.basic.PetCommand;
@@ -65,7 +66,7 @@ import java.util.*;
 
 import static com.captainbern.reflection.matcher.Matchers.withType;
 
-@Nest(nests = {"echopet", "ec"})
+@Nest(nests = {"echopet", "ep"})
 @Authorize(Perm.ECHOPET)
 public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandListener {
 
@@ -77,6 +78,8 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     private HashMap<ConfigType, YAMLConfig> configFiles = new HashMap<>();
     private HashMap<ConfigType, Options> settings = new HashMap<>();
     private ArrayList<PluginDependencyProvider> providers = new ArrayList<>();
+
+    private PetRegistry petRegistry;
 
     // Update Checker stuff
     public boolean updateAvailable = false;
@@ -114,10 +117,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
 
         registerCommands();
 
-        // Register custom entities
-        for (PetType petType : PetType.values()) {
-            registerEntity(petType.getEntityClass(), petType.humanName() + " Pet", petType.getRegistrationId());
-        }
+        petRegistry = new PetRegistry();
 
         getServer().getPluginManager().registerEvents(new PetListener(), this);
         getServer().getPluginManager().registerEvents(new PetOwnerListener(), this);
@@ -171,7 +171,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
             Settings.CONVERT_DATA_FILE_TO_UUID.setValue(false);
         }
 
-        commandManager.getResponder().setResponsePrefix(Lang.PREFIX.getValue());
+        commandManager.getResponder().setResponsePrefix(Lang.PREFIX.getValue() + ChatColor.RESET);
         ((BukkitResponder) commandManager.getResponder()).setMessageFormats(ChatColor.getByChar(Settings.BASE_CHAT_COLOUR.getValue()), ChatColor.getByChar(Settings.HIGHLIGHT_CHAT_COLOUR.getValue()));
     }
 
@@ -198,9 +198,9 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
 
     private void registerCommands() {
         // All sub commands are registered inside the classes themselves
+        commandManager.register(this);
         new PetCommand();
         new PetAdminCommand();
-        commandManager.register(this);
     }
 
     private void loadHooks() {
@@ -231,55 +231,6 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         }
     }
 
-    private void registerEntity(Class<? extends EntityPet> clazz, String name, int id) {
-        // Initiate all our fields
-        ClassTemplate entityTypesTemplate = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityTypes"));
-        List<SafeField<Map>> fields = entityTypesTemplate.getSafeFields(withType(Map.class));
-        Map<String, Class> entityNameToClassMapping = (Map<String, Class>) fields.get(0).getAccessor().getStatic();
-        Map<Class, String> classToEntityNameMapping = (Map<Class, String>) fields.get(1).getAccessor().getStatic();
-        Map<Class, Integer> classToIdMapping = (Map<Class, Integer>) fields.get(3).getAccessor().getStatic();
-        Map<String, Integer> entityNameToIdMapping = (Map<String, Integer>) fields.get(4).getAccessor().getStatic();
-
-        // First make sure we don't register something twice
-        Iterator mapIter = entityNameToClassMapping.keySet().iterator();
-        while (mapIter.hasNext()) {
-            String entityName = (String) mapIter.next();
-            if (entityName.equals(name)) {
-                mapIter.remove();
-            }
-        }
-
-        mapIter = entityNameToIdMapping.keySet().iterator();
-        while (mapIter.hasNext()) {
-            String entityName = (String) mapIter.next();
-            if (entityName.equals(name)) {
-                mapIter.remove();
-            }
-        }
-
-        mapIter = classToEntityNameMapping.keySet().iterator();
-        while (mapIter.hasNext()) {
-            Class entityClass = (Class) mapIter.next();
-            if (entityClass.getCanonicalName().equals(clazz.getCanonicalName())) {
-                mapIter.remove();
-            }
-        }
-
-        mapIter = classToIdMapping.keySet().iterator();
-        while (mapIter.hasNext()) {
-            Class entityClass = (Class) mapIter.next();
-            if (entityClass.getCanonicalName().equals(clazz.getCanonicalName())) {
-                mapIter.remove();
-            }
-        }
-
-        // Finally, register the entities
-        entityNameToClassMapping.put(name, clazz);
-        classToEntityNameMapping.put(clazz, name);
-        classToIdMapping.put(clazz, id);
-        entityNameToIdMapping.put(name, id);
-    }
-
     @Override
     public InfluxBukkitManager getCommandManager() {
         return commandManager;
@@ -288,6 +239,11 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     @Override
     public PetManager getPetManager() {
         return manager;
+    }
+
+    @Override
+    public PetRegistry getPetRegistry() {
+        return petRegistry;
     }
 
     @Override
@@ -336,8 +292,8 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     }
 
     @Command(
-            syntax = "echopet [args...]",
-            desc = "EchoPet - custom entities at your control"
+            syntax = "",
+            desc = "EchoPet: custom entities at your control"
     )
     public boolean onCommand(BukkitCommandEvent event) {
         event.respond(Lang.PLUGIN_INFORMATION.getValue("version", EchoPet.getCore().getDescription().getVersion()));

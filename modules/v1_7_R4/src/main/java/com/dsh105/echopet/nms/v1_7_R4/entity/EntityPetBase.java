@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.nms.v1_7_R4.entity;
 
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.entity.ai.PetGoalSelector;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
@@ -24,6 +25,7 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetAttackEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.v1_7_R4.NMSEntityUtil;
+import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
@@ -538,7 +540,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public boolean onInteract(org.bukkit.entity.Player player) {
-        if (player == getPet().getOwner()) {
+        if (IdentUtil.areIdentical(player, getPet().getOwner())) {
             getPet().onInteract(player);
             return true;
         }

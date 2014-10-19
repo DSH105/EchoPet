@@ -20,6 +20,7 @@ package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.type.EnderDragonPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EntityPetBase;
+import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 

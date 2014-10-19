@@ -133,13 +133,6 @@ public enum PetType {
         return (S) new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), pet.getClass()).getAccessor().invoke(world, pet);
     }
 
-    public Pet getNewPetInstance(Player owner) {
-        if (owner != null) {
-            return new Reflection().reflect(this.petClass).getSafeConstructor(Player.class).getAccessor().invoke(owner);
-        }
-        return null;
-    }
-
     public Class<? extends EntityPet> getEntityClass() {
         return this.entityClass;
     }

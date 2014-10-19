@@ -327,7 +327,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
                 setOwnerRiding(false);
             }
 
-            Pet newRider = type.getNewPetInstance(getOwner());
+            Pet newRider = EchoPet.getPetRegistry().spawn(type, getOwner());
             if (newRider != null) {
                 if (rider != null) {
                     rider.despawn(false);

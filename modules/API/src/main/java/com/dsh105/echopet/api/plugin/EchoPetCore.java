@@ -21,6 +21,7 @@ import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.dependency.PluginDependencyProvider;
 import com.dsh105.echopet.api.config.ConfigType;
+import com.dsh105.echopet.api.registration.PetRegistry;
 import com.dsh105.influx.InfluxBukkitManager;
 import com.jolbox.bonecp.BoneCP;
 import org.bukkit.plugin.Plugin;
@@ -33,15 +34,17 @@ public interface EchoPetCore extends Plugin {
 
     PetManager getPetManager();
 
+    PetRegistry getPetRegistry();
+
     <T extends PluginDependencyProvider> T getProvider(Class<T> providerClass);
 
-    public abstract BoneCP getDbPool();
+    BoneCP getDbPool();
 
-    public abstract boolean isUpdateAvailable();
+    boolean isUpdateAvailable();
 
-    public abstract <T extends Options> T getSettings(Class<T> settingsClass);
+    <T extends Options> T getSettings(Class<T> settingsClass);
 
-    public abstract Options getSettings(ConfigType configType);
+    Options getSettings(ConfigType configType);
 
-    public abstract YAMLConfig getConfig(ConfigType configType);
+    YAMLConfig getConfig(ConfigType configType);
 }

@@ -22,6 +22,7 @@ import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.dependency.PluginDependencyProvider;
 import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.api.config.ConfigType;
+import com.dsh105.echopet.api.registration.PetRegistry;
 import com.dsh105.influx.InfluxBukkitManager;
 
 public class EchoPet {
@@ -45,6 +46,10 @@ public class EchoPet {
 
     public static PetManager getManager() {
         return CORE.getPetManager();
+    }
+
+    public static PetRegistry getPetRegistry() {
+        return CORE.getPetRegistry();
     }
 
     public static InfluxBukkitManager getCommandManager() {

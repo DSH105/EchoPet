@@ -41,7 +41,7 @@ public class Spawn {
         }
         Location spawnLocation = spawnEvent.getSpawnLocation();
         Object mcWorld = new Reflection().reflect(World.class).getSafeFieldByName("getHandle").getAccessor().get(spawnLocation.getWorld());
-        S entityPet = pet.getType().getNewEntityPetInstance(mcWorld, pet);
+        S entityPet = EchoPet.getPetRegistry().getRegistrationEntry(pet.getType()).createEntityPet(mcWorld, pet);
         entityPet.setLocation(spawnLocation);
         if (!spawnLocation.getChunk().isLoaded()) {
             spawnLocation.getChunk().load();

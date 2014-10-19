@@ -250,11 +250,14 @@ public class SimplePetManager implements PetManager {
         } else if (!EchoPet.getProvider(WorldGuardProvider.class).allowPets(owner.getLocation())) {
             failMessage = Lang.PETS_DISABLED_HERE.getValue();
         } else {
-            Pet pet = type.getNewPetInstance(owner);
-            forceData(pet);
-            modify(pet, true);
-            mapPetName(pet);
-            return pet;
+            Pet pet = EchoPet.getPetRegistry().spawn(type, owner);
+            if (pet != null) {
+                forceData(pet);
+                modify(pet, true);
+                mapPetName(pet);
+                return pet;
+            }
+            failMessage = Lang.FAILED_SPAWN.getValue();
         }
 
         if (sendFailMessage) {

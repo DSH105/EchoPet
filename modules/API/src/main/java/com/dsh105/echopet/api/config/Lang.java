@@ -40,6 +40,7 @@ public class Lang extends Options {
     UPDATE_NOT_AVAILABLE = new LangSetting("update_not_available", "{c1}An update is not available.", "Sent when an update is not available"),
             UPDATE_AVAILABLE = new LangSetting("update_available", "{c1}An update is available.\n{c1}Type \"{c2}/echopet update{c1}\" to update", "Sent when an update is not available"),
             PLUGIN_INFORMATION = new LangSetting("plugin_information", "{c1}Running EchoPet v{c2}%version%{c1}. Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
+            PET_COMMAND = new LangSetting("pet_command", "{c1}Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
             CONFIGS_RELOADED = new LangSetting("configs_reloaded", "{c1}Configuration files reloaded."),
             COMMAND_HOVER_TIP = new LangSetting("commandhover_tip", "&e&oHover over to see more information about each command. Click to insert it into the chat window.", "Reminds players to hover over commands to see more information"),
             HOVER_TIP = new LangSetting("hover_tip", "&e&oHover over to see more information."),
@@ -47,6 +48,7 @@ public class Lang extends Options {
 
     PETS_DISABLED_HERE = new LangSetting("pets_disabled_here", "{c1}pets are not allowed here.", "Sent when pets are disabled in a certain area"),
             PET_TYPE_DISABLED = new LangSetting("pet_type_disabled", "{c2}%type% {c1}pets are disabled."),
+            FAILED_SPAWN = new LangSetting("failed_spawn", "{c1}Failed to spawn pet: an unexpected error was encountered."),
             RIDERS_DISABLED = new LangSetting("riders_disabled", "{c1}Riders are disabled for {c2}%type% {c1}pets."),
             ENTER_PET_DISABLED_REGION = new LangSetting("enter_pet_disabled_region", "{c1}This region disables pets. Yours has been hidden."),
             INVALID_PET_TYPE = new LangSetting("invalid_pet_type", "{c2}%type% {c1}is not a valid pet type. See \"{c2}/pet list{c1}\" {c1}for a list of pet types."),

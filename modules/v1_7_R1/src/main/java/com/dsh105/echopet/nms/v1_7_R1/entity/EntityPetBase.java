@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.nms.v1_7_R1.entity;
 
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.entity.ai.PetGoalSelector;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
@@ -539,7 +540,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public boolean onInteract(org.bukkit.entity.Player player) {
-        if (player == getPet().getOwner()) {
+        if (IdentUtil.areIdentical(player, getPet().getOwner())) {
             getPet().onInteract(player);
             return true;
         }
