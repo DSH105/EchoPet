@@ -37,11 +37,21 @@ public class ReflectionUtil {
 
     private static String prepareCompatNmsPath() {
         String versionTag = getServerVersion();
-        if (Bukkit.getVersion().contains("Spigot") && versionTag.equals("v1_7_R4")) {
+        if (Bukkit.getVersion().contains("Spigot") && versionTag.equals("v1_7_R4") && isSpigot1dot8()) {
             // At least it works
             versionTag = "v1_8_Spigot";
         }
         return "com.dsh105.echopet.compat.nms." + versionTag;
+    }
+
+    public static boolean isSpigot1dot8() {
+        try {
+            // not ideal, but it's the only class needed
+            Class.forName("org.spigotmc.ProtocolData");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     public static Object getEntityHandle(Entity entity) {
