@@ -143,7 +143,7 @@ public class AttributeAccessor {
 
     public static <T extends Pet> ArrayList<PetData> getRegisteredData(Class<T> petClass) {
         ArrayList<PetData> dataList = new ArrayList<>();
-        for (AttributeHandler handler : attributeHandlers(petClass)) {
+        for (AttributeHandler handler : attributeSetters(petClass)) {
             if (handler.data() == PetData.DEFAULT) {
                 dataList.addAll(PetData.allOfType(handler.dataType()));
             } else {
