@@ -38,6 +38,7 @@ import com.dsh105.influx.CommandListener;
 import com.dsh105.influx.Controller;
 import com.dsh105.influx.annotation.Bind;
 import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Verify;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.command.CommandSender;
 
@@ -70,14 +71,15 @@ public class HelpCommand implements CommandListener {
                     "Use \"/pet help <command>\" for more help on a certain command"
             }
     )
-    public boolean helpPage(BukkitCommandEvent event, @Bind("index") int index) {
+    public boolean helpPage(BukkitCommandEvent event, @Bind("index") @Verify("[0-9]+") int index) {
         event.getManager().getHelp().sendPage(event.sender(), index);
         return true;
     }
 
-    @Command(
-            syntax = "help <command>",
-            aliases = {"? <command>"},
+    // TODO: EXPERIMENTAL
+    /*@Command(
+            syntax = "help <command...>",
+            aliases = {"? <command...>"},
             desc = "Retrieve help on a certain EchoPet command",
             help = {
                     "Commands are listed in alphabetical order",
@@ -86,19 +88,20 @@ public class HelpCommand implements CommandListener {
             }
     )
     public boolean commandHelp(BukkitCommandEvent<CommandSender> event) {
-        String command = event.getInput();
+        String command = event.var("command");
         SortedMap<Controller, String[]> matches = event.getManager().getHelp().getHelpFor(command);
         if (matches.isEmpty()) {
             event.respond("No help found for \"" + command + "\".");
             return true;
         }
 
-        event.respond(matches.size() + " matches found for \"" + command + "\":");
+        if (matches.size() > 1) {
+            event.respond(matches.size() + " matches found for \"" + command + "\":");
+        }
 
         for (Controller controller : matches.keySet()) {
-            System.out.println('\n');
             event.getManager().getHelp().sendHelpFor(event.sender(), controller);
         }
         return true;
-    }
+    }*/
 }

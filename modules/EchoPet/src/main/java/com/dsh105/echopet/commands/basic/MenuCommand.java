@@ -22,37 +22,20 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.annotation.Authorize;
-import com.dsh105.influx.annotation.Bind;
-import com.dsh105.influx.annotation.Command;
-import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class MenuCommand implements CommandListener {
 
     @Command(
-            syntax = "<pet_name> menu",
-            desc = "Opens the pet data menu for a pet (specified by <pet_name>)",
-            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"}
+            syntax = "[pet_name] menu",
+            desc = "Opens the pet data menu for a pet (specified by [pet_name] or nothing if you only have one pet or nothing if you only have one pet)",
+            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)"}
     )
     @Authorize(Perm.MENU)
-    public boolean namePet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+    public boolean menu(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
         if (pet == null) {
-            return true;
-        }
-        pet.onInteract(event.sender());
-        return true;
-    }
-
-    @Command(
-            syntax = "menu",
-            desc = "Opens the pet data menu for a pet"
-    )
-    @Authorize(Perm.MENU)
-    public boolean name(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
-        if (pet == null) {
-            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> menu"));
             return true;
         }
         pet.onInteract(event.sender());

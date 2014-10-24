@@ -26,6 +26,7 @@ public class Perm {
             PETADMIN = "echopet.petadmin",
             NAME_OVERRIDE = "echopet.pet.name.override",
             TYPE = "echopet.pet.type.<type>",
+            APPLY_DATA = "echopet.pet.data",
             RIDER_TYPE = "echopet.pet.rider.type.<type>",
             DATA = "echopet.pet.type.<type>.<data>",
             INFO = "echopet.pet.info",

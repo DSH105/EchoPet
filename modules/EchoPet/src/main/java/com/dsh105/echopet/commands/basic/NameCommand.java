@@ -23,45 +23,20 @@ import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.conversation.NameFactory;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.annotation.Authorize;
-import com.dsh105.influx.annotation.Bind;
-import com.dsh105.influx.annotation.Command;
-import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class NameCommand implements CommandListener {
 
     @Command(
-            syntax = "<pet_name> name [name]",
-            desc = "Sets the name of your pet (specified by <pet_name>)",
-            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
+            syntax = "[pet_name] name [name]",
+            desc = "Sets the name of your pet (specified by [pet_name] or nothing if you only have one pet)",
+            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
     )
     @Authorize(Perm.NAME)
-    public boolean namePet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+    public boolean name(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
         if (pet == null) {
-            return true;
-        }
-
-        String name = event.var("name");
-        if (name == null) {
-            NameFactory.askForName(event.sender(), pet, false);
-        } else {
-            pet.setName(name, true);
-            event.respond(Lang.NAME_PET.getValue("name", pet.getName(), "newname", name));
-        }
-        return true;
-    }
-
-    @Command(
-            syntax = "name [name]",
-            desc = "Sets the name of your pet",
-            help = {"If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
-    )
-    @Authorize(Perm.NAME)
-    public boolean name(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
-        if (pet == null) {
-            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> name [name]"));
             return true;
         }
 

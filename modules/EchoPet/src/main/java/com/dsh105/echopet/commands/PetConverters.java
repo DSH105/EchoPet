@@ -85,6 +85,10 @@ public class PetConverters {
                 } else if (value.toLowerCase().startsWith("data:")) {
                     value = value.substring(5, value.length());
                     for (String candidate : value.split(",")) {
+                        if (candidate.isEmpty()) {
+                            continue;
+                        }
+
                         if (GeneralUtil.isEnumType(PetData.class, candidate)) {
                             invalidData.add(candidate);
                             continue;
@@ -105,10 +109,52 @@ public class PetConverters {
             if (!validData.isEmpty()) {
                 pet.setDataValue(validData.toArray(new PetData[0]));
             }
-            if (name != null) {
+            if (name != null && !name.isEmpty()) {
                 pet.setName(name);
             }
             return pet;
+        }
+    }
+
+    public class CreateType extends Converter<Pet> {
+
+        public CreateType() {
+            super(Pet.class);
+        }
+
+        @Override
+        public Pet convert(ContextualVariable variable) throws ConversionException {
+            System.out.println("Something is happening...");
+            Player target = getTarget(variable);
+            PetType petType;
+            try {
+                System.out.println("Creating " + variable.getConsumedArguments()[0]);
+                petType = PetType.valueOf(variable.getConsumedArguments()[0].toUpperCase());
+                System.out.println("Yup!");
+            } catch (IllegalArgumentException e) {
+                throw new ConversionException(Lang.INVALID_PET_TYPE.getValue("type", variable.getConsumedArguments()[0]));
+            }
+
+            return EchoPet.getManager().create(target, petType, true);
+        }
+    }
+
+    public class FindPet extends Converter<Pet> {
+
+        public FindPet() {
+            super(Pet.class);
+        }
+
+        @Override
+        public Pet convert(ContextualVariable variable) throws ConversionException {
+            if (variable.getConsumedValue().isEmpty()) {
+                Pet pet = new OnlyPet().convert(variable.getContext());
+                if (pet == null) {
+                    variable.getContext().respond(Lang.MORE_PETS_FOUND.getValue("command", variable.getContext().getInput().replaceAll("^pet(admin)*", variable.getContext().getArguments()[0] + " <pet_name>")));
+                }
+                return pet;
+            }
+            return new ByName().convert(variable);
         }
     }
 

@@ -90,7 +90,7 @@ public class ToggleCommand implements CommandListener {
 
     @Command(
             syntax = "<pet_name> toggle",
-            desc = "Toggles an existing pet (specified by <pet_name>)",
+            desc = "Toggles an existing pet (specified by <pet_name> or nothing if you only have one pet)",
             help = "<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"
     )
     @Authorize(Perm.TOGGLE)

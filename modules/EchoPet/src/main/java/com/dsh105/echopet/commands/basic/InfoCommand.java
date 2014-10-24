@@ -25,10 +25,7 @@ import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.annotation.Authorize;
-import com.dsh105.influx.annotation.Bind;
-import com.dsh105.influx.annotation.Command;
-import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
@@ -59,7 +56,7 @@ public class InfoCommand implements CommandListener {
 
     @Command(
             syntax = "<pet_name> info",
-            desc = "Retrieve info on one of your active pets (specified by <pet_name>)",
+            desc = "Retrieve info on one of your active pets (specified by <pet_name> or nothing if you only have one pet)",
             help = "<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"
     )
     @Authorize(Perm.INFO)

@@ -22,44 +22,20 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.annotation.Authorize;
-import com.dsh105.influx.annotation.Bind;
-import com.dsh105.influx.annotation.Command;
-import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class SitCommand implements CommandListener {
 
     @Command(
-            syntax = "<pet_name> sit <flag>",
-            desc = "Sets the state of rest that a pet exhibits (specified by <pet_name>)",
-            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
+            syntax = "[pet_name] sit <state>",
+            desc = "Sets the state of rest that a pet exhibits (specified by [pet_name] or nothing if you only have one pet)",
+            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
     )
     @Authorize(Perm.SIT)
-    public boolean sitPet(BukkitCommandEvent<Player> event, @Bind("flag") boolean flag, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+    public boolean sit(BukkitCommandEvent<Player> event, @Bind("state") boolean flag, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
         if (pet == null) {
-            return true;
-        }
-
-        pet.setStationary(flag);
-        if (flag) {
-            event.respond((pet.isStationary() ? Lang.PET_ALREADY_SITTING : Lang.PET_SITTING).getValue("name", pet.getName()));
-        } else {
-            event.respond((pet.isStationary() ? Lang.PET_NOT_SITTING : Lang.PET_ALREADY_NOT_SITTING).getValue("name", pet.getName()));
-        }
-        return true;
-    }
-
-    @Command(
-            syntax = "sit <flag>",
-            desc = "Sets the state of rest that a pet exhibits",
-            help = {"<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
-    )
-    @Authorize(Perm.SIT)
-    public boolean sit(BukkitCommandEvent<Player> event, @Bind("flag") boolean flag, @Convert(PetConverters.OnlyPet.class) Pet pet) {
-        if (pet == null) {
-            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> sit"));
             return true;
         }
 

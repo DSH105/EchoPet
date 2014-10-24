@@ -22,39 +22,20 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.annotation.Authorize;
-import com.dsh105.influx.annotation.Bind;
-import com.dsh105.influx.annotation.Command;
-import com.dsh105.influx.annotation.Convert;
+import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
 public class CallCommand implements CommandListener {
 
     @Command(
-            syntax = "<pet_name> call",
-            desc = "Calls your pet to your side (specified by <pet_name>)",
-            help = {"<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)", "In most cases, this will work when your pet has unexpectedly disappeared"}
+            syntax = "[pet_name] call",
+            desc = "Calls your pet to your side (specified by [pet_name] or nothing if you only have one pet)",
+            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "In most cases, this will work when your pet has unexpectedly disappeared"}
     )
     @Authorize(Perm.CALL)
-    public boolean callPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+    public boolean call(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
         if (pet == null) {
-            return true;
-        }
-        pet.teleportToOwner();
-        event.respond(Lang.PET_CALLED.getValue("name", pet.getName()));
-        return true;
-    }
-
-    @Command(
-            syntax = "call",
-            desc = "Calls your pet to your side",
-            help = {"In most cases, this will work when your pet has unexpectedly disappeared"}
-    )
-    @Authorize(Perm.CALL)
-    public boolean call(BukkitCommandEvent<Player> event, @Convert(PetConverters.OnlyPet.class) Pet pet) {
-        if (pet == null) {
-            event.respond(Lang.MORE_PETS_FOUND.getValue("command", "<pet_name> call"));
             return true;
         }
         pet.teleportToOwner();

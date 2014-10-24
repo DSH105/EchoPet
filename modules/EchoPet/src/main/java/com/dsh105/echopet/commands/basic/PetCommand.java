@@ -17,45 +17,48 @@
 
 package com.dsh105.echopet.commands.basic;
 
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.Lang;
+import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.Controller;
 import com.dsh105.influx.InfluxBukkitManager;
 import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+@Nest(nests = {"pet"})
+@Authorize(Perm.PET)
 public class PetCommand implements CommandListener {
-
-    protected static final String PET_REGEX_STRING = "([^\\s]+)(:[^\\s]+)?(;.+)?";
-    protected static final String PET_VARIABLE_NAME = "<type>:[data];[name...]";
-    protected static final Pattern PET_REGEX_PATTERN = Pattern.compile(PET_REGEX_STRING);
 
     public PetCommand() {
         InfluxBukkitManager manager = EchoPet.getCommandManager();
         manager.register(this);
-        manager.nestCommandsIn(this, new HelpCommand(), false);
-        manager.nestCommandsIn(this, new RiderCommand(), false);
-        manager.nestCommandsIn(this, new NameCommand(), false);
-        manager.nestCommandsIn(this, new RemoveCommand(), false);
-        manager.nestCommandsIn(this, new InfoCommand(), false);
-        manager.nestCommandsIn(this, new ListCommand(), false);
-        manager.nestCommandsIn(this, new CallCommand(), false);
-        manager.nestCommandsIn(this, new HatCommand(), false);
-        manager.nestCommandsIn(this, new MenuCommand(), false);
-        manager.nestCommandsIn(this, new RideCommand(), false);
-        manager.nestCommandsIn(this, new SelectorCommand(), false);
-        manager.nestCommandsIn(this, new ToggleCommand(), false);
-        manager.nestCommandsIn(this, new SitCommand(), false);
+        manager.nestCommandsIn(this, new HelpCommand());
+        manager.nestCommandsIn(this, new RiderCommand());
+        manager.nestCommandsIn(this, new NameCommand());
+        manager.nestCommandsIn(this, new RemoveCommand());
+        manager.nestCommandsIn(this, new InfoCommand());
+        manager.nestCommandsIn(this, new ListCommand());
+        manager.nestCommandsIn(this, new CallCommand());
+        manager.nestCommandsIn(this, new HatCommand());
+        manager.nestCommandsIn(this, new MenuCommand());
+        manager.nestCommandsIn(this, new RideCommand());
+        manager.nestCommandsIn(this, new SelectorCommand());
+        manager.nestCommandsIn(this, new ToggleCommand());
+        manager.nestCommandsIn(this, new SitCommand());
     }
 
     @Command(
-            syntax = "pet",
+            syntax = "",
             desc = "Manage your own pets",
             usage = "Use \"/pet help\" for help."
     )
@@ -66,19 +69,51 @@ public class PetCommand implements CommandListener {
     }
 
     @Command(
-            syntax = "<pet>",
+            syntax = "<type>",
             desc = "Creates a new pet of the given type",
-            help = {"Data values can be separated by a comma", "e.g. blue,baby (for a sheep)", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\"", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"name\" command"}
+            help = {"Set pet data using \"/pet [pet_name] data <data...\" (separated by spaces)", "Set the name of your pet using \"/pet [pet_name] name [name...]\""}
     )
     @Authorize(Perm.TYPE)
-    public boolean create(BukkitCommandEvent<Player> event,
-                          @Bind("pet") @Accept(value = 3, showAs = "<type> name:[name] data:[data]")
-                          @Convert(PetConverters.Create.class) Pet pet) {
-        if (pet == null) {
-            return true;
+    @Nested
+    public boolean create(BukkitCommandEvent<Player> event, @Bind("type") @Convert(PetConverters.CreateType.class) Pet pet) {
+        if (pet != null) {
+            EchoPet.getManager().save(pet);
+            event.respond(Lang.PET_CREATED.getValue("type", pet.getType().humanName()));
         }
-        EchoPet.getManager().save(pet);
-        event.respond(Lang.PET_CREATED.getValue("type", pet.getType().humanName()));
+        return true;
+    }
+
+    @Command(
+            syntax = "[pet_name] data <data...>",
+            desc = "Applies the given data types to your pet (specified by [pet_name] or nothing if you only have one pet)",
+            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)"}
+    )
+    @Authorize(Perm.DATA)
+    @Nested
+    public boolean applyData(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+        if (pet != null) {
+            ArrayList<String> invalidData = new ArrayList<>();
+            ArrayList<PetData> validData = new ArrayList<>();
+            ArrayList<String> validStringData = new ArrayList<>();
+            for (String candidate : event.getVariable("data").getConsumedArguments()) {
+                if (GeneralUtil.isEnumType(PetData.class, candidate)) {
+                    invalidData.add(candidate);
+                    continue;
+                }
+                validData.add(PetData.valueOf(candidate));
+            }
+
+            if (!invalidData.isEmpty()) {
+                event.respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", invalidData)));
+            }
+
+            if (!validData.isEmpty()) {
+                pet.setDataValue(validData.toArray(new PetData[0]));
+                event.respond(Lang.DATA_APPLIED.getValue("data", StringUtil.combine("{c1}, {c2}", validStringData), "name", pet.getName()));
+            } else if (!invalidData.isEmpty()) {
+                event.respond(Lang.NO_DATA_APPLIED.getValue("name", pet.getName()));
+            }
+        }
         return true;
     }
 }
