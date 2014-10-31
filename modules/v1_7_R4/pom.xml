@@ -21,7 +21,7 @@
 
     <artifactId>EchoPet-v1_7_R4</artifactId>
     <name>EchoPet for v1_7_R4</name>
-    <version>v3</version>
+    <version>${plugin.version}</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
-            <version>v3</version>
+            <version>${plugin.version}</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>

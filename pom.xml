@@ -28,13 +28,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <plugin.version>3.0.0-SNAPSHOT</plugin.version>
     </properties>
 
     <modules>
         <module>modules/API</module>
-        <module>modules/v1_7_R1</module>
+        <!--<module>modules/v1_7_R1</module>
         <module>modules/v1_7_R2</module>
-        <module>modules/v1_7_R3</module>
+        <module>modules/v1_7_R3</module>-->
         <module>modules/v1_7_R4</module>
         <module>modules/EchoPet</module>
     </modules>
