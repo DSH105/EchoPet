@@ -344,7 +344,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public org.bukkit.entity.Entity getPassenger() {
-        return passenger.getBukkitEntity();
+        return passenger == null ? null : passenger.getBukkitEntity();
     }
 
     @Override
