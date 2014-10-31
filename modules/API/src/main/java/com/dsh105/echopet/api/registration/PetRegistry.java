@@ -29,9 +29,14 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import static com.captainbern.reflection.matcher.Matchers.withType;
 
+/**
+ * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings so
+ * that custom pet entities can be spawned.
+ */
 public class PetRegistry {
 
     private static final EntityMapModifier<Class<?>, String> CLASS_TO_NAME_MODIFIER;
@@ -56,16 +61,25 @@ public class PetRegistry {
         return registrationEntries.get(petType);
     }
 
-    public Pet spawn(PetType petType, Player owner) {
+    public Pet spawn(PetType petType, final Player owner) {
         Preconditions.checkNotNull(petType, "Pet type must not be null.");
         Preconditions.checkNotNull(owner, "Owner type must not be null.");
 
-        PetRegistrationEntry registrationEntry = getRegistrationEntry(petType);
+        final PetRegistrationEntry registrationEntry = getRegistrationEntry(petType);
         if (registrationEntry == null) {
             // Pet type not registered
             return null;
         }
 
+        return performRegistration(registrationEntry, new Callable<Pet>() {
+            @Override
+            public Pet call() throws Exception {
+                return registrationEntry.createFor(owner);
+            }
+        });
+    }
+
+    public <T> T performRegistration(PetRegistrationEntry registrationEntry, Callable<T> callable) {
         // Just to be sure, remove any existing mappings and replace them afterwards
         CLASS_TO_NAME_MODIFIER.clear(registrationEntry.getName());
         CLASS_TO_ID_MODIFIER.clear(registrationEntry.getRegistrationId());
@@ -75,7 +89,9 @@ public class PetRegistry {
         try {
             CLASS_TO_NAME_MODIFIER.applyModifications();
             CLASS_TO_ID_MODIFIER.applyModifications();
-            return registrationEntry.createFor(owner);
+            return callable.call();
+        } catch (Exception e) {
+            throw new PetRegistrationException(e);
         } finally {
             // Ensure everything is back to normal
             CLASS_TO_NAME_MODIFIER.removeModifications();

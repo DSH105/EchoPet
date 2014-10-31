@@ -35,6 +35,7 @@ import com.dsh105.echopet.api.entity.ai.goal.PetGoalFloat;
 import com.dsh105.echopet.api.entity.ai.goal.PetGoalFollowOwner;
 import com.dsh105.echopet.api.entity.ai.goal.PetGoalLookAtPlayer;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
+import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.pet.type.EnderDragonPet;
 import com.dsh105.echopet.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.api.event.PetRideMoveEvent;
@@ -69,6 +70,8 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     private String ownerIdent;
     private String name;
 
+    private PetGoalSelector petGoalSelector;
+
     private Pet rider;
     private boolean isRider;
 
@@ -94,35 +97,47 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             this.entity = Spawn.spawn(this);
             if (this.entity != null) {
                 // Begin initiating our EntityPet
-                JUMP_FIELD = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityLiving")).getSafeFieldByName(entity.getJumpField());
 
-                entity.modifyBoundingBox(width(), height());
-                entity.setFireProof(true);
+                JUMP_FIELD = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityLiving")).getSafeFieldByName(getModifier().getJumpField());
+
+                getEntity().modifyBoundingBox(width(), height());
+                getEntity().setFireProof(true);
                 getBukkitEntity().setMaxHealth(getType().getMaxHealth());
                 getBukkitEntity().setHealth(getBukkitEntity().getMaxHealth());
                 jumpHeight = PetSettings.JUMP_HEIGHT.getValue(getType().storageName());
                 rideSpeed = PetSettings.RIDE_SPEED.getValue(getType().storageName());
 
-                PetGoalSelector goalSelector = new SimplePetGoalSelector(this);
-                goalSelector.addGoal(new PetGoalFloat(), 0);
-                goalSelector.addGoal(new PetGoalFollowOwner(), 1);
-                goalSelector.addGoal(new PetGoalLookAtPlayer(), 2);
-                entity.setGoalSelector(goalSelector);
+                this.petGoalSelector = new SimplePetGoalSelector(this);
+                this.petGoalSelector.addGoal(new PetGoalFloat(), 0);
+                this.petGoalSelector.addGoal(new PetGoalFollowOwner(), 1);
+                this.petGoalSelector.addGoal(new PetGoalLookAtPlayer(), 2);
+
+                getModifier().setAvoidsWater(false);
+                getModifier().setAvoidSun(false);
+                getModifier().setCanSwim(true);
+                getModifier().setBreakDoors(false);
+                getModifier().setEnterDoors(false);
 
                 setName(getType().getDefaultName(getOwnerName()));
                 teleportToOwner();
+
             }
         }
     }
 
     @Override
     public T getBukkitEntity() {
-        return (T) entity.getBukkitEntity();
+        return (T) getModifier().getBukkitEntity();
     }
 
     @Override
     public S getEntity() {
         return entity;
+    }
+
+    @Override
+    public <P extends Pet<T, S>> EntityPetModifier<P> getModifier() {
+        return getEntity().getModifier();
     }
 
     @Override
@@ -133,6 +148,11 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public PetGoalSelector getPetGoalSelector() {
+        return petGoalSelector;
     }
 
     @Override
@@ -308,7 +328,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
         getBukkitEntity().remove();
         if (makeDeathSound) {
             if (getDeathSound() != null && !getDeathSound().isEmpty()) {
-                entity.makeSound(getDeathSound(), 1.0F, 1.0F);
+                getEntity().makeSound(getDeathSound(), 1.0F, 1.0F);
             }
         }
 
@@ -407,7 +427,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public boolean teleport(Location to) {
-        if (entity == null || entity.isDead()) {
+        if (entity == null || getModifier().isDead()) {
             return false;
         }
 
@@ -484,7 +504,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             }
             getBukkitEntity().setPassenger(getOwner());
             if (this instanceof EnderDragonPet) {
-                getEntity().setNoClipEnabled(false);
+                getModifier().setNoClipEnabled(false);
             }
 
             this.ownerInMountingProcess = false;
@@ -492,7 +512,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             getEntity().modifyBoundingBox(width() / 2, height() / 2);
         } else {
             if (this instanceof EnderDragonPet) {
-                getEntity().setNoClipEnabled(true);
+                getModifier().setNoClipEnabled(true);
             }
             EchoPet.getManager().loadRider(this);
             getEntity().modifyBoundingBox(width(), height());
@@ -536,9 +556,16 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     }
 
     @Override
+    public void onError(Throwable e) {
+        EchoPet.LOG.severe("Uh oh. Something bad happened");
+        e.printStackTrace();
+        despawn(false);
+    }
+
+    @Override
     public void onLive() {
         // This should NEVER happen. NEVER
-        if (entity.getPet() == null) {
+        if (getModifier().getPet() == null) {
             despawn(false);
             return;
         }
@@ -548,22 +575,22 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             return;
         }
 
-        if (isOwnerRiding() && entity.getPassenger() == null && !isOwnerInMountingProcess()) {
+        if (isOwnerRiding() && getModifier().getPassenger() == null && !isOwnerInMountingProcess()) {
             setOwnerRiding(false);
         }
 
         for (String status : new String[]{"isInvisible", "isSprinting", "isSneaking"}) {
-            boolean entityStatus = status(getBukkitEntity(), status);
-            if (status(getOwner(), status) != entityStatus) {
+            boolean entityStatus = getStatus(getBukkitEntity(), status);
+            if (getStatus(getOwner(), status) != entityStatus) {
                 if (!status.equalsIgnoreCase("isInvisible") || !shouldVanish()) {
-                    status(getBukkitEntity(), status, !entityStatus);
+                    setStatus(getBukkitEntity(), status, !entityStatus);
                 }
             }
         }
 
         if (isHat()) {
             float yaw = (getType() == PetType.ENDER_DRAGON ? getOwner().getLocation().getYaw() - 180 : getOwner().getLocation().getYaw());
-            entity.setYaw(yaw);
+            getModifier().setYaw(yaw);
         }
 
         if (getOwner().isFlying() && PetSettings.CAN_FLY.getValue(getType().storageName())) {
@@ -574,18 +601,18 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void onRide(float sideMotion, float forwardMotion) {
-        if (entity.getPassenger() == null || entity.getPassenger() != getOwner()) {
-            entity.updateMotion(sideMotion, forwardMotion);
-            entity.setBlockClimbHeight(0.5F);
+        if (getModifier().getPassenger() == null || getModifier().getPassenger() != getOwner()) {
+            getEntity().updateMotion(sideMotion, forwardMotion);
+            getModifier().setBlockClimbHeight(0.5F);
             return;
         }
 
-        entity.setBlockClimbHeight(1.0F);
-        entity.applyPitchAndYawChanges(entity.getPassenger().getLocation().getPitch() * 0.5F, entity.getPassenger().getLocation().getYaw());
+        getModifier().setBlockClimbHeight(1.0F);
+        getModifier().applyPitchAndYawChanges(getModifier().getPassenger().getLocation().getPitch() * 0.5F, getModifier().getPassenger().getLocation().getYaw());
 
         // Retrieve motion of passenger
-        sideMotion = entity.getPassengerSideMotion() * 0.5F;
-        forwardMotion = entity.getPassengerForwardMotion();
+        sideMotion = getModifier().getPassengerSideMotion() * 0.5F;
+        forwardMotion = getModifier().getPassengerForwardMotion();
 
         if (forwardMotion <= 0F) {
             // Slow down backwards movement
@@ -600,22 +627,22 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             return;
         }
 
-        entity.setSpeed((float) getRideSpeed());
+        getModifier().setSpeed((float) getRideSpeed());
         // Apply all changes to entity motion
-        entity.updateMotion(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
+        getEntity().updateMotion(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
         if (JUMP_FIELD != null) {
             boolean canFly = PetSettings.CAN_FLY.getValue(getType().storageName());
             double jumpHeight = canFly ? 0.5D : getJumpHeight();
-            if (canFly || entity.isGrounded()) {
-                if (JUMP_FIELD.getAccessor().get(entity.getPassenger())) {
+            if (canFly || getModifier().isGrounded()) {
+                if (JUMP_FIELD.getAccessor().get(getModifier().getPassenger())) {
                     if (getOwner().isFlying()) {
                         getOwner().setFlying(false);
                     }
                     PetRideJumpEvent jumpEvent = new PetRideJumpEvent(this, jumpHeight);
                     EchoPet.getCore().getServer().getPluginManager().callEvent(jumpEvent);
                     if (!jumpEvent.isCancelled()) {
-                        entity.setMotionY((float) jumpHeight);
+                        getModifier().setMotionY((float) jumpHeight);
                         if (!canFly) {
                             doJumpAnimation();
                         }
@@ -626,15 +653,24 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     }
 
     @Override
-    public void onInteract(Player player) {
-        if (player.hasPermission(Perm.MENU)) {
-            DataMenu.prepare(this).show(player);
+    public boolean onInteract(Player player) {
+        if (IdentUtil.areIdentical(player, getOwner())) {
+            if (player.hasPermission(Perm.MENU)) {
+                DataMenu.prepare(this).show(player);
+            }
+            return true;
         }
+        return false;
     }
 
-    private boolean status(Entity entity, String methodName, Object... params) {
+    private boolean getStatus(Entity entity, String methodName) {
         Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
-        return (Boolean) new Reflection().reflect(handle.getClass()).getSafeMethod(methodName).getAccessor().invoke(handle, params);
+        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(methodName).getAccessor().invoke(handle);
+    }
+
+    private boolean setStatus(Entity entity, String methodName, boolean value) {
+        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
+        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(methodName, boolean.class).getAccessor().invoke(handle, value);
     }
 
     @Override

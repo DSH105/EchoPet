@@ -24,7 +24,7 @@ public interface EntityBatPet extends EntityPet<BatPet> {
 
     public static final int DATAWATCHER_STARTLED = 16;
 
-    void setStartled(boolean flag);
+    void setAsleep(boolean flag);
 
-    boolean isStartled();
+    boolean isAsleep();
 }

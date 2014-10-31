@@ -49,6 +49,7 @@ public enum PetData {
     GRAY("gray", Type.COLOUR, Type.HORSE_COLOUR),
     GREEN("green", Type.COLOUR),
     GOLD("gold", Type.HORSE_ARMOUR),
+    IGNITED("ignited", Type.BOOLEAN),
     IRON("iron", Type.HORSE_ARMOUR),
     LARGE("large", Type.SLIME_SIZE),
     LIBRARIAN("librarian", Type.VILLAGER_PROFESSION),
@@ -85,7 +86,7 @@ public enum PetData {
     YELLOW("yellow", Type.COLOUR),
     ZOMBIE("zombie", Type.VARIANT),
 
-    DEFAULT(); // hax
+    DEFAULT; // hax
 
     private static PetData[] VALUES;
 

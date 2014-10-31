@@ -35,7 +35,7 @@ public interface EntityHorsePet extends EntityAgeablePet<HorsePet> {
     public static final int ANIMATION_REAR = 64;
     public static final int ANIMATION_OPEN_MOUTH = 128;
 
-    Horse.Variant getVariant();
+    Horse.Variant getHorseVariant();
 
     Horse.Color getColor();
 
@@ -47,7 +47,7 @@ public interface EntityHorsePet extends EntityAgeablePet<HorsePet> {
 
     boolean isChested();
 
-    void setVariant(Horse.Variant variant);
+    void setHorseVariant(Horse.Variant variant);
 
     void setColor(Horse.Color color);
 
@@ -60,4 +60,6 @@ public interface EntityHorsePet extends EntityAgeablePet<HorsePet> {
     void setChested(boolean flag);
 
     void animation(int animationId, boolean flag);
+
+    public void setTame(boolean flag);
 }

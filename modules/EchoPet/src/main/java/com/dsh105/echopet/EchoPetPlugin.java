@@ -47,6 +47,7 @@ import com.dsh105.echopet.util.TableMigrationUtil;
 import com.dsh105.echopet.util.UUIDMigration;
 import com.dsh105.influx.BukkitCommandManager;
 import com.dsh105.influx.CommandListener;
+import com.dsh105.influx.Controller;
 import com.dsh105.influx.InfluxBukkitManager;
 import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
@@ -94,7 +95,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         commandManager = new BukkitCommandManager(this);
 
         try {
-            Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EntityPetBase");
+            Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EchoEntityPetBase");
         } catch (ClassNotFoundException e) {
             // Make sure the server owner is aware
             EchoPet.LOG.console(Level.WARNING, "+----------------------+");
@@ -116,6 +117,10 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         manager = dbPool != null ? new SimpleSQLPetManager() : new SimplePetManager();
 
         registerCommands();
+
+        for (Controller controller : commandManager) {
+            System.out.println(controller.getCommand().getStringSyntax());
+        }
 
         petRegistry = new PetRegistry();
 
@@ -140,6 +145,8 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
         if (manager != null) {
             manager.removeAllPets();
         }
+
+        getServer().getScheduler().cancelTasks(this);
 
         if (dbPool != null) {
             dbPool.shutdown();
@@ -249,7 +256,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     @Override
     public <T extends PluginDependencyProvider> T getProvider(Class<T> providerClass) {
         for (PluginDependencyProvider provider : providers) {
-            if (providerClass.equals(provider.getClass())) {
+            if (providerClass.isAssignableFrom(provider.getClass())) {
                 return (T) provider;
             }
         }
@@ -269,7 +276,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     @Override
     public <T extends Options> T getSettings(Class<T> settingsClass) {
         for (Options options : settings.values()) {
-            if (options.getClass().equals(settingsClass)) {
+            if (settingsClass.isAssignableFrom(options.getClass())) {
                 return (T) options;
             }
         }

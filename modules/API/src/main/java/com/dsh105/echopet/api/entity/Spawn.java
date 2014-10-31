@@ -40,13 +40,14 @@ public class Spawn {
             return null;
         }
         Location spawnLocation = spawnEvent.getSpawnLocation();
-        Object mcWorld = new Reflection().reflect(World.class).getSafeFieldByName("getHandle").getAccessor().get(spawnLocation.getWorld());
+        System.out.println(MinecraftReflection.getCraftBukkitClass("CraftWorld").getCanonicalName());
+        Object mcWorld = new Reflection().reflect(MinecraftReflection.getCraftBukkitClass("CraftWorld")).getSafeMethod("getHandle").getAccessor().invoke(spawnLocation.getWorld());
         S entityPet = EchoPet.getPetRegistry().getRegistrationEntry(pet.getType()).createEntityPet(mcWorld, pet);
         entityPet.setLocation(spawnLocation);
         if (!spawnLocation.getChunk().isLoaded()) {
             spawnLocation.getChunk().load();
         }
-        if (!((Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("World")).getSafeMethod("addEntity", MinecraftReflection.getMinecraftClass("Entity"), CreatureSpawnEvent.SpawnReason.class).getAccessor().invoke(entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM))) {
+        if (!((Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("World")).getSafeMethod("addEntity", MinecraftReflection.getMinecraftClass("Entity"), CreatureSpawnEvent.SpawnReason.class).getAccessor().invoke(mcWorld, entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM))) {
             Lang.SPAWN_BLOCKED.send(pet.getOwner());
             EchoPet.getManager().removePet(pet);
             return null;

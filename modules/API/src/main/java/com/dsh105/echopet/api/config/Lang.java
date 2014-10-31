@@ -43,7 +43,7 @@ public class Lang extends Options {
             PET_COMMAND = new LangSetting("pet_command", "{c1}Use {c2}/" + Settings.COMMAND.getValue() + " help {c1}for help."),
             CONFIGS_RELOADED = new LangSetting("configs_reloaded", "{c1}Configuration files reloaded."),
             COMMAND_HOVER_TIP = new LangSetting("commandhover_tip", "&e&oHover over to see more information about each command. Click to insert it into the chat window.", "Reminds players to hover over commands to see more information"),
-            HOVER_TIP = new LangSetting("hover_tip", "&e&oHover over to see more information."),
+            HOVER_TIP = new LangSetting("hover_tip", "&e&oHover over the text to see more information."),
             HELP_INDEX_TOO_BIG = new LangSetting("help_index_too_big", "{c1}Page {c2}%index% {c1}does not exist."),
 
     PETS_DISABLED_HERE = new LangSetting("pets_disabled_here", "{c1}pets are not allowed here.", "Sent when pets are disabled in a certain area"),
@@ -81,6 +81,8 @@ public class Lang extends Options {
             PET_RIDE_OFF = new LangSetting("pet_ride_off", "{c1}You are no longer riding your pet, {c2}%name%{c1}."),
             PET_HIDDEN = new LangSetting("pet_hidden", "{c1}Your pet, {c2}%name% {c1}, has been hidden."),
             PET_SHOWN = new LangSetting("pet_shown", "{c1}Your pet, {c2}%name% {c1}, has come out of hiding."),
+            DATA_APPLIED = new LangSetting("data_applied", "{c1}Data types applied to your pet, {c2}%name%{c1}: {c2}%data%"),
+            NO_DATA_APPLIED = new LangSetting("no_data_applied", "{c1}No valid data types given to apply to your pet, {c2}%name%{c1}."),
 
     NAME_PET_PROMPT = new LangSetting("name_pet_prompt", "{c1}What would you like to name your pet?"),
 

@@ -46,12 +46,12 @@ public class EntitySheepPetBase extends EntityAgeablePetBase<SheepPet> implement
     }
 
     @Override
-    public DyeColor getColor() {
+    public DyeColor getDyeColor() {
         return DyeColor.getByWoolData((byte) (this.datawatcher.getByte(DATAWATCHER_SKIN) & 15));
     }
 
     @Override
-    public void setColor(DyeColor color) {
+    public void setDyeColor(DyeColor color) {
         byte value = this.datawatcher.getByte(16);
         this.datawatcher.watch(DATAWATCHER_SKIN, (byte) (value & 240 | color.getWoolData() & 15));
     }

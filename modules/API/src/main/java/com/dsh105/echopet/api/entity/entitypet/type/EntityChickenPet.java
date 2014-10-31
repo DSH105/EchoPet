@@ -22,4 +22,5 @@ import com.dsh105.echopet.api.entity.pet.type.ChickenPet;
 
 public interface EntityChickenPet extends EntityAgeablePet<ChickenPet> {
 
+    void setEggDropTimer(int value);
 }

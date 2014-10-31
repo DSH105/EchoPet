@@ -18,9 +18,10 @@
 package com.dsh105.echopet.api.entity.entitypet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
+import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.WitherPet;
 
-public interface EntityWitherPet extends EntityPet<WitherPet> {
+public interface EntityWitherPet extends EntityRangedPet<WitherPet> {
 
     public static int DATAWATCHER_INVULNERABLE_TIME = 20;
 

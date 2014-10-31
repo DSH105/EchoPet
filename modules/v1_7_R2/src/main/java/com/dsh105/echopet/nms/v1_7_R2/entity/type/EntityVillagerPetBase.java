@@ -30,13 +30,13 @@ public class EntityVillagerPetBase extends EntityAgeablePetBase<VillagerPet> imp
     }
 
     @Override
-    public Villager.Profession getProfession() {
+    public Villager.Profession getVillagerProfession() {
         return Villager.Profession.getProfession(this.datawatcher.getInt(DATAWATCHER_PROFESSION));
     }
 
     @Override
-    public void setProfession(Villager.Profession prof) {
-        this.datawatcher.watch(DATAWATCHER_PROFESSION, prof.getId());
+    public void setVillagerProfession(Villager.Profession profession) {
+        this.datawatcher.watch(DATAWATCHER_PROFESSION, profession.getId());
     }
 
     @Override

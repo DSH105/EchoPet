@@ -20,6 +20,7 @@ package com.dsh105.echopet.listeners;
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
+import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetInteractEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
@@ -31,10 +32,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.EntityBlockFormEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.event.entity.EntityPortalEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 
 /**
@@ -47,19 +45,15 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        Entity entity = event.getEntity();
-        if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
+        if (shouldCancel(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCreatureSpawnUnBlock(CreatureSpawnEvent event) {
-        Entity entity = event.getEntity();
-        if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
-            if (event.isCancelled()) {
-                event.setCancelled(false);
-            }
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
         }
     }
 
@@ -78,11 +72,8 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPetEnterPortal(EntityPortalEvent event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof LivingEntity) {
-            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
-                event.setCancelled(true);
-            }
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
         }
     }
 
@@ -105,22 +96,129 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityInteract(EntityInteractEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onBlockForm(EntityBlockFormEvent event) {
+        if (event.getNewState().getType().equals(Material.SNOW) && shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityExplode(EntityExplodeEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof LivingEntity) {
-            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
+            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityEnderDragonPet) {
                 event.setCancelled(true);
             }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onBlockForm(EntityBlockFormEvent event) {
+    public void onEntityChangeBlock(EntityChangeBlockEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityTarget(EntityTargetEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onExplosionPrime(ExplosionPrimeEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityRegainHealth(EntityRegainHealthEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof LivingEntity) {
-            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet && event.getNewState().getType().equals(Material.SNOW)) {
+            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityEnderDragonPet) {
                 event.setCancelled(true);
-                event.getNewState().setType(Material.AIR);
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onSlimeSplit(SlimeSplitEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setDroppedExp(0);
+            event.getDrops().clear();
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityTame(EntityTameEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityShootBow(EntityShootBowEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPigZap(PigZapEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onSheepRegrowWool(SheepRegrowWoolEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPlayerLeashEntity(PlayerLeashEntityEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityCombust(EntityCombustEvent event) {
+        if (shouldCancel(event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEntityEvent(EntityEvent event) {
+
+    }
+
+    private boolean shouldCancel(Entity entity) {
+        if (entity instanceof LivingEntity) {
+            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
+                return true;
+            }
+        }
+        return false;
     }
 }

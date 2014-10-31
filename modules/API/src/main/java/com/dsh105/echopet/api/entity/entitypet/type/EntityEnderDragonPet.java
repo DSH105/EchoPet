@@ -24,5 +24,15 @@ public interface EntityEnderDragonPet extends EntityPet<EnderDragonPet> {
 
     void updatePosition(double x, double y, double z);
 
-    void updateComplexParts();
+    boolean isTargetingEnabled();
+
+    void enableTargeting(boolean flag);
+
+    void setHurtTicks(int value);
+
+    void setTargetCrystal(org.bukkit.entity.EnderCrystal entity);
+
+    void tickMovement();
+
+    void target();
 }

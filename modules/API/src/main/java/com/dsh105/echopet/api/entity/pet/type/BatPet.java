@@ -23,7 +23,7 @@ import org.bukkit.entity.Bat;
 
 public interface BatPet extends Pet<Bat, EntityBatPet> {
 
-    void setStartled(boolean flag);
+    void setAsleep(boolean flag);
 
-    boolean isStartled();
+    boolean isAsleep();
 }

@@ -29,9 +29,9 @@ public interface EntityWolfPet extends EntityAgeablePet<WolfPet> {
     public static int DATAWATCHER_BEGGING = 19;
     public static int DATAWATCHER_COLLAR_COLOUR = 20;
 
-    void setCollarColor(DyeColor color);
+    void setWolfCollarColor(DyeColor color);
 
-    DyeColor getCollarColor();
+    DyeColor getWolfCollarColor();
 
     void setTamed(boolean flag);
 
@@ -42,6 +42,4 @@ public interface EntityWolfPet extends EntityAgeablePet<WolfPet> {
     boolean isAngry();
 
     float getTailHealth();
-
-    void shakeParticle(float shakeCount);
 }

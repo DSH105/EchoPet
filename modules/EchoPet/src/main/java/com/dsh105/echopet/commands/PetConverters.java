@@ -116,7 +116,7 @@ public class PetConverters {
         }
     }
 
-    public class CreateType extends Converter<Pet> {
+    public static class CreateType extends Converter<Pet> {
 
         public CreateType() {
             super(Pet.class);

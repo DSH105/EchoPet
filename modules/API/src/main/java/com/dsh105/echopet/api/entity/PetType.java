@@ -99,8 +99,8 @@ public enum PetType {
         this.materialData = (short) materialData;
 
         String classIdentifier = humanName().replace(" ", "");
-        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type.Entity" + classIdentifier + "PetBase").getReflectedClass();
-        this.petClass = new Reflection().reflect("com.dsh105.echopet.api.entity.pet.type." + classIdentifier + "PetBase").getReflectedClass();
+        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type.EchoEntity" + classIdentifier + "Pet").getReflectedClass();
+        this.petClass = new Reflection().reflect("com.dsh105.echopet.api.entity.pet.type.Echo" + classIdentifier + "Pet").getReflectedClass();
 
         this.command = "pet " + storageName();
     }

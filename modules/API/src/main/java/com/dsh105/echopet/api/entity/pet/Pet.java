@@ -20,7 +20,9 @@ package com.dsh105.echopet.api.entity.pet;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.ai.PetGoalSelector;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
+import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -34,9 +36,13 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     S getEntity();
 
+    <P extends Pet<T, S>> EntityPetModifier<P> getModifier();
+
     UUID getPetId();
 
     String getName();
+
+    PetGoalSelector getPetGoalSelector();
 
     boolean setName(String name);
 
@@ -120,11 +126,13 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     boolean isHat();
 
+    void onError(Throwable e);
+
     void onLive();
 
     void onRide(float sideMotion, float forwardMotion);
 
-    void onInteract(Player player);
+    boolean onInteract(Player player);
 
     void doJumpAnimation();
 }

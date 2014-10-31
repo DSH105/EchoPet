@@ -32,14 +32,14 @@ public class EntityWolfPetBase extends EntityAgeablePetBase<WolfPet> implements 
     }
 
     @Override
-    public void setCollarColor(DyeColor color) {
+    public void setWolfCollarColor(DyeColor color) {
         if (isTamed()) {
             this.datawatcher.watch(DATAWATCHER_COLLAR_COLOUR, color.getWoolData());
         }
     }
 
     @Override
-    public DyeColor getCollarColor() {
+    public DyeColor getWolfCollarColor() {
         return DyeColor.getByWoolData(this.datawatcher.getByte(DATAWATCHER_COLLAR_COLOUR));
     }
 

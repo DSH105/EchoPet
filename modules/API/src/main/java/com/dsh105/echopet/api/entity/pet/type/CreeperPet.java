@@ -17,6 +17,8 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.AttributeHandler;
+import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityCreeperPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.Creeper;
@@ -26,4 +28,10 @@ public interface CreeperPet extends Pet<Creeper, EntityCreeperPet> {
     void setPowered(boolean flag);
 
     boolean isPowered();
+
+    @AttributeHandler(data = PetData.POWER)
+    void setIgnited(boolean flag);
+
+    @AttributeHandler(data = PetData.POWER, getter = true)
+    boolean isIgnited();
 }

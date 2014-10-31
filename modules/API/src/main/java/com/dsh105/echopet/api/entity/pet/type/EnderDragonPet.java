@@ -20,7 +20,9 @@ package com.dsh105.echopet.api.entity.pet.type;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
 
 public interface EnderDragonPet extends Pet<EnderDragon, EntityEnderDragonPet> {
 
+    void setTarget(Entity entity);
 }

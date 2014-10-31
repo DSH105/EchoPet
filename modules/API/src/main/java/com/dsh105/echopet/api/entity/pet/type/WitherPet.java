@@ -19,9 +19,10 @@ package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWitherPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.entity.pet.RangedPet;
 import org.bukkit.entity.Wither;
 
-public interface WitherPet extends Pet<Wither, EntityWitherPet> {
+public interface WitherPet extends RangedPet<Wither, EntityWitherPet> {
 
     void setShielded(boolean flag);
 

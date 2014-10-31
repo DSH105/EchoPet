@@ -18,12 +18,13 @@
 package com.dsh105.echopet.api.plugin.hook;
 
 import com.dsh105.commodus.dependency.PluginDependencyProviderBase;
+import com.dsh105.echopet.api.hook.VanishProvider;
 import com.dsh105.echopet.listeners.VanishListener;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.kitteh.vanish.VanishPlugin;
 
-public class VanishProviderBase extends PluginDependencyProviderBase<VanishPlugin> {
+public class VanishProviderBase extends PluginDependencyProviderBase<VanishPlugin> implements VanishProvider {
 
     public VanishProviderBase(Plugin myPluginInstance) {
         super(myPluginInstance, "VanishNoPacket");
@@ -39,10 +40,12 @@ public class VanishProviderBase extends PluginDependencyProviderBase<VanishPlugi
 
     }
 
+    @Override
     public boolean isVanished(Player player) {
         return this.isVanished(player.getName());
     }
 
+    @Override
     public boolean isVanished(String player) {
         return this.isHooked() && this.getDependency().getManager().isVanished(player);
     }

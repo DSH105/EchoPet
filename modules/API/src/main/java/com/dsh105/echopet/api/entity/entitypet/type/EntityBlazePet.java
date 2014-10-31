@@ -18,9 +18,10 @@
 package com.dsh105.echopet.api.entity.entitypet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
+import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.BlazePet;
 
-public interface EntityBlazePet extends EntityPet<BlazePet> {
+public interface EntityBlazePet extends EntityRangedPet<BlazePet> {
 
     public static final int DATAWATCHER_ON_FIRE = 16;
 

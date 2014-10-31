@@ -19,11 +19,16 @@ package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySkeletonPet;
 import com.dsh105.echopet.api.entity.pet.EquipablePet;
+import com.dsh105.echopet.api.entity.pet.RangedPet;
 import org.bukkit.entity.Skeleton;
 
-public interface SkeletonPet extends EquipablePet<Skeleton, EntitySkeletonPet> {
+public interface SkeletonPet extends EquipablePet<Skeleton, EntitySkeletonPet>, RangedPet<Skeleton, EntitySkeletonPet> {
 
     void setWither(boolean flag);
 
     boolean isWither();
+
+    void setSkeletonType(Skeleton.SkeletonType type);
+
+    Skeleton.SkeletonType getSkeletonType();
 }

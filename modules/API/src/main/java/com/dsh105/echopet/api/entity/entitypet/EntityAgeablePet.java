@@ -26,4 +26,6 @@ public interface EntityAgeablePet<T extends AgeablePet> extends EntityPet<T> {
     void setBaby(boolean flag);
 
     boolean isBaby();
+
+    void resetLove();
 }

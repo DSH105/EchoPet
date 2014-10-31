@@ -29,7 +29,7 @@ public interface EntitySheepPet extends EntityAgeablePet<SheepPet> {
 
     boolean isSheared();
 
-    DyeColor getColor();
+    DyeColor getDyeColor();
 
-    void setColor(DyeColor c);
+    void setDyeColor(DyeColor color);
 }

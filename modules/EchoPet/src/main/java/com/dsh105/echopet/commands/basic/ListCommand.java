@@ -45,7 +45,7 @@ public class ListCommand implements CommandListener {
             help = "If [inline] is specified as \"true\", data types will be shown in the following format (as well as in hover information): \"<type> (<data>, <data>)\""
     )
     @Authorize(Perm.LIST)
-    public boolean list(BukkitCommandEvent event, @Bind("inline") @Default("false") boolean inline) {
+    public boolean list(BukkitCommandEvent event, @Bind("inline") @Default("") boolean inline) {
         if (!(event.sender() instanceof Player) && event.var("inline").isEmpty()) {
             inline = true;
         }

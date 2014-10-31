@@ -21,6 +21,7 @@ import com.dsh105.commodus.Version;
 import com.dsh105.commodus.dependency.PluginDependencyProviderBase;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.config.Settings;
+import com.dsh105.echopet.api.hook.WorldGuardProvider;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.listeners.RegionListener;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -30,7 +31,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
-public class WorldGuardProviderBase extends PluginDependencyProviderBase<WorldGuardPlugin> {
+public class WorldGuardProviderBase extends PluginDependencyProviderBase<WorldGuardPlugin> implements WorldGuardProvider {
 
     public WorldGuardProviderBase(Plugin myPluginInstance) {
         super(myPluginInstance, "WorldGuard");
@@ -52,11 +53,13 @@ public class WorldGuardProviderBase extends PluginDependencyProviderBase<WorldGu
 
     }
 
+    @Override
     public boolean allowPets(Location location) {
         Boolean allowWorld = Settings.WORLD.getValue(location.getWorld().getName());
         return (allowWorld == null ? Settings.WORLDS_DEFAULT.getValue() : allowWorld) && allowRegion(location);
     }
 
+    @Override
     public boolean allowRegion(Location location) {
         boolean result = true;
         if (isHooked()) {

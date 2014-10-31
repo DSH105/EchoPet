@@ -19,8 +19,9 @@ package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWitchPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.entity.pet.RangedPet;
 import org.bukkit.entity.Witch;
 
-public interface WitchPet extends Pet<Witch, EntityWitchPet> {
+public interface WitchPet extends RangedPet<Witch, EntityWitchPet> {
 
 }

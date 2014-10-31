@@ -23,4 +23,7 @@ import org.bukkit.entity.IronGolem;
 
 public interface IronGolemPet extends Pet<IronGolem, EntityIronGolemPet> {
 
+    void setHoldingRose(boolean flag);
+
+    boolean getHoldingRose();
 }

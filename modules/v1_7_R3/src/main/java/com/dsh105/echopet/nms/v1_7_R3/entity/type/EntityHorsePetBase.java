@@ -45,7 +45,7 @@ public class EntityHorsePetBase extends EntityAgeablePetBase<HorsePet> implement
     }
 
     @Override
-    public void setVariant(Horse.Variant variant) {
+    public void setHorseVariant(Horse.Variant variant) {
         if (variant != Horse.Variant.HORSE) {
             setArmour(HorsePet.Armour.NONE);
         }
@@ -64,7 +64,7 @@ public class EntityHorsePetBase extends EntityAgeablePetBase<HorsePet> implement
 
     @Override
     public void setArmour(HorsePet.Armour armour) {
-        if (getVariant() == Horse.Variant.HORSE) {
+        if (getHorseVariant() == Horse.Variant.HORSE) {
             this.datawatcher.watch(DATAWATCHER_HORSE_ARMOUR, armour.ordinal());
         }
     }
@@ -80,7 +80,7 @@ public class EntityHorsePetBase extends EntityAgeablePetBase<HorsePet> implement
     }
 
     @Override
-    public Horse.Variant getVariant() {
+    public Horse.Variant getHorseVariant() {
         return Horse.Variant.values()[this.datawatcher.getByte(DATAWATCHER_HORSE_VARIANT)];
     }
 
@@ -125,9 +125,9 @@ public class EntityHorsePetBase extends EntityAgeablePetBase<HorsePet> implement
         boolean flag = super.attack(entity, damage);
         if (flag) {
             animation(ANIMATION_REAR, true);
-            if (getVariant() == Horse.Variant.HORSE) {
+            if (getHorseVariant() == Horse.Variant.HORSE) {
                 this.makeSound("mob.horse.angry", 1.0F, 1.0F);
-            } else if (getVariant() == Horse.Variant.DONKEY || getVariant() == Horse.Variant.MULE) {
+            } else if (getHorseVariant() == Horse.Variant.DONKEY || getHorseVariant() == Horse.Variant.MULE) {
                 this.makeSound("mob.horse.donkey.angry", 1.0F, 1.0F);
             }
         }
@@ -153,7 +153,7 @@ public class EntityHorsePetBase extends EntityAgeablePetBase<HorsePet> implement
         }
 
         if (!block.getMaterial().isLiquid()) {
-            Horse.Variant variant = this.getVariant();
+            Horse.Variant variant = this.getHorseVariant();
 
             if (this.passenger != null && variant != Horse.Variant.DONKEY && variant != Horse.Variant.MULE) {
                 ++this.reverseMotion;

@@ -27,7 +27,7 @@ public interface EntityOcelotPet extends EntityAgeablePet<OcelotPet> {
     public static int DATAWATCHER_OWNER_NAME = 17;
     public static int DATAWATCHER_TYPE = 18;
 
-    Ocelot.Type getCatType();
+    Ocelot.Type getBukkitCatType();
 
-    void setCatType(Ocelot.Type type);
+    void setBukkitCatType(Ocelot.Type type);
 }

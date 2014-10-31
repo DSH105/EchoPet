@@ -22,7 +22,4 @@ import org.bukkit.inventory.ItemStack;
 
 public interface EntityEquipablePet<T extends EquipablePet> extends EntityPet<T> {
 
-    ItemStack getWeapon();
-
-    void setWeapon(ItemStack stack);
 }

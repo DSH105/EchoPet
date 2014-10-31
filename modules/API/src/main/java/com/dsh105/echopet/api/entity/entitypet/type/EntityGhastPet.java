@@ -22,4 +22,7 @@ import com.dsh105.echopet.api.entity.pet.type.GhastPet;
 
 public interface EntityGhastPet extends EntityPet<GhastPet> {
 
+    void setCourseChangeCounter(int value);
+
+    String getAggressionCounterFieldName();
 }

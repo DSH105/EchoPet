@@ -25,7 +25,7 @@ public interface EntityVillagerPet extends EntityAgeablePet<VillagerPet> {
 
     public static int DATAWATCHER_PROFESSION = 16;
 
-    Villager.Profession getProfession();
+    Villager.Profession getVillagerProfession();
 
-    void setProfession(Villager.Profession prof);
+    void setVillagerProfession(Villager.Profession profession);
 }

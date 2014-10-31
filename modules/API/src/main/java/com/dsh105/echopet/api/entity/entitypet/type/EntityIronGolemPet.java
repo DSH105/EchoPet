@@ -22,4 +22,7 @@ import com.dsh105.echopet.api.entity.pet.type.IronGolemPet;
 
 public interface EntityIronGolemPet extends EntityPet<IronGolemPet> {
 
+    void setPlayerCreated(boolean flag);
+
+    void setHoldingRose(boolean flag);
 }

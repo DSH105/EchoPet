@@ -30,12 +30,12 @@ public class EntityOcelotPetBase extends EntityAgeablePetBase<OcelotPet> impleme
     }
 
     @Override
-    public Ocelot.Type getCatType() {
+    public Ocelot.Type getBukkitCatType() {
         return Ocelot.Type.getType(this.datawatcher.getByte(DATAWATCHER_TYPE));
     }
 
     @Override
-    public void setCatType(Ocelot.Type type) {
+    public void setBukkitCatType(Ocelot.Type type) {
         this.datawatcher.watch(DATAWATCHER_TYPE, (byte) type.getId());
     }
 

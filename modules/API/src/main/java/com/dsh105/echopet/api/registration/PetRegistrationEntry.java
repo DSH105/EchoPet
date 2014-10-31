@@ -61,7 +61,7 @@ public class PetRegistrationEntry {
     }
 
     public <T extends LivingEntity, S extends EntityPet> S createEntityPet(Object nmsWorld, Pet<T, S> pet) {
-        return (S) new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), pet.getClass()).getAccessor().invoke(nmsWorld, pet);
+        return (S) new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), this.petClass.getInterfaces()[0]).getAccessor().invoke(nmsWorld, pet);
     }
 
     public static PetRegistrationEntry create(PetType petType) {

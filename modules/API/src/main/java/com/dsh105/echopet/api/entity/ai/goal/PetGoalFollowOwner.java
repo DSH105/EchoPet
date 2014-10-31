@@ -19,6 +19,7 @@ package com.dsh105.echopet.api.entity.ai.goal;
 
 import com.dsh105.echopet.api.entity.ai.PetGoal;
 import com.dsh105.echopet.api.entity.ai.PetGoalType;
+import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.pet.type.GhastPet;
 import org.bukkit.entity.Player;
 
@@ -31,7 +32,9 @@ public class PetGoalFollowOwner extends PetGoal {
     private double stopDistance;
     private double teleportDistance;
 
-    public PetGoalFollowOwner() {
+    @Override
+    protected void setPet(Pet pet) {
+        super.setPet(pet);
         startDistance = getPet().getSizeCategory().startFollowDistance(getPet().getType());
         stopDistance = getPet().getSizeCategory().stopFollowDistance(getPet().getType());
         teleportDistance = getPet().getSizeCategory().teleportDistance(getPet().getType());
