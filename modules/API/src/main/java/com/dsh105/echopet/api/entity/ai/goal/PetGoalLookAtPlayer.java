@@ -52,16 +52,16 @@ public class PetGoalLookAtPlayer extends PetGoal {
     public boolean shouldStart() {
         if (GeneralUtil.random().nextFloat() >= chance) {
             return false;
-        } else if (getEntity().getPassenger() != null) {
+        } else if (getModifier().getPassenger() != null) {
             return false;
         }
-        targetPlayer = getEntity().findPlayer(range);
+        targetPlayer = getModifier().findPlayer(range);
         return targetPlayer != null;
     }
 
     @Override
     public boolean shouldContinue() {
-        return !targetPlayer.isDead() && getEntity().distanceTo(targetPlayer) < (double) (range * range) && ticksLeft > 0;
+        return !targetPlayer.isDead() && getModifier().distanceTo(targetPlayer) < (double) (range * range) && ticksLeft > 0;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 
     @Override
     public void tick() {
-        getEntity().lookAt(targetPlayer.getLocation().getX(), targetPlayer.getLocation().getY() + 0.12D, targetPlayer.getLocation().getZ(), 10.0F, (float) getEntity().getMaxHeadRotation());
+        getModifier().lookAt(targetPlayer.getLocation().getX(), targetPlayer.getLocation().getY() + 0.12D, targetPlayer.getLocation().getZ(), 10.0F, (float) getModifier().getMaxHeadRotation());
         --ticksLeft;
     }
 }

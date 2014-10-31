@@ -35,13 +35,13 @@ public class PetGoalFloat extends PetGoal {
 
     @Override
     public boolean shouldStart() {
-        return getEntity().inWater() || getEntity().inLava();
+        return getModifier().inWater() || getModifier().inLava();
     }
 
     @Override
     public void tick() {
         if (GeneralUtil.random().nextFloat() < 0.8F) {
-            getEntity().jump();
+            getModifier().jump();
         }
     }
 }

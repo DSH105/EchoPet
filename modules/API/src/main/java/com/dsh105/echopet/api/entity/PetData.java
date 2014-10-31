@@ -67,6 +67,7 @@ public enum PetData {
     PRIEST("priest", Type.VILLAGER_PROFESSION),
     PURPLE("purple", Type.COLOUR),
     RED("red", Type.CAT_TYPE, Type.COLOUR),
+    ROSE("rose", Type.BOOLEAN),
     SADDLE("saddle", Type.BOOLEAN),
     SCREAMING("screaming", Type.BOOLEAN),
     SHEARED("sheared", Type.BOOLEAN),

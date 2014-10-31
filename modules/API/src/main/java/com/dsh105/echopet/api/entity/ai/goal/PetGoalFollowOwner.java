@@ -56,7 +56,7 @@ public class PetGoalFollowOwner extends PetGoal {
             return false;
         } else if (getPet().getOwner() == null) {
             return false;
-        } else if (getEntity().distanceTo(getPet().getOwner()) < startDistance) {
+        } else if (getModifier().distanceTo(getPet().getOwner()) < startDistance) {
             return false;
         } // else return !(getPet.getGoalTarget() != null && !getPet().getGoalTarget().isDead)
         // TODO
@@ -65,11 +65,11 @@ public class PetGoalFollowOwner extends PetGoal {
 
     @Override
     public boolean shouldContinue() {
-        if (getEntity().isNavigating()) {
+        if (getModifier().isNavigating()) {
             return false;
         } else if (getPet().getOwner() == null || !getPet().getOwner().isOnline()) {
             return false;
-        } else if (getEntity().distanceTo(getPet().getOwner()) <= stopDistance) {
+        } else if (getModifier().distanceTo(getPet().getOwner()) <= stopDistance) {
             return false;
         } else if (getPet().isStationary()) {
             return false;
@@ -81,33 +81,33 @@ public class PetGoalFollowOwner extends PetGoal {
     @Override
     public void start() {
         this.timer = 0;
-        getEntity().setPathfindingRadius((float) teleportDistance);
+        getModifier().setPathfindingRadius((float) teleportDistance);
     }
 
     @Override
     public void finish() {
-        getEntity().stopNavigating();
+        getModifier().stopNavigating();
     }
 
     @Override
     public void tick() {
         Player owner = getPet().getOwner();
-        getEntity().lookAt(owner, 10.0F, (float) getEntity().getMaxHeadRotation());
+        getModifier().lookAt(owner, 10.0F, (float) getModifier().getMaxHeadRotation());
         if (--timer <= 0) {
             timer = 10;
             if (owner.isFlying()) {
                 return;
             }
 
-            if (getEntity().distanceTo(owner) > teleportDistance && owner.isOnGround()) {
+            if (getModifier().distanceTo(owner) > teleportDistance && owner.isOnGround()) {
                 getPet().teleportToOwner();
             }
         }
 
         if (getPet() instanceof GhastPet) {
-            getEntity().navigateTo(owner.getLocation().getBlockX(), owner.getLocation().getBlockY() + 5, owner.getLocation().getBlockZ(), speed);
+            getModifier().navigateTo(owner.getLocation().getBlockX(), owner.getLocation().getBlockY() + 5, owner.getLocation().getBlockZ(), speed);
         } else {
-            getEntity().navigateTo(owner, speed);
+            getModifier().navigateTo(owner, speed);
         }
     }
 }

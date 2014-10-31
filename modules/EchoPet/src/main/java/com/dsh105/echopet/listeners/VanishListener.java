@@ -36,7 +36,7 @@ public class VanishListener implements Listener {
         if (!pets.isEmpty()) {
             for (Pet pet : pets) {
                 pet.setShouldVanish(event.isVanishing());
-                pet.getEntity().setInvisible(event.isVanishing());
+                pet.getModifier().setInvisible(event.isVanishing());
             }
         }
     }

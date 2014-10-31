@@ -126,11 +126,11 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
     public void onLive() {
         super.onLive();
 
-        if (getEntity().isInvisible()) {
+        if (getModifier().isInvisible()) {
             this.entityStatus = ENTITY_STATUS_INVISIBLE;
-        } else if (getEntity().isSneaking()) {
+        } else if (getModifier().isSneaking()) {
             this.entityStatus = ENTITY_STATUS_SNEAKING;
-        } else if (getEntity().isSprinting()) {
+        } else if (getModifier().isSprinting()) {
             this.entityStatus = ENTITY_STATUS_SPRINTING;
         } else {
             this.entityStatus = ENTITY_STATUS_DEFAULT;

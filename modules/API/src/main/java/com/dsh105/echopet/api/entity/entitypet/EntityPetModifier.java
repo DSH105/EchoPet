@@ -149,4 +149,16 @@ public interface EntityPetModifier<T extends Pet> {
     void setCanSwim(boolean flag);
 
     int getMaxHeadRotation();
+
+    void setInvisible(boolean flag);
+
+    boolean isInvisible();
+
+    void setSneaking(boolean flag);
+
+    boolean isSneaking();
+
+    void setSprinting(boolean flag);
+
+    boolean isSprinting();
 }

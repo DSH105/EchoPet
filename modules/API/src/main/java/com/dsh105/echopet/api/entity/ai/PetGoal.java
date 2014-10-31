@@ -18,6 +18,7 @@
 package com.dsh105.echopet.api.entity.ai;
 
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
+import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.LivingEntity;
 
@@ -38,6 +39,10 @@ public abstract class PetGoal {
 
     public EntityPet getEntity() {
         return getPet().getEntity();
+    }
+
+    public EntityPetModifier getModifier() {
+        return getPet().getModifier();
     }
 
     public LivingEntity getBukkitEntity() {

@@ -43,7 +43,7 @@ public class Spawn {
         System.out.println(MinecraftReflection.getCraftBukkitClass("CraftWorld").getCanonicalName());
         Object mcWorld = new Reflection().reflect(MinecraftReflection.getCraftBukkitClass("CraftWorld")).getSafeMethod("getHandle").getAccessor().invoke(spawnLocation.getWorld());
         S entityPet = EchoPet.getPetRegistry().getRegistrationEntry(pet.getType()).createEntityPet(mcWorld, pet);
-        entityPet.setLocation(spawnLocation);
+        entityPet.getModifier().setLocation(spawnLocation);
         if (!spawnLocation.getChunk().isLoaded()) {
             spawnLocation.getChunk().load();
         }

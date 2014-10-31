@@ -406,4 +406,34 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     public int getMaxHeadRotation() {
         return NMSEntityUtil.getMaxHeadRotation(getEntity());
     }
+
+    @Override
+    public void setInvisible(boolean flag) {
+        getEntity().setInvisible(flag);
+    }
+
+    @Override
+    public boolean isInvisible() {
+        return getEntity().isInvisible();
+    }
+
+    @Override
+    public void setSneaking(boolean flag) {
+        getEntity().setSneaking(flag);
+    }
+
+    @Override
+    public boolean isSneaking() {
+        return getEntity().isSneaking();
+    }
+
+    @Override
+    public void setSprinting(boolean flag) {
+        getEntity().setSprinting(flag);
+    }
+
+    @Override
+    public boolean isSprinting() {
+        return getEntity().isSprinting();
+    }
 }
