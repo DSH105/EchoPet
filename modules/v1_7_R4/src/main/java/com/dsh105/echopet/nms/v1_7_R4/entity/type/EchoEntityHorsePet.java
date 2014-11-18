@@ -8,6 +8,8 @@ import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.entity.Horse;
 
+import java.util.List;
+
 public class EchoEntityHorsePet extends EntityHorse implements IAnimal, EchoEntityPetHandle, EntityHorsePet {
 
     private EntityPetModifier<HorsePet> modifier;
@@ -179,7 +181,7 @@ public class EchoEntityHorsePet extends EntityHorse implements IAnimal, EchoEnti
     // Whether to use the new NMS AI or not
     @Override
     public boolean bk() {
-        return modifier.useNewAi();
+        return modifier == null || modifier.useNewAi();
     }
 
     // 'on tick' function

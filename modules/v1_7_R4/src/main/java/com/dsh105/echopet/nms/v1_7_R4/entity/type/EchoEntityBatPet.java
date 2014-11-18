@@ -122,7 +122,7 @@ public class EchoEntityBatPet extends EntityBat implements IAnimal, EchoEntityPe
     // Whether to use the new NMS AI or not
     @Override
     public boolean bk() {
-        return modifier.useNewAi();
+        return modifier == null || modifier.useNewAi();
     }
 
     // 'on tick' function

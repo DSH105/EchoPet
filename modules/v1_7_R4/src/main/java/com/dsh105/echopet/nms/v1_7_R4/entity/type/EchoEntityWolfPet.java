@@ -134,7 +134,7 @@ public class EchoEntityWolfPet extends EntityWolf implements IAnimal, EchoEntity
     // Whether to use the new NMS AI or not
     @Override
     public boolean bk() {
-        return modifier.useNewAi();
+        return modifier == null || modifier.useNewAi();
     }
 
     // 'on tick' function
