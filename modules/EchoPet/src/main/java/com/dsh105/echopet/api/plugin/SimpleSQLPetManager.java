@@ -18,7 +18,7 @@
 package com.dsh105.echopet.api.plugin;
 
 import com.dsh105.commodus.IdentUtil;
-import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.AttributeManager;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.Pet;
@@ -30,6 +30,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
 
     @Override
     public void save(Pet pet, boolean isRider) {
-        save(pet.getPetId().toString(), pet.getOwnerIdent(), pet.getType(), pet.getName(), AttributeAccessor.getActiveDataValues(pet), false);
+        save(pet.getPetId().toString(), pet.getOwnerIdent(), pet.getType(), pet.getName(), AttributeManager.getModifier(pet).getActiveDataValues(pet), false);
         if (pet.getRider() != null) {
             save(pet.getRider(), true);
         }
@@ -145,6 +146,8 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
 
     @Override
     public List<Pet> load(String playerIdent) {
+        List<Pet> loadedPets = new ArrayList<>();
+
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -161,12 +164,13 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
+                    // TODO
                     owner = IdentUtil.getPlayerOf(rs.getString("OwnerName"));
                     if (owner == null) {
                         return null;
                     }
                     try {
-                        petType = PetType.valueOf(rs.getString("PetType"));
+                        petType = PetType.valueOf(rs.getString("PetType").toUpperCase());
                     } catch (IllegalArgumentException e) {
                         return null;
                     }
@@ -186,7 +190,7 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                     if (rs.getString("RiderPetType") != null) {
                         PetType riderType;
                         try {
-                            riderType = PetType.valueOf(rs.getString("PetType"));
+                            riderType = PetType.valueOf(rs.getString("PetType").toUpperCase());
                         } catch (IllegalArgumentException e) {
                             return null;
                         }
@@ -218,7 +222,7 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
                 }
             }
         }
-        return null;
+        return loadedPets;
     }
 
     @Override
@@ -245,7 +249,7 @@ public class SimpleSQLPetManager extends SimplePetManager implements SQLPetManag
             try {
                 con = EchoPet.getCore().getDbPool().getConnection();
                 ps = con.prepareStatement("UPDATE " + TableMigrationUtil.LATEST_TABLE + " SET RiderData = ? WHERE OwnerName = ?;");
-                ps.setLong(1, SQLUtil.serializePetData(Arrays.asList(PetData.values())));
+                ps.setLong(1, SQLUtil.serializePetData(Arrays.asList(PetData.valid())));
                 ps.setString(2, String.valueOf(playerIdent));
                 ps.executeUpdate();
             } catch (SQLException e) {

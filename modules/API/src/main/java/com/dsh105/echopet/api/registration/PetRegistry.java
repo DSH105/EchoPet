@@ -34,7 +34,8 @@ import java.util.concurrent.Callable;
 import static com.captainbern.reflection.matcher.Matchers.withType;
 
 /**
- * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings so
+ * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings
+ * so
  * that custom pet entities can be spawned.
  */
 public class PetRegistry {

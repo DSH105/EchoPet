@@ -27,6 +27,7 @@ import com.dsh105.echopet.nms.v1_7_R4.NMSEntityUtil;
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 
 public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
@@ -208,7 +209,7 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public void setBlockClimbHeight(float height) {
+    public void setStepHeight(float height) {
         getEntity().W = height;
     }
 
@@ -312,7 +313,8 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public org.bukkit.entity.Entity findPlayer(double range) {
-        return getEntity().world.findNearbyPlayer(getEntity(), range).getBukkitEntity();
+        Entity candidate = getEntity().world.findNearbyPlayer(getEntity(), range);
+        return candidate != null ? candidate.getBukkitEntity() : null;
     }
 
     @Override
@@ -328,6 +330,19 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     @Override
     public float distanceTo(org.bukkit.entity.Entity entity) {
         return getEntity().e(((CraftEntity) entity).getHandle());
+    }
+
+    @Override
+    public double getSpeed() {
+        if (getEntity() == null) {
+            return GenericAttributes.d.b();
+        }
+        return getEntity().getAttributeInstance(GenericAttributes.d).getValue();
+    }
+
+    @Override
+    public void setSpeed(double speed) {
+        getEntity().getAttributeInstance(GenericAttributes.d).setValue(speed);
     }
 
     @Override

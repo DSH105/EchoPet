@@ -88,7 +88,7 @@ public class EchoEnderDragonPet extends PetBase<EnderDragon, EntityEnderDragonPe
     public void onRide(float sideMotion, float forwardMotion) {
         if (getModifier().getPassenger() == null || getModifier().getPassenger() != getOwner()) {
             getEntity().updateMotion(sideMotion, forwardMotion);
-            getModifier().setBlockClimbHeight(0.5F);
+            getModifier().setStepHeight(0.5F);
             return;
         }
 

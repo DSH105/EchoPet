@@ -138,8 +138,8 @@ public enum PetData {
         return this.getTypes().contains(t);
     }
 
-    public static ArrayList<PetData> allOfType(Type type) {
-        ArrayList<PetData> dataOfType = new ArrayList<>();
+    public static List<PetData> allOfType(Type type) {
+        List<PetData> dataOfType = new ArrayList<>();
         for (PetData data : PetData.valid()) {
             if (data.isType(type)) {
                 dataOfType.add(data);
@@ -186,7 +186,7 @@ public enum PetData {
         VARIANT {
             @Override
             public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, Horse.Variant.valueOf(petData.name()));
+                petData.typeToObjectMap.put(this, petData == ZOMBIE ? Horse.Variant.UNDEAD_HORSE : ( petData == SKELETON_HORSE ? Horse.Variant.SKELETON_HORSE : Horse.Variant.valueOf(petData.name())));
             }
         },
 

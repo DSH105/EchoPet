@@ -22,7 +22,6 @@ import com.captainbern.reflection.Reflection;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -33,11 +32,11 @@ public class PetRegistrationEntry {
     private Class<? extends Pet> petClass;
     private Class<? extends EntityPet> entityClass;
 
-    public PetRegistrationEntry(String name, int registrationId, String classIdentifier) {
+    public PetRegistrationEntry(String name, int registrationId, Class<? extends Pet> petClass, Class<? extends EntityPet> entityClass) {
         this.name = name;
         this.registrationId = registrationId;
-        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type.Entity" + classIdentifier + "PetBase").getReflectedClass();
-        this.petClass = new Reflection().reflect("com.dsh105.echopet.api.entity.pet.type." + classIdentifier + "PetBase").getReflectedClass();
+        this.entityClass = entityClass;
+        this.petClass = petClass;
     }
 
     public String getName() {
@@ -65,6 +64,6 @@ public class PetRegistrationEntry {
     }
 
     public static PetRegistrationEntry create(PetType petType) {
-        return new PetRegistrationEntry(petType.humanName() + "-Pet", petType.getRegistrationId(), petType.humanName().replaceAll("\\s+", ""));
+        return new PetRegistrationEntry(petType.humanName() + "-Pet", petType.getRegistrationId(), petType.getPetClass(), petType.getEntityClass());
     }
 }

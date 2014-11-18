@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * Dynamic and reversible map modifications, built for use with the EntityTypes Miencraft server entity registration
+ *
  * @param <K> map key type
  * @param <V> map value type
  */

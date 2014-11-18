@@ -18,12 +18,11 @@
 package com.dsh105.echopet.api.plugin;
 
 import com.dsh105.commodus.IdentUtil;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.Data;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.config.Settings;
-import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.AttributeManager;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.Pet;
@@ -38,7 +37,7 @@ public class SimplePetManager implements PetManager {
     /**
      * Maps player owner to a list of active pets
      */
-    private HashMap<String, ArrayList<Pet>> IDENT_TO_PET_MAP = new HashMap<>();
+    private HashMap<String, List<Pet>> IDENT_TO_PET_MAP = new HashMap<>();
 
     /**
      * Maps pet unique ID to pet
@@ -51,7 +50,7 @@ public class SimplePetManager implements PetManager {
     private HashMap<String, HashMap<String, UUID>> IDENT_TO_PET_NAME_MAP = new HashMap<>();
 
     private void modify(Pet pet, boolean add) {
-        ArrayList<Pet> existing = IDENT_TO_PET_MAP.get(pet.getOwnerIdent());
+        List<Pet> existing = IDENT_TO_PET_MAP.get(pet.getOwnerIdent());
         if (existing == null) {
             existing = new ArrayList<>();
         }
@@ -91,6 +90,9 @@ public class SimplePetManager implements PetManager {
     @Override
     public void mapPetName(Pet pet) {
         HashMap<String, UUID> petNameMap = IDENT_TO_PET_NAME_MAP.get(pet.getOwnerIdent());
+        if (petNameMap == null) {
+            petNameMap = new HashMap<>();
+        }
         petNameMap.put(pet.getName(), pet.getPetId());
         IDENT_TO_PET_NAME_MAP.put(pet.getOwnerIdent(), petNameMap);
     }
@@ -103,8 +105,10 @@ public class SimplePetManager implements PetManager {
     @Override
     public void unmapPetName(String playerIdent, String name) {
         HashMap<String, UUID> petNameMap = IDENT_TO_PET_NAME_MAP.get(playerIdent);
-        petNameMap.remove(name);
-        IDENT_TO_PET_NAME_MAP.put(playerIdent, petNameMap);
+        if (petNameMap != null) {
+            petNameMap.remove(name);
+            IDENT_TO_PET_NAME_MAP.put(playerIdent, petNameMap);
+        }
     }
 
     @Override
@@ -162,7 +166,7 @@ public class SimplePetManager implements PetManager {
     @Override
     public void removeAllPets() {
         for (String ident : IDENT_TO_PET_MAP.keySet()) {
-            for (Pet pet : getPetsFor(ident)) {
+            for (Pet pet : new ArrayList<>(getPetsFor(ident))) {
                 removePet(pet);
             }
         }
@@ -170,11 +174,11 @@ public class SimplePetManager implements PetManager {
 
     @Override
     public List<Pet> getAllPets() {
-        ArrayList<Pet> pets = new ArrayList<>();
-        for (ArrayList<Pet> petsForPlayer : IDENT_TO_PET_MAP.values()) {
-            pets.addAll(petsForPlayer);
+        List<Pet> pets = new ArrayList<>();
+        for (List<Pet> mappedPets : IDENT_TO_PET_MAP.values()) {
+            pets.addAll(mappedPets);
         }
-        return pets;
+        return Collections.unmodifiableList(pets);
     }
 
     @Override
@@ -221,8 +225,9 @@ public class SimplePetManager implements PetManager {
     @Override
     public Pet loadRider(Pet pet) {
         String petId = pet.getPetId().toString();
-        PetType riderType = PetType.valueOf(Data.RIDER_TYPE.getValue(pet.getOwnerIdent(), petId));
-        if (riderType != null) {
+        String savedRider = Data.RIDER_TYPE.getValue(pet.getOwnerIdent(), petId);
+        if (savedRider != null) {
+            PetType riderType = PetType.valueOf(savedRider.toUpperCase());
             Pet rider = pet.spawnRider(riderType, true);
 
             if (rider != null) {
@@ -233,7 +238,7 @@ public class SimplePetManager implements PetManager {
                 rider.setName(riderName);
 
                 for (String value : Data.RIDER_DATA.getValue(pet.getOwnerIdent(), petId)) {
-                    PetData petData = PetData.valueOf(value);
+                    PetData petData = PetData.valueOf(value.toUpperCase());
                     rider.setDataValue(petData);
                 }
             }
@@ -268,7 +273,7 @@ public class SimplePetManager implements PetManager {
 
     @Override
     public List<Pet> loadPets(Player owner) {
-        ArrayList<Pet> loadedPets = new ArrayList<>();
+        List<Pet> loadedPets = new ArrayList<>();
         ConfigurationSection section = EchoPet.getCore().getSettings(Data.class).getConfig().getConfigurationSection(Data.SECTION.getPath(IdentUtil.getIdentificationForAsString(owner)));
         if (section != null) {
             for (String key : section.getKeys(false)) {
@@ -290,27 +295,32 @@ public class SimplePetManager implements PetManager {
 
         String ident = IdentUtil.getIdentificationForAsString(owner);
 
-        PetType type = PetType.valueOf(Data.PET_TYPE.getValue(ident, petUniqueId));
+        PetType type = PetType.valueOf(Data.PET_TYPE.getValue(ident, petUniqueId).toUpperCase());
         Pet pet = create(owner, type, true);
         if (pet == null) {
             return null;
         }
 
-        String name = Data.PET_NAME.getValue(ident, petUniqueId);
-        if (name == null) {
-            name = PetSettings.DEFAULT_NAME.getValue(type.storageName());
+        try {
+            String name = Data.PET_NAME.getValue(ident, petUniqueId);
+            if (name == null) {
+                name = PetSettings.DEFAULT_NAME.getValue(type.storageName());
+            }
+            pet.setName(name);
+
+            for (String value : Data.PET_DATA.getValue(ident, petUniqueId)) {
+                PetData petData = PetData.valueOf(value.toUpperCase());
+                pet.setDataValue(petData);
+            }
+
+            loadRider(pet);
+
+            // Re-force everything again
+            forceData(pet);
+        } catch (Exception e) {
+            pet.onError(e);
+            return null;
         }
-        pet.setName(name);
-
-        for (String value : Data.PET_DATA.getValue(ident, petUniqueId)) {
-            PetData petData = PetData.valueOf(value);
-            pet.setDataValue(petData);
-        }
-
-        loadRider(pet);
-
-        // Re-force everything again
-        forceData(pet);
 
         return pet;
     }
@@ -319,15 +329,17 @@ public class SimplePetManager implements PetManager {
     public void forceData(Pet pet) {
         StringBuilder sb = new StringBuilder();
 
-        for (PetData petData : PetData.valid()) {
+        for (PetData petData : AttributeManager.getModifier(pet).getApplicableDataTypes()) {
             if (PetSettings.FORCE_DATA.getValue(pet.getType().storageName(), petData.storageName())) {
                 pet.setDataValue(petData);
                 sb.append(petData.storageName()).append(", ");
             }
 
-            if (PetSettings.FORCE_DATA.getValue(pet.getRider().getType().storageName(), petData.storageName())) {
-                pet.getRider().setDataValue(petData);
-                sb.append(petData.storageName()).append(" (Rider), ");
+            if (pet.getRider() != null) {
+                if (PetSettings.FORCE_DATA.getValue(pet.getRider().getType().storageName(), petData.storageName())) {
+                    pet.getRider().setDataValue(petData);
+                    sb.append(petData.storageName()).append(" (Rider), ");
+                }
             }
         }
 
@@ -349,28 +361,28 @@ public class SimplePetManager implements PetManager {
         Data.PET_TYPE.setValue(pet.getType().storageName(), ident, petId);
         Data.PET_NAME.setValue(pet.getName(), ident, petId);
 
-        List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
+        ArrayList<String> convertedData = new ArrayList<>();
+        List<PetData> activeData = AttributeManager.getModifier(pet).getActiveDataValues(pet);
         if (!activeData.isEmpty()) {
-            ArrayList<String> converted = new ArrayList<>();
             for (PetData petData : activeData) {
-                converted.add(petData.storageName());
+                convertedData.add(petData.storageName());
             }
-            Data.PET_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petId);
         }
+        Data.PET_DATA.setValue(convertedData, ident, petId);
 
         if (pet.getRider() != null) {
             Pet rider = pet.getRider();
             Data.RIDER_TYPE.setValue(rider.getType().storageName(), ident, petId);
             Data.RIDER_NAME.setValue(rider.getName(), ident, petId);
 
-            List<PetData> activeRiderData = AttributeAccessor.getActiveDataValues(rider);
+            ArrayList<String> convertedRiderData = new ArrayList<>();
+            List<PetData> activeRiderData = AttributeManager.getModifier(rider).getActiveDataValues(rider);
             if (!activeRiderData.isEmpty()) {
-                ArrayList<String> converted = new ArrayList<>();
                 for (PetData petData : activeRiderData) {
-                    converted.add(petData.storageName());
+                    convertedRiderData.add(petData.storageName());
                 }
-                Data.RIDER_DATA.setValue(converted.toArray(StringUtil.EMPTY_STRING_ARRAY), ident, petId);
             }
+            Data.RIDER_DATA.setValue(convertedRiderData, ident, petId);
         }
     }
 

@@ -137,7 +137,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public <P extends Pet<T, S>> EntityPetModifier<P> getModifier() {
-        return getEntity().getModifier();
+        return (EntityPetModifier<P>) getEntity().getModifier();
     }
 
     @Override
@@ -175,7 +175,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             if (matcher.matches()) {
                 // Append a number onto the end to prevent duplicate names
                 // This is especially problematic for multiple pets with the default name
-                name += " " + (GeneralUtil.toInteger(matcher.group(1)) + 1);
+                name.replace(matcher.group(0), " " + (GeneralUtil.toInteger(matcher.group(1)) + 1));
             } else {
                 name += " 1";
             }
@@ -257,48 +257,56 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void setDataValue(PetData petData, Object value) {
-        AttributeAccessor.setDataValue(this, petData, value);
-    }
-
-    @Override
-    public List<PetData> getRegisteredData() {
-        return AttributeAccessor.getRegisteredData(this.getClass());
-    }
-
-    @Override
-    public List<PetData> getActiveDataValues() {
-        return AttributeAccessor.getActiveDataValues(this);
+        AttributeManager.getModifier(this).setDataValue(this, petData, value);
     }
 
     @Override
     public void setDataValue(PetData... dataArray) {
-        List<PetData> registeredData = getRegisteredData();
+        List<PetData> registeredData = getApplicableDataTypes();
         for (PetData petData : dataArray) {
             if (!registeredData.contains(petData)) {
                 continue;
             }
-            AttributeAccessor.setDataValue(this, petData);
+            AttributeManager.getModifier(this).setDataValue(this, petData);
         }
     }
 
     @Override
     public void setDataValue(boolean on, PetData... dataArray) {
-        List<PetData> registeredData = getRegisteredData();
+        List<PetData> registeredData = getApplicableDataTypes();
         for (PetData petData : dataArray) {
             if (!registeredData.contains(petData)) {
                 continue;
             }
             if (petData.isType(PetData.Type.BOOLEAN)) {
-                AttributeAccessor.setDataValue(this, petData, on);
+                AttributeManager.getModifier(this).setDataValue(this, petData, on);
             } else {
-                AttributeAccessor.setDataValue(this, petData);
+                AttributeManager.getModifier(this).setDataValue(this, petData);
             }
         }
     }
 
+    public Object getDataValue(PetData petData) {
+        return AttributeManager.getModifier(this).getDataValue(this, petData);
+    }
+
+    public Object getDataValue(PetData.Type petDataType) {
+        return AttributeManager.getModifier(this).getDataValue(this, petDataType);
+    }
+
     @Override
     public void invertDataValue(PetData petData) {
-        AttributeAccessor.invertDataValue(this, petData);
+        AttributeManager.getModifier(this).invertDataValue(this, petData);
+    }
+
+    @Override
+    public List<PetData> getActiveDataValues() {
+        return AttributeManager.getModifier(this).getActiveDataValues(this);
+    }
+
+    @Override
+    public List<PetData> getApplicableDataTypes() {
+        return AttributeManager.getModifier(this).getApplicableDataTypes();
     }
 
     @Override
@@ -318,18 +326,18 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             return;
         }
 
-        if (getBukkitEntity() != null) {
+        if (getEntity() != null && getBukkitEntity() != null) {
             Particle.DEATH_CLOUD.builder().show(getLocation());
+            getBukkitEntity().remove();
+            if (makeDeathSound) {
+                if (getDeathSound() != null && !getDeathSound().isEmpty()) {
+                    getEntity().makeSound(getDeathSound(), 1.0F, 1.0F);
+                }
+            }
         }
         if (rider != null) {
             rider.despawn(false);
             rider = null;
-        }
-        getBukkitEntity().remove();
-        if (makeDeathSound) {
-            if (getDeathSound() != null && !getDeathSound().isEmpty()) {
-                getEntity().makeSound(getDeathSound(), 1.0F, 1.0F);
-            }
         }
 
         this.despawned = true;
@@ -559,7 +567,8 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     public void onError(Throwable e) {
         EchoPet.LOG.severe("Uh oh. Something bad happened");
         e.printStackTrace();
-        despawn(false);
+        // TODO: send the player a message
+        EchoPet.getManager().removePet(this, false);
     }
 
     @Override
@@ -579,10 +588,12 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             setOwnerRiding(false);
         }
 
-        for (String status : new String[]{"isInvisible", "isSprinting", "isSneaking"}) {
+
+
+        for (Status status : new Status[]{Status.INVISIBLE, Status.SPRINTING, Status.SNEAKING}) {
             boolean entityStatus = getStatus(getBukkitEntity(), status);
             if (getStatus(getOwner(), status) != entityStatus) {
-                if (!status.equalsIgnoreCase("isInvisible") || !shouldVanish()) {
+                if (status != Status.INVISIBLE || !shouldVanish()) {
                     setStatus(getBukkitEntity(), status, !entityStatus);
                 }
             }
@@ -603,11 +614,11 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     public void onRide(float sideMotion, float forwardMotion) {
         if (getModifier().getPassenger() == null || getModifier().getPassenger() != getOwner()) {
             getEntity().updateMotion(sideMotion, forwardMotion);
-            getModifier().setBlockClimbHeight(0.5F);
+            getModifier().setStepHeight(0.5F);
             return;
         }
 
-        getModifier().setBlockClimbHeight(1.0F);
+        getModifier().setStepHeight(1.0F);
         getModifier().applyPitchAndYawChanges(getModifier().getPassenger().getLocation().getPitch() * 0.5F, getModifier().getPassenger().getLocation().getYaw());
 
         // Retrieve motion of passenger
@@ -663,16 +674,6 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
         return false;
     }
 
-    private boolean getStatus(Entity entity, String methodName) {
-        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
-        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(methodName).getAccessor().invoke(handle);
-    }
-
-    private boolean setStatus(Entity entity, String methodName, boolean value) {
-        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
-        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(methodName, boolean.class).getAccessor().invoke(handle, value);
-    }
-
     @Override
     public void makeStepSound() {
 
@@ -686,5 +687,39 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     @Override
     public String getHurtSound() {
         return "";
+    }
+
+    private static boolean getStatus(Entity entity, Status status) {
+        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
+        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(status.getGetter()).getAccessor().invoke(handle);
+    }
+
+    private static void setStatus(Entity entity, Status status, boolean value) {
+        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
+        new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(status.getSetter(), boolean.class).getAccessor().invoke(handle, value);
+    }
+
+    private enum Status {
+        INVISIBLE,
+        SPRINTING,
+        SNEAKING;
+
+        private String key;
+
+        Status() {
+            this.key = StringUtil.capitalise(this.name(), true);
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public String getSetter() {
+            return "set" + getKey();
+        }
+
+        public String getGetter() {
+            return "is" + getKey();
+        }
     }
 }

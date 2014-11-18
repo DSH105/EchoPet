@@ -76,7 +76,7 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     void setDataValue(PetData petData, Object value);
 
-    List<PetData> getRegisteredData();
+    List<PetData> getApplicableDataTypes();
 
     List<PetData> getActiveDataValues();
 

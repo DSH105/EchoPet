@@ -17,31 +17,35 @@
 
 package com.dsh105.echopet.api.entity;
 
-import com.dsh105.echopet.api.config.PetSettings;
+import java.lang.reflect.Method;
 
-public enum SizeCategory {
+public class Attribute {
 
-    TINY(1),
-    REGULAR(1),
-    LARGE(3),
-    GIANT(4),
-    OVERSIZE(10);
+    private Method method;
+    private boolean getter;
+    private PetData data;
+    private PetData.Type dataType;
 
-    private int modifier;
-
-    SizeCategory(int modifier) {
-        this.modifier = modifier;
+    protected Attribute(AttributeHandler attributeHandler, Method method) {
+        this.method = method;
+        this.getter = attributeHandler.getter();
+        this.data = attributeHandler.data();
+        this.dataType = attributeHandler.dataType();
     }
 
-    public double startFollowDistance(PetType petType) {
-        return (PetSettings.START_FOLLOW_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2D;
+    public Method getMethod() {
+        return method;
     }
 
-    public double stopFollowDistance(PetType petType) {
-        return (PetSettings.STOP_FOLLOW_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2D;
+    public boolean isGetter() {
+        return getter;
     }
 
-    public double teleportDistance(PetType petType) {
-        return (PetSettings.TELEPORT_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2D;
+    public PetData getData() {
+        return data;
+    }
+
+    public PetData.Type getDataType() {
+        return dataType;
     }
 }

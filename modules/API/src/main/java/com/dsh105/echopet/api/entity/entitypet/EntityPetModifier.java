@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.entity.entitypet;
 
-import com.dsh105.echopet.api.entity.ai.PetGoalSelector;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -74,7 +73,7 @@ public interface EntityPetModifier<T extends Pet> {
 
     void setYaw(float yaw); // set last yaw too
 
-    void setBlockClimbHeight(float height);
+    void setStepHeight(float height);
 
     void setPitch(float pitch);
 
@@ -121,6 +120,10 @@ public interface EntityPetModifier<T extends Pet> {
     Object growBoundingBox(double d0, double d1, double d2);
 
     float distanceTo(Entity entity);
+
+    double getSpeed();
+
+    void setSpeed(double speed);
 
     float getPathfindingRadius();
 

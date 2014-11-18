@@ -19,6 +19,7 @@ package com.dsh105.echopet.api.entity;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.Reflection;
+import com.captainbern.reflection.SafeMethod;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
@@ -26,7 +27,6 @@ import com.dsh105.echopet.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -40,14 +40,14 @@ public class Spawn {
             return null;
         }
         Location spawnLocation = spawnEvent.getSpawnLocation();
-        System.out.println(MinecraftReflection.getCraftBukkitClass("CraftWorld").getCanonicalName());
         Object mcWorld = new Reflection().reflect(MinecraftReflection.getCraftBukkitClass("CraftWorld")).getSafeMethod("getHandle").getAccessor().invoke(spawnLocation.getWorld());
         S entityPet = EchoPet.getPetRegistry().getRegistrationEntry(pet.getType()).createEntityPet(mcWorld, pet);
         entityPet.getModifier().setLocation(spawnLocation);
         if (!spawnLocation.getChunk().isLoaded()) {
             spawnLocation.getChunk().load();
         }
-        if (!((Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("World")).getSafeMethod("addEntity", MinecraftReflection.getMinecraftClass("Entity"), CreatureSpawnEvent.SpawnReason.class).getAccessor().invoke(mcWorld, entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM))) {
+        SafeMethod<Boolean> spawnMethod = new Reflection().reflect(MinecraftReflection.getMinecraftClass("World")).getSafeMethod("addEntity", MinecraftReflection.getMinecraftClass("Entity"), CreatureSpawnEvent.SpawnReason.class);
+        if (!spawnMethod.getAccessor().invoke(mcWorld, entityPet, CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             Lang.SPAWN_BLOCKED.send(pet.getOwner());
             EchoPet.getManager().removePet(pet);
             return null;
