@@ -29,12 +29,12 @@ import org.bukkit.entity.Player;
 public class RideCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] ride",
-            desc = "Ride your pet (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "Ride your pet", "Control your pet using the WASD keys and the space bar (to jump)", "Remember, some pets might be able to fly!"}
+            syntax = "ride",
+            desc = "Ride your currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Ride your pet", "Control your pet using the WASD keys and the space bar (to jump)", "Remember, some pets might be able to fly!"}
     )
     @Authorize(Perm.RIDE)
-    public boolean ride(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean ride(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

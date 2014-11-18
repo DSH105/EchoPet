@@ -31,7 +31,7 @@ public class SitCommand implements CommandListener {
     @Command(
             syntax = "[pet_name] sit <state>",
             desc = "Sets the state of rest that a pet exhibits (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
     )
     @Authorize(Perm.SIT)
     public boolean sit(BukkitCommandEvent<Player> event, @Bind("state") boolean flag, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {

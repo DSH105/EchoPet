@@ -18,14 +18,18 @@
 package com.dsh105.echopet.commands.basic;
 
 import com.dsh105.echopet.api.config.Lang;
-import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.AttributeManager;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.pet.Pet;
+import com.dsh105.echopet.api.inventory.ViewMenu;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.annotation.*;
+import com.dsh105.influx.annotation.Authorize;
+import com.dsh105.influx.annotation.Bind;
+import com.dsh105.influx.annotation.Command;
+import com.dsh105.influx.annotation.Convert;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
@@ -34,6 +38,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class InfoCommand implements CommandListener {
+
+    // TODO: merge this with the "view" command
 
     @Command(
             syntax = "info",
@@ -48,7 +54,7 @@ public class InfoCommand implements CommandListener {
         }
 
         for (Pet pet : pets) {
-            displayInfo(pet);
+            ViewMenu.displayInfo(pet);
         }
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
@@ -65,25 +71,8 @@ public class InfoCommand implements CommandListener {
             return true;
         }
 
-        displayInfo(pet);
+        ViewMenu.displayInfo(pet);
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
-    }
-
-    private void displayInfo(Pet pet) {
-        PowerMessage message = new PowerMessage(ChatColor.WHITE + "• {c1}" + pet.getType().humanName() + " ({c2}" + pet.getName() + "{c1})");
-
-        StringBuilder dataBuilder = new StringBuilder();
-        List<PetData> activeData = AttributeAccessor.getActiveDataValues(pet);
-        if (!activeData.isEmpty()) {
-            dataBuilder.append("{c1}Valid data types: ");
-            for (PetData data : activeData) {
-                if (dataBuilder.length() >= 35) {
-                    dataBuilder.append("\n");
-                }
-                dataBuilder.append("{c2}").append(data.humanName()).append("{c1}, ");
-            }
-            message.tooltip(dataBuilder.substring(0, dataBuilder.length() - 2));
-        }
     }
 }

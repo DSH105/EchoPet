@@ -29,12 +29,12 @@ import org.bukkit.entity.Player;
 public class HatCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] hat",
-            desc = "Places your pet on your head (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
+            syntax = "hat",
+            desc = "Places your currently selected pet on your head",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
     )
     @Authorize(Perm.HAT)
-    public boolean hat(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean hat(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

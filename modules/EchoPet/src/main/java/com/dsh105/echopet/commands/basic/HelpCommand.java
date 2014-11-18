@@ -35,14 +35,10 @@
 package com.dsh105.echopet.commands.basic;
 
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.Controller;
 import com.dsh105.influx.annotation.Bind;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Verify;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
-import org.bukkit.command.CommandSender;
-
-import java.util.SortedMap;
 
 public class HelpCommand implements CommandListener {
 

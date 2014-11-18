@@ -19,7 +19,7 @@ package com.dsh105.echopet.commands.basic;
 
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.Lang;
-import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.AttributeManager;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.plugin.EchoPet;
@@ -60,7 +60,7 @@ public class ListCommand implements CommandListener {
             ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
             message.then(highlight + type.humanName());
 
-            List<PetData> registeredData = AttributeAccessor.getRegisteredData(type);
+            List<PetData> registeredData = AttributeManager.getModifier(type).getApplicableDataTypes();
             List<String> registeredStringData = new ArrayList<>();
 
             StringBuilder dataBuilder = new StringBuilder();

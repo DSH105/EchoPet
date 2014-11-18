@@ -30,12 +30,12 @@ import org.bukkit.entity.Player;
 public class RemoveCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] remove",
-            desc = "Removes an existing pet (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "Removes an existing pet"}
+            syntax = "remove",
+            desc = "Removes an existing currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Removes an existing pet"}
     )
     @Authorize(Perm.REMOVE)
-    public boolean remove(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean remove(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

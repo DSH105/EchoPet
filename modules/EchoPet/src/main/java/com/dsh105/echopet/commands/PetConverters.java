@@ -18,7 +18,10 @@
 package com.dsh105.echopet.commands;
 
 import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
+import com.dsh105.cooldown.Cooldown;
+import com.dsh105.cooldown.CooldownAPI;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
@@ -27,15 +30,22 @@ import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.influx.conversion.ConversionException;
 import com.dsh105.influx.conversion.Converter;
 import com.dsh105.influx.conversion.UnboundConverter;
+import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import com.dsh105.influx.dispatch.CommandContext;
 import com.dsh105.influx.syntax.ContextualVariable;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class PetConverters {
+
+    private static final Map<String, UUID> PLAYER_TO_PET_ID = new HashMap<>();
 
     private static Player getTarget(ContextualVariable variable) throws ConversionException {
         return getTarget(variable.getContext());
@@ -73,8 +83,8 @@ public class PetConverters {
                 throw new ConversionException(Lang.INVALID_PET_TYPE.getValue("type", variable.getConsumedArguments()[0]));
             }
 
-            ArrayList<String> invalidData = new ArrayList<>();
-            ArrayList<PetData> validData = new ArrayList<>();
+            List<String> invalidData = new ArrayList<>();
+            List<PetData> validData = new ArrayList<>();
             String name = null;
 
             for (int i = 1; i < 3; i++) {
@@ -93,7 +103,7 @@ public class PetConverters {
                             invalidData.add(candidate);
                             continue;
                         }
-                        validData.add(PetData.valueOf(candidate));
+                        validData.add(PetData.valueOf(candidate.toUpperCase()));
                     }
                 }
             }
@@ -103,14 +113,39 @@ public class PetConverters {
                 return null;
             }
 
-            if (!invalidData.isEmpty()) {
-                variable.getContext().respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", invalidData)));
+            try {
+                if (!invalidData.isEmpty()) {
+                    variable.getContext().respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", invalidData)));
+                }
+                if (!validData.isEmpty()) {
+                    pet.setDataValue(validData.toArray(new PetData[0]));
+                }
+                if (name != null && !name.isEmpty()) {
+                    pet.setName(name);
+                }
+            } catch (Exception e) {
+                pet.onError(e);
+                return null;
             }
-            if (!validData.isEmpty()) {
-                pet.setDataValue(validData.toArray(new PetData[0]));
-            }
-            if (name != null && !name.isEmpty()) {
-                pet.setName(name);
+            return pet;
+        }
+    }
+
+    public static class Selected extends UnboundConverter<Pet> {
+
+        public Selected() {
+            super(Pet.class);
+        }
+
+        @Override
+        public Pet convert(CommandContext<?> context) throws ConversionException {
+            Player sender = ((BukkitCommandEvent<Player>) context).sender();
+            Pet pet = EchoPet.getManager().getPetById(PLAYER_TO_PET_ID.get(IdentUtil.getIdentificationForAsString(sender)));
+            if (pet == null) {
+                pet = new OnlyPet().convert(context);
+                if (pet == null) {
+                    context.respond(Lang.NO_SELECTED_PET.getValue());
+                }
             }
             return pet;
         }
@@ -139,7 +174,7 @@ public class PetConverters {
         }
     }
 
-    public class FindPet extends Converter<Pet> {
+    public static class FindPet extends Converter<Pet> {
 
         public FindPet() {
             super(Pet.class);
@@ -158,7 +193,7 @@ public class PetConverters {
         }
     }
 
-    public class ByName extends Converter<Pet> {
+    public static class ByName extends Converter<Pet> {
 
         public ByName() {
             super(Pet.class);
@@ -175,7 +210,7 @@ public class PetConverters {
         }
     }
 
-    public class OnlyPet extends UnboundConverter<Pet> {
+    public static class OnlyPet extends UnboundConverter<Pet> {
 
         public OnlyPet() {
             super(Pet.class);

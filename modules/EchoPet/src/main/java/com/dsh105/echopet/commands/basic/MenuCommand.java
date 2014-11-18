@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.commands.basic;
 
-import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.util.Perm;
@@ -29,12 +28,12 @@ import org.bukkit.entity.Player;
 public class MenuCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] menu",
-            desc = "Opens the pet data menu for a pet (specified by [pet_name] or nothing if you only have one pet or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)"}
+            syntax = "menu",
+            desc = "Opens the pet data menu for your currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
     )
     @Authorize(Perm.MENU)
-    public boolean menu(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean menu(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

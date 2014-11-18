@@ -30,12 +30,12 @@ import org.bukkit.entity.Player;
 public class NameCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] name [name]",
-            desc = "Sets the name of your pet (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
+            syntax = "name [name]",
+            desc = "Sets the name of your currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
     )
     @Authorize(Perm.NAME)
-    public boolean name(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean name(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

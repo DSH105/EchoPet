@@ -29,12 +29,12 @@ import org.bukkit.entity.Player;
 public class CallCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] call",
-            desc = "Calls your pet to your side (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "In most cases, this will work when your pet has unexpectedly disappeared"}
+            syntax = "call",
+            desc = "Calls your currently selected pet to your side",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "In most cases, this will work when your pet has unexpectedly disappeared"}
     )
     @Authorize(Perm.CALL)
-    public boolean call(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean call(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

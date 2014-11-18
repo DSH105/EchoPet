@@ -29,6 +29,7 @@ public class Perm {
             APPLY_DATA = "echopet.pet.data",
             RIDER_TYPE = "echopet.pet.rider.type.<type>",
             DATA = "echopet.pet.type.<type>.<data>",
+            VIEW = "echopet.pet.view",
             INFO = "echopet.pet.info",
             LIST = "echopet.pet.list",
             NAME = "echopet.pet.name",

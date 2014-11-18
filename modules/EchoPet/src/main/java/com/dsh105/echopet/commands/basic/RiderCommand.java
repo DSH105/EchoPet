@@ -17,7 +17,10 @@
 
 package com.dsh105.echopet.commands.basic;
 
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.Lang;
+import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.commands.PetConverters;
 import com.dsh105.echopet.conversation.NameFactory;
@@ -25,19 +28,23 @@ import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
 import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
+import com.dsh105.influx.syntax.ContextualVariable;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RiderCommand implements CommandListener {
 
     @Command(
-            syntax = "[pet_name] rider <pet>",
-            desc = "Creates a rider for an existing pet (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "Data values can be separated by a comma", "e.g. blue,baby (for a sheep)", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\"", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
+            syntax = "rider <type>",
+            desc = "Creates a rider from the given <type> for your currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Data values can be separated by a comma", "e.g. blue,baby (for a sheep)", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\"", "If no pet name is provided, a default will be assigned", "Pet names can also be set using the \"rider name\" command"}
     )
     @Authorize(Perm.RIDER_TYPE)
     public boolean rider(BukkitCommandEvent<Player> event,
-                               @Bind("pet") @Accept(value = 3, showAs = "<type> name:[name] data:[data]") @Convert(PetConverters.Create.class) Pet rider,
-                               @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+                         @Bind("type") @Convert(PetConverters.CreateType.class) Pet rider,
+                         @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet != null && rider != null) {
             pet.spawnRider(rider, true);
         }
@@ -45,12 +52,26 @@ public class RiderCommand implements CommandListener {
     }
 
     @Command(
-            syntax = "[pet_name] name rider [name]",
-            desc = "Sets the name of the rider of an existing pet (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
+            syntax = "rider data <data...>",
+            desc = "Applies the given data types to the rider of your currently selected pet.",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
+    )
+    @Authorize(Perm.DATA)
+    @Nested
+    public boolean applyData(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
+        if (pet != null) {
+            PetCommand.applyData(pet, event.getVariable("data"));
+        }
+        return true;
+    }
+
+    @Command(
+            syntax = "name rider [name]",
+            desc = "Sets the name of the rider of your currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
     )
     @Authorize(Perm.NAME)
-    public boolean riderName(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean riderName(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }
@@ -71,12 +92,12 @@ public class RiderCommand implements CommandListener {
     }
 
     @Command(
-            syntax = "[pet_name] rider remove",
-            desc = "Removes the rider of a pet (specified by [pet_name] or nothing if you only have one pet)",
-            help = {"[pet_name] is the name of an existing pet e.g. \"My pet\" (in quotations)", "Removes the rider of a pet"}
+            syntax = "rider remove",
+            desc = "Removes the rider of your currently selected pet",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Removes the rider of a pet"}
     )
     @Authorize(Perm.REMOVE)
-    public boolean removeRider(BukkitCommandEvent<Player> event, @Bind("pet_name") @Default("") @Convert(PetConverters.FindPet.class) Pet pet) {
+    public boolean removeRider(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }
