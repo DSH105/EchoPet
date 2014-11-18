@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 
 public class PetGoalFollowOwner extends PetGoal {
 
-    private double speed = 0.55F;
+    private double speed = 1.65F;
 
     private int timer = 0;
     private double startDistance;
