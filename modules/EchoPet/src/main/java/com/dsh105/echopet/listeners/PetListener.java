@@ -24,6 +24,7 @@ import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.PetInteractEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.api.plugin.EchoPetAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -45,15 +46,15 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCreatureSpawnUnBlock(CreatureSpawnEvent event) {
-        if (shouldCancel(event.getEntity())) {
-            event.setCancelled(true);
+        if (EchoPetAPI.isPetEntity(event.getEntity()) && event.isCancelled()) {
+            event.setCancelled(false);
         }
     }
 
@@ -72,7 +73,7 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPetEnterPortal(EntityPortalEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
@@ -96,14 +97,14 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityInteract(EntityInteractEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockForm(EntityBlockFormEvent event) {
-        if (event.getNewState().getType().equals(Material.SNOW) && shouldCancel(event.getEntity())) {
+        if (event.getNewState().getType().equals(Material.SNOW) && EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
@@ -120,21 +121,21 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityTarget(EntityTargetEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onExplosionPrime(ExplosionPrimeEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
@@ -151,14 +152,14 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSlimeSplit(SlimeSplitEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDeath(EntityDeathEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setDroppedExp(0);
             event.getDrops().clear();
         }
@@ -166,59 +167,43 @@ public class PetListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityTame(EntityTameEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityShootBow(EntityShootBowEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPigZap(PigZapEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSheepRegrowWool(SheepRegrowWoolEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerLeashEntity(PlayerLeashEntityEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityCombust(EntityCombustEvent event) {
-        if (shouldCancel(event.getEntity())) {
+        if (EchoPetAPI.isPetEntity(event.getEntity())) {
             event.setCancelled(true);
         }
-    }
-
-
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onEntityEvent(EntityEvent event) {
-
-    }
-
-    private boolean shouldCancel(Entity entity) {
-        if (entity instanceof LivingEntity) {
-            if (BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet) {
-                return true;
-            }
-        }
-        return false;
     }
 }

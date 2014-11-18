@@ -144,7 +144,7 @@ public class PetOwnerListener implements Listener {
                         if (EchoPet.getCore().getProvider(VanishProvider.class).isVanished(player)) {
                             for (Pet pet : pets) {
                                 pet.setShouldVanish(true);
-                                pet.getEntity().setInvisible(true);
+                                pet.getModifier().setInvisible(true);
                             }
                         }
                     }
