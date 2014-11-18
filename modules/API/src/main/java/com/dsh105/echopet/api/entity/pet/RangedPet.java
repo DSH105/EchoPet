@@ -17,9 +17,7 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
-import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
 
 public interface RangedPet<T extends LivingEntity, S extends EntityRangedPet> extends Pet<T, S> {

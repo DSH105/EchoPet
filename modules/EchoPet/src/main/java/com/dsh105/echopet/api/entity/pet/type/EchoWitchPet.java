@@ -22,7 +22,6 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.SizeCategory;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWitchPet;
 import com.dsh105.echopet.api.entity.pet.EchoRangedPet;
-import com.dsh105.echopet.api.entity.pet.PetBase;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Witch;
 

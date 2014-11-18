@@ -18,7 +18,6 @@
 package com.dsh105.echopet.api.entity.entitypet;
 
 import com.dsh105.echopet.api.entity.pet.EquipablePet;
-import org.bukkit.inventory.ItemStack;
 
 public interface EntityEquipablePet<T extends EquipablePet> extends EntityPet<T> {
 

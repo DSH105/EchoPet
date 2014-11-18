@@ -18,7 +18,7 @@
 package com.dsh105.echopet.api.inventory;
 
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.AttributeManager;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 import org.bukkit.ChatColor;
@@ -28,6 +28,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum MenuPreset {
 
@@ -152,8 +153,8 @@ public enum MenuPreset {
         return petData;
     }
 
-    public static ArrayList<MenuPreset> getPresetsOfType(PetData.Type toCompare) {
-        ArrayList<MenuPreset> presets = new ArrayList<>();
+    public static List<MenuPreset> getPresetsOfType(PetData.Type toCompare) {
+        List<MenuPreset> presets = new ArrayList<>();
         for (MenuPreset preset : MenuPreset.values()) {
             if ((preset.getDataType() != null && preset.getDataType().equals(toCompare)) || preset.getPetData().isType(toCompare)) {
                 presets.add(preset);
@@ -162,8 +163,8 @@ public enum MenuPreset {
         return presets;
     }
 
-    public static ArrayList<MenuPreset> getPresetsOfType(MenuType toCompare) {
-        ArrayList<MenuPreset> presets = new ArrayList<>();
+    public static List<MenuPreset> getPresetsOfType(MenuType toCompare) {
+        List<MenuPreset> presets = new ArrayList<>();
         for (MenuPreset preset : MenuPreset.values()) {
             if (preset.getMenuType().equals(toCompare)) {
                 presets.add(preset);
@@ -172,11 +173,11 @@ public enum MenuPreset {
         return presets;
     }
 
-    public static ArrayList<MenuPreset> getPresets(PetType petType) {
-        ArrayList<MenuPreset> presets = new ArrayList<>(Arrays.asList(RIDE, HAT));
+    public static List<MenuPreset> getPresets(PetType petType) {
+        List<MenuPreset> presets = new ArrayList<>(Arrays.asList(RIDE, HAT));
 
-        ArrayList<PetData> registeredData = AttributeAccessor.getRegisteredData(petType);
-        ArrayList<MenuPreset> dataPresets = getPresetsOfType(MenuType.DATA);
+        List<PetData> registeredData = AttributeManager.getModifier(petType).getApplicableDataTypes();
+        List<MenuPreset> dataPresets = getPresetsOfType(MenuType.DATA);
         for (MenuPreset preset : dataPresets) {
             if (presets.contains(preset)) {
                 continue;

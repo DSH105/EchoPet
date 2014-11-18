@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.entity.entitypet;
 
-import com.dsh105.echopet.api.entity.pet.AgeablePet;
 import com.dsh105.echopet.api.entity.pet.RangedPet;
 import org.bukkit.entity.LivingEntity;
 

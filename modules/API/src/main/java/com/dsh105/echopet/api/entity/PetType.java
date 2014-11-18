@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.entity;
 
-import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.Reflection;
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.config.PetSettings;
@@ -25,8 +24,6 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Collections;

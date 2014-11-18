@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.api.entity;
 
-
 import org.bukkit.entity.Horse;
 
 public enum HorseType {

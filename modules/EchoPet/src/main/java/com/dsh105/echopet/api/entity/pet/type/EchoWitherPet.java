@@ -20,7 +20,6 @@ package com.dsh105.echopet.api.entity.pet.type;
 import com.dsh105.echopet.api.entity.*;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWitherPet;
 import com.dsh105.echopet.api.entity.pet.EchoRangedPet;
-import com.dsh105.echopet.api.entity.pet.PetBase;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wither;
 

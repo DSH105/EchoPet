@@ -28,8 +28,8 @@ import com.dsh105.menuapi.api.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataMenu {
@@ -37,7 +37,7 @@ public class DataMenu {
     private static HashMap<PetType, Layout> LAYOUTS = new HashMap<>();
 
     public static Layout getDefaultLayout(PetType petType) {
-        ArrayList<MenuPreset> presets = MenuPreset.getPresets(petType);
+        List<MenuPreset> presets = MenuPreset.getPresets(petType);
         Layout layout = new Layout(presets.size(), petType.humanName() + " - Data");
 
         for (int i = 0; i < presets.size(); i++) {
@@ -71,7 +71,7 @@ public class DataMenu {
             }
         }
 
-        final ArrayList<MenuPreset> typePresets = MenuPreset.getPresets(pet.getType());
+        final List<MenuPreset> typePresets = MenuPreset.getPresets(pet.getType());
 
         HashMap<Integer, Icon> slots = layout.getSlots();
         for (Map.Entry<Integer, Icon> entry : slots.entrySet()) {
@@ -106,7 +106,7 @@ public class DataMenu {
     }
 
     public static Layout getSecondLevelLayout(final Pet pet, PetData.Type dataType) {
-        ArrayList<MenuPreset> presets = MenuPreset.getPresetsOfType(dataType);
+        List<MenuPreset> presets = MenuPreset.getPresetsOfType(dataType);
 
         Layout layout = new Layout(presets.size(), pet.getType().humanName() + " - Data - " + StringUtil.capitalise(dataType.toString()));
 

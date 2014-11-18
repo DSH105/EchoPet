@@ -18,7 +18,6 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntityBlazePet;
-import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.pet.RangedPet;
 import org.bukkit.entity.Blaze;
 

@@ -17,12 +17,9 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
 import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
 
 public abstract class EchoRangedPet<T extends LivingEntity, S extends EntityRangedPet> extends PetBase<T, S> implements RangedPet<T, S> {
 

@@ -17,10 +17,6 @@
 
 package com.dsh105.echopet;
 
-import com.captainbern.minecraft.reflection.MinecraftReflection;
-import com.captainbern.reflection.ClassTemplate;
-import com.captainbern.reflection.Reflection;
-import com.captainbern.reflection.SafeField;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
@@ -30,8 +26,6 @@ import com.dsh105.commodus.data.Updater;
 import com.dsh105.commodus.dependency.PluginDependencyProvider;
 import com.dsh105.commodus.logging.Level;
 import com.dsh105.echopet.api.config.*;
-import com.dsh105.echopet.api.entity.PetType;
-import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.plugin.*;
 import com.dsh105.echopet.api.plugin.hook.VanishProviderBase;
 import com.dsh105.echopet.api.plugin.hook.WorldGuardProviderBase;
@@ -63,9 +57,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
-
-import static com.captainbern.reflection.matcher.Matchers.withType;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Nest(nests = {"echopet", "ep"})
 @Authorize(Perm.ECHOPET)
@@ -78,7 +73,7 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     protected YAMLConfigManager configManager;
     private HashMap<ConfigType, YAMLConfig> configFiles = new HashMap<>();
     private HashMap<ConfigType, Options> settings = new HashMap<>();
-    private ArrayList<PluginDependencyProvider> providers = new ArrayList<>();
+    private List<PluginDependencyProvider> providers = new ArrayList<>();
 
     private PetRegistry petRegistry;
 

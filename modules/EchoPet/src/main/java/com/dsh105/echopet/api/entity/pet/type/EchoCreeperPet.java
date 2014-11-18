@@ -53,7 +53,7 @@ public class EchoCreeperPet extends PetBase<Creeper, EntityCreeperPet> implement
     @AttributeHandler(data = PetData.IGNITED, getter = true)
     @Override
     public boolean isIgnited() {
-       return ignited;
+        return ignited;
     }
 
     @Override
