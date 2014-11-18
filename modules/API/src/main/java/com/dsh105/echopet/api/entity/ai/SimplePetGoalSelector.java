@@ -19,10 +19,7 @@ package com.dsh105.echopet.api.entity.ai;
 
 import com.dsh105.echopet.api.entity.pet.Pet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /*
  * From EntityAPI :)
@@ -34,12 +31,15 @@ public class SimplePetGoalSelector implements PetGoalSelector {
     private Pet pet;
     private int delay = 0;
 
+    private EntityAIModifier aiModifier;
+
     private Map<String, PetGoalSelectorItem> goalMap = new HashMap<>();
-    private ArrayList<PetGoalSelectorItem> goals = new ArrayList<>();
-    private ArrayList<PetGoalSelectorItem> activeGoals = new ArrayList<>();
+    private List<PetGoalSelectorItem> goals = new ArrayList<>();
+    private List<PetGoalSelectorItem> activeGoals = new ArrayList<>();
 
     public SimplePetGoalSelector(Pet pet) {
         this.pet = pet;
+        this.aiModifier = new EntityAIModifier(pet);
     }
 
     @Override
@@ -144,6 +144,8 @@ public class SimplePetGoalSelector implements PetGoalSelector {
 
     @Override
     public void updateGoals() {
+        this.aiModifier.update();
+
         Iterator<PetGoalSelectorItem> iterator;
         if (this.delay++ % 3 == 0) {
 
