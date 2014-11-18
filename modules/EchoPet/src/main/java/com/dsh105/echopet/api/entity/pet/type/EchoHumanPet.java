@@ -65,6 +65,12 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
             this.profileUuid = UUID.randomUUID();
         }
         this.gameProfile = new WrappedGameProfile(this.profileUuid, getName());
+
+        dataWatcher = new WrappedDataWatcher();
+        dataWatcher.setObject(0, this.entityStatus);
+        dataWatcher.setObject(1, 0);
+        dataWatcher.setObject(8, 0);
+        dataWatcher.setObject(10, getName());
     }
 
     @Override
@@ -161,10 +167,7 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
 
     @Override
     public void updateDataWatcher() {
-        dataWatcher = new WrappedDataWatcher();
         dataWatcher.setObject(0, this.entityStatus);
-        dataWatcher.setObject(1, 0);
-        dataWatcher.setObject(8, 0);
         dataWatcher.setObject(10, getName());
 
         WrappedPacket meta = new WrappedPacket(PacketType.Play.Server.ENTITY_METADATA);
