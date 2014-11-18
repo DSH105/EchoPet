@@ -17,36 +17,23 @@
 
 package com.dsh105.echopet.api.config;
 
-import com.dsh105.commodus.config.Option;
 import com.dsh105.echopet.api.plugin.EchoPet;
 
-public class Setting<T> extends Option<T> {
-
-    private ConfigType configType;
+public class Setting<T> extends AbstractSetting<T> {
 
     public Setting(ConfigType configType, String path, String... comments) {
-        super(EchoPet.getCore().getConfig(configType).config(), path, comments);
-        this.configType = configType;
+        super(configType, path, comments);
     }
 
     public Setting(ConfigType configType, String path, T defaultValue, String... comments) {
-        super(EchoPet.getCore().getConfig(configType).config(), path, defaultValue, comments);
-        this.configType = configType;
+        super(configType, path, defaultValue, comments);
     }
 
     public Setting(String path, T defaultValue, String... comments) {
-        this(ConfigType.GENERAL, path, defaultValue, comments);
-    }
-
-    public T getValue(Object... replacements) {
-        return super.getValue(EchoPet.getCore().getSettings(configType), replacements);
+        super(path, defaultValue, comments);
     }
 
     public T getValue(T defaultValue, Object... replacements) {
-        return super.getValue(EchoPet.getCore().getSettings(configType), defaultValue, replacements);
-    }
-
-    public void setValue(T value, Object... replacements) {
-        super.setValue(EchoPet.getCore().getSettings(configType), value, replacements);
+        return super.getValue(EchoPet.getCore().getSettings(this.configType), defaultValue, replacements);
     }
 }

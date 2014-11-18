@@ -20,6 +20,8 @@ package com.dsh105.echopet.api.config;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 
+import java.util.ArrayList;
+
 public class Data extends Options {
 
     public Data(YAMLConfig config) {
@@ -31,12 +33,12 @@ public class Data extends Options {
 
     }
 
-    public static Setting<String> SECTION = new Setting<>(ConfigType.DATA, "%s");
-    public static Setting<String> PET_SECTION = new Setting<>(ConfigType.DATA, "%s.%s");
-    public static Setting<String> PET_TYPE = new Setting<>(ConfigType.DATA, "%s.%s.pet.type");
-    public static Setting<String> PET_NAME = new Setting<>(ConfigType.DATA, "%s.%s.pet.name");
-    public static Setting<String[]> PET_DATA = new Setting<>(ConfigType.DATA, "%s.%s.pet.data");
-    public static Setting<String> RIDER_TYPE = new Setting<>(ConfigType.DATA, "%s.%s.rider.type");
-    public static Setting<String> RIDER_NAME = new Setting<>(ConfigType.DATA, "%s.%s.rider.name");
-    public static Setting<String[]> RIDER_DATA = new Setting<>(ConfigType.DATA, "%s.%s.rider.data");
+    public static AbstractSetting<String> SECTION = new AbstractSetting<>(ConfigType.DATA, "%s");
+    public static AbstractSetting<String> PET_SECTION = new AbstractSetting<>(ConfigType.DATA, "%s.%s");
+    public static AbstractSetting<String> PET_TYPE = new AbstractSetting<>(ConfigType.DATA, "%s.%s.pet.type");
+    public static AbstractSetting<String> PET_NAME = new AbstractSetting<>(ConfigType.DATA, "%s.%s.pet.name");
+    public static Setting<ArrayList<String>> PET_DATA = new Setting<>(ConfigType.DATA, "%s.%s.pet.data");
+    public static AbstractSetting<String> RIDER_TYPE = new AbstractSetting<>(ConfigType.DATA, "%s.%s.rider.type");
+    public static AbstractSetting<String> RIDER_NAME = new AbstractSetting<>(ConfigType.DATA, "%s.%s.rider.name");
+    public static Setting<ArrayList<String>> RIDER_DATA = new Setting<>(ConfigType.DATA, "%s.%s.rider.data");
 }

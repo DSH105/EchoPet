@@ -35,13 +35,14 @@
 package com.dsh105.echopet.api.config;
 
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.powermessage.core.PowerMessage;
 import com.dsh105.powermessage.markup.MarkupBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
 
-public class LangSetting extends Setting<String> {
+public class LangSetting extends AbstractSetting<String> {
 
     public LangSetting(ConfigType configType, String path, String defaultValue, String... comments) {
         super(configType, path, defaultValue, comments);
@@ -76,7 +77,7 @@ public class LangSetting extends Setting<String> {
         if (message == null) {
             return;
         }
-        new MarkupBuilder().withText(Lang.PREFIX.getValue() + ChatColor.translateAlternateColorCodes('&', message)).build().send(sender);
+        new PowerMessage(Lang.PREFIX.getValue() + ChatColor.translateAlternateColorCodes('&', message)).send(sender);
     }
 
     public void send(Conversable conversable, String... pairedReplacements) {

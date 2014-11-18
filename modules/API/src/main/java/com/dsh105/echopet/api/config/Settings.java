@@ -33,7 +33,7 @@ public class Settings extends Options {
 
     @Override
     public void setDefaults() {
-        for (Setting setting : Setting.getOptions(Settings.class, Setting.class)) {
+        for (AbstractSetting setting : AbstractSetting.getOptions(Settings.class, AbstractSetting.class)) {
             if (setting.equals(PET_NAME)) {
                 set(setting, "My Pet");
             } else if (setting.equals(WORLD)) {
@@ -56,18 +56,18 @@ public class Settings extends Options {
         }
     }
 
-    public static final Setting<String> COMMAND = new Setting<>("command", "pet");
-    public static final Setting<String> BASE_CHAT_COLOUR = new Setting<>("baseChatColour", "e");
-    public static final Setting<String> HIGHLIGHT_CHAT_COLOUR = new Setting<>("highlightChatColour", "6");
+    public static final AbstractSetting<String> COMMAND = new AbstractSetting<>("command", "pet");
+    public static final AbstractSetting<String> BASE_CHAT_COLOUR = new AbstractSetting<>("baseChatColour", "e");
+    public static final AbstractSetting<String> HIGHLIGHT_CHAT_COLOUR = new AbstractSetting<>("highlightChatColour", "6");
     public static final Setting<Boolean> AUTO_UPDATE = new Setting<>("autoUpdate", false, "If set to true, EchoPet will automatically download and install new updates from BukkitDev.");
     public static final Setting<Boolean> CHECK_FOR_UPDATES = new Setting<>("checkForUpdates", true, "Notifies when new updates are available");
     public static final Setting<Boolean> SQL_OVERRIDE = new Setting<>("sql.overrideFile", true);
     public static final Setting<Boolean> SQL_ENABLE = new Setting<>("sql.use", false);
-    public static final Setting<String> SQL_HOST = new Setting<>("sql.host", "localhost");
+    public static final AbstractSetting<String> SQL_HOST = new AbstractSetting<>("sql.host", "localhost");
     public static final Setting<Integer> SQL_PORT = new Setting<>("sql.port", 3306);
-    public static final Setting<String> SQL_DATABASE = new Setting<>("sql.database", "EchoPet");
-    public static final Setting<String> SQL_USERNAME = new Setting<>("sql.username", "non");
-    public static final Setting<String> SQL_PASSWORD = new Setting<>("sql.password", "none");
+    public static final AbstractSetting<String> SQL_DATABASE = new AbstractSetting<>("sql.database", "EchoPet");
+    public static final AbstractSetting<String> SQL_USERNAME = new AbstractSetting<>("sql.username", "non");
+    public static final AbstractSetting<String> SQL_PASSWORD = new AbstractSetting<>("sql.password", "none");
     public static final Setting<Boolean> STRIP_DIACRITICS = new Setting<>("stripDiacriticsFromNames", true);
     public static final Setting<Boolean> FIX_HUMAN_SKINS = new Setting<>("enableHumanSkinFixing", true);
     public static final Setting<Boolean> LOAD_SAVED_PETS = new Setting<>("loadSavedPets", true, "Loads saved pets for players");

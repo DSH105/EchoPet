@@ -20,7 +20,7 @@ package com.dsh105.echopet.api.config;
 import com.dsh105.commodus.Version;
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
-import com.dsh105.echopet.api.entity.AttributeAccessor;
+import com.dsh105.echopet.api.entity.AttributeManager;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
 
@@ -38,10 +38,10 @@ public class PetSettings extends Options {
     @Override
     public void setDefaults() {
         for (PetType petType : PetType.values()) {
-            for (Setting setting : Setting.getOptions(PetSettings.class, Setting.class)) {
+            for (AbstractSetting setting : AbstractSetting.getOptions(PetSettings.class, AbstractSetting.class)) {
 
                 if (setting.equals(ALLOW_DATA) || setting.equals(FORCE_DATA)) {
-                    for (PetData data : AttributeAccessor.getRegisteredData(petType)) {
+                    for (PetData data : AttributeManager.getModifier(petType).getApplicableDataTypes()) {
                         set(setting.getPath(petType.storageName(), data.storageName()), setting.equals(ALLOW_RIDERS));
                     }
                     continue;
@@ -67,9 +67,9 @@ public class PetSettings extends Options {
     public static final Setting<Boolean> ENABLE = new Setting<>(ConfigType.PETS, "pets.%s.enable", true);
     public static final Setting<Boolean> TAG_VISIBLE = new Setting<>(ConfigType.PETS, "pets.%s.tagVisible", true);
     public static final Setting<String> DEFAULT_NAME = new Setting<>(ConfigType.PETS, "pets.%s.defaultName");
-    public static final Setting<Float> START_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.startFollowDistance", 12.0F);
-    public static final Setting<Float> STOP_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.stopFollowDistance", 4.0F);
-    public static final Setting<Float> TELEPORT_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.teleportDistance", 30.0F);
+    public static final Setting<Double> START_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.startFollowDistance", 12.0D);
+    public static final Setting<Double> STOP_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.stopFollowDistance", 4.0D);
+    public static final Setting<Double> TELEPORT_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.teleportDistance", 30.0D);
     public static final Setting<Boolean> DAMAGE_PLAYERS = new Setting<>(ConfigType.PETS, "pets.%s.ai.damagePlayers", false);
     public static final Setting<Double> LOCK_RANGE = new Setting<>(ConfigType.PETS, "pets.%s.ai.lockRange", 10.0D);
     public static final Setting<Integer> TICKS_BETWEEN_ATTACKS = new Setting<>(ConfigType.PETS, "pets.%s.ai.ticksBetweenAttacks", 20);
@@ -81,5 +81,5 @@ public class PetSettings extends Options {
     public static final Setting<Boolean> CAN_FLY = new Setting<>(ConfigType.PETS, "pets.%s.canFly");
     public static final Setting<Boolean> ALLOW_RIDERS = new Setting<>(ConfigType.PETS, "pets.%s.allow.riders", true);
     public static final Setting<Boolean> ALLOW_DATA = new Setting<>(ConfigType.PETS, "pets.%s.allow.%s", true);
-    public static final Setting<Boolean> FORCE_DATA = new Setting<>(ConfigType.PETS, "pets.%s.force.%s", true);
+    public static final Setting<Boolean> FORCE_DATA = new Setting<>(ConfigType.PETS, "pets.%s.force.%s", false);
 }

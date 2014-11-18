@@ -43,17 +43,17 @@ public class MenuSettings extends Options {
                 DataMenu.getDefaultLayout(petType).saveToFile(getConfig().config(), "petMenu." + petType.storageName());
             }
 
-            for (Setting setting : Setting.getOptions(MenuSettings.class, Setting.class)) {
+            for (AbstractSetting setting : AbstractSetting.getOptions(MenuSettings.class, AbstractSetting.class)) {
                 set(setting);
             }
         }
     }
 
-    public static final Setting<Boolean> SELECTOR_ALLOW_DROP = new Setting<Boolean>(ConfigType.MENU, "selector.allowDrop", true);
-    public static final Setting<Boolean> SELECTOR_SHOW_DISABLED_PETS = new Setting<Boolean>(ConfigType.MENU, "selector.showDisabledPets", true);
-    public static final Setting<Boolean> SELECTOR_ONJOIN_ENABLE = new Setting<Boolean>(ConfigType.MENU, "selector.giveOnJoin.enable", false);
-    public static final Setting<Boolean> SELECTOR_ONJOIN_USE_PERM = new Setting<Boolean>(ConfigType.MENU, "selector.giveOnJoin.usePerm", false);
-    public static final Setting<String> SELECTOR_ONJOIN_PERM = new Setting<String>(ConfigType.MENU, "selector.giveOnJoin.perm", "echopet.selector.join", new String[0]);
-    public static final Setting<Integer> SELECTOR_ONJOIN_SLOT = new Setting<Integer>(ConfigType.MENU, "selector.giveOnJoin.slot", 9);
-    public static final Setting<Boolean> SELECTOR_ONJOIN_CLEAR = new Setting<Boolean>(ConfigType.MENU, "selector.clearInvOnJoin", false);
+    public static final Setting<Boolean> SELECTOR_ALLOW_DROP = new Setting<>(ConfigType.MENU, "selector.allowDrop", true);
+    public static final Setting<Boolean> SELECTOR_SHOW_DISABLED_PETS = new Setting<>(ConfigType.MENU, "selector.showDisabledPets", true);
+    public static final Setting<Boolean> SELECTOR_ONJOIN_ENABLE = new Setting<>(ConfigType.MENU, "selector.giveOnJoin.enable", false);
+    public static final Setting<Boolean> SELECTOR_ONJOIN_USE_PERM = new Setting<>(ConfigType.MENU, "selector.giveOnJoin.usePerm", false);
+    public static final AbstractSetting<String> SELECTOR_ONJOIN_PERM = new AbstractSetting<>(ConfigType.MENU, "selector.giveOnJoin.perm", "echopet.selector.join", new String[0]);
+    public static final Setting<Integer> SELECTOR_ONJOIN_SLOT = new Setting<>(ConfigType.MENU, "selector.giveOnJoin.slot", 9);
+    public static final Setting<Boolean> SELECTOR_ONJOIN_CLEAR = new Setting<>(ConfigType.MENU, "selector.clearInvOnJoin", false);
 }
