@@ -76,7 +76,7 @@ public class PetGoalLookAtPlayer extends PetGoal {
 
     @Override
     public void tick() {
-        getModifier().lookAt(targetPlayer.getLocation().getX(), targetPlayer.getLocation().getY() + 0.12D, targetPlayer.getLocation().getZ(), 10.0F, (float) getModifier().getMaxHeadRotation());
+        getModifier().lookAt(targetPlayer, 10.0F, (float) getModifier().getMaxHeadRotation());
         --ticksLeft;
     }
 }
