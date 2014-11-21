@@ -84,11 +84,13 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     public File file;
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         EchoPet.setCore(this);
-
         commandManager = new BukkitCommandManager(this);
+    }
 
+    @Override
+    public void onEnable() {
         try {
             Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EchoEntityPetBase");
         } catch (ClassNotFoundException e) {
