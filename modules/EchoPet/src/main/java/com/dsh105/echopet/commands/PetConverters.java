@@ -20,8 +20,6 @@ package com.dsh105.echopet.commands;
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.cooldown.Cooldown;
-import com.dsh105.cooldown.CooldownAPI;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
@@ -33,6 +31,7 @@ import com.dsh105.influx.conversion.UnboundConverter;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import com.dsh105.influx.dispatch.CommandContext;
 import com.dsh105.influx.syntax.ContextualVariable;
+import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -46,6 +45,12 @@ import java.util.concurrent.TimeUnit;
 public class PetConverters {
 
     private static final Map<String, UUID> PLAYER_TO_PET_ID = new HashMap<>();
+
+    public static void selectPet(Player owner, UUID petUniqueId) {
+        Preconditions.checkNotNull(owner, "Pet owner must not be null.");
+        Preconditions.checkNotNull(petUniqueId, "Pet unique ID must not be null.");
+        PLAYER_TO_PET_ID.put(IdentUtil.getIdentificationForAsString(owner), petUniqueId);
+    }
 
     private static Player getTarget(ContextualVariable variable) throws ConversionException {
         return getTarget(variable.getContext());
@@ -140,7 +145,12 @@ public class PetConverters {
         @Override
         public Pet convert(CommandContext<?> context) throws ConversionException {
             Player sender = ((BukkitCommandEvent<Player>) context).sender();
-            Pet pet = EchoPet.getManager().getPetById(PLAYER_TO_PET_ID.get(IdentUtil.getIdentificationForAsString(sender)));
+            Pet pet = null;
+            String ident = IdentUtil.getIdentificationForAsString(sender);
+            if (PLAYER_TO_PET_ID.containsKey(ident)) {
+                pet = EchoPet.getManager().getPetById(PLAYER_TO_PET_ID.get(ident));
+            }
+
             if (pet == null) {
                 pet = new OnlyPet().convert(context);
                 if (pet == null) {

@@ -42,6 +42,7 @@ public class Perm {
             SELECTOR = "echopet.pet.selector",
             TOGGLE = "echopet.pet.toggle",
             SIT = "echopet.pet.sit",
+            UUID_SELECT = "echopet.pet.uuidSelect",
             RELOAD = "echopet.pet.reload";
 
 }

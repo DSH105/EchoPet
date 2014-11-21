@@ -86,6 +86,21 @@ public class PetCommand implements CommandListener {
     }
 
     @Command(
+            syntax = "uuid <pet_uuid> [pet_name]",
+            desc = "Select a pet by its ID.",
+            help = "Not intended for external use."
+    )
+    @Authorize(Perm.UUID_SELECT)
+    @Nested
+    @Hidden
+    // Internal use by "/pet view" - that's why it's hidden ;D
+    public boolean selectByUniqueId(BukkitCommandEvent<Player> event, @Bind("uuid") UUID petUniqueId, @Bind("pet_name") String name) {
+        PetConverters.selectPet(event.sender(), petUniqueId);
+        event.respond((name == null ? Lang.PET_SELECTED : Lang.PET_SELECTED_OF_NAME).getValue("name", name));
+        return true;
+    }
+
+    @Command(
             syntax = "create <type>",
             desc = "Creates a new pet of the given type",
             help = {"Set pet data using \"/pet [pet_name] data <data...\" (separated by spaces)", "Set the name of your pet using \"/pet [pet_name] name [name...]\""}

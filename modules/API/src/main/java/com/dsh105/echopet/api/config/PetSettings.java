@@ -66,7 +66,7 @@ public class PetSettings extends Options {
 
     public static final Setting<Boolean> ENABLE = new Setting<>(ConfigType.PETS, "pets.%s.enable", true);
     public static final Setting<Boolean> TAG_VISIBLE = new Setting<>(ConfigType.PETS, "pets.%s.tagVisible", true);
-    public static final Setting<String> DEFAULT_NAME = new Setting<>(ConfigType.PETS, "pets.%s.defaultName");
+    public static final AbstractSetting<String> DEFAULT_NAME = new AbstractSetting<>(ConfigType.PETS, "pets.%s.defaultName");
     public static final Setting<Double> START_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.startFollowDistance", 12.0D);
     public static final Setting<Double> STOP_FOLLOW_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.stopFollowDistance", 4.0D);
     public static final Setting<Double> TELEPORT_DISTANCE = new Setting<>(ConfigType.PETS, "pets.%s.teleportDistance", 30.0D);
