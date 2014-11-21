@@ -65,12 +65,6 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
             this.profileUuid = UUID.randomUUID();
         }
         this.gameProfile = new WrappedGameProfile(this.profileUuid, getName());
-
-        dataWatcher = new WrappedDataWatcher();
-        dataWatcher.setObject(0, this.entityStatus);
-        dataWatcher.setObject(1, 0);
-        dataWatcher.setObject(8, 0);
-        dataWatcher.setObject(10, getName());
     }
 
     @Override
@@ -143,10 +137,19 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
         }
 
         if (!this.initiated) {
+            this.initialiseDataWatcher();
             this.updatePosition();
             this.initiated = true;
         }
         this.updateDataWatcher();
+    }
+
+    private void initialiseDataWatcher() {
+        this.dataWatcher = new WrappedDataWatcher();
+        this.dataWatcher.setObject(0, this.entityStatus);
+        this.dataWatcher.setObject(1, 0);
+        this.dataWatcher.setObject(8, 0);
+        this.dataWatcher.setObject(10, getName());
     }
 
     @Override
@@ -167,12 +170,12 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
 
     @Override
     public void updateDataWatcher() {
-        dataWatcher.setObject(0, this.entityStatus);
-        dataWatcher.setObject(10, getName());
+        this.dataWatcher.setObject(0, this.entityStatus);
+        this.dataWatcher.setObject(10, getName());
 
         WrappedPacket meta = new WrappedPacket(PacketType.Play.Server.ENTITY_METADATA);
         meta.getIntegers().write(0, this.id);
-        meta.getWatchableObjectLists().write(0, dataWatcher.getWatchableObjects());
+        meta.getWatchableObjectLists().write(0, this.dataWatcher.getWatchableObjects());
         for (Player player : GeometryUtil.getNearbyPlayers(getLocation(), -1)) {
             MinecraftMethods.sendPacket(player, meta.getHandle());
         }
