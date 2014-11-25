@@ -19,6 +19,7 @@ package com.dsh105.echopet.compat.api.plugin;
 
 import com.dsh105.dshutils.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
+import com.dsh105.echopet.compat.api.registration.PetRegistry;
 
 public final class EchoPet {
 
@@ -45,6 +46,10 @@ public final class EchoPet {
 
     public static ISqlPetManager getSqlManager() {
         return PLUGIN.getSqlPetManager();
+    }
+
+    public static PetRegistry getPetRegistry() {
+        return PLUGIN.getPetRegistry();
     }
 
     public static ConfigOptions getOptions() {

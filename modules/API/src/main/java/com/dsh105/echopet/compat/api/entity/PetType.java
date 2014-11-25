@@ -133,12 +133,12 @@ public enum PetType {
     }
 
     public IEntityPet getNewEntityPetInstance(Object world, IPet pet) {
-        return new SafeConstructor<IEntityPet>(this.entityClass, ReflectionUtil.getNMSClass("World"), IPet.class).newInstance(world, pet);
+        return EchoPet.getPetRegistry().getRegistrationEntry(pet.getPetType()).createEntityPet(world, pet);
     }
 
     public IPet getNewPetInstance(Player owner) {
         if (owner != null) {
-            return new SafeConstructor<IPet>(this.petClass, Player.class).newInstance(owner);
+            return EchoPet.getPetRegistry().spawn(this, owner);
         }
         return null;
     }

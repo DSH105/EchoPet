@@ -40,6 +40,7 @@ import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
+import com.dsh105.echopet.compat.api.registration.PetRegistry;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
@@ -77,6 +78,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
     public static final ModuleLogger LOGGER = new ModuleLogger("EchoPet");
     public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule("Reflection");
+
+    private PetRegistry petRegistry;
 
     private CommandManager COMMAND_MANAGER;
     private YAMLConfig petConfig;
@@ -125,6 +128,8 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             return;
         }
 
+        this.petRegistry = new PetRegistry();
+
         SPAWN_UTIL = new SafeConstructor<ISpawnUtil>(ReflectionUtil.getVersionedClass("SpawnUtil")).newInstance();
 
         this.loadConfiguration();
@@ -136,11 +141,6 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
         if (OPTIONS.useSql()) {
             this.prepareSqlDatabase();
-        }
-
-        // Register custom entities
-        for (PetType pt : PetType.values()) {
-            this.registerEntity(pt.getEntityClass(), pt.getDefaultName().replace(" ", ""), pt.getRegistrationId());
         }
 
         // Register custom commands
@@ -357,50 +357,6 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         return false;
     }
 
-    private void registerEntity(Class<? extends IEntityPet> clazz, String name, int id) {
-        Map<String, Class> entityNameToClassMapping = new SafeField<Map<String, Class>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOCLASSMAP.getName()).get(null);
-        Map<Class, String> classToEntityNameMapping = new SafeField<Map<Class, String>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTONAMEMAP.getName()).get(null);
-        Map<Class, Integer> classToIdMapping = new SafeField<Map<Class, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_CLASSTOIDMAP.getName()).get(null);
-        Map<String, Integer> entityNameToIdMapping = new SafeField<Map<String, Integer>>(ReflectionUtil.getNMSClass("EntityTypes"), ReflectionConstants.ENTITYTYPES_FIELD_NAMETOIDMAP.getName()).get(null);
-
-        Iterator i = entityNameToClassMapping.keySet().iterator();
-        while (i.hasNext()) {
-            String s = (String) i.next();
-            if (s.equals(name)) {
-                i.remove();
-            }
-        }
-
-        i = classToEntityNameMapping.keySet().iterator();
-        while (i.hasNext()) {
-            Class cl = (Class) i.next();
-            if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                i.remove();
-            }
-        }
-
-        i = classToIdMapping.keySet().iterator();
-        while (i.hasNext()) {
-            Class cl = (Class) i.next();
-            if (cl.getCanonicalName().equals(clazz.getCanonicalName())) {
-                i.remove();
-            }
-        }
-
-        i = entityNameToIdMapping.keySet().iterator();
-        while (i.hasNext()) {
-            String s = (String) i.next();
-            if (s.equals(name)) {
-                i.remove();
-            }
-        }
-
-        entityNameToClassMapping.put(name, clazz);
-        classToEntityNameMapping.put(clazz, name);
-        classToIdMapping.put(clazz, id);
-        entityNameToIdMapping.put(name, id);
-    }
-
     public static EchoPetPlugin getInstance() {
         return (EchoPetPlugin) getPluginInstance();
     }
@@ -442,6 +398,11 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
     public static PetManager getManager() {
         return MANAGER;
+    }
+
+    @Override
+    public PetRegistry getPetRegistry() {
+        return this.petRegistry;
     }
 
     @Override
