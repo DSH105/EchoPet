@@ -88,7 +88,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public void move(double x, double y, double z) {
-        if (getPet().isStationary()) {
+        if (pet.isStationary()) {
             return;
         }
         super.move(x, y, z);
@@ -96,7 +96,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public void g(double x, double y, double z) {
-        if (getPet().isStationary()) {
+        if (pet.isStationary()) {
             super.g(0, 0, 0);
             return;
         }
@@ -111,7 +111,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
             } catch (Exception e) {
                 EchoPet.LOG.severe("Uh oh. Something bad happened");
                 e.printStackTrace();
-                getPet().despawn(false);
+                pet.despawn(false);
             }
         }
         // Nope!
@@ -122,11 +122,11 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     public void e(float sideMotion, float forwardMotion) {
         try {
             // Call the ride function
-            getPet().onRide(sideMotion, forwardMotion);
+            pet.onRide(sideMotion, forwardMotion);
         } catch (Exception e) {
             EchoPet.LOG.severe("Uh oh. Something bad happened");
             e.printStackTrace();
-            getPet().despawn(false);
+            pet.despawn(false);
         }
     }
 
@@ -135,12 +135,12 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     public void h() {
         super.h();
         try {
-            getPet().onLive();
+            pet.onLive();
             onLive();
         } catch (Exception e) {
             EchoPet.LOG.severe("Uh oh. Something bad happened");
             e.printStackTrace();
-            getPet().despawn(false);
+            pet.despawn(false);
         }
     }
 
@@ -151,17 +151,17 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return pet.getIdleSound();
     }
 
     @Override
     protected String aS() {
-        return getPet().getHurtSound();
+        return pet.getHurtSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getDeathSound();
+        return pet.getDeathSound();
     }
 
     @Override
@@ -172,7 +172,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
         } catch (Exception e) {
             EchoPet.LOG.severe("Uh oh. Something bad happened");
             e.printStackTrace();
-            getPet().despawn(false);
+            pet.despawn(false);
         }
     }
 
@@ -187,7 +187,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     }
 
     protected void makeStepSound(int i, int j, int k, Block block) {
-        getPet().makeStepSound();
+        pet.makeStepSound();
     }
 
     /*
@@ -329,7 +329,7 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
     }
 
     private boolean attack(LivingEntity entity, DamageSource damageSource, float damage) {
-        PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity, damage);
+        PetAttackEvent attackEvent = new PetAttackEvent(pet, entity, damage);
         EchoPet.getCore().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {
@@ -540,8 +540,8 @@ public class EntityPetBase<T extends Pet> extends EntityCreature implements IAni
 
     @Override
     public boolean onInteract(org.bukkit.entity.Player player) {
-        if (IdentUtil.areIdentical(player, getPet().getOwner())) {
-            getPet().onInteract(player);
+        if (IdentUtil.areIdentical(player, pet.getOwner())) {
+            pet.onInteract(player);
             return true;
         }
         return false;

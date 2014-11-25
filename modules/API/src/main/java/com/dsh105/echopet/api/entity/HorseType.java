@@ -45,7 +45,7 @@ public enum HorseType {
 
     public static HorseType getForBukkitVariant(Horse.Variant variant) {
         for (HorseType v : values()) {
-            if (v.getBukkitVariant().equals(variant)) {
+            if (v.bukkitVariant.equals(variant)) {
                 return v;
             }
         }
@@ -54,7 +54,7 @@ public enum HorseType {
 
     public static HorseType getById(int id) {
         for (HorseType horseType : HorseType.values()) {
-            if (horseType.getId() == id) {
+            if (horseType.id == id) {
                 return horseType;
             }
         }

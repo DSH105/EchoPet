@@ -156,7 +156,7 @@ public enum MenuPreset {
     public static List<MenuPreset> getPresetsOfType(PetData.Type toCompare) {
         List<MenuPreset> presets = new ArrayList<>();
         for (MenuPreset preset : MenuPreset.values()) {
-            if ((preset.getDataType() != null && preset.getDataType().equals(toCompare)) || preset.getPetData().isType(toCompare)) {
+            if ((preset.dataType != null && preset.dataType.equals(toCompare)) || preset.petData.isType(toCompare)) {
                 presets.add(preset);
             }
         }
@@ -166,7 +166,7 @@ public enum MenuPreset {
     public static List<MenuPreset> getPresetsOfType(MenuType toCompare) {
         List<MenuPreset> presets = new ArrayList<>();
         for (MenuPreset preset : MenuPreset.values()) {
-            if (preset.getMenuType().equals(toCompare)) {
+            if (preset.menuType.equals(toCompare)) {
                 presets.add(preset);
             }
         }
@@ -183,7 +183,7 @@ public enum MenuPreset {
                 continue;
             }
             for (PetData data : registeredData) {
-                if (data == preset.getPetData() || data.isType(preset.getDataType())) {
+                if (data == preset.petData || data.isType(preset.dataType)) {
                     presets.add(preset);
                 }
             }

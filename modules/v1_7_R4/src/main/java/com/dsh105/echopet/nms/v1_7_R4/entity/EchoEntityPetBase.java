@@ -45,11 +45,11 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     public EntityPet<T> getEntityPet() {
-        return getPet().getEntity();
+        return pet.getEntity();
     }
 
     public EchoEntityPetHandle getHandle() {
-        return (EchoEntityPetHandle) getEntity();
+        return (EchoEntityPetHandle) entity;
     }
 
     @Override
@@ -71,11 +71,11 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
         getHandle().getEntitySenses().a();
 
         // Update/run our custom AI
-        if (getPet().getPetGoalSelector() == null) {
+        if (pet.getPetGoalSelector() == null) {
             this.getBukkitEntity().remove();
             return;
         }
-        getPet().getPetGoalSelector().updateGoals();
+        pet.getPetGoalSelector().updateGoals();
 
         // Some navigation updates
         getHandle().getNavigation().f();
@@ -95,7 +95,7 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public CraftEntity getBukkitEntity() {
-        return getEntity().getBukkitEntity();
+        return entity.getBukkitEntity();
     }
 
     @Override
@@ -105,32 +105,32 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public void setMotionX(double motX) {
-        getEntity().motX = motX;
+        entity.motX = motX;
     }
 
     @Override
     public void setMotionY(double motY) {
-        getEntity().motY = motY;
+        entity.motY = motY;
     }
 
     @Override
     public void setMotionZ(double motZ) {
-        getEntity().motZ = motZ;
+        entity.motZ = motZ;
     }
 
     @Override
     public double getMotionX() {
-        return getEntity().motX;
+        return entity.motX;
     }
 
     @Override
     public double getMotionY() {
-        return getEntity().motY;
+        return entity.motY;
     }
 
     @Override
     public double getMotionZ() {
-        return getEntity().motZ;
+        return entity.motZ;
     }
 
     @Override
@@ -140,37 +140,37 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public boolean isDead() {
-        return getEntity().dead;
+        return entity.dead;
     }
 
     @Override
     public boolean inLava() {
-        return getEntity().P();
+        return entity.P();
     }
 
     @Override
     public boolean inWater() {
-        return getEntity().M();
+        return entity.M();
     }
 
     @Override
     public boolean isWet() {
-        return getEntity().L();
+        return entity.L();
     }
 
     @Override
     public void setNoClipEnabled(boolean flag) {
-        getEntity().X = flag;
+        entity.X = flag;
     }
 
     @Override
     public void setTarget(LivingEntity livingEntity) {
-        getEntity().setGoalTarget(((CraftLivingEntity) livingEntity).getHandle());
+        entity.setGoalTarget(((CraftLivingEntity) livingEntity).getHandle());
     }
 
     @Override
     public LivingEntity getTarget() {
-        return (LivingEntity) getEntity().getGoalTarget().getBukkitEntity();
+        return (LivingEntity) entity.getGoalTarget().getBukkitEntity();
     }
 
     @Override
@@ -185,7 +185,7 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     private boolean attack(LivingEntity entity, DamageSource damageSource, float damage) {
-        PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity, damage);
+        PetAttackEvent attackEvent = new PetAttackEvent(pet, entity, damage);
         EchoPet.getCore().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {
@@ -193,37 +193,37 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
                     return false;
                 }
             }
-            return getEntity().damageEntity(damageSource, (float) attackEvent.getDamage());
+            return this.entity.damageEntity(damageSource, (float) attackEvent.getDamage());
         }
         return false;
     }
 
     @Override
     public org.bukkit.entity.Entity getPassenger() {
-        return getEntity().passenger == null ? null : getEntity().passenger.getBukkitEntity();
+        return entity.passenger == null ? null : entity.passenger.getBukkitEntity();
     }
 
     @Override
     public void setYaw(float yaw) {
-        getEntity().lastYaw = getEntity().yaw = yaw;
+        entity.lastYaw = entity.yaw = yaw;
     }
 
     @Override
     public void setStepHeight(float height) {
-        getEntity().W = height;
+        entity.W = height;
     }
 
     @Override
     public void setPitch(float pitch) {
-        getEntity().pitch = pitch;
+        entity.pitch = pitch;
     }
 
     @Override
     public void applyPitchAndYawChanges(float pitch, float yaw) {
-        getEntity().lastYaw = getEntity().yaw = yaw;
-        getEntity().pitch = pitch;
-        getPet().getEntity().applyPitchAndYawChanges(getEntity().yaw, getEntity().pitch);
-        getEntity().aO = getEntity().aM = getEntity().yaw;
+        entity.lastYaw = entity.yaw = yaw;
+        entity.pitch = pitch;
+        pet.getEntity().applyPitchAndYawChanges(entity.yaw, entity.pitch);
+        entity.aO = entity.aM = entity.yaw;
     }
 
     @Override
@@ -238,7 +238,7 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public void setSpeed(float value) {
-        getEntity().i(value);
+        entity.i(value);
     }
 
     @Override
@@ -248,42 +248,42 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public boolean isGrounded() {
-        return getEntity().onGround;
+        return entity.onGround;
     }
 
     @Override
     public double getLocX() {
-        return getEntity().locX;
+        return entity.locX;
     }
 
     @Override
     public double getLocY() {
-        return getEntity().locY;
+        return entity.locY;
     }
 
     @Override
     public double getLocZ() {
-        return getEntity().locZ;
+        return entity.locZ;
     }
 
     @Override
     public void setLocX(double value) {
-        getEntity().locX = value;
+        entity.locX = value;
     }
 
     @Override
     public void setLocY(double value) {
-        getEntity().locY = value;
+        entity.locY = value;
     }
 
     @Override
     public void setLocZ(double value) {
-        getEntity().locZ = value;
+        entity.locZ = value;
     }
 
     @Override
     public float getLength() {
-        return getEntity().length;
+        return entity.length;
     }
 
     @Override
@@ -293,7 +293,7 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public void lookAt(org.bukkit.entity.Entity entity, float headYaw) {
-        getHandle().getControllerLook().a(((CraftEntity) entity).getHandle(), headYaw, NMSEntityUtil.getMaxHeadRotation(getEntity()));
+        getHandle().getControllerLook().a(((CraftEntity) entity).getHandle(), headYaw, NMSEntityUtil.getMaxHeadRotation(this.entity));
     }
 
     @Override
@@ -308,67 +308,67 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public void setLocation(org.bukkit.Location location) {
-        getEntity().setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+        entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
     }
 
     @Override
     public org.bukkit.entity.Entity findPlayer(double range) {
-        Entity candidate = getEntity().world.findNearbyPlayer(getEntity(), range);
+        Entity candidate = entity.world.findNearbyPlayer(entity, range);
         return candidate != null ? candidate.getBukkitEntity() : null;
     }
 
     @Override
     public org.bukkit.entity.Entity findEntity(Class<?> nmsTypeClass, Object boundingBox) {
-        return getEntity().world.a(nmsTypeClass, (AxisAlignedBB) boundingBox, getEntity()).getBukkitEntity();
+        return entity.world.a(nmsTypeClass, (AxisAlignedBB) boundingBox, entity).getBukkitEntity();
     }
 
     @Override
     public Object growBoundingBox(double d0, double d1, double d2) {
-        return getEntity().boundingBox.grow(d0, d1, d2);
+        return entity.boundingBox.grow(d0, d1, d2);
     }
 
     @Override
     public float distanceTo(org.bukkit.entity.Entity entity) {
-        return getEntity().e(((CraftEntity) entity).getHandle());
+        return this.entity.e(((CraftEntity) entity).getHandle());
     }
 
     @Override
     public double getSpeed() {
-        if (getEntity() == null) {
+        if (entity == null) {
             return GenericAttributes.d.b();
         }
-        return getEntity().getAttributeInstance(GenericAttributes.d).getValue();
+        return entity.getAttributeInstance(GenericAttributes.d).getValue();
     }
 
     @Override
     public void setSpeed(double speed) {
-        getEntity().getAttributeInstance(GenericAttributes.d).setValue(speed);
+        entity.getAttributeInstance(GenericAttributes.d).setValue(speed);
     }
 
     @Override
     public float getPathfindingRadius() {
-        return (float) getEntity().getAttributeInstance(GenericAttributes.b).getValue();
+        return (float) entity.getAttributeInstance(GenericAttributes.b).getValue();
     }
 
     @Override
     public void setPathfindingRadius(float pathfindingRadius) {
-        getEntity().getAttributeInstance(GenericAttributes.b).setValue(pathfindingRadius);
+        entity.getAttributeInstance(GenericAttributes.b).setValue(pathfindingRadius);
     }
 
     @Override
     public void navigateTo(org.bukkit.entity.Entity entity, double speed) {
-        PathEntity path = getEntity().world.findPath(getEntity(), ((CraftEntity) entity).getHandle(), getPathfindingRadius(), true, false, false, true);
+        PathEntity path = this.entity.world.findPath(this.entity, ((CraftEntity) entity).getHandle(), getPathfindingRadius(), true, false, false, true);
         navigateTo(path, speed);
     }
 
     @Override
     public void navigateTo(int x, int y, int z, double speed) {
-        PathEntity path = getEntity().world.a(getEntity(), x, y, z, getPathfindingRadius(), true, false, false, true);
+        PathEntity path = entity.world.a(entity, x, y, z, getPathfindingRadius(), true, false, false, true);
         navigateTo(path, speed);
     }
 
     private void navigateTo(PathEntity path, double speed) {
-        getEntity().setPathEntity(path);
+        entity.setPathEntity(path);
         getHandle().getNavigation().a(path, speed);
     }
 
@@ -384,71 +384,71 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public void setAvoidsWater(boolean flag) {
-        getEntity().getNavigation().a(flag);
+        entity.getNavigation().a(flag);
     }
 
     @Override
     public boolean getAvoidsWater() {
-        return getEntity().getNavigation().a();
+        return entity.getNavigation().a();
     }
 
     @Override
     public void setBreakDoors(boolean flag) {
-        getEntity().getNavigation().b(flag);
+        entity.getNavigation().b(flag);
     }
 
     @Override
     public boolean getBreakDoors() {
-        return getEntity().getNavigation().c();
+        return entity.getNavigation().c();
     }
 
     @Override
     public void setEnterDoors(boolean flag) {
-        getEntity().getNavigation().c(flag);
+        entity.getNavigation().c(flag);
     }
 
     @Override
     public void setAvoidSun(boolean flag) {
-        getEntity().getNavigation().d(flag);
+        entity.getNavigation().d(flag);
     }
 
     @Override
     public void setCanSwim(boolean flag) {
-        getEntity().getNavigation().e(flag);
+        entity.getNavigation().e(flag);
     }
 
     @Override
     public int getMaxHeadRotation() {
-        return NMSEntityUtil.getMaxHeadRotation(getEntity());
+        return NMSEntityUtil.getMaxHeadRotation(entity);
     }
 
     @Override
     public void setInvisible(boolean flag) {
-        getEntity().setInvisible(flag);
+        entity.setInvisible(flag);
     }
 
     @Override
     public boolean isInvisible() {
-        return getEntity().isInvisible();
+        return entity.isInvisible();
     }
 
     @Override
     public void setSneaking(boolean flag) {
-        getEntity().setSneaking(flag);
+        entity.setSneaking(flag);
     }
 
     @Override
     public boolean isSneaking() {
-        return getEntity().isSneaking();
+        return entity.isSneaking();
     }
 
     @Override
     public void setSprinting(boolean flag) {
-        getEntity().setSprinting(flag);
+        entity.setSprinting(flag);
     }
 
     @Override
     public boolean isSprinting() {
-        return getEntity().isSprinting();
+        return entity.isSprinting();
     }
 }

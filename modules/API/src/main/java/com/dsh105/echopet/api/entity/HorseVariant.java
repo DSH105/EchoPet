@@ -41,7 +41,7 @@ public enum HorseVariant {
 
     public static HorseVariant getForBukkitColour(Horse.Color colour) {
         for (HorseVariant v : values()) {
-            if (v.getBukkitColour().equals(colour)) {
+            if (v.bukkitColour.equals(colour)) {
                 return v;
             }
         }

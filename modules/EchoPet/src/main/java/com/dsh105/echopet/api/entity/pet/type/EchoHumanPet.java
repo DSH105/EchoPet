@@ -72,12 +72,12 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
         name = name.length() > 16 ? name.substring(0, 16) : name;
         boolean success = super.setName(name, sendFailMessage);
         if (success) {
-            if (isInitiated()) {
+            if (initiated) {
                 updatePosition();
             }
 
-            if (getGameProfile() != null) {
-                gameProfile = WrappedGameProfile.getNewProfile(getGameProfile(), name);
+            if (gameProfile != null) {
+                gameProfile = WrappedGameProfile.getNewProfile(gameProfile, name);
             }
         }
         return success;
@@ -86,7 +86,7 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntity, EntityHumanPet> 
     @Override
     public boolean teleport(Location to) {
         boolean success = super.teleport(to);
-        if (isInitiated()) {
+        if (initiated) {
             updatePosition();
         }
         return success;

@@ -38,15 +38,15 @@ public abstract class PetGoal {
     }
 
     public EntityPet getEntity() {
-        return getPet().getEntity();
+        return pet.getEntity();
     }
 
     public EntityPetModifier getModifier() {
-        return getPet().getModifier();
+        return pet.getModifier();
     }
 
     public LivingEntity getBukkitEntity() {
-        return getPet().getBukkitEntity();
+        return pet.getBukkitEntity();
     }
 
     public abstract PetGoalType getType();

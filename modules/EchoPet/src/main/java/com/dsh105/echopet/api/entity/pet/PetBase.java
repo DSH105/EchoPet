@@ -100,8 +100,8 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
                 JUMP_FIELD = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityLiving")).getSafeFieldByName(getModifier().getJumpField());
 
-                getEntity().modifyBoundingBox(width(), height());
-                getEntity().setFireProof(true);
+                entity.modifyBoundingBox(width(), height());
+                entity.setFireProof(true);
                 getBukkitEntity().setMaxHealth(getType().getMaxHealth());
                 getBukkitEntity().setHealth(getBukkitEntity().getMaxHealth());
                 jumpHeight = PetSettings.JUMP_HEIGHT.getValue(getType().storageName());
@@ -137,7 +137,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public <P extends Pet<T, S>> EntityPetModifier<P> getModifier() {
-        return (EntityPetModifier<P>) getEntity().getModifier();
+        return (EntityPetModifier<P>) entity.getModifier();
     }
 
     @Override
@@ -170,7 +170,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             name = name.substring(0, 32);
         }
 
-        if (EchoPet.getManager().getPetNameMapFor(getOwnerIdent()).containsKey(name)) {
+        if (EchoPet.getManager().getPetNameMapFor(ownerIdent).containsKey(name)) {
             Matcher matcher = PREVIOUS_NAME_PATTERN.matcher(name);
             if (matcher.matches()) {
                 // Append a number onto the end to prevent duplicate names
@@ -199,7 +199,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             if (Settings.STRIP_DIACRITICS.getValue()) {
                 name = StringUtil.stripDiacritics(name);
             }
-            EchoPet.getManager().unmapPetName(getOwnerIdent(), this.name);
+            EchoPet.getManager().unmapPetName(ownerIdent, this.name);
 
             this.name = name;
             getBukkitEntity().setCustomName(this.name);
@@ -326,12 +326,12 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             return;
         }
 
-        if (getEntity() != null && getBukkitEntity() != null) {
+        if (entity != null && getBukkitEntity() != null) {
             Particle.DEATH_CLOUD.builder().show(getLocation());
             getBukkitEntity().remove();
             if (makeDeathSound) {
                 if (getDeathSound() != null && !getDeathSound().isEmpty()) {
-                    getEntity().makeSound(getDeathSound(), 1.0F, 1.0F);
+                    entity.makeSound(getDeathSound(), 1.0F, 1.0F);
                 }
             }
         }
@@ -351,7 +351,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
         } else if (!PetSettings.ALLOW_RIDERS.getValue(getType().storageName())) {
             failMessage = Lang.RIDERS_DISABLED.getValue("type", getType().humanName());
         } else {
-            if (isOwnerRiding()) {
+            if (owningRiding) {
                 setOwnerRiding(false);
             }
 
@@ -392,7 +392,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
         } else if (!PetSettings.ALLOW_RIDERS.getValue(getType().storageName())) {
             failMessage = Lang.RIDERS_DISABLED.getValue("type", getType().humanName());
         } else {
-            if (isOwnerRiding()) {
+            if (owningRiding) {
                 setOwnerRiding(false);
             }
 
@@ -421,7 +421,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void despawnRider() {
-        getRider().despawn(true);
+        rider.despawn(true);
         if (EchoPet.getManager() instanceof SQLPetManager) {
             ((SQLPetManager) EchoPet.getManager()).clearRider(this);
         }
@@ -497,18 +497,18 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void setOwnerRiding(boolean flag) {
-        if (isOwnerRiding() == flag) {
+        if (owningRiding == flag) {
             return;
         }
-        if (isHat()) {
+        if (hat) {
             setHat(false);
         }
 
         if (flag) {
             this.ownerInMountingProcess = true;
 
-            if (getRider() != null) {
-                getRider().despawn(false);
+            if (rider != null) {
+                rider.despawn(false);
             }
             getBukkitEntity().setPassenger(getOwner());
             if (this instanceof EnderDragonPet) {
@@ -517,13 +517,13 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
             this.ownerInMountingProcess = false;
 
-            getEntity().modifyBoundingBox(width() / 2, height() / 2);
+            entity.modifyBoundingBox(width() / 2, height() / 2);
         } else {
             if (this instanceof EnderDragonPet) {
                 getModifier().setNoClipEnabled(true);
             }
             EchoPet.getManager().loadRider(this);
-            getEntity().modifyBoundingBox(width(), height());
+            entity.modifyBoundingBox(width(), height());
             teleportToOwner();
         }
 
@@ -537,22 +537,22 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
 
     @Override
     public void setHat(boolean flag) {
-        if (isHat() == flag) {
+        if (hat == flag) {
             return;
         }
-        if (isOwnerRiding()) {
+        if (owningRiding) {
             setOwnerRiding(false);
         }
 
         if (flag) {
-            if (getRider() != null) {
-                getRider().despawn(false);
+            if (rider != null) {
+                rider.despawn(false);
             }
             getOwner().setPassenger(getBukkitEntity());
         } else {
             getOwner().setPassenger(null);
             EchoPet.getManager().loadRider(this);
-            getEntity().modifyBoundingBox(width(), height());
+            entity.modifyBoundingBox(width(), height());
             teleportToOwner();
         }
 
@@ -584,7 +584,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             return;
         }
 
-        if (isOwnerRiding() && getModifier().getPassenger() == null && !isOwnerInMountingProcess()) {
+        if (owningRiding && getModifier().getPassenger() == null && !ownerInMountingProcess) {
             setOwnerRiding(false);
         }
 
@@ -599,7 +599,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             }
         }
 
-        if (isHat()) {
+        if (hat) {
             float yaw = (getType() == PetType.ENDER_DRAGON ? getOwner().getLocation().getYaw() - 180 : getOwner().getLocation().getYaw());
             getModifier().setYaw(yaw);
         }
@@ -613,7 +613,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
     @Override
     public void onRide(float sideMotion, float forwardMotion) {
         if (getModifier().getPassenger() == null || getModifier().getPassenger() != getOwner()) {
-            getEntity().updateMotion(sideMotion, forwardMotion);
+            entity.updateMotion(sideMotion, forwardMotion);
             getModifier().setStepHeight(0.5F);
             return;
         }
@@ -638,13 +638,13 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
             return;
         }
 
-        getModifier().setSpeed((float) getRideSpeed());
+        getModifier().setSpeed((float) rideSpeed);
         // Apply all changes to entity motion
-        getEntity().updateMotion(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
+        entity.updateMotion(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
         if (JUMP_FIELD != null) {
             boolean canFly = PetSettings.CAN_FLY.getValue(getType().storageName());
-            double jumpHeight = canFly ? 0.5D : getJumpHeight();
+            double jumpHeight = canFly ? 0.5D : this.jumpHeight;
             if (canFly || getModifier().isGrounded()) {
                 if (JUMP_FIELD.getAccessor().get(getModifier().getPassenger())) {
                     if (getOwner().isFlying()) {
@@ -715,11 +715,11 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
         }
 
         public String getSetter() {
-            return "set" + getKey();
+            return "set" + key;
         }
 
         public String getGetter() {
-            return "is" + getKey();
+            return "is" + key;
         }
     }
 }

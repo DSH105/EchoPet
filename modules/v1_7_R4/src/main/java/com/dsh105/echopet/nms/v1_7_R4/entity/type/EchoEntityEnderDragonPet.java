@@ -19,7 +19,7 @@ public class EchoEntityEnderDragonPet extends EntityEnderDragon implements IAnim
     public EchoEntityEnderDragonPet(World world, EnderDragonPet pet) {
         super(world);
         this.modifier = new EchoEntityPetBase<>(pet, this);
-        this.getModifier().setNoClipEnabled(true);
+        modifier.setNoClipEnabled(true);
     }
 
     /*

@@ -70,7 +70,7 @@ public class EchoIronGolemPet extends PetBase<IronGolem, EntityIronGolemPet> imp
     @Override
     public void onLive() {
         if (this.holdingRoseCounter > 0 && --this.holdingRoseCounter <= 0) {
-            if (getHoldingRose()) {
+            if (holdingRose) {
                 setHoldingRose(true);
             } else {
                 this.holdingRoseCounter = 0;
