@@ -47,6 +47,7 @@ public class PetRegistry {
         List<Field> typeMaps = new ArrayList<Field>();
         for (Field candidate : entityTypes.getDeclaredFields()) {
             if (Map.class.isAssignableFrom(candidate.getType())) {
+                candidate.setAccessible(true);
                 typeMaps.add(candidate);
             }
         }
@@ -54,7 +55,7 @@ public class PetRegistry {
             CLASS_TO_NAME_MODIFIER = new EntityMapModifier<Class<?>, String>((Map<Class<?>, String>) typeMaps.get(1).get(null));
             CLASS_TO_ID_MODIFIER = new EntityMapModifier<Class<?>, Integer>((Map<Class<?>, Integer>) typeMaps.get(3).get(null));
         } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Failed to initialise Entity type maps correctly!");
+            throw new IllegalStateException("Failed to initialise Entity type maps correctly!", e);
         }
     }
 
