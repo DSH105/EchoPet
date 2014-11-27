@@ -35,12 +35,7 @@
 package com.dsh105.echopet.api.config;
 
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.powermessage.core.PowerMessage;
-import com.dsh105.powermessage.markup.MarkupBuilder;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.conversations.Conversable;
-import org.bukkit.entity.Player;
+import com.dsh105.echopet.bridge.MessageBridge;
 
 public class LangSetting extends AbstractSetting<String> {
 
@@ -64,31 +59,14 @@ public class LangSetting extends AbstractSetting<String> {
         if (message == null || message.isEmpty() || message.equalsIgnoreCase("NONE")) {
             return null;
         }
-        return ChatColor.translateAlternateColorCodes('&', EchoPet.getCommandManager().getResponder().format("{c1}" + message));
+        return EchoPet.getBridge(MessageBridge.class).translateChatColours(EchoPet.getCommandManager().getResponder().format("{c1}" + message));
     }
 
-    public void send(Player player, String... pairedReplacements) {
-        send((CommandSender) player, pairedReplacements);
-    }
-
-    // Not ideal, but it's easy to call
-    public void send(CommandSender sender, String... pairedReplacements) {
+    public void send(Object conversable, String... pairedReplacements) {
         String message = getValue(pairedReplacements);
         if (message == null) {
             return;
         }
-        new PowerMessage(Lang.PREFIX.getValue() + ChatColor.translateAlternateColorCodes('&', message)).send(sender);
-    }
-
-    public void send(Conversable conversable, String... pairedReplacements) {
-        if (conversable instanceof CommandSender) {
-            send((CommandSender) conversable, pairedReplacements);
-            return;
-        }
-
-        String message = getValue(pairedReplacements);
-        if (message != null) {
-            conversable.sendRawMessage(Lang.PREFIX.getValue() + ChatColor.translateAlternateColorCodes('&', message));
-        }
+        EchoPet.getBridge(MessageBridge.class).send(conversable, Lang.PREFIX.getValue(), message);
     }
 }

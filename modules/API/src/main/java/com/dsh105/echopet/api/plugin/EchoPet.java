@@ -18,11 +18,16 @@
 package com.dsh105.echopet.api.plugin;
 
 import com.captainbern.minecraft.reflection.MinecraftReflection;
+import com.dsh105.commodus.Affirm;
+import com.dsh105.commodus.AffirmationCallable;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.dependency.PluginDependencyProvider;
 import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.registration.PetRegistry;
+import com.dsh105.echopet.bridge.BridgeManager;
+import com.dsh105.echopet.bridge.PlatformBridge;
+import com.dsh105.echopet.util.AffirmationException;
 import com.dsh105.influx.InfluxBukkitManager;
 
 public class EchoPet {
@@ -38,10 +43,25 @@ public class EchoPet {
         }
         CORE = core;
         LOG = new Log("EchoPet");
+        Affirm.setErrorCallable(new AffirmationCallable<Object>() {
+            @Override
+            public Object call(Throwable cause) {
+                throw new AffirmationException(cause);
+            }
+        });
     }
 
     public static EchoPetCore getCore() {
         return CORE;
+    }
+
+    public static BridgeManager getBridgeManager() {
+        // TODO:
+        return null;
+    }
+
+    public static <T extends PlatformBridge> T getBridge(Class<T> bridgeType) {
+        return getBridgeManager().getBridge(bridgeType);
     }
 
     public static PetManager getManager() {
