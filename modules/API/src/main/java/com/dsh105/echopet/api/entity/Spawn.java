@@ -23,7 +23,7 @@ import com.captainbern.reflection.SafeMethod;
 import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.event.PetPreSpawnEvent;
+import com.dsh105.echopet.api.event.bukkit.PetPreSpawnEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -32,7 +32,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class Spawn {
 
-    public static <T extends LivingEntity, S extends EntityPet> S spawn(Pet<T, S> pet) {
+    public static <T extends LivingEntity, S extends EntityPet> S spawnBukkit(Pet<T, S> pet) {
         PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, pet.getOwner().getLocation());
         Bukkit.getServer().getPluginManager().callEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
@@ -53,5 +53,9 @@ public class Spawn {
             return null;
         }
         return entityPet;
+    }
+
+    public static <T extends LivingEntity, S extends EntityPet> S spawnSponge(Pet<T, S> pet) {
+        return null;
     }
 }

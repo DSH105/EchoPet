@@ -55,7 +55,7 @@ public class Lang extends Options {
             INVALID_PET_DATA = new LangSetting("invalid_pet_data", "{c1}Invalid data types entered: {c2}%data%"),
             NAME_NOT_ALLOWED = new LangSetting("name_not_allowed", "{c1}You are not permitted to name your pet {c2}%name%{c1}."),
             DATA_FORCED = new LangSetting("data_forced", "{c1}The following data types have been forced: {c2}%data%"),
-                NO_SELECTED_PET = new LangSetting("no_selected_pet", "{c1}Use {c2}/pet view {c1} to select a pet to edit."),
+                NO_SELECTED_PET = new LangSetting("no_selected_pet", "{c1}Use {c2}/pet view {c1}to select a pet to edit."),
 
     PET_LOADED = new LangSetting("pet_loaded", "{c2}%name% {c1}was retrieved from your last session.", "Sent when a pet is loaded."),
             PETS_LOADED = new LangSetting("pets_loaded", "{c2}%number% {c1}pets were retrieved from your last session.", "Sent when a pet is loaded."),

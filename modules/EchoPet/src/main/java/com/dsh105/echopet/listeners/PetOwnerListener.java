@@ -25,7 +25,7 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.pet.type.HumanPet;
-import com.dsh105.echopet.api.event.PetInteractEvent;
+import com.dsh105.echopet.api.event.bukkit.PetInteractEvent;
 import com.dsh105.echopet.api.hook.VanishProvider;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;

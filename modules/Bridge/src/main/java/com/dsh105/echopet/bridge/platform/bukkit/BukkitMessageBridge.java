@@ -1,4 +1,4 @@
-package com.dsh105.echopet.bridge.bukkit;
+package com.dsh105.echopet.bridge.platform.bukkit;
 
 import com.dsh105.commodus.Affirm;
 import com.dsh105.echopet.bridge.MessageBridge;

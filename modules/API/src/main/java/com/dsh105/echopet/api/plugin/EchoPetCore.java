@@ -22,6 +22,7 @@ import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.dependency.PluginDependencyProvider;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.registration.PetRegistry;
+import com.dsh105.echopet.bridge.BridgeManager;
 import com.dsh105.influx.InfluxBukkitManager;
 import com.jolbox.bonecp.BoneCP;
 import org.bukkit.plugin.Plugin;
@@ -29,6 +30,8 @@ import org.bukkit.plugin.Plugin;
 public interface EchoPetCore extends Plugin {
 
     public static final String DEFAULT_PREFIX = "&4[&cEchoPet&4]&r ";
+
+    BridgeManager getBridgeManager();
 
     InfluxBukkitManager getCommandManager();
 

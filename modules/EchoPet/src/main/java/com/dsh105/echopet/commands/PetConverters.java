@@ -48,8 +48,11 @@ public class PetConverters {
 
     public static void selectPet(Player owner, UUID petUniqueId) {
         Preconditions.checkNotNull(owner, "Pet owner must not be null.");
-        Preconditions.checkNotNull(petUniqueId, "Pet unique ID must not be null.");
-        PLAYER_TO_PET_ID.put(IdentUtil.getIdentificationForAsString(owner), petUniqueId);
+        String ident = IdentUtil.getIdentificationForAsString(owner);
+        if (petUniqueId == null) {
+            PLAYER_TO_PET_ID.remove(ident);
+        }
+        PLAYER_TO_PET_ID.put(ident, petUniqueId);
     }
 
     private static Player getTarget(ContextualVariable variable) throws ConversionException {
@@ -145,10 +148,11 @@ public class PetConverters {
         @Override
         public Pet convert(CommandContext<?> context) throws ConversionException {
             Player sender = ((BukkitCommandEvent<Player>) context).sender();
-            Pet pet = null;
             String ident = IdentUtil.getIdentificationForAsString(sender);
-            if (PLAYER_TO_PET_ID.containsKey(ident)) {
-                pet = EchoPet.getManager().getPetById(PLAYER_TO_PET_ID.get(ident));
+            UUID petUniqueId = PLAYER_TO_PET_ID.get(ident);
+            Pet pet = null;
+            if (petUniqueId != null) {
+                pet = EchoPet.getManager().getPetById(petUniqueId);
             }
 
             if (pet == null) {

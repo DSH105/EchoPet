@@ -30,6 +30,8 @@ import com.dsh105.echopet.api.plugin.*;
 import com.dsh105.echopet.api.plugin.hook.VanishProviderBase;
 import com.dsh105.echopet.api.plugin.hook.WorldGuardProviderBase;
 import com.dsh105.echopet.api.registration.PetRegistry;
+import com.dsh105.echopet.bridge.BridgeManager;
+import com.dsh105.echopet.bridge.ServerBridge;
 import com.dsh105.echopet.commands.IncompatiblePluginCommand;
 import com.dsh105.echopet.commands.admin.PetAdminCommand;
 import com.dsh105.echopet.commands.basic.PetCommand;
@@ -66,16 +68,16 @@ import java.util.Map;
 @Authorize(Perm.ECHOPET)
 public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandListener {
 
+    private BridgeManager bridgeManager;
     private InfluxBukkitManager commandManager;
     private PetManager manager;
+    private PetRegistry petRegistry;
     private BoneCP dbPool;
 
     protected YAMLConfigManager configManager;
     private HashMap<ConfigType, YAMLConfig> configFiles = new HashMap<>();
     private HashMap<ConfigType, Options> settings = new HashMap<>();
     private List<PluginDependencyProvider> providers = new ArrayList<>();
-
-    private PetRegistry petRegistry;
 
     // Update Checker stuff
     public boolean updateAvailable = false;
@@ -86,7 +88,9 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
     @Override
     public void onLoad() {
         EchoPet.setCore(this);
+        bridgeManager = new BridgeManager(ServerBridge.BUKKIT);
         commandManager = new BukkitCommandManager(this);
+
     }
 
     @Override
@@ -233,6 +237,11 @@ public class EchoPetPlugin extends JavaPlugin implements EchoPetCore, CommandLis
                 }
             });
         }
+    }
+
+    @Override
+    public BridgeManager getBridgeManager() {
+        return bridgeManager;
     }
 
     @Override

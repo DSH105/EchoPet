@@ -15,7 +15,7 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.api.event;
+package com.dsh105.echopet.api.event.bukkit;
 
 import com.dsh105.echopet.api.config.LangSetting;
 import org.bukkit.command.CommandSender;

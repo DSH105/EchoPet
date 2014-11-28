@@ -26,6 +26,7 @@ import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.api.config.ConfigType;
 import com.dsh105.echopet.api.registration.PetRegistry;
 import com.dsh105.echopet.bridge.BridgeManager;
+import com.dsh105.echopet.bridge.GenericBridge;
 import com.dsh105.echopet.bridge.PlatformBridge;
 import com.dsh105.echopet.util.AffirmationException;
 import com.dsh105.influx.InfluxBukkitManager;
@@ -56,12 +57,11 @@ public class EchoPet {
     }
 
     public static BridgeManager getBridgeManager() {
-        // TODO:
-        return null;
+        return CORE.getBridgeManager();
     }
 
-    public static <T extends PlatformBridge> T getBridge(Class<T> bridgeType) {
-        return getBridgeManager().getBridge(bridgeType);
+    public static <T extends GenericBridge> T getBridge(Class<T> bridgeType) {
+        return getBridgeManager().getGenericBridge(bridgeType);
     }
 
     public static PetManager getManager() {
