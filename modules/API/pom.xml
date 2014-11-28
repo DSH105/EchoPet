@@ -19,7 +19,12 @@
     </parent>
 
     <dependencies>
-
+        <!-- Bridge Module -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-Bridge</artifactId>
+            <version>${plugin.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

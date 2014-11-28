@@ -39,34 +39,13 @@ import java.util.List;
 
 public class InfoCommand implements CommandListener {
 
-    // TODO: merge this with the "view" command
-
     @Command(
             syntax = "info",
-            desc = "Retrieve info on all of your active pets"
+            desc = "Retrieve info on your currently selected pet.",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
     )
     @Authorize(Perm.INFO)
-    public boolean info(BukkitCommandEvent<Player> event) {
-        List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender());
-        if (pets.size() <= 0) {
-            event.respond(Lang.NO_PETS_FOUND.getValue());
-            return true;
-        }
-
-        for (Pet pet : pets) {
-            ViewMenu.displayInfo(pet);
-        }
-        event.respond(Lang.HOVER_TIP.getValue());
-        return true;
-    }
-
-    @Command(
-            syntax = "<pet_name> info",
-            desc = "Retrieve info on one of your active pets (specified by <pet_name> or nothing if you only have one pet)",
-            help = "<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"
-    )
-    @Authorize(Perm.INFO)
-    public boolean infoForPet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+    public boolean infoForPet(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         if (pet == null) {
             return true;
         }

@@ -57,11 +57,12 @@ public class SimplePetManager implements PetManager {
 
         if (add) {
             existing.add(pet);
+            PET_ID_TO_PET_MAP.put(pet.getPetId(), pet);
         } else {
             existing.remove(pet);
+            PET_ID_TO_PET_MAP.remove(pet.getPetId());
         }
         IDENT_TO_PET_MAP.put(pet.getOwnerIdent(), existing);
-        PET_ID_TO_PET_MAP.put(pet.getPetId(), pet);
     }
 
     @Override

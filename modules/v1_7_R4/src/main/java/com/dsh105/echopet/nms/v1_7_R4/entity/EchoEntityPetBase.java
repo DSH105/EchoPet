@@ -21,13 +21,12 @@ import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.event.PetAttackEvent;
+import com.dsh105.echopet.api.event.bukkit.PetAttackEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.v1_7_R4.NMSEntityUtil;
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 
 public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {

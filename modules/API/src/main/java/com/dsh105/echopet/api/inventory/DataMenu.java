@@ -76,6 +76,11 @@ public class DataMenu {
         HashMap<Integer, Icon> slots = layout.getSlots();
         for (Map.Entry<Integer, Icon> entry : slots.entrySet()) {
             final int slotNumber = entry.getKey();
+
+            if (slotNumber >= typePresets.size()) {
+                continue;
+            }
+
             final Icon icon = entry.getValue();
             final MenuPreset preset = typePresets.get(slotNumber);
             final PetData petData = preset.getPetData();
@@ -85,7 +90,7 @@ public class DataMenu {
                 icon.setCallback(new IconCallback() {
                     @Override
                     public void run(Player viewer) {
-                        if (pet != null && pet.getOwner() != null) {
+                        if (pet.getOwner() != null) {
                             if (petData == null) {
                                 Menu menu = getSecondLevelLayout(pet, preset.getDataType()).toMenu(EchoPet.getCore());
                                 menu.show(viewer);

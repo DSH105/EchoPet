@@ -28,7 +28,7 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.SizeCategory;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.PetBase;
-import com.dsh105.echopet.api.event.PetRideMoveEvent;
+import com.dsh105.echopet.api.event.bukkit.PetRideMoveEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderDragon;

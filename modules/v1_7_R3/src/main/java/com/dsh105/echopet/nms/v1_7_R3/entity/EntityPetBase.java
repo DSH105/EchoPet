@@ -22,7 +22,7 @@ import com.dsh105.echopet.api.config.PetSettings;
 import com.dsh105.echopet.api.entity.ai.PetGoalSelector;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.event.PetAttackEvent;
+import com.dsh105.echopet.api.event.bukkit.PetAttackEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.nms.v1_7_R3.NMSEntityUtil;
 import net.minecraft.server.v1_7_R3.*;

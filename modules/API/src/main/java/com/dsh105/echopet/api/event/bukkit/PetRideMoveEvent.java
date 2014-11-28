@@ -15,81 +15,82 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.api.event;
+package com.dsh105.echopet.api.event.bukkit;
 
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 /**
- * Called when a Pet damages another Entity
+ * Called when a Pet moves when their owner is riding
  */
 
-public class PetDamageEvent extends Event implements Cancellable {
+public class PetRideMoveEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled = true; // cancelled by default
+    private boolean cancelled = false;
 
     private Pet pet;
-    private double damage;
-    private DamageCause damageCause;
+    private float forwardSpeed;
+    private float sidewardSpeed;
 
-    public PetDamageEvent(Pet pet, DamageCause damageCause, final double damage) {
+    public PetRideMoveEvent(Pet pet, float forwardSpeed, float sidewardSpeed) {
         this.pet = pet;
-        this.damage = damage;
-        this.damageCause = damageCause;
-    }
-
-    /**
-     * Gets the damage dealt by the Pet
-     *
-     * @return damage dealt
-     */
-    public double getDamage() {
-        return this.damage;
-    }
-
-    /**
-     * Sets the damage of the event
-     *
-     * @param damage amount of health to take off
-     */
-    public void setDamage(double damage) {
-        this.damage = damage;
+        this.forwardSpeed = forwardSpeed;
+        this.sidewardSpeed = sidewardSpeed;
     }
 
     /**
      * Gets the Pet involved in this event
      *
-     * @return the Pet involved
+     * @return Pet involved
      */
     public Pet getPet() {
         return this.pet;
     }
 
-    public DamageCause getDamageCause() {
-        return this.damageCause;
+    /**
+     * Gets the forward motion of the Pet
+     *
+     * @return Forward motion
+     */
+    public float getForwardMotionSpeed() {
+        return this.forwardSpeed;
     }
 
     /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
+     * Gets the sideward motion of the Pet
      *
-     * @return true if this event is cancelled
+     * @return Sideward motion
      */
+    public float getSidewardMotionSpeed() {
+        return this.sidewardSpeed;
+    }
+
+    /**
+     * Sets the forward motion to be applied to the Pet
+     *
+     * @param forwardMotionSpeed New forward motion
+     */
+    public void setForwardMotionSpeed(float forwardMotionSpeed) {
+        this.forwardSpeed = forwardMotionSpeed;
+    }
+
+    /**
+     * Sets the sideward motion to be applied to the Pet
+     *
+     * @param sidewardMotionSpeed New sideward motion
+     */
+    public void setSidewardMotionSpeed(float sidewardMotionSpeed) {
+        this.sidewardSpeed = sidewardMotionSpeed;
+    }
+
     @Override
     public boolean isCancelled() {
         return cancelled;
     }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins
-     *
-     * @param cancel true if you wish to cancel this event
-     */
     @Override
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;

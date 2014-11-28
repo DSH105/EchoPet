@@ -37,8 +37,8 @@ import com.dsh105.echopet.api.entity.ai.goal.PetGoalLookAtPlayer;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.pet.type.EnderDragonPet;
-import com.dsh105.echopet.api.event.PetRideJumpEvent;
-import com.dsh105.echopet.api.event.PetRideMoveEvent;
+import com.dsh105.echopet.api.event.bukkit.PetRideJumpEvent;
+import com.dsh105.echopet.api.event.bukkit.PetRideMoveEvent;
 import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.SQLPetManager;
@@ -94,7 +94,7 @@ public abstract class PetBase<T extends LivingEntity, S extends EntityPet> imple
                 petId = UUID.randomUUID();
             }
 
-            this.entity = Spawn.spawn(this);
+            this.entity = Spawn.spawnBukkit(this);
             if (this.entity != null) {
                 // Begin initiating our EntityPet
 

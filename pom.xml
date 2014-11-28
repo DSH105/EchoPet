@@ -32,6 +32,7 @@
     </properties>
 
     <modules>
+        <module>modules/Bridge</module>
         <module>modules/API</module>
         <!--<module>modules/v1_7_R1</module>
         <module>modules/v1_7_R2</module>

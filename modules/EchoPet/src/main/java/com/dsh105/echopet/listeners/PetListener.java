@@ -22,7 +22,7 @@ import com.dsh105.echopet.api.config.Lang;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.event.PetInteractEvent;
+import com.dsh105.echopet.api.event.bukkit.PetInteractEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.EchoPetAPI;
 import org.bukkit.Material;
