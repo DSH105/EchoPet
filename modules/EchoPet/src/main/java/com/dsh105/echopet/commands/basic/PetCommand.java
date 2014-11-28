@@ -94,9 +94,24 @@ public class PetCommand implements CommandListener {
     @Nested
     @Hidden
     // Internal use by "/pet view" - that's why it's hidden ;D
-    public boolean selectByUniqueId(BukkitCommandEvent<Player> event, @Bind("uuid") UUID petUniqueId, @Bind("pet_name") String name) {
+    public boolean selectByUniqueId(BukkitCommandEvent<Player> event, @Verify("^(?!none$).*") @Bind("pet_uuid") UUID petUniqueId, @Bind("pet_name") String name) {
         PetConverters.selectPet(event.sender(), petUniqueId);
         event.respond((name == null ? Lang.PET_SELECTED : Lang.PET_SELECTED_OF_NAME).getValue("name", name));
+        return true;
+    }
+
+    @Command(
+            syntax = "uuid <pet_uuid> none",
+            desc = "Remove any pet selection.",
+            help = "Not intended for external use."
+    )
+    @Authorize(Perm.UUID_SELECT)
+    @Nested
+    @Hidden
+    // Internal use by "/pet view" - that's why it's hidden ;D
+    public boolean selectNone(BukkitCommandEvent<Player> event) {
+        PetConverters.selectPet(event.sender(), null);
+        // TODO: send a message perhaps?
         return true;
     }
 

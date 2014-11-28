@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class ToggleCommand implements CommandListener {
 
-    @Command(
+    /*@Command(
             syntax = "toggle",
             desc = "Toggles an existing pet"
     )
@@ -86,15 +86,15 @@ public class ToggleCommand implements CommandListener {
         }
         event.respond(Lang.PET_SHOWN.getValue("name", pet.getName()));
         return true;
-    }
+    }*/
 
     @Command(
-            syntax = "<pet_name> toggle",
-            desc = "Toggles an existing pet (specified by <pet_name> or nothing if you only have one pet)",
-            help = "<pet_name> is the name of an existing pet e.g. \"My pet\" (in quotations)"
+            syntax = "toggle",
+            desc = "Toggles your currently selected pet.",
+            help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
     )
     @Authorize(Perm.TOGGLE)
-    public boolean togglePet(BukkitCommandEvent<Player> event, @Bind("pet_name") @Convert(PetConverters.ByName.class) Pet pet) {
+    public boolean togglePet(BukkitCommandEvent<Player> event, @Convert(PetConverters.Selected.class) Pet pet) {
         // Does it exist?
         if (pet != null) {
             EchoPet.getManager().save(pet);
