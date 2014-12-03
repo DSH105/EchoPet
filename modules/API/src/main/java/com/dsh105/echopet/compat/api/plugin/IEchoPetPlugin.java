@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import com.dsh105.dshutils.config.YAMLConfig;
+import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.plugin.hook.IVanishProvider;
 import com.dsh105.echopet.compat.api.plugin.hook.IWorldGuardProvider;
@@ -57,10 +57,6 @@ public interface IEchoPetPlugin extends Plugin {
     public ConfigOptions getOptions();
 
     public boolean isUsingNetty();
-
-    public ModuleLogger getModuleLogger();
-
-    public ModuleLogger getReflectionLogger();
 
     public boolean isUpdateAvailable();
 

@@ -55,7 +55,7 @@ public class CommonFields {
            NETWORK_ACCESSOR = new SafeField<Object>(CommonReflection.getPlayerConnectionClass(), "networkManager");
 
             if(!NETWORK_ACCESSOR.getField().getType().equals(CommonReflection.getNetworkManagerClass())) {
-                EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve a valid NetworkManager!");
+                EchoPet.LOG.warning("Failed to retrieve a valid NetworkManager!");
                 NETWORK_ACCESSOR = null;
                 return null;
             }
@@ -70,7 +70,7 @@ public class CommonFields {
             CONNECTION_ACCESSOR = new SafeField<Object>(CommonReflection.getEntityPlayerClass(), "playerConnection");
 
             if(!CONNECTION_ACCESSOR.getField().getType().equals(CommonReflection.getPlayerConnectionClass())) {
-                EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve a valid PlayerConnection!");
+                EchoPet.LOG.warning("Failed to retrieve a valid PlayerConnection!");
                 CONNECTION_ACCESSOR = null;
                 return null;
             }

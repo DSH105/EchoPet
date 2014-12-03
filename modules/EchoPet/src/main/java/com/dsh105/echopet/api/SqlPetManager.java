@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;

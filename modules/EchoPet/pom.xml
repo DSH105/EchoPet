@@ -133,12 +133,12 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.10-R0.1-SNAPSHOT</version>
+            <version>1.8-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>DSHUtils</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <artifactId>Commodus</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.kitteh</groupId>
@@ -256,7 +256,8 @@
                                     <include>com.jolbox:bonecp</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>org.slf4j:slf4j-jdk14</include>
-                                    <include>com.dsh105:DSHUtils</include>
+                                    <include>com.dsh105:Commodus</include>
+                                    <include>com.dsh105:PowerMessage</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -269,8 +270,12 @@
                                     <shadedPattern>com.dsh105.echopet.libraries.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>com.dsh105.dshutils</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries.dshutils</shadedPattern>
+                                    <pattern>com.dsh105.commodus</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libraries.commodus</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.dsh105.powermessage</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libraries.powermessage</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

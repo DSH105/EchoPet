@@ -118,7 +118,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", this.perm));
         }
-        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        //EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
         return false;
     }
 
@@ -129,7 +129,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
         }
-        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        //EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
         return false;
     }
 
@@ -141,7 +141,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", perm));
         }
-        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
+        //EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + perm + " permission needed.");
         return false;
     }
 
@@ -158,7 +158,7 @@ public enum Perm {
         if (sendMessage) {
             Lang.sendTo(player, Lang.NO_PERMISSION.toString().replace("%perm%", dataPerm));
         }
-        //ConsoleLogger.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
+        //EchoPet.LOG.log(Logger.LogLevel.NORMAL, player.getName() + " was denied access to command. " + dataPerm + " permission needed.");
         return false;
     }
 }

@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.plugin.uuid;
 
-import com.dsh105.dshutils.config.YAMLConfig;
+import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.Version;

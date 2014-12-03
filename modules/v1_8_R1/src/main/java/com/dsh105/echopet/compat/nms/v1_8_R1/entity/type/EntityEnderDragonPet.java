@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_R1.entity.type;
 
-import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEnderDragonPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
@@ -307,7 +307,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
             //Nope, absolutely no destruction
             /*if (!this.world.isStatic) {
-                this.bv = this.a(this.head.boundingBox) | this.a(this.body.boundingBox);
+                this.bv = this.a(this.head.getBoundingBox()) | this.a(this.body.getBoundingBox());
 			}*/
         }
     }
@@ -353,9 +353,9 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 		/*if (!this.world.isStatic && this.hurtTicks == 0) {
                 PetGoalAttack attackGoal = (PetGoalAttack) this.petGoalSelector.getGoal(PetGoalAttack.class);
 				if (attackGoal != null && attackGoal.isActive) {
-					this.launchEntities(this.world.getEntities(this, this.wing1.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
-					this.launchEntities(this.world.getEntities(this, this.wing2.boundingBox.grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
-					this.damageEntities(this.world.getEntities(this, this.head.boundingBox.grow(1.0D, 1.0D, 1.0D)));
+					this.launchEntities(this.world.getEntities(this, this.wing1.getBoundingBox().grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
+					this.launchEntities(this.world.getEntities(this, this.wing2.getBoundingBox().grow(4.0D, 2.0D, 4.0D).d(0.0D, -2.0D, 0.0D)));
+					this.damageEntities(this.world.getEntities(this, this.head.getBoundingBox().grow(1.0D, 1.0D, 1.0D)));
 				}
 		}*/
 

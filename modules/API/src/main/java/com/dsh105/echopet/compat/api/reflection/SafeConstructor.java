@@ -36,7 +36,7 @@ public class SafeConstructor<T> {
             Constructor constructor = coreClass.getConstructor(params);
             setConstructor(constructor);
         } catch (NoSuchMethodException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("No such constructor!");
+            EchoPet.LOG.warning("No such constructor!");
         }
     }
 

@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.dshutils.util.GeometryUtil;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeometryUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;

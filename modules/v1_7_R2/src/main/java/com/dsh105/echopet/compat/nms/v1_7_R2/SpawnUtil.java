@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R2;
 
-import com.dsh105.dshutils.DSHPlugin;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -38,7 +38,7 @@ public class SpawnUtil implements ISpawnUtil {
     public EntityPet spawn(IPet pet, Player owner) {
         Location l = owner.getLocation();
         PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, l);
-        DSHPlugin.getPluginInstance().getServer().getPluginManager().callEvent(spawnEvent);
+        EchoPet.getPlugin().getServer().getPluginManager().callEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
             owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Pet spawn was cancelled externally.");
             EchoPet.getManager().removePet(pet, true);

@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R4.entity;
 
-import com.dsh105.dshutils.util.GeometryUtil;
+import com.dsh105.commodus.GeometryUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;

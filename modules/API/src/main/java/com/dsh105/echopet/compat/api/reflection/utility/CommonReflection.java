@@ -158,7 +158,7 @@ public class CommonReflection {
                         }
                     } catch (Exception e) {
                         if(VERSION_TAG == null)
-                            EchoPet.getPlugin().getReflectionLogger().warning("Version tag is null and it appears the server is modded but does not contain the expected method(s)! HoloAPI may not work correctly!");
+                            EchoPet.LOG.warning("Version tag is null and it appears the server is modded but does not contain the expected method(s)! HoloAPI may not work correctly!");
                     }
 
                     MINECARFT_PACKAGE = combine(MINECARFT_PACKAGE_PREFIX, VERSION_TAG);

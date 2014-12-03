@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.EnumUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -94,7 +94,7 @@ public class MenuListener implements Listener {
                     for (MenuItem mi : MenuItem.values()) {
                         if (inv.getItem(slot).equals(mi.getItem()) || inv.getItem(slot).equals(mi.getBoolean(true)) || inv.getItem(slot).equals(mi.getBoolean(false))) {
                             if (mi.getMenuType() == DataMenuType.BOOLEAN) {
-                                if (EnumUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
+                                if (GeneralUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
                                     PetData pd = PetData.valueOf(mi.toString());
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                         if (pet.getPetData().contains(pd)) {

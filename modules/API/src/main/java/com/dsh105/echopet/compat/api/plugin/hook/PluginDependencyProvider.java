@@ -50,10 +50,10 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
                 if (this.dependency != null && this.dependency.isEnabled()) {
                     onHook();
                     this.hooked = true;
-                    EchoPet.getPlugin().getModuleLogger().info("[" + this.dependency.getName() + "] Successfully hooked");
+                    EchoPet.LOG.info("[" + this.dependency.getName() + "] Successfully hooked");
                 }
             } catch (Exception e) {
-                EchoPet.getPlugin().getReflectionLogger().warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?) - " + e.getMessage());
+                EchoPet.LOG.warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?) - " + e.getMessage());
             }
         }
 
@@ -66,7 +66,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
                         dependency = (T) event.getPlugin();
                         onHook();
                         hooked = true;
-                        EchoPet.getPlugin().getModuleLogger().info("[" + getDependencyName() + "] Successfully hooked");
+                        EchoPet.LOG.info("[" + getDependencyName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new RuntimeException("Failed to hook plugin: " + event.getPlugin().getName());
                     }
@@ -79,7 +79,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> implements IPlu
                     dependency = null;
                     onUnhook();
                     hooked = false;
-                    EchoPet.getPlugin().getModuleLogger().info("[" + getDependencyName() + "] Successfully unhooked");
+                    EchoPet.LOG.info("[" + getDependencyName() + "] Successfully unhooked");
                 }
             }
         }, getHandlingPlugin());

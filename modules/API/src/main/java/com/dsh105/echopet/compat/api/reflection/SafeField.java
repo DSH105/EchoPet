@@ -37,7 +37,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             Field field = coreClass.getDeclaredField(fieldName);
             setField(field);
         } catch (NoSuchFieldException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching field with name: " + fieldName);
+            EchoPet.LOG.warning("Failed to find a matching field with name: " + fieldName);
             e.printStackTrace();
         }
     }
@@ -70,7 +70,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             this.field.set(instance, value);
             return true;
         } catch (IllegalAccessException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to access field: " + toString());
+            EchoPet.LOG.warning("Failed to access field: " + toString());
             e.printStackTrace();
         }
         return false;
@@ -84,7 +84,7 @@ public class SafeField<T> implements FieldAccessor<T> {
         try {
             return (T) this.field.get(instance);
         } catch (IllegalAccessException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to access field: " + toString());
+            EchoPet.LOG.warning("Failed to access field: " + toString());
             e.printStackTrace();
         }
         return null;

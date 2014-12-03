@@ -17,34 +17,29 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.paginator.ObjectPaginator;
+import com.dsh105.commodus.paginator.Paginator;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.util.*;
-import com.dsh105.echopet.compat.api.util.fanciful.FancyMessage;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
-import com.dsh105.echopet.compat.api.util.pagination.FancyPaginator;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketPlayOutChat;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.conversation.NameFactory;
+import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PetCommand implements CommandExecutor {
 
@@ -54,12 +49,12 @@ public class PetCommand implements CommandExecutor {
         this.cmdLabel = commandLabel;
     }
 
-    private FancyPaginator getHelp(CommandSender sender) {
-        ArrayList<FancyMessage> helpMessages = new ArrayList<FancyMessage>();
+    private Paginator<PowerMessage> getHelp(CommandSender sender) {
+        ArrayList<PowerMessage> helpMessages = new ArrayList<PowerMessage>();
         for (HelpEntry he : HelpEntry.values()) {
-            helpMessages.add(he.getFancyMessage(sender));
+            helpMessages.add(he.getPowerMessage(sender));
         }
-        return new FancyPaginator(helpMessages, 5);
+        return new Paginator<PowerMessage>(helpMessages, 5);
     }
 
     @Override
@@ -120,65 +115,6 @@ public class PetCommand implements CommandExecutor {
                 }
             } else return true;
         } else if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("debug")) {
-                System.out.println("DEBUG Particles:");
-                for (Field f : new WrapperPacketWorldParticles().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Chat:");
-                for (Field f : new WrapperPacketPlayOutChat().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Meta:");
-                for (Field f : new WrapperPacketEntityMetadata().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Named Spawn:");
-                for (Field f : new WrapperPacketNamedEntitySpawn().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Chat Serializer:");
-                for (Method m : ReflectionUtil.getNMSClass("ChatSerializer").getDeclaredMethods()) {
-                    /*if (ReflectionUtil.getNMSClass("IChatBaseComponent").isAssignableFrom(m.getReturnType())) {
-                        System.out.println("set component: " + m.getName());
-                    } else*/ if (String.class.isAssignableFrom(m.getReturnType())) {
-                        System.out.println("get component: " + m.getName());
-                    }
-                }
-                System.out.println("DEBUG DataWatcher:");
-                for (Method m : ReflectionUtil.getNMSClass("DataWatcher").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG EntityTypes:");
-                for (Field f : ReflectionUtil.getNMSClass("EntityTypes").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Packet:");
-                for (Method m : ReflectionUtil.getNMSClass("PlayerConnection").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG Player:");
-                for (Field f : ReflectionUtil.getNMSClass("EntityPlayer").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG ItemStack:");
-                for (Method m : ReflectionUtil.getNMSClass("ItemStack").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG Achievement:");
-                for (Field f : ReflectionUtil.getNMSClass("Achievement").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-            }
             if (args[0].equalsIgnoreCase("select")) {
                 if (sender instanceof Player) {
                     // We can exempt the player from having the appropriate permission here
@@ -328,12 +264,10 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
                     if (sender instanceof Player && EchoPet.isUsingNetty()) {
-                        FancyPaginator paginator = this.getHelp(sender);
-                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        Paginator<PowerMessage> paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getPages() + " ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                        for (FancyMessage fancy : paginator.getPage(1)) {
-                            fancy.send((Player) sender);
-                        }
+                        paginator.sendPage(sender, 1);
                         sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                     } else {
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
@@ -506,18 +440,16 @@ public class PetCommand implements CommandExecutor {
             // Help pages 1 through to 3
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
-                    if (StringUtil.isInt(args[1])) {
+                    if (GeneralUtil.isInt(args[1])) {
                         if (sender instanceof Player && EchoPet.isUsingNetty()) {
-                            FancyPaginator paginator = this.getHelp(sender);
-                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getIndex() + " ------------");
+                            Paginator<PowerMessage> paginator = this.getHelp(sender);
+                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getPages() + " ------------");
                             sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                            if (Integer.parseInt(args[1]) > paginator.getIndex()) {
+                            if (Integer.parseInt(args[1]) > paginator.getPages()) {
                                 Lang.sendTo(sender, Lang.HELP_INDEX_TOO_BIG.toString().replace("%index%", args[1]));
                                 return true;
                             }
-                            for (FancyMessage fancy : paginator.getPage(Integer.parseInt(args[1]))) {
-                                fancy.send((Player) sender);
-                            }
+                            paginator.sendPage(sender, Integer.parseInt(args[1]));
                             sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                         } else {
                             sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
@@ -529,12 +461,10 @@ public class PetCommand implements CommandExecutor {
                         return true;
                     }
                     if (sender instanceof Player && EchoPet.isUsingNetty()) {
-                        FancyPaginator paginator = this.getHelp(sender);
-                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        Paginator<PowerMessage> paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getPages() + " ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                        for (FancyMessage fancy : paginator.getPage(1)) {
-                            fancy.send((Player) sender);
-                        }
+                        paginator.sendPage(sender, 1);
                         sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                     } else {
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");

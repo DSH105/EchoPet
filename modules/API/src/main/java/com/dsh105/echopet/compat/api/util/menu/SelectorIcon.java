@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import com.dsh105.dshutils.inventory.MenuIcon;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.inventory.MenuIcon;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

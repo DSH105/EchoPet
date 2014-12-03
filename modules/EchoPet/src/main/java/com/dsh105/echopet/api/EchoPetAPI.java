@@ -17,9 +17,7 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.dshutils.logger.ConsoleLogger;
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.ai.*;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
@@ -63,7 +61,7 @@ public class EchoPetAPI {
         if (player != null && petType != null) {
             IPet pet = EchoPet.getManager().createPet(player, petType, sendMessage);
             if (pet == null) {
-                ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml?");
+                EchoPet.LOG.severe("Failed to give " + petType.toString() + " to " + player.getName() + " through the EchoPetAPI. Maybe this PetType is disabled in the Config.yml?");
                 return null;
             }
             if (sendMessage) {
@@ -133,7 +131,7 @@ public class EchoPetAPI {
      */
     public boolean teleportPet(IPet pet, Location location) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to teleport Pet to Location through the EchoPetAPI. {@link com.dsh105.echopet.api.pet.Pet} cannot be null.");
+            EchoPet.LOG.severe("Failed to teleport Pet to Location through the EchoPetAPI. {@link com.dsh105.echopet.api.pet.Pet} cannot be null.");
             return false;
         }
         if (pet.isHat() || pet.isOwnerRiding()) {
@@ -151,7 +149,7 @@ public class EchoPetAPI {
      */
     public boolean savePet(IPet pet, SaveType saveType) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to save Pet file through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to save Pet file through the EchoPetAPI. Pet cannot be null.");
             return false;
         }
 
@@ -171,7 +169,7 @@ public class EchoPetAPI {
      */
     public void addData(IPet pet, PetData petData) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to add PetData [" + petData.toString() + "] to Pet through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         EchoPet.getManager().setData(pet, new PetData[]{petData}, true);
@@ -185,7 +183,7 @@ public class EchoPetAPI {
      */
     public void removeData(IPet pet, PetData petData) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetData [" + petData.toString() + "] from Pet through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to remove PetData [" + petData.toString() + "] from Pet through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         EchoPet.getManager().setData(pet, new PetData[]{petData}, false);
@@ -200,7 +198,7 @@ public class EchoPetAPI {
      */
     public boolean hasData(IPet pet, PetData petData) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to check PetData [" + petData.toString() + "] of Pet through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to check PetData [" + petData.toString() + "] of Pet through the EchoPetAPI. Pet cannot be null.");
             return false;
         }
         return pet.getPetData().contains(petData);
@@ -261,11 +259,11 @@ public class EchoPetAPI {
      */
     public void setAttackTarget(IPet pet, LivingEntity target) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to set attack target for Pet through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to set attack target for Pet through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         if (target == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to set attack target for Pet through the EchoPetAPI. Target cannot be null.");
+            EchoPet.LOG.severe("Failed to set attack target for Pet through the EchoPetAPI. Target cannot be null.");
             return;
         }
         if (pet.getEntityPet().getPetGoalSelector().getGoal("Attack") != null) {
@@ -281,7 +279,7 @@ public class EchoPetAPI {
      */
     public LivingEntity getAttackTarget(IPet pet) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to get attack target for Pet through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to get attack target for Pet through the EchoPetAPI. Pet cannot be null.");
         }
         return pet.getCraftPet().getTarget();
     }
@@ -294,7 +292,7 @@ public class EchoPetAPI {
      */
     public void addGoal(IPet pet, GoalType goalType) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         if (goalType == GoalType.ATTACK) {
@@ -317,11 +315,11 @@ public class EchoPetAPI {
      */
     public void addGoal(IPet pet, PetGoal goal, String identifier, int priority) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to add PetGoal to Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         if (goal == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to add PetGoal to Pet AI through the EchoPetAPI. Goal cannot be null.");
+            EchoPet.LOG.severe("Failed to add PetGoal to Pet AI through the EchoPetAPI. Goal cannot be null.");
             return;
         }
         pet.getEntityPet().getPetGoalSelector().addGoal(identifier, goal, priority);
@@ -335,7 +333,7 @@ public class EchoPetAPI {
      */
     public void removeGoal(IPet pet, GoalType goalType) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         pet.getEntityPet().getPetGoalSelector().removeGoal(goalType.getGoalString());
@@ -351,7 +349,7 @@ public class EchoPetAPI {
      */
     public void removeGoal(IPet pet, String identifier) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         pet.getEntityPet().getPetGoalSelector().removeGoal(identifier);
@@ -365,11 +363,11 @@ public class EchoPetAPI {
      */
     public void removeGoal(IPet pet, PetGoal petGoal) {
         if (pet == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
+            EchoPet.LOG.severe("Failed to remove PetGoal from Pet AI through the EchoPetAPI. Pet cannot be null.");
             return;
         }
         if (petGoal == null) {
-            ConsoleLogger.log(Logger.LogLevel.SEVERE, "Failed to remove PetGoal from Pet AI through the EchoPetAPI. Goal cannot be null.");
+            EchoPet.LOG.severe("Failed to remove PetGoal from Pet AI through the EchoPetAPI. Goal cannot be null.");
             return;
         }
         pet.getEntityPet().getPetGoalSelector().removeGoal(petGoal);

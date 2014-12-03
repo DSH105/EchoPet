@@ -31,8 +31,13 @@
         </dependency>
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>DSHUtils</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <artifactId>Commodus</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>PowerMessage</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.kitteh</groupId>

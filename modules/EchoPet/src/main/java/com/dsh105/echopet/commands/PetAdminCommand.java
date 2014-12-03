@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -295,7 +296,7 @@ public class PetAdminCommand implements CommandExecutor {
                 } else return true;
             } else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.ADMIN.hasPerm(sender, true, true)) {
-                    if (StringUtil.isInt(args[1])) {
+                    if (GeneralUtil.isInt(args[1])) {
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help " + args[1] + "/6 ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
                         for (String s : AdminHelpPage.getHelpPage(Integer.parseInt(args[1]))) {

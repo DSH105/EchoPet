@@ -17,19 +17,15 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.EnumUtil;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.pet.*;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.PetUtil;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.WorldUtil;
+import com.dsh105.echopet.compat.api.util.*;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -240,7 +236,7 @@ public class PetManager implements IPetManager {
                 ConfigurationSection cs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.data");
                 if (cs != null) {
                     for (String key : cs.getKeys(false)) {
-                        if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+                        if (GeneralUtil.isEnumType(PetData.class, key.toUpperCase())) {
                             PetData pd = PetData.valueOf(key.toUpperCase());
                             data.add(pd);
                         } else {
@@ -286,7 +282,7 @@ public class PetManager implements IPetManager {
                         ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".rider.data");
                         if (mcs != null) {
                             for (String key : mcs.getKeys(false)) {
-                                if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+                                if (GeneralUtil.isEnumType(PetData.class, key.toUpperCase())) {
                                     PetData pd = PetData.valueOf(key.toUpperCase());
                                     riderData.add(pd);
                                 } else {

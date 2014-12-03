@@ -17,12 +17,9 @@
 
 package com.dsh105.echopet;
 
-import com.dsh105.dshutils.DSHPlugin;
-import com.dsh105.dshutils.Metrics;
-import com.dsh105.dshutils.command.VersionIncompatibleCommand;
-import com.dsh105.dshutils.config.YAMLConfig;
-import com.dsh105.dshutils.logger.ConsoleLogger;
-import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.commodus.config.YAMLConfigManager;
+import com.dsh105.commodus.data.Metrics;
 import com.dsh105.echopet.api.PetManager;
 import com.dsh105.echopet.api.SqlPetManager;
 import com.dsh105.echopet.commands.CommandComplete;
@@ -41,10 +38,7 @@ import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.registration.PetRegistry;
-import com.dsh105.echopet.compat.api.util.ISpawnUtil;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
+import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
 import com.dsh105.echopet.listeners.ChunkListener;
@@ -58,6 +52,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +62,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
 
-public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
+public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
 
     private static boolean isUsingNetty;
 
@@ -82,6 +77,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
     private PetRegistry petRegistry;
 
     private CommandManager COMMAND_MANAGER;
+    private YAMLConfigManager configManager;
     private YAMLConfig petConfig;
     private YAMLConfig mainConfig;
     private YAMLConfig langConfig;
@@ -103,21 +99,20 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
     @Override
     public void onEnable() {
-        super.onEnable();
         EchoPet.setPlugin(this);
-        Logger.initiate(this, "EchoPet", "[EchoPet]");
         isUsingNetty = CommonReflection.isUsingNetty();
 
+        this.configManager = new YAMLConfigManager(this);
         COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors
 
         try {
             Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".SpawnUtil");
         } catch (ClassNotFoundException e) {
-            ConsoleLogger.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
+            EchoPet.LOG.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
                     + " is not compatible with this version of CraftBukkit");
-            ConsoleLogger.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
+            EchoPet.LOG.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
                     new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
@@ -184,9 +179,6 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
         // Unregister the commands
         this.COMMAND_MANAGER.unregister();
-
-        // Don't nullify instance until after we're done
-        super.onDisable();
     }
 
     private void loadConfiguration() {
@@ -194,7 +186,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
                 "Configuration for EchoPet 2",
                 "See the EchoPet Wiki before editing this file"};
         try {
-            mainConfig = this.getConfigManager().getNewConfig("config.yml", header);
+            mainConfig = this.configManager.getNewConfig("config.yml", header);
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [config.yml] generation failed.", e, true);
         }
@@ -204,7 +196,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         mainConfig.reloadConfig();
 
         try {
-            petConfig = this.getConfigManager().getNewConfig("pets.yml");
+            petConfig = this.configManager.getNewConfig("pets.yml");
             petConfig.reloadConfig();
         } catch (Exception e) {
             Logger.log(Logger.LogLevel.WARNING, "Configuration File [pets.yml] generation failed.", e, true);
@@ -212,7 +204,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
 
         // Make sure to convert those UUIDs!
         if (ReflectionUtil.MC_VERSION_NUMERIC >= 172 && UUIDMigration.supportsUuid() && mainConfig.getBoolean("convertDataFileToUniqueId", true) && petConfig.getConfigurationSection("autosave") != null) {
-            LOGGER.info("Converting data files to UUID system...");
+            EchoPet.LOG.info("Converting data files to UUID system...");
             UUIDMigration.migrateConfig(petConfig);
             mainConfig.set("convertDataFileToUniqueId", false);
             mainConfig.saveConfig();
@@ -221,7 +213,7 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
         String[] langHeader = {"EchoPet By DSH105", "---------------------",
                 "Language Configuration File"};
         try {
-            langConfig = this.getConfigManager().getNewConfig("language.yml", langHeader);
+            langConfig = this.configManager.getNewConfig("language.yml", langHeader);
             try {
                 for (Lang l : Lang.values()) {
                     String[] desc = l.getDescription();
@@ -307,12 +299,12 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
                 @Override
                 public void run() {
-                    Updater updater = new Updater(getInstance(), 53655, file, updateType, false);
+                    Updater updater = new Updater(EchoPet.getPlugin(), 53655, file, updateType, false);
                     update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
                     if (update) {
                         name = updater.getLatestName();
-                        ConsoleLogger.log(ChatColor.GOLD + "An update is available: " + name);
-                        ConsoleLogger.log(ChatColor.GOLD + "Type /ecupdate to update.");
+                        EchoPet.LOG.log(ChatColor.GOLD + "An update is available: " + name);
+                        EchoPet.LOG.log(ChatColor.GOLD + "Type /ecupdate to update.");
                         if (!updateChecked) {
                             updateChecked = true;
                         }
@@ -355,10 +347,6 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
             }
         }
         return false;
-    }
-
-    public static EchoPetPlugin getInstance() {
-        return (EchoPetPlugin) getPluginInstance();
     }
 
     @Override
@@ -438,16 +426,6 @@ public class EchoPetPlugin extends DSHPlugin implements IEchoPetPlugin {
     @Override
     public boolean isUsingNetty() {
         return isUsingNetty;
-    }
-
-    @Override
-    public ModuleLogger getModuleLogger() {
-        return LOGGER;
-    }
-
-    @Override
-    public ModuleLogger getReflectionLogger() {
-        return LOGGER_REFLECTION;
     }
 
     @Override

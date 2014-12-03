@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R4.entity.type;
 
-import com.dsh105.dshutils.DSHPlugin;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISkeletonPet;
@@ -46,7 +46,7 @@ public class EntitySkeletonPet extends EntityPet implements IEntitySkeletonPet {
                     setEquipment(0, new ItemStack(Items.BOW));
                 }
             }
-        }.runTaskLater(DSHPlugin.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getPlugin(), 5L);
     }
 
     @Override

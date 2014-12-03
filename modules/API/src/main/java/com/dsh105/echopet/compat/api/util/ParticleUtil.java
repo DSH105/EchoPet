@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import com.dsh105.dshutils.util.GeometryUtil;
+import com.dsh105.commodus.GeometryUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package com.dsh105.echopet.compat.api.util;
 
-import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;

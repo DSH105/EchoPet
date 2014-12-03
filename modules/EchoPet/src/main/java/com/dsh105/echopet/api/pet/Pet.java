@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.pet;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -153,7 +153,7 @@ public abstract class Pet implements IPet {
 
     @Override
     public String getPetNameWithoutColours() {
-        return StringUtil.replaceColoursWithString(this.getPetName());
+        return ChatColor.stripColor(this.getPetName());
     }
 
     @Override

@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.type;
 
-import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEnderDragonPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
