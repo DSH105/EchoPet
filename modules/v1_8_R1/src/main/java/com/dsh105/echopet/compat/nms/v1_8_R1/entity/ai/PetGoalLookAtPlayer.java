@@ -66,7 +66,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer {
             if (this.clazz == EntityHuman.class) {
                 this.player = this.pet.world.findNearbyPlayer(this.pet, (double) this.range);
             } else {
-                this.player = this.pet.world.a(this.clazz, this.pet.boundingBox.grow((double) this.range, 3.0D, (double) this.range), this.pet);
+                this.player = this.pet.world.a(this.clazz, this.pet.getBoundingBox().grow((double) this.range, 3.0D, (double) this.range), this.pet);
             }
             return this.player != null;
         }
@@ -74,7 +74,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer {
 
     @Override
     public boolean shouldContinue() {
-        return this.player.isAlive() && (this.pet.e(this.player) <= (double) (this.range * this.range) && this.ticksLeft > 0);
+        return this.player.isAlive() && (this.pet.h(this.player) <= (double) (this.range * this.range) && this.ticksLeft > 0);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer {
 
     @Override
     public void tick() {
-        this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.x());
+        this.pet.getControllerLook().a(this.player.locX, this.player.locY + (double) this.player.getHeadHeight(), this.player.locZ, 10.0F, (float) this.pet.bP());
         --this.ticksLeft;
     }
 }

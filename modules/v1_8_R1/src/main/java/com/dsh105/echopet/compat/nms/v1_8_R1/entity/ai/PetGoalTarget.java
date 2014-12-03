@@ -23,7 +23,6 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.nms.v1_8_R1.NMSEntityUtil;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
 import net.minecraft.server.v1_8_R1.*;
-import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 
 /**
@@ -75,11 +74,11 @@ public abstract class PetGoalTarget extends PetGoal {
             AttributeInstance attribute = this.handle.getAttributeInstance(GenericAttributes.b);
             double range = attribute == null ? 16.0D : attribute.getValue();
 
-            if (this.handle.e(entityliving) > range * range) {
+            if (this.handle.h(entityliving) > range * range) {
                 return false;
             } else {
                 if (this.checkSenses) {
-                    if (NMSEntityUtil.getEntitySenses(this.handle).canSee(entityliving)) {
+                    if (NMSEntityUtil.getEntitySenses(this.handle).a(entityliving)) {
                         this.targetNotVisibleTicks = 0;
                     } else if (++this.targetNotVisibleTicks > 60) {
                         return false;
@@ -113,7 +112,9 @@ public abstract class PetGoalTarget extends PetGoal {
         } else if (!this.canAttackClass(entityliving.getClass())) {
             return false;
         } else {
-            if (this.handle instanceof EntityOwnable && StringUtils.isNotEmpty(((EntityOwnable) this.handle).getOwnerUUID())) {
+            String uuid = ((EntityOwnable) this.handle).getOwnerUUID();
+            boolean hasOwner = !(uuid == null || uuid.length() == 0);
+            if (this.handle instanceof EntityOwnable && hasOwner) {
                 if (entityliving instanceof EntityOwnable && ((EntityOwnable) this.handle).getOwnerUUID().equals(((EntityOwnable) entityliving).getOwnerUUID())) {
                     return false;
                 }
@@ -127,7 +128,7 @@ public abstract class PetGoalTarget extends PetGoal {
 
             if (!NMSEntityUtil.isInGuardedAreaOf(this.handle, MathHelper.floor(entityliving.locX), MathHelper.floor(entityliving.locY), MathHelper.floor(entityliving.locZ))) {
                 return false;
-            } else if (this.checkSenses && !NMSEntityUtil.getEntitySenses(this.handle).canSee(entityliving)) {
+            } else if (this.checkSenses && !NMSEntityUtil.getEntitySenses(this.handle).a(entityliving)) {
                 return false;
             } else {
                 if (this.useMelee) {
@@ -150,7 +151,7 @@ public abstract class PetGoalTarget extends PetGoal {
     }
 
     private boolean attack(EntityLiving entityliving) {
-        this.ticksAfterLastAttack = 10 + this.handle.aI().nextInt(5);
+        this.ticksAfterLastAttack = 10 + ((EntityPet) this.handle).random().nextInt(5);
         PathEntity pathentity = NMSEntityUtil.getNavigation(this.handle).a(entityliving);
 
         if (pathentity == null) {
