@@ -173,11 +173,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     }
 
     public boolean attack(Entity entity, float damage) {
-        return this.attack(entity, DamageSource.mobAttack(this), f);
+        return this.attack(entity, DamageSource.mobAttack(this), damage);
     }
 
     public boolean attack(Entity entity, DamageSource damageSource, float damage) {
-        PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), f);
+        PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), damage);
         EchoPet.getPlugin().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {

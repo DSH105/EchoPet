@@ -27,14 +27,14 @@ import org.bukkit.entity.LivingEntity;
 
 public class NMSEntityUtil {
 
-    public static Navigation getNavigation(LivingEntity livingEntity) {
+    public static NavigationAbstract getNavigation(LivingEntity livingEntity) {
         if (livingEntity instanceof CraftLivingEntity) {
             return getNavigation(((CraftLivingEntity) livingEntity).getHandle());
         }
         return null;
     }
 
-    public static Navigation getNavigation(EntityLiving entityLiving) {
+    public static NavigationAbstract getNavigation(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityInsentient) {
             return ((EntityInsentient) entityLiving).getNavigation();
         }
@@ -97,37 +97,9 @@ public class NMSEntityUtil {
         return null;
     }
 
-    public static boolean hasGuardedArea(EntityLiving entityLiving) {
-        if (entityLiving instanceof EntityCreature) {
-            return ((EntityCreature) entityLiving).bY();
-        } else return false;
-    }
-
-    public static boolean isInGuardedAreaOf(EntityLiving entityLiving) {
-        if (entityLiving instanceof EntityCreature) {
-            return ((EntityCreature) entityLiving).bS();
-        } else return false;
-    }
-
     public static boolean isInGuardedAreaOf(EntityLiving entityLiving, int x, int y, int z) {
         if (entityLiving instanceof EntityCreature) {
-            return ((EntityCreature) entityLiving).b(x, y, z);
+            return ((EntityCreature) entityLiving).d(new BlockPosition(x, y, z));
         } else return false;
-    }
-
-    public static float getRangeOfGuardedAreaFor(EntityLiving entityLiving) {
-        if (entityLiving instanceof EntityCreature) {
-            return ((EntityCreature) entityLiving).bW();
-        } else return 1.0F;
-    }
-
-    public static ChunkCoordinates getChunkCoordinates(EntityLiving inEntity) {
-        if (inEntity instanceof EntityCreature) {
-            return ((EntityCreature) inEntity).bV();
-        } else if (inEntity instanceof EntityPlayer) {
-            return ((EntityPlayer) inEntity).getChunkCoordinates();
-        } else {
-            return new ChunkCoordinates(MathHelper.floor(inEntity.locX), MathHelper.floor(inEntity.locY), MathHelper.floor(inEntity.locZ));
-        }
     }
 }

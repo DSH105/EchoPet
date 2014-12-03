@@ -84,7 +84,7 @@ public class EntitySlimePet extends EntityPet implements IEntitySlimePet {
 
         if (this.onGround && this.jumpDelay-- <= 0) {
             this.jumpDelay = this.random.nextInt(15) + 10;
-            this.makeSound(this.getDeathSound(), this.bf(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+            this.makeSound(this.getDeathSound(), this.bA(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             getControllerJump().a();
         }
 

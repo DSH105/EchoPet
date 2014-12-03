@@ -55,7 +55,7 @@ public class EntitySquidPet extends EntityPet implements IEntitySquidPet {
     public void onLive() {
         super.onLive();
         if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            if (this.L()) {
+            if (this.inWater) {
                 ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.BUBBLE, this.getLocation());
             }
             ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPLASH, this.getLocation());

@@ -21,9 +21,7 @@ import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWolfPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IWolfPet;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityAgeablePet;
-import net.minecraft.server.v1_8_R1.BlockCloth;
-import net.minecraft.server.v1_8_R1.MathHelper;
-import net.minecraft.server.v1_8_R1.World;
+import net.minecraft.server.v1_8_R1.*;
 import org.bukkit.DyeColor;
 
 @EntitySize(width = 0.6F, height = 0.8F)
@@ -100,13 +98,13 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
     @Override
     public void onLive() {
         super.onLive();
-        if (this.L()) {
+        if (this.inWater) {
             this.wet = true;
             this.shaking = false;
             this.shakeCount = 0.0F;
         } else if ((this.wet || this.shaking) && this.shaking) {
             if (this.shakeCount == 0.0F) {
-                this.makeSound("mob.wolf.shake", this.bf(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                this.makeSound("mob.wolf.shake", this.bA(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             }
 
             this.shakeCount += 0.05F;
@@ -117,14 +115,14 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
             }
 
             if (this.shakeCount > 0.4F) {
-                float f = (float) this.boundingBox.b;
+                float f = (float) this.getBoundingBox().b;
                 int i = (int) (MathHelper.sin((this.shakeCount - 0.4F) * 3.1415927F) * 7.0F);
 
                 for (int j = 0; j < i; ++j) {
                     float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
                     float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
 
-                    this.world.addParticle("splash", this.locX + (double) f1, (double) (f + 0.8F), this.locZ + (double) f2, this.motX, this.motY, this.motZ);
+                    this.world.addParticle(EnumParticle.WATER_SPLASH, this.locX + (double) f1, (double) (f + 0.8F), this.locZ + (double) f2, this.motX, this.motY, this.motZ);
                 }
             }
         }
@@ -147,6 +145,6 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
         this.datawatcher.a(16, new Byte((byte) 0));
         this.datawatcher.a(18, new Float(this.getHealth()));
         this.datawatcher.a(19, new Byte((byte) 0));
-        this.datawatcher.a(20, new Byte((byte) BlockCloth.b(1)));
+        this.datawatcher.a(20, new Byte((byte) EnumColor.RED.getColorIndex()));
     }
 }

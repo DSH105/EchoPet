@@ -109,7 +109,7 @@ public class PetGoalMeleeAttack extends APetGoalMeleeAttack {
 
                 // Arm animation
                 if (this.pet.be() != null) {
-                    this.pet.aZ();
+                    this.pet.ba();
                 }
                 //this.pet.m(this.target)
                 this.pet.attack(this.target);

@@ -56,8 +56,8 @@ public abstract class EntityAgeablePet extends EntityPet {
     }
 
     @Override
-    public void e() {
-        super.e();
+    public void m() {
+        super.m();
         if (!(this.world.isStatic || this.ageLocked)) {
             int i = this.getAge();
 

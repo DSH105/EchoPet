@@ -39,7 +39,7 @@ public class EntityPigZombiePet extends EntityPet implements IEntityPigZombiePet
         new BukkitRunnable() {
             @Override
             public void run() {
-                setEquipment(0, new ItemStack(Items.GOLD_SWORD));
+                setEquipment(0, new ItemStack(Items.GOLDEN_SWORD));
             }
         }.runTaskLater(DSHPlugin.getPluginInstance(), 5L);
     }

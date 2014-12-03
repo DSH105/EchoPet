@@ -21,6 +21,7 @@ import com.dsh105.echopet.compat.api.ai.APetGoalMeleeAttack;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
 import net.minecraft.server.v1_8_R1.EntityLiving;
+import net.minecraft.server.v1_8_R1.Navigation;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 
 public class PetGoalMeleeAttack extends APetGoalMeleeAttack {
@@ -57,12 +58,12 @@ public class PetGoalMeleeAttack extends APetGoalMeleeAttack {
             return false;
         } else if (!entityLiving.isAlive()) {
             return false;
-        } else if (this.pet.e(entityLiving) >= this.lockRange) {
+        } else if (this.pet.h(entityLiving) >= this.lockRange) {
             return false;
         }
         this.target = entityLiving;
 
-        return this.pet.getEntitySenses().canSee(entityLiving);
+        return this.pet.getEntitySenses().a(entityLiving);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class PetGoalMeleeAttack extends APetGoalMeleeAttack {
             return false;
         } else if (!entityliving.isAlive()) {
             return false;
-        } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport(this.pet.getPet().getPetType())) {
+        } else if (this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) >= this.pet.getSizeCategory().getTeleport(this.pet.getPet().getPetType())) {
             return false;
         }
         return true;
@@ -89,13 +90,13 @@ public class PetGoalMeleeAttack extends APetGoalMeleeAttack {
     @Override
     public void finish() {
         this.isActive = false;
-        this.pet.getNavigation().h();
+        this.pet.getNavigation().n();
     }
 
     @Override
     public void tick() {
         this.pet.getControllerLook().a(this.target, 30.0F, 30.0F);
-        if (this.pet.getEntitySenses().canSee(this.target) && --this.navUpdate <= 0) {
+        if (this.pet.getEntitySenses().a(this.target) && --this.navUpdate <= 0) {
             this.navUpdate = 4 + this.pet.random().nextInt(7);
             this.pet.getNavigation().a(this.target);
         }
@@ -103,13 +104,13 @@ public class PetGoalMeleeAttack extends APetGoalMeleeAttack {
         this.ticksUntilAttack = Math.max(this.ticksUntilAttack - 1, 0);
         double attackRange = (double) (this.pet.width * 2.0F * this.pet.width * 2.0F + this.target.width);
 
-        if (this.pet.e(this.target.locX, this.target.boundingBox.b, this.target.locZ) <= attackRange) {
+        if (this.pet.e(this.target.locX, this.target.getBoundingBox().b, this.target.locZ) <= attackRange) {
             if (this.ticksUntilAttack <= 0) {
                 this.ticksUntilAttack = this.ticksBetweenAttack;
 
                 // Arm animation
-                if (this.pet.be() != null) {
-                    this.pet.ba();
+                if (this.pet.bz() != null) {
+                    this.pet.bv();
                 }
                 //this.pet.m(this.target)
                 this.pet.attack(this.target);

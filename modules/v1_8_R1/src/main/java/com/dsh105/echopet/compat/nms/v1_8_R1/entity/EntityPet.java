@@ -75,7 +75,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         this.fireProof = true;
         if (this.FIELD_JUMP == null) {
             try {
-                this.FIELD_JUMP = EntityLiving.class.getDeclaredField("bc");
+                this.FIELD_JUMP = EntityLiving.class.getDeclaredField("aW");
                 this.FIELD_JUMP.setAccessible(true);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
@@ -193,7 +193,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     public void setPathfinding() {
         try {
             this.petGoalSelector = new PetGoalSelector();
-            this.getNavigation().b(true);
+            //this.getNavigation().b(true);
 
             petGoalSelector.addGoal(new PetGoalFloat(this), 0);
             petGoalSelector.addGoal(new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())), 1);
@@ -204,12 +204,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         }
     }
 
-    // EntityInsentient
-    @Override
-    public boolean bk() {
-        return true;
-    }
-
     @Override
     public CraftCreature getBukkitEntity() {
         return (CraftCreature) super.getBukkitEntity();
@@ -217,11 +211,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     // Overriden from EntityInsentient - Most importantly overrides pathfinding selectors
     @Override
-    protected void bn() {
-        super.bn();
-        ++this.aU;
+    protected void doTick() {
+        super.doTick();
+        ++this.aO;
 
-        this.w();
+        this.D();
 
         this.getEntitySenses().a();
 
@@ -232,12 +226,14 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         }
         this.petGoalSelector.updateGoals();
 
-        this.getNavigation().f();
+        this.navigation.k();
 
-        this.bo();
+        this.E();
 
         this.getControllerMove().c();
+
         this.getControllerLook().a();
+
         this.getControllerJump().b();
     }
 
@@ -353,29 +349,28 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     // EntityInsentient
     @Override
-    public void e(float sideMot, float forwMot) {
+    public void g(float sideMot, float forwMot) {
         if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
             super.e(sideMot, forwMot);
-            // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityHorse.java#L914
-            this.W = 0.5F;
+            this.S = 0.5F;
             return;
         }
         EntityHuman human = (EntityHuman) this.passenger;
         if (human.getBukkitEntity() != this.getPlayerOwner().getPlayer()) {
             super.e(sideMot, forwMot);
-            this.W = 0.5F;
+            this.S = 0.5F;
             return;
         }
 
-        this.W = 1.0F;
+        this.S = 1.0F;
 
         this.lastYaw = this.yaw = this.passenger.yaw;
         this.pitch = this.passenger.pitch * 0.5F;
-        this.b(this.yaw, this.pitch);
-        this.aO = this.aM = this.yaw;
+        this.setYawPitch(this.yaw, this.pitch);
+        this.aI = this.aG = this.yaw;
 
-        sideMot = ((EntityLiving) this.passenger).bd * 0.5F;
-        forwMot = ((EntityLiving) this.passenger).be;
+        sideMot = ((EntityLiving) this.passenger).aX * 0.5F;
+        forwMot = ((EntityLiving) this.passenger).aY;
 
         if (forwMot <= 0.0F) {
             forwMot *= 0.25F;
@@ -388,7 +383,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             return;
         }
 
-        this.i(this.rideSpeed);
+        this.j(this.rideSpeed);
         super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
         PetType pt = this.getPet().getPetType();
@@ -435,13 +430,13 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     // EntityInsentient
     @Override
-    protected String t() {
+    protected String z() {
         return this.getIdleSound();
     }
 
     // EntityInsentient
     @Override
-    protected String aT() {
+    protected String bo() {
         return this.getDeathSound();
     }
 
@@ -454,23 +449,28 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     // Entity
     @Override
-    public void h() {
-        super.h();
+    public void s_() {
+        super.s_();
         //this.C();
         onLive();
     }
 
     // EntityLiving
     @Override
-    protected void c() {
-        super.c();
+    protected void h() {
+        super.h();
         initDatawatcher();
     }
 
     // Entity
     @Override
+    protected void a(BlockPosition blockposition, Block block) {
+        super.a(blockposition, block);
+        this.a(blockposition.getX(), blockposition.getY(), blockposition.getZ(), block);
+    }
+
     protected void a(int i, int j, int k, Block block) {
-        super.a(i, j, k, block);
+        super.a(new BlockPosition(i, j, k), block);
         makeStepSound(i, j, k, block);
     }
 

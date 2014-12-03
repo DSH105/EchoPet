@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_8_R1.entity.ai;
 import com.dsh105.echopet.compat.api.ai.APetGoalFloat;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
+import net.minecraft.server.v1_8_R1.Navigation;
 
 public class PetGoalFloat extends APetGoalFloat {
 
@@ -27,7 +28,7 @@ public class PetGoalFloat extends APetGoalFloat {
 
     public PetGoalFloat(EntityPet pet) {
         this.pet = pet;
-        pet.getNavigation().e(true);
+        ((Navigation) pet.getNavigation()).d(true);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class PetGoalFloat extends APetGoalFloat {
 
     @Override
     public boolean shouldStart() {
-        return this.pet.M() || this.pet.P();
+        return this.pet.V() || this.pet.ab();
     }
 
     @Override

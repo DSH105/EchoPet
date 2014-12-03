@@ -28,7 +28,7 @@ import net.minecraft.server.v1_8_R1.*;
 public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet {
 
     private int rearingCounter = 0;
-    int bP = 0;
+    int stepSoundCount = 0;
 
     public EntityHorsePet(World world) {
         super(world);
@@ -138,7 +138,7 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
     protected void makeStepSound(int i, int j, int k, Block block) {
         StepSound stepsound = block.stepSound;
 
-        if (this.world.getType(i, j + 1, k) == Blocks.SNOW) {
+        if (this.world.getType(new BlockPosition(i, j + 1, k)) == Blocks.SNOW) {
             stepsound = Blocks.SNOW.stepSound;
         }
 
@@ -146,13 +146,13 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
             int l = this.getType();
 
             if (this.passenger != null && l != 1 && l != 2) {
-                ++this.bP;
-                if (this.bP > 5 && this.bP % 3 == 0) {
+                ++this.stepSoundCount;
+                if (this.stepSoundCount > 5 && this.stepSoundCount % 3 == 0) {
                     this.makeSound("mob.horse.gallop", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
                     if (l == 0 && this.random.nextInt(10) == 0) {
                         this.makeSound("mob.horse.breathe", stepsound.getVolume1() * 0.6F, stepsound.getVolume2());
                     }
-                } else if (this.bP <= 5) {
+                } else if (this.stepSoundCount <= 5) {
                     this.makeSound("mob.horse.wood", stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
                 }
             } else if (stepsound == Block.f) {
@@ -164,10 +164,10 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
     }
 
     @Override
-    public void e(float sideMot, float forwMot) {
+    public void g(float sideMot, float forwMot) {
         super.e(sideMot, forwMot);
         if (forwMot <= 0.0F) {
-            this.bP = 0;
+            this.stepSoundCount = 0;
         }
     }
 

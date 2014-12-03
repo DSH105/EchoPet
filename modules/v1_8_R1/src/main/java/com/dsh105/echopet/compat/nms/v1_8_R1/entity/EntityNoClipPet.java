@@ -32,6 +32,6 @@ public abstract class EntityNoClipPet extends EntityPet {
     }
 
     public void noClip(boolean flag) {
-        this.X = flag;
+        this.T = flag;
     }
 }
