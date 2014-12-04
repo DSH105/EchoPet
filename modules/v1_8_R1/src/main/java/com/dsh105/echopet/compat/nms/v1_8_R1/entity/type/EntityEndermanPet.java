@@ -45,7 +45,7 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet {
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(16, new Byte((byte) 0));
+        this.datawatcher.a(16, new Short((short) 0));
         this.datawatcher.a(17, new Byte((byte) 0));
         this.datawatcher.a(18, new Byte((byte) 0));
     }
@@ -60,11 +60,11 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet {
     }
 
     public void setCarried(Block block) {
-        this.datawatcher.watch(16, Byte.valueOf((byte) (Block.getId(block) & 255)));
+        this.datawatcher.watch(16, Short.valueOf((short) (Block.getId(block) & 255)));
     }
 
     public Block getCarried() {
-        return Block.getById(this.datawatcher.getByte(16));
+        return Block.getById(this.datawatcher.getShort(16));
     }
 
     public void setCarriedData(int i) {
