@@ -20,8 +20,6 @@ package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity;
 import com.dsh105.commodus.GeometryUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;

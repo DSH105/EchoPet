@@ -20,13 +20,10 @@ package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigPet;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 @EntityPetType(petType = PetType.PIG)
 public class PigPet extends Pet implements IPigPet {

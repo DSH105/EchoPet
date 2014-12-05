@@ -29,14 +29,18 @@ public enum Protocol {
     public static Protocol fromVanilla(Enum<?> enumValue) {
         String name = enumValue.name();
 
-        if ("HANDSHAKING".equals(name))
+        if ("HANDSHAKING".equals(name)) {
             return HANDSHAKE;
-        if ("PLAY".equals(name))
+        }
+        if ("PLAY".equals(name)) {
             return PLAY;
-        if ("STATUS".equals(name))
+        }
+        if ("STATUS".equals(name)) {
             return STATUS;
-        if ("LOGIN".equals(name))
+        }
+        if ("LOGIN".equals(name)) {
             return LOGIN;
+        }
 
         return null;
     }

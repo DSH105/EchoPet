@@ -22,12 +22,10 @@ import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
 import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
 import net.minecraft.server.v1_7_R4.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -102,7 +100,8 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         customDataWatcher.initiate(0, (Object) (byte) this.entityStatus);
         customDataWatcher.initiate(1, (Object) (short) 0);
         customDataWatcher.initiate(8, (Object) (byte) 0);
-        customDataWatcher.initiate(10, (Object) (String) name);
+        // Name tag
+        customDataWatcher.initiate(2, (Object) (String) name);
         WrapperPacketEntityMetadata meta = new WrapperPacketEntityMetadata();
         meta.setEntityId(this.id);
         meta.setMetadata(customDataWatcher);

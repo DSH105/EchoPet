@@ -67,7 +67,9 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
             return false;
         } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance) {
             return false;
-        } else return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
+        } else {
+            return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
+        }
 
     }
 

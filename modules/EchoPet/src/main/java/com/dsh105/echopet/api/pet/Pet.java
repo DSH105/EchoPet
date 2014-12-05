@@ -18,14 +18,14 @@
 package com.dsh105.echopet.api.pet;
 
 import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
-import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.reflection.SafeMethod;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopet.compat.api.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -206,8 +206,8 @@ public abstract class Pet implements IPet {
     @Override
     public void removePet(boolean makeSound) {
         if (this.getCraftPet() != null) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.CLOUD, this.getLocation());
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.LAVA_SPARK, this.getLocation());
+            Particle.CLOUD.builder().show(getLocation());
+            Particle.LAVA_SPARK.builder().show(getLocation());
         }
         removeRider();
         if (this.getEntityPet() != null) {
@@ -305,10 +305,10 @@ public abstract class Pet implements IPet {
         this.teleportToOwner();
         this.getEntityPet().resizeBoundingBox(flag);
         this.ownerRiding = flag;
-        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
+        Particle.PORTAL.builder().show(getLocation());
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        ParticleUtil.showWithData(WrapperPacketWorldParticles.ParticleType.BLOCK_DUST, this.getLocation(), l.getBlock().getTypeId(), 0);
+        Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).show(getLocation());
     }
 
     @Override
@@ -359,10 +359,10 @@ public abstract class Pet implements IPet {
         }
         this.getEntityPet().resizeBoundingBox(flag);
         this.isHat = flag;
-        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
+        Particle.PORTAL.builder().show(getLocation());
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        ParticleUtil.showWithData(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation(), l.getBlock().getTypeId(), 0);
+        Particle.PORTAL.builder().show(getLocation());
     }
 
     @Override

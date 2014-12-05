@@ -40,13 +40,17 @@ import java.util.zip.ZipFile;
 /**
  * Check dev.bukkit.org to find updates for a given plugin, and download the updates if needed.
  * <p/>
- * <b>VERY, VERY IMPORTANT</b>: Because there are no standards for adding auto-update toggles in your plugin's config, this system provides NO CHECK WITH YOUR CONFIG to make sure the user has allowed auto-updating.
+ * <b>VERY, VERY IMPORTANT</b>: Because there are no standards for adding auto-update toggles in your plugin's config,
+ * this system provides NO CHECK WITH YOUR CONFIG to make sure the user has allowed auto-updating.
  * <br>
- * It is a <b>BUKKIT POLICY</b> that you include a boolean value in your config that prevents the auto-updater from running <b>AT ALL</b>.
+ * It is a <b>BUKKIT POLICY</b> that you include a boolean value in your config that prevents the auto-updater from
+ * running <b>AT ALL</b>.
  * <br>
- * If you fail to include this option in your config, your plugin will be <b>REJECTED</b> when you attempt to submit it to dev.bukkit.org.
+ * If you fail to include this option in your config, your plugin will be <b>REJECTED</b> when you attempt to submit it
+ * to dev.bukkit.org.
  * <p/>
- * An example of a good configuration option would be something similar to 'auto-update: true' - if this value is set to false you may NOT run the auto-updater.
+ * An example of a good configuration option would be something similar to 'auto-update: true' - if this value is set to
+ * false you may NOT run the auto-updater.
  * <br>
  * If you are unsure about these rules, please read the plugin submission guidelines: http://goo.gl/8iU5l
  *
@@ -78,7 +82,7 @@ public class Updater {
     private static final String QUERY = "/servermods/files?projectIds="; // Path to GET
     private static final String HOST = "https://api.curseforge.com"; // Slugs will be appended to this to get to the project's RSS feed
 
-    private static final String[] NO_UPDATE_TAG = { "-DEV", "-PRE", "-SNAPSHOT" }; // If the version number contains one of these, don't update.
+    private static final String[] NO_UPDATE_TAG = {"-DEV", "-PRE", "-SNAPSHOT"}; // If the version number contains one of these, don't update.
     private static final int BYTE_SIZE = 1024; // Used for downloading files
     private YamlConfiguration config; // Config file
     private String updateFolder;// The folder that downloads will be placed in
@@ -109,7 +113,8 @@ public class Updater {
          */
         FAIL_DBO,
         /**
-         * When running the version check, the file on DBO did not contain the a version in the format 'vVersion' such as 'v1.0'.
+         * When running the version check, the file on DBO did not contain the a version in the format 'vVersion' such
+         * as 'v1.0'.
          */
         FAIL_NOVERSION,
         /**
@@ -149,7 +154,8 @@ public class Updater {
      *
      * @param plugin   The plugin that is checking for an update.
      * @param id       The dev.bukkit.org id of the project
-     * @param file     The file that the plugin is running from, get this by doing this.getFile() from within your main class.
+     * @param file     The file that the plugin is running from, get this by doing this.getFile() from within your main
+     *                 class.
      * @param type     Specify the type of update this will be. See {@link UpdateType}
      * @param announce True if the program should announce the progress of new updates in console
      */
@@ -179,8 +185,8 @@ public class Updater {
         this.config = YamlConfiguration.loadConfiguration(updaterConfigFile);
 
         this.config.options().header("This configuration file affects all plugins using the Updater system (version 2+ - http://forums.bukkit.org/threads/96681/ )" + '\n'
-                + "If you wish to use your API key, read http://wiki.bukkit.org/ServerMods_API and place it below." + '\n'
-                + "Some updating systems will not adhere to the disabled value, but these may be turned off in their plugin's configuration.");
+                                             + "If you wish to use your API key, read http://wiki.bukkit.org/ServerMods_API and place it below." + '\n'
+                                             + "Some updating systems will not adhere to the disabled value, but these may be turned off in their plugin's configuration.");
         this.config.addDefault("api-key", "PUT_API_KEY_HERE");
         this.config.addDefault("disable", false);
 
@@ -259,7 +265,8 @@ public class Updater {
     }
 
     /**
-     * As the result of Updater output depends on the thread's completion, it is necessary to wait for the thread to finish
+     * As the result of Updater output depends on the thread's completion, it is necessary to wait for the thread to
+     * finish
      * before allowing anyone to check the result.
      */
     private void waitForThread() {
@@ -411,7 +418,8 @@ public class Updater {
     }
 
     /**
-     * Check if the name of a jar is one of the plugins currently installed, used for extracting the correct files out of a zip.
+     * Check if the name of a jar is one of the plugins currently installed, used for extracting the correct files out
+     * of a zip.
      */
     private boolean pluginFile(String name) {
         for (final File file : new File("plugins").listFiles()) {
@@ -423,7 +431,8 @@ public class Updater {
     }
 
     /**
-     * Check to see if the program should continue by evaluation whether the plugin is already updated, or shouldn't be updated
+     * Check to see if the program should continue by evaluation whether the plugin is already updated, or shouldn't be
+     * updated
      */
     private boolean versionCheck(String title) {
         if (this.type != UpdateType.NO_VERSION_CHECK) {

@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DynamicPluginCommand extends Command implements PluginIdentifiableCommand {
+
     protected final CommandExecutor owner;
     protected final Object registeredWith;
     protected final Plugin owningPlugin;
@@ -87,8 +88,9 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
         if (registeredWith instanceof CommandManager) {
             try {
                 for (String permission : permissions) {
-                    if (sender.hasPermission(permission))
+                    if (sender.hasPermission(permission)) {
                         return true;
+                    }
                 }
                 return false;
             } catch (Throwable ignore) {

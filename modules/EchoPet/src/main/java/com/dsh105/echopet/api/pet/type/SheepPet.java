@@ -19,14 +19,11 @@ package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySheepPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISheepPet;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 @EntityPetType(petType = PetType.SHEEP)
 public class SheepPet extends Pet implements ISheepPet {

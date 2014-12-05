@@ -22,8 +22,6 @@ import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityVillagerPet;
-import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.EntityAgeablePet;
 import net.minecraft.server.v1_6_R3.World;
 
@@ -67,13 +65,5 @@ public class EntityVillagerPet extends EntityAgeablePet implements IEntityVillag
     public void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(16, new Integer(0));
-    }
-
-    @Override
-    public void onLive() {
-        super.onLive();
-        if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, this.getLocation());
-        }
     }
 }

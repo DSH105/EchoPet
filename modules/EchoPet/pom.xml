@@ -37,6 +37,17 @@
     <dependencies>
         <dependency>
             <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-API</artifactId>
+            <version>v2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-v1_6_R3</artifactId>
             <version>v2</version>
             <exclusions>
@@ -119,79 +130,6 @@
             </exclusions>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-API</artifactId>
-            <version>v2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>Commodus</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kitteh</groupId>
-            <artifactId>VanishNoPacket</artifactId>
-            <version>3.18.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.daboross.vault</groupId>
-            <artifactId>vault-api</artifactId>
-            <version>1.2.27</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
-            <version>1.2.32</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>6.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>6.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <version>0.8.0-rc3</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -258,24 +196,33 @@
                                     <include>org.slf4j:slf4j-jdk14</include>
                                     <include>com.dsh105:Commodus</include>
                                     <include>com.dsh105:PowerMessage</include>
+                                    <include>com.captainbern:Minecraft-Reflection</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>com.jolbox</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries.slf4j</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.dsh105.commodus</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries.commodus</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.dsh105</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.dsh105.powermessage</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libraries.powermessage</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.dsh105</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.captainbern.reflection</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.captainbern</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.captainbern.minecraft</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.captainbern</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

@@ -23,13 +23,13 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
-import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -52,8 +52,10 @@ public class EchoPetAPI {
      * <p/>
      * Pets will be spawned immediately next to the target player, linked until it is removed.
      *
-     * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link com.dsh105.echopet.api.pet.Pet}
-     * @param petType     the {@link com.dsh105.echopet.compat.api.entity.PetType} (type of {@link com.dsh105.echopet.api.pet.Pet}) that will be given to the player
+     * @param player      the {@link org.bukkit.entity.Player} that will be provided with a {@link
+     *                    com.dsh105.echopet.api.pet.Pet}
+     * @param petType     the {@link com.dsh105.echopet.compat.api.entity.PetType} (type of {@link
+     *                    com.dsh105.echopet.api.pet.Pet}) that will be given to the player
      * @param sendMessage defines if the plugin sends a message to the target {@link Player}
      * @return the {@link com.dsh105.echopet.api.pet.Pet} created
      */
@@ -75,7 +77,8 @@ public class EchoPetAPI {
     /**
      * Removes a {@link com.dsh105.echopet.api.pet.Pet} if the {@link org.bukkit.entity.Player} has one active
      *
-     * @param player      the {@link org.bukkit.entity.Player} to remove their {@link com.dsh105.echopet.api.pet.Pet} from
+     * @param player      the {@link org.bukkit.entity.Player} to remove their {@link com.dsh105.echopet.api.pet.Pet}
+     *                    from
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void removePet(Player player, boolean sendMessage, boolean save) {
@@ -165,7 +168,8 @@ public class EchoPetAPI {
      * Adds {@link com.dsh105.echopet.compat.api.entity.PetData} to a {@link com.dsh105.echopet.api.pet.Pet}
      *
      * @param pet     the {@link com.dsh105.echopet.api.pet.Pet} to add the data to
-     * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link com.dsh105.echopet.api.pet.Pet}
+     * @param petData {@link com.dsh105.echopet.compat.api.entity.PetData} to add to the {@link
+     *                com.dsh105.echopet.api.pet.Pet}
      */
     public void addData(IPet pet, PetData petData) {
         if (pet == null) {
@@ -255,7 +259,8 @@ public class EchoPetAPI {
      * Set a target for the {@link com.dsh105.echopet.api.pet.Pet} to attack
      *
      * @param pet    the attacker
-     * @param target the {@link org.bukkit.entity.LivingEntity} for the {@link com.dsh105.echopet.api.pet.Pet} to attack
+     * @param target the {@link org.bukkit.entity.LivingEntity} for the {@link com.dsh105.echopet.api.pet.Pet} to
+     *               attack
      */
     public void setAttackTarget(IPet pet, LivingEntity target) {
         if (pet == null) {
@@ -285,7 +290,8 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add a predefined {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link com.dsh105.echopet.api.pet.Pet} from the API
+     * Add a predefined {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link com.dsh105.echopet.api.pet.Pet}
+     * from the API
      *
      * @param pet      the {@link com.dsh105.echopet.api.pet.Pet} to add the goal to
      * @param goalType type of goal
@@ -307,9 +313,11 @@ public class EchoPetAPI {
     }
 
     /**
-     * Add an implementation of {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link com.dsh105.echopet.api.pet.Pet}
+     * Add an implementation of {@link com.dsh105.echopet.compat.api.ai.PetGoal} to a {@link
+     * com.dsh105.echopet.api.pet.Pet}
      *
-     * @param pet        the {@link com.dsh105.echopet.api.pet.Pet} to add the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to
+     * @param pet        the {@link com.dsh105.echopet.api.pet.Pet} to add the {@link com.dsh105.echopet.compat.api.ai.PetGoal}
+     *                   to
      * @param goal       the {@link com.dsh105.echopet.compat.api.ai.PetGoal} to add
      * @param identifier a {@link java.lang.String} to identify the goal
      */
@@ -342,7 +350,8 @@ public class EchoPetAPI {
     /**
      * Remove a goal from a {@link com.dsh105.echopet.api.pet.Pet}'s AI
      * <p/>
-     * The goal is identified using a string, initiated when the goal is added to the {@link com.dsh105.echopet.api.pet.Pet}
+     * The goal is identified using a string, initiated when the goal is added to the {@link
+     * com.dsh105.echopet.api.pet.Pet}
      *
      * @param pet        {@link com.dsh105.echopet.api.pet.Pet} to remove the goal from
      * @param identifier String that identifies a {@link com.dsh105.echopet.compat.api.ai.PetGoal}

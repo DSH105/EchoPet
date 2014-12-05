@@ -211,14 +211,14 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         final Player p = event.getPlayer();
-        new BukkitRunnable() { 
-            
+        new BukkitRunnable() {
+
             @Override
             public void run() {
                 EchoPet.getManager().loadPets(p, true, false, true);
             }
-            
-        }.runTaskLater(EchoPet.getPlugin(),20L);
+
+        }.runTaskLater(EchoPet.getPlugin(), 20L);
     }
 
     @EventHandler

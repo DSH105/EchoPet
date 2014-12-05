@@ -43,7 +43,7 @@ public class ConfigOptions extends Options {
 
     public boolean allowPetType(PetType petType) {
         return this.config.getBoolean("pets."
-                + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
+                                              + petType.toString().toLowerCase().replace("_", " ") + ".enable", true);
     }
 
     public boolean allowRidersFor(PetType petType) {
@@ -51,22 +51,22 @@ public class ConfigOptions extends Options {
             return false;
         }
         return this.config.getBoolean("pets."
-                + petType.toString().toLowerCase().replace("_", " ") + ".allow.riders", true);
+                                              + petType.toString().toLowerCase().replace("_", " ") + ".allow.riders", true);
     }
 
     public boolean allowData(PetType type, PetData data) {
         return this.config.getBoolean("pets." + type.toString().toLowerCase().replace("_", " ")
-                + ".allow." + data.getConfigOptionString(), true);
+                                              + ".allow." + data.getConfigOptionString(), true);
     }
 
     public boolean forceData(PetType type, PetData data) {
         return this.config.getBoolean("pets." + type.toString().toLowerCase().replace("_", " ")
-                + ".force." + data.getConfigOptionString(), false);
+                                              + ".force." + data.getConfigOptionString(), false);
     }
 
     public boolean canFly(PetType petType) {
         return this.config.getBoolean("pets." + petType.toString().toLowerCase().replace("_", " ")
-                + ".canFly", false);
+                                              + ".canFly", false);
     }
 
     public String getCommandString() {
@@ -111,7 +111,7 @@ public class ConfigOptions extends Options {
         set("petNamesRegexMatching", true);
         set("petNamesRegex", new ArrayList<HashMap<String, String>>() {
             {
-                add(new HashMap<String, String>(){
+                add(new HashMap<String, String>() {
                     {
                         put(".*administrator.*", "deny");
                     }

@@ -100,25 +100,33 @@ public class NMSEntityUtil {
     public static boolean hasGuardedArea(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).bY();
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     public static boolean isInGuardedAreaOf(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).bS();
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     public static boolean isInGuardedAreaOf(EntityLiving entityLiving, int x, int y, int z) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).b(x, y, z);
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     public static float getRangeOfGuardedAreaFor(EntityLiving entityLiving) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).bW();
-        } else return 1.0F;
+        } else {
+            return 1.0F;
+        }
     }
 
     public static ChunkCoordinates getChunkCoordinates(EntityLiving inEntity) {

@@ -1,6 +1,5 @@
 package com.dsh105.echopet.compat.api.util;
 
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
@@ -16,11 +15,12 @@ import java.util.UUID;
 
 /**
  * Coordinates migration between table schemas.
- *
+ * <p/>
  * Table migration strategies are intended to be incremental: if a user has a table two-versions-old,
  * the table will be migrated twice (once for each version).
  */
 public class TableMigrationUtil {
+
     public static final String LATEST_TABLE = "EchoPet_version3";
     private static final List<MigrationStrategy> tableMigrationStrategies = new ArrayList<MigrationStrategy>();
 
@@ -32,14 +32,14 @@ public class TableMigrationUtil {
             @Override
             public String getMigratedTableSchema() {
                 return "EchoPet ("
-                     + "    OwnerName varchar(255),"
-                     + "    PetType varchar(255),"
-                     + "    PetName varchar(255),"
-                     +      serialise(PetData.values(), false) + ", "
-                     + "    RiderPetType varchar(255), RiderPetName varchar(255), "
-                     +      serialise(PetData.values(), true) + ", "
-                     + "    PRIMARY KEY (OwnerName)"
-                     + ");";
+                        + "    OwnerName varchar(255),"
+                        + "    PetType varchar(255),"
+                        + "    PetName varchar(255),"
+                        + serialise(PetData.values(), false) + ", "
+                        + "    RiderPetType varchar(255), RiderPetName varchar(255), "
+                        + serialise(PetData.values(), true) + ", "
+                        + "    PRIMARY KEY (OwnerName)"
+                        + ");";
             }
 
             @Override
@@ -60,7 +60,8 @@ public class TableMigrationUtil {
                         try {
                             UUID.fromString(ownerName);
                             continue; // This name is already a UUID.
-                        } catch (IllegalArgumentException ignored) {}
+                        } catch (IllegalArgumentException ignored) {
+                        }
 
                         UUID playerUUID;
                         try {
@@ -100,15 +101,15 @@ public class TableMigrationUtil {
             @Override
             public String getMigratedTableSchema() {
                 return "EchoPet_version3 ("
-                     + "    OwnerName varchar(36),"
-                     + "    PetType varchar(255),"
-                     + "    PetName varchar(255),"
-                     + "    PetData BIGINT,"
-                     + "    RiderPetType varchar(255),"
-                     + "    RiderPetName varchar(255), "
-                     + "    RiderPetData BIGINT,"
-                     + "    PRIMARY KEY (OwnerName)"
-                     + ");";
+                        + "    OwnerName varchar(36),"
+                        + "    PetType varchar(255),"
+                        + "    PetName varchar(255),"
+                        + "    PetData BIGINT,"
+                        + "    RiderPetType varchar(255),"
+                        + "    RiderPetName varchar(255), "
+                        + "    RiderPetData BIGINT,"
+                        + "    PRIMARY KEY (OwnerName)"
+                        + ");";
             }
 
             @Override
@@ -156,7 +157,7 @@ public class TableMigrationUtil {
 
     /**
      * Migrate old tables using EchoPet's SQL connection pool
-     *
+     * <p/>
      * In the process of migration, old tables will be dropped
      */
     public static void migrateTables() {
@@ -178,7 +179,8 @@ public class TableMigrationUtil {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException ignored) {}
+                } catch (SQLException ignored) {
+                }
             }
         }
     }
@@ -187,6 +189,7 @@ public class TableMigrationUtil {
      * Represents a table schema transition
      */
     abstract static class MigrationStrategy {
+
         private final String tableName;
 
         /**

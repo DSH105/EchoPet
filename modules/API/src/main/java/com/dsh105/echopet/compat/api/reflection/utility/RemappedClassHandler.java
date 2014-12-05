@@ -74,8 +74,9 @@ public class RemappedClassHandler extends ClassHandler {
 
         this.remapper = ClassTemplate.create(this.classLoader.getClass()).getField("remapper").get(getClass().getClassLoader());
 
-        if (this.remapper == null)
+        if (this.remapper == null) {
             throw new IllegalStateException("Remapper is NULL!");
+        }
 
         Class<?> remapperClass = this.remapper.getClass();
         this.map = ClassTemplate.create(remapperClass).getMethod("map", String.class);

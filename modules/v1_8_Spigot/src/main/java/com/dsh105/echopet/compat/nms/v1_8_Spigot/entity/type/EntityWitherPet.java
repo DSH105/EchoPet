@@ -19,8 +19,6 @@ package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityWitherPet;
-import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.EntityPet;
 import net.minecraft.server.v1_7_R4.World;
 
@@ -63,13 +61,5 @@ public class EntityWitherPet extends EntityPet implements IEntityWitherPet {
     @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.LARGE;
-    }
-
-    @Override
-    public void onLive() {
-        super.onLive();
-        if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.VOID, this.getLocation());
-        }
     }
 }

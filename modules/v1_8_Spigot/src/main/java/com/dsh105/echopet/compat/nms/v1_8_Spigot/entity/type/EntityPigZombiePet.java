@@ -17,15 +17,14 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.type;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_8_Spigot.entity.EntityPet;
 import net.minecraft.server.v1_7_R4.ItemStack;
 import net.minecraft.server.v1_7_R4.Items;
 import net.minecraft.server.v1_7_R4.World;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.spigotmc.ProtocolData;
 
 @EntitySize(width = 0.6F, height = 1.8F)
 @EntityPetType(petType = PetType.PIGZOMBIE)

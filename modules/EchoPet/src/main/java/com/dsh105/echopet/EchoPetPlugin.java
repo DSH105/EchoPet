@@ -17,6 +17,11 @@
 
 package com.dsh105.echopet;
 
+import com.captainbern.minecraft.protocol.PacketType;
+import com.captainbern.minecraft.wrapper.WrappedPacket;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.ServerUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.config.YAMLConfigManager;
 import com.dsh105.commodus.data.Metrics;
@@ -28,14 +33,10 @@ import com.dsh105.echopet.commands.PetCommand;
 import com.dsh105.echopet.commands.util.CommandManager;
 import com.dsh105.echopet.commands.util.DynamicPluginCommand;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
-import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.*;
 import com.dsh105.echopet.compat.api.plugin.data.Updater;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.registration.PetRegistry;
 import com.dsh105.echopet.compat.api.util.*;
@@ -59,8 +60,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.Map;
 
 public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
 
@@ -102,6 +101,9 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         EchoPet.setPlugin(this);
         isUsingNetty = CommonReflection.isUsingNetty();
 
+        System.out.println("VERSION: " + StringUtil.combineArray(".", StringUtil.convert(ServerUtil.getVersion().getNumericVersion())));
+        System.out.println("VERSION: " + new Version("1.8").isCompatible());
+        System.out.println("VERSION: " + new Version("1.8.0").isCompatible());
         this.configManager = new YAMLConfigManager(this);
         COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors
@@ -110,15 +112,15 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
             Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".SpawnUtil");
         } catch (ClassNotFoundException e) {
             EchoPet.LOG.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
-                    + this.getDescription().getVersion() + ChatColor.RED
-                    + " is not compatible with this version of CraftBukkit");
+                                    + this.getDescription().getVersion() + ChatColor.RED
+                                    + " is not compatible with this version of CraftBukkit");
             EchoPet.LOG.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
-                    new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
-                            "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
-                            "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
-                    null, this);
+                                                                new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
+                                                                        "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
+                                                                                               "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
+                                                                null, this);
             COMMAND_MANAGER.register(cmd);
             return;
         }
@@ -261,15 +263,15 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
                 connection = dbPool.getConnection();
                 statement = connection.createStatement();
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS EchoPet_version3 (" +
-                        "OwnerName varchar(36)," +
-                        "PetType varchar(255)," +
-                        "PetName varchar(255)," +
-                        "PetData BIGINT," +
-                        "RiderPetType varchar(255)," +
-                        "RiderPetName varchar(255), " +
-                        "RiderPetData BIGINT," +
-                        "PRIMARY KEY (OwnerName)" +
-                        ");");
+                                                "OwnerName varchar(36)," +
+                                                "PetType varchar(255)," +
+                                                "PetName varchar(255)," +
+                                                "PetData BIGINT," +
+                                                "RiderPetType varchar(255)," +
+                                                "RiderPetName varchar(255), " +
+                                                "RiderPetData BIGINT," +
+                                                "PRIMARY KEY (OwnerName)" +
+                                                ");");
 
                 // Convert previous database versions
                 TableMigrationUtil.migrateTables();

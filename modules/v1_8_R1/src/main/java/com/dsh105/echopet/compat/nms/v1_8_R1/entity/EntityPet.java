@@ -17,13 +17,13 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_R1.entity;
 
-import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
@@ -37,7 +37,6 @@ import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftCreature;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -51,8 +50,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     protected IPet pet;
     public PetGoalSelector petGoalSelector;
 
-    protected int particle = 0;
-    protected int particleCounter = 0;
     protected static Field FIELD_JUMP = null;
     protected double jumpHeight;
 
@@ -313,13 +310,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
         if (this.getPet().isHat()) {
             this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
-        }
-
-        if (this.particle == this.particleCounter) {
-            this.particle = 0;
-            this.particleCounter = this.random.nextInt(50);
-        } else {
-            this.particle++;
         }
 
         if (this.getPlayerOwner().isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())) {

@@ -19,10 +19,10 @@ package com.dsh105.echopet.compat.api.util.protocol.wrapper;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
+import com.dsh105.echopet.compat.api.reflection.SafeMethod;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.protocol.Packet;
 import com.dsh105.echopet.compat.api.util.protocol.PacketFactory;
-import com.dsh105.echopet.compat.api.reflection.SafeMethod;
 
 public class WrapperPacketPlayOutChat extends Packet {
 

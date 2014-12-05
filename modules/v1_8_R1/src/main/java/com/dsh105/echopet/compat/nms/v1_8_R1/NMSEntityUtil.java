@@ -100,6 +100,8 @@ public class NMSEntityUtil {
     public static boolean isInGuardedAreaOf(EntityLiving entityLiving, int x, int y, int z) {
         if (entityLiving instanceof EntityCreature) {
             return ((EntityCreature) entityLiving).d(new BlockPosition(x, y, z));
-        } else return false;
+        } else {
+            return false;
+        }
     }
 }

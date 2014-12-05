@@ -21,7 +21,6 @@ import com.dsh105.echopet.compat.api.ai.APetGoalMeleeAttack;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
 import net.minecraft.server.v1_8_R1.EntityLiving;
-import net.minecraft.server.v1_8_R1.Navigation;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 
 public class PetGoalMeleeAttack extends APetGoalMeleeAttack {

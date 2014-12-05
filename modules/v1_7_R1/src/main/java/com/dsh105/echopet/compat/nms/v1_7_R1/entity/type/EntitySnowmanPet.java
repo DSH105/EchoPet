@@ -19,8 +19,6 @@ package com.dsh105.echopet.compat.nms.v1_7_R1.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
-import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_7_R1.entity.EntityPet;
 import net.minecraft.server.v1_7_R1.World;
 
@@ -49,13 +47,5 @@ public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet {
     @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.REGULAR;
-    }
-
-    @Override
-    public void onLive() {
-        super.onLive();
-        if (this.random.nextBoolean() && particle <= 0 && !this.isInvisible()) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SNOW_SHOVEL, this.getLocation());
-        }
     }
 }

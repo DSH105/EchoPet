@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_R1.entity.type;
 
-import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
 import net.minecraft.server.v1_8_R1.ItemStack;
 import net.minecraft.server.v1_8_R1.Items;

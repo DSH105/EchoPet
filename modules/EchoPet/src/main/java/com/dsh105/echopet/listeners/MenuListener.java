@@ -18,18 +18,17 @@
 package com.dsh105.echopet.listeners;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.compat.api.util.Logger;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
-import com.dsh105.echopet.compat.api.util.ParticleUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.*;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -99,10 +98,10 @@ public class MenuListener implements Listener {
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
-                                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.RED_SMOKE, pet.getLocation());
+                                            Particle.RED_SMOKE.builder().show(pet.getLocation());
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
-                                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, pet.getLocation());
+                                            Particle.SPARKLE.builder().show(pet.getLocation());
                                         }
                                     }
                                 } else {

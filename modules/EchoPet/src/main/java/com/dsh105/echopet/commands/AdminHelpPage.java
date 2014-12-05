@@ -47,19 +47,19 @@ public enum AdminHelpPage {
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
 
     RIDER(2, ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " rider <player> <type>:[data],[data];[name]",
-            ChatColor.YELLOW + "    - Changes the rider type of a Player's current pet.",
-            ChatColor.YELLOW + "    - Each data value is separated by a comma.",
-            ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type>",
+          ChatColor.YELLOW + "    - Changes the rider type of a Player's current pet.",
+          ChatColor.YELLOW + "    - Each data value is separated by a comma.",
+          ChatColor.YELLOW + "    - Pet names can be entered using a semi-colon.",
+          ChatColor.DARK_RED + "    - Permission: echopet.petadmin.type.<type>",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " name <player> rider <name>",
-            ChatColor.YELLOW + "    - Set the name tag of a Player's pet's rider.",
-            ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.name",
+          ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " name <player> rider <name>",
+          ChatColor.YELLOW + "    - Set the name tag of a Player's pet's rider.",
+          ChatColor.YELLOW + "    - Names can be more than one word, but no longer than 64 characters.",
+          ChatColor.DARK_RED + "    - Permission: echopet.petadmin.name",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " rider <player> remove",
-            ChatColor.YELLOW + "    - Remove a Player's pet's current rider.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
+          ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " rider <player> remove",
+          ChatColor.YELLOW + "    - Remove a Player's pet's current rider.",
+          ChatColor.DARK_RED + "    - Permission: echopet.petadmin.remove"),
 
     DEFAULT(3, ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " list",
             ChatColor.YELLOW + "    - Lists available pet types.",
@@ -82,37 +82,37 @@ public enum AdminHelpPage {
             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.default.remove"),
 
     SKILLS(4, ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " ride <player>",
-            ChatColor.YELLOW + "    - Force a Player to ride their pet.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.ride",
+           ChatColor.YELLOW + "    - Force a Player to ride their pet.",
+           ChatColor.DARK_RED + "    - Permission: echopet.petadmin.ride",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " hat <player>",
-            ChatColor.YELLOW + "    - Force a Player's pet to ride on their head.",
-            ChatColor.YELLOW + "    - Appears higher to the owner to prevent sight obstruction.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.hat",
+           ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " hat <player>",
+           ChatColor.YELLOW + "    - Force a Player's pet to ride on their head.",
+           ChatColor.YELLOW + "    - Appears higher to the owner to prevent sight obstruction.",
+           ChatColor.DARK_RED + "    - Permission: echopet.petadmin.hat",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getCommandString() + " call <player>",
-            ChatColor.YELLOW + "    - Call a Player's Pet to their side.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.call"),
+           ChatColor.GOLD + "/" + EchoPet.getPlugin().getCommandString() + " call <player>",
+           ChatColor.YELLOW + "    - Call a Player's Pet to their side.",
+           ChatColor.DARK_RED + "    - Permission: echopet.petadmin.call"),
 
     OTHER(5, ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " menu <player>",
-            ChatColor.YELLOW + "    - Open the Data Menu GUI for a Player's Pet",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.menu",
+          ChatColor.YELLOW + "    - Open the Data Menu GUI for a Player's Pet",
+          ChatColor.DARK_RED + "    - Permission: echopet.petadmin.menu",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " show <player>",
-            ChatColor.YELLOW + "    - Show a Player's hidden Pet.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.show",
+          ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " show <player>",
+          ChatColor.YELLOW + "    - Show a Player's hidden Pet.",
+          ChatColor.DARK_RED + "    - Permission: echopet.petadmin.show",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " hide <player>",
-            ChatColor.YELLOW + "    - Hide a Player's currently active Pet.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.hide"),
+          ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " hide <player>",
+          ChatColor.YELLOW + "    - Hide a Player's currently active Pet.",
+          ChatColor.DARK_RED + "    - Permission: echopet.petadmin.hide"),
 
     SELECTOR(6, ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " select <player>",
-            ChatColor.YELLOW + "    - Open the Pet Selector GUI for another Player.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.select",
+             ChatColor.YELLOW + "    - Open the Pet Selector GUI for another Player.",
+             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.select",
 
-            ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " selector <player>",
-            ChatColor.YELLOW + "    - Give another Player the Pet Selector.",
-            ChatColor.DARK_RED + "    - Permission: echopet.petadmin.selector");
+             ChatColor.GOLD + "/" + EchoPet.getPlugin().getAdminCommandString() + " selector <player>",
+             ChatColor.YELLOW + "    - Give another Player the Pet Selector.",
+             ChatColor.DARK_RED + "    - Permission: echopet.petadmin.selector");
 
     private int id;
     private String[] lines;

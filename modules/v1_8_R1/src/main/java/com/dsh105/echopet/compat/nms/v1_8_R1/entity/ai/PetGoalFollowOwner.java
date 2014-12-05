@@ -23,7 +23,9 @@ import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.type.EntityGhastPet;
-import net.minecraft.server.v1_8_R1.*;
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.GenericAttributes;
+import net.minecraft.server.v1_8_R1.Navigation;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 
 
@@ -64,7 +66,9 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
             return false;
         } else if (this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance) {
             return false;
-        } else return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
+        } else {
+            return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
+        }
 
     }
 

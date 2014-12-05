@@ -68,7 +68,7 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
 
     @Override
     public void setGameProfile(WrappedGameProfile profile) {
-        this.profile =  profile;
+        this.profile = profile;
     }
 
     @Override
