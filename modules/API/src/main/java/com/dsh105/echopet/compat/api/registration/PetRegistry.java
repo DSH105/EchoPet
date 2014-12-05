@@ -34,13 +34,14 @@ import java.util.concurrent.Callable;
  * Reversible registration of entities to Minecraft internals. Allows for temporary modification of internal mappings
  * so
  * that custom pet entities can be spawned.
- *
+ * <p/>
  * NOTE: This class is a modified version of the registry used in EchoPet v3.
  */
 public class PetRegistry {
 
     private static final EntityMapModifier<Class<?>, String> CLASS_TO_NAME_MODIFIER;
     private static final EntityMapModifier<Class<?>, Integer> CLASS_TO_ID_MODIFIER;
+    private static final EntityMapModifier<Integer, Class<?>> ID_TO_CLASS_MODIFIER;
 
     static {
         Class<?> entityTypes = ReflectionUtil.getNMSClass("EntityTypes");
@@ -53,6 +54,7 @@ public class PetRegistry {
         }
         try {
             CLASS_TO_NAME_MODIFIER = new EntityMapModifier<Class<?>, String>((Map<Class<?>, String>) typeMaps.get(1).get(null));
+            ID_TO_CLASS_MODIFIER = new EntityMapModifier<Integer, Class<?>>((Map<Integer, Class<?>>) typeMaps.get(2).get(null));
             CLASS_TO_ID_MODIFIER = new EntityMapModifier<Class<?>, Integer>((Map<Class<?>, Integer>) typeMaps.get(3).get(null));
         } catch (IllegalAccessException e) {
             throw new IllegalStateException("Failed to initialise Entity type maps correctly!", e);
@@ -63,12 +65,24 @@ public class PetRegistry {
 
     public PetRegistry() {
         for (PetType petType : PetType.values()) {
-            registrationEntries.put(petType, PetRegistrationEntry.create(petType));
+            PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
+            registrationEntries.put(petType, registrationEntry);
+
+            // Since these are guaranteed to be unique (for vanilla Minecraft), we can safely assume that they can be applied permanently during the lifetime of this plugin
+            CLASS_TO_NAME_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getName());
+            CLASS_TO_ID_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getRegistrationId());
         }
+        CLASS_TO_NAME_MODIFIER.applyModifications();
+        CLASS_TO_ID_MODIFIER.applyModifications();
     }
 
     public PetRegistrationEntry getRegistrationEntry(PetType petType) {
         return registrationEntries.get(petType);
+    }
+
+    public void shutdown() {
+        CLASS_TO_NAME_MODIFIER.removeModifications();
+        CLASS_TO_ID_MODIFIER.removeModifications();
     }
 
     public IPet spawn(PetType petType, final Player owner) {
@@ -90,24 +104,22 @@ public class PetRegistry {
     }
 
     public <T> T performRegistration(PetRegistrationEntry registrationEntry, Callable<T> callable) {
+        Class<?> existingEntityClass = ID_TO_CLASS_MODIFIER.getMap().get(registrationEntry.getRegistrationId());
         // Just to be sure, remove any existing mappings and replace them afterwards
-        CLASS_TO_NAME_MODIFIER.clear(registrationEntry.getName());
-        CLASS_TO_ID_MODIFIER.clear(registrationEntry.getRegistrationId());
-        CLASS_TO_NAME_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getName());
-        CLASS_TO_ID_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getRegistrationId());
+        // Make this entity the 'default' while the pet is being spawned
+        ID_TO_CLASS_MODIFIER.clear(existingEntityClass);
+        ID_TO_CLASS_MODIFIER.modify(registrationEntry.getRegistrationId(), registrationEntry.getEntityClass());
 
         try {
-            CLASS_TO_NAME_MODIFIER.applyModifications();
-            CLASS_TO_ID_MODIFIER.applyModifications();
+            ID_TO_CLASS_MODIFIER.applyModifications();
             return callable.call();
         } catch (Exception e) {
             throw new PetRegistrationException(e);
         } finally {
             // Ensure everything is back to normal
-            CLASS_TO_NAME_MODIFIER.removeModifications();
-            CLASS_TO_ID_MODIFIER.removeModifications();
-            CLASS_TO_NAME_MODIFIER.add(registrationEntry.getName());
-            CLASS_TO_ID_MODIFIER.add(registrationEntry.getRegistrationId());
+            // Client will now receive the correct entity ID and we're all set!
+            ID_TO_CLASS_MODIFIER.removeModifications();
+            ID_TO_CLASS_MODIFIER.add(existingEntityClass);
         }
     }
 }
