@@ -46,6 +46,8 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         super(world, pet);
         this.id = this.hashCode();
         this.profile = new WrappedGameProfile(String.valueOf(this.id), pet.getPetName());
+        customDataWatcher = new WrappedDataWatcher();
+        customDataWatcher.setEntity(this.getBukkitEntity());
     }
 
     @Override
@@ -83,7 +85,6 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     }
 
     private void updateDatawatcher(String name) {
-        customDataWatcher = new WrappedDataWatcher(this);
         customDataWatcher.setObject(0, (Object) (byte) this.entityStatus);
         customDataWatcher.setObject(1, (Object) (short) 0);
         customDataWatcher.setObject(8, (Object) (byte) 0);

@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.nms.v1_8_R1.entity;
 
 import com.captainbern.minecraft.protocol.PacketType;
-import com.captainbern.minecraft.reflection.MinecraftMethods;
 import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.GeometryUtil;
@@ -27,6 +26,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
 import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
+import com.dsh105.echopet.compat.nms.v1_8_R1.util.MinecraftMethods;
 import net.minecraft.server.v1_8_R1.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -60,6 +60,8 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
             this.profileUuid = UUID.randomUUID();
         }
         this.profile = new WrappedGameProfile(this.profileUuid, pet.getPetName());
+        customDataWatcher = new WrappedDataWatcher();
+        customDataWatcher.setEntity(this.getBukkitEntity());
     }
 
     @Override
@@ -97,14 +99,13 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     }
 
     private void updateDatawatcher(String name) {
-        customDataWatcher = new WrappedDataWatcher(this);
         customDataWatcher.setObject(0, (Object) (byte) this.entityStatus);
         customDataWatcher.setObject(1, (Object) (short) 0);
         customDataWatcher.setObject(8, (Object) (byte) 0);
         customDataWatcher.setObject(2, (Object) (String) name);
         WrappedPacket metaPacket = new WrappedPacket(PacketType.Play.Server.ENTITY_METADATA);
         metaPacket.getIntegers().write(0, this.id);
-        metaPacket.getDataWatchers().write(0, customDataWatcher);
+        metaPacket.getWatchableObjectLists().write(0, customDataWatcher.getWatchableObjects());
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
             MinecraftMethods.sendPacket(p, metaPacket.getHandle());

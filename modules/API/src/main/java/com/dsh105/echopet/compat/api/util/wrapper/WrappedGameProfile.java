@@ -26,34 +26,31 @@ import java.util.UUID;
 public class WrappedGameProfile extends AbstractWrapper {
 
     private WrappedGameProfile(Object ident, String name) {
-        if (ident instanceof UUID) {
+        Class<?> gameProfileClass = null;
+        try {
+            gameProfileClass = Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
+        } catch (ClassNotFoundException e) {
             try {
-                super.setHandle(Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile").getConstructor(ident.getClass(), String.class).newInstance(ident, name));
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                gameProfileClass = Class.forName("com.mojang.authlib.GameProfile");
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
             }
-        } else if (ident instanceof String) {
-            try {
-                super.setHandle(Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile").getConstructor(String.class, String.class).newInstance(ident, name));
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        }
+
+        try {
+            if (ident instanceof UUID) {
+                super.setHandle(gameProfileClass.getConstructor(ident.getClass(), String.class).newInstance(ident, name));
+            } else if (ident instanceof String) {
+                super.setHandle(gameProfileClass.getConstructor(String.class, String.class).newInstance(ident, name));
             }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
     }
 
