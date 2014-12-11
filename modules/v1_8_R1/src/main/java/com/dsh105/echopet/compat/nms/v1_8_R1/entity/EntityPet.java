@@ -121,10 +121,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         return this.pet;
     }
 
-    public void setNameTagVisible(boolean flag) {
-        this.datawatcher.watch(3, );
-    }
-
     public Player getPlayerOwner() {
         return pet.getOwner();
     }

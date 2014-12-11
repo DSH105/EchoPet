@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_R1.entity;
 
+import com.captainbern.minecraft.protocol.PacketType;
 import com.captainbern.minecraft.reflection.MinecraftMethods;
 import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
