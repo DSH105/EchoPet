@@ -26,6 +26,7 @@ import com.dsh105.echopet.compat.nms.v1_8_R1.entity.type.EntityGhastPet;
 import net.minecraft.server.v1_8_R1.EntityPlayer;
 import net.minecraft.server.v1_8_R1.GenericAttributes;
 import net.minecraft.server.v1_8_R1.Navigation;
+import net.minecraft.server.v1_8_R1.PathEntity;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 
 
@@ -110,7 +111,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
                 return;
             }
 
-            double speed = 0.55F;
+            double speed = 0.6F;
             if (this.pet.h(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround) {
                 this.pet.getPet().teleportToOwner();
                 return;
@@ -123,11 +124,15 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
             }
 
             if (pet.goalTarget == null) {
+                PathEntity path;
                 if (pet instanceof EntityGhastPet) {
-                    pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), (float) speed);
+                    path = pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ());
+                } else {
+                    path = pet.getNavigation().a(owner);
                 }
+
                 //Smooth path finding to entity instead of location
-                pet.getNavigation().a(owner, speed);
+                pet.getNavigation().a(path, speed);
             }
         }
     }
