@@ -206,8 +206,8 @@ public abstract class Pet implements IPet {
     @Override
     public void removePet(boolean makeSound) {
         if (this.getCraftPet() != null) {
-            Particle.CLOUD.builder().show(getLocation());
-            Particle.LAVA_SPARK.builder().show(getLocation());
+            //Particle.CLOUD.builder().show(getLocation()); // TOOD
+            //Particle.LAVA_SPARK.builder().show(getLocation()); // TODO
         }
         removeRider();
         if (this.getEntityPet() != null) {
@@ -305,10 +305,10 @@ public abstract class Pet implements IPet {
         this.teleportToOwner();
         this.getEntityPet().resizeBoundingBox(flag);
         this.ownerRiding = flag;
-        Particle.PORTAL.builder().show(getLocation());
+        //Particle.PORTAL.builder().show(getLocation()); // TODO
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).show(getLocation());
+        //Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).show(getLocation()); // TODO
     }
 
     @Override
@@ -359,10 +359,10 @@ public abstract class Pet implements IPet {
         }
         this.getEntityPet().resizeBoundingBox(flag);
         this.isHat = flag;
-        Particle.PORTAL.builder().show(getLocation());
+        // Particle.PORTAL.builder().show(getLocation()); // TODO
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        Particle.PORTAL.builder().show(getLocation());
+        // Particle.PORTAL.builder().show(getLocation());// TODO
     }
 
     @Override

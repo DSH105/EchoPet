@@ -101,9 +101,6 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         EchoPet.setPlugin(this);
         isUsingNetty = CommonReflection.isUsingNetty();
 
-        System.out.println("VERSION: " + StringUtil.combineArray(".", StringUtil.convert(ServerUtil.getVersion().getNumericVersion())));
-        System.out.println("VERSION: " + new Version("1.8").isCompatible());
-        System.out.println("VERSION: " + new Version("1.8.0").isCompatible());
         this.configManager = new YAMLConfigManager(this);
         COMMAND_MANAGER = new CommandManager(this);
         // Make sure that the plugin is running under the correct version to prevent errors

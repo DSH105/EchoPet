@@ -54,7 +54,7 @@ public class SpawnUtil implements ISpawnUtil {
             owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Failed to spawn pet entity.");
             EchoPet.getManager().removePet(pet, true);
         } else {
-            Particle.MAGIC_RUNES.builder().show(l);
+            // Particle.MAGIC_RUNES.builder().show(l); // TODO
         }
         return entityPet;
     }

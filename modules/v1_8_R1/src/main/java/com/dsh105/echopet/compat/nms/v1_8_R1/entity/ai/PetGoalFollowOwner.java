@@ -124,10 +124,10 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
 
             if (pet.goalTarget == null) {
                 if (pet instanceof EntityGhastPet) {
-                    pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), (float) pet.getAttributeInstance(GenericAttributes.b).getValue());
+                    pet.getNavigation().a(pet.getPlayerOwner().getLocation().getBlockX(), pet.getPlayerOwner().getLocation().getBlockY() + 5, pet.getPlayerOwner().getLocation().getBlockZ(), (float) speed);
                 }
                 //Smooth path finding to entity instead of location
-                pet.getNavigation().a(owner, pet.getAttributeInstance(GenericAttributes.b).getValue());
+                pet.getNavigation().a(owner, speed);
             }
         }
     }

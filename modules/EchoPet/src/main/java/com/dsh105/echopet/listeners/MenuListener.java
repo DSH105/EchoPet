@@ -98,10 +98,10 @@ public class MenuListener implements Listener {
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
-                                            Particle.RED_SMOKE.builder().show(pet.getLocation());
+                                            //Particle.RED_SMOKE.builder().show(pet.getLocation()); // TODO
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
-                                            Particle.SPARKLE.builder().show(pet.getLocation());
+                                            // Particle.SPARKLE.builder().show(pet.getLocation()); // TODO
                                         }
                                     }
                                 } else {
