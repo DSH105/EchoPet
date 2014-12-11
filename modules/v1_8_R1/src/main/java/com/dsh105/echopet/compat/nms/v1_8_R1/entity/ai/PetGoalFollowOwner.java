@@ -65,7 +65,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
             return false;
         } else if (this.pet.getPlayerOwner() == null) {
             return false;
-        } else if (this.pet.getPet().isOwnerRiding()) {
+        } else if (this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()) {
             return false;
         } else if (this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance) {
             return false;
@@ -81,7 +81,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
             return false;
         } else if (this.pet.getPlayerOwner() == null) {
             return false;
-        } else if (this.pet.getPet().isOwnerRiding()) {
+        } else if (this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()) {
             return false;
         } else if (this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) <= this.stopDistance) {
             return false;
