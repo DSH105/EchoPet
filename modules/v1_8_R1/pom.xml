@@ -58,7 +58,6 @@
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 
