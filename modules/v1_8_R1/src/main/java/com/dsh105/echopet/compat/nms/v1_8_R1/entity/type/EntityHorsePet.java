@@ -39,20 +39,6 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
     }
 
     @Override
-    public boolean isBaby() {
-        return ((IHorsePet) pet).isBaby();
-    }
-
-    @Override
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(-24000));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-    }
-
-    @Override
     public void setSaddled(boolean flag) {
         this.horseVisual(4, flag);
     }
