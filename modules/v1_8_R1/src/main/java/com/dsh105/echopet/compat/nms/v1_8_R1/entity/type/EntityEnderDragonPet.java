@@ -23,6 +23,7 @@ import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityNoClipPet;
+import net.minecraft.server.v1_8_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.util.Vector;
