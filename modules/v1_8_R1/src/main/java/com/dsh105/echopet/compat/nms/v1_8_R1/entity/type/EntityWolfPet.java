@@ -82,15 +82,6 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
     }
 
     @Override
-    public void setBaby(boolean flag) {
-        if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
-        } else {
-            this.datawatcher.watch(12, new Integer(0));
-        }
-    }
-
-    @Override
     public void setCollarColor(DyeColor dc) {
         if (((IWolfPet) pet).isTamed()) {
             byte colour = dc.getWoolData();
