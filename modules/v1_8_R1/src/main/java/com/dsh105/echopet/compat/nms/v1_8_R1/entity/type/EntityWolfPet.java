@@ -51,6 +51,7 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
     public void setTamed(boolean flag) {
         if (isAngry() && flag) {
             this.getPet().getPetData().remove(PetData.ANGRY);
+            setAngry(false);
         }
 
         byte b0 = this.datawatcher.getByte(16);
@@ -66,6 +67,7 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
     public void setAngry(boolean flag) {
         if (isTamed() && flag) {
             this.getPet().getPetData().remove(PetData.TAMED);
+            setTamed(false);
         }
 
         byte b0 = this.datawatcher.getByte(16);
