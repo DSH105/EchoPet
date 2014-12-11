@@ -60,6 +60,12 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
+        if (p.getItemInHand() != null && p.getItemInHand().isSimilar(SelectorLayout.getSelectorItem())) {
+            new SelectorMenu().showTo(p);
+            event.setCancelled(true);
+            return;
+        }
+
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
             IPet pet = ((IEntityPet) ReflectionUtil.getEntityHandle(e)).getPet();
             event.setCancelled(true);
@@ -69,11 +75,6 @@ public class PetOwnerListener implements Listener {
                 pet.getEntityPet().onInteract(p);
                 return;
             }
-        }
-
-        if (p.getItemInHand() != null && p.getItemInHand().isSimilar(SelectorLayout.getSelectorItem())) {
-            new SelectorMenu().showTo(p);
-            event.setCancelled(true);
         }
     }
 
