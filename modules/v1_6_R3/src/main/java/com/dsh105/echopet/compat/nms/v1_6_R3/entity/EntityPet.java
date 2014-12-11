@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_6_R3.entity;
 
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
@@ -245,7 +246,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     // EntityInsentient
     @Override
     public boolean a(EntityHuman human) {
-        if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
+        if (IdentUtil.areIdentical((Player) human.getBukkitEntity(), getPlayerOwner())) {
             if (EchoPet.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
