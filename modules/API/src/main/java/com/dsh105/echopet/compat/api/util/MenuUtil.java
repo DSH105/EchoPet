@@ -44,7 +44,6 @@ public class MenuUtil {
         }
         if (pt == PetType.PIGZOMBIE) {
             options.add(new MenuOption(i++, MenuItem.BABY));
-            options.add(new MenuOption(i++, MenuItem.VILLAGER));
         }
         if (pt == PetType.SKELETON) {
             options.add(new MenuOption(i++, MenuItem.WITHER));

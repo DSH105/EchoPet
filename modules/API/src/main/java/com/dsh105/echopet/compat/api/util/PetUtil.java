@@ -314,9 +314,6 @@ public class PetUtil {
         if (pt.getPetType() == PetType.ZOMBIE) {
             info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((IZombiePet) pt).isVillager());
         }
-        if (pt.getPetType() == PetType.PIGZOMBIE) {
-            info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((IPigZombiePet) pt).isVillager());
-        }
         if (pt.getPetType() == PetType.HORSE) {
             HorseType ht = ((IHorsePet) pt).getHorseType();
             info.add(ChatColor.GOLD + " - Saddled: " + ChatColor.YELLOW + ((IHorsePet) pt).isSaddled());

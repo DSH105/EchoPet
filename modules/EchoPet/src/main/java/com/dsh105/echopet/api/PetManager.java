@@ -507,8 +507,6 @@ public class PetManager implements IPetManager {
             if (pd == PetData.VILLAGER) {
                 if (petType == PetType.ZOMBIE) {
                     ((IZombiePet) pet).setVillager(b);
-                } else if (petType == PetType.PIGZOMBIE) {
-                    ((IPigZombiePet) pet).setVillager(b);
                 }
             }
 

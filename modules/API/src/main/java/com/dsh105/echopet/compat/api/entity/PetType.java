@@ -36,7 +36,7 @@ public enum PetType {
     GHAST("Ghast", 56, "Ghast Pet", 10D, 7D, EntityType.GHAST),
     GIANT("Giant", 53, "Giant Pet", 100D, 0D, EntityType.GIANT),
     MAGMACUBE("MagmaCube", 62, "Magma Cube Pet", 20D, 5D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-    PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, EntityType.PIG_ZOMBIE, PetData.BABY, PetData.VILLAGER),
+    PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, EntityType.PIG_ZOMBIE, PetData.BABY),
     SILVERFISH("Silverfish", 60, "Silverfish Pet", 8D, 4D, EntityType.SILVERFISH),
     SKELETON("Skeleton", 51, "Skeleton Pet", 20D, 5D, EntityType.SKELETON, PetData.WITHER),
     SLIME("Slime", 55, "Slime Pet", 20D, 4D, EntityType.SLIME, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),

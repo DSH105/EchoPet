@@ -46,15 +46,4 @@ public class PigZombiePet extends Pet implements IPigZombiePet {
         return this.baby;
     }
 
-    @Override
-    public void setVillager(boolean flag) {
-        ((IEntityPigZombiePet) getEntityPet()).setVillager(flag);
-        this.villager = flag;
-    }
-
-    @Override
-    public boolean isVillager() {
-        return this.villager;
-    }
-
 }
