@@ -18,7 +18,6 @@
 package com.dsh105.echopet.listeners;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;

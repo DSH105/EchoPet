@@ -22,7 +22,6 @@ import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.nms.v1_8_R1.NMSEntityUtil;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.EntityPet;
-import net.minecraft.server.v1_8_R1.*;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 
 /**

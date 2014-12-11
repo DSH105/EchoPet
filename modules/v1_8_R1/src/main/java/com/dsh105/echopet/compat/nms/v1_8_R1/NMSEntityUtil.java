@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_R1;
 
-import net.minecraft.server.v1_8_R1.*;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 

@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_Spigot;
 
-import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;

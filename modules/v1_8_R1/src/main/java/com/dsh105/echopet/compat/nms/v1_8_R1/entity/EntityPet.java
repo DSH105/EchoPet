@@ -32,7 +32,6 @@ import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_8_R1.entity.ai.PetGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R1.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftCreature;
@@ -120,6 +119,10 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     public IPet getPet() {
         return this.pet;
+    }
+
+    public void setNameTagVisible(boolean flag) {
+        this.datawatcher.watch(3, );
     }
 
     public Player getPlayerOwner() {

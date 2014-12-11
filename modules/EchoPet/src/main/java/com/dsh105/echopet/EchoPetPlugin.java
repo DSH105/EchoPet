@@ -17,11 +17,6 @@
 
 package com.dsh105.echopet;
 
-import com.captainbern.minecraft.protocol.PacketType;
-import com.captainbern.minecraft.wrapper.WrappedPacket;
-import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.commodus.ServerUtil;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.commodus.config.YAMLConfigManager;
 import com.dsh105.commodus.data.Metrics;
