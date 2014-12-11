@@ -190,7 +190,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     public void setPathfinding() {
         try {
             this.petGoalSelector = new PetGoalSelector();
-            //this.getNavigation().b(true);
 
             petGoalSelector.addGoal(new PetGoalFloat(this), 0);
             petGoalSelector.addGoal(new PetGoalFollowOwner(this, this.getSizeCategory().getStartWalk(getPet().getPetType()), this.getSizeCategory().getStopWalk(getPet().getPetType()), this.getSizeCategory().getTeleport(getPet().getPetType())), 1);
@@ -341,13 +340,13 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     @Override
     public void g(float sideMot, float forwMot) {
         if (this.passenger == null || !(this.passenger instanceof EntityHuman)) {
-            super.e(sideMot, forwMot);
+            super.g(sideMot, forwMot);
             this.S = 0.5F;
             return;
         }
         EntityHuman human = (EntityHuman) this.passenger;
         if (human.getBukkitEntity() != this.getPlayerOwner().getPlayer()) {
-            super.e(sideMot, forwMot);
+            super.g(sideMot, forwMot);
             this.S = 0.5F;
             return;
         }
@@ -374,7 +373,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         }
 
         this.j(this.rideSpeed);
-        super.e(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
+        super.g(moveEvent.getSidewardMotionSpeed(), moveEvent.getForwardMotionSpeed());
 
         PetType pt = this.getPet().getPetType();
         if (FIELD_JUMP != null && this.passenger != null) {

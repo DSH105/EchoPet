@@ -165,7 +165,7 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
 
     @Override
     public void g(float sideMot, float forwMot) {
-        super.e(sideMot, forwMot);
+        super.g(sideMot, forwMot);
         if (forwMot <= 0.0F) {
             this.stepSoundCount = 0;
         }
