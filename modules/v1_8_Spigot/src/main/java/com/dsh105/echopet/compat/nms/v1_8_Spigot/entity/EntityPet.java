@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_8_Spigot.entity;
 
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
@@ -245,13 +246,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     @Override
     public boolean onInteract(Player p) {
-        return this.a(((CraftPlayer) p).getHandle());
-    }
-
-    // EntityInsentient
-    @Override
-    public boolean a(EntityHuman human) {
-        if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
+        if (IdentUtil.areIdentical(p, getPlayerOwner())) {
             if (EchoPet.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
@@ -261,6 +256,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean a(EntityHuman human) {
+        return onInteract((Player) human.getBukkitEntity());
     }
 
     @Override

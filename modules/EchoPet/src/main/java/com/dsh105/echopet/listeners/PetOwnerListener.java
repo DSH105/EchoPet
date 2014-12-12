@@ -72,11 +72,7 @@ public class PetOwnerListener implements Listener {
             PetInteractEvent iEvent = new PetInteractEvent(pet, p, PetInteractEvent.Action.RIGHT_CLICK, false);
             EchoPet.getPlugin().getServer().getPluginManager().callEvent(iEvent);
             if (!iEvent.isCancelled()) {
-                float yaw = p.getLocation().getYaw();
                 pet.getEntityPet().onInteract(p);
-                if (p.getLocation().getYaw() != yaw) {
-                    p.getLocation().setYaw(yaw);
-                }
                 return;
             }
         }

@@ -241,13 +241,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     @Override
     public boolean onInteract(Player p) {
-        return this.a(((CraftPlayer) p).getHandle());
-    }
-
-    // EntityInsentient
-    @Override
-    public boolean a(EntityHuman human) {
-        if (IdentUtil.areIdentical((Player) human.getBukkitEntity(), getPlayerOwner())) {
+        if (IdentUtil.areIdentical(p, getPlayerOwner())) {
             if (EchoPet.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
@@ -257,6 +251,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean a(EntityHuman human) {
+        return onInteract((Player) human.getBukkitEntity());
     }
 
     @Override
