@@ -97,9 +97,11 @@ public class MenuListener implements Listener {
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
+                                            inv.setItem(slot, mi.getBoolean(true));
                                             //Particle.RED_SMOKE.builder().show(pet.getLocation()); // TODO
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
+                                            inv.setItem(slot, mi.getBoolean(false));
                                             // Particle.SPARKLE.builder().show(pet.getLocation()); // TODO
                                         }
                                     }
@@ -108,9 +110,11 @@ public class MenuListener implements Listener {
                                         if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, false, pet.getPetType())) {
                                             if (!pet.isHat()) {
                                                 pet.setAsHat(true);
+                                                inv.setItem(slot, mi.getBoolean(false));
                                                 Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
                                             } else {
                                                 pet.setAsHat(false);
+                                                inv.setItem(slot, mi.getBoolean(true));
                                                 Lang.sendTo(pet.getOwner(), Lang.HAT_PET_OFF.toString());
                                             }
                                         }
