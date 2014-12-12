@@ -39,6 +39,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PetCommand implements CommandExecutor {
 
@@ -306,9 +307,51 @@ public class PetCommand implements CommandExecutor {
             // List of all pet types
             else if (args[0].equalsIgnoreCase("list")) {
                 if (Perm.LIST.hasPerm(sender, true, true)) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
-                    for (String s : PetUtil.getPetList(sender, false)) {
-                        sender.sendMessage(s);
+                    boolean is1dot7 = new Version("1.7").isSupported();
+                    boolean inline = !(sender instanceof Player && is1dot7);
+
+                    PowerMessage message = new PowerMessage(Lang.VALID_PET_TYPES.toString() + " ");
+
+                    for (PetType type : PetType.values()) {
+                        boolean access = Perm.hasTypePerm(sender, false, Perm.BASE_PETTYPE, true, type);
+                        ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
+                        ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
+                        message.then(highlight + StringUtil.capitalise(type.toString().replace("_", " ")));
+
+                        List<PetData> registeredData = type.getAllowedDataTypes();
+                        List<String> registeredStringData = new ArrayList<String>();
+
+                        StringBuilder dataBuilder = new StringBuilder();
+                        dataBuilder.append(format).append("Valid data types: ");
+                        int length = 0;
+                        for (PetData data : registeredData) {
+                            String dataName = StringUtil.capitalise(data.toString().replace("_", " "));
+                            boolean dataAccess = Perm.hasDataPerm(sender, false, type, data, true);
+                            if (dataAccess) {
+                                registeredStringData.add(StringUtil.capitalise(data.toString().replace("_", " ")));
+                                if (length >= 35) {
+                                    dataBuilder.append("\n");
+                                    length = 0;
+                                }
+                                dataBuilder.append(highlight).append(dataName).append(format).append(", ");
+                                length += dataName.length();
+                            }
+                        }
+
+                        if (registeredStringData.size() <= 0) {
+                            message.tooltip(format + "No valid data types.");
+                        } else {
+                            String data = dataBuilder.substring(0, dataBuilder.length() - 2);
+                            message.tooltip(data);
+                            if (inline) {
+                                message.then(" (" + StringUtil.combine(", ", registeredStringData) + ")").colour(format);
+                            }
+                        }
+                        message.then(format + ", " + highlight);
+                    }
+                    message.send(sender);
+                    if (!inline) {
+                        sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                     }
                     return true;
                 } else {
