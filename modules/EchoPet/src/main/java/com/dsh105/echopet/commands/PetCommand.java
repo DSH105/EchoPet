@@ -351,7 +351,7 @@ public class PetCommand implements CommandExecutor {
                     }
                     message.send(sender);
                     if (!inline) {
-                        sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
+                        sender.sendMessage(Lang.TIP_HOVER_LIST_PREVIEW.toString());
                     }
                     return true;
                 } else {
