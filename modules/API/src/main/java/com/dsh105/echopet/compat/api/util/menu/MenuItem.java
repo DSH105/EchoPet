@@ -34,7 +34,7 @@ public enum MenuItem {
     HORSE_MARKING(Material.INK_SACK, 1, (short) 0, DataMenuType.HORSE_MARKING, "Marking", "Horse"),
     HORSE_ARMOUR(Material.IRON_CHESTPLATE, 1, (short) 0, DataMenuType.HORSE_ARMOUR, "Armour", "Horse"),
     CHESTED(Material.CHEST, 1, (short) 0, DataMenuType.BOOLEAN, "Chested", "Horse"),
-    FIRE(Material.FIRE, 1, (short) 0, DataMenuType.BOOLEAN, "Fire", "Blaze"),
+    FIRE(Material.FIREBALL, 1, (short) 0, DataMenuType.BOOLEAN, "Fire", "Blaze"),
     SADDLE(Material.SADDLE, 1, (short) 0, DataMenuType.BOOLEAN, "Saddle", "Horse", "Pig"),
     SHEARED(Material.SHEARS, 1, (short) 0, DataMenuType.BOOLEAN, "Sheared", "Sheep"),
     SCREAMING(Material.ENDER_PEARL, 1, (short) 0, DataMenuType.BOOLEAN, "Screaming", "Enderman"),
