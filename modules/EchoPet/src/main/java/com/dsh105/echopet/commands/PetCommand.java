@@ -234,7 +234,7 @@ public class PetCommand implements CommandExecutor {
                     ArrayList<MenuOption> options = MenuUtil.createOptionList(p.getPetType());
                     int size = p.getPetType() == PetType.HORSE ? 18 : 9;
                     PetMenu menu = new PetMenu(p, options, size);
-                    menu.open(true);
+                    menu.open(false);
                     return true;
                 } else {
                     return true;

@@ -246,7 +246,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
                 PetMenu menu = new PetMenu(getPet(), options, size);
-                menu.open(true);
+                menu.open(false);
             }
             return true;
         }

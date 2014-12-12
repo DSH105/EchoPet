@@ -194,7 +194,7 @@ public class PetAdminCommand implements CommandExecutor {
                     ArrayList<MenuOption> options = MenuUtil.createOptionList(pet.getPetType());
                     int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
                     PetMenu menu = new PetMenu(pet, options, size);
-                    menu.open(true);
+                    menu.open(false);
                     Lang.sendTo(sender, Lang.ADMIN_OPEN_MENU.toString()
                             .replace("%player%", target.getName())
                             .replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
