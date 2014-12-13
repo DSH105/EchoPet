@@ -38,7 +38,7 @@ public class PetRegistrationEntry {
     private Constructor<? extends IEntityPet> entityPetConstructor;
 
     public PetRegistrationEntry(String name, int registrationId, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass) {
-        if (this.entityClass == null) {
+        if (entityClass == null) {
             throw new PetRegistrationException("Pet type is not supported by this server version.");
         }
 
