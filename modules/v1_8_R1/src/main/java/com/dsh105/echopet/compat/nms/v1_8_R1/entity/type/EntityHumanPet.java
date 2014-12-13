@@ -69,7 +69,9 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
 
     @Override
     public void setGameProfile(WrappedGameProfile profile) {
+        this.removeFromPlayerList();
         this.profile = profile;
+        this.addToPlayerList();
     }
 
     @Override

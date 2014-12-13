@@ -20,6 +20,8 @@ package com.dsh105.echopet.compat.nms.v1_8_R1.entity;
 import com.captainbern.minecraft.protocol.PacketType;
 import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
+import com.captainbern.reflection.Reflection;
+import com.captainbern.reflection.matcher.Matchers;
 import com.dsh105.commodus.GeometryUtil;
 import com.dsh105.commodus.ServerUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
@@ -27,10 +29,13 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
 import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
-import net.minecraft.server.v1_8_R1.World;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.server.v1_8_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public abstract class EntityPacketPet extends EntityPet implements IEntityPacketPet {
@@ -67,6 +72,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     @Override
     public void remove(boolean makeSound) {
         bukkitEntity.remove();
+        this.removeFromPlayerList();
     }
 
     @Override
@@ -118,7 +124,31 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     }
 
     private void init() {
-        this.updateDatawatcher("Human Pet");
+        this.addToPlayerList();
         this.updatePosition();
+        this.updateDatawatcher("Human Pet");
+    }
+
+    protected void removeFromPlayerList() {
+        PacketPlayOutPlayerInfo playerInfo = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER);
+        PlayerInfoData infoData = new PlayerInfoData(playerInfo, (GameProfile) this.profile.getHandle(), 0, EnumGamemode.SPECTATOR, new ChatComponentText(""));
+        injectToList(playerInfo, infoData);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ServerUtil.sendPacket(playerInfo, player);
+        }
+    }
+
+    protected void addToPlayerList() {
+        PacketPlayOutPlayerInfo playerInfo = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER);
+        PlayerInfoData infoData = new PlayerInfoData(playerInfo, (GameProfile) this.profile.getHandle(), 0, EnumGamemode.SPECTATOR, new ChatComponentText(""));
+        injectToList(playerInfo, infoData);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ServerUtil.sendPacket(playerInfo, player);
+        }
+    }
+
+    private void injectToList(PacketPlayOutPlayerInfo playerInfoPacket, PlayerInfoData infoData) {
+        List playerList = (List) new Reflection().reflect(playerInfoPacket.getClass()).getSafeFields(Matchers.withExactType(List.class)).get(0).getAccessor().get(playerInfoPacket);
+        playerList.add(infoData);
     }
 }
