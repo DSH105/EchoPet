@@ -79,6 +79,7 @@ public enum Lang {
     INVALID_PET_DATA_TYPE("invalid_pet_data_type", "&6%data% &eis an invalid pet data type."),
     INVALID_PET_DATA_TYPE_FOR_PET("invalid_pet_data_type_for_pet", "&6%data% &e is invalid for the &6%type% &epet type."),
     VALID_PET_TYPES("valid_pet_types", "&eValid pet types:"),
+    PET_TYPE_NOT_COMPATIBLE("pet_type_not_compatible", "&6%type% &epet type is not compatible with this server version."),
 
     NO_DEFAULT("no_default", "&eYou do not currently have a default pet set."),
     REMOVE_DEFAULT("remove_default", "&eDefault pet removed successfully."),

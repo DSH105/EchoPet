@@ -63,7 +63,12 @@ public class PetRegistry {
 
     public PetRegistry() {
         for (PetType petType : PetType.values()) {
-            registrationEntries.put(petType, PetRegistrationEntry.create(petType));
+            try {
+                PetRegistrationEntry entry = PetRegistrationEntry.create(petType);
+                registrationEntries.put(petType, entry);
+            } catch (PetRegistrationException e) {
+                // not found = not compatible with this server version
+            }
         }
     }
 

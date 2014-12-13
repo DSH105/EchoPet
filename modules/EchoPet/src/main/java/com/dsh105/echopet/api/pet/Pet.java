@@ -386,19 +386,23 @@ public abstract class Pet implements IPet {
             this.removeRider();
         }
         IPet newRider = pt.getNewPetInstance(this.getOwner());
-        if (newRider != null) {
-            this.rider = (Pet) newRider;
-            this.rider.setRider();
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (getCraftPet() != null) {
-                        getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
-                    }
-                    EchoPet.getSqlManager().saveToDatabase(Pet.this.rider, true);
-                }
-            }.runTaskLater(EchoPet.getPlugin(), 5L);
+        if (newRider == null) {
+            if (sendFailMessage) {
+                Lang.sendTo(getOwner(), Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
+            }
+            return null;
         }
+        this.rider = (Pet) newRider;
+        this.rider.setRider();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (getCraftPet() != null) {
+                    getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
+                }
+                EchoPet.getSqlManager().saveToDatabase(Pet.this.rider, true);
+            }
+        }.runTaskLater(EchoPet.getPlugin(), 5L);
 
         return this.rider;
     }

@@ -88,7 +88,11 @@ public enum PetType {
     private int id;
 
     PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
-        this.entityClass = ReflectionUtil.getPetNMSClass(classIdentifier);
+        try {
+            this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
+        } catch (ClassNotFoundException e) {
+            // do nothing
+        }
         this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
         this.id = registrationId;
         this.allowedData = ImmutableList.copyOf(allowedData);

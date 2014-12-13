@@ -38,6 +38,10 @@ public class PetRegistrationEntry {
     private Constructor<? extends IEntityPet> entityPetConstructor;
 
     public PetRegistrationEntry(String name, int registrationId, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass) {
+        if (this.entityClass == null) {
+            throw new PetRegistrationException("Pet type is not supported by this server version.");
+        }
+
         this.name = name;
         this.registrationId = registrationId;
         this.entityClass = entityClass;
@@ -47,7 +51,7 @@ public class PetRegistrationEntry {
             this.petConstructor = this.petClass.getConstructor(Player.class);
             this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
         } catch (NoSuchMethodException e) {
-            throw new IllegalStateException("Failed to create pet constructors!", e);
+            throw new PetRegistrationException("Failed to create pet constructors!", e);
         }
     }
 
