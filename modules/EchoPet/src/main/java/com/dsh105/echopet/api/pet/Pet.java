@@ -18,6 +18,7 @@
 package com.dsh105.echopet.api.pet;
 
 import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -205,8 +206,8 @@ public abstract class Pet implements IPet {
     @Override
     public void removePet(boolean makeSound) {
         if (this.getCraftPet() != null) {
-            //Particle.CLOUD.builder().show(getLocation()); // TOOD
-            //Particle.LAVA_SPARK.builder().show(getLocation()); // TODO
+            Particle.CLOUD.builder().at(getLocation()).show();
+            Particle.LAVA_SPARK.builder().at(getLocation()).show();
         }
         removeRider();
         if (this.getEntityPet() != null) {
@@ -304,10 +305,10 @@ public abstract class Pet implements IPet {
         this.teleportToOwner();
         this.getEntityPet().resizeBoundingBox(flag);
         this.ownerRiding = flag;
-        //Particle.PORTAL.builder().show(getLocation()); // TODO
+        Particle.PORTAL.builder().at(getLocation()).show();
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        //Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).show(getLocation()); // TODO
+        Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).at(getLocation()).show();
     }
 
     @Override
@@ -358,10 +359,10 @@ public abstract class Pet implements IPet {
         }
         this.getEntityPet().resizeBoundingBox(flag);
         this.isHat = flag;
-        // Particle.PORTAL.builder().show(getLocation()); // TODO
+        Particle.PORTAL.builder().at(getLocation()).show();
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        // Particle.PORTAL.builder().show(getLocation());// TODO
+        Particle.PORTAL.builder().at(getLocation()).show();
     }
 
     @Override

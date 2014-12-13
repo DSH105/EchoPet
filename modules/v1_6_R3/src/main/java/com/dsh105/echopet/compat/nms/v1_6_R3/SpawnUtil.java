@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.compat.nms.v1_6_R3;
 
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -53,7 +54,7 @@ public class SpawnUtil implements ISpawnUtil {
             owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Failed to spawn pet entity.");
             EchoPet.getManager().removePet(pet, true);
         } else {
-            // Particle.MAGIC_RUNES.builder().show(l); // TODO
+            Particle.MAGIC_RUNES.builder().at(l).show();
         }
         return entityPet;
     }

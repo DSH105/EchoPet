@@ -18,6 +18,7 @@
 package com.dsh105.echopet.listeners;
 
 import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -98,11 +99,11 @@ public class MenuListener implements Listener {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
                                             inv.setItem(slot, mi.getBoolean(true));
-                                            //Particle.RED_SMOKE.builder().show(pet.getLocation()); // TODO
+                                            Particle.RED_SMOKE.builder().at(pet.getLocation()).show();
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
                                             inv.setItem(slot, mi.getBoolean(false));
-                                            // Particle.SPARKLE.builder().show(pet.getLocation()); // TODO
+                                            Particle.SPARKLE.builder().at(pet.getLocation()).show();
                                         }
                                     }
                                 } else {

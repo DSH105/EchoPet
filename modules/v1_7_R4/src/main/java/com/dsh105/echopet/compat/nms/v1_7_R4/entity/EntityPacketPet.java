@@ -22,6 +22,7 @@ import com.captainbern.minecraft.reflection.MinecraftMethods;
 import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.GeometryUtil;
+import com.dsh105.commodus.ServerUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -94,7 +95,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public void updatePosition() {
         WrappedPacket spawnPacket = getSpawnPacket();
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
-            MinecraftMethods.sendPacket(p, spawnPacket.getHandle());
+            ServerUtil.sendPacket(spawnPacket.getHandle(), p);
         }
     }
 
@@ -108,7 +109,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         metaPacket.getDataWatchers().write(0, customDataWatcher);
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
-            MinecraftMethods.sendPacket(p, metaPacket.getHandle());
+            ServerUtil.sendPacket(metaPacket.getHandle(), p);
         }
     }
 

@@ -21,12 +21,12 @@ import com.captainbern.minecraft.protocol.PacketType;
 import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
 import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.commodus.GeometryUtil;
+import com.dsh105.commodus.ServerUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
 import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
-import com.dsh105.echopet.compat.nms.v1_8_R1.util.MinecraftMethods;
 import net.minecraft.server.v1_8_R1.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -94,7 +94,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
     public void updatePosition() {
         WrappedPacket spawnPacket = getSpawnPacket();
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
-            MinecraftMethods.sendPacket(p, spawnPacket.getHandle());
+            ServerUtil.sendPacket(spawnPacket.getHandle(), p);
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         metaPacket.getWatchableObjectLists().write(0, customDataWatcher.getWatchableObjects());
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
-            MinecraftMethods.sendPacket(p, metaPacket.getHandle());
+            ServerUtil.sendPacket(metaPacket.getHandle(), p);
         }
     }
 
