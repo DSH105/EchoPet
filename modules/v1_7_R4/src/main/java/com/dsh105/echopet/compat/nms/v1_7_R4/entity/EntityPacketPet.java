@@ -17,17 +17,17 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R4.entity;
 
-import com.dsh105.dshutils.util.GeometryUtil;
+import com.captainbern.minecraft.protocol.PacketType;
+import com.captainbern.minecraft.reflection.MinecraftMethods;
+import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
+import com.captainbern.minecraft.wrapper.WrappedPacket;
+import com.dsh105.commodus.GeometryUtil;
+import com.dsh105.commodus.ServerUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDFetcher;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedDataWatcher;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.compat.api.reflection.SafeField;
+import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
 import net.minecraft.server.v1_7_R4.World;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -61,6 +61,8 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
             this.profileUuid = UUID.randomUUID();
         }
         this.profile = new WrappedGameProfile(this.profileUuid, pet.getPetName());
+        customDataWatcher = new WrappedDataWatcher();
+        customDataWatcher.setEntity(this.getBukkitEntity());
     }
 
     @Override
@@ -87,28 +89,27 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         this.updateDatawatcher(this.pet.getPetName());
     }
 
-    public abstract WrapperPacketNamedEntitySpawn getSpawnPacket();
+    public abstract WrappedPacket getSpawnPacket();
 
     @Override
     public void updatePosition() {
-        WrapperPacketNamedEntitySpawn spawn = this.getSpawnPacket();
+        WrappedPacket spawnPacket = getSpawnPacket();
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
-            spawn.send(p);
+            ServerUtil.sendPacket(spawnPacket.getHandle(), p);
         }
     }
 
     private void updateDatawatcher(String name) {
-        customDataWatcher = new WrappedDataWatcher(this);
-        customDataWatcher.initiate(0, (Object) (byte) this.entityStatus);
-        customDataWatcher.initiate(1, (Object) (short) 0);
-        customDataWatcher.initiate(8, (Object) (byte) 0);
-        customDataWatcher.initiate(10, (Object) (String) name);
-        WrapperPacketEntityMetadata meta = new WrapperPacketEntityMetadata();
-        meta.setEntityId(this.id);
-        meta.setMetadata(customDataWatcher);
+        customDataWatcher.setObject(0, (Object) (byte) this.entityStatus);
+        customDataWatcher.setObject(1, (Object) (short) 0);
+        customDataWatcher.setObject(8, (Object) (byte) 0);
+        customDataWatcher.setObject(10, (Object) (String) name);
+        WrappedPacket metaPacket = new WrappedPacket(PacketType.Play.Server.ENTITY_METADATA);
+        metaPacket.getIntegers().write(0, this.id);
+        metaPacket.getDataWatchers().write(0, customDataWatcher);
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
-            meta.send(p);
+            ServerUtil.sendPacket(metaPacket.getHandle(), p);
         }
     }
 

@@ -17,10 +17,10 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import com.dsh105.dshutils.inventory.InventoryMenu;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.inventory.InventoryMenu;
 import org.bukkit.entity.Player;
 
 import java.util.Map;

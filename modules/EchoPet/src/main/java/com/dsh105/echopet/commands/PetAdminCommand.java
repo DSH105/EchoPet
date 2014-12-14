@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -57,7 +58,9 @@ public class PetAdminCommand implements CommandExecutor {
             if (Perm.ADMIN.hasPerm(sender, true, true)) {
                 Lang.sendTo(sender, Lang.HELP.toString().replace("%cmd%", "pet help"));
                 return true;
-            } else return true;
+            } else {
+                return true;
+            }
 
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
@@ -67,7 +70,9 @@ public class PetAdminCommand implements CommandExecutor {
                     SelectorLayout.loadLayout();
                     Lang.sendTo(sender, Lang.ADMIN_RELOAD_CONFIG.toString());
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.ADMIN.hasPerm(sender, true, true)) {
                     sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help 1/6 ------------");
@@ -76,7 +81,9 @@ public class PetAdminCommand implements CommandExecutor {
                         sender.sendMessage(s);
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("list")) {
                 if (Perm.ADMIN.hasPerm(sender, true, true)) {
                     sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
@@ -84,7 +91,9 @@ public class PetAdminCommand implements CommandExecutor {
                         sender.sendMessage(s);
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
 
         } else if (args.length >= 1 && args[0].equalsIgnoreCase("name")) {
@@ -165,7 +174,9 @@ public class PetAdminCommand implements CommandExecutor {
                     }
                 }
 
-            } else return true;
+            } else {
+                return true;
+            }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("menu")) {
                 if (Perm.ADMIN_MENU.hasPerm(sender, true, true)) {
@@ -183,12 +194,14 @@ public class PetAdminCommand implements CommandExecutor {
                     ArrayList<MenuOption> options = MenuUtil.createOptionList(pet.getPetType());
                     int size = pet.getPetType() == PetType.HORSE ? 18 : 9;
                     PetMenu menu = new PetMenu(pet, options, size);
-                    menu.open(true);
+                    menu.open(false);
                     Lang.sendTo(sender, Lang.ADMIN_OPEN_MENU.toString()
                             .replace("%player%", target.getName())
                             .replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("call")) {
                 if (Perm.ADMIN_CALL.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -206,7 +219,9 @@ public class PetAdminCommand implements CommandExecutor {
                     Lang.sendTo(target, Lang.PET_CALL.toString());
                     Lang.sendTo(sender, Lang.ADMIN_PET_CALL.toString().replace("%player%", target.getName()));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("show")) {
                 if (Perm.ADMIN_SHOW.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -225,7 +240,9 @@ public class PetAdminCommand implements CommandExecutor {
                             .replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
                     Lang.sendTo(target, Lang.SHOW_PET.toString().replace("%type%", StringUtil.capitalise(pet.getPetType().toString())));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("hide")) {
                 if (Perm.ADMIN_HIDE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -245,7 +262,9 @@ public class PetAdminCommand implements CommandExecutor {
                     Lang.sendTo(target, Lang.HIDE_PET.toString());
                     Lang.sendTo(sender, Lang.ADMIN_HIDE_PET.toString().replace("%player%", target.getName()));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("select")) {
                 if (Perm.ADMIN_SELECT.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -261,7 +280,9 @@ public class PetAdminCommand implements CommandExecutor {
                     new SelectorMenu().showTo(target);
                     Lang.sendTo(sender, Lang.ADMIN_OPEN_SELECTOR.toString().replace("%player%", target.getName()));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("selector")) {
                 if (Perm.ADMIN_SELECTOR.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -273,7 +294,9 @@ public class PetAdminCommand implements CommandExecutor {
                     Lang.sendTo(target, Lang.ADD_SELECTOR.toString());
                     Lang.sendTo(sender, Lang.ADMIN_ADD_SELECTOR.toString().replace("%player%", target.getName()));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("info")) {
                 if (Perm.ADMIN_INFO.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -292,10 +315,12 @@ public class PetAdminCommand implements CommandExecutor {
                         sender.sendMessage(s);
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.ADMIN.hasPerm(sender, true, true)) {
-                    if (StringUtil.isInt(args[1])) {
+                    if (GeneralUtil.isInt(args[1])) {
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Admin Help " + args[1] + "/6 ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
                         for (String s : AdminHelpPage.getHelpPage(Integer.parseInt(args[1]))) {
@@ -309,7 +334,9 @@ public class PetAdminCommand implements CommandExecutor {
                         sender.sendMessage(s);
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("remove")) {
                 if (Perm.ADMIN_REMOVE.hasPerm(sender, true, true)) {
                     Player target = Bukkit.getPlayer(args[1]);
@@ -340,7 +367,9 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(target, Lang.REMOVE_PET.toString());
                         return true;
                     }
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("hat")) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null || !target.isOnline()) {
@@ -363,7 +392,9 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_HAT_PET_OFF.toString().replace("%player%", target.getName()));
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("ride")) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null || !target.isOnline()) {
@@ -386,7 +417,9 @@ public class PetAdminCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.ADMIN_RIDE_PET_OFF.toString().replace("%player%", target.getName()));
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else {
                 Player target = Bukkit.getPlayer(args[0]);
                 if (target == null || !target.isOnline()) {
@@ -429,7 +462,9 @@ public class PetAdminCommand implements CommandExecutor {
                             .replace("%player%", target.getName())
                             .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
 
         } else if (args.length >= 3 && args[0].equalsIgnoreCase("default")) {
@@ -450,7 +485,9 @@ public class PetAdminCommand implements CommandExecutor {
                     EchoPet.getSqlManager().clearFromDatabase(target);
                     Lang.sendTo(sender, Lang.ADMIN_REMOVE_DEFAULT.toString().replace("%player%", name));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args.length == 4 && args[2].equalsIgnoreCase("set")) { //args[3] == pet info
                 if (args[3].equalsIgnoreCase("current")) {
                     if (Perm.ADMIN_DEFAULT_SET_CURRENT.hasPerm(sender, true, true)) {
@@ -469,7 +506,9 @@ public class PetAdminCommand implements CommandExecutor {
                         EchoPet.getManager().saveFileData("default", pet);
                         Lang.sendTo(sender, Lang.ADMIN_SET_DEFAULT_TO_CURRENT.toString().replace("%player%", args[2]));
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 } else {
                     String name = args[1];
                     if (Bukkit.getPlayer(args[1]) != null) {
@@ -493,7 +532,9 @@ public class PetAdminCommand implements CommandExecutor {
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
                                 .replace("%player%", name));
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             } else if (args.length == 5 && args[2].equalsIgnoreCase("set")) {
                 String name = args[1];
@@ -526,7 +567,9 @@ public class PetAdminCommand implements CommandExecutor {
                             .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", "")))
                             .replace("%player%", name));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("rider")) {
@@ -568,7 +611,9 @@ public class PetAdminCommand implements CommandExecutor {
                             Lang.sendTo(target, Lang.REMOVE_RIDER.toString());
                             return true;
                         }
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 } else {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
@@ -624,7 +669,9 @@ public class PetAdminCommand implements CommandExecutor {
                                 .replace("%player%", target.getName())
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             } else {
                 Player target = Bukkit.getPlayer(args[0]);
@@ -690,7 +737,9 @@ public class PetAdminCommand implements CommandExecutor {
                             .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
                             .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
         }
 

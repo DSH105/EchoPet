@@ -17,19 +17,23 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.ISqlPetManager;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.SQLUtil;
 import com.dsh105.echopet.compat.api.util.TableMigrationUtil;
 import org.bukkit.entity.Player;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 public class SqlPetManager implements ISqlPetManager {
 
@@ -79,10 +83,12 @@ public class SqlPetManager implements ISqlPetManager {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to save Pet data for " + playerIdent + " to MySQL Database", e, true);
                 } finally {
                     try {
-                        if (ps != null)
+                        if (ps != null) {
                             ps.close();
-                        if (con != null)
+                        }
+                        if (con != null) {
                             con.close();
+                        }
                     } catch (SQLException ignored) {
                     }
                 }
@@ -156,10 +162,12 @@ public class SqlPetManager implements ISqlPetManager {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + playerIdent + " in MySQL Database", e, true);
                 } finally {
                     try {
-                        if (ps != null)
+                        if (ps != null) {
                             ps.close();
-                        if (con != null)
+                        }
+                        if (con != null) {
                             con.close();
+                        }
                     } catch (SQLException ignored) {
                     }
                 }
@@ -200,10 +208,12 @@ public class SqlPetManager implements ISqlPetManager {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + playerIdent + " in MySQL Database", e, true);
                 } finally {
                     try {
-                        if (ps != null)
+                        if (ps != null) {
                             ps.close();
-                        if (con != null)
+                        }
+                        if (con != null) {
                             con.close();
+                        }
                     } catch (SQLException ignored) {
                     }
                 }
@@ -233,10 +243,12 @@ public class SqlPetManager implements ISqlPetManager {
                     Logger.log(Logger.LogLevel.SEVERE, "Failed to retrieve Pet data for " + playerIdent + " in MySQL Database", e, true);
                 } finally {
                     try {
-                        if (ps != null)
+                        if (ps != null) {
                             ps.close();
-                        if (con != null)
+                        }
+                        if (con != null) {
                             con.close();
+                        }
                     } catch (SQLException ignored) {
                     }
                 }

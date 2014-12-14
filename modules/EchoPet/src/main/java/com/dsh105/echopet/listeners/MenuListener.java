@@ -17,19 +17,18 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.EnumUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Lang;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
-import com.dsh105.echopet.compat.api.util.ParticleUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.*;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -94,15 +93,17 @@ public class MenuListener implements Listener {
                     for (MenuItem mi : MenuItem.values()) {
                         if (inv.getItem(slot).equals(mi.getItem()) || inv.getItem(slot).equals(mi.getBoolean(true)) || inv.getItem(slot).equals(mi.getBoolean(false))) {
                             if (mi.getMenuType() == DataMenuType.BOOLEAN) {
-                                if (EnumUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
+                                if (GeneralUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
                                     PetData pd = PetData.valueOf(mi.toString());
                                     if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                         if (pet.getPetData().contains(pd)) {
                                             EchoPet.getManager().setData(pet, pd, false);
-                                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.RED_SMOKE, pet.getLocation());
+                                            inv.setItem(slot, mi.getBoolean(true));
+                                            Particle.RED_SMOKE.builder().at(pet.getLocation()).show();
                                         } else {
                                             EchoPet.getManager().setData(pet, pd, true);
-                                            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.SPARKLE, pet.getLocation());
+                                            inv.setItem(slot, mi.getBoolean(false));
+                                            Particle.SPARKLE.builder().at(pet.getLocation()).show();
                                         }
                                     }
                                 } else {
@@ -110,9 +111,11 @@ public class MenuListener implements Listener {
                                         if (Perm.hasTypePerm(player, true, Perm.BASE_HAT, false, pet.getPetType())) {
                                             if (!pet.isHat()) {
                                                 pet.setAsHat(true);
+                                                inv.setItem(slot, mi.getBoolean(false));
                                                 Lang.sendTo(pet.getOwner(), Lang.HAT_PET_ON.toString());
                                             } else {
                                                 pet.setAsHat(false);
+                                                inv.setItem(slot, mi.getBoolean(true));
                                                 Lang.sendTo(pet.getOwner(), Lang.HAT_PET_OFF.toString());
                                             }
                                         }

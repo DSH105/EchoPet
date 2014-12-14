@@ -17,13 +17,11 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R4;
 
-import com.dsh105.dshutils.DSHPlugin;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetPreSpawnEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
-import com.dsh105.echopet.compat.api.util.ParticleUtil;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.compat.nms.v1_7_R4.entity.EntityPet;
 import net.minecraft.server.v1_7_R4.World;
 import org.bukkit.ChatColor;
@@ -38,7 +36,7 @@ public class SpawnUtil implements ISpawnUtil {
     public EntityPet spawn(IPet pet, Player owner) {
         Location l = owner.getLocation();
         PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, l);
-        DSHPlugin.getPluginInstance().getServer().getPluginManager().callEvent(spawnEvent);
+        EchoPet.getPlugin().getServer().getPluginManager().callEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
             owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Pet spawn was cancelled externally.");
             EchoPet.getManager().removePet(pet, true);
@@ -56,7 +54,7 @@ public class SpawnUtil implements ISpawnUtil {
             owner.sendMessage(EchoPet.getPrefix() + ChatColor.YELLOW + "Failed to spawn pet entity.");
             EchoPet.getManager().removePet(pet, true);
         } else {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.MAGIC_RUNES, l);
+            Particle.MAGIC_RUNES.builder().at(l).show();
         }
         return entityPet;
     }

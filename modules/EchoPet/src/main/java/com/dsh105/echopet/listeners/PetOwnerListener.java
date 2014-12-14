@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.listeners;
 
-import com.dsh105.dshutils.util.GeometryUtil;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeometryUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
@@ -60,6 +60,12 @@ public class PetOwnerListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
+        if (p.getItemInHand() != null && p.getItemInHand().isSimilar(SelectorLayout.getSelectorItem())) {
+            new SelectorMenu().showTo(p);
+            event.setCancelled(true);
+            return;
+        }
+
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
             IPet pet = ((IEntityPet) ReflectionUtil.getEntityHandle(e)).getPet();
             event.setCancelled(true);
@@ -69,11 +75,6 @@ public class PetOwnerListener implements Listener {
                 pet.getEntityPet().onInteract(p);
                 return;
             }
-        }
-
-        if (p.getItemInHand() != null && p.getItemInHand().isSimilar(SelectorLayout.getSelectorItem())) {
-            new SelectorMenu().showTo(p);
-            event.setCancelled(true);
         }
     }
 
@@ -211,14 +212,14 @@ public class PetOwnerListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         final Player p = event.getPlayer();
-        new BukkitRunnable() { 
-            
+        new BukkitRunnable() {
+
             @Override
             public void run() {
                 EchoPet.getManager().loadPets(p, true, false, true);
             }
-            
-        }.runTaskLater(EchoPet.getPlugin(),20L);
+
+        }.runTaskLater(EchoPet.getPlugin(), 20L);
     }
 
     @EventHandler

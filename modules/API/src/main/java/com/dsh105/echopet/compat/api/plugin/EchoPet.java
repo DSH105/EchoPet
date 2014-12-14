@@ -17,19 +17,22 @@
 
 package com.dsh105.echopet.compat.api.plugin;
 
-import com.dsh105.dshutils.config.YAMLConfig;
+import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.commodus.logging.Log;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.registration.PetRegistry;
 
 public final class EchoPet {
 
     private static IEchoPetPlugin PLUGIN;
+    public static final Log LOG = new Log("EchoPet");
 
     public static void setPlugin(IEchoPetPlugin plugin) {
         if (PLUGIN != null) {
             return;
         }
         PLUGIN = plugin;
+
     }
 
     public static IEchoPetPlugin getPlugin() {

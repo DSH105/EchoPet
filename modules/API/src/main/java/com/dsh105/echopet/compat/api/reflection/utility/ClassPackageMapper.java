@@ -59,8 +59,9 @@ public class ClassPackageMapper {
 
                 clazz = this.classHandler.loadClass(this.packageName + "." + className);
 
-                if (clazz == null)
+                if (clazz == null) {
                     throw new ClassNotFoundException("Failed to find class: " + this.packageName + "." + className);
+                }
 
                 this.classes.put(className, clazz);
             }

@@ -23,7 +23,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when this plugin attempts to send a message to a {@link org.bukkit.command.CommandSender}. Plugin prefix is appended automatically.
+ * Called when this plugin attempts to send a message to a {@link org.bukkit.command.CommandSender}. Plugin prefix is
+ * appended automatically.
  */
 
 public class EchoPetSendMessageEvent extends Event implements Cancellable {

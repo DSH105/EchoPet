@@ -19,16 +19,13 @@ package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.api.pet.PacketPet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IHumanPet;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
+import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 @EntityPetType(petType = PetType.HUMAN)
 public class HumanPet extends PacketPet implements IHumanPet {

@@ -18,9 +18,7 @@
 package com.dsh105.echopet.compat.api.entity;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -38,7 +36,7 @@ public enum PetType {
     GHAST("Ghast", 56, "Ghast Pet", 10D, 7D, EntityType.GHAST),
     GIANT("Giant", 53, "Giant Pet", 100D, 0D, EntityType.GIANT),
     MAGMACUBE("MagmaCube", 62, "Magma Cube Pet", 20D, 5D, EntityType.MAGMA_CUBE, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
-    PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, EntityType.PIG_ZOMBIE, PetData.BABY, PetData.VILLAGER),
+    PIGZOMBIE("PigZombie", 57, "Pig Zombie Pet", 20D, 6D, EntityType.PIG_ZOMBIE, PetData.BABY),
     SILVERFISH("Silverfish", 60, "Silverfish Pet", 8D, 4D, EntityType.SILVERFISH),
     SKELETON("Skeleton", 51, "Skeleton Pet", 20D, 5D, EntityType.SKELETON, PetData.WITHER),
     SLIME("Slime", 55, "Slime Pet", 20D, 4D, EntityType.SLIME, PetData.SMALL, PetData.MEDIUM, PetData.LARGE),
@@ -52,31 +50,31 @@ public enum PetType {
     CHICKEN("Chicken", 93, "Chicken Pet", 4D, 3D, EntityType.CHICKEN, PetData.BABY),
     COW("Cow", 92, "Cow Pet", 10D, 4D, EntityType.COW, PetData.BABY),
     HORSE("Horse", 100, "Horse Pet", 30D, 4D, EntityType.HORSE, PetData.BABY, PetData.CHESTED, PetData.SADDLE,
-            PetData.NORMAL, PetData.DONKEY,
-            PetData.MULE, PetData.SKELETON, PetData.ZOMBIE, PetData.WHITE,
-            PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK,
-            PetData.GRAY, PetData.DARKBROWN, PetData.NONE, PetData.SOCKS,
-            PetData.WHITEPATCH, PetData.WHITESPOT, PetData.BLACKSPOT,
-            PetData.NOARMOUR, PetData.IRON, PetData.GOLD, PetData.DIAMOND),
+          PetData.NORMAL, PetData.DONKEY,
+          PetData.MULE, PetData.SKELETON, PetData.ZOMBIE, PetData.WHITE,
+          PetData.CREAMY, PetData.CHESTNUT, PetData.BROWN, PetData.BLACK,
+          PetData.GRAY, PetData.DARKBROWN, PetData.NONE, PetData.SOCKS,
+          PetData.WHITEPATCH, PetData.WHITESPOT, PetData.BLACKSPOT,
+          PetData.NOARMOUR, PetData.IRON, PetData.GOLD, PetData.DIAMOND),
     IRONGOLEM("IronGolem", 99, "Iron Golem Pet", 100D, 7D, EntityType.IRON_GOLEM),
     MUSHROOMCOW("MushroomCow", 96, "Mushroom Cow Pet", 10D, 3D, EntityType.MUSHROOM_COW, PetData.BABY),
     OCELOT("Ocelot", 98, "Ocelot Pet", 10D, 4D, EntityType.OCELOT, PetData.BABY, PetData.BLACK, PetData.RED, PetData.SIAMESE, PetData.WILD),
     PIG("Pig", 90, "Pig Pet", 10D, 3D, EntityType.PIG, PetData.BABY, PetData.SADDLE),
     SHEEP("Sheep", 91, "Sheep Pet", 8D, 3D, EntityType.SHEEP, PetData.BABY, PetData.SHEARED,
-            PetData.BLACK, PetData.BLUE, PetData.BROWN,
-            PetData.CYAN, PetData.GRAY, PetData.GREEN,
-            PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
-            PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
-            PetData.SILVER, PetData.WHITE, PetData.YELLOW),
+          PetData.BLACK, PetData.BLUE, PetData.BROWN,
+          PetData.CYAN, PetData.GRAY, PetData.GREEN,
+          PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
+          PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
+          PetData.SILVER, PetData.WHITE, PetData.YELLOW),
     SNOWMAN("Snowman", 97, "Snowman Pet", 4D, 4D, EntityType.SNOWMAN),
     SQUID("Squid", 94, "Squid Pet", 10D, 4D, EntityType.SQUID),
     VILLAGER("Villager", 120, "Villager Pet", 20D, 4D, EntityType.VILLAGER, PetData.BABY, PetData.BLACKSMITH, PetData.BUTCHER, PetData.FARMER, PetData.LIBRARIAN, PetData.PRIEST),
     WOLF("Wolf", 95, "Wolf Pet", 20D, 6D, EntityType.WOLF, PetData.BABY, PetData.TAMED, PetData.ANGRY,
-            PetData.BLACK, PetData.BLUE, PetData.BROWN,
-            PetData.CYAN, PetData.GRAY, PetData.GREEN,
-            PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
-            PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
-            PetData.SILVER, PetData.WHITE, PetData.YELLOW),
+         PetData.BLACK, PetData.BLUE, PetData.BROWN,
+         PetData.CYAN, PetData.GRAY, PetData.GREEN,
+         PetData.LIGHTBLUE, PetData.LIME, PetData.MAGENTA,
+         PetData.ORANGE, PetData.PINK, PetData.PURPLE, PetData.RED,
+         PetData.SILVER, PetData.WHITE, PetData.YELLOW),
 
     HUMAN("Human", 54, "Human Pet", 20D, 6D, EntityType.UNKNOWN);
 
@@ -90,7 +88,11 @@ public enum PetType {
     private int id;
 
     PetType(String classIdentifier, int registrationId, String defaultName, double maxHealth, double attackDamage, EntityType entityType, PetData... allowedData) {
-        this.entityClass = ReflectionUtil.getPetNMSClass(classIdentifier);
+        try {
+            this.entityClass = (Class<? extends IEntityPet>) Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".entity.type.Entity" + classIdentifier + "Pet");
+        } catch (ClassNotFoundException e) {
+            // do nothing
+        }
         this.petClass = ReflectionUtil.getClass("com.dsh105.echopet.api.pet.type." + classIdentifier + "Pet");
         this.id = registrationId;
         this.allowedData = ImmutableList.copyOf(allowedData);

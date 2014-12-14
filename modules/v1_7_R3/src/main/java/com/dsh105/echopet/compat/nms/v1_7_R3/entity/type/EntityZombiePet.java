@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R3.entity.type;
 
-import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityZombiePet;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_7_R3.entity.EntityPet;
 import net.minecraft.server.v1_7_R3.ItemStack;
 import net.minecraft.server.v1_7_R3.Items;
@@ -41,7 +41,7 @@ public class EntityZombiePet extends EntityPet implements IEntityZombiePet {
             public void run() {
                 setEquipment(0, new ItemStack(Items.IRON_SPADE));
             }
-        }.runTaskLater(DSHPlugin.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getPlugin(), 5L);
     }
 
     @Override

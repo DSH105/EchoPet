@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import com.dsh105.dshutils.config.YAMLConfig;
-import com.dsh105.dshutils.util.EnumUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.PetItem;
 import com.dsh105.echopet.compat.api.entity.PetType;
@@ -40,7 +40,7 @@ public class SelectorLayout {
         String name = config.getString("petSelector.item.name", "&aPets");
         int materialId = config.getInt("petSelector.item.materialId", Material.BONE.getId());
         int materialData = config.getInt("petSelector.item.materialData", 0);
-        List<String> lore = config.getConfig().getStringList("petSelector.item.lore");
+        List<String> lore = config.config().getStringList("petSelector.item.lore");
         if (lore == null) {
             lore = new ArrayList<String>();
         }
@@ -69,7 +69,7 @@ public class SelectorLayout {
             String cmd = config.getString(s + ".slot-" + i + ".command");
             String petType = config.getString(s + ".slot-" + i + ".petType");
             PetType pt = null;
-            if (petType != null && EnumUtil.isEnumType(PetType.class, petType.toUpperCase())) {
+            if (petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())) {
                 pt = PetType.valueOf(petType.toUpperCase());
             }
             int id = config.getInt(s + ".slot-" + i + ".materialId");
@@ -78,7 +78,7 @@ public class SelectorLayout {
             if (name == null) {
                 continue;
             }
-            List<String> lore = config.getConfig().getStringList(s + ".slot-" + i + ".lore");
+            List<String> lore = config.config().getStringList(s + ".slot-" + i + ".lore");
             if (lore == null) {
                 lore = new ArrayList<String>();
             }

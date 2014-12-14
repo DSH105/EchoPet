@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import com.dsh105.dshutils.util.EnumUtil;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
@@ -44,7 +44,7 @@ public class PetMenu {
         for (MenuOption o : this.options) {
             if (o.item.getMenuType() == DataMenu.DataMenuType.BOOLEAN) {
                 MenuItem mi = o.item;
-                if (EnumUtil.isEnumType(PetData.class, mi.toString())) {
+                if (GeneralUtil.isEnumType(PetData.class, mi.toString())) {
                     PetData pd = PetData.valueOf(mi.toString());
                     if (pet.getPetData().contains(pd)) {
                         this.inv.setItem(o.position, o.item.getBoolean(false));

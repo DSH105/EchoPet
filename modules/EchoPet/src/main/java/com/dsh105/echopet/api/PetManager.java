@@ -17,19 +17,15 @@
 
 package com.dsh105.echopet.api;
 
-import com.dsh105.dshutils.logger.Logger;
-import com.dsh105.dshutils.util.EnumUtil;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.pet.*;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.IPetManager;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.PetUtil;
-import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import com.dsh105.echopet.compat.api.util.WorldUtil;
+import com.dsh105.echopet.compat.api.util.*;
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -122,6 +118,12 @@ public class PetManager implements IPetManager {
             return null;
         }
         IPet pi = petType.getNewPetInstance(owner);
+        if (pi == null) {
+            if (sendMessageOnFail) {
+                Lang.sendTo(owner, Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
+            }
+            return null;
+        }
         forceAllValidData(pi);
         pets.add(pi);
         return pi;
@@ -143,6 +145,10 @@ public class PetManager implements IPetManager {
             return null;
         }
         IPet pi = petType.getNewPetInstance(owner);
+        if (pi == null) {
+            Lang.sendTo(owner, Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(petType.toString())));
+            return null;
+        }
         pi.createRider(riderType, true);
         forceAllValidData(pi);
         pets.add(pi);
@@ -195,7 +201,8 @@ public class PetManager implements IPetManager {
         }
 
         if (EchoPet.getOptions().getConfig().getBoolean("sendForceMessage", true)) {
-            String dataToString = tempRiderData.isEmpty() ? PetUtil.dataToString(tempData, tempRiderData) : PetUtil.dataToString(tempData);;
+            String dataToString = tempRiderData.isEmpty() ? PetUtil.dataToString(tempData, tempRiderData) : PetUtil.dataToString(tempData);
+            ;
             if (dataToString != null) {
                 Lang.sendTo(pi.getOwner(), Lang.DATA_FORCE_MESSAGE.toString().replace("%data%", dataToString));
             }
@@ -240,7 +247,7 @@ public class PetManager implements IPetManager {
                 ConfigurationSection cs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".pet.data");
                 if (cs != null) {
                     for (String key : cs.getKeys(false)) {
-                        if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+                        if (GeneralUtil.isEnumType(PetData.class, key.toUpperCase())) {
                             PetData pd = PetData.valueOf(key.toUpperCase());
                             data.add(pd);
                         } else {
@@ -286,7 +293,7 @@ public class PetManager implements IPetManager {
                         ConfigurationSection mcs = EchoPet.getConfig(EchoPet.ConfigType.DATA).getConfigurationSection(path + ".rider.data");
                         if (mcs != null) {
                             for (String key : mcs.getKeys(false)) {
-                                if (EnumUtil.isEnumType(PetData.class, key.toUpperCase())) {
+                                if (GeneralUtil.isEnumType(PetData.class, key.toUpperCase())) {
                                     PetData pd = PetData.valueOf(key.toUpperCase());
                                     riderData.add(pd);
                                 } else {
@@ -510,8 +517,6 @@ public class PetManager implements IPetManager {
             if (pd == PetData.VILLAGER) {
                 if (petType == PetType.ZOMBIE) {
                     ((IZombiePet) pet).setVillager(b);
-                } else if (petType == PetType.PIGZOMBIE) {
-                    ((IPigZombiePet) pet).setVillager(b);
                 }
             }
 

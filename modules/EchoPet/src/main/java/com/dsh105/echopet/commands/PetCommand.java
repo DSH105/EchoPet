@@ -17,32 +17,27 @@
 
 package com.dsh105.echopet.commands;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.paginator.Paginator;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.PetStorage;
 import com.dsh105.echopet.compat.api.util.*;
-import com.dsh105.echopet.compat.api.util.fanciful.FancyMessage;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
-import com.dsh105.echopet.compat.api.util.pagination.FancyPaginator;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketEntityMetadata;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketPlayOutChat;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
 import com.dsh105.echopet.conversation.NameFactory;
+import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,12 +49,12 @@ public class PetCommand implements CommandExecutor {
         this.cmdLabel = commandLabel;
     }
 
-    private FancyPaginator getHelp(CommandSender sender) {
-        ArrayList<FancyMessage> helpMessages = new ArrayList<FancyMessage>();
+    private Paginator<PowerMessage> getHelp(CommandSender sender) {
+        ArrayList<PowerMessage> helpMessages = new ArrayList<PowerMessage>();
         for (HelpEntry he : HelpEntry.values()) {
-            helpMessages.add(he.getFancyMessage(sender));
+            helpMessages.add(he.getPowerMessage(sender));
         }
-        return new FancyPaginator(helpMessages, 5);
+        return new Paginator<PowerMessage>(helpMessages, 5);
     }
 
     @Override
@@ -68,7 +63,9 @@ public class PetCommand implements CommandExecutor {
             if (Perm.BASE.hasPerm(sender, true, true)) {
                 Lang.sendTo(sender, Lang.HELP.toString().replace("%cmd%", "pet help"));
                 return true;
-            } else return true;
+            } else {
+                return true;
+            }
 
         }
 
@@ -118,67 +115,10 @@ public class PetCommand implements CommandExecutor {
                     }
                     return true;
                 }
-            } else return true;
-        } else if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("debug")) {
-                System.out.println("DEBUG Particles:");
-                for (Field f : new WrapperPacketWorldParticles().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Chat:");
-                for (Field f : new WrapperPacketPlayOutChat().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Meta:");
-                for (Field f : new WrapperPacketEntityMetadata().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Named Spawn:");
-                for (Field f : new WrapperPacketNamedEntitySpawn().getPacketClass().getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Chat Serializer:");
-                for (Method m : ReflectionUtil.getNMSClass("ChatSerializer").getDeclaredMethods()) {
-                    /*if (ReflectionUtil.getNMSClass("IChatBaseComponent").isAssignableFrom(m.getReturnType())) {
-                        System.out.println("set component: " + m.getName());
-                    } else*/ if (String.class.isAssignableFrom(m.getReturnType())) {
-                        System.out.println("get component: " + m.getName());
-                    }
-                }
-                System.out.println("DEBUG DataWatcher:");
-                for (Method m : ReflectionUtil.getNMSClass("DataWatcher").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG EntityTypes:");
-                for (Field f : ReflectionUtil.getNMSClass("EntityTypes").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG Packet:");
-                for (Method m : ReflectionUtil.getNMSClass("PlayerConnection").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG Player:");
-                for (Field f : ReflectionUtil.getNMSClass("EntityPlayer").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
-                System.out.println("DEBUG ItemStack:");
-                for (Method m : ReflectionUtil.getNMSClass("ItemStack").getDeclaredMethods()) {
-                    System.out.println(m.getName());
-                    for (Class c : m.getParameterTypes()) {
-                        System.out.println("      -> " + c.getCanonicalName());
-                    }
-                }
-                System.out.println("DEBUG Achievement:");
-                for (Field f : ReflectionUtil.getNMSClass("Achievement").getDeclaredFields()) {
-                    System.out.println(f.getName() + " -> " + f.getType());
-                }
+            } else {
+                return true;
             }
+        } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("select")) {
                 if (sender instanceof Player) {
                     // We can exempt the player from having the appropriate permission here
@@ -192,14 +132,18 @@ public class PetCommand implements CommandExecutor {
                     Player p = (Player) sender;
                     new SelectorMenu().showTo(p);
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("selector")) {
                 if (Perm.BASE_SELECTOR.hasPerm(sender, true, false)) {
                     Player p = (Player) sender;
                     p.getInventory().addItem(SelectorLayout.getSelectorItem());
                     Lang.sendTo(sender, Lang.ADD_SELECTOR.toString());
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("call")) {
                 if (Perm.BASE_CALL.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
@@ -211,7 +155,9 @@ public class PetCommand implements CommandExecutor {
                     pet.teleportToOwner();
                     Lang.sendTo(sender, Lang.PET_CALL.toString());
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("toggle")) {
                 if (Perm.BASE_TOGGLE.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
@@ -237,7 +183,9 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.HIDE_PET.toString());
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("hide")) {
                 if (Perm.BASE_HIDE.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
@@ -251,7 +199,9 @@ public class PetCommand implements CommandExecutor {
                     EchoPet.getManager().removePet(pet, true);
                     Lang.sendTo(sender, Lang.HIDE_PET.toString());
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("show")) {
                 if (Perm.BASE_SHOW.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
@@ -271,7 +221,9 @@ public class PetCommand implements CommandExecutor {
                         }
                         return true;
                     }
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("menu")) {
                 if (Perm.BASE_MENU.hasPerm(sender, true, false)) {
                     Player player = (Player) sender;
@@ -283,9 +235,11 @@ public class PetCommand implements CommandExecutor {
                     ArrayList<MenuOption> options = MenuUtil.createOptionList(p.getPetType());
                     int size = p.getPetType() == PetType.HORSE ? 18 : 9;
                     PetMenu menu = new PetMenu(p, options, size);
-                    menu.open(true);
+                    menu.open(false);
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("hat")) {
                 if (sender instanceof Player) {
                     Player p = (Player) sender;
@@ -302,7 +256,9 @@ public class PetCommand implements CommandExecutor {
                             Lang.sendTo(sender, Lang.HAT_PET_OFF.toString());
                         }
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             } else if (args[0].equalsIgnoreCase("ride")) {
                 if (sender instanceof Player) {
@@ -320,7 +276,9 @@ public class PetCommand implements CommandExecutor {
                             Lang.sendTo(sender, Lang.RIDE_PET_OFF.toString());
                         }
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             }
 
@@ -328,12 +286,10 @@ public class PetCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
                     if (sender instanceof Player && EchoPet.isUsingNetty()) {
-                        FancyPaginator paginator = this.getHelp(sender);
-                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        Paginator<PowerMessage> paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getPages() + " ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                        for (FancyMessage fancy : paginator.getPage(1)) {
-                            fancy.send((Player) sender);
-                        }
+                        paginator.sendPage(sender, 1);
                         sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                     } else {
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
@@ -343,18 +299,64 @@ public class PetCommand implements CommandExecutor {
                         }
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
 
             // List of all pet types
             else if (args[0].equalsIgnoreCase("list")) {
                 if (Perm.LIST.hasPerm(sender, true, true)) {
-                    sender.sendMessage(ChatColor.RED + "------------ EchoPet Pet List ------------");
-                    for (String s : PetUtil.getPetList(sender, false)) {
-                        sender.sendMessage(s);
+                    boolean is1dot7 = new Version("1.7").isSupported();
+                    boolean inline = !(sender instanceof Player && is1dot7);
+
+                    PowerMessage message = new PowerMessage(Lang.VALID_PET_TYPES.toString() + " ");
+
+                    for (PetType type : PetType.values()) {
+                        boolean access = Perm.hasTypePerm(sender, false, Perm.BASE_PETTYPE, true, type);
+                        ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
+                        ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
+                        message.then(highlight + StringUtil.capitalise(type.toString().replace("_", " ")));
+
+                        List<PetData> registeredData = type.getAllowedDataTypes();
+                        List<String> registeredStringData = new ArrayList<String>();
+
+                        StringBuilder dataBuilder = new StringBuilder();
+                        dataBuilder.append(format).append("Valid data types: ");
+                        int length = 0;
+                        for (PetData data : registeredData) {
+                            String dataName = StringUtil.capitalise(data.toString().replace("_", " "));
+                            boolean dataAccess = Perm.hasDataPerm(sender, false, type, data, true);
+                            if (dataAccess) {
+                                registeredStringData.add(StringUtil.capitalise(data.toString().replace("_", " ")));
+                                if (length >= 35) {
+                                    dataBuilder.append("\n");
+                                    length = 0;
+                                }
+                                dataBuilder.append(highlight).append(dataName).append(format).append(", ");
+                                length += dataName.length();
+                            }
+                        }
+
+                        if (registeredStringData.size() <= 0) {
+                            message.tooltip(format + "No valid data types.");
+                        } else {
+                            String data = dataBuilder.substring(0, dataBuilder.length() - 2);
+                            message.tooltip(data);
+                            if (inline) {
+                                message.then(" (" + StringUtil.combine(", ", registeredStringData) + ")").colour(format);
+                            }
+                        }
+                        message.then(format + ", " + highlight);
+                    }
+                    message.send(sender);
+                    if (!inline) {
+                        sender.sendMessage(Lang.TIP_HOVER_LIST_PREVIEW.toString());
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
 
             // Get all the info for a specific pet and send it to the player
@@ -370,7 +372,9 @@ public class PetCommand implements CommandExecutor {
                         sender.sendMessage(s);
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("remove")) {
                 if (Perm.BASE_REMOVE.hasPerm(sender, true, false)) {
                     IPet pi = EchoPet.getManager().getPet((Player) sender);
@@ -383,7 +387,9 @@ public class PetCommand implements CommandExecutor {
                     EchoPet.getManager().removePet(pi, true);
                     Lang.sendTo(sender, Lang.REMOVE_PET.toString());
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else {
                 if (!(sender instanceof Player)) {
                     Lang.sendTo(sender, Lang.IN_GAME_ONLY.toString()
@@ -424,7 +430,9 @@ public class PetCommand implements CommandExecutor {
                     Lang.sendTo(sender, Lang.CREATE_PET.toString()
                             .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
 
         } else if (args.length == 2) {
@@ -445,7 +453,9 @@ public class PetCommand implements CommandExecutor {
                         EchoPet.getSqlManager().saveToDatabase(pi, false);
                         Lang.sendTo(sender, Lang.REMOVE_RIDER.toString());
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 } else {
                     if (!(sender instanceof Player)) {
                         Lang.sendTo(sender, Lang.IN_GAME_ONLY.toString()
@@ -499,25 +509,25 @@ public class PetCommand implements CommandExecutor {
                         Lang.sendTo(sender, Lang.CHANGE_RIDER.toString()
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             }
 
             // Help pages 1 through to 3
             else if (args[0].equalsIgnoreCase("help")) {
                 if (Perm.BASE.hasPerm(sender, true, true)) {
-                    if (StringUtil.isInt(args[1])) {
+                    if (GeneralUtil.isInt(args[1])) {
                         if (sender instanceof Player && EchoPet.isUsingNetty()) {
-                            FancyPaginator paginator = this.getHelp(sender);
-                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getIndex() + " ------------");
+                            Paginator<PowerMessage> paginator = this.getHelp(sender);
+                            sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/" + paginator.getPages() + " ------------");
                             sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                            if (Integer.parseInt(args[1]) > paginator.getIndex()) {
+                            if (Integer.parseInt(args[1]) > paginator.getPages()) {
                                 Lang.sendTo(sender, Lang.HELP_INDEX_TOO_BIG.toString().replace("%index%", args[1]));
                                 return true;
                             }
-                            for (FancyMessage fancy : paginator.getPage(Integer.parseInt(args[1]))) {
-                                fancy.send((Player) sender);
-                            }
+                            paginator.sendPage(sender, Integer.parseInt(args[1]));
                             sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                         } else {
                             sender.sendMessage(ChatColor.RED + "------------ EchoPet Help " + args[1] + "/6 ------------");
@@ -529,12 +539,10 @@ public class PetCommand implements CommandExecutor {
                         return true;
                     }
                     if (sender instanceof Player && EchoPet.isUsingNetty()) {
-                        FancyPaginator paginator = this.getHelp(sender);
-                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getIndex() + " ------------");
+                        Paginator<PowerMessage> paginator = this.getHelp(sender);
+                        sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/" + paginator.getPages() + " ------------");
                         sender.sendMessage(ChatColor.RED + "Key: <> = Required      [] = Optional");
-                        for (FancyMessage fancy : paginator.getPage(1)) {
-                            fancy.send((Player) sender);
-                        }
+                        paginator.sendPage(sender, 1);
                         sender.sendMessage(Lang.TIP_HOVER_PREVIEW.toString());
                     } else {
                         sender.sendMessage(ChatColor.RED + "------------ EchoPet Help 1/6 ------------");
@@ -544,7 +552,9 @@ public class PetCommand implements CommandExecutor {
                         }
                     }
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("default")) {
                 if (args[1].equalsIgnoreCase("remove")) {
                     if (Perm.BASE_DEFAULT_REMOVE.hasPerm(sender, true, false)) {
@@ -558,7 +568,9 @@ public class PetCommand implements CommandExecutor {
                         EchoPet.getSqlManager().clearFromDatabase((Player) sender);
                         Lang.sendTo(sender, Lang.REMOVE_DEFAULT.toString());
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             } else {
                 PetStorage UPD = PetUtil.formPetFromArgs(sender, args[0], false);
@@ -614,7 +626,9 @@ public class PetCommand implements CommandExecutor {
                             .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
                             .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
                     return true;
-                } else return true;
+                } else {
+                    return true;
+                }
             }
 
         } else if (args.length == 3) {
@@ -631,7 +645,9 @@ public class PetCommand implements CommandExecutor {
                             EchoPet.getManager().saveFileData("default", pi);
                             Lang.sendTo(sender, Lang.SET_DEFAULT_TO_CURRENT.toString());
                             return true;
-                        } else return true;
+                        } else {
+                            return true;
+                        }
                     } else {
                         PetStorage UPD = PetUtil.formPetFromArgs(sender, args[2], false);
                         if (UPD == null) {
@@ -649,7 +665,9 @@ public class PetCommand implements CommandExecutor {
                             Lang.sendTo(sender, Lang.SET_DEFAULT.toString()
                                     .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", ""))));
                             return true;
-                        } else return true;
+                        } else {
+                            return true;
+                        }
                     }
                 }
             }
@@ -680,7 +698,9 @@ public class PetCommand implements CommandExecutor {
                                 .replace("%type%", StringUtil.capitalise(petType.toString().replace("_", "")))
                                 .replace("%mtype%", StringUtil.capitalise(riderType.toString().replace("_", ""))));
                         return true;
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 }
             }
         }

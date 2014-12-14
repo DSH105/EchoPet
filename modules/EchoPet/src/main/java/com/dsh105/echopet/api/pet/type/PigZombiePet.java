@@ -19,13 +19,10 @@ package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityPigZombiePet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IPigZombiePet;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 @EntityPetType(petType = PetType.PIGZOMBIE)
 public class PigZombiePet extends Pet implements IPigZombiePet {
@@ -47,17 +44,6 @@ public class PigZombiePet extends Pet implements IPigZombiePet {
     @Override
     public boolean isBaby() {
         return this.baby;
-    }
-
-    @Override
-    public void setVillager(boolean flag) {
-        ((IEntityPigZombiePet) getEntityPet()).setVillager(flag);
-        this.villager = flag;
-    }
-
-    @Override
-    public boolean isVillager() {
-        return this.villager;
     }
 
 }

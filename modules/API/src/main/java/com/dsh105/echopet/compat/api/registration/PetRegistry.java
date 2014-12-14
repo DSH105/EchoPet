@@ -65,12 +65,16 @@ public class PetRegistry {
 
     public PetRegistry() {
         for (PetType petType : PetType.values()) {
-            PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
-            registrationEntries.put(petType, registrationEntry);
+            try {
+                PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
+                registrationEntries.put(petType, registrationEntry);
 
-            // Since these are guaranteed to be unique (for vanilla Minecraft), we can safely assume that they can be applied permanently during the lifetime of this plugin
-            CLASS_TO_NAME_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getName());
-            CLASS_TO_ID_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getRegistrationId());
+                // Since these are guaranteed to be unique (for vanilla Minecraft), we can safely assume that they can be applied permanently during the lifetime of this plugin
+                CLASS_TO_NAME_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getName());
+                CLASS_TO_ID_MODIFIER.modify(registrationEntry.getEntityClass(), registrationEntry.getRegistrationId());
+            } catch (PetRegistrationException e) {
+                // not found = not compatible with this server version
+            }
         }
         CLASS_TO_NAME_MODIFIER.applyModifications();
         CLASS_TO_ID_MODIFIER.applyModifications();

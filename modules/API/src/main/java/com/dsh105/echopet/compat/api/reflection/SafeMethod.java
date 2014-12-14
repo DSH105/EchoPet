@@ -41,14 +41,14 @@ public class SafeMethod<T> implements MethodAccessor<T> {
             Method method = coreClass.getDeclaredMethod(methodname, params);
             setMethod(method);
         } catch (NoSuchMethodException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching method with name: " + methodname);
+            EchoPet.LOG.warning("Failed to find a matching method with name: " + methodname);
             e.printStackTrace();
         }
     }
 
     protected void setMethod(Method method) {
         if (method == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Cannot create a SafeMethod with a null method!");
+            EchoPet.LOG.warning("Cannot create a SafeMethod with a null method!");
         }
         if (!method.isAccessible()) {
             method.setAccessible(true);
@@ -86,15 +86,17 @@ public class SafeMethod<T> implements MethodAccessor<T> {
 
     @Override
     public Class<?> getReturnType() {
-        if (this.method == null)
+        if (this.method == null) {
             throw new RuntimeException("Method handle is NULL!");
+        }
         return this.method.getReturnType();
     }
 
     @Override
     public Class[] getArguments() {
-        if (this.method == null)
+        if (this.method == null) {
             throw new RuntimeException("Method handle is NULL!");
+        }
         return this.method.getParameterTypes();
     }
 }

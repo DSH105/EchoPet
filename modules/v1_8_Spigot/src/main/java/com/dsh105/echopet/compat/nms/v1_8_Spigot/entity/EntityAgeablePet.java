@@ -39,7 +39,7 @@ public abstract class EntityAgeablePet extends EntityPet {
     }
 
     public void setAge(int i) {
-        this.datawatcher.watch(12, new ProtocolData.IntByte(i, (byte) ( i < 0 ? -1 : (i >= 6000 ? 1 : 0))));
+        this.datawatcher.watch(12, new ProtocolData.IntByte(i, (byte) (i < 0 ? -1 : (i >= 6000 ? 1 : 0))));
     }
 
     public boolean isAgeLocked() {
@@ -53,7 +53,7 @@ public abstract class EntityAgeablePet extends EntityPet {
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(12, new ProtocolData.IntByte(0, (byte)0));
+        this.datawatcher.a(12, new ProtocolData.IntByte(0, (byte) 0));
     }
 
     @Override

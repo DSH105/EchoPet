@@ -17,15 +17,15 @@
 
 package com.dsh105.echopet.api.pet;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.particle.Particle;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetTeleportEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
-import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.reflection.SafeMethod;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketWorldParticles;
+import com.dsh105.echopet.compat.api.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -153,7 +153,7 @@ public abstract class Pet implements IPet {
 
     @Override
     public String getPetNameWithoutColours() {
-        return StringUtil.replaceColoursWithString(this.getPetName());
+        return ChatColor.stripColor(this.getPetName());
     }
 
     @Override
@@ -206,8 +206,8 @@ public abstract class Pet implements IPet {
     @Override
     public void removePet(boolean makeSound) {
         if (this.getCraftPet() != null) {
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.CLOUD, this.getLocation());
-            ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.LAVA_SPARK, this.getLocation());
+            Particle.CLOUD.builder().at(getLocation()).show();
+            Particle.LAVA_SPARK.builder().at(getLocation()).show();
         }
         removeRider();
         if (this.getEntityPet() != null) {
@@ -305,10 +305,10 @@ public abstract class Pet implements IPet {
         this.teleportToOwner();
         this.getEntityPet().resizeBoundingBox(flag);
         this.ownerRiding = flag;
-        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
+        Particle.PORTAL.builder().at(getLocation()).show();
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        ParticleUtil.showWithData(WrapperPacketWorldParticles.ParticleType.BLOCK_DUST, this.getLocation(), l.getBlock().getTypeId(), 0);
+        Particle.BLOCK_DUST.builder().ofBlockType(l.getBlock().getType()).at(getLocation()).show();
     }
 
     @Override
@@ -359,10 +359,10 @@ public abstract class Pet implements IPet {
         }
         this.getEntityPet().resizeBoundingBox(flag);
         this.isHat = flag;
-        ParticleUtil.show(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation());
+        Particle.PORTAL.builder().at(getLocation()).show();
         Location l = this.getLocation().clone();
         l.setY(l.getY() - 1D);
-        ParticleUtil.showWithData(WrapperPacketWorldParticles.ParticleType.PORTAL, this.getLocation(), l.getBlock().getTypeId(), 0);
+        Particle.PORTAL.builder().at(getLocation()).show();
     }
 
     @Override
@@ -386,19 +386,23 @@ public abstract class Pet implements IPet {
             this.removeRider();
         }
         IPet newRider = pt.getNewPetInstance(this.getOwner());
-        if (newRider != null) {
-            this.rider = (Pet) newRider;
-            this.rider.setRider();
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (getCraftPet() != null) {
-                        getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
-                    }
-                    EchoPet.getSqlManager().saveToDatabase(Pet.this.rider, true);
-                }
-            }.runTaskLater(EchoPet.getPlugin(), 5L);
+        if (newRider == null) {
+            if (sendFailMessage) {
+                Lang.sendTo(getOwner(), Lang.PET_TYPE_NOT_COMPATIBLE.toString().replace("%type%", StringUtil.capitalise(getPetType().toString())));
+            }
+            return null;
         }
+        this.rider = (Pet) newRider;
+        this.rider.setRider();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (getCraftPet() != null) {
+                    getCraftPet().setPassenger(Pet.this.getRider().getCraftPet());
+                }
+                EchoPet.getSqlManager().saveToDatabase(Pet.this.rider, true);
+            }
+        }.runTaskLater(EchoPet.getPlugin(), 5L);
 
         return this.rider;
     }

@@ -17,10 +17,11 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
 
+import com.captainbern.minecraft.protocol.PacketType;
+import com.captainbern.minecraft.wrapper.WrappedPacket;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityHumanPet;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrappedGameProfile;
-import com.dsh105.echopet.compat.api.util.protocol.wrapper.WrapperPacketNamedEntitySpawn;
+import com.dsh105.echopet.compat.api.util.wrapper.WrappedGameProfile;
 import com.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityPacketPet;
 import net.minecraft.server.v1_7_R2.World;
 
@@ -37,18 +38,18 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     }
 
     @Override
-    public WrapperPacketNamedEntitySpawn getSpawnPacket() {
-        WrapperPacketNamedEntitySpawn spawn = new WrapperPacketNamedEntitySpawn();
-        spawn.setEntityId(this.id);
-        spawn.setGameProfile(this.profile);
-        spawn.setX(this.locX);
-        spawn.setY(this.locY);
-        spawn.setZ(this.locZ);
-        spawn.setYaw(this.yaw);
-        spawn.setPitch(this.pitch);
-        spawn.setEquipmentId(this.equipmentId);
-        spawn.setMetadata(this.customDataWatcher);
-        return spawn;
+    public WrappedPacket getSpawnPacket() {
+        WrappedPacket spawnPacket = new WrappedPacket(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
+        spawnPacket.getIntegers().write(0, this.id);
+        spawnPacket.getAccessor().write(1, this.profile);
+        spawnPacket.getIntegers().write(1, (int) (this.locX * 32.0D));
+        spawnPacket.getIntegers().write(2, (int) (this.locY * 32.0D));
+        spawnPacket.getIntegers().write(3, (int) (this.locZ * 32.0D));
+        spawnPacket.getBytes().write(0, (byte) (this.yaw * 256.0F / 360.0F));
+        spawnPacket.getBytes().write(1, (byte) (this.pitch * 256.0F / 360.0F));
+        spawnPacket.getIntegers().write(4, this.equipmentId);
+        spawnPacket.getDataWatchers().write(0, this.customDataWatcher);
+        return spawnPacket;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
 
     @Override
     public void setGameProfile(WrappedGameProfile profile) {
-        this.profile =  profile;
+        this.profile = profile;
     }
 
     @Override

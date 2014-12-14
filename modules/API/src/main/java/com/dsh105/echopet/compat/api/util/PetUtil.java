@@ -17,8 +17,8 @@
 
 package com.dsh105.echopet.compat.api.util;
 
-import com.dsh105.dshutils.util.EnumUtil;
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.pet.*;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
@@ -133,7 +133,7 @@ public class PetUtil {
 
         ArrayList<PetData> petDataList = new ArrayList<PetData>();
         PetType petType = null;
-        if (EnumUtil.isEnumType(PetType.class, petString)) {
+        if (GeneralUtil.isEnumType(PetType.class, petString)) {
             petType = PetType.valueOf(petString.toUpperCase());
         }
         if (petType == null) {
@@ -313,9 +313,6 @@ public class PetUtil {
 
         if (pt.getPetType() == PetType.ZOMBIE) {
             info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((IZombiePet) pt).isVillager());
-        }
-        if (pt.getPetType() == PetType.PIGZOMBIE) {
-            info.add(ChatColor.GOLD + " - Villager: " + ChatColor.YELLOW + ((IPigZombiePet) pt).isVillager());
         }
         if (pt.getPetType() == PetType.HORSE) {
             HorseType ht = ((IHorsePet) pt).getHorseType();

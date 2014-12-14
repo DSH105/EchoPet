@@ -17,12 +17,11 @@
 
 package com.dsh105.echopet.compat.api.registration;
 
-import com.dsh105.dshutils.util.StringUtil;
+import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -39,6 +38,10 @@ public class PetRegistrationEntry {
     private Constructor<? extends IEntityPet> entityPetConstructor;
 
     public PetRegistrationEntry(String name, int registrationId, Class<? extends IPet> petClass, Class<? extends IEntityPet> entityClass) {
+        if (entityClass == null) {
+            throw new PetRegistrationException("Pet type is not supported by this server version.");
+        }
+
         this.name = name;
         this.registrationId = registrationId;
         this.entityClass = entityClass;
@@ -48,7 +51,7 @@ public class PetRegistrationEntry {
             this.petConstructor = this.petClass.getConstructor(Player.class);
             this.entityPetConstructor = this.entityClass.getConstructor(ReflectionUtil.getNMSClass("World"), IPet.class);
         } catch (NoSuchMethodException e) {
-            throw new IllegalStateException("Failed to create pet constructors!");
+            throw new PetRegistrationException("Failed to create pet constructors!", e);
         }
     }
 
@@ -69,23 +72,31 @@ public class PetRegistrationEntry {
     }
 
     public IPet createFor(Player owner) {
+        Throwable throwable;
         try {
             return this.petConstructor.newInstance(owner);
         } catch (InstantiationException e) {
+            throwable = e;
         } catch (IllegalAccessException e) {
+            throwable = e;
         } catch (InvocationTargetException e) {
+            throwable = e;
         }
-        throw new IllegalStateException("Failed to create pet object for " + owner.getName());
+        throw new IllegalStateException("Failed to create pet object for " + owner.getName(), throwable);
     }
 
     public IEntityPet createEntityPet(Object nmsWorld, IPet pet) {
+        Throwable throwable;
         try {
             return this.entityPetConstructor.newInstance(nmsWorld, pet);
         } catch (InstantiationException e) {
+            throwable = e;
         } catch (IllegalAccessException e) {
+            throwable = e;
         } catch (InvocationTargetException e) {
+            throwable = e;
         }
-        throw new IllegalStateException("Failed to create EntityPet object for " + pet.getOwner().getName());
+        throw new IllegalStateException("Failed to create EntityPet object for " + pet.getOwner().getName(), throwable);
     }
 
     public static PetRegistrationEntry create(PetType petType) {

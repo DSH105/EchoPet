@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R2.entity;
 
-import com.dsh105.dshutils.logger.Logger;
+import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.event.PetRideMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
@@ -51,8 +52,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     protected IPet pet;
     public PetGoalSelector petGoalSelector;
 
-    protected int particle = 0;
-    protected int particleCounter = 0;
     protected static Field FIELD_JUMP = null;
     protected double jumpHeight;
 
@@ -173,11 +172,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     }
 
     public boolean attack(Entity entity, float damage) {
-        return this.attack(entity, DamageSource.mobAttack(this), f);
+        return this.attack(entity, DamageSource.mobAttack(this), damage);
     }
 
     public boolean attack(Entity entity, DamageSource damageSource, float damage) {
-        PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), f);
+        PetAttackEvent attackEvent = new PetAttackEvent(this.getPet(), entity.getBukkitEntity(), damage);
         EchoPet.getPlugin().getServer().getPluginManager().callEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {
@@ -242,22 +241,21 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     @Override
     public boolean onInteract(Player p) {
-        return this.a(((CraftPlayer) p).getHandle());
-    }
-
-    // EntityInsentient
-    @Override
-    public boolean a(EntityHuman human) {
-        if (human.getBukkitEntity() == this.getPlayerOwner().getPlayer()) {
+        if (IdentUtil.areIdentical(p, getPlayerOwner())) {
             if (EchoPet.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
                 PetMenu menu = new PetMenu(getPet(), options, size);
-                menu.open(true);
+                menu.open(false);
             }
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean a(EntityHuman human) {
+        return onInteract((Player) human.getBukkitEntity());
     }
 
     @Override
@@ -317,13 +315,6 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         if (this.getPet().isHat()) {
 
             this.lastYaw = this.yaw = (this.getPet().getPetType() == PetType.ENDERDRAGON ? this.getPlayerOwner().getLocation().getYaw() - 180 : this.getPlayerOwner().getLocation().getYaw());
-        }
-
-        if (this.particle == this.particleCounter) {
-            this.particle = 0;
-            this.particleCounter = this.random.nextInt(50);
-        } else {
-            this.particle++;
         }
 
         if (this.getPlayerOwner().isFlying() && EchoPet.getOptions().canFly(this.getPet().getPetType())) {

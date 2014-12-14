@@ -67,7 +67,9 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
             return false;
         } else if (this.pet.e(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance) {
             return false;
-        } else return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
+        } else {
+            return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
+        }
 
     }
 
@@ -109,7 +111,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
                 return;
             }
 
-            double speed = 0.55F;
+            double speed = 0.6F;
             if (this.pet.e(owner) > (this.teleportDistance) && ((CraftPlayer) this.pet.getPlayerOwner()).getHandle().onGround) {
                 this.pet.getPet().teleportToOwner();
                 return;

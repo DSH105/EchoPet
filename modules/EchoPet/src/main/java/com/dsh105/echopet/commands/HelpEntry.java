@@ -19,8 +19,7 @@ package com.dsh105.echopet.commands;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Perm;
-import com.dsh105.echopet.compat.api.util.fanciful.FancyItemUtil;
-import com.dsh105.echopet.compat.api.util.fanciful.FancyMessage;
+import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -74,7 +73,7 @@ public enum HelpEntry {
         return description;
     }
 
-    public FancyMessage getFancyMessage(CommandSender sender) {
+    public PowerMessage getPowerMessage(CommandSender sender) {
         ArrayList<String> description = new ArrayList<String>();
         description.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Usage for /" + EchoPet.getPlugin().getCommandString() + " " + this.getCommandArguments() + ":");
         for (String s : this.getDescription()) {
@@ -93,10 +92,10 @@ public enum HelpEntry {
             }
         }
         String cmd = "/" + EchoPet.getPlugin().getCommandString() + " " + this.getCommandArguments();
-        return new FancyMessage(ChatColor.YELLOW + "• " + ChatColor.GOLD + cmd).itemTooltip(FancyItemUtil.getItem(description.toArray(new String[description.size()]))).suggest(cmd);
+        return new PowerMessage(ChatColor.YELLOW + "• " + ChatColor.GOLD + cmd).tooltip(description.toArray(new String[0])).suggest(cmd);
     }
 
-    public FancyMessage getFancyMessage() {
-        return this.getFancyMessage(null);
+    public PowerMessage getPowerMessage() {
+        return this.getPowerMessage(null);
     }
 }

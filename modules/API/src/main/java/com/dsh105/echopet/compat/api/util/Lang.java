@@ -37,6 +37,7 @@ public enum Lang {
     STRING_ERROR("string_error", "&eError parsing String: [&6%string%&e]. Please revise command arguments."),
     HELP_INDEX_TOO_BIG("help_index_too_big", "&3Page &b%index% &3does not exist."),
     TIP_HOVER_PREVIEW("hover_tip", "&e&oHover over to see more information about this command. Click to insert it into the chat window."),
+    TIP_HOVER_LIST_PREVIEW("hover_list_tip", "&e&oHover over each pet type to see the valid data types."),
 
     DIMENSION_CHANGE("dimension_change", "&eDimension change initiated. Warping space and time to retrieve your Pet..."),
     AUTOSAVE_PET_LOAD("autosave_pet_load", "&eYour last active pet (&6%petname%&e) now follows close behind you."),
@@ -77,6 +78,8 @@ public enum Lang {
     INVALID_PET_TYPE("invalid_pet_type", "&6%type% &eis an invalid pet type."),
     INVALID_PET_DATA_TYPE("invalid_pet_data_type", "&6%data% &eis an invalid pet data type."),
     INVALID_PET_DATA_TYPE_FOR_PET("invalid_pet_data_type_for_pet", "&6%data% &e is invalid for the &6%type% &epet type."),
+    VALID_PET_TYPES("valid_pet_types", "&eValid pet types:"),
+    PET_TYPE_NOT_COMPATIBLE("pet_type_not_compatible", "&6%type% &epet type is not compatible with this server version."),
 
     NO_DEFAULT("no_default", "&eYou do not currently have a default pet set."),
     REMOVE_DEFAULT("remove_default", "&eDefault pet removed successfully."),

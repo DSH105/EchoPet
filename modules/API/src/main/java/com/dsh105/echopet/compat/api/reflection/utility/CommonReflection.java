@@ -86,8 +86,9 @@ public class CommonReflection {
      * @return
      */
     public static String getVersionTag() {
-        if (VERSION_TAG == null)
+        if (VERSION_TAG == null) {
             initializePackageNames();
+        }
         return VERSION_TAG;
     }
 
@@ -97,8 +98,9 @@ public class CommonReflection {
      * @return
      */
     public static String getMinecraftPackage() {
-        if (MINECARFT_PACKAGE == null)
+        if (MINECARFT_PACKAGE == null) {
             initializePackageNames();
+        }
         return MINECARFT_PACKAGE;
     }
 
@@ -108,8 +110,9 @@ public class CommonReflection {
      * @return
      */
     public static String getCraftBukkitPackage() {
-        if (CRAFTBUKKIT_PACKAGE == null)
+        if (CRAFTBUKKIT_PACKAGE == null) {
             initializePackageNames();
+        }
         return CRAFTBUKKIT_PACKAGE;
     }
 
@@ -157,8 +160,9 @@ public class CommonReflection {
                             }
                         }
                     } catch (Exception e) {
-                        if(VERSION_TAG == null)
-                            EchoPet.getPlugin().getReflectionLogger().warning("Version tag is null and it appears the server is modded but does not contain the expected method(s)! HoloAPI may not work correctly!");
+                        if (VERSION_TAG == null) {
+                            EchoPet.LOG.warning("Version tag is null and it appears the server is modded but does not contain the expected method(s)! HoloAPI may not work correctly!");
+                        }
                     }
 
                     MINECARFT_PACKAGE = combine(MINECARFT_PACKAGE_PREFIX, VERSION_TAG);
@@ -189,10 +193,12 @@ public class CommonReflection {
     }
 
     private static String combine(String packageName, String className) {
-        if (Strings.isNullOrEmpty(packageName))
+        if (Strings.isNullOrEmpty(packageName)) {
             return className;
-        if (Strings.isNullOrEmpty(className))
+        }
+        if (Strings.isNullOrEmpty(className)) {
             return packageName;
+        }
         return packageName + "." + className;
     }
 
@@ -238,8 +244,9 @@ public class CommonReflection {
      * @return
      */
     public static Class<?> getMinecraftClass(String className) {
-        if (NMS_HANDLER == null)
+        if (NMS_HANDLER == null) {
             NMS_HANDLER = new ClassPackageMapper(getMinecraftPackage(), getDefaultClassHandler());
+        }
 
         return NMS_HANDLER.getClass(className);
     }
@@ -251,8 +258,9 @@ public class CommonReflection {
      * @return
      */
     public static Class<?> getCraftBukkitClass(String className) {
-        if (CRAFTBUKKIT_HANDLER == null)
+        if (CRAFTBUKKIT_HANDLER == null) {
             CRAFTBUKKIT_HANDLER = new ClassPackageMapper(getCraftBukkitPackage(), getDefaultClassHandler());
+        }
 
         return CRAFTBUKKIT_HANDLER.getClass(className);
     }

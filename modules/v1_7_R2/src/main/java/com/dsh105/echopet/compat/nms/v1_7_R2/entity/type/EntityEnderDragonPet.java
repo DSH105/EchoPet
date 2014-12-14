@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.compat.nms.v1_7_R2.entity.type;
 
-import com.dsh105.dshutils.logger.Logger;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEnderDragonPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
+import com.dsh105.echopet.compat.api.util.Logger;
 import com.dsh105.echopet.compat.nms.v1_7_R2.entity.EntityNoClipPet;
 import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Location;

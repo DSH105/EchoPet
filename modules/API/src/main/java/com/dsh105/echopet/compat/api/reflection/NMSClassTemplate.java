@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.reflection;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 
 public class NMSClassTemplate extends ClassTemplate {
@@ -34,7 +33,7 @@ public class NMSClassTemplate extends ClassTemplate {
     protected void setNMSClass(String name) {
         Class clazz = ReflectionUtil.getNMSClass(name);
         if (clazz == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching class with name: " + name);
+            EchoPet.LOG.warning("Failed to find a matching class with name: " + name);
         }
         setClass(clazz);
     }

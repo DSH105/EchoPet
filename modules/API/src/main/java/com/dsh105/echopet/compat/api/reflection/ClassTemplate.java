@@ -88,7 +88,7 @@ public class ClassTemplate<T> {
 
     public static ClassTemplate<?> create(Class<?> type) {
         if (type == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Cannot create a ClassTemplate with a null type!");
+            EchoPet.LOG.warning("Cannot create a ClassTemplate with a null type!");
             return null;
         }
         return new ClassTemplate(type);
@@ -98,7 +98,7 @@ public class ClassTemplate<T> {
         Class clazz = ReflectionUtil.getClass(className);
 
         if (clazz == null) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to find a matching class with name: " + className);
+            EchoPet.LOG.warning("Failed to find a matching class with name: " + className);
             return null;
         }
         return new ClassTemplate<Object>(clazz);

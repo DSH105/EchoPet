@@ -18,11 +18,8 @@
 package com.dsh105.echopet.api.pet;
 
 import com.dsh105.echopet.compat.api.entity.IEntityPacketPet;
-import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPacketPet;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class PacketPet extends Pet implements IPacketPet {
 

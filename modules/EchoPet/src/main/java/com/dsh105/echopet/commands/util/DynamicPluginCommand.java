@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.commands.util;
 
-import com.dsh105.dshutils.DSHPlugin;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.bukkit.command.*;
@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DynamicPluginCommand extends Command implements PluginIdentifiableCommand {
+
     protected final CommandExecutor owner;
     protected final Object registeredWith;
     protected final Plugin owningPlugin;
@@ -87,8 +88,9 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
         if (registeredWith instanceof CommandManager) {
             try {
                 for (String permission : permissions) {
-                    if (sender.hasPermission(permission))
+                    if (sender.hasPermission(permission)) {
                         return true;
+                    }
                 }
                 return false;
             } catch (Throwable ignore) {
@@ -117,7 +119,7 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
             for (String arg : args) {
                 message.append(arg).append(' ');
             }
-            message.deleteCharAt(message.length() - 1).append("' in plugin ").append(DSHPlugin.getPluginInstance().getDescription().getFullName());
+            message.deleteCharAt(message.length() - 1).append("' in plugin ").append(EchoPet.getPlugin().getDescription().getFullName());
             throw new CommandException(message.toString(), ex);
         }
 

@@ -19,7 +19,6 @@ package com.dsh105.echopet.compat.api.util;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.reflection.ReflectionConstants;
-import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
@@ -34,11 +33,11 @@ public class PlayerUtil {
         try {
             sendPacket.invoke(playerConnection, packet);
         } catch (IllegalAccessException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve the PlayerConnection of: " + player.getName());
+            EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
         } catch (IllegalArgumentException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve the PlayerConnection of: " + player.getName());
+            EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
         } catch (InvocationTargetException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed to retrieve the PlayerConnection of: " + player.getName());
+            EchoPet.LOG.warning("Failed to retrieve the PlayerConnection of: " + player.getName());
         }
     }
 
@@ -47,13 +46,13 @@ public class PlayerUtil {
         try {
             return getHandle.invoke(player);
         } catch (IllegalAccessException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed retrieve the NMS Player-Object of:" + player.getName());
+            EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
             return null;
         } catch (IllegalArgumentException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed retrieve the NMS Player-Object of:" + player.getName());
+            EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
             return null;
         } catch (InvocationTargetException e) {
-            EchoPet.getPlugin().getReflectionLogger().warning("Failed retrieve the NMS Player-Object of:" + player.getName());
+            EchoPet.LOG.warning("Failed retrieve the NMS Player-Object of:" + player.getName());
             return null;
         }
     }

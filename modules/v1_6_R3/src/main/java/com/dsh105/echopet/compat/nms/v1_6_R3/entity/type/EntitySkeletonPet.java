@@ -17,10 +17,10 @@
 
 package com.dsh105.echopet.compat.nms.v1_6_R3.entity.type;
 
-import com.dsh105.dshutils.DSHPlugin;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySkeletonPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISkeletonPet;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.EntityPet;
 import net.minecraft.server.v1_6_R3.Item;
 import net.minecraft.server.v1_6_R3.ItemStack;
@@ -46,7 +46,7 @@ public class EntitySkeletonPet extends EntityPet implements IEntitySkeletonPet {
                     setEquipment(0, new ItemStack(Item.BOW));
                 }
             }
-        }.runTaskLater(DSHPlugin.getPluginInstance(), 5L);
+        }.runTaskLater(EchoPet.getPlugin(), 5L);
     }
 
     @Override
