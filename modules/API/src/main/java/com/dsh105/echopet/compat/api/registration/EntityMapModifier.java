@@ -58,22 +58,14 @@ public class EntityMapModifier<K, V> {
     }
 
     public boolean clear(V value) {
-        if (!results.containsKey(value)) {
-            return false;
-        }
-
-        for (K key : results.get(value).keySet()) {
+        for (K key : requestMappings(value).keySet()) {
             map.remove(key);
         }
         return true;
     }
 
     public boolean add(V value) {
-        if (!results.containsKey(value)) {
-            return false;
-        }
-
-        for (Map.Entry<K, V> entry : results.get(value).entrySet()) {
+        for (Map.Entry<K, V> entry : requestMappings(value).entrySet()) {
             map.put(entry.getKey(), entry.getValue());
         }
         return true;
