@@ -166,17 +166,17 @@ public class EchoEntityGhastPet extends EntityGhast implements IAnimal, EchoEnti
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

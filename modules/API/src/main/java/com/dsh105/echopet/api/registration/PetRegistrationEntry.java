@@ -22,8 +22,9 @@ import com.captainbern.reflection.Reflection;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
+
+import java.util.UUID;
 
 public class PetRegistrationEntry {
 
@@ -33,6 +34,9 @@ public class PetRegistrationEntry {
     private Class<? extends EntityPet> entityClass;
 
     public PetRegistrationEntry(String name, int registrationId, Class<? extends Pet> petClass, Class<? extends EntityPet> entityClass) {
+        if (this.entityClass == null) {
+            throw new PetRegistrationException("Entity class not available");
+        }
         this.name = name;
         this.registrationId = registrationId;
         this.entityClass = entityClass;
@@ -55,11 +59,12 @@ public class PetRegistrationEntry {
         return entityClass;
     }
 
-    public Pet createFor(Player owner) {
-        return new Reflection().reflect(this.petClass).getSafeConstructor(Player.class).getAccessor().invoke(owner);
+    public Pet createFor(UUID playerUID) {
+        return new Reflection().reflect(this.petClass).getSafeConstructor(UUID.class).getAccessor().invoke(playerUID);
     }
 
-    public <T extends LivingEntity, S extends EntityPet> S createEntityPet(Object nmsWorld, Pet<T, S> pet) {
+    // FIXME: support Sponge/Forge
+    public <T extends LivingEntityBridge, S extends EntityPet> S createEntityPet(Object nmsWorld, Pet<T, S> pet) {
         return (S) new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), this.petClass.getInterfaces()[0]).getAccessor().invoke(nmsWorld, pet);
     }
 

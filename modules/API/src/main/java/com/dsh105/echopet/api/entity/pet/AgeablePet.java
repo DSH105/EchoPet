@@ -17,12 +17,17 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
-import org.bukkit.entity.Ageable;
+import com.dsh105.echopet.bridge.entity.AgeableEntityBridge;
 
-public interface AgeablePet<T extends Ageable, S extends EntityAgeablePet> extends Pet<T, S> {
+public interface AgeablePet<T extends AgeableEntityBridge, S extends EntityAgeablePet> extends Pet<T, S> {
 
+    @AttributeSetter(Attributes.Attribute.BABY)
     void setBaby(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.BABY)
     boolean isBaby();
 }

@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.EnderDragonPet;
 
+@Entity(PetType.ENDER_DRAGON)
 public interface EntityEnderDragonPet extends EntityPet<EnderDragonPet> {
 
     void updatePosition(double x, double y, double z);
@@ -30,7 +33,7 @@ public interface EntityEnderDragonPet extends EntityPet<EnderDragonPet> {
 
     void setHurtTicks(int value);
 
-    void setTargetCrystal(org.bukkit.entity.EnderCrystal entity);
+    void setTargetCrystal(Object enderCrystal);
 
     void tickMovement();
 

@@ -23,4 +23,5 @@ import org.bukkit.entity.Chicken;
 
 public class BukkitChickenEntityBridge extends BukkitAgeableEntityBridge<Chicken> implements ChickenEntityBridge {
 
+
 }

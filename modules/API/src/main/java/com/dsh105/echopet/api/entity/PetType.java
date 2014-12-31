@@ -17,13 +17,16 @@
 
 package com.dsh105.echopet.api.entity;
 
-import com.captainbern.reflection.Reflection;
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.echopet.api.config.PetSettings;
+import com.dsh105.commodus.container.ItemStackContainer;
+import com.dsh105.commodus.reflection.Reflection;
+import com.dsh105.echopet.api.configuration.PetSettings;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import org.bukkit.Material;
+import com.dsh105.echopet.util.Perm;
+import com.dsh105.interact.Interact;
+import com.dsh105.interact.api.CommandIcon;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,95 +34,89 @@ import java.util.List;
 
 public enum PetType {
 
-    // Aggressive mobs
-    BAT(65, 6D, 3D, 65, true),
-    BLAZE(61, 20D, 6D, 6, false),
-    CAVE_SPIDER(59, 12D, 5D, 59, false),
-    CREEPER(50, 20D, 6D, 50, false),
-    ENDER_DRAGON(63, 200D, 0D, Material.DRAGON_EGG, false),
-    ENDERMAN(58, 40D, 6D, 58, false),
-    GHAST(56, 10D, 7D, 56, false),
-    GIANT(53, 100D, 0D, 54, false),
-    MAGMA_CUBE(62, 20D, 5D, 62, false),
-    PIG_ZOMBIE(57, 20D, 6D, 57, false),
-    SILVERFISH(60, 8D, 4D, 60, false),
-    SKELETON(51, 20D, 5D, 5, false),
-    SLIME(55, 20D, 4D, 55, false),
-    SPIDER(52, 16D, 5D, 52, false),
-    CHICKEN(93, 4D, 3D, 93, true),
-    COW(92, 10D, 4D, 92, true),
-    WITCH(66, 26D, 5D, 66, false),
-    WITHER(64, 300D, 8D, Material.NETHER_STAR, false),
-    ZOMBIE(54, 20D, 5D, 54, false),
+    BAT(65),
+    BLAZE(61),
+    CAVE_SPIDER(59),
+    CHICKEN(93),
+    COW(92),
+    CREEPER(50),
+    ENDER_DRAGON(63, "dragon_egg"),
+    ENDERMAN(58),
+    GHAST(56),
+    GIANT(53),
+    HORSE(100),
+    HUMAN(54, "skull"),
+    IRON_GOLEM(99, "pumpkin"),
+    MAGMA_CUBE(62),
+    MOOSHROOM(96),
+    OCELOT(98),
+    PIG(90),
+    ZOMBIE_PIGMAN(57),
+    SHEEP(91),
+    SILVERFISH(60),
+    SKELETON(51),
+    SLIME(55),
+    SNOWMAN(97, "snowball"),
+    SPIDER(52),
+    SQUID(94),
+    VILLAGER(120),
+    WITCH(66),
+    WITHER(64, "nether_start"),
+    WOLF(95),
+    ZOMBIE(54);
 
-    // Passive mobs
-    HORSE(100, 30D, 4D, 50, true),
-    IRON_GOLEM(99, 100D, 7D, Material.PUMPKIN, true),
-    MUSHROOM_COW(96, 10D, 3D, 96, true),
-    OCELOT(98, 10D, 4D, 98, true),
-    PIG(90, 10D, 3D, 90, true),
-    SHEEP(91, 8D, 3D, 9, true),
-    SNOWMAN(97, 4D, 4D, Material.SNOW_BALL, true),
-    SQUID(94, 10D, 4D, 94, true),
-    VILLAGER(120, 20D, 4D, 120, true),
-    WOLF(95, 20D, 6D, 95, true),
-
-    HUMAN(54, 20D, 6D, Material.SKULL_ITEM, 3, true);
 
     private int registrationId;
-    private double maxHealth;
-    private double attackDamage;
     private Class<? extends Pet> petClass;
     private Class<? extends EntityPet> entityClass;
 
     private String command;
-    private Material material;
-    private short materialData;
+    private String materialId;
+    private short materialMeta;
 
-    PetType(int registrationId, double maxHealth, double attackDamage, Material material, boolean passive) {
-        init(registrationId, maxHealth, attackDamage, material, 0, passive);
+    PetType(int registrationId) {
+        this(registrationId, "spawn_egg", 0);
     }
 
-    PetType(int registrationId, double maxHealth, double attackDamage, Material material, int materialData, boolean passive) {
-        init(registrationId, maxHealth, attackDamage, material, materialData, passive);
+    PetType(int registrationId, String materialId) {
+        this(registrationId, materialId, 0);
     }
 
-    PetType(int registrationId, double maxHealth, double attackDamage, int materialData, boolean passive) {
-        init(registrationId, maxHealth, attackDamage, Material.MONSTER_EGG, materialData, passive);
-    }
-
-    private void init(int registrationId, double maxHealth, double attackDamage, Material material, int materialData, boolean passive) {
+    PetType(int registrationId, String materialId, int materialMeta) {
         this.registrationId = registrationId;
-        this.maxHealth = maxHealth;
-        this.attackDamage = attackDamage;
-        this.material = material;
-        this.materialData = (short) materialData;
+        this.materialId = materialId;
+        this.materialMeta = (short) materialMeta;
+        this.command = "pet " + storageName();
 
         String classIdentifier = humanName().replace(" ", "");
-        this.entityClass = new Reflection().reflect(EchoPet.INTERNAL_NMS_PATH + ".entity.type.EchoEntity" + classIdentifier + "Pet").getReflectedClass();
-        this.petClass = new Reflection().reflect("com.dsh105.echopet.api.entity.pet.type.Echo" + classIdentifier + "Pet").getReflectedClass();
+        this.entityClass = (Class<? extends EntityPet>) Reflection.getClass(EchoPet.INTERNAL_NMS_PATH + ".entity.type.EchoEntity" + classIdentifier + "Pet");
+        this.petClass = (Class<? extends Pet>) Reflection.getClass("com.dsh105.echopet.api.entity.pet.type.Echo" + classIdentifier + "Pet");
+    }
 
-        this.command = "pet " + storageName();
+    public static List<PetType> sortAlphabetically() {
+        List<PetType> types = Arrays.asList(values());
+        Collections.sort(types);
+        return types;
     }
 
     public int getRegistrationId() {
         return this.registrationId;
     }
 
-    public double getMaxHealth() {
-        return this.maxHealth;
-    }
-
     public String getCommand() {
         return command;
     }
 
-    public Material getMaterial() {
-        return material;
+    public String getMaterial() {
+        return materialId;
     }
 
-    public short getMaterialData() {
-        return materialData;
+    public short getMaterialMeta() {
+        return materialMeta;
+    }
+
+    public CommandIcon getIcon() {
+        return Interact.commandIcon().command(command).permission(Perm.TYPE.replace("<type>", storageName())).name(humanName()).of(ItemStackContainer.of(materialId, materialMeta, 1)).build();
     }
 
     public String getDefaultName(String name) {
@@ -140,11 +137,5 @@ public enum PetType {
 
     public String humanName() {
         return StringUtil.capitalise(toString().toLowerCase().replace("_", " "));
-    }
-
-    public static List<PetType> sortAlphabetically() {
-        List<PetType> types = Arrays.asList(values());
-        Collections.sort(types);
-        return types;
     }
 }

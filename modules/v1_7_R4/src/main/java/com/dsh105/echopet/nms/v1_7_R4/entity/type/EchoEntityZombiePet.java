@@ -1,11 +1,15 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.commodus.container.ItemStackContainer;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityZombiePet;
 import com.dsh105.echopet.api.entity.pet.type.ZombiePet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
+import net.minecraft.server.v1_7_R4.World;
+import org.bukkit.*;
+import org.bukkit.inventory.*;
 
 public class EchoEntityZombiePet extends EntityZombie implements IAnimal, EchoEntityPetHandle, EntityZombiePet {
 
@@ -32,6 +36,16 @@ public class EchoEntityZombiePet extends EntityZombie implements IAnimal, EchoEn
     @Override
     public EntityPetModifier<ZombiePet> getModifier() {
         return modifier;
+    }
+
+    @Override
+    public void applyDefaultItems() {
+        getPet().setWeapon(ItemStackContainer.of(new org.bukkit.inventory.ItemStack(org.bukkit.Material.IRON_SPADE)));
+    }
+
+    @Override
+    public void resetLove() {
+
     }
 
     @Override
@@ -156,17 +170,17 @@ public class EchoEntityZombiePet extends EntityZombie implements IAnimal, EchoEn
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

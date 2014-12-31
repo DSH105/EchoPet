@@ -1,5 +1,6 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.commodus.Affirm;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityBlazePet;
 import com.dsh105.echopet.api.entity.pet.type.BlazePet;
@@ -27,7 +28,8 @@ public class EchoEntityBlazePet extends EntityBlaze implements IAnimal, EchoEnti
      */
 
     @Override
-    public void rangedAttack(LivingEntity entity, float speed) {
+    public void rangedAttack(Object entity, float speed) {
+        Affirm.checkInstanceOf(LivingEntity.class, entity);
         super.a(((CraftLivingEntity) entity).getHandle(), speed);
     }
 
@@ -201,17 +203,17 @@ public class EchoEntityBlazePet extends EntityBlaze implements IAnimal, EchoEnti
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

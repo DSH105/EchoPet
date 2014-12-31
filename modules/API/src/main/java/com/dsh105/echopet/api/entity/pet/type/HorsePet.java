@@ -17,41 +17,53 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.*;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityHorsePet;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
-import org.bukkit.entity.Horse;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.HorseEntityBridge;
 
-public interface HorsePet extends AgeablePet<Horse, EntityHorsePet> {
+@Traits(type = PetType.HORSE, hositility = Hostility.PASSIVE, width = 1.4F, height = 1.6F, health = 30.0D, attackDamage = 4.0D)
+@Size(SizeCategory.REGULAR)
+public interface HorsePet extends AgeablePet<HorseEntityBridge, EntityHorsePet> {
 
-    void setVariant(Horse.Variant variant);
+    @GroupAttributeSetter(AttributeType.HORSE_VARIANT)
+    void setVariant(Attributes.HorseVariant variant);
 
-    void setColor(Horse.Color color);
+    @GroupAttributeGetter(AttributeType.HORSE_VARIANT)
+    Attributes.HorseVariant getVariant();
 
-    void setStyle(Horse.Style style);
+    @GroupAttributeSetter(AttributeType.HORSE_COLOUR)
+    void setColor(Attributes.HorseColor color);
 
-    void setArmour(Armour armour);
+    @GroupAttributeGetter(AttributeType.HORSE_COLOUR)
+    Attributes.HorseColor getColor();
 
+    @GroupAttributeSetter(AttributeType.HORSE_STYLE)
+    void setStyle(Attributes.HorseStyle style);
+
+    @GroupAttributeGetter(AttributeType.HORSE_STYLE)
+    Attributes.HorseStyle getStyle();
+
+    @GroupAttributeSetter(AttributeType.HORSE_ARMOUR)
+    void setArmour(Attributes.HorseArmour armour);
+
+    @GroupAttributeGetter(AttributeType.HORSE_ARMOUR)
+    Attributes.HorseArmour getArmour();
+
+    @AttributeSetter(Attributes.Attribute.SADDLE)
     void setSaddled(boolean flag);
 
-    void setChested(boolean flag);
-
-    Horse.Variant getVariant();
-
-    Horse.Color getColor();
-
-    Horse.Style getStyle();
-
-    Armour getArmour();
-
+    @AttributeGetter(Attributes.Attribute.SADDLE)
     boolean isSaddled();
 
+    @AttributeSetter(Attributes.Attribute.CHESTED)
+    void setChested(boolean flag);
+
+    @AttributeGetter(Attributes.Attribute.CHESTED)
     boolean isChested();
-
-    enum Armour {
-
-        NONE,
-        IRON,
-        GOLD,
-        DIAMOND
-    }
 }

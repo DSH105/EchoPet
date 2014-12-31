@@ -17,10 +17,8 @@
 
 package com.dsh105.echopet.api.entity.entitypet;
 
+import com.dsh105.commodus.container.PositionContainer;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 
 public interface EntityPetModifier<T extends Pet> {
 
@@ -35,7 +33,7 @@ public interface EntityPetModifier<T extends Pet> {
     // 'on tick' function
     void onTick();
 
-    Entity getBukkitEntity();
+    Object getBukkitEntity();
 
     void setMotionX(double motX);
 
@@ -49,7 +47,7 @@ public interface EntityPetModifier<T extends Pet> {
 
     double getMotionZ();
 
-    boolean canSee(Entity entity);
+    boolean canSee(Object entity);
 
     boolean isDead();
 
@@ -61,15 +59,15 @@ public interface EntityPetModifier<T extends Pet> {
 
     public void setNoClipEnabled(boolean flag);
 
-    void setTarget(LivingEntity livingEntity);
+    void setTarget(Object livingEntity);
 
-    LivingEntity getTarget();
+    Object getTarget();
 
-    boolean attack(LivingEntity entity);
+    boolean attack(Object livingEntity);
 
-    boolean attack(LivingEntity entity, float damage);
+    boolean attack(Object livingEntity, float damage);
 
-    Entity getPassenger();
+    Object getPassenger();
 
     void setYaw(float yaw); // set last yaw too
 
@@ -105,21 +103,21 @@ public interface EntityPetModifier<T extends Pet> {
 
     void jump();
 
-    void lookAt(Entity entity, float headYaw);
+    void lookAt(Object entity, float headYaw);
 
-    void lookAt(Entity entity, float headYaw, float headPitch);
+    void lookAt(Object entity, float headYaw, float headPitch);
 
     void lookAt(double x, double y, double z, float headYaw, float headPitch);
 
-    void setLocation(Location location);
+    void setLocation(PositionContainer position);
 
-    Entity findPlayer(double range);
+    Object findPlayer(double range);
 
-    Entity findEntity(Class<?> nmsTypeClass, Object boundingBox);
+    Object findEntity(Class<?> nmsTypeClass, Object boundingBox);
 
     Object growBoundingBox(double d0, double d1, double d2);
 
-    float distanceTo(Entity entity);
+    float distanceTo(Object entity);
 
     double getSpeed();
 
@@ -129,7 +127,7 @@ public interface EntityPetModifier<T extends Pet> {
 
     void setPathfindingRadius(float pathfindingRadius);
 
-    void navigateTo(Entity entity, double speed);
+    void navigateTo(Object entity, double speed);
 
     void navigateTo(int x, int y, int z, double speed);
 

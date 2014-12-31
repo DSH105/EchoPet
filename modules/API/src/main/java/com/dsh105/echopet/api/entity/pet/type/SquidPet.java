@@ -17,10 +17,17 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySquidPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Squid;
+import com.dsh105.echopet.bridge.entity.type.SquidEntityBridge;
 
-public interface SquidPet extends Pet<Squid, EntitySquidPet> {
+@Traits(type = PetType.SQUID, hositility = Hostility.PASSIVE, width = 0.95F, height = 0.95F, health = 10.0D, attackDamage = 4.0D)
+@Size(SizeCategory.REGULAR)
+public interface SquidPet extends Pet<SquidEntityBridge, EntitySquidPet> {
 
 }

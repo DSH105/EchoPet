@@ -1,12 +1,12 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySheepPet;
 import com.dsh105.echopet.api.entity.pet.type.SheepPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.DyeColor;
 
 public class EchoEntitySheepPet extends EntitySheep implements IAnimal, EchoEntityPetHandle, EntitySheepPet {
 
@@ -26,13 +26,13 @@ public class EchoEntitySheepPet extends EntitySheep implements IAnimal, EchoEnti
      */
 
     @Override
-    public void setDyeColor(DyeColor color) {
-        super.setColor(color.getWoolData());
+    public void setDyeColor(Attributes.Color color) {
+        super.setColor(color.ordinal());
     }
 
     @Override
-    public DyeColor getDyeColor() {
-        return DyeColor.getByWoolData((byte) super.getColor());
+    public Attributes.Color getDyeColor() {
+        return Attributes.Color.valueOf((byte) super.getColor());
     }
 
     @Override
@@ -177,17 +177,17 @@ public class EchoEntitySheepPet extends EntitySheep implements IAnimal, EchoEnti
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

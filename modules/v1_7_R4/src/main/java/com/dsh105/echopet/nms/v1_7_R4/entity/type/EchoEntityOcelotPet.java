@@ -1,12 +1,12 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityOcelotPet;
 import com.dsh105.echopet.api.entity.pet.type.OcelotPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.entity.Ocelot;
 
 public class EchoEntityOcelotPet extends EntityOcelot implements IAnimal, EchoEntityPetHandle, EntityOcelotPet {
 
@@ -31,13 +31,13 @@ public class EchoEntityOcelotPet extends EntityOcelot implements IAnimal, EchoEn
     }
 
     @Override
-    public void setBukkitCatType(Ocelot.Type type) {
-        this.setCatType(type.getId());
+    public void setBukkitCatType(Attributes.OcelotType type) {
+        this.setCatType(type.ordinal());
     }
 
     @Override
-    public Ocelot.Type getBukkitCatType() {
-        return Ocelot.Type.getType(super.getCatType());
+    public Attributes.OcelotType getBukkitCatType() {
+        return Attributes.OcelotType.valueOf(super.getCatType());
     }
 
     @Override
@@ -177,17 +177,17 @@ public class EchoEntityOcelotPet extends EntityOcelot implements IAnimal, EchoEn
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

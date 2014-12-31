@@ -17,15 +17,19 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
 import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.SkeletonPet;
 
+@Entity(PetType.SKELETON)
 public interface EntitySkeletonPet extends EntityEquipablePet<SkeletonPet>, EntityRangedPet<SkeletonPet> {
 
     public static final int DATAWATCHER_WITHER = 13;
 
-    void setWither(boolean flag);
+    void setSkeletonEntityType(Attributes.SkeletonType skeletonType);
 
-    boolean isWither();
+    Attributes.SkeletonType getSkeletonEntityType();
 }

@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.CreeperPet;
 
+@Entity(PetType.CREEPER)
 public interface EntityCreeperPet extends EntityPet<CreeperPet> {
 
     public static final int DATAWATCHER_FUSE_STATE = 16;

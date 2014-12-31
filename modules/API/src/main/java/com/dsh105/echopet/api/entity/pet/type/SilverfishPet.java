@@ -17,10 +17,17 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySilverfishPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Silverfish;
+import com.dsh105.echopet.bridge.entity.type.SilverfishEntityBridge;
 
-public interface SilverfishPet extends Pet<Silverfish, EntitySilverfishPet> {
+@Traits(type = PetType.SILVERFISH, hositility = Hostility.AGGRESSIVE, width = 0.3F, height = 0.7F, health = 8.0D, attackDamage = 4.0D)
+@Size(SizeCategory.TINY)
+public interface SilverfishPet extends Pet<SilverfishEntityBridge, EntitySilverfishPet> {
 
 }

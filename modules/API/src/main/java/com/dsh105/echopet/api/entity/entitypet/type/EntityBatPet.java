@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.BatPet;
 
+@Entity(PetType.BAT)
 public interface EntityBatPet extends EntityPet<BatPet> {
 
     public static final int DATAWATCHER_STARTLED = 16;

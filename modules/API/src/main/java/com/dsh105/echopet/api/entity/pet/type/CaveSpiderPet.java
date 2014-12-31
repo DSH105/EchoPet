@@ -17,9 +17,16 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityCaveSpiderPet;
-import org.bukkit.entity.CaveSpider;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.CaveSpiderEntityBridge;
 
-public interface CaveSpiderPet extends SpiderPet<CaveSpider, EntityCaveSpiderPet> {
+@Traits(type = PetType.CAVE_SPIDER, hositility = Hostility.AGGRESSIVE, width = 0.7F, height = 0.5F, health = 12.0D, attackDamage = 5.0D)
+@Size(SizeCategory.REGULAR)
+public interface CaveSpiderPet extends SpiderPet<CaveSpiderEntityBridge, EntityCaveSpiderPet> {
 
 }

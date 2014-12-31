@@ -17,10 +17,13 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.HorsePet;
-import org.bukkit.entity.Horse;
 
+@Entity(PetType.HORSE)
 public interface EntityHorsePet extends EntityAgeablePet<HorsePet> {
 
     public static final int DATAWATCHER_ANIMATION = 16;
@@ -35,29 +38,29 @@ public interface EntityHorsePet extends EntityAgeablePet<HorsePet> {
     public static final int ANIMATION_REAR = 64;
     public static final int ANIMATION_OPEN_MOUTH = 128;
 
-    Horse.Variant getHorseVariant();
+    void setHorseVariant(Attributes.HorseVariant variant);
 
-    Horse.Color getColor();
+    Attributes.HorseVariant getHorseVariant();
 
-    Horse.Style getStyle();
+    void setColor(Attributes.HorseColor color);
 
-    HorsePet.Armour getArmour();
+    Attributes.HorseColor getColor();
 
-    boolean isSaddled();
+    void setStyle(Attributes.HorseStyle style);
 
-    boolean isChested();
+    Attributes.HorseStyle getStyle();
 
-    void setHorseVariant(Horse.Variant variant);
+    void setArmour(Attributes.HorseArmour armour);
 
-    void setColor(Horse.Color color);
-
-    void setStyle(Horse.Style style);
-
-    void setArmour(HorsePet.Armour armour);
+    Attributes.HorseArmour getArmour();
 
     void setSaddled(boolean flag);
 
     void setChested(boolean flag);
+
+    boolean isSaddled();
+
+    boolean isChested();
 
     void animation(int animationId, boolean flag);
 

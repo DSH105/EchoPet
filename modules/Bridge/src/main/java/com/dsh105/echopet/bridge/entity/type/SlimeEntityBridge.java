@@ -21,4 +21,7 @@ import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 
 public interface SlimeEntityBridge extends LivingEntityBridge {
 
+    void setSize(int size);
+
+    int getSize();
 }

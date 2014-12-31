@@ -17,13 +17,25 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWitherPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.RangedPet;
-import org.bukkit.entity.Wither;
+import com.dsh105.echopet.bridge.entity.type.WitherEntityBridge;
 
-public interface WitherPet extends RangedPet<Wither, EntityWitherPet> {
+@Traits(type = PetType.WITHER, hositility = Hostility.AGGRESSIVE, width = 0.9F, height = 4.0F, health = 300.0D, attackDamage = 8.0D)
+@Size(SizeCategory.LARGE)
+public interface WitherPet extends RangedPet<WitherEntityBridge, EntityWitherPet> {
 
+    @AttributeSetter(Attributes.Attribute.SHIELD)
     void setShielded(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.SHIELD)
     boolean isShielded();
 }

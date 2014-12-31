@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.PigPet;
 
+@Entity(PetType.PIG)
 public interface EntityPigPet extends EntityAgeablePet<PigPet> {
 
     public static int DATAWATCHER_SADDLE = 16;

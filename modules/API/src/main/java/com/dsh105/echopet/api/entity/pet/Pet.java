@@ -17,22 +17,25 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.commodus.container.PositionContainer;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.SizeCategory;
-import com.dsh105.echopet.api.entity.ai.PetGoalSelector;
+import com.dsh105.echopet.api.entity.Voice;
+import com.dsh105.echopet.api.entity.ai.Mind;
+import com.dsh105.echopet.api.entity.attribute.AttributeType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
+import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import com.dsh105.echopet.bridge.PlayerBridge;
+import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface Pet<T extends LivingEntity, S extends EntityPet> {
+public interface Pet<T extends LivingEntityBridge, S extends EntityPet> {
 
-    T getBukkitEntity();
+    T getBridgeEntity();
 
     S getEntity();
 
@@ -42,15 +45,17 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     String getName();
 
-    PetGoalSelector getPetGoalSelector();
+    Mind getMind();
 
     boolean setName(String name);
 
     boolean setName(String name, boolean sendFailMessage);
 
-    String getOwnerIdent();
+    UUID getOwnerUID();
 
-    Player getOwner();
+    String getOwnerUIDAsString();
+
+    PlayerBridge getOwner();
 
     String getOwnerName();
 
@@ -66,6 +71,8 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     SizeCategory getSizeCategory();
 
+    Voice getVoice();
+
     String getIdleSound();
 
     String getHurtSound();
@@ -74,35 +81,37 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     void makeStepSound();
 
-    void setDataValue(PetData petData, Object value);
+    boolean getAttribute(Attributes.Attribute attribute);
 
-    List<PetData> getApplicableDataTypes();
+    void setAttribute(Attributes.Attribute attribute, boolean value);
 
-    List<PetData> getActiveDataValues();
+    void invertAttribute(Attributes.Attribute attribute);
 
-    void setDataValue(PetData... dataArray);
+    EntityAttribute getAttribute(AttributeType attributeType);
 
-    void setDataValue(boolean on, PetData... dataArray);
+    void setAttribute(EntityAttribute entityAttribute);
 
-    void invertDataValue(PetData petData);
+    List<EntityAttribute> getValidAttributes();
+
+    List<EntityAttribute> getActiveAttributes();
 
     boolean isStationary();
 
     void setStationary(boolean flag);
 
-    void despawn(boolean makeDeathSound);
+    void remove(boolean makeDeathSound);
 
     Pet spawnRider(final PetType type, boolean sendFailMessage);
 
-    Pet spawnRider(Pet pet, boolean sendFailMessage);
+    Pet setRider(Pet pet, boolean sendFailMessage);
 
-    void despawnRider();
+    void removeRider();
 
-    boolean teleportToOwner();
+    boolean moveToOwner();
 
-    boolean teleport(Location to);
+    boolean move(PositionContainer to);
 
-    Location getLocation();
+    PositionContainer getLocation();
 
     double getJumpHeight();
 
@@ -132,7 +141,7 @@ public interface Pet<T extends LivingEntity, S extends EntityPet> {
 
     void onRide(float sideMotion, float forwardMotion);
 
-    boolean onInteract(Player player);
+    boolean onInteract(PlayerBridge player);
 
     void doJumpAnimation();
 }

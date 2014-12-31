@@ -17,18 +17,31 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeSetter;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySkeletonPet;
 import com.dsh105.echopet.api.entity.pet.EquipablePet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.RangedPet;
-import org.bukkit.entity.Skeleton;
+import com.dsh105.echopet.bridge.entity.type.SkeletonEntityBridge;
 
-public interface SkeletonPet extends EquipablePet<Skeleton, EntitySkeletonPet>, RangedPet<Skeleton, EntitySkeletonPet> {
+@Traits(type = PetType.SKELETON, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.9F, health = 20.0D, attackDamage = 5.0D)
+@Size(SizeCategory.REGULAR)
+public interface SkeletonPet extends EquipablePet<SkeletonEntityBridge, EntitySkeletonPet>, RangedPet<SkeletonEntityBridge, EntitySkeletonPet> {
 
     void setWither(boolean flag);
 
     boolean isWither();
 
-    void setSkeletonType(Skeleton.SkeletonType type);
+    @GroupAttributeSetter(AttributeType.SKELETON_TYPE)
+    void setSkeletonType(Attributes.SkeletonType type);
 
-    Skeleton.SkeletonType getSkeletonType();
+    @GroupAttributeGetter(AttributeType.SKELETON_TYPE)
+    Attributes.SkeletonType getSkeletonType();
 }

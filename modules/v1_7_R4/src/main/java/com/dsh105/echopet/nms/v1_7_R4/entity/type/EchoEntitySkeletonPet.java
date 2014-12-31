@@ -1,13 +1,20 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.commodus.Affirm;
+import com.dsh105.commodus.container.ItemStackContainer;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySkeletonPet;
 import com.dsh105.echopet.api.entity.pet.type.SkeletonPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
+import net.minecraft.server.v1_7_R4.Material;
+import net.minecraft.server.v1_7_R4.World;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.*;
 
 public class EchoEntitySkeletonPet extends EntitySkeleton implements IAnimal, EchoEntityPetHandle, EntitySkeletonPet {
 
@@ -27,18 +34,24 @@ public class EchoEntitySkeletonPet extends EntitySkeleton implements IAnimal, Ec
      */
 
     @Override
-    public void rangedAttack(LivingEntity entity, float speed) {
+    public void applyDefaultItems() {
+        getPet().setWeapon(ItemStackContainer.of(new org.bukkit.inventory.ItemStack(getPet().getSkeletonType() == Attributes.SkeletonType.WITHER ? org.bukkit.Material.STONE_SWORD : org.bukkit.Material.BOW)));
+    }
+
+    @Override
+    public void rangedAttack(Object entity, float speed) {
+        Affirm.checkInstanceOf(LivingEntity.class, entity);
         super.a(((CraftLivingEntity) entity).getHandle(), speed);
     }
 
     @Override
-    public void setWither(boolean flag) {
-        super.setSkeletonType(flag ? 1 : 0);
+    public void setSkeletonEntityType(Attributes.SkeletonType skeletonType) {
+        super.setSkeletonType(skeletonType.ordinal());
     }
 
     @Override
-    public boolean isWither() {
-        return super.getSkeletonType() == 1;
+    public Attributes.SkeletonType getSkeletonEntityType() {
+        return Attributes.SkeletonType.valueOf(super.getSkeletonType());
     }
 
     @Override
@@ -173,17 +186,17 @@ public class EchoEntitySkeletonPet extends EntitySkeleton implements IAnimal, Ec
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

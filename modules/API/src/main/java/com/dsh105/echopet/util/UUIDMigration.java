@@ -19,7 +19,7 @@ package com.dsh105.echopet.util;
 
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.commodus.UUIDFetcher;
-import com.dsh105.commodus.config.YAMLConfig;
+import com.dsh105.commodus.configuration.Config;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,7 +31,8 @@ import java.util.UUID;
 
 public class UUIDMigration {
 
-    public static void migrateConfig(final YAMLConfig config) {
+    public static void migrateConfig(final Config config) {
+        // TODO: hmm
         ConfigurationSection cs = config.getConfigurationSection("autosave");
         if (cs != null) {
             final LinkedHashMap<String, LinkedHashMap<String, Object>> keyToValueMap = new LinkedHashMap<String, LinkedHashMap<String, Object>>();

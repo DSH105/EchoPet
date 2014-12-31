@@ -17,13 +17,29 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeSetter;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityVillagerPet;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
-import org.bukkit.entity.Villager;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.VillagerEntityBridge;
 
-public interface VillagerPet extends AgeablePet<Villager, EntityVillagerPet> {
+@Traits(type = PetType.VILLAGER, hositility = Hostility.PASSIVE, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 4.0D)
+public interface VillagerPet extends AgeablePet<VillagerEntityBridge, EntityVillagerPet> {
 
-    Villager.Profession getProfession();
+    @GroupAttributeSetter(AttributeType.PROFESSION)
+    void setProfession(Attributes.VillagerProfession profession);
 
-    void setProfession(Villager.Profession profession);
+    @GroupAttributeGetter(AttributeType.PROFESSION)
+    Attributes.VillagerProfession getProfession();
+
+    @GroupAttributeSetter(AttributeType.CAREER)
+    void setCareer(Attributes.VillagerCareer career);
+
+    @GroupAttributeGetter(AttributeType.CAREER)
+    Attributes.VillagerCareer getCareer();
 }

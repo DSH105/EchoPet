@@ -1,12 +1,12 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWolfPet;
 import com.dsh105.echopet.api.entity.pet.type.WolfPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.DyeColor;
 
 public class EchoEntityWolfPet extends EntityWolf implements IAnimal, EchoEntityPetHandle, EntityWolfPet {
 
@@ -26,29 +26,13 @@ public class EchoEntityWolfPet extends EntityWolf implements IAnimal, EchoEntity
      */
 
     @Override
-    public void setWolfCollarColor(DyeColor color) {
-        super.setCollarColor(color.getWoolData());
+    public void setWolfCollarColor(Attributes.Color color) {
+        super.setCollarColor(color.ordinal());
     }
 
     @Override
-    public DyeColor getWolfCollarColor() {
-        return DyeColor.getByWoolData((byte) super.getCollarColor());
-    }
-
-    @Override
-    public void setTamed(boolean flag) {
-        if (isAngry() && flag) {
-            setAngry(false);
-        }
-        super.setTamed(flag);
-    }
-
-    @Override
-    public void setAngry(boolean flag) {
-        if (isTamed() && flag) {
-            setTamed(false);
-        }
-        super.setAngry(flag);
+    public Attributes.Color getWolfCollarColor() {
+        return Attributes.Color.valueOf((byte) super.getCollarColor());
     }
 
     @Override
@@ -198,17 +182,17 @@ public class EchoEntityWolfPet extends EntityWolf implements IAnimal, EchoEntity
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

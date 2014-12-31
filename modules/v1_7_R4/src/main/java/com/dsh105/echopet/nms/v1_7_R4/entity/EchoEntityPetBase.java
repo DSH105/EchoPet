@@ -17,12 +17,15 @@
 
 package com.dsh105.echopet.nms.v1_7_R4.entity;
 
-import com.dsh105.echopet.api.config.PetSettings;
+import com.dsh105.commodus.Affirm;
+import com.dsh105.commodus.container.PositionContainer;
+import com.dsh105.echopet.api.configuration.PetSettings;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.bukkit.PetAttackEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
+import com.dsh105.echopet.bridge.GeneralBridge;
 import com.dsh105.echopet.nms.v1_7_R4.NMSEntityUtil;
 import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
@@ -70,11 +73,11 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
         getHandle().getEntitySenses().a();
 
         // Update/run our custom AI
-        if (pet.getPetGoalSelector() == null) {
+        if (pet.getMind() == null) {
             this.getBukkitEntity().remove();
             return;
         }
-        pet.getPetGoalSelector().updateGoals();
+        pet.getMind().updateGoals();
 
         // Some navigation updates
         getHandle().getNavigation().f();
@@ -133,7 +136,8 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public boolean canSee(org.bukkit.entity.Entity entity) {
+    public boolean canSee(Object entity) {
+        Affirm.checkInstanceOf(org.bukkit.entity.Entity.class, entity);
         return getHandle().getEntitySenses().canSee(((CraftEntity) entity).getHandle());
     }
 
@@ -163,29 +167,32 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public void setTarget(LivingEntity livingEntity) {
+    public void setTarget(Object livingEntity) {
+        Affirm.checkInstanceOf(LivingEntity.class, livingEntity);
         entity.setGoalTarget(((CraftLivingEntity) livingEntity).getHandle());
     }
 
     @Override
-    public LivingEntity getTarget() {
+    public Object getTarget() {
         return (LivingEntity) entity.getGoalTarget().getBukkitEntity();
     }
 
     @Override
-    public boolean attack(LivingEntity entity) {
+    public boolean attack(Object livingEntity) {
+        Affirm.checkInstanceOf(LivingEntity.class, livingEntity);
         // TODO
         return false;
     }
 
     @Override
-    public boolean attack(LivingEntity entity, float damage) {
-        return attack(entity, DamageSource.mobAttack((EntityLiving) ((CraftEntity) entity).getHandle()), damage);
+    public boolean attack(Object livingEntity, float damage) {
+        Affirm.checkInstanceOf(LivingEntity.class, livingEntity);
+        return attack((LivingEntity) livingEntity, DamageSource.mobAttack((EntityLiving) ((CraftEntity) livingEntity).getHandle()), damage);
     }
 
     private boolean attack(LivingEntity entity, DamageSource damageSource, float damage) {
         PetAttackEvent attackEvent = new PetAttackEvent(pet, entity, damage);
-        EchoPet.getCore().getServer().getPluginManager().callEvent(attackEvent);
+        EchoPet.getBridge(GeneralBridge.class).postEvent(attackEvent);
         if (!attackEvent.isCancelled()) {
             if (entity instanceof EntityPlayer) {
                 if (!(PetSettings.DAMAGE_PLAYERS.getValue())) {
@@ -198,7 +205,7 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public org.bukkit.entity.Entity getPassenger() {
+    public Object getPassenger() {
         return entity.passenger == null ? null : entity.passenger.getBukkitEntity();
     }
 
@@ -227,12 +234,12 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
 
     @Override
     public float getPassengerSideMotion() {
-        return ((EntityLiving) getPassenger()).bd;
+        return ((CraftLivingEntity) getPassenger()).getHandle().bd;
     }
 
     @Override
     public float getPassengerForwardMotion() {
-        return ((EntityLiving) getPassenger()).be;
+        return ((CraftLivingEntity) getPassenger()).getHandle().be;
     }
 
     @Override
@@ -291,12 +298,14 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public void lookAt(org.bukkit.entity.Entity entity, float headYaw) {
+    public void lookAt(Object entity, float headYaw) {
+        Affirm.checkInstanceOf(org.bukkit.entity.Entity.class, entity);
         getHandle().getControllerLook().a(((CraftEntity) entity).getHandle(), headYaw, NMSEntityUtil.getMaxHeadRotation(this.entity));
     }
 
     @Override
-    public void lookAt(org.bukkit.entity.Entity entity, float headYaw, float headPitch) {
+    public void lookAt(Object entity, float headYaw, float headPitch) {
+        Affirm.checkInstanceOf(org.bukkit.entity.Entity.class, entity);
         getHandle().getControllerLook().a(((CraftEntity) entity).getHandle(), headYaw, headPitch);
     }
 
@@ -306,18 +315,18 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public void setLocation(org.bukkit.Location location) {
-        entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+    public void setLocation(PositionContainer position) {
+        entity.setLocation(position.getX(), position.getY(), position.getZ(), position.getYaw(), position.getPitch());
     }
 
     @Override
-    public org.bukkit.entity.Entity findPlayer(double range) {
+    public Object findPlayer(double range) {
         Entity candidate = entity.world.findNearbyPlayer(entity, range);
         return candidate != null ? candidate.getBukkitEntity() : null;
     }
 
     @Override
-    public org.bukkit.entity.Entity findEntity(Class<?> nmsTypeClass, Object boundingBox) {
+    public Object findEntity(Class<?> nmsTypeClass, Object boundingBox) {
         return entity.world.a(nmsTypeClass, (AxisAlignedBB) boundingBox, entity).getBukkitEntity();
     }
 
@@ -327,7 +336,8 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public float distanceTo(org.bukkit.entity.Entity entity) {
+    public float distanceTo(Object entity) {
+        Affirm.checkInstanceOf(org.bukkit.entity.Entity.class, entity);
         return this.entity.e(((CraftEntity) entity).getHandle());
     }
 
@@ -355,7 +365,8 @@ public class EchoEntityPetBase<T extends Pet> implements EntityPetModifier<T> {
     }
 
     @Override
-    public void navigateTo(org.bukkit.entity.Entity entity, double speed) {
+    public void navigateTo(Object entity, double speed) {
+        Affirm.checkInstanceOf(org.bukkit.entity.Entity.class, entity);
         PathEntity path = this.entity.world.findPath(this.entity, ((CraftEntity) entity).getHandle(), getPathfindingRadius(), true, false, false, true);
         navigateTo(path, speed);
     }

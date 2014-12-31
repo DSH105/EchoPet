@@ -17,8 +17,11 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.type.CaveSpiderPet;
 
+@Entity(PetType.CAVE_SPIDER)
 public interface EntityCaveSpiderPet extends EntitySpiderPet<CaveSpiderPet> {
 
 }

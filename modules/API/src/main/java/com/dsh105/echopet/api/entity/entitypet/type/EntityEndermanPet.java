@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.EndermanPet;
 
+@Entity(PetType.ENDERMAN)
 public interface EntityEndermanPet extends EntityPet<EndermanPet> {
 
     public static final int DATAWATCHER_CARRIED_BLOCK = 16;

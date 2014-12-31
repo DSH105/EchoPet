@@ -17,8 +17,12 @@
 
 package com.dsh105.echopet.bridge.entity.type;
 
+import com.dsh105.echopet.bridge.entity.AgeableEntityBridge;
 import com.dsh105.echopet.bridge.entity.EquipableEntityBridge;
 
-public interface ZombieEntityBridge extends EquipableEntityBridge {
+public interface ZombieEntityBridge extends EquipableEntityBridge, AgeableEntityBridge {
 
+    void setVillager(boolean flag);
+
+    boolean isVillager();
 }

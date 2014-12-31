@@ -17,22 +17,32 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.*;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWolfPet;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
-import org.bukkit.DyeColor;
-import org.bukkit.entity.Wolf;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.WolfEntityBridge;
 
-public interface WolfPet extends AgeablePet<Wolf, EntityWolfPet> {
+@Traits(type = PetType.WOLF, hositility = Hostility.NEUTRAL, width = 0.6F, height = 0.8F, health = 20.0D, attackDamage = 6.0D)
+public interface WolfPet extends AgeablePet<WolfEntityBridge, EntityWolfPet> {
 
-    void setCollarColor(DyeColor dyeColor);
+    @GroupAttributeSetter(AttributeType.COLOR)
+    void setCollarColor(Attributes.Color color);
 
-    DyeColor getCollarColor();
+    @GroupAttributeGetter(AttributeType.COLOR)
+    Attributes.Color getCollarColor();
 
+    @AttributeSetter(Attributes.Attribute.TAME)
     void setTamed(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.TAME)
     boolean isTamed();
 
+    @AttributeSetter(Attributes.Attribute.ANGRY)
     void setAngry(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.ANGRY)
     boolean isAngry();
 }

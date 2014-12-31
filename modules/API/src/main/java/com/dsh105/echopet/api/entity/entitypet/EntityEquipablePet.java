@@ -21,4 +21,5 @@ import com.dsh105.echopet.api.entity.pet.EquipablePet;
 
 public interface EntityEquipablePet<T extends EquipablePet> extends EntityPet<T> {
 
+    void applyDefaultItems();
 }

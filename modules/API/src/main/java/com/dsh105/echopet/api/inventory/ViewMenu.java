@@ -17,52 +17,37 @@
 
 package com.dsh105.echopet.api.inventory;
 
-import com.dsh105.commodus.StringUtil;
-import com.dsh105.commodus.particle.Particle;
-import com.dsh105.echopet.api.config.ConfigType;
-import com.dsh105.echopet.api.entity.AttributeManager;
-import com.dsh105.echopet.api.entity.PetData;
-import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.AttributeManager;
+import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.menuapi.api.*;
-import com.dsh105.powermessage.core.PowerMessage;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import com.dsh105.echopet.util.StringForm;
+import com.dsh105.interact.Interact;
+import com.dsh105.interact.api.Inventory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ViewMenu {
+public final class ViewMenu {
 
-    public static Menu prepare(List<Pet> pets) {
-        // TODO: configurable?
-        Menu menu = new Menu(EchoPet.getCore(), "Active Pets", pets.size());
-        int i = 0;
+    public static Inventory<?> getInventory(List<Pet> pets) {
+        Inventory.Builder inventory = Interact.inventory().size(pets.size());
+        
+        int slot = 0;
         for (Pet pet : pets) {
-            // TODO
-            menu.setSlot(i++, new CommandIcon("pet uuid " + pet.getPetId().toString(), pet.getType().getMaterial(), 1, pet.getType().getMaterialData(), pet.getName(), getHoverInfo(pet).split("\\n")));
+            inventory.at(Interact.position().slot(slot++).icon(pet.getType().getIcon().builder().command("pet uuid " + pet.getPetId().toString()).lore(getHoverInfo(pet).split("\\n"))));
         }
-        return menu;
+        return inventory.build();
     }
-
-    public static void displayInfo(Pet pet) {
-        new PowerMessage(ChatColor.WHITE + "• {c1}" + pet.getType().humanName() + " ({c2}" + pet.getName() + "{c1})")
-                .tooltip(getHoverInfo(pet))
-                .send(pet.getOwner());
-    }
-
+    
     public static String getHoverInfo(Pet pet) {
         StringBuilder dataBuilder = new StringBuilder();
-        List<PetData> activeData = AttributeManager.getModifier(pet).getActiveDataValues(pet);
+        List<EntityAttribute> activeData = AttributeManager.getModifier(pet).getValidAttributes();
         if (!activeData.isEmpty()) {
             dataBuilder.append("{c1}Valid data types: ");
-            for (PetData data : activeData) {
+            for (EntityAttribute attribute : activeData) {
                 if (dataBuilder.length() >= 35) {
                     dataBuilder.append("\n");
                 }
-                dataBuilder.append("{c2}").append(data.humanName()).append("{c1}, ");
+                dataBuilder.append("{c2}").append(StringForm.create(attribute).getCaptalisedName()).append("{c1}, ");
             }
         }
         return dataBuilder.substring(0, dataBuilder.length() - 2);

@@ -19,18 +19,11 @@ package com.dsh105.echopet.api.plugin;
 
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 
 // TODO: implement general API methods
 public class EchoPetAPI {
 
-    public static boolean isPetEntity(Entity bukkitEntity) {
-        if (bukkitEntity instanceof LivingEntity) {
-            if (BukkitUnwrapper.getInstance().unwrap(bukkitEntity) instanceof EntityPet) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isPetEntity(Object entity) {
+        return BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet;
     }
 }

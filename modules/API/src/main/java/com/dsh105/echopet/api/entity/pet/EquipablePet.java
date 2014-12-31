@@ -17,16 +17,13 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
+import com.dsh105.commodus.container.ItemStackContainer;
 import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
+import com.dsh105.echopet.bridge.entity.EquipableEntityBridge;
 
-public interface EquipablePet<T extends LivingEntity, S extends EntityEquipablePet> extends Pet<T, S> {
+public interface EquipablePet<T extends EquipableEntityBridge, S extends EntityEquipablePet> extends Pet<T, S> {
 
-    EntityEquipment getEquipment();
+    ItemStackContainer getWeapon();
 
-    ItemStack getWeapon();
-
-    void setWeapon(ItemStack stack);
+    void setWeapon(ItemStackContainer itemStack);
 }

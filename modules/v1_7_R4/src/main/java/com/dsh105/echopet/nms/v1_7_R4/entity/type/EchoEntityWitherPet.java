@@ -1,11 +1,13 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.commodus.Affirm;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityWitherPet;
 import com.dsh105.echopet.api.entity.pet.type.WitherPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
 public class EchoEntityWitherPet extends EntityWither implements IAnimal, EchoEntityPetHandle, EntityWitherPet {
@@ -36,8 +38,9 @@ public class EchoEntityWitherPet extends EntityWither implements IAnimal, EchoEn
     }
 
     @Override
-    public void rangedAttack(LivingEntity entity, float speed) {
-
+    public void rangedAttack(Object entity, float speed) {
+        Affirm.checkInstanceOf(LivingEntity.class, entity);
+        super.a(((CraftLivingEntity) entity).getHandle(), speed);
     }
 
     @Override
@@ -172,17 +175,17 @@ public class EchoEntityWitherPet extends EntityWither implements IAnimal, EchoEn
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

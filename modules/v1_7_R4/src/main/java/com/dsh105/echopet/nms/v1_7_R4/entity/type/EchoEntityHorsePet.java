@@ -1,14 +1,12 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityHorsePet;
 import com.dsh105.echopet.api.entity.pet.type.HorsePet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.entity.Horse;
-
-import java.util.List;
 
 public class EchoEntityHorsePet extends EntityHorse implements IAnimal, EchoEntityPetHandle, EntityHorsePet {
 
@@ -28,18 +26,18 @@ public class EchoEntityHorsePet extends EntityHorse implements IAnimal, EchoEnti
      */
 
     @Override
-    public Horse.Color getColor() {
-        return Horse.Color.values()[this.getVariant() & 0xFF];
+    public Attributes.HorseColor getColor() {
+        return Attributes.HorseColor.values()[this.getVariant() & 0xFF];
     }
 
     @Override
-    public Horse.Style getStyle() {
-        return Horse.Style.values()[this.getVariant() >>> 8];
+    public Attributes.HorseStyle getStyle() {
+        return Attributes.HorseStyle.values()[this.getVariant() >>> 8];
     }
 
     @Override
-    public HorsePet.Armour getArmour() {
-        return HorsePet.Armour.values()[this.cl()];
+    public Attributes.HorseArmour getArmour() {
+        return Attributes.HorseArmour.values()[this.cl()];
     }
 
     @Override
@@ -53,31 +51,31 @@ public class EchoEntityHorsePet extends EntityHorse implements IAnimal, EchoEnti
     }
 
     @Override
-    public void setHorseVariant(Horse.Variant variant) {
-        if (variant != Horse.Variant.HORSE) {
-            setArmour(HorsePet.Armour.NONE);
+    public void setHorseVariant(Attributes.HorseVariant variant) {
+        if (variant != Attributes.HorseVariant.NORMAL) {
+            setArmour(Attributes.HorseArmour.NONE);
         }
         this.setType(variant.ordinal());
     }
 
     @Override
-    public Horse.Variant getHorseVariant() {
-        return Horse.Variant.values()[this.getType()];
+    public Attributes.HorseVariant getHorseVariant() {
+        return Attributes.HorseVariant.values()[this.getType()];
     }
 
     @Override
-    public void setColor(Horse.Color color) {
+    public void setColor(Attributes.HorseColor color) {
         this.setVariant(color.ordinal() & 0xFF | getStyle().ordinal() << 8);
     }
 
     @Override
-    public void setStyle(Horse.Style style) {
+    public void setStyle(Attributes.HorseStyle style) {
         this.setVariant(getColor().ordinal() & 0xFF | style.ordinal() << 8);
     }
 
     @Override
-    public void setArmour(HorsePet.Armour armour) {
-        if (getHorseVariant() == Horse.Variant.HORSE) {
+    public void setArmour(Attributes.HorseArmour armour) {
+        if (getHorseVariant() == Attributes.HorseVariant.NORMAL) {
             this.datawatcher.watch(DATAWATCHER_HORSE_ARMOUR, armour.ordinal());
         }
     }
@@ -245,17 +243,17 @@ public class EchoEntityHorsePet extends EntityHorse implements IAnimal, EchoEnti
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

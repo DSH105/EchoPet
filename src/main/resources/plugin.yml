@@ -1,4 +1,4 @@
-name: EchoPet
+name: ${project.name}
 version: ${project.version}-bjenkins-build-number
 description: >
   EchoPet is an advanced, easy to use plugin, designed to handle custom-tailored pets with more unique behaviours than vanilla Minecraft entities. Perfect for donation perks.
@@ -122,13 +122,13 @@ permissions:
         default: op
     echopet.pet.type.magmacube:
         default: op
-    echopet.pet.type.mushroomcow:
+    echopet.pet.type.mooshroom:
         default: op
     echopet.pet.type.ocelot:
         default: op
     echopet.pet.type.pig:
         default: op
-    echopet.pet.type.pigzombie:
+    echopet.pet.type.zombiepigman:
         default: op
     echopet.pet.type.sheep:
         default: op
@@ -180,13 +180,13 @@ permissions:
         default: op
     echopet.pet.hat.magmacube:
         default: op
-    echopet.pet.hat.mushroomcow:
+    echopet.pet.hat.mooshroom:
         default: op
     echopet.pet.hat.ocelot:
         default: op
     echopet.pet.hat.pig:
         default: op
-    echopet.pet.hat.pigzombie:
+    echopet.pet.hat.zombiepigman:
         default: op
     echopet.pet.hat.sheep:
         default: op
@@ -238,13 +238,13 @@ permissions:
         default: op
     echopet.pet.ride.magmacube:
         default: op
-    echopet.pet.ride.mushroomcow:
+    echopet.pet.ride.mooshroom:
         default: op
     echopet.pet.ride.ocelot:
         default: op
     echopet.pet.ride.pig:
         default: op
-    echopet.pet.ride.pigzombie:
+    echopet.pet.ride.zombiepigman:
         default: op
     echopet.pet.ride.sheep:
         default: op
@@ -296,13 +296,13 @@ permissions:
         default: op
     echopet.pet.default.set.type.magmacube:
         default: op
-    echopet.pet.default.set.type.mushroomcow:
+    echopet.pet.default.set.type.mooshroom:
         default: op
     echopet.pet.default.set.type.ocelot:
         default: op
     echopet.pet.default.set.type.pig:
         default: op
-    echopet.pet.default.set.type.pigzombie:
+    echopet.pet.default.set.type.zombiepigman:
         default: op
     echopet.pet.default.set.type.sheep:
         default: op
@@ -392,7 +392,7 @@ permissions:
         default: op
     echopet.pet.type.magmacube.large:
         default: op
-    echopet.pet.type.mushroomcow.baby:
+    echopet.pet.type.mooshroom.baby:
         default: op
     echopet.pet.type.ocelot.baby:
         default: op
@@ -408,9 +408,9 @@ permissions:
         default: op
     echopet.pet.type.pig.saddle:
         default: op
-    echopet.pet.type.pigzombie.baby:
+    echopet.pet.type.zombiepigman.baby:
         default: op
-    echopet.pet.type.pigzombie.villager:
+    echopet.pet.type.zombiepigman.villager:
         default: op
     echopet.pet.type.sheep.baby:
         default: op
@@ -538,13 +538,13 @@ permissions:
         default: op
     echopet.petadmin.type.magmacube:
         default: op
-    echopet.petadmin.type.mushroomcow:
+    echopet.petadmin.type.mooshroom:
         default: op
     echopet.petadmin.type.ocelot:
         default: op
     echopet.petadmin.type.pig:
         default: op
-    echopet.petadmin.type.pigzombie:
+    echopet.petadmin.type.zombiepigman:
         default: op
     echopet.petadmin.type.sheep:
         default: op
@@ -596,13 +596,13 @@ permissions:
         default: op
     echopet.petadmin.ride.magmacube:
         default: op
-    echopet.petadmin.ride.mushroomcow:
+    echopet.petadmin.ride.mooshroom:
         default: op
     echopet.petadmin.ride.ocelot:
         default: op
     echopet.petadmin.ride.pig:
         default: op
-    echopet.petadmin.ride.pigzombie:
+    echopet.petadmin.ride.zombiepigman:
         default: op
     echopet.petadmin.ride.sheep:
         default: op
@@ -654,13 +654,13 @@ permissions:
         default: op
     echopet.petadmin.hat.magmacube:
         default: op
-    echopet.petadmin.hat.mushroomcow:
+    echopet.petadmin.hat.mooshroom:
         default: op
     echopet.petadmin.hat.ocelot:
         default: op
     echopet.petadmin.hat.pig:
         default: op
-    echopet.petadmin.hat.pigzombie:
+    echopet.petadmin.hat.zombiepigman:
         default: op
     echopet.petadmin.hat.sheep:
         default: op
@@ -712,13 +712,13 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.magmacube:
         default: op
-    echopet.petadmin.default.set.type.mushroomcow:
+    echopet.petadmin.default.set.type.mooshroom:
         default: op
     echopet.petadmin.default.set.type.ocelot:
         default: op
     echopet.petadmin.default.set.type.pig:
         default: op
-    echopet.petadmin.default.set.type.pigzombie:
+    echopet.petadmin.default.set.type.zombiepigman:
         default: op
     echopet.petadmin.default.set.type.sheep:
         default: op
@@ -789,10 +789,10 @@ permissions:
             echopet.pet.type.human: true
             echopet.pet.type.irongolem: true
             echopet.pet.type.magmacube: true
-            echopet.pet.type.mushroomcow: true
+            echopet.pet.type.mooshroom: true
             echopet.pet.type.ocelot: true
             echopet.pet.type.pig: true
-            echopet.pet.type.pigzombie: true
+            echopet.pet.type.zombiepigman: true
             echopet.pet.type.sheep: true
             echopet.pet.type.silverfish: true
             echopet.pet.type.skeleton: true
@@ -822,10 +822,10 @@ permissions:
             echopet.pet.ride.human: true
             echopet.pet.ride.irongolem: true
             echopet.pet.ride.magmacube: true
-            echopet.pet.ride.mushroomcow: true
+            echopet.pet.ride.mooshroom: true
             echopet.pet.ride.ocelot: true
             echopet.pet.ride.pig: true
-            echopet.pet.ride.pigzombie: true
+            echopet.pet.ride.zombiepigman: true
             echopet.pet.ride.sheep: true
             echopet.pet.ride.silverfish: true
             echopet.pet.ride.skeleton: true
@@ -855,10 +855,10 @@ permissions:
             echopet.pet.hat.human: true
             echopet.pet.hat.irongolem: true
             echopet.pet.hat.magmacube: true
-            echopet.pet.hat.mushroomcow: true
+            echopet.pet.hat.mooshroom: true
             echopet.pet.hat.ocelot: true
             echopet.pet.hat.pig: true
-            echopet.pet.hat.pigzombie: true
+            echopet.pet.hat.zombiepigman: true
             echopet.pet.hat.sheep: true
             echopet.pet.hat.silverfish: true
             echopet.pet.hat.skeleton: true
@@ -895,10 +895,10 @@ permissions:
             echopet.pet.default.set.type.human: true
             echopet.pet.default.set.type.irongolem: true
             echopet.pet.default.set.type.magmacube: true
-            echopet.pet.default.set.type.mushroomcow: true
+            echopet.pet.default.set.type.mooshroom: true
             echopet.pet.default.set.type.ocelot: true
             echopet.pet.default.set.type.pig: true
-            echopet.pet.default.set.type.pigzombie: true
+            echopet.pet.default.set.type.zombiepigman: true
             echopet.pet.default.set.type.sheep: true
             echopet.pet.default.set.type.silverfish: true
             echopet.pet.default.set.type.skeleton: true
@@ -949,10 +949,10 @@ permissions:
             echopet.petadmin.type.human: true
             echopet.petadmin.type.irongolem: true
             echopet.petadmin.type.magmacube: true
-            echopet.petadmin.type.mushroomcow: true
+            echopet.petadmin.type.mooshroom: true
             echopet.petadmin.type.ocelot: true
             echopet.petadmin.type.pig: true
-            echopet.petadmin.type.pigzombie: true
+            echopet.petadmin.type.zombiepigman: true
             echopet.petadmin.type.sheep: true
             echopet.petadmin.type.silverfish: true
             echopet.petadmin.type.skeleton: true
@@ -982,10 +982,10 @@ permissions:
             echopet.petadmin.ride.human: true
             echopet.petadmin.ride.irongolem: true
             echopet.petadmin.ride.magmacube: true
-            echopet.petadmin.ride.mushroomcow: true
+            echopet.petadmin.ride.mooshroom: true
             echopet.petadmin.ride.ocelot: true
             echopet.petadmin.ride.pig: true
-            echopet.petadmin.ride.pigzombie: true
+            echopet.petadmin.ride.zombiepigman: true
             echopet.petadmin.ride.sheep: true
             echopet.petadmin.ride.silverfish: true
             echopet.petadmin.ride.skeleton: true
@@ -1015,10 +1015,10 @@ permissions:
             echopet.petadmin.hat.human: true
             echopet.petadmin.hat.irongolem: true
             echopet.petadmin.hat.magmacube: true
-            echopet.petadmin.hat.mushroomcow: true
+            echopet.petadmin.hat.mooshroom: true
             echopet.petadmin.hat.ocelot: true
             echopet.petadmin.hat.pig: true
-            echopet.petadmin.hat.pigzombie: true
+            echopet.petadmin.hat.zombiepigman: true
             echopet.petadmin.hat.sheep: true
             echopet.petadmin.hat.silverfish: true
             echopet.petadmin.hat.skeleton: true
@@ -1055,10 +1055,10 @@ permissions:
             echopet.petadmin.default.set.type.human: true
             echopet.petadmin.default.set.type.irongolem: true
             echopet.petadmin.default.set.type.magmacube: true
-            echopet.petadmin.default.set.type.mushroomcow: true
+            echopet.petadmin.default.set.type.mooshroom: true
             echopet.petadmin.default.set.type.ocelot: true
             echopet.petadmin.default.set.type.pig: true
-            echopet.petadmin.default.set.type.pigzombie: true
+            echopet.petadmin.default.set.type.zombiepigman: true
             echopet.petadmin.default.set.type.sheep: true
             echopet.petadmin.default.set.type.silverfish: true
             echopet.petadmin.default.set.type.skeleton: true
@@ -1126,11 +1126,11 @@ permissions:
             echopet.pet.type.magmacube.small: true
             echopet.pet.type.magmacube.medium: true
             echopet.pet.type.magmacube.large: true
-    echopet.pet.type.mushroomcow.*:
+    echopet.pet.type.mooshroom.*:
         default: op
         description: 'All mushroom cow pet data permissions'
         children:
-            echopet.pet.type.mushroomcow.baby: true
+            echopet.pet.type.mooshroom.baby: true
     echopet.pet.type.ocelot.*:
         default: op
         description: 'All ocelot pet data permissions'
@@ -1146,12 +1146,12 @@ permissions:
         children:
             echopet.pet.type.pig.baby: true
             echopet.pet.type.pig.saddle: true
-    echopet.pet.type.pigzombie.*:
+    echopet.pet.type.zombiepigman.*:
         default: op
-        description: 'All pigzombie pet data permissions'
+        description: 'All zombiepigman pet data permissions'
         children:
-            echopet.pet.type.pigzombie.baby: true
-            echopet.pet.type.pigzombie.villager: true
+            echopet.pet.type.zombiepigman.baby: true
+            echopet.pet.type.zombiepigman.villager: true
     echopet.pet.type.sheep.*:
         default: op
         description: 'All sheep pet data permissions'
@@ -1240,10 +1240,10 @@ permissions:
             echopet.pet.type.enderman.*: true
             echopet.pet.type.horse.*: true
             echopet.pet.type.magmacube.*: true
-            echopet.pet.type.mushroomcow.*: true
+            echopet.pet.type.mooshroom.*: true
             echopet.pet.type.ocelot.*: true
             echopet.pet.type.pig.*: true
-            echopet.pet.type.pigzombie.*: true
+            echopet.pet.type.zombiepigman.*: true
             echopet.pet.type.sheep.*: true
             echopet.pet.type.skeleton.*: true
             echopet.pet.type.slime.*: true

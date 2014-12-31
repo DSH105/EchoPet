@@ -23,4 +23,23 @@ import org.bukkit.entity.Zombie;
 
 public class BukkitZombieEntityBridge<E extends Zombie> extends BukkitEquipableEntityBridge<E> implements ZombieEntityBridge {
 
+    @Override
+    public void setVillager(boolean flag) {
+        getBukkitEntity().setVillager(flag);
+    }
+
+    @Override
+    public boolean isVillager() {
+        return getBukkitEntity().isVillager();
+    }
+
+    @Override
+    public void setAdult(boolean flag) {
+        getBukkitEntity().setBaby(!flag);
+    }
+
+    @Override
+    public boolean isAdult() {
+        return !getBukkitEntity().isBaby();
+    }
 }

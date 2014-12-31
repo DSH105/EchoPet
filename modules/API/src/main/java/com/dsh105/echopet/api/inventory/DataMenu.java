@@ -17,134 +17,194 @@
 
 package com.dsh105.echopet.api.inventory;
 
-import com.dsh105.commodus.StringUtil;
+import com.dsh105.commodus.ServerUtil;
+import com.dsh105.commodus.container.PlayerContainer;
 import com.dsh105.commodus.particle.Particle;
-import com.dsh105.echopet.api.config.ConfigType;
-import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.configuration.MenuSettings;
 import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.AttributeType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.menuapi.api.*;
+import com.dsh105.echopet.util.StringForm;
+import com.dsh105.interact.Interact;
+import com.dsh105.interact.api.CommandIcon;
+import com.dsh105.interact.api.Icon;
+import com.dsh105.interact.api.Inventory;
+import com.dsh105.interact.api.Position;
+import com.dsh105.interact.api.action.ClickAction;
+import com.dsh105.interact.api.action.PrepareIconAction;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DataMenu {
 
-    private static HashMap<PetType, Layout> LAYOUTS = new HashMap<>();
+    private static final Map<PetType, Inventory<?>> TYPE_DEFAULTS = new HashMap<>();
+    private static final Map<PetType, Map<AttributeType, Inventory<?>>> ATTRIBUTE_TYPE_DEFAULTS = new HashMap<>();
+    
+    static {
+        load();
+    }
+    
+    private static void load() {
+        for (PetType petType : PetType.values()) {
+            List<MenuPreset> typePresets = MenuPreset.getPresets(petType);
+            Inventory.Builder builder = Interact.inventory().size(typePresets.size()).name(petType.humanName() + " Attributes");
 
-    public static Layout getDefaultLayout(PetType petType) {
-        List<MenuPreset> presets = MenuPreset.getPresets(petType);
-        Layout layout = new Layout(presets.size(), petType.humanName() + " - Data");
-
-        for (int i = 0; i < presets.size(); i++) {
-            MenuPreset preset = presets.get(i);
-            Icon icon = new Icon(preset.getMaterial(), preset.getAmount(), preset.getMaterialData(), preset.getName());
-            if (preset.getCommand() != null && !preset.getCommand().isEmpty()) {
-                icon = new CommandIcon(preset.getCommand(), preset.getMaterial(), preset.getAmount(), preset.getMaterialData(), preset.getName());
+            for (int i = 0; i < typePresets.size(); i++) {
+                MenuPreset preset = typePresets.get(i);
+                builder.at(Interact.position().slot(i).icon(preset.getIcon()));
             }
-            layout.setSlot(i, icon);
-        }
 
-        LAYOUTS.put(petType, layout);
-        return layout;
-    }
+            TYPE_DEFAULTS.put(petType, builder.build());
 
-    public static Menu prepare(Pet pet) {
-        return getLayout(pet).toMenu(EchoPet.getCore());
-    }
+            Map<AttributeType, Inventory<?>> attributeTypeDefaults = new HashMap<>();
+            for (AttributeType attributeType : AttributeType.values()) {
+                List<MenuPreset> attributeTypePresets = MenuPreset.getPresetsOfType(MenuPreset.MenuType.DATA_SECOND_LEVEL, attributeType);
+                Inventory.Builder attributeBuilder = Interact.inventory().size(attributeTypePresets.size()).name(petType.humanName() + " Attributes: " + StringForm.create(attributeType).getCaptalisedName());
 
-    public static void reloadLayouts() {
-        LAYOUTS.clear();
-    }
-
-    public static Layout getLayout(final Pet pet) {
-        Layout layout = LAYOUTS.get(pet.getType());
-        if (layout == null) {
-            layout = new Layout().loadFromFile(EchoPet.getConfig(ConfigType.MENU).config(), "petMenu." + pet.getType().storageName());
-
-            if (layout == null) {
-                layout = getDefaultLayout(pet.getType());
+                for (int i = 0; i < attributeTypePresets.size(); i++) {
+                    MenuPreset preset = attributeTypePresets.get(i);
+                    attributeBuilder.at(Interact.position().slot(i).icon(preset.getIcon()));
+                }
+                attributeTypeDefaults.put(attributeType, attributeBuilder.build());
             }
+
+            ATTRIBUTE_TYPE_DEFAULTS.put(petType, Collections.unmodifiableMap(attributeTypeDefaults));
         }
+    }
+    
+    public static Inventory<?> getDefault(PetType petType) {
+        return TYPE_DEFAULTS.get(petType);
+    }
 
-        final List<MenuPreset> typePresets = MenuPreset.getPresets(pet.getType());
+    public static Inventory<?> getDefault(PetType petType, AttributeType attributeType) {
+        return ATTRIBUTE_TYPE_DEFAULTS.get(petType).get(attributeType);
+    }
 
-        HashMap<Integer, Icon> slots = layout.getSlots();
-        for (Map.Entry<Integer, Icon> entry : slots.entrySet()) {
-            final int slotNumber = entry.getKey();
-
-            if (slotNumber >= typePresets.size()) {
+    public static Inventory<?> getInventory(final Pet pet) {
+        Inventory<?> inventory;
+        try {
+            inventory = Interact.inventory().from(MenuSettings.ATTRIBUTES_INVENTORY.getValue(pet.getType().storageName())).build();
+        } catch (Exception e) {
+            inventory = getDefault(pet.getType());
+        }
+        
+        for (Map.Entry<Integer, Icon> entry : inventory.getLayout().getIcons().entrySet()) {
+            int slot = entry.getKey();
+            Icon icon = entry.getValue();
+            Icon.Builder iconBuilder = icon.builder();
+            final MenuPreset preset = MenuPreset.getIconToTypeMap().get(icon);
+            if (preset == null) {
                 continue;
             }
 
-            final Icon icon = entry.getValue();
-            final MenuPreset preset = typePresets.get(slotNumber);
-            final PetData petData = preset.getPetData();
-
-            if (!(icon instanceof CommandIcon)) {
-                icon.setName(icon.getName() + (pet.getActiveDataValues().contains(petData) ? ChatColor.GREEN + " [TOGGLE ON]" : ChatColor.RED + " [TOGGLE OFF]"));
-                icon.setCallback(new IconCallback() {
+            if (preset.getAttributeType().equals(AttributeType.SWITCH)) {
+                iconBuilder = iconBuilder.onPrepare(new PrepareIconAction() {
                     @Override
-                    public void run(Player viewer) {
-                        if (pet.getOwner() != null) {
-                            if (petData == null) {
-                                Menu menu = getSecondLevelLayout(pet, preset.getDataType()).toMenu(EchoPet.getCore());
-                                menu.show(viewer);
-                            } else {
-                                pet.invertDataValue(petData);
-                                Particle.RED_SMOKE.builder().show(pet.getLocation());
-                            }
+                    public void onPrepare(Icon icon, PlayerContainer viewer) {
+                        boolean active = pet.getActiveAttributes().contains(preset.getAttribute());
+                        String on = "[TOGGLE ON]";
+                        String off = "[TOGGLE OFF]";
+                        switch (ServerUtil.getServerBrand().getCapsule()) {
+                            case BUKKIT:
+                                icon.setName(active ? ChatColor.GREEN + on : ChatColor.RED + off);
+                                break;
+                            case SPONGE:
+                                // TODO: implement
+                                break;
                         }
                     }
-                });
-            }
-            layout.setSlot(slotNumber, icon);
-        }
 
-        MenuPreset preset = MenuPreset.CLOSE_DATA;
-        layout.setSlot(layout.getSize() - 1, new Icon(preset.getMaterial(), preset.getAmount(), preset.getMaterialData(), preset.getName()));
-        return layout;
+                    @Override
+                    public String getId() {
+                        return "toggle";
+                    }
+                });
+                
+            } else if (!(icon instanceof CommandIcon)) {
+                iconBuilder.onClick(new AttributeClickAction(pet, preset));
+            }
+            inventory.getLayout().set(slot, iconBuilder.build());
+        }
+        
+        inventory.getLayout().set(inventory.getLayout().getMaximumSize() - 1, Interact.icon(MenuPreset.CLOSE_DATA.getIcon()).build());
+        return inventory;
     }
+    
+    private static class AttributeClickAction implements ClickAction {
 
-    public static Layout getSecondLevelLayout(final Pet pet, PetData.Type dataType) {
-        List<MenuPreset> presets = MenuPreset.getPresetsOfType(dataType);
+        private Pet pet;
+        private MenuPreset preset;
 
-        Layout layout = new Layout(presets.size(), pet.getType().humanName() + " - Data - " + StringUtil.capitalise(dataType.toString()));
-
-        HashMap<Integer, Icon> slots = layout.getSlots();
-        for (Map.Entry<Integer, Icon> entry : slots.entrySet()) {
-            final int slotNumber = entry.getKey();
-            final Icon icon = entry.getValue();
-            final MenuPreset preset = presets.get(slotNumber);
-            final PetData petData = preset.getPetData();
-
-            if (!(icon instanceof CommandIcon)) {
-                icon.setName(icon.getName() + (pet.getActiveDataValues().contains(petData) ? ChatColor.GREEN + " [TOGGLE ON]" : ChatColor.RED + " [TOGGLE OFF]"));
-                icon.setCallback(new IconCallback() {
-                    @Override
-                    public void run(Player viewer) {
-                        if (pet != null && pet.getOwner() != null) {
-                            pet.setDataValue(petData);
-                            Particle.RED_SMOKE.builder().show(pet.getLocation());
-                        }
-                    }
-                });
-            }
-            layout.setSlot(slotNumber, icon);
+        public AttributeClickAction(Pet pet, MenuPreset preset) {
+            this.pet = pet;
+            this.preset = preset;
         }
 
-        MenuPreset preset = MenuPreset.BACK;
-        layout.setSlot(layout.getSize() - 1, new Icon(preset.getMaterial(), preset.getAmount(), preset.getMaterialData(), preset.getName()) {
-            @Override
-            public void onClick(Player viewer) {
-                Menu menu = getLayout(pet).toMenu(EchoPet.getCore());
-                menu.show(viewer);
+        @Override
+        public void onClick(Inventory inventory, PlayerContainer player, Position clicked) {
+            if (pet.getOwner().get() != null) {
+                if (preset.getAttribute() != null) {
+                    if (preset.getAttribute() instanceof Attributes.Attribute) {
+                        pet.invertAttribute((Attributes.Attribute) preset.getAttribute());
+                        Particle.RED_SMOKE.builder().show(pet.getLocation());
+                    } else {
+                        pet.setAttribute(preset.getAttribute());
+                    }
+                } else {
+                    inventory.close(player);
+                    getSecondLevelInventory(pet, preset.getAttributeType()).show(player);
+                }
             }
-        });
-        return layout;
+        }
+
+        @Override
+        public String getId() {
+            return "invert";
+        }
+
+        private static Inventory<?> getSecondLevelInventory(final Pet pet, AttributeType attributeType) {
+            Inventory<?> inventory;
+            try {
+                inventory = Interact.inventory().from(MenuSettings.ATTRIBUTE_SWITCHES_INVENTORY.getValue(attributeType.getConfigName(), pet.getType().storageName())).build();
+            } catch (Exception e) {
+                inventory = getDefault(pet.getType(), attributeType);
+            }
+
+            for (Map.Entry<Integer, Icon> entry : inventory.getLayout().getIcons().entrySet()) {
+                int slot = entry.getKey();
+                Icon icon = entry.getValue();
+                Icon.Builder iconBuilder = icon.builder();
+                final MenuPreset preset = MenuPreset.getIconToTypeMap().get(icon);
+                if (preset == null) {
+                    continue;
+                }
+
+                if (!(iconBuilder instanceof CommandIcon)) {
+                    iconBuilder.onClick(new AttributeClickAction(pet, preset));
+                }
+
+                inventory.getLayout().set(slot, iconBuilder.build());
+            }
+
+            inventory.getLayout().set(inventory.getLayout().getMaximumSize() - 1, MenuPreset.BACK.getIcon().builder().onClick(new ClickAction() {
+                @Override
+                public void onClick(Inventory inventory, PlayerContainer player, Position clicked) {
+                    inventory.close(player);
+                    getInventory(pet).show(player);
+                }
+
+                @Override
+                public String getId() {
+                    return "back";
+                }
+            }).build());
+
+            return inventory;
+        }
     }
 }

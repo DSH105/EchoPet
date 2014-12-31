@@ -17,10 +17,17 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySpiderPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Spider;
+import com.dsh105.echopet.bridge.entity.type.SpiderEntityBridge;
 
-public interface SpiderPet<T extends Spider, S extends EntitySpiderPet> extends Pet<T, S> {
+@Traits(type = PetType.SPIDER, hositility = Hostility.AGGRESSIVE, width = 1.4F, height = 0.9F, health = 16.0D, attackDamage = 5.0D)
+@Size(SizeCategory.REGULAR)
+public interface SpiderPet<T extends SpiderEntityBridge, S extends EntitySpiderPet> extends Pet<T, S> {
 
 }

@@ -17,13 +17,25 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityIronGolemPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.IronGolem;
+import com.dsh105.echopet.bridge.entity.type.IronGolemEntityBridge;
 
-public interface IronGolemPet extends Pet<IronGolem, EntityIronGolemPet> {
+@Traits(type = PetType.IRON_GOLEM, hositility = Hostility.NEUTRAL, width = 1.4F, height = 2.9F, health = 100.0D, attackDamage = 7.0D)
+@Size(SizeCategory.REGULAR)
+public interface IronGolemPet extends Pet<IronGolemEntityBridge, EntityIronGolemPet> {
 
+    @AttributeSetter(Attributes.Attribute.ROSE)
     void setHoldingRose(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.ROSE)
     boolean getHoldingRose();
 }

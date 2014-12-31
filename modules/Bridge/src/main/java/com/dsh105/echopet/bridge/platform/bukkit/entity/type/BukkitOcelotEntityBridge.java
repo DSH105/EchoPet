@@ -23,4 +23,8 @@ import org.bukkit.entity.Ocelot;
 
 public class BukkitOcelotEntityBridge extends BukkitAgeableEntityBridge<Ocelot> implements OcelotEntityBridge {
 
+    @Override
+    public void setSitting(boolean flag) {
+        getBukkitEntity().setSitting(flag);
+    }
 }

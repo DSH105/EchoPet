@@ -18,14 +18,19 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.captainbern.minecraft.wrapper.WrappedDataWatcher;
+import com.dsh105.echopet.api.entity.*;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityHumanPet;
 import com.dsh105.echopet.api.entity.pet.EquipablePet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.HumanEntityBridge;
 import com.dsh105.echopet.util.WrappedGameProfile;
-import org.bukkit.entity.HumanEntity;
 
 import java.util.UUID;
 
-public interface HumanPet extends EquipablePet<HumanEntity, EntityHumanPet> {
+@Traits(type = PetType.HUMAN, hositility = Hostility.NEUTRAL, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 6.0D)
+@Voice(idle = "random.breathe", death = "random.classic_hurt", step = "step.grass")
+@Size(SizeCategory.REGULAR)
+public interface HumanPet extends EquipablePet<HumanEntityBridge, EntityHumanPet> {
 
     WrappedDataWatcher getDataWatcher();
 

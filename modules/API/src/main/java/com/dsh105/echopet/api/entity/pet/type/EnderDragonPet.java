@@ -17,12 +17,16 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.*;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.EnderDragon;
-import org.bukkit.entity.Entity;
+import com.dsh105.echopet.bridge.entity.type.EnderDragonEntityBridge;
 
-public interface EnderDragonPet extends Pet<EnderDragon, EntityEnderDragonPet> {
+@Traits(type = PetType.ENDER_DRAGON, hositility = Hostility.AGGRESSIVE, width = 16.0F, height = 8.0F, health = 200.0D, attackDamage = 0.0D)
+@Voice(idle = "mob.enderdragon.growl")
+@Size(SizeCategory.EXTRA_LARGE)
+public interface EnderDragonPet extends Pet<EnderDragonEntityBridge, EntityEnderDragonPet> {
 
-    void setTarget(Entity entity);
+    void setTarget(Object entity);
 }

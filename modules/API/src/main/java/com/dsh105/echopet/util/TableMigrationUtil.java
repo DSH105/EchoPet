@@ -17,9 +17,11 @@
 
 package com.dsh105.echopet.util;
 
-import com.dsh105.commodus.IdentUtil;
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.Transformer;
 import com.dsh105.commodus.UUIDFetcher;
 import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.echopet.api.plugin.EchoPet;
 
 import java.sql.Connection;
@@ -67,38 +69,37 @@ public class TableMigrationUtil {
                 copyStatement.executeUpdate();
 
                 // Migrate to UUIDs in the new table if necessary
-                if (IdentUtil.supportsUuid()) {
-                    PreparedStatement getOwnerStatement = conn.prepareStatement("SELECT OwnerName FROM EchoPet");
+                // removed: if Ident.supportsUniqueIds() -> EchoPet 3.x only works on 1.8 and above (i.e. supports UUIDs)
+                PreparedStatement getOwnerStatement = conn.prepareStatement("SELECT OwnerName FROM EchoPet");
 
-                    PreparedStatement updateNameStatement = conn.prepareStatement("UPDATE EchoPet SET OwnerName = ? WHERE OwnerName = ?");
-                    ResultSet resultSet = getOwnerStatement.executeQuery();
-                    while (resultSet.next()) {
-                        String ownerName = resultSet.getString("OwnerName");
+                PreparedStatement updateNameStatement = conn.prepareStatement("UPDATE EchoPet SET OwnerName = ? WHERE OwnerName = ?");
+                ResultSet resultSet = getOwnerStatement.executeQuery();
+                while (resultSet.next()) {
+                    String ownerName = resultSet.getString("OwnerName");
 
-                        try {
-                            UUID.fromString(ownerName);
-                            continue; // This name is already a UUID.
-                        } catch (IllegalArgumentException ignored) {
-                        }
-
-                        UUID playerUUID;
-                        try {
-                            playerUUID = UUIDFetcher.getUUIDOf(ownerName);
-                        } catch (Exception e) {
-                            continue;
-                        }
-
-                        if (playerUUID == null) {
-                            continue;
-                        }
-
-                        updateNameStatement.setString(1, playerUUID.toString());
-                        updateNameStatement.setString(2, ownerName);
-                        updateNameStatement.addBatch();
+                    try {
+                        UUID.fromString(ownerName);
+                        continue; // This name is already a UUID.
+                    } catch (IllegalArgumentException ignored) {
                     }
 
-                    updateNameStatement.executeBatch();
+                    UUID playerUUID;
+                    try {
+                        playerUUID = UUIDFetcher.getUUIDOf(ownerName);
+                    } catch (Exception e) {
+                        continue;
+                    }
+
+                    if (playerUUID == null) {
+                        continue;
+                    }
+
+                    updateNameStatement.setString(1, playerUUID.toString());
+                    updateNameStatement.setString(2, ownerName);
+                    updateNameStatement.addBatch();
                 }
+
+                updateNameStatement.executeBatch();
             }
 
             // Implementation-compatible with old SQLUtil::serialise
@@ -151,7 +152,7 @@ public class TableMigrationUtil {
                         }
                     }
 
-                    statement.setLong(4, SQLUtil.serializePetData(dataList));
+                    statement.setLong(4, SQLUtil.serializeData(dataList));
 
                     statement.setString(5, resultSet.getString("RiderPetType"));
                     statement.setString(6, resultSet.getString("RiderPetName"));
@@ -165,7 +166,7 @@ public class TableMigrationUtil {
                         }
                     }
 
-                    statement.setLong(7, SQLUtil.serializePetData(riderDataList));
+                    statement.setLong(7, SQLUtil.serializeData(riderDataList));
                     statement.addBatch();
                 }
                 statement.executeBatch();
@@ -179,13 +180,13 @@ public class TableMigrationUtil {
             public String getMigratedTableSchema() {
                 return "EchoPet_version4 ("
                         + "    PetId varchar(36) NOT NULL,"
-                        + "    OwnerName varchar(36),"
-                        + "    PetType varchar(255),"
-                        + "    PetName varchar(255),"
-                        + "    PetData BIGINT,"
-                        + "    RiderPetType varchar(255),"
-                        + "    RiderPetName varchar(255), "
-                        + "    RiderPetData BIGINT,"
+                        + "    OwnerId varchar(36) NOT NULL,"
+                        + "    PetType varchar(255) NOT NULL,"
+                        + "    PetName varchar(255) NOT NULL,"
+                        + "    Attributes BIGINT,"
+                        + "    RiderType varchar(255),"
+                        + "    RiderName varchar(255), "
+                        + "    RiderAttributes BIGINT,"
                         + "    PRIMARY KEY (PetId)"
                         + ");";
             }
@@ -195,13 +196,32 @@ public class TableMigrationUtil {
                 PreparedStatement selectAll = conn.prepareStatement("SELECT * FROM EchoPet_version3");
                 ResultSet resultSet = selectAll.executeQuery();
 
-                PreparedStatement statement = conn.prepareStatement("INSERT INTO EchoPet_version4 (PetId, OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData) SELECT ?, OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData FROM EchoPet_version3 WHERE OwnerName = ?");
+                PreparedStatement statement = conn.prepareStatement("INSERT INTO EchoPet_version4 (PetId, OwnerId, PetType, PetName, Attributes, RiderType, RiderName, RiderAttributes) SELECT ?, OwnerName, PetType, PetName, ?, RiderPetType, RiderPetName, ? FROM EchoPet_version3 WHERE OwnerName = ?");
                 while (resultSet.next()) {
                     statement.setString(1, UUID.randomUUID().toString());
                     statement.setString(2, resultSet.getString("OwnerName"));
+                    statement.setLong(3, migrate(resultSet.getLong("PetData")));
+                    statement.setLong(4, migrate(resultSet.getLong("RiderPetData")));
                     statement.addBatch();
                 }
                 statement.executeBatch();
+            }
+
+            /*
+             * Migrates PetData into EntityAttributes
+             */
+
+            private long migrate(long petDataBitmask) {
+                return SQLUtil.serializeAttributes(migrate(SQLUtil.deserializeData(petDataBitmask)));
+            }
+
+            private List<EntityAttribute> migrate(List<PetData> petData) {
+                return GeneralUtil.transform(petData, new Transformer<PetData, EntityAttribute>() {
+                    @Override
+                    public EntityAttribute transform(PetData transmutable) {
+                        return transmutable.getCorrespondingAttribute();
+                    }
+                });
             }
         });
     }
@@ -215,7 +235,7 @@ public class TableMigrationUtil {
         Connection conn = null;
 
         try {
-            conn = EchoPet.getCore().getDbPool().getConnection();
+            conn = EchoPet.getNucleus().getDbPool().getConnection();
             for (MigrationStrategy strategy : tableMigrationStrategies) {
                 if (conn.getMetaData().getTables(null, null, strategy.getTableName(), null).next()) {
                     strategy.createTargetTable(conn);
@@ -225,7 +245,7 @@ public class TableMigrationUtil {
             }
 
         } catch (SQLException e) {
-            EchoPet.LOG.console("Failed migrate old SQL table(s)");
+            EchoPet.log().console("Failed migrate old SQL table(s)");
             e.printStackTrace();
         } finally {
             if (conn != null) {
@@ -244,14 +264,14 @@ public class TableMigrationUtil {
         Connection conn = null;
 
         try {
-            conn = EchoPet.getCore().getDbPool().getConnection();
+            conn = EchoPet.getNucleus().getDbPool().getConnection();
 
             if (tableMigrationStrategies.size() > 0) {
                 MigrationStrategy strategy = tableMigrationStrategies.get(tableMigrationStrategies.size() - 1);
                 strategy.createTargetTable(conn);
             }
         } catch (SQLException e) {
-            EchoPet.LOG.console("Failed to create latest table");
+            EchoPet.log().console("Failed to create latest table");
             e.printStackTrace();
         } finally {
             if (conn != null) {

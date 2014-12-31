@@ -17,9 +17,16 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityMagmaCubePet;
-import org.bukkit.entity.MagmaCube;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.MagmaCubeEntityBridge;
 
-public interface MagmaCubePet extends SlimePet<MagmaCube, EntityMagmaCubePet> {
+@Traits(type = PetType.MAGMA_CUBE, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 0.6F, health = 20.0D, attackDamage = 5.0D)
+@Size(SizeCategory.REGULAR)
+public interface MagmaCubePet extends SlimePet<MagmaCubeEntityBridge, EntityMagmaCubePet> {
 
 }

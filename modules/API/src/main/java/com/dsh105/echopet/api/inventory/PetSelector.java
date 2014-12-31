@@ -18,77 +18,81 @@
 package com.dsh105.echopet.api.inventory;
 
 import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.echopet.api.config.ConfigType;
-import com.dsh105.echopet.api.config.MenuSettings;
-import com.dsh105.echopet.api.config.PetSettings;
+import com.dsh105.echopet.api.configuration.ConfigType;
+import com.dsh105.echopet.api.configuration.MenuSettings;
+import com.dsh105.echopet.api.configuration.PetSettings;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.menuapi.api.CommandIcon;
-import com.dsh105.menuapi.api.Icon;
-import com.dsh105.menuapi.api.Layout;
-import com.dsh105.menuapi.api.Menu;
+import com.dsh105.interact.Interact;
+import com.dsh105.interact.api.CommandIcon;
+import com.dsh105.interact.api.Icon;
+import com.dsh105.interact.api.Inventory;
 
 import java.util.List;
 import java.util.Map;
 
-public class PetSelector {
+public final class PetSelector {
 
-    private static Layout LAYOUT;
-
-    public static Layout getDefaultLayout() {
-        Layout layout = new Layout(45, "Pets", MenuPreset.SELECTOR_PRESET);
-
-        List<PetType> types = PetType.sortAlphabetically();
-        for (int i = 0; i < types.size(); i++) {
-            PetType petType = types.get(i);
-            layout.setSlot(i, new CommandIcon("echopet.pet.type." + petType.storageName(), petType.getCommand(), petType.getMaterial(), 1, petType.getMaterialData(), petType.humanName()));
-        }
-
-        MenuPreset[] selectorItems = new MenuPreset[]{MenuPreset.CLOSE_SELECTOR, null, MenuPreset.TOGGLE, MenuPreset.CALL, null, MenuPreset.HAT, MenuPreset.RIDE, MenuPreset.NAME, MenuPreset.MENU};
-        for (int j = 1; j < 10; j++) {
-            MenuPreset preset = selectorItems[j - 1];
-            if (preset != null) {
-                layout.setSlot(45 - j, new CommandIcon(preset.getCommand(), preset.getMaterial(), preset.getAmount(), preset.getMaterialData(), preset.getName()));
-            }
-        }
-        return layout;
+    private static Inventory<?> DEFAULT;
+    private static Inventory<?> INVENTORY;
+    
+    static {
+        getDefault();
     }
 
-    public static Layout getLayout() {
-        if (LAYOUT == null) {
-            LAYOUT = new Layout().loadFromFile(EchoPet.getConfig(ConfigType.MENU).config(), "selector");
+    public static Inventory<?> getDefault() {
+        if (DEFAULT == null) {
+            int size = 45;
+            Inventory.Builder builder = Interact.inventory().size(size);
 
-            if (LAYOUT == null) {
-                LAYOUT = getDefaultLayout();
+            List<PetType> petTypes = PetType.sortAlphabetically();
+            for (int i = 0; i < petTypes.size(); i++) {
+                PetType type = petTypes.get(i);
+                builder.at(Interact.position().slot(i).icon(type.getIcon()));
             }
 
-            for (Map.Entry<Integer, Icon> entry : LAYOUT.getSlots().entrySet()) {
+            MenuPreset[] presets = {MenuPreset.CLOSE_SELECTOR, MenuPreset.TOGGLE, MenuPreset.CALL, MenuPreset.HAT, MenuPreset.RIDE, MenuPreset.NAME, MenuPreset.MENU};
+            int[] diffs = {1, 3, 4, 6, 7, 8, 9};
+            for (int i = 0; i < presets.length; i++) {
+                builder.at(Interact.position().slot(size - diffs[i]).icon(presets[i].getIcon()));
+            }
+
+            DEFAULT = builder.build();
+        }
+        
+        return DEFAULT;
+    }
+    
+    public static Inventory<?> getInventory() {
+        if (INVENTORY == null) {
+            try {
+                INVENTORY = Interact.inventory().from((Map<String, Object>) EchoPet.getConfig(ConfigType.MENU).getMapList("selector")).build();
+            } catch (Exception e) {
+                // copy it over
+                INVENTORY = getDefault().builder().build();
+            }
+            
+            for (Map.Entry<Integer, Icon> entry : INVENTORY.getLayout().getIcons().entrySet()) {
                 if (entry.getValue() instanceof CommandIcon) {
-                    CommandIcon icon = (CommandIcon) entry.getValue();
-                    if (!MenuSettings.SELECTOR_SHOW_DISABLED_PETS.getValue(EchoPet.getCore().getConfig(ConfigType.MENU).config())) {
-                        String[] parts = icon.getCommand().split("\\s+");
-                        if (parts.length <= 1) {
+                    CommandIcon cIcon = (CommandIcon) entry.getValue();
+                    if (!MenuSettings.SELECTOR_SHOW_DISABLED_PETS.getValue()) {
+                        String[] parts = cIcon.getCommand().split("\\s+");
+                        if (parts.length <= 1 || !GeneralUtil.isEnumType(PetType.class, parts[1])) {
                             continue;
                         }
-                        if (!GeneralUtil.isEnumType(PetType.class, parts[1].toUpperCase())) {
-                            continue;
-                        }
-                        PetType petType = PetType.valueOf(parts[1].toUpperCase());
-                        if (!PetSettings.ENABLE.getValue(petType.storageName())) {
-                            LAYOUT.setSlot(entry.getKey(), null);
+                        if (!PetSettings.ENABLE.getValue(GeneralUtil.toEnumType(PetType.class, parts[1]).storageName())) {
+                            INVENTORY.getLayout().remove(entry.getKey());
                         }
                     }
                 }
             }
         }
-        return LAYOUT;
+        
+        return INVENTORY;
     }
-
-    public static void reloadLayout() {
-        LAYOUT = null;
-    }
-
-    public static Menu prepare() {
-        return getLayout().toMenu(EchoPet.getCore());
+    
+    public static void reset() {
+        INVENTORY = null;
+        getInventory();
     }
 }

@@ -17,10 +17,14 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityCowPet;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
-import org.bukkit.entity.Cow;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.CowEntityBridge;
 
-public interface CowPet<T extends Cow, S extends EntityCowPet> extends AgeablePet<T, S> {
+@Traits(type = PetType.COW, hositility = Hostility.PASSIVE, width = 0.9F, height = 1.3F, health = 10.0D, attackDamage = 4.0D)
+public interface CowPet<T extends CowEntityBridge, S extends EntityCowPet> extends AgeablePet<T, S> {
 
 }

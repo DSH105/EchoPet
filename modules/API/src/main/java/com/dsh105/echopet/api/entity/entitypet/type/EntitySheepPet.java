@@ -17,10 +17,13 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.SheepPet;
-import org.bukkit.DyeColor;
 
+@Entity(PetType.SHEEP)
 public interface EntitySheepPet extends EntityAgeablePet<SheepPet> {
 
     public static int DATAWATCHER_SKIN = 16;
@@ -29,7 +32,7 @@ public interface EntitySheepPet extends EntityAgeablePet<SheepPet> {
 
     boolean isSheared();
 
-    DyeColor getDyeColor();
+    void setDyeColor(Attributes.Color color);
 
-    void setDyeColor(DyeColor color);
+    Attributes.Color getDyeColor();
 }

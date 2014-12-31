@@ -17,13 +17,25 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEndermanPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Enderman;
+import com.dsh105.echopet.bridge.entity.type.EndermanEntityBridge;
 
-public interface EndermanPet extends Pet<Enderman, EntityEndermanPet> {
+@Traits(type = PetType.ENDERMAN, hositility = Hostility.NEUTRAL, width = 0.6F, height = 2.9F, health = 40.0D, attackDamage = 6.0D)
+@Size(SizeCategory.REGULAR)
+public interface EndermanPet extends Pet<EndermanEntityBridge, EntityEndermanPet> {
 
+    @AttributeSetter(Attributes.Attribute.SCREAMING)
     void setScreaming(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.SCREAMING)
     boolean isScreaming();
 }

@@ -16,7 +16,11 @@ public class BukkitAgeableEntityBridge<E extends Ageable> extends BukkitLivingEn
     }
 
     @Override
-    public void setAdult() {
-        getBukkitEntity().setAdult();
+    public void setAdult(boolean flag) {
+        if (flag) {
+            getBukkitEntity().setAdult();
+        } else {
+            getBukkitEntity().setBaby();
+        }
     }
 }

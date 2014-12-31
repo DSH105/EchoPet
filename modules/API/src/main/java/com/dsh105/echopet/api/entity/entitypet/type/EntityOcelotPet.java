@@ -17,17 +17,20 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.OcelotPet;
-import org.bukkit.entity.Ocelot;
 
+@Entity(PetType.OCELOT)
 public interface EntityOcelotPet extends EntityAgeablePet<OcelotPet> {
 
     public static int DATAWATCHER_ENTITY_STATUS = 16;
     public static int DATAWATCHER_OWNER_NAME = 17;
     public static int DATAWATCHER_TYPE = 18;
 
-    Ocelot.Type getBukkitCatType();
+    void setBukkitCatType(Attributes.OcelotType type);
 
-    void setBukkitCatType(Ocelot.Type type);
+    Attributes.OcelotType getBukkitCatType();
 }

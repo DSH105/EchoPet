@@ -1,5 +1,6 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.commodus.Affirm;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.type.EnderDragonPet;
@@ -52,7 +53,8 @@ public class EchoEntityEnderDragonPet extends EntityEnderDragon implements IAnim
     }
 
     @Override
-    public void setTargetCrystal(org.bukkit.entity.EnderCrystal entity) {
+    public void setTargetCrystal(Object entity) {
+        Affirm.checkInstanceOf(org.bukkit.entity.EnderCrystal.class, entity);
         this.bC = ((org.bukkit.craftbukkit.v1_7_R4.entity.CraftEnderCrystal) entity).getHandle();
     }
 
@@ -183,17 +185,17 @@ public class EchoEntityEnderDragonPet extends EntityEnderDragon implements IAnim
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override
@@ -271,8 +273,8 @@ public class EchoEntityEnderDragonPet extends EntityEnderDragon implements IAnim
     public void target() {
         this.bz = false;
         if (this.random.nextInt(2) == 0 && !this.world.players.isEmpty()) {
-            if (this.random.nextInt(50) <= 40 && this.getPet().getOwner() != null) {
-                getPet().setTarget((((CraftPlayer) this.getPet().getOwner()).getHandle()).getBukkitEntity());
+            if (this.random.nextInt(50) <= 40 && this.getPet().getOwner().get() != null) {
+                getPet().setTarget((((CraftPlayer) this.getPet().getOwner().asBukkit()).getHandle()).getBukkitEntity());
             } else {
                 getPet().setTarget(((Entity) this.world.players.get(this.random.nextInt(this.world.players.size()))).getBukkitEntity());
             }

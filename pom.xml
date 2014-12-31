@@ -34,20 +34,28 @@
     <modules>
         <module>modules/Bridge</module>
         <module>modules/API</module>
-        <!--<module>modules/v1_7_R1</module>
-        <module>modules/v1_7_R2</module>
-        <module>modules/v1_7_R3</module>-->
         <module>modules/v1_7_R4</module>
-        <module>modules/EchoPet</module>
+        <module>modules/EchoPet-Bukkit</module>
+        <module>modules/EchoPet-Sponge</module>
     </modules>
 
     <dependencies>
+        <!-- Either Bukkit OR Sponge is required -->
+
         <!-- Bukkit -->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.10-R0.1-SNAPSHOT</version>
+            <version>1.8-R0.1-SNAPSHOT</version>
+            <optional>true</optional>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- SpongeAPI -->
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
 
         <!-- Reflection -->
@@ -57,11 +65,24 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!-- Commodus -->
+        <!-- Commodus - utilities -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>Commodus</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Interact - inventory menu API -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>interact</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>Commodus</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- MenuAPI -->
@@ -77,7 +98,7 @@
             </exclusions>
         </dependency>
 
-        <!-- PowerMessage -->
+        <!-- PowerMessage - fancy messages for Bukkit -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>PowerMessage</artifactId>
@@ -90,7 +111,7 @@
             </exclusions>
         </dependency>
 
-        <!-- Influx -->
+        <!-- Influx - command manager -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>Influx</artifactId>
@@ -182,6 +203,19 @@
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
 
+        <!-- Spigot Hub -->
+        <repository>
+            <id>spigot-bukkit-repo</id>
+            <url>http://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+
+        <!-- Sponge -->
+        <repository>
+            <id>sponge-maven-repo</id>
+            <url>http://repo.spongepowered.org/sponge/maven/</url>
+        </repository>
+
+        <!-- My repo -->
         <repository>
             <id>dsh-repo</id>
             <url>http://repo.dsh105.com/</url>
@@ -249,9 +283,29 @@
                     <archive>
                         <manifestEntries>
                             <Plugin-Version>${project.version}</Plugin-Version>
+                            <Git-Branch>${git.branch}</Git-Branch>
+                            <Git-Describe>${git.describe}</Git-Describe>
+                            <Git-Commit-Id>${git.commit.id}</Git-Commit-Id>
+                            <Git-Commit-Time>${git.commit.time}</Git-Commit-Time>
+                            <Build-Time>${git.build.time}</Build-Time>
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <!-- Templating -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>1.0-alpha-3</version>
+                <executions>
+                    <execution>
+                        <id>filter-src</id>
+                        <goals>
+                            <goal>filter-sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

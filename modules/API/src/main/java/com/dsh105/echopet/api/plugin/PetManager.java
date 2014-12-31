@@ -19,7 +19,6 @@ package com.dsh105.echopet.api.plugin;
 
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -29,25 +28,19 @@ public interface PetManager {
 
     List<Pet> getPetsOfType(PetType petType);
 
-    List<Pet> getPetsFor(String playerIdent);
-
-    List<Pet> getPetsFor(Player player);
+    List<Pet> getPetsFor(UUID playerUID);
 
     void mapPetName(Pet pet);
 
-    void unmapPetNames(String playerIdent);
+    void unmapPetNames(UUID playerUID);
 
-    void unmapPetName(String playerIdent, String name);
+    void unmapPetName(UUID playerUID, String name);
 
-    void updatePetNameMap(String playerIdent);
+    void updatePetNameMap(UUID playerUID);
 
-    Map<String, UUID> getPetNameMapFor(String playerIdent);
+    Map<String, UUID> getPetNameMapFor(UUID playerUID);
 
-    Map<String, UUID> getPetNameMapFor(Player player);
-
-    Pet getPetByName(String playerIdent, String petName);
-
-    Pet getPetByName(Player player, String petName);
+    Pet getPetByName(UUID playerUID, String petName);
 
     Map<UUID, Pet> getPetUniqueIdMap();
 
@@ -57,23 +50,25 @@ public interface PetManager {
 
     void removeAllPets();
 
-    void removePets(String playerIdent);
-
-    void removePets(Player player);
+    void removePets(UUID playerUID);
 
     void removePet(Pet pet);
 
     void removePet(Pet pet, boolean makeDeathSound);
 
-    List<Pet> load(Player player, boolean sendMessage);
+    void load(UUID playerUID, boolean sendMessage);
+
+    void load(UUID playerUID, boolean sendMessage, LoadCallback<List<Pet>> callback);
 
     Pet loadRider(Pet pet);
 
-    Pet create(Player owner, PetType type, boolean sendFailMessage);
+    Pet create(UUID playerUID, PetType type, boolean sendFailMessage);
 
-    List<Pet> loadPets(Player owner);
+    void loadPets(UUID playerUID);
 
-    Pet loadPet(Player owner, String petStorageName);
+    void loadPets(UUID playerUID, LoadCallback<List<Pet>> callback);
+
+    void loadPet(UUID playerUID, UUID petUniqueId, LoadCallback<Pet> callback);
 
     void forceData(Pet pet);
 
@@ -81,7 +76,5 @@ public interface PetManager {
 
     void clear(Pet pet);
 
-    void clear(Player player);
-
-    void clear(String playerIdent);
+    void clear(UUID playerUID);
 }

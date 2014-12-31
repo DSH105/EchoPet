@@ -17,10 +17,17 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityGhastPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Ghast;
+import com.dsh105.echopet.bridge.entity.type.GhastEntityBridge;
 
-public interface GhastPet extends Pet<Ghast, EntityGhastPet> {
+@Traits(type = PetType.GHAST, hositility = Hostility.AGGRESSIVE, width = 4.0F, height = 4.0F, health = 10.0D, attackDamage = 7.0D)
+@Size(SizeCategory.OVERSIZE)
+public interface GhastPet extends Pet<GhastEntityBridge, EntityGhastPet> {
 
 }

@@ -17,9 +17,12 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.IronGolemPet;
 
+@Entity(PetType.IRON_GOLEM)
 public interface EntityIronGolemPet extends EntityPet<IronGolemPet> {
 
     void setPlayerCreated(boolean flag);

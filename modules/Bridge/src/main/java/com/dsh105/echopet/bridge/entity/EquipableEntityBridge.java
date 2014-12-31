@@ -1,8 +1,10 @@
 package com.dsh105.echopet.bridge.entity;
 
+import com.dsh105.commodus.container.ItemStackContainer;
+
 public interface EquipableEntityBridge extends LivingEntityBridge {
 
-    void setWeapon(Object itemStack);
+    void setWeapon(ItemStackContainer itemStack);
 
-    int getWeaponItemId();
+    ItemStackContainer getWeapon();
 }

@@ -20,21 +20,22 @@ package com.dsh105.echopet.api.entity;
 import com.captainbern.minecraft.reflection.MinecraftReflection;
 import com.captainbern.reflection.Reflection;
 import com.captainbern.reflection.SafeMethod;
-import com.dsh105.echopet.api.config.Lang;
+import com.dsh105.echopet.api.configuration.Lang;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.bukkit.PetPreSpawnEvent;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import org.bukkit.Bukkit;
+import com.dsh105.echopet.bridge.GeneralBridge;
+import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class Spawn {
 
-    public static <T extends LivingEntity, S extends EntityPet> S spawnBukkit(Pet<T, S> pet) {
-        PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, pet.getOwner().getLocation());
-        Bukkit.getServer().getPluginManager().callEvent(spawnEvent);
+    public static <T extends LivingEntityBridge, S extends EntityPet> S spawnBukkit(Pet<T, S> pet) {
+        PetPreSpawnEvent spawnEvent = new PetPreSpawnEvent(pet, pet.getOwner().asBukkit().getLocation());
+        EchoPet.getBridge(GeneralBridge.class).postEvent(spawnEvent);
         if (spawnEvent.isCancelled()) {
             EchoPet.getManager().removePet(pet);
             return null;
@@ -55,7 +56,7 @@ public class Spawn {
         return entityPet;
     }
 
-    public static <T extends LivingEntity, S extends EntityPet> S spawnSponge(Pet<T, S> pet) {
+    public static <T extends LivingEntityBridge, S extends EntityPet> S spawnSponge(Pet<T, S> pet) {
         return null;
     }
 }

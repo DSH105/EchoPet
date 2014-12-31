@@ -1,12 +1,12 @@
 package com.dsh105.echopet.nms.v1_7_R4.entity.type;
 
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityVillagerPet;
 import com.dsh105.echopet.api.entity.pet.type.VillagerPet;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetBase;
 import com.dsh105.echopet.nms.v1_7_R4.entity.EchoEntityPetHandle;
 import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.entity.Villager;
 
 public class EchoEntityVillagerPet extends EntityVillager implements IAnimal, EchoEntityPetHandle, EntityVillagerPet {
 
@@ -31,13 +31,24 @@ public class EchoEntityVillagerPet extends EntityVillager implements IAnimal, Ec
     }
 
     @Override
-    public void setVillagerProfession(Villager.Profession profession) {
-        super.setProfession(profession.getId());
+    public void setVillagerProfession(Attributes.VillagerProfession profession) {
+        super.setProfession(profession.ordinal());
     }
 
     @Override
-    public Villager.Profession getVillagerProfession() {
-        return Villager.Profession.getProfession(super.getProfession());
+    public Attributes.VillagerProfession getVillagerProfession() {
+        return Attributes.VillagerProfession.valueOf(super.getProfession());
+    }
+
+    @Override
+    public void setCareer(Attributes.VillagerCareer career) {
+        // TODO
+    }
+
+    @Override
+    public Attributes.VillagerCareer getCareer() {
+        // TODO
+        return null;
     }
 
     @Override
@@ -180,17 +191,17 @@ public class EchoEntityVillagerPet extends EntityVillager implements IAnimal, Ec
 
     @Override
     protected String t() {
-        return getPet().getIdleSound();
+        return getPet().getIdleSound().equals("default") ? super.t() : getPet().getIdleSound();
     }
 
     @Override
     protected String aT() {
-        return getPet().getHurtSound();
+        return getPet().getHurtSound().equals("default") ? super.aT() : getPet().getHurtSound();
     }
 
     @Override
     protected String aU() {
-        return getPet().getDeathSound();
+        return getPet().getDeathSound().equals("default") ? super.aT() : getPet().getDeathSound();
     }
 
     @Override

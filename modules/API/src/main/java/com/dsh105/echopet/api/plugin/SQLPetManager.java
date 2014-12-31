@@ -17,26 +17,26 @@
 
 package com.dsh105.echopet.api.plugin;
 
-import com.dsh105.echopet.api.entity.PetData;
 import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface SQLPetManager extends PetManager {
 
     void save(Pet pet, boolean isRider);
 
-    void save(String petUniqueId, String playerIdent, PetType petType, String petName, List<PetData> petData, boolean isRider);
+    void save(UUID petUniqueId, UUID playerUID, PetType petType, String petName, List<EntityAttribute> petData, boolean isRider);
 
-    List<Pet> load(String playerIdent);
+    @Override
+    void loadPets(UUID playerUID);
 
-    Pet load(String petUniqueId, String playerIdent);
+    @Override
+    void loadPets(UUID playerUID, LoadCallback<List<Pet>> callback);
 
     void clearRider(Pet pet);
 
-    void clearRider(String petUniqueId, Player player);
-
-    void clearRider(String petUniqueId, String playerIdent);
+    void clearRider(UUID petUniqueId);
 }

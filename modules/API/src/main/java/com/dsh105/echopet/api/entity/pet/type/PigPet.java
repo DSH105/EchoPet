@@ -17,13 +17,22 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityPigPet;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
-import org.bukkit.entity.Pig;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.PigEntityBridge;
 
-public interface PigPet extends AgeablePet<Pig, EntityPigPet> {
+@Traits(type = PetType.PIG, hositility = Hostility.PASSIVE, width = 0.9F, height = 0.9F, health = 10.0D, attackDamage = 3.0D)
+public interface PigPet extends AgeablePet<PigEntityBridge, EntityPigPet> {
 
+    @AttributeSetter(Attributes.Attribute.SADDLE)
     void setSaddle(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.SADDLE)
     boolean hasSaddle();
 }

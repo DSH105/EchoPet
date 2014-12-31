@@ -17,26 +17,58 @@
 
 package com.dsh105.echopet.util;
 
+import com.dsh105.commodus.GeneralUtil;
+import com.dsh105.commodus.Transformer;
 import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
+import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SQLUtil {
 
-    public static long serializePetData(List<PetData> data) {
+    public static long serializeData(List<PetData> petData) {
+        return serializeOrdinals(GeneralUtil.transform(petData, new Transformer<PetData, Integer>() {
+            @Override
+            public Integer transform(PetData transmutable) {
+                return transmutable.ordinal();
+            }
+        }));
+    }
+
+    public static long serializeAttributes(List<EntityAttribute> petData) {
+        return serializeOrdinals(GeneralUtil.transform(petData, new Transformer<EntityAttribute, Integer>() {
+            @Override
+            public Integer transform(EntityAttribute transmutable) {
+                return transmutable.getType().getValue(transmutable).ordinal();
+            }
+        }));
+    }
+
+    public static long serializeOrdinals(List<Integer> ordinals) {
         long bitmask = 0;
-        for (PetData petData : data) {
-            bitmask |= (1 << petData.ordinal());
+        for (int ordinal : ordinals) {
+            bitmask |= (1 << ordinal);
         }
         return bitmask;
     }
 
-    public static List<PetData> deserializePetData(long bitmask) {
-        List<PetData> result = new ArrayList<PetData>();
-        for (PetData petData : PetData.valid()) {
-            if ((bitmask & (1 << petData.ordinal())) != 0) {
-                result.add(petData);
+    public static List<PetData> deserializeData(long bitmask) {
+        List<PetData> result = new ArrayList<>();
+        for (PetData data : PetData.valid()) {
+            if ((bitmask & (1 << data.ordinal())) != 0) {
+                result.add(data);
+            }
+        }
+        return result;
+    }
+
+    public static List<EntityAttribute> deserializeAttributes(long bitmask) {
+        List<EntityAttribute> result = new ArrayList<>();
+        for (EntityAttribute entityAttribute : Attributes.values()) {
+            if ((bitmask & (1 << entityAttribute.getType().getValue(entityAttribute).ordinal())) != 0) {
+                result.add(entityAttribute);
             }
         }
         return result;

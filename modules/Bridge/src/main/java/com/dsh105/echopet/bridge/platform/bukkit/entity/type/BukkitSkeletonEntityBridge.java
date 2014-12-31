@@ -19,7 +19,6 @@ package com.dsh105.echopet.bridge.platform.bukkit.entity.type;
 
 import com.dsh105.echopet.bridge.entity.type.SkeletonEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitEquipableEntityBridge;
-import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitRangedEntityBridge;
 import org.bukkit.entity.Skeleton;
 
 public class BukkitSkeletonEntityBridge extends BukkitEquipableEntityBridge<Skeleton> implements SkeletonEntityBridge {

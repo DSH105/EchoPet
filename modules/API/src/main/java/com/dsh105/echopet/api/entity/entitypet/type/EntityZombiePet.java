@@ -17,10 +17,14 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
 import com.dsh105.echopet.api.entity.pet.type.ZombiePet;
 
-public interface EntityZombiePet<T extends ZombiePet> extends EntityEquipablePet<T> {
+@Entity(PetType.ZOMBIE)
+public interface EntityZombiePet<T extends ZombiePet> extends EntityEquipablePet<T>, EntityAgeablePet<T> {
 
     public static final int DATAWATCHER_VILLAGER = 13;
     public static final int DATAWATCHER_BABY = 12;

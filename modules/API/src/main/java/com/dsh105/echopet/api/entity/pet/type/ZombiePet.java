@@ -17,17 +17,26 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityZombiePet;
+import com.dsh105.echopet.api.entity.pet.AgeablePet;
 import com.dsh105.echopet.api.entity.pet.EquipablePet;
-import org.bukkit.entity.Zombie;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.ZombieEntityBridge;
 
-public interface ZombiePet<T extends Zombie, S extends EntityZombiePet> extends EquipablePet<T, S> {
+@Traits(type = PetType.ZOMBIE, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 5.0D)
+@Size(SizeCategory.REGULAR)
+public interface ZombiePet<T extends ZombieEntityBridge, S extends EntityZombiePet> extends EquipablePet<T, S>, AgeablePet<T, S> {
 
+    @AttributeSetter(Attributes.Attribute.VILLAGER)
     void setVillager(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.VILLAGER)
     boolean isVillager();
-
-    void setBaby(boolean flag);
-
-    boolean isBaby();
 }

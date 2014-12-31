@@ -17,14 +17,14 @@
 
 package com.dsh105.echopet.api.entity;
 
-import com.dsh105.echopet.api.config.PetSettings;
+import com.dsh105.echopet.api.configuration.PetSettings;
 
 public enum SizeCategory {
 
     TINY(1),
     REGULAR(1),
     LARGE(3),
-    GIANT(4),
+    EXTRA_LARGE(4),
     OVERSIZE(10);
 
     private int modifier;

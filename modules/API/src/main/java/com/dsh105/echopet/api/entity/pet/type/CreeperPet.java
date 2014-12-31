@@ -17,21 +17,31 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
-import com.dsh105.echopet.api.entity.AttributeHandler;
-import com.dsh105.echopet.api.entity.PetData;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.AttributeSetter;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityCreeperPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Creeper;
+import com.dsh105.echopet.bridge.entity.type.CreeperEntityBridge;
 
-public interface CreeperPet extends Pet<Creeper, EntityCreeperPet> {
+@Traits(type = PetType.CREEPER, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.9F, health = 20.0D, attackDamage = 6.0D)
+@Size(SizeCategory.TINY)
+public interface CreeperPet extends Pet<CreeperEntityBridge, EntityCreeperPet> {
 
+    @AttributeSetter(Attributes.Attribute.POWER)
     void setPowered(boolean flag);
 
+    @AttributeGetter(Attributes.Attribute.POWER)
     boolean isPowered();
 
-    @AttributeHandler(data = PetData.POWER)
+    @AttributeSetter(Attributes.Attribute.IGNITION)
     void setIgnited(boolean flag);
 
-    @AttributeHandler(data = PetData.POWER, getter = true)
+    @AttributeGetter(Attributes.Attribute.IGNITION)
     boolean isIgnited();
 }

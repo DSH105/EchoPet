@@ -23,4 +23,13 @@ import org.bukkit.entity.Creeper;
 
 public class BukkitCreeperEntityBridge extends BukkitLivingEntityBridge<Creeper> implements CreeperEntityBridge {
 
+    @Override
+    public void setPowered(boolean flag) {
+        getBukkitEntity().setPowered(flag);
+    }
+
+    @Override
+    public boolean isPowered() {
+        return getBukkitEntity().isPowered();
+    }
 }

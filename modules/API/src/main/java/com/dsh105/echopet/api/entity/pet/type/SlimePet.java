@@ -17,13 +17,26 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeSetter;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySlimePet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Slime;
+import com.dsh105.echopet.bridge.entity.type.SlimeEntityBridge;
 
-public interface SlimePet<T extends Slime, S extends EntitySlimePet> extends Pet<T, S> {
+@Traits(type = PetType.SLIME, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 0.6F, health = 20.0D, attackDamage = 4.0D)
+@Size(SizeCategory.REGULAR)
+public interface SlimePet<T extends SlimeEntityBridge, S extends EntitySlimePet> extends Pet<T, S> {
 
-    void setSize(int size);
+    @GroupAttributeSetter(AttributeType.SLIME_SIZE)
+    void setSize(Attributes.SlimeSize size);
 
-    int getSize();
+    @GroupAttributeGetter(AttributeType.SLIME_SIZE)
+    Attributes.SlimeSize getSize();
 }

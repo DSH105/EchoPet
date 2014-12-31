@@ -23,4 +23,13 @@ import org.bukkit.entity.Slime;
 
 public class BukkitSlimeEntityBridge<E extends Slime> extends BukkitLivingEntityBridge<E> implements SlimeEntityBridge {
 
+    @Override
+    public void setSize(int size) {
+        getBukkitEntity().setSize(size);
+    }
+
+    @Override
+    public int getSize() {
+        return getBukkitEntity().getSize();
+    }
 }

@@ -23,4 +23,8 @@ import org.bukkit.entity.Wolf;
 
 public class BukkitWolfEntityBridge extends BukkitAgeableEntityBridge<Wolf> implements WolfEntityBridge {
 
+    @Override
+    public void setSitting(boolean flag) {
+        getBukkitEntity().setSitting(flag);
+    }
 }

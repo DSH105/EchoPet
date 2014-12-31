@@ -17,15 +17,22 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.VillagerPet;
-import org.bukkit.entity.Villager;
 
+@Entity(PetType.VILLAGER)
 public interface EntityVillagerPet extends EntityAgeablePet<VillagerPet> {
 
     public static int DATAWATCHER_PROFESSION = 16;
 
-    Villager.Profession getVillagerProfession();
+    void setVillagerProfession(Attributes.VillagerProfession profession);
 
-    void setVillagerProfession(Villager.Profession profession);
+    Attributes.VillagerProfession getVillagerProfession();
+
+    void setCareer(Attributes.VillagerCareer career);
+
+    Attributes.VillagerCareer getCareer();
 }

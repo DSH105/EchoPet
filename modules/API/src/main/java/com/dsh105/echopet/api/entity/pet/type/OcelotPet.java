@@ -17,13 +17,23 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Traits;
+import com.dsh105.echopet.api.entity.attribute.AttributeType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeGetter;
+import com.dsh105.echopet.api.entity.attribute.GroupAttributeSetter;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityOcelotPet;
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
-import org.bukkit.entity.Ocelot;
+import com.dsh105.echopet.api.entity.pet.Hostility;
+import com.dsh105.echopet.bridge.entity.type.OcelotEntityBridge;
 
-public interface OcelotPet extends AgeablePet<Ocelot, EntityOcelotPet> {
+@Traits(type = PetType.OCELOT, hositility = Hostility.PASSIVE, width = 0.6F, height = 0.8F, health = 10.0D, attackDamage = 4.0D)
+public interface OcelotPet extends AgeablePet<OcelotEntityBridge, EntityOcelotPet> {
 
-    Ocelot.Type getCatType();
+    @GroupAttributeSetter(AttributeType.OCELOT_TYPE)
+    void setCatType(Attributes.OcelotType type);
 
-    void setCatType(Ocelot.Type type);
+    @GroupAttributeGetter(AttributeType.OCELOT_TYPE)
+    Attributes.OcelotType getCatType();
 }

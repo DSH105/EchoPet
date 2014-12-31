@@ -17,10 +17,13 @@
 
 package com.dsh105.echopet.api.entity.entitypet.type;
 
+import com.dsh105.echopet.api.entity.Entity;
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.WolfPet;
-import org.bukkit.DyeColor;
 
+@Entity(PetType.WOLF)
 public interface EntityWolfPet extends EntityAgeablePet<WolfPet> {
 
     public static int DATAWATCHER_ENTITY_STATUS = 16;
@@ -29,9 +32,9 @@ public interface EntityWolfPet extends EntityAgeablePet<WolfPet> {
     public static int DATAWATCHER_BEGGING = 19;
     public static int DATAWATCHER_COLLAR_COLOUR = 20;
 
-    void setWolfCollarColor(DyeColor color);
+    void setWolfCollarColor(Attributes.Color color);
 
-    DyeColor getWolfCollarColor();
+    Attributes.Color getWolfCollarColor();
 
     void setTamed(boolean flag);
 

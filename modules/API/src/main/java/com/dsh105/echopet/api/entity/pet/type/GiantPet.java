@@ -17,10 +17,17 @@
 
 package com.dsh105.echopet.api.entity.pet.type;
 
+import com.dsh105.echopet.api.entity.PetType;
+import com.dsh105.echopet.api.entity.Size;
+import com.dsh105.echopet.api.entity.SizeCategory;
+import com.dsh105.echopet.api.entity.Traits;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityGiantPet;
+import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import org.bukkit.entity.Giant;
+import com.dsh105.echopet.bridge.entity.type.GiantEntityBridge;
 
-public interface GiantPet extends Pet<Giant, EntityGiantPet> {
+@Traits(type = PetType.GIANT, hositility = Hostility.NEUTRAL, width = 5.5F, height = 5.5F, health = 100.0D, attackDamage = 0.0D)
+@Size(SizeCategory.EXTRA_LARGE)
+public interface GiantPet extends Pet<GiantEntityBridge, EntityGiantPet> {
 
 }
