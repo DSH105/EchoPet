@@ -107,8 +107,10 @@ public class PetOwnerListener implements Listener {
         if (pi != null) {
             if (!WorldUtil.allowPets(event.getTo())) {
                 Lang.sendTo(p, Lang.PETS_DISABLED_HERE.toString().replace("%world%", StringUtil.capitalise(event.getTo().getWorld().getName())));
-                EchoPet.getManager().saveFileData("autosave", pi);
-                EchoPet.getSqlManager().saveToDatabase(pi, false);
+                if (EchoPet.getConfig().getBoolean("loadSavedPets", true)) {
+                    EchoPet.getManager().saveFileData("autosave", pi);
+                    EchoPet.getSqlManager().saveToDatabase(pi, false);
+                }
                 EchoPet.getManager().removePet(pi, false);
             }
         }
@@ -120,8 +122,10 @@ public class PetOwnerListener implements Listener {
         IPet pi = EchoPet.getManager().getPet(p);
         if (pi != null) {
             //ec.PH.saveFileData("autosave", pi);
-            EchoPet.getManager().saveFileData("autosave", pi);
-            EchoPet.getSqlManager().saveToDatabase(pi, false);
+            if (EchoPet.getConfig().getBoolean("loadSavedPets", true)) {
+                EchoPet.getManager().saveFileData("autosave", pi);
+                EchoPet.getSqlManager().saveToDatabase(pi, false);
+            }
             EchoPet.getManager().removePet(pi, true);
         }
     }
@@ -201,9 +205,11 @@ public class PetOwnerListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player p = event.getEntity();
         IPet pet = EchoPet.getManager().getPet(p);
-        if (pet != null) {
-            EchoPet.getManager().saveFileData("autosave", pet);
-            EchoPet.getSqlManager().saveToDatabase(pet, false);
+        if (pet != null ) {
+            if (EchoPet.getConfig().getBoolean("loadSavedPets", true)) {
+                EchoPet.getManager().saveFileData("autosave", pet);
+                EchoPet.getSqlManager().saveToDatabase(pet, false);
+            }
             EchoPet.getManager().removePet(pet, true);
             //p.sendMessage(Lang.REMOVE_PET_DEATH.toString());
         }
@@ -227,8 +233,10 @@ public class PetOwnerListener implements Listener {
         final Player p = event.getPlayer();
         final IPet pi = EchoPet.getManager().getPet(p);
         if (pi != null) {
-            EchoPet.getManager().saveFileData("autosave", pi);
-            EchoPet.getSqlManager().saveToDatabase(pi, false);
+            if (EchoPet.getConfig().getBoolean("loadSavedPets", true)) {
+                EchoPet.getManager().saveFileData("autosave", pi);
+                EchoPet.getSqlManager().saveToDatabase(pi, false);
+            }
             EchoPet.getManager().removePet(pi, false);
             new BukkitRunnable() {
 
