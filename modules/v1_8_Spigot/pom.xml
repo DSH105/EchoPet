@@ -40,7 +40,8 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.7.10-R0.1-SNAPSHOT</version>
-            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>C:\Users\Samuel\Desktop\spigot1649.jar\</systemPath>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
