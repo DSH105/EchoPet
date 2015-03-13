@@ -120,6 +120,7 @@
         </dependency>
         <dependency>
             <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-v1_8_R2</artifactId>
             <version>v2</version>
             <exclusions>
                 <exclusion>
