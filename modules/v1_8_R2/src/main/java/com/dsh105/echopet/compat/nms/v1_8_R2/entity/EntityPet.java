@@ -74,7 +74,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         this.fireProof = true;
         if (this.FIELD_JUMP == null) {
             try {
-                this.FIELD_JUMP = EntityLiving.class.getDeclaredField("aW");
+                this.FIELD_JUMP = EntityLiving.class.getDeclaredField("aY");
                 this.FIELD_JUMP.setAccessible(true);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
