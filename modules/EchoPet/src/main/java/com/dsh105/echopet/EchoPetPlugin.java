@@ -147,7 +147,7 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         manager.registerEvents(new MenuListener(), this);
         manager.registerEvents(new PetEntityListener(), this);
         manager.registerEvents(new PetOwnerListener(), this);
-        manager.registerEvents(new ChunkListener(), this);
+        //manager.registerEvents(new ChunkListener(), this);
 
         this.vanishProvider = new VanishProvider(this);
         this.worldGuardProvider = new WorldGuardProvider(this);
