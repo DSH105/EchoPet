@@ -118,17 +118,6 @@
             </exclusions>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <version>v2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
     <build>
