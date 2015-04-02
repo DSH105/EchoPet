@@ -70,7 +70,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     }
 
     private void initiateEntityPet() {
-        this.setSize();
+        this.resetEntitySize();
         this.fireProof = true;
         if (this.FIELD_JUMP == null) {
             try {
@@ -103,11 +103,17 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         }
     }
 
-    protected void setSize() {
+    @Override
+    public void resetEntitySize() {
         EntitySize es = this.getClass().getAnnotation(EntitySize.class);
         if (es != null) {
             this.setSize(es.width(), es.height());
         }
+    }
+
+    @Override
+    public void setEntitySize(float width, float height) {
+        this.setSize(width, height);
     }
 
     @Override

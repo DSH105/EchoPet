@@ -102,6 +102,12 @@ public class MenuUtil {
             options.add(new MenuOption(i++, MenuItem.HORSE_VARIANT));
             options.add(new MenuOption(i++, MenuItem.HORSE_MARKING));
         }
+        if (pt == PetType.GUARDIAN) {
+            options.add(new MenuOption(i++, MenuItem.ELDER));
+        }
+        if (pt == PetType.RABBIT) {
+            options.add(new MenuOption(i++, MenuItem.RABBIT_TYPE));
+        }
         return options;
     }
 }
