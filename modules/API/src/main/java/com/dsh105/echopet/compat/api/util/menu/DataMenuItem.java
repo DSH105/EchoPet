@@ -91,8 +91,8 @@ public enum DataMenuItem {
     BROWN_RABBIT(DataMenuType.RABBIT_TYPE, PetData.BROWN, Material.WOOL, 1, (short) 12, "Brown", "Bunny type"),
     WHITE_RABBIT(DataMenuType.RABBIT_TYPE, PetData.WHITE, Material.WOOL, 1, (short) 0, "White", "Bunny type"),
     BLACK_RABBIT(DataMenuType.HORSE_ARMOUR, PetData.BLACK, Material.WOOL, 1, (short) 15, "Black", "Bunny type"),
-    BLACK_AND_WHITE_RABBIT(DataMenuType.RABBIT_TYPE, PetData.BLACK_AND_WHITE, Material.WOOL, 7, (short) 0, "Black and White", "Bunny type"),
-    SALT_AND_PEPPER_RABBIT(DataMenuType.RABBIT_TYPE, PetData.SALT_AND_PEPPER, Material.WOOL, 4, (short) 0, "Salt and Pepper", "Bunny type"),
+    BLACK_AND_WHITE_RABBIT(DataMenuType.RABBIT_TYPE, PetData.BLACK_AND_WHITE, Material.WOOL, 1, (short) 7, "Black and White", "Bunny type"),
+    SALT_AND_PEPPER_RABBIT(DataMenuType.RABBIT_TYPE, PetData.SALT_AND_PEPPER, Material.WOOL, 1, (short) 4, "Salt and Pepper", "Bunny type"),
     KILLER_BUNNY(DataMenuType.RABBIT_TYPE, PetData.THE_KILLER_BUNNY, Material.WOOL, 1, (short) 14, "Killer Bunny", "Bunny type"),
 
     BACK(DataMenuType.OTHER, null, Material.BOOK, 1, (short) 0, "Back", "Return to the main menu."),
