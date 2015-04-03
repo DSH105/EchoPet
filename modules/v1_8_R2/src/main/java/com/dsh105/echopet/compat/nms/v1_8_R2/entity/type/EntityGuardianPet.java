@@ -29,7 +29,7 @@ public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet {
 
     @Override
     public SizeCategory getSizeCategory() {
-        return isElder() ? SizeCategory.LARGE : SizeCategory.REGULAR;
+        return isElder() ? SizeCategory.GIANT : SizeCategory.LARGE;
     }
 
     @Override
