@@ -106,6 +106,7 @@ public class MenuUtil {
             options.add(new MenuOption(i++, MenuItem.ELDER));
         }
         if (pt == PetType.RABBIT) {
+            options.add(new MenuOption(i++, MenuItem.BABY));
             options.add(new MenuOption(i++, MenuItem.RABBIT_TYPE));
         }
         return options;
