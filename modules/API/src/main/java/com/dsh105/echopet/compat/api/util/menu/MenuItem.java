@@ -49,7 +49,7 @@ public enum MenuItem {
     TAMED(Material.BONE, 1, (short) 0, DataMenuType.BOOLEAN, "Tamed", "Wolf"),
     WITHER(Material.getMaterial(397), 1, (short) 1, DataMenuType.BOOLEAN, "Wither", "Skeleton"),
     VILLAGER(Material.EMERALD, 1, (short) 0, DataMenuType.BOOLEAN, "Villager", "Zombie", "PigZombie"),
-    ELDER(Material.SEA_LANTERN, 1, (short) 0, DataMenuType.BOOLEAN, "Guardian"),
+    ELDER(Material.SEA_LANTERN, 1, (short) 0, DataMenuType.BOOLEAN, "Elder", "Guardian"),
     COLOR(Material.WOOL, 1, (short) 0, DataMenuType.COLOR, "Color", "Sheep", "Wolf"),
     PROFESSION(Material.IRON_AXE, 1, (short) 0, DataMenuType.PROFESSION, "Profession", "Villager"),
     RIDE(Material.CARROT_STICK, 1, (short) 0, DataMenuType.BOOLEAN, "Ride Pet", "Control your pet."),
