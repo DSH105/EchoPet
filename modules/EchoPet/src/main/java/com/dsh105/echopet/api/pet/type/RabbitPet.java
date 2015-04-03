@@ -18,11 +18,14 @@
 package com.dsh105.echopet.api.pet.type;
 
 import com.dsh105.echopet.api.pet.Pet;
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.IRabbitPet;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Rabbit;
 
+@EntityPetType(petType = PetType.RABBIT)
 public class RabbitPet extends Pet implements IRabbitPet {
 
     public RabbitPet(Player owner) {
