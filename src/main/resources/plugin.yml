@@ -452,11 +452,11 @@ permissions:
         default: op
     echopet.pet.type.rabbit.black:
         default: op
-    echopet.pet.type.rabbit.black_and_white:
+    echopet.pet.type.rabbit.blackandwhite:
         default: op
-    echopet.pet.type.rabbit.salt_and_pepper:
+    echopet.pet.type.rabbit.saltandpepper:
         default: op
-    echopet.pet.type.rabbit.killer_bunny:
+    echopet.pet.type.rabbit.killerbunny:
         default: op
     echopet.pet.type.sheep.baby:
         default: op
@@ -1259,9 +1259,9 @@ permissions:
             echopet.pet.type.rabbit.brown: true
             echopet.pet.type.rabbit.white: true
             echopet.pet.type.rabbit.black: true
-            echopet.pet.type.rabbit.black_and_white: true
-            echopet.pet.type.rabbit.salt_and_pepper: true
-            echopet.pet.type.rabbit.killer_bunny: true
+            echopet.pet.type.rabbit.blackandwhite: true
+            echopet.pet.type.rabbit.saltandpepper: true
+            echopet.pet.type.rabbit.killerbunny: true
     echopet.pet.type.sheep.*:
         default: op
         description: 'All sheep pet data permissions'
