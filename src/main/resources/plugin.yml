@@ -376,7 +376,7 @@ permissions:
         default: op
     echopet.pet.type.horse.nomarking:
         default: op
-    echopet.pet.type.horse.socks:
+    echopet.pet.type.horse.whitesocks:
         default: op
     echopet.pet.type.horse.whitepatch:
         default: op
@@ -1117,7 +1117,7 @@ permissions:
             echopet.pet.type.horse.gray: true
             echopet.pet.type.horse.darkbrown: true
             echopet.pet.type.horse.nomarking: true
-            echopet.pet.type.horse.socks: true
+            echopet.pet.type.horse.whitesocks: true
             echopet.pet.type.horse.whitepatch: true
             echopet.pet.type.horse.whitespot: true
             echopet.pet.type.horse.blackspot: true
