@@ -1092,6 +1092,11 @@ permissions:
         description: 'All cow pet data permissions'
         children:
             echopet.pet.type.cow.baby: true
+    echopet.pet.type.creeper.*:
+        default: op
+        description: 'All creeper pet data permissions'
+        children:
+            echopet.pet.type.creeper.powered: true
     echopet.pet.type.enderman.*:
         default: op
         description: 'All enderman pet data permissions'
@@ -1243,6 +1248,7 @@ permissions:
             echopet.pet.type.blaze.*: true
             echopet.pet.type.chicken.*: true
             echopet.pet.type.cow.*: true
+            echopet.pet.type.creeper.*: true
             echopet.pet.type.enderman.*: true
             echopet.pet.type.horse.*: true
             echopet.pet.type.magmacube.*: true
