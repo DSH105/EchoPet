@@ -22,6 +22,7 @@ import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityPet;
+import com.dsh105.echopet.compat.nms.v1_8_R2.entity.type.EntityEnderDragonPet;
 import com.dsh105.echopet.compat.nms.v1_8_R2.entity.type.EntityGhastPet;
 import net.minecraft.server.v1_8_R2.EntityPlayer;
 import net.minecraft.server.v1_8_R2.GenericAttributes;
@@ -68,6 +69,8 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
         } else if (this.pet.getPet().isOwnerRiding() || this.pet.getPet().isHat()) {
             return false;
         } else if (this.pet.h(((CraftPlayer) this.pet.getPlayerOwner()).getHandle()) < this.startDistance) {
+            return false;
+        } else if (this.pet instanceof EntityEnderDragonPet) {
             return false;
         } else {
             return !(this.pet.getGoalTarget() != null && this.pet.getGoalTarget().isAlive());
