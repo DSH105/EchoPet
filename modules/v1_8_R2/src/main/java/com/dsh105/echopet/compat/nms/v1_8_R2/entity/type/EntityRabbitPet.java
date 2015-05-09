@@ -14,12 +14,15 @@ import org.bukkit.entity.Rabbit;
 @EntityPetType(petType = PetType.RABBIT)
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet {
 
+    private int jumpDelay;
+
     public EntityRabbitPet(World world) {
         super(world);
     }
 
     public EntityRabbitPet(World world, IPet pet) {
         super(world, pet);
+        this.jumpDelay = this.random.nextInt(15) + 10;
     }
 
     @Override
