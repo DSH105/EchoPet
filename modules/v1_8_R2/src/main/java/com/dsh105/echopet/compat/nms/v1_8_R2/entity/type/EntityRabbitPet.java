@@ -8,8 +8,6 @@ import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityPet;
 import net.minecraft.server.v1_8_R2.World;
 import org.bukkit.entity.Rabbit;
 
-// TODO: hopping
-
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet {
 
     public EntityRabbitPet(World world) {
