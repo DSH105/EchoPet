@@ -36,34 +36,23 @@ public class EntityGuardianPet extends EntityPet implements IEntityGuardianPet {
     protected void initDatawatcher() {
         super.initDatawatcher();
         this.datawatcher.a(16, new Integer(0));
-        //this.datawatcher.a(17, new Integer(0)); //attack target
+        this.datawatcher.a(17, new Integer(0));
     }
 
     @Override
     public void onLive() {
         super.onLive();
-        if (onGround && this.random.nextInt(20) < 2) {
-            this.motY += 0.2D;
-            this.onGround = false;
-            this.ai = true; // airborne
-        }
     }
 
     @Override
     public boolean isElder() {
-        return retrieve(4);
+        int i = 4;
+        return (this.datawatcher.getInt(16) & i) != 0;
     }
 
     @Override
     public void setElder(boolean flag) {
-        update(4, flag);
-    }
-    
-    private boolean retrieve(int i) {
-        return (this.datawatcher.getInt(16) & i) != 0;
-    }
-
-    private void update(int i, boolean flag) {
+        int i = 4;
         int existing = this.datawatcher.getInt(16);
         
         if (flag) {
