@@ -1,5 +1,7 @@
 package com.dsh105.echopet.compat.nms.v1_8_R2.entity.type;
 
+import com.dsh105.echopet.compat.api.entity.EntityPetType;
+import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.SizeCategory;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
@@ -8,6 +10,8 @@ import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityPet;
 import net.minecraft.server.v1_8_R2.World;
 import org.bukkit.entity.Rabbit;
 
+@EntitySize(width = 0.6F, height = 0.7F)
+@EntityPetType(petType = PetType.RABBIT)
 public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPet {
 
     public EntityRabbitPet(World world) {
