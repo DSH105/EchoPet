@@ -1,9 +1,6 @@
 package com.dsh105.echopet.compat.nms.v1_8_R2.entity.type;
 
-import com.dsh105.echopet.compat.api.entity.EntityPetType;
-import com.dsh105.echopet.compat.api.entity.EntitySize;
-import com.dsh105.echopet.compat.api.entity.IPet;
-import com.dsh105.echopet.compat.api.entity.SizeCategory;
+import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityRabbitPet;
 import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityAgeablePet;
 import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityPet;
