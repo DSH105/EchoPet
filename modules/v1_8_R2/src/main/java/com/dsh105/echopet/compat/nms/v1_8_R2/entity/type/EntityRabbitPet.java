@@ -46,6 +46,17 @@ public class EntityRabbitPet extends EntityAgeablePet implements IEntityRabbitPe
         this.datawatcher.a(18, Byte.valueOf((byte)0));
     }
     
+    @Override
+    public void onLive() {
+        super.onLive();
+        // same as the slime
+        if (this.onGround && this.jumpDelay-- <= 0) {
+            getControllerJump().a();
+            this.jumpDelay = this.random.nextInt(15) + 10;
+            this.world.broadcastEntityEffect(this, (byte) 1);
+        }
+    }
+    
     static class TypeMapping {
         
         private static final int[] NMS_TYPES = new int[Rabbit.Type.values().length];
