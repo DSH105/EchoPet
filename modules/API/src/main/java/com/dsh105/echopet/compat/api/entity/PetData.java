@@ -25,11 +25,12 @@ public enum PetData {
 
     ANGRY("angry", Type.BOOLEAN),
     BABY("baby", Type.BOOLEAN),
-    BLACK("black", Type.COLOUR, Type.CAT, Type.HORSE_VARIANT),
+    BLACK("black", Type.COLOUR, Type.CAT, Type.HORSE_VARIANT, Type.RABBIT_TYPE),
+    BLACK_AND_WHITE("blackandwhite", Type.RABBIT_TYPE),
     BLACKSMITH("blacksmith", Type.PROF),
     BLACKSPOT("blackSpot", Type.HORSE_MARKING),
     BLUE("blue", Type.COLOUR),
-    BROWN("brown", Type.COLOUR, Type.HORSE_VARIANT),
+    BROWN("brown", Type.COLOUR, Type.HORSE_VARIANT, Type.RABBIT_TYPE),
     BUTCHER("butcher", Type.PROF),
     CHESTED("chested", Type.BOOLEAN),
     CHESTNUT("chestnut", Type.HORSE_VARIANT),
@@ -38,12 +39,14 @@ public enum PetData {
     DARKBROWN("darkbrown", Type.HORSE_VARIANT),
     DIAMOND("diamond", Type.HORSE_ARMOUR),
     DONKEY("donkey", Type.HORSE_TYPE),
+    ELDER("elder", Type.BOOLEAN),
     FARMER("farmer", Type.PROF),
     FIRE("fire", Type.BOOLEAN),
     GRAY("gray", Type.COLOUR, Type.HORSE_VARIANT),
     GREEN("green", Type.COLOUR),
     GOLD("gold", Type.HORSE_ARMOUR),
     IRON("iron", Type.HORSE_ARMOUR),
+    THE_KILLER_BUNNY("killerbunny", Type.RABBIT_TYPE),
     LARGE("large", Type.SIZE),
     LIBRARIAN("librarian", Type.PROF),
     LIGHTBLUE("lightBlue", Type.COLOUR),
@@ -61,6 +64,7 @@ public enum PetData {
     PURPLE("purple", Type.COLOUR),
     RED("red", Type.CAT, Type.COLOUR),
     SADDLE("saddle", Type.BOOLEAN),
+    SALT_AND_PEPPER("saltandpepper", Type.RABBIT_TYPE),
     SCREAMING("screaming", Type.BOOLEAN),
     SHEARED("sheared", Type.BOOLEAN),
     SHIELD("shield", Type.BOOLEAN),
@@ -73,7 +77,7 @@ public enum PetData {
     VILLAGER("villager", Type.BOOLEAN),
     WHITEPATCH("whitePatch", Type.HORSE_MARKING),
     WHITESPOT("whiteSpot", Type.HORSE_MARKING),
-    WHITE("white", Type.COLOUR, Type.HORSE_VARIANT),
+    WHITE("white", Type.COLOUR, Type.HORSE_VARIANT, Type.RABBIT_TYPE),
     WILD("wild", Type.CAT),
     WITHER("wither", Type.BOOLEAN),
     YELLOW("yellow", Type.COLOUR),
@@ -101,6 +105,6 @@ public enum PetData {
     }
 
     public enum Type {
-        BOOLEAN, COLOUR, CAT, SIZE, PROF, HORSE_TYPE, HORSE_VARIANT, HORSE_MARKING, HORSE_ARMOUR
+        BOOLEAN, COLOUR, CAT, SIZE, PROF, HORSE_TYPE, HORSE_VARIANT, HORSE_MARKING, HORSE_ARMOUR, RABBIT_TYPE
     }
 }

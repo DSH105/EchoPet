@@ -174,7 +174,7 @@ public class ConfigOptions extends Options {
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".interactMenu", true);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".startFollowDistance", 12);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".stopFollowDistance", 4);
-            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 30);
+            set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 40);
 
             /*set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.canDamagePlayers", false);
             set("pets." + petType.toString().toLowerCase().replace("_", " ") + ".attack.lockRange", 10);

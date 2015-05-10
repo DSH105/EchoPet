@@ -118,6 +118,18 @@
             </exclusions>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EchoPet-v1_8_R2</artifactId>
+            <version>v2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

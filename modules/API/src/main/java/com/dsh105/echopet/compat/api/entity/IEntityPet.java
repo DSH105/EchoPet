@@ -46,5 +46,9 @@ public interface IEntityPet {
 
     public LivingEntity getTarget();
 
+    void resetEntitySize();
+    
+    void setEntitySize(float width, float height);
+
     public IPet getPet();
 }

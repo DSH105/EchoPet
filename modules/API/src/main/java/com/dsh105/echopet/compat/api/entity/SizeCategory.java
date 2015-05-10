@@ -21,15 +21,15 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 
 public enum SizeCategory {
 
-    TINY(1),
-    REGULAR(1),
-    LARGE(3),
-    GIANT(4),
-    OVERSIZE(10);
+    TINY(1.5F),
+    REGULAR(1.5F),
+    LARGE(4),
+    GIANT(5),
+    OVERSIZE(12);
 
-    private int modifier;
+    private float modifier;
 
-    SizeCategory(int modifier) {
+    SizeCategory(float modifier) {
         this.modifier = modifier;
     }
 
@@ -42,6 +42,6 @@ public enum SizeCategory {
     }
 
     public float getTeleport(PetType petType) {
-        return (EchoPet.getConfig().getInt("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 30) * this.modifier) / 2;
+        return (EchoPet.getConfig().getInt("pets." + petType.toString().toLowerCase().replace("_", " ") + ".teleportDistance", 40) * this.modifier) / 2;
     }
 }
