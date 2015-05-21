@@ -15,7 +15,7 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_8_R2.entity;
+package com.dsh105.echopet.compat.nms.v1_8_R3.entity;
 
 import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
@@ -29,16 +29,16 @@ import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.Perm;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
-import com.dsh105.echopet.compat.nms.v1_8_R2.NMSEntityUtil;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.ai.PetGoalFloat;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.ai.PetGoalFollowOwner;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.ai.PetGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R2.*;
+import com.dsh105.echopet.compat.nms.v1_8_R3.NMSEntityUtil;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai.PetGoalFloat;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai.PetGoalFollowOwner;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai.PetGoalLookAtPlayer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftCreature;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;

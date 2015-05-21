@@ -15,15 +15,15 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_8_R2.entity.type;
+package com.dsh105.echopet.compat.nms.v1_8_R3.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.EntitySize;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityOcelotPet;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityAgeablePet;
-import net.minecraft.server.v1_8_R2.World;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.EntityAgeablePet;
+import net.minecraft.server.v1_8_R3.World;
 
 @EntitySize(width = 0.6F, height = 0.8F)
 @EntityPetType(petType = PetType.OCELOT)

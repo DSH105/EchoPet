@@ -15,10 +15,10 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_8_R2.entity;
+package com.dsh105.echopet.compat.nms.v1_8_R3.entity;
 
 import com.dsh105.echopet.compat.api.entity.IPet;
-import net.minecraft.server.v1_8_R2.World;
+import net.minecraft.server.v1_8_R3.World;
 
 
 public abstract class EntityNoClipPet extends EntityPet {

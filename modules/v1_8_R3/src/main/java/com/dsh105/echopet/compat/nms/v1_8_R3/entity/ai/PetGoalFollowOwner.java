@@ -15,20 +15,20 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_8_R2.entity.ai;
+package com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai;
 
 import com.dsh105.echopet.compat.api.ai.APetGoalFollowOwner;
 import com.dsh105.echopet.compat.api.ai.PetGoalType;
 import com.dsh105.echopet.compat.api.event.PetMoveEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityPet;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.type.EntityEnderDragonPet;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.type.EntityGhastPet;
-import net.minecraft.server.v1_8_R2.EntityPlayer;
-import net.minecraft.server.v1_8_R2.GenericAttributes;
-import net.minecraft.server.v1_8_R2.Navigation;
-import net.minecraft.server.v1_8_R2.PathEntity;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.EntityPet;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.type.EntityEnderDragonPet;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.type.EntityGhastPet;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.Navigation;
+import net.minecraft.server.v1_8_R3.PathEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 
 public class PetGoalFollowOwner extends APetGoalFollowOwner {
@@ -99,7 +99,7 @@ public class PetGoalFollowOwner extends APetGoalFollowOwner {
         this.timer = 0;
 
         //Set pathfinding radius
-        pet.getAttributeInstance(GenericAttributes.b).setValue(this.teleportDistance);
+        pet.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(this.teleportDistance);
     }
 
     @Override

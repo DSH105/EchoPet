@@ -15,18 +15,18 @@
  * along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.dsh105.echopet.compat.nms.v1_8_R2.entity.type;
+package com.dsh105.echopet.compat.nms.v1_8_R3.entity.type;
 
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntityEnderDragonPet;
 import com.dsh105.echopet.compat.api.event.PetRideJumpEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.Logger;
-import com.dsh105.echopet.compat.nms.v1_8_R2.entity.EntityNoClipPet;
+import com.dsh105.echopet.compat.nms.v1_8_R3.entity.EntityNoClipPet;
 import com.google.common.collect.Lists;
-import net.minecraft.server.v1_8_R2.*;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -378,7 +378,7 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
         ArrayList arraylist = Lists.newArrayList(this.world.players);
         Iterator iterator = arraylist.iterator();
         while (iterator.hasNext()) {
-            if (((EntityHuman) iterator.next()).v()) {
+            if (((EntityHuman) iterator.next()).isSpectator()) {
                 iterator.remove();
             }
         }
