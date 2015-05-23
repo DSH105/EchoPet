@@ -98,12 +98,12 @@ public class PetManager implements IPetManager {
 
     @Override
     public IPet createPet(Player owner, PetType petType, boolean sendMessageOnFail) {
-        if (ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN) {
+        /*if (ReflectionUtil.BUKKIT_VERSION_NUMERIC == 178 && petType == PetType.HUMAN) {
             if (sendMessageOnFail) {
                 Lang.sendTo(owner, Lang.HUMAN_PET_DISABLED.toString());
             }
             return null;
-        }
+        }*/
         removePets(owner, true);
         if (!WorldUtil.allowPets(owner.getLocation())) {
             if (sendMessageOnFail) {

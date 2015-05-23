@@ -41,7 +41,7 @@
             <artifactId>spigot</artifactId>
             <version>1.7.10-R0.1-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>C:\Users\Samuel\Desktop\spigot1649.jar\</systemPath>
+            <systemPath>C:\Users\Samuel\Documents\spigot1649.jar\</systemPath>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
