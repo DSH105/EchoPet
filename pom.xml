@@ -140,10 +140,10 @@
             <id>dsh-repo</id>
             <url>http://repo.dsh105.com/</url>
         </repository>
-        <repository>
+        <!--<repository>
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
-        </repository>
+        </repository>-->
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
