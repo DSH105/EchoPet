@@ -37,7 +37,8 @@
         <module>modules/v1_7_R3</module>
         <module>modules/v1_7_R4</module>
         <module>modules/v1_8_R1</module>
-        <module>modules/v1_8_Spigot</module>
+        <module>modules/v1_8_R2</module>
+        <module>modules/v1_8_R3</module>
         <module>modules/EchoPet</module>
     </modules>
 
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <version>1.8.4-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.dsh105</groupId>
@@ -83,7 +84,7 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.4.1</version>
+            <version>1.2.32</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -124,12 +125,12 @@
 
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
-        </repository>
-        <repository>
             <id>spigot-hub</id>
             <url>http://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>spigot-repo</id>
@@ -151,10 +152,6 @@
             <id>kitteh-repo</id>
             <url>http://repo.kitteh.org/content/groups/public</url>
         </repository>
-        <!--<repository>
-            <id>repo-daboross-net</id>
-            <url>http://repo.daboross.net/</url>
-        </repository>-->
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>

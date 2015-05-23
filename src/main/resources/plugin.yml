@@ -118,7 +118,11 @@ permissions:
         default: op
     echopet.pet.type.enderman:
         default: op
+    echopet.pet.type.endermite:
+        default: op
     echopet.pet.type.ghast:
+        default: op
+    echopet.pet.type.guardian:
         default: op
     echopet.pet.type.horse:
         default: op
@@ -135,6 +139,8 @@ permissions:
     echopet.pet.type.pig:
         default: op
     echopet.pet.type.pigzombie:
+        default: op
+    echopet.pet.type.rabbit:
         default: op
     echopet.pet.type.sheep:
         default: op
@@ -176,7 +182,11 @@ permissions:
         default: op
     echopet.pet.hat.enderman:
         default: op
+    echopet.pet.hat.endermite:
+        default: op
     echopet.pet.hat.ghast:
+        default: op
+    echopet.pet.hat.guardian:
         default: op
     echopet.pet.hat.horse:
         default: op
@@ -193,6 +203,8 @@ permissions:
     echopet.pet.hat.pig:
         default: op
     echopet.pet.hat.pigzombie:
+        default: op
+    echopet.pet.hat.rabbit:
         default: op
     echopet.pet.hat.sheep:
         default: op
@@ -234,7 +246,11 @@ permissions:
         default: op
     echopet.pet.ride.enderman:
         default: op
+    echopet.pet.ride.endermite:
+        default: op
     echopet.pet.ride.ghast:
+        default: op
+    echopet.pet.ride.guardian:
         default: op
     echopet.pet.ride.horse:
         default: op
@@ -251,6 +267,8 @@ permissions:
     echopet.pet.ride.pig:
         default: op
     echopet.pet.ride.pigzombie:
+        default: op
+    echopet.pet.ride.rabbit:
         default: op
     echopet.pet.ride.sheep:
         default: op
@@ -292,7 +310,11 @@ permissions:
         default: op
     echopet.pet.default.set.type.enderman:
         default: op
+    echopet.pet.default.set.type.endermite:
+        default: op
     echopet.pet.default.set.type.ghast:
+        default: op
+    echopet.pet.default.set.type.guardian:
         default: op
     echopet.pet.default.set.type.horse:
         default: op
@@ -309,6 +331,8 @@ permissions:
     echopet.pet.default.set.type.pig:
         default: op
     echopet.pet.default.set.type.pigzombie:
+        default: op
+    echopet.pet.default.set.type.rabbit:
         default: op
     echopet.pet.default.set.type.sheep:
         default: op
@@ -344,6 +368,8 @@ permissions:
         default: op
     echopet.pet.type.enderman.screaming:
         default: op
+    echopet.pet.type.guardian.elder:
+        default: op
     echopet.pet.type.horse.baby:
         default: op
     echopet.pet.type.horse.chested:
@@ -376,7 +402,7 @@ permissions:
         default: op
     echopet.pet.type.horse.nomarking:
         default: op
-    echopet.pet.type.horse.socks:
+    echopet.pet.type.horse.whitesocks:
         default: op
     echopet.pet.type.horse.whitepatch:
         default: op
@@ -417,6 +443,20 @@ permissions:
     echopet.pet.type.pigzombie.baby:
         default: op
     echopet.pet.type.pigzombie.villager:
+        default: op
+    echopet.pet.type.rabbit.baby:
+        default: op
+    echopet.pet.type.rabbit.brown:
+        default: op
+    echopet.pet.type.rabbit.white:
+        default: op
+    echopet.pet.type.rabbit.black:
+        default: op
+    echopet.pet.type.rabbit.blackandwhite:
+        default: op
+    echopet.pet.type.rabbit.saltandpepper:
+        default: op
+    echopet.pet.type.rabbit.killerbunny:
         default: op
     echopet.pet.type.sheep.baby:
         default: op
@@ -534,7 +574,11 @@ permissions:
         default: op
     echopet.petadmin.type.enderman:
         default: op
+    echopet.petadmin.type.endermite:
+        default: op
     echopet.petadmin.type.ghast:
+        default: op
+    echopet.petadmin.type.guardian:
         default: op
     echopet.petadmin.type.horse:
         default: op
@@ -551,6 +595,8 @@ permissions:
     echopet.petadmin.type.pig:
         default: op
     echopet.petadmin.type.pigzombie:
+        default: op
+    echopet.petadmin.type.rabbit:
         default: op
     echopet.petadmin.type.sheep:
         default: op
@@ -592,7 +638,11 @@ permissions:
         default: op
     echopet.petadmin.ride.enderman:
         default: op
+    echopet.petadmin.ride.endermite:
+        default: op
     echopet.petadmin.ride.ghast:
+        default: op
+    echopet.petadmin.ride.guardian:
         default: op
     echopet.petadmin.ride.horse:
         default: op
@@ -609,6 +659,8 @@ permissions:
     echopet.petadmin.ride.pig:
         default: op
     echopet.petadmin.ride.pigzombie:
+        default: op
+    echopet.petadmin.ride.rabbit:
         default: op
     echopet.petadmin.ride.sheep:
         default: op
@@ -650,7 +702,11 @@ permissions:
         default: op
     echopet.petadmin.hat.enderman:
         default: op
+    echopet.petadmin.hat.endermite:
+        default: op
     echopet.petadmin.hat.ghast:
+        default: op
+    echopet.petadmin.hat.guardian:
         default: op
     echopet.petadmin.hat.horse:
         default: op
@@ -667,6 +723,8 @@ permissions:
     echopet.petadmin.hat.pig:
         default: op
     echopet.petadmin.hat.pigzombie:
+        default: op
+    echopet.petadmin.hat.rabbit:
         default: op
     echopet.petadmin.hat.sheep:
         default: op
@@ -708,7 +766,11 @@ permissions:
         default: op
     echopet.petadmin.default.set.type.enderman:
         default: op
+    echopet.petadmin.default.set.type.endermite:
+        default: op
     echopet.petadmin.default.set.type.ghast:
+        default: op
+    echopet.petadmin.default.set.type.guardian:
         default: op
     echopet.petadmin.default.set.type.horse:
         default: op
@@ -725,6 +787,8 @@ permissions:
     echopet.petadmin.default.set.type.pig:
         default: op
     echopet.petadmin.default.set.type.pigzombie:
+        default: op
+    echopet.petadmin.default.set.type.rabbit:
         default: op
     echopet.petadmin.default.set.type.sheep:
         default: op
@@ -790,7 +854,9 @@ permissions:
             echopet.pet.type.creeper: true
             echopet.pet.type.enderdragon: true
             echopet.pet.type.enderman: true
+            echopet.pet.type.endermite: true
             echopet.pet.type.ghast: true
+            echopet.pet.type.guardian: true
             echopet.pet.type.horse: true
             echopet.pet.type.human: true
             echopet.pet.type.irongolem: true
@@ -799,6 +865,7 @@ permissions:
             echopet.pet.type.ocelot: true
             echopet.pet.type.pig: true
             echopet.pet.type.pigzombie: true
+            echopet.pet.type.rabbit: true
             echopet.pet.type.sheep: true
             echopet.pet.type.silverfish: true
             echopet.pet.type.skeleton: true
@@ -823,7 +890,9 @@ permissions:
             echopet.pet.ride.creeper: true
             echopet.pet.ride.enderdragon: true
             echopet.pet.ride.enderman: true
+            echopet.pet.ride.endermite: true
             echopet.pet.ride.ghast: true
+            echopet.pet.ride.guardian: true
             echopet.pet.ride.horse: true
             echopet.pet.ride.human: true
             echopet.pet.ride.irongolem: true
@@ -832,6 +901,7 @@ permissions:
             echopet.pet.ride.ocelot: true
             echopet.pet.ride.pig: true
             echopet.pet.ride.pigzombie: true
+            echopet.pet.ride.rabbit: true
             echopet.pet.ride.sheep: true
             echopet.pet.ride.silverfish: true
             echopet.pet.ride.skeleton: true
@@ -856,7 +926,9 @@ permissions:
             echopet.pet.hat.creeper: true
             echopet.pet.hat.enderdragon: true
             echopet.pet.hat.enderman: true
+            echopet.pet.hat.endermite: true
             echopet.pet.hat.ghast: true
+            echopet.pet.hat.guardian: true
             echopet.pet.hat.horse: true
             echopet.pet.hat.human: true
             echopet.pet.hat.irongolem: true
@@ -865,6 +937,7 @@ permissions:
             echopet.pet.hat.ocelot: true
             echopet.pet.hat.pig: true
             echopet.pet.hat.pigzombie: true
+            echopet.pet.hat.rabbit: true
             echopet.pet.hat.sheep: true
             echopet.pet.hat.silverfish: true
             echopet.pet.hat.skeleton: true
@@ -896,7 +969,9 @@ permissions:
             echopet.pet.default.set.type.creeper: true
             echopet.pet.default.set.type.enderdragon: true
             echopet.pet.default.set.type.enderman: true
+            echopet.pet.default.set.type.endermite: true
             echopet.pet.default.set.type.ghast: true
+            echopet.pet.default.set.type.guardian: true
             echopet.pet.default.set.type.horse: true
             echopet.pet.default.set.type.human: true
             echopet.pet.default.set.type.irongolem: true
@@ -905,6 +980,7 @@ permissions:
             echopet.pet.default.set.type.ocelot: true
             echopet.pet.default.set.type.pig: true
             echopet.pet.default.set.type.pigzombie: true
+            echopet.pet.default.set.type.rabbit: true
             echopet.pet.default.set.type.sheep: true
             echopet.pet.default.set.type.silverfish: true
             echopet.pet.default.set.type.skeleton: true
@@ -950,7 +1026,9 @@ permissions:
             echopet.petadmin.type.creeper: true
             echopet.petadmin.type.enderdragon: true
             echopet.petadmin.type.enderman: true
+            echopet.petadmin.type.endermite: true
             echopet.petadmin.type.ghast: true
+            echopet.petadmin.type.guardian: true
             echopet.petadmin.type.horse: true
             echopet.petadmin.type.human: true
             echopet.petadmin.type.irongolem: true
@@ -959,6 +1037,7 @@ permissions:
             echopet.petadmin.type.ocelot: true
             echopet.petadmin.type.pig: true
             echopet.petadmin.type.pigzombie: true
+            echopet.petadmin.type.rabbit: true
             echopet.petadmin.type.sheep: true
             echopet.petadmin.type.silverfish: true
             echopet.petadmin.type.skeleton: true
@@ -983,7 +1062,9 @@ permissions:
             echopet.petadmin.ride.creeper: true
             echopet.petadmin.ride.enderdragon: true
             echopet.petadmin.ride.enderman: true
+            echopet.petadmin.ride.endermite: true
             echopet.petadmin.ride.ghast: true
+            echopet.petadmin.ride.guardian: true
             echopet.petadmin.ride.horse: true
             echopet.petadmin.ride.human: true
             echopet.petadmin.ride.irongolem: true
@@ -992,6 +1073,7 @@ permissions:
             echopet.petadmin.ride.ocelot: true
             echopet.petadmin.ride.pig: true
             echopet.petadmin.ride.pigzombie: true
+            echopet.petadmin.ride.rabbit: true
             echopet.petadmin.ride.sheep: true
             echopet.petadmin.ride.silverfish: true
             echopet.petadmin.ride.skeleton: true
@@ -1016,7 +1098,9 @@ permissions:
             echopet.petadmin.hat.creeper: true
             echopet.petadmin.hat.enderdragon: true
             echopet.petadmin.hat.enderman: true
+            echopet.petadmin.hat.endermite: true
             echopet.petadmin.hat.ghast: true
+            echopet.petadmin.hat.guardian: true
             echopet.petadmin.hat.horse: true
             echopet.petadmin.hat.human: true
             echopet.petadmin.hat.irongolem: true
@@ -1025,6 +1109,7 @@ permissions:
             echopet.petadmin.hat.ocelot: true
             echopet.petadmin.hat.pig: true
             echopet.petadmin.hat.pigzombie: true
+            echopet.petadmin.hat.rabbit: true
             echopet.petadmin.hat.sheep: true
             echopet.petadmin.hat.silverfish: true
             echopet.petadmin.hat.skeleton: true
@@ -1056,7 +1141,9 @@ permissions:
             echopet.petadmin.default.set.type.creeper: true
             echopet.petadmin.default.set.type.enderdragon: true
             echopet.petadmin.default.set.type.enderman: true
+            echopet.petadmin.default.set.type.endermite: true
             echopet.petadmin.default.set.type.ghast: true
+            echopet.petadmin.default.set.type.guardian: true
             echopet.petadmin.default.set.type.horse: true
             echopet.petadmin.default.set.type.human: true
             echopet.petadmin.default.set.type.irongolem: true
@@ -1065,6 +1152,7 @@ permissions:
             echopet.petadmin.default.set.type.ocelot: true
             echopet.petadmin.default.set.type.pig: true
             echopet.petadmin.default.set.type.pigzombie: true
+            echopet.petadmin.default.set.type.rabbit: true
             echopet.petadmin.default.set.type.sheep: true
             echopet.petadmin.default.set.type.silverfish: true
             echopet.petadmin.default.set.type.skeleton: true
@@ -1102,6 +1190,11 @@ permissions:
         description: 'All enderman pet data permissions'
         children:
             echopet.pet.type.enderman.screaming: true
+    echopet.pet.type.guardian.*:
+        default: op
+        description: 'All guardian pet data permissions'
+        children:
+            echopet.pet.type.guardian.elder: true
     echopet.pet.type.horse.*:
         default: op
         description: 'All horse pet data permissions'
@@ -1122,7 +1215,7 @@ permissions:
             echopet.pet.type.horse.gray: true
             echopet.pet.type.horse.darkbrown: true
             echopet.pet.type.horse.nomarking: true
-            echopet.pet.type.horse.socks: true
+            echopet.pet.type.horse.whitesocks: true
             echopet.pet.type.horse.whitepatch: true
             echopet.pet.type.horse.whitespot: true
             echopet.pet.type.horse.blackspot: true
@@ -1163,6 +1256,17 @@ permissions:
         children:
             echopet.pet.type.pigzombie.baby: true
             echopet.pet.type.pigzombie.villager: true
+    echopet.pet.type.rabbit.*:
+        default: op
+        description: 'All rabbit pet data permissions'
+        children:
+            echopet.pet.type.rabbit.baby: true
+            echopet.pet.type.rabbit.brown: true
+            echopet.pet.type.rabbit.white: true
+            echopet.pet.type.rabbit.black: true
+            echopet.pet.type.rabbit.blackandwhite: true
+            echopet.pet.type.rabbit.saltandpepper: true
+            echopet.pet.type.rabbit.killerbunny: true
     echopet.pet.type.sheep.*:
         default: op
         description: 'All sheep pet data permissions'

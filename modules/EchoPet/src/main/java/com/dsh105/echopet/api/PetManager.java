@@ -30,6 +30,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Villager.Profession;
 
 import java.util.ArrayList;
@@ -543,7 +544,14 @@ public class PetManager implements IPetManager {
             if (pd == PetData.SHIELD) {
                 ((IWitherPet) pet).setShielded(b);
             }
+            
+            if (pd == PetData.ELDER) {
+                ((IGuardianPet) pet).setElder(b);
+            }
 
+            if (pd.isType(PetData.Type.RABBIT_TYPE) && petType == PetType.RABBIT) {
+                ((IRabbitPet) pet).setRabbitType(Rabbit.Type.valueOf(pd.toString()));
+            }
 
             if (petType == PetType.HORSE) {
                 if (pd == PetData.CHESTED) {
@@ -616,6 +624,11 @@ public class PetManager implements IPetManager {
                     }
                 }
             }
+            
+            if (petType == PetType.GUARDIAN) {
+                
+            }
+            
             ListIterator<PetData> i = pet.getPetData().listIterator();
             while (i.hasNext()) {
                 PetData petData = i.next();
