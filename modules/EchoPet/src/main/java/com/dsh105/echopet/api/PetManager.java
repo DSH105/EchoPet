@@ -337,7 +337,7 @@ public class PetManager implements IPetManager {
         PetType petType = pet.getPetType();
 
         EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.type", petType.toString());
-        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.getPetNameWithoutColours());
+        EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.name", pet.serialisePetName());
 
         for (PetData pd : pet.getPetData()) {
             EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".pet.data." + pd.toString().toLowerCase(), true);
@@ -347,7 +347,7 @@ public class PetManager implements IPetManager {
             PetType riderType = pet.getRider().getPetType();
 
             EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.type", riderType.toString());
-            EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pet.getRider().getPetNameWithoutColours());
+            EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.name", pet.getRider().serialisePetName());
             for (PetData pd : pet.getRider().getPetData()) {
                 EchoPet.getConfig(EchoPet.ConfigType.DATA).set(path + ".rider.data." + pd.toString().toLowerCase(), true);
             }

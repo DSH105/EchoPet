@@ -155,6 +155,11 @@ public abstract class Pet implements IPet {
     public String getPetNameWithoutColours() {
         return ChatColor.stripColor(this.getPetName());
     }
+    
+    @Override
+    public String serialisePetName() {
+        return getPetName().replace(ChatColor.COLOR_CHAR, '&');
+    }
 
     @Override
     public boolean setPetName(String name) {

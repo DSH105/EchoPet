@@ -51,6 +51,8 @@ public interface IPet {
     public String getPetName();
 
     public String getPetNameWithoutColours();
+    
+    public String serialisePetName();
 
     public boolean setPetName(String name);
 
