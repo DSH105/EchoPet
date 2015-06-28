@@ -94,8 +94,7 @@ public class EntityWolfPet extends EntityAgeablePet implements IEntityWolfPet {
     @Override
     public void setCollarColor(DyeColor dc) {
         if (((IWolfPet) pet).isTamed()) {
-            byte colour = dc.getWoolData();
-            this.datawatcher.watch(20, colour);
+            this.datawatcher.watch(20, Byte.valueOf((byte) (((int)dc.getWoolData()) & 15)));
         }
     }
 

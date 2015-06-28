@@ -23,10 +23,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.Lang;
-import com.dsh105.echopet.compat.api.util.Logger;
-import com.dsh105.echopet.compat.api.util.MenuUtil;
-import com.dsh105.echopet.compat.api.util.Perm;
+import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.util.menu.*;
 import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
 import org.bukkit.entity.Player;
@@ -36,36 +33,37 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class MenuListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) {
+            return;
+        }
+
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle().contains("EchoPet DataMenu")) {
             event.setCancelled(true);
         }
 
         Inventory inv = event.getInventory();
-
         String title = event.getView().getTitle();
         int slot = event.getRawSlot();
 
-        try {
-            if (slot < 0 || slot >= inv.getSize() || inv.getItem(slot) == null) {
-                return;
-            }
-        } catch (Exception e) {
+        if (slot < 0 || slot >= inv.getSize() || inv.getItem(slot) == null) {
             return;
         }
+
+        ItemStack currentlyInSlot = inv.getItem(slot);
 
         if (event.getSlotType() == InventoryType.SlotType.RESULT) {
             try {
                 for (int i = 1; i <= 4; i++) {
-                    if (inv.getItem(slot) != null && inv.getItem(i) != null && inv.getItem(i).isSimilar(SelectorLayout.getSelectorItem())) {
+                    if (currentlyInSlot != null && inv.getItem(i) != null && inv.getItem(i).isSimilar(SelectorLayout.getSelectorItem())) {
                         player.updateInventory();
-                        event.setCancelled(true);
                         break;
                     }
                 }
@@ -81,17 +79,15 @@ public class MenuListener implements Listener {
 
         int size = (title.equals("EchoPet DataMenu - Color") || pet.getPetType() == PetType.HORSE) ? 18 : 9;
 
-        if (slot <= size && inv.getItem(slot) != null) {
-
+        if (slot <= size && currentlyInSlot != null) {
             try {
                 if (title.equals("EchoPet DataMenu")) {
-                    if (inv.getItem(slot).equals(DataMenuItem.CLOSE.getItem())) {
+                    if (currentlyInSlot.equals(DataMenuItem.CLOSE.getItem())) {
                         player.closeInventory();
-                        event.setCancelled(true);
                         return;
                     }
                     for (MenuItem mi : MenuItem.values()) {
-                        if (inv.getItem(slot).equals(mi.getItem()) || inv.getItem(slot).equals(mi.getBoolean(true)) || inv.getItem(slot).equals(mi.getBoolean(false))) {
+                        if (ItemUtil.matches(mi.getItem(), currentlyInSlot) || ItemUtil.matches(mi.getBoolean(false), currentlyInSlot) || ItemUtil.matches(mi.getBoolean(true), currentlyInSlot)) {
                             if (mi.getMenuType() == DataMenuType.BOOLEAN) {
                                 if (GeneralUtil.isEnumType(PetData.class, mi.toString().toUpperCase())) {
                                     PetData pd = PetData.valueOf(mi.toString());
@@ -155,13 +151,12 @@ public class MenuListener implements Listener {
 
                                 new OpenMenu(mi);
                             }
+                            break;
                         }
                     }
-                    event.setCancelled(true);
                 } else if (title.startsWith("EchoPet DataMenu - ")) {
-                    if (inv.getItem(slot).equals(DataMenuItem.BACK.getItem())) {
+                    if (currentlyInSlot.equals(DataMenuItem.BACK.getItem())) {
                         player.closeInventory();
-                        event.setCancelled(true);
                         new BukkitRunnable() {
                             @Override
                             public void run() {
@@ -173,23 +168,20 @@ public class MenuListener implements Listener {
                         return;
                     }
                     for (DataMenuItem dmi : DataMenuItem.values()) {
-                        if (inv.getItem(slot).equals(dmi.getItem())) {
+                        if (ItemUtil.matches(dmi.getItem(), currentlyInSlot)) {
                             PetData pd = dmi.getDataLink();
                             if (Perm.hasDataPerm(player, true, pet.getPetType(), pd, false)) {
                                 EchoPet.getManager().setData(pet, pd, true);
                             }
+                            break;
                         }
                     }
-                    event.setCancelled(true);
                 }
             } catch (IllegalArgumentException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
-                event.setCancelled(true);
             } catch (IllegalStateException e) {
                 Logger.log(Logger.LogLevel.SEVERE, "Encountered severe error whilst handling InventoryClickEvent.", e, true);
-                event.setCancelled(true);
             }
-
         }
     }
 }

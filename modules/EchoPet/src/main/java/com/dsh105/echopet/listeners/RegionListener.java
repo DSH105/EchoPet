@@ -23,13 +23,14 @@ import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 
 public class RegionListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
         IPet pet = EchoPet.getManager().getPet(p);

@@ -106,7 +106,7 @@ public abstract class EntityPacketPet extends EntityPet implements IEntityPacket
         customDataWatcher.setObject(10, (Object) (String) name);
         WrappedPacket metaPacket = new WrappedPacket(PacketType.Play.Server.ENTITY_METADATA);
         metaPacket.getIntegers().write(0, this.id);
-        metaPacket.getDataWatchers().write(0, customDataWatcher);
+        metaPacket.getWatchableObjectLists().write(0, this.customDataWatcher.getWatchableObjects());
 
         for (Player p : GeometryUtil.getNearbyPlayers(new Location(this.world.getWorld(), this.locX, this.locY, this.locZ), 50)) {
             ServerUtil.sendPacket(metaPacket.getHandle(), p);
