@@ -52,7 +52,7 @@ public abstract class EntityAgeablePet extends EntityPet {
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(12, new Integer(0));
+        this.datawatcher.a(12, Integer.valueOf(0));
     }
 
     @Override
@@ -73,9 +73,9 @@ public abstract class EntityAgeablePet extends EntityPet {
 
     public void setBaby(boolean flag) {
         if (flag) {
-            this.datawatcher.watch(12, Integer.valueOf(Integer.MIN_VALUE));
+            this.datawatcher.watch(12, -1);
         } else {
-            this.datawatcher.watch(12, new Integer(0));
+            this.datawatcher.watch(12, 0);
         }
     }
 

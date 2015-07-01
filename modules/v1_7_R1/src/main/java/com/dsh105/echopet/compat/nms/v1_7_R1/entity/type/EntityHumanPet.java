@@ -41,7 +41,7 @@ public class EntityHumanPet extends EntityPacketPet implements IEntityHumanPet {
     public WrappedPacket getSpawnPacket() {
         WrappedPacket spawnPacket = new WrappedPacket(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
         spawnPacket.getIntegers().write(0, this.id);
-        spawnPacket.getAccessor().write(1, this.profile);
+        spawnPacket.getAccessor().write(1, this.profile.getHandle());
         spawnPacket.getIntegers().write(1, (int) (this.locX * 32.0D));
         spawnPacket.getIntegers().write(2, (int) (this.locY * 32.0D));
         spawnPacket.getIntegers().write(3, (int) (this.locZ * 32.0D));

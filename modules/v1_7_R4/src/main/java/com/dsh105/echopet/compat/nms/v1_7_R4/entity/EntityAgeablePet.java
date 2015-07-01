@@ -34,11 +34,11 @@ public abstract class EntityAgeablePet extends EntityPet {
     }
 
     public int getAge() {
-        return this.datawatcher.getByte(12);
+        return this.datawatcher.getInt(12);
     }
 
     public void setAge(int i) {
-        this.datawatcher.watch(12, Byte.valueOf((byte) i));
+        this.datawatcher.watch(12, Integer.valueOf(i));
     }
 
     public boolean isAgeLocked() {
@@ -52,7 +52,7 @@ public abstract class EntityAgeablePet extends EntityPet {
     @Override
     protected void initDatawatcher() {
         super.initDatawatcher();
-        this.datawatcher.a(12, new Byte((byte) 0));
+        this.datawatcher.a(12, Integer.valueOf(0));
     }
 
     @Override
@@ -73,9 +73,9 @@ public abstract class EntityAgeablePet extends EntityPet {
 
     public void setBaby(boolean flag) {
         if (flag) {
-            this.datawatcher.watch(12, Byte.valueOf((byte) -1));
+            this.datawatcher.watch(12, -1);
         } else {
-            this.datawatcher.watch(12, new Byte((byte) 0));
+            this.datawatcher.watch(12, 0);
         }
     }
 

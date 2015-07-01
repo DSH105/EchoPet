@@ -35,14 +35,15 @@ import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
 import com.dsh105.echopet.compat.api.registration.PetRegistry;
 import com.dsh105.echopet.compat.api.util.*;
+import com.dsh105.echopet.compatibility.SpigotProtocolHackPacketListener;
 import com.dsh105.echopet.hook.VanishProvider;
 import com.dsh105.echopet.hook.WorldGuardProvider;
-import com.dsh105.echopet.listeners.ChunkListener;
 import com.dsh105.echopet.listeners.MenuListener;
 import com.dsh105.echopet.listeners.PetEntityListener;
 import com.dsh105.echopet.listeners.PetOwnerListener;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -85,6 +86,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
     public String cmdString = "pet";
     public String adminCmdString = "petadmin";
 
+    private SpigotProtocolHackPacketListener spigotProtocolHackPacketListener = null;
+
     // Update data
     public boolean update = false;
     public String name = "";
@@ -104,15 +107,15 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
             Class.forName(ReflectionUtil.COMPAT_NMS_PATH + ".SpawnUtil");
         } catch (ClassNotFoundException e) {
             EchoPet.LOG.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
-                                    + this.getDescription().getVersion() + ChatColor.RED
-                                    + " is not compatible with this version of CraftBukkit");
+                    + this.getDescription().getVersion() + ChatColor.RED
+                    + " is not compatible with this version of CraftBukkit");
             EchoPet.LOG.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
-                                                                new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
-                                                                        "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
-                                                                                               "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
-                                                                null, this);
+                    new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
+                            "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
+                            "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
+                    null, this);
             COMMAND_MANAGER.register(cmd);
             return;
         }
@@ -152,6 +155,8 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         this.vanishProvider = new VanishProvider(this);
         this.worldGuardProvider = new WorldGuardProvider(this);
 
+        this.setupSpigotProtocolHackCompatibilityIfNeeded();
+
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();
@@ -169,6 +174,9 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         }
         if (dbPool != null) {
             dbPool.shutdown();
+        }
+        if (this.spigotProtocolHackPacketListener != null) {
+            this.spigotProtocolHackPacketListener.shutdown();
         }
 
         // Unregister the commands
@@ -255,15 +263,15 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
                 connection = dbPool.getConnection();
                 statement = connection.createStatement();
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS EchoPet_version3 (" +
-                                                "OwnerName varchar(36)," +
-                                                "PetType varchar(255)," +
-                                                "PetName varchar(255)," +
-                                                "PetData BIGINT," +
-                                                "RiderPetType varchar(255)," +
-                                                "RiderPetName varchar(255), " +
-                                                "RiderPetData BIGINT," +
-                                                "PRIMARY KEY (OwnerName)" +
-                                                ");");
+                        "OwnerName varchar(36)," +
+                        "PetType varchar(255)," +
+                        "PetName varchar(255)," +
+                        "PetData BIGINT," +
+                        "RiderPetType varchar(255)," +
+                        "RiderPetName varchar(255), " +
+                        "RiderPetData BIGINT," +
+                        "PRIMARY KEY (OwnerName)" +
+                        ");");
 
                 // Convert previous database versions
                 TableMigrationUtil.migrateTables();
@@ -284,6 +292,23 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
 
         // Make sure to convert those UUIDs!
 
+    }
+
+    private void setupSpigotProtocolHackCompatibilityIfNeeded() {
+        if (ReflectionUtil.MC_VERSION_NUMERIC != 174) {
+            return;
+        }
+        try {
+            Class.forName("org.spigotmc.SpigotConfig");
+        } catch (Throwable throwable) {
+            return;
+        }
+        if (!Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) {
+            EchoPet.LOG.log(ChatColor.RED + "Spigot 1.7.x-1.8.x ProtocolHack detected, however ProtocolLib not installed. Some pets may crash 1.8 clients!");
+            return;
+        }
+        EchoPet.LOG.log(ChatColor.GREEN + "Spigot 1.7.x-1.8.x ProtocolHack and ProtocolLib detected! Adding 1.8 compatibility!");
+        this.spigotProtocolHackPacketListener = new SpigotProtocolHackPacketListener(this);
     }
 
     protected void checkUpdates() {

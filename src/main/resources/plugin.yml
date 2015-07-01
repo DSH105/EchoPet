@@ -6,7 +6,7 @@ description: >
 author: DSH105
 website: ${project.url}
 main: com.dsh105.echopet.EchoPetPlugin
-softdepend: [WorldGuard, VanishNoPacket]
+softdepend: [WorldGuard, VanishNoPacket, ProtocolLib]
 
 commands:
     ecupdate:

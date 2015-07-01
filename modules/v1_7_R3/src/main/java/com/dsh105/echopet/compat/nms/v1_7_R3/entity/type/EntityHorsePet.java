@@ -48,7 +48,7 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
         if (flag) {
             this.datawatcher.watch(12, Integer.valueOf(-24000));
         } else {
-            this.datawatcher.watch(12, new Integer(0));
+            this.datawatcher.watch(12, 0);
         }
     }
 

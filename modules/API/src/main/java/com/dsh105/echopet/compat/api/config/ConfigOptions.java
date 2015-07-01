@@ -120,7 +120,7 @@ public class ConfigOptions extends Options {
         });
         set("stripDiacriticsFromNames", true);
 
-        set("enableHumanSkinFixing", true, "Connects to Mojang session servers to attempt fto fix human skins");
+        set("enableHumanSkinFixing", true, "Connects to Mojang session servers to attempt to fix human skins");
         set("loadSavedPets", true, "Auto-load pets from last session");
         set("multiworldLoadOverride", true, "When true, if -loadSavedPets-", "is set to false, Pets will", "still be loaded when", "players switch worlds");
 

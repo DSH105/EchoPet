@@ -35,7 +35,7 @@ import org.bukkit.event.vehicle.VehicleExitEvent;
 
 public class PetEntityListener implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
@@ -53,7 +53,7 @@ public class PetEntityListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDismount(VehicleExitEvent event) {
         Entity e = event.getVehicle();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
@@ -65,7 +65,7 @@ public class PetEntityListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPetEnterPortal(EntityPortalEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
@@ -73,7 +73,7 @@ public class PetEntityListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
@@ -85,7 +85,7 @@ public class PetEntityListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
@@ -99,7 +99,7 @@ public class PetEntityListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onEntityInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet) {
@@ -107,7 +107,7 @@ public class PetEntityListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockForm(EntityBlockFormEvent event) {
         Entity e = event.getEntity();
         if (ReflectionUtil.getEntityHandle(e) instanceof IEntityPet && event.getNewState().getType().equals(Material.SNOW)) {

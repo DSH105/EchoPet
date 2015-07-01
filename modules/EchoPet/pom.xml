@@ -197,32 +197,37 @@
                                     <include>com.dsh105:Commodus</include>
                                     <include>com.dsh105:PowerMessage</include>
                                     <include>com.captainbern:Minecraft-Reflection</include>
+                                    <include>com.comphenix.packetwrapper:PacketWrapper</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>com.jolbox</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.com.jolbox</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.slf4j</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.org.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.dsh105.commodus</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.dsh105</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.com.dsh105.commodus</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.dsh105.powermessage</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.dsh105</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.com.dsh105.powermessage</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.captainbern.reflection</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.captainbern</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.com.captainbern.reflection</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.captainbern.minecraft</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs.captainbern</shadedPattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.com.captainbern.minecraft</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.comphenix.packetwrapper</pattern>
+                                    <shadedPattern>com.dsh105.echopet.libs.com.comphenix.packetwrapper</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
