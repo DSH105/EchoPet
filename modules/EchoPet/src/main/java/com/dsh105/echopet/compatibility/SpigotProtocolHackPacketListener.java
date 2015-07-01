@@ -131,6 +131,12 @@ public class SpigotProtocolHackPacketListener extends PacketAdapter {
             Object object = getKeyValue(12, wrappedWatchableObjectList);
             if (object instanceof Integer) {
                 removeKey(12, wrappedWatchableObjectList);
+
+                if (Horse.class.isAssignableFrom(entityType.getEntityClass())) {
+                    if (((Integer) object) == -24000) {
+                        object = -1;
+                    }
+                }
                 wrappedWatchableObjectList.add(new WrappedWatchableObject(12, Byte.valueOf((byte) (int) (Integer) object)));
             }
         }
