@@ -37,10 +37,12 @@ public class ReflectionUtil {
 
     private static String prepareCompatNmsPath() {
         String versionTag = getServerVersion();
-        if (Bukkit.getVersion().contains("Spigot") && versionTag.equals("v1_7_R4") && isSpigot1dot8()) {
-            // At least it works
-            versionTag = "v1_8_Spigot";
-        }
+
+//        if (Bukkit.getVersion().contains("Spigot") && versionTag.equals("v1_7_R4") && isSpigot1dot8()) {
+//            // At least it works
+//            versionTag = "v1_8_Spigot";
+//        }
+
         return "com.dsh105.echopet.compat.nms." + versionTag;
     }
 
