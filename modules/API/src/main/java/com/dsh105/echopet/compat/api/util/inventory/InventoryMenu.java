@@ -95,7 +95,7 @@ public class InventoryMenu implements InventoryHolder, Listener {
         HumanEntity human = event.getWhoClicked();
         if (human instanceof Player) {
             Player player = (Player) human;
-            Inventory inv = player.getOpenInventory().getTopInventory();
+            Inventory inv = event.getView().getTopInventory();
             if (inv.getHolder() != null && inv.getHolder() instanceof InventoryMenu && event.getRawSlot() >= 0 && event.getRawSlot() < size) {
                 InventoryMenu menu = (InventoryMenu) inv.getHolder();
                 if (menu.id == id) {
