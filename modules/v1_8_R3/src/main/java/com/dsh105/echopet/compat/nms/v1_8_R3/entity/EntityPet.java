@@ -33,7 +33,9 @@ import com.dsh105.echopet.compat.nms.v1_8_R3.NMSEntityUtil;
 import com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_8_R3.entity.ai.PetGoalLookAtPlayer;
+
 import net.minecraft.server.v1_8_R3.*;
+
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature;
@@ -163,6 +165,11 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     @Override
     public void setTarget(LivingEntity livingEntity) {
         this.setGoalTarget(((CraftLivingEntity) livingEntity).getHandle());
+    }
+    
+    @Override
+    public void setForceInvisible(boolean flag){
+    	this.forceInvisible = flag;
     }
 
     @Override

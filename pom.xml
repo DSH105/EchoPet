@@ -123,7 +123,7 @@
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib-v1_7_R4</artifactId>
+            <artifactId>ProtocolLib</artifactId>
             <version>3.6.4-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -171,9 +171,9 @@
             <url>http://maven.elmakers.com/repository/</url>
         </repository>
         <repository>
-            <id>dmulloy2-repo</id>
-            <url>http://repo.dmulloy2.net/content/repositories/snapshots/</url>
-        </repository>
+    <id>dmulloy2-repo</id>
+    <url>http://repo.dmulloy2.net/content/groups/public/</url>
+</repository>
         <repository>
             <id>yawkat-repo</id>
             <url>http://mvn.yawk.at/</url>
