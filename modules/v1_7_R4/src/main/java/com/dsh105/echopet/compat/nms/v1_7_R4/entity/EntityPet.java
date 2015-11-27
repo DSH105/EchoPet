@@ -173,6 +173,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     @Override
     public void setForceInvisible(boolean flag){
     	this.forceInvisible = flag;
+    	this.setInvisible(flag);
     }
 
     @Override
@@ -314,11 +315,8 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             pet.ownerRidePet(false);
         }
 
-        if (((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
-            if (forceInvisible && !this.isInvisible())
-            	this.setInvisible(forceInvisible);
-            else
-            	this.setInvisible(!this.isInvisible());
+        if (!forceInvisible && ((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
+        	this.setInvisible(!this.isInvisible());
         }
 
         if (((CraftPlayer) this.getPlayerOwner()).getHandle().isSneaking() != this.isSneaking()) {

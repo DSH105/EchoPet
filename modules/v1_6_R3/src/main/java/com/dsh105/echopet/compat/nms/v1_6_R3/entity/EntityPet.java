@@ -32,7 +32,9 @@ import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.ai.PetGoalFloat;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.ai.PetGoalFollowOwner;
 import com.dsh105.echopet.compat.nms.v1_6_R3.entity.ai.PetGoalLookAtPlayer;
+
 import net.minecraft.server.v1_6_R3.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
@@ -172,6 +174,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     @Override
     public void setForceInvisible(boolean flag){
     	this.forceInvisible = flag;
+    	this.setInvisible(flag);
     }
 
     @Override
@@ -311,10 +314,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
             pet.ownerRidePet(false);
         }
 
-        if (((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
-            if (forceInvisible && !this.isInvisible())
-            	this.setInvisible(forceInvisible);
-            else
+        if (!forceInvisible && ((CraftPlayer) this.getPlayerOwner()).getHandle().isInvisible() != this.isInvisible() && !this.shouldVanish) {
             	this.setInvisible(!this.isInvisible());
         }
 
