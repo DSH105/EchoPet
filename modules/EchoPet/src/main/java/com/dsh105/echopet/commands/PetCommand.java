@@ -29,7 +29,6 @@ import com.dsh105.echopet.compat.api.util.*;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
-import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
 import com.dsh105.echopet.conversation.NameFactory;
 import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
@@ -130,7 +129,7 @@ public class PetCommand implements CommandExecutor {
                 }
                 if (Perm.BASE_SELECT.hasPerm(sender, true, false)) {
                     Player p = (Player) sender;
-                    new SelectorMenu().showTo(p);
+                    SelectorLayout.getSelectorMenu().showTo(p);
                     return true;
                 } else {
                     return true;

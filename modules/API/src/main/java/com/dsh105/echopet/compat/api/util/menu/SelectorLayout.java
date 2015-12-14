@@ -24,6 +24,7 @@ import com.dsh105.echopet.compat.api.config.PetItem;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -34,6 +35,7 @@ import java.util.List;
 public class SelectorLayout {
 
     private static ArrayList<SelectorIcon> selectorLayout = new ArrayList<SelectorIcon>();
+    private static SelectorMenu selectorMenu;
 
     public static ItemStack getSelectorItem() {
         YAMLConfig config = ConfigOptions.instance.getConfig();
@@ -61,6 +63,10 @@ public class SelectorLayout {
     }
 
     public static void loadLayout() {
+        if (selectorMenu != null) {
+            HandlerList.unregisterAll(selectorMenu);
+        }
+
         selectorLayout.clear();
         YAMLConfig config = ConfigOptions.instance.getConfig();
         String s = "petSelector.menu";
@@ -90,6 +96,12 @@ public class SelectorLayout {
             }
             selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name, loreList.toArray(new String[0])));
         }
+
+        selectorMenu = new SelectorMenu();
+    }
+
+    public static SelectorMenu getSelectorMenu() {
+        return selectorMenu;
     }
 
     public static HashMap<Integer, SelectorIcon> getLoadedLayout() {

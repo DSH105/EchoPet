@@ -18,7 +18,6 @@
 package com.dsh105.echopet.compat.api.util.inventory;
 
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
-import com.dsh105.echopet.compat.api.util.IDGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -33,13 +32,11 @@ import java.util.Map;
 
 public class InventoryMenu implements InventoryHolder, Listener {
 
-    private long id;
     private int size;
     private String title;
     private HashMap<Integer, MenuIcon> slots = new HashMap<Integer, MenuIcon>();
 
-    public InventoryMenu(String title, int size) {
-        this.id = IDGenerator.nextId();
+    protected InventoryMenu(String title, int size) {
         EchoPet.getPlugin().getServer().getPluginManager().registerEvents(this, EchoPet.getPlugin());
 
         if (size < 0) {
@@ -49,10 +46,6 @@ public class InventoryMenu implements InventoryHolder, Listener {
         }
         this.title = title;
         this.size = size;
-    }
-
-    public long getId() {
-        return id;
     }
 
     @Override
@@ -98,13 +91,11 @@ public class InventoryMenu implements InventoryHolder, Listener {
             Inventory inv = event.getView().getTopInventory();
             if (inv.getHolder() != null && inv.getHolder() instanceof InventoryMenu && event.getRawSlot() >= 0 && event.getRawSlot() < size) {
                 InventoryMenu menu = (InventoryMenu) inv.getHolder();
-                if (menu.id == id) {
-                    event.setCancelled(true);
-                    MenuIcon icon = slots.get(event.getSlot());
-                    if (icon != null) {
-                        icon.onClick(player);
-                        player.closeInventory();
-                    }
+                event.setCancelled(true);
+                MenuIcon icon = slots.get(event.getSlot());
+                if (icon != null) {
+                    icon.onClick(player);
+                    player.closeInventory();
                 }
             }
         }

@@ -29,7 +29,7 @@ import com.dsh105.echopet.compat.api.util.MenuUtil;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
-import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
+import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -215,7 +215,7 @@ public class EchoPetAPI {
      * @param sendMessage defines if the plugin sends a message to the target {@link org.bukkit.entity.Player}
      */
     public void openPetSelector(Player player, boolean sendMessage) {
-        new SelectorMenu().showTo(player);
+        SelectorLayout.getSelectorMenu().showTo(player);
         if (false) {
             Lang.sendTo(player, Lang.OPEN_SELECTOR.toString());
         }
