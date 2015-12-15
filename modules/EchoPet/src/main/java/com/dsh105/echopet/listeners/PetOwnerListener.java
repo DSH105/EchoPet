@@ -29,7 +29,6 @@ import com.dsh105.echopet.compat.api.util.Lang;
 import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.WorldUtil;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
-import com.dsh105.echopet.compat.api.util.menu.SelectorMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -52,7 +51,7 @@ public class PetOwnerListener implements Listener {
         Player p = event.getPlayer();
         ItemStack itemStack = event.getItem();
         if (itemStack != null && itemStack.isSimilar(SelectorLayout.getSelectorItem())) {
-            new SelectorMenu().showTo(p);
+            SelectorLayout.getSelectorMenu().showTo(p);
             event.setCancelled(true);
         }
     }
@@ -62,7 +61,7 @@ public class PetOwnerListener implements Listener {
         Player p = event.getPlayer();
         Entity e = event.getRightClicked();
         if (p.getItemInHand() != null && p.getItemInHand().isSimilar(SelectorLayout.getSelectorItem())) {
-            new SelectorMenu().showTo(p);
+            SelectorLayout.getSelectorMenu().showTo(p);
             event.setCancelled(true);
             return;
         }

@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class SelectorMenu extends InventoryMenu {
 
-    public SelectorMenu() {
+    SelectorMenu() {
         super(ConfigOptions.instance.getConfig().getString("petSelector.menu.title", "Pets"), ConfigOptions.instance.getConfig().getInt("petSelector.menu.slots", 45));
         for (Map.Entry<Integer, SelectorIcon> entry : SelectorLayout.getLoadedLayout().entrySet()) {
             this.setSlot(entry.getKey(), entry.getValue());
