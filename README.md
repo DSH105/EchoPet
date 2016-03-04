@@ -1,6 +1,6 @@
-# [The EchoPet project is offically no longer under development!](https://twitter.com/_DSH105_/status/694102156392005633)
+# [EchoPet is permanently discontinued.](https://twitter.com/_DSH105_/status/694102156392005633)
 
-(For anyone who whishes to continue the project or whishes to maintain his own fork, we suggest you to use the [version 3 branch](https://github.com/DSH105/EchoPet/tree/3.x))
+If you wish to maintain your own fork, I recommend you take a peek at the [version 3 branch](https://github.com/DSH105/EchoPet/tree/3.x). I'd prefer if you refrain from branding/redistributing it under the same name as I will **not** be endorsing any unofficial continuations.
 
 ![Logo](http://dev.bukkit.org/media/images/52/979/Title.png)
 ## [EchoPet](https://dev.bukkit.org/bukkit-plugins/echopet/) adds pets to your Minecraft server! Perfect for donation perks
