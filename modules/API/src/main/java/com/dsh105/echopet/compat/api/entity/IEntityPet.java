@@ -41,6 +41,8 @@ public interface IEntityPet {
     public void setShouldVanish(boolean flag);
 
     public void setInvisible(boolean flag);
+    
+    public void setForceInvisible(boolean flag);
 
     public void setTarget(LivingEntity livingEntity);
 
