@@ -43,12 +43,6 @@
             <version>1.9-R0.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
-        <!--<dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.8.4-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>-->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EchoPet-API</artifactId>
