@@ -17,7 +17,6 @@
 
 package com.dsh105.echopet;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -42,7 +41,6 @@ import com.dsh105.echopet.commands.util.CommandManager;
 import com.dsh105.echopet.commands.util.DynamicPluginCommand;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.plugin.*;
-import com.dsh105.echopet.compat.api.plugin.data.Updater;
 import com.dsh105.echopet.compat.api.plugin.uuid.UUIDMigration;
 import com.dsh105.echopet.compat.api.reflection.SafeConstructor;
 import com.dsh105.echopet.compat.api.reflection.utility.CommonReflection;
@@ -105,12 +103,12 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
         } catch (ClassNotFoundException e) {
             EchoPet.LOG.log(ChatColor.RED + "EchoPet " + ChatColor.GOLD
                     + this.getDescription().getVersion() + ChatColor.RED
-                    + " is not compatible with this version of CraftBukkit");
+			        + " is not compatible with this version of Spigot");
             EchoPet.LOG.log(ChatColor.RED + "Initialisation failed. Please update the plugin.");
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(this.cmdString, new String[0], "", "",
                     new VersionIncompatibleCommand(this.cmdString, prefix, ChatColor.YELLOW +
-                            "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of CraftBukkit. Please update the plugin.",
+			                "EchoPet " + ChatColor.GOLD + this.getDescription().getVersion() + ChatColor.YELLOW + " is not compatible with this version of Spigot. Please update the plugin.",
                             "echopet.pet", ChatColor.YELLOW + "You are not allowed to do that."),
                     null, this);
             COMMAND_MANAGER.register(cmd);
@@ -287,44 +285,44 @@ public class EchoPetPlugin extends JavaPlugin implements IEchoPetPlugin {
     }
 
     protected void checkUpdates() {
-        if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
-            final File file = this.getFile();
-            final Updater.UpdateType updateType = this.getMainConfig().getBoolean("autoUpdate", false) ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD;
-            getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
-                @Override
-                public void run() {
-                    Updater updater = new Updater(EchoPet.getPlugin(), 53655, file, updateType, false);
-                    update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
-                    if (update) {
-                        name = updater.getLatestName();
-                        EchoPet.LOG.log(ChatColor.GOLD + "An update is available: " + name);
-                        EchoPet.LOG.log(ChatColor.GOLD + "Type /ecupdate to update.");
-                        if (!updateChecked) {
-                            updateChecked = true;
-                        }
-                    }
-                }
-            });
-        }
+		/*if (this.getMainConfig().getBoolean("checkForUpdates", true)) {
+		    final File file = this.getFile();
+		    final Updater.UpdateType updateType = this.getMainConfig().getBoolean("autoUpdate", false) ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD;
+		    getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+		        @Override
+		        public void run() {
+		            Updater updater = new Updater(EchoPet.getPlugin(), 53655, file, updateType, false);
+		            update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
+		            if (update) {
+		                name = updater.getLatestName();
+		                EchoPet.LOG.log(ChatColor.GOLD + "An update is available: " + name);
+		                EchoPet.LOG.log(ChatColor.GOLD + "Type /ecupdate to update.");
+		                if (!updateChecked) {
+		                    updateChecked = true;
+		                }
+		            }
+		        }
+		    });
+		}*/
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        if (commandLabel.equalsIgnoreCase("ecupdate")) {
-            if (sender.hasPermission("echopet.update")) {
-                if (updateChecked) {
-                    @SuppressWarnings("unused")
-                    Updater updater = new Updater(this, 53655, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-                    return true;
-                } else {
-                    sender.sendMessage(this.prefix + ChatColor.GOLD + " An update is not available.");
-                    return true;
-                }
-            } else {
-                Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.update"));
-                return true;
-            }
-        } else if (commandLabel.equalsIgnoreCase("echopet")) {
+		/*if (commandLabel.equalsIgnoreCase("ecupdate")) {
+		    if (sender.hasPermission("echopet.update")) {
+		        if (updateChecked) {
+		            @SuppressWarnings("unused")
+		            Updater updater = new Updater(this, 53655, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+		            return true;
+		        } else {
+		            sender.sendMessage(this.prefix + ChatColor.GOLD + " An update is not available.");
+		            return true;
+		        }
+		    } else {
+		        Lang.sendTo(sender, Lang.NO_PERMISSION.toString().replace("%perm%", "echopet.update"));
+		        return true;
+		    }
+		} else */if(commandLabel.equalsIgnoreCase("echopet")){
             if (sender.hasPermission("echopet.petadmin")) {
                 PluginDescriptionFile pdFile = this.getDescription();
                 sender.sendMessage(ChatColor.RED + "-------- EchoPet --------");

@@ -20,6 +20,7 @@ package com.dsh105.echopet.compat.nms.v1_9_R1;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -31,6 +32,8 @@ import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.ISpawnUtil;
 import com.dsh105.echopet.compat.nms.v1_9_R1.entity.EntityPet;
 
+import net.minecraft.server.v1_9_R1.ItemStack;
+import net.minecraft.server.v1_9_R1.NBTTagCompound;
 import net.minecraft.server.v1_9_R1.World;
 
 public class SpawnUtil implements ISpawnUtil {
@@ -58,5 +61,16 @@ public class SpawnUtil implements ISpawnUtil {
 			Particle.MAGIC_RUNES.builder().at(l).show();
 		}
 		return entityPet;
+	}
+
+	@Override
+	// This is kind of a dumb way to do this.. But I'm too lazy to fix my reflection
+	public org.bukkit.inventory.ItemStack getSpawnEgg(org.bukkit.inventory.ItemStack i, String entityTag){
+		ItemStack is = CraftItemStack.asNMSCopy(i);
+		NBTTagCompound nbt = is.getTag();
+		if(nbt == null) nbt = new NBTTagCompound();
+		if(!nbt.hasKey("EntityTag")) nbt.set("EntityTag", new NBTTagCompound());
+		nbt.getCompound("EntityTag").setString("id", entityTag);
+		return CraftItemStack.asCraftMirror(is);
 	}
 }

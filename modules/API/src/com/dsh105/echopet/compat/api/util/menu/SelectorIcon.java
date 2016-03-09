@@ -18,6 +18,7 @@
 package com.dsh105.echopet.compat.api.util.menu;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -33,11 +34,17 @@ public class SelectorIcon extends MenuIcon {
     private String command;
     private PetType petType;
 
-    public SelectorIcon(int slot, String command, PetType petType, int materialId, int materialData, String name, String... lore) {
-        super(slot, materialId, materialData, name, lore);
+	public SelectorIcon(int slot, String command, PetType petType, Material material, int materialData, String name, String... lore){
+		super(slot, material, materialData, name, lore);
         this.command = command;
         this.petType = petType;
     }
+
+	public SelectorIcon(int slot, String command, PetType petType, Material material, String entityTag, String name, String... lore){
+		super(slot, material, entityTag, name, lore);
+		this.command = command;
+		this.petType = petType;
+	}
 
     public String getCommand() {
         return command;
@@ -51,15 +58,15 @@ public class SelectorIcon extends MenuIcon {
     public ItemStack getIcon(Player viewer) {
         ItemStack i = super.getIcon(viewer);
         ItemMeta meta = i.getItemMeta();
-        ChatColor c = this.petType == null ? ChatColor.YELLOW : (viewer.hasPermission("echopet.pet.type." + this.getPetType().toString().toLowerCase().replace("_", ""))) ? ChatColor.GREEN : ChatColor.RED;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', c + this.getName()));
+		ChatColor c = this.petType == null ? ChatColor.YELLOW : (viewer.hasPermission("echopet.pet.type." + this.getPetType().toString().toLowerCase().replace("_", ""))) ? ChatColor.GREEN : ChatColor.RED;
+		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', c + this.getName()));// NPE
         i.setItemMeta(meta);
 
         if (this.petType == PetType.HUMAN && i.getItemMeta() instanceof SkullMeta) {
             SkullMeta sm = (SkullMeta) i.getItemMeta();
             sm.setOwner(viewer.getName());
             i.setItemMeta(sm);
-        }
+		}
         return i;
     }
 

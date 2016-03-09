@@ -17,20 +17,22 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
 import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.config.PetItem;
 import com.dsh105.echopet.compat.api.entity.PetType;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class SelectorLayout {
 
@@ -66,7 +68,6 @@ public class SelectorLayout {
         if (selectorMenu != null) {
             HandlerList.unregisterAll(selectorMenu);
         }
-
         selectorLayout.clear();
         YAMLConfig config = ConfigOptions.instance.getConfig();
         String s = "petSelector.menu";
@@ -78,8 +79,17 @@ public class SelectorLayout {
             if (petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())) {
                 pt = PetType.valueOf(petType.toUpperCase());
             }
-            int id = config.getInt(s + ".slot-" + i + ".materialId");
-            int data = config.getInt(s + ".slot-" + i + ".materialData");
+			Material material = Material.getMaterial(config.getString(s + ".slot-" + i + ".material"));
+			int data = config.getInt(s + ".slot-" + i + ".materialData", -1);// Support old configs
+			String entityTag = "Pig";
+			if(data > 0){
+				EntityType et = EntityType.fromId(data);
+				if(et != null){
+					entityTag = et.getName();
+				}
+			}else{
+				entityTag = config.getString(s + ".slot-" + i + ".entityName", "Pig");
+			}
             String name = config.getString(s + ".slot-" + i + ".name");
             if (name == null) {
                 continue;
@@ -94,7 +104,8 @@ public class SelectorLayout {
                     loreList.add(ChatColor.translateAlternateColorCodes('&', part));
                 }
             }
-            selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, id, data, name, loreList.toArray(new String[0])));
+			if(material.equals(Material.MONSTER_EGG)) selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, material, entityTag, name, loreList.toArray(new String[0])));
+			else selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, material, data, name, loreList.toArray(new String[0])));
         }
 
         selectorMenu = new SelectorMenu();
@@ -121,8 +132,9 @@ public class SelectorLayout {
         ArrayList<SelectorIcon> layout = new ArrayList<SelectorIcon>();
         int count = 0;
         for (PetItem item : PetItem.values()) {
-            layout.add(new SelectorIcon(count, item.getCommand(), item.petType, item.getMat().getId(), item.getData(), item.getName()));
-            count++;
+			if(item.getPetType() != null && !item.getPetType().equals(PetType.HUMAN) && !(item.getMaterialData() > 0)) layout.add(new SelectorIcon(count, item.getCommand(), item.petType, item.getMat(), item.getPetType().getEntityType().getName(), item.getName()));
+			else layout.add(new SelectorIcon(count, item.getCommand(), item.petType, item.getMat(), item.getMaterialData(), item.getName()));
+			count++;
         }
 
         SelectorItem[] selectorItems = new SelectorItem[]{SelectorItem.CLOSE, null, SelectorItem.TOGGLE, SelectorItem.CALL, null, SelectorItem.HAT, SelectorItem.RIDE, SelectorItem.NAME, SelectorItem.MENU};
@@ -130,7 +142,7 @@ public class SelectorLayout {
         for (int j = 1; j < 10; j++) {
             SelectorItem s = selectorItems[i++];
             if (s != null) {
-                layout.add(new SelectorIcon((45 - j), s.getCommand(), null, s.getMat().getId(), s.getData(), s.getName()));
+				layout.add(new SelectorIcon((45 - j), s.getCommand(), null, s.getMat(), s.getData(), s.getName()));
             }
         }
         return layout;

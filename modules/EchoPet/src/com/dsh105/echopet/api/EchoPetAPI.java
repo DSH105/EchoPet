@@ -17,6 +17,12 @@
 
 package com.dsh105.echopet.api;
 
+import java.util.ArrayList;
+
+import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+
 import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.compat.api.ai.*;
 import com.dsh105.echopet.compat.api.entity.IPet;
@@ -30,11 +36,6 @@ import com.dsh105.echopet.compat.api.util.ReflectionUtil;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
 import com.dsh105.echopet.compat.api.util.menu.PetMenu;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class EchoPetAPI {
 

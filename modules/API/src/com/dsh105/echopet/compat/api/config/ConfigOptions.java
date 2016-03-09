@@ -17,18 +17,19 @@
 
 package com.dsh105.echopet.compat.api.config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+
 import com.dsh105.commodus.config.Options;
 import com.dsh105.commodus.config.YAMLConfig;
 import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.menu.SelectorIcon;
 import com.dsh105.echopet.compat.api.util.menu.SelectorLayout;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class ConfigOptions extends Options {
@@ -145,7 +146,7 @@ public class ConfigOptions extends Options {
         set("petSelector.clearInvOnJoin", false);
         set("petSelector.item.name", "&aPets");
         set("petSelector.item.lore", "&7Right click to open");
-        set("petSelector.item.materialId", Material.BONE.getId());
+		set("petSelector.item.material", Material.BONE.name());
         set("petSelector.item.materialData", 0);
 
         boolean loadDefault = this.config.get("petSelector.menu.slots") == null;
@@ -156,8 +157,9 @@ public class ConfigOptions extends Options {
                 int friendlySlot = icon.getSlot() + 1;
                 set("petSelector.menu.slot-" + friendlySlot + ".command", icon.getCommand());
                 set("petSelector.menu.slot-" + friendlySlot + ".petType", icon.getPetType() == null ? "" : icon.getPetType().toString());
-                set("petSelector.menu.slot-" + friendlySlot + ".materialId", icon.getMaterialId());
-                set("petSelector.menu.slot-" + friendlySlot + ".materialData", icon.getMaterialData());
+				set("petSelector.menu.slot-" + friendlySlot + ".material", icon.getMaterial().name());
+				if(icon.getPetType() == null || icon.getPetType().equals(PetType.HUMAN) || icon.getMaterialData() > 0) set("petSelector.menu.slot-" + friendlySlot + ".materialData", icon.getMaterialData());
+				else set("petSelector.menu.slot-" + friendlySlot + ".entityName", icon.getPetType().getEntityType().getName());
                 set("petSelector.menu.slot-" + friendlySlot + ".name", (icon.getName() == null ? "" : icon.getName()).replace(ChatColor.COLOR_CHAR, '&'));
                 ArrayList<String> lore = new ArrayList<String>();
                 for (String s : icon.getLore()) {

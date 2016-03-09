@@ -17,13 +17,14 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
+import java.util.Map;
+
+import org.bukkit.entity.Player;
+
 import com.dsh105.echopet.compat.api.config.ConfigOptions;
 import com.dsh105.echopet.compat.api.event.PetMenuOpenEvent;
 import com.dsh105.echopet.compat.api.plugin.EchoPet;
 import com.dsh105.echopet.compat.api.util.inventory.InventoryMenu;
-import org.bukkit.entity.Player;
-
-import java.util.Map;
 
 public class SelectorMenu extends InventoryMenu {
 

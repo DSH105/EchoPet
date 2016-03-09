@@ -17,34 +17,45 @@
 
 package com.dsh105.echopet.compat.api.util.inventory;
 
+import java.util.Arrays;
+
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import com.dsh105.echopet.compat.api.plugin.EchoPet;
 
 public class MenuIcon {
 
     private int slot;
-    private int materialId;
+	private Material material;
     private int materialData;
-    private String name;
+	private String name, entityTag;
     private String[] lore;
 
-    public MenuIcon(int slot, int materialId, int materialData, String name, String... lore) {
+	public MenuIcon(int slot, Material material, int materialData, String name, String... lore){
         this.slot = slot;
-        this.materialId = materialId;
+		this.material = material;
         this.materialData = materialData;
         this.name = name;
         this.lore = lore;
     }
 
+	public MenuIcon(int slot, Material material, String entityTag, String name, String... lore){
+		this.slot = slot;
+		this.material = material;
+		this.entityTag = entityTag;
+		this.name = name;
+		this.lore = lore;
+	}
+
     public int getSlot() {
         return slot;
     }
 
-    public int getMaterialId() {
-        return materialId;
+	public Material getMaterial(){
+		return material;
     }
 
     public int getMaterialData() {
@@ -60,14 +71,17 @@ public class MenuIcon {
     }
 
     public ItemStack getIcon(Player viewer) {
-        ItemStack i = new ItemStack(materialId, 1, (short) materialData);
+		ItemStack i = new ItemStack(material, 1, (short) materialData);
         ItemMeta meta = i.getItemMeta();
         meta.setDisplayName(name);
         if (this.lore != null && this.lore.length > 0) {
             meta.setLore(Arrays.asList(lore));
         }
         i.setItemMeta(meta);
-        return i;
+		if(entityTag != null){
+			i = EchoPet.getPlugin().getSpawnUtil().getSpawnEgg(i, entityTag);
+		}
+		return i;
     }
 
     public void onClick(Player viewer) {
