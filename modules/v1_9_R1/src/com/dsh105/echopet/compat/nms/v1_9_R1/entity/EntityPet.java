@@ -30,7 +30,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import com.dsh105.commodus.IdentUtil;
 import com.dsh105.echopet.compat.api.ai.PetGoalSelector;
 import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.event.PetAttackEvent;
@@ -247,7 +246,8 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
 
     public boolean onInteract(Player p) {
-        if (IdentUtil.areIdentical(p, getPlayerOwner())) {
+		if(p.getUniqueId().equals(getPlayerOwner().getUniqueId())){
+			// if (IdentUtil.areIdentical(p, getPlayerOwner())) {
             if (EchoPet.getConfig().getBoolean("pets." + this.getPet().getPetType().toString().toLowerCase().replace("_", " ") + ".interactMenu", true) && Perm.BASE_MENU.hasPerm(this.getPlayerOwner(), false, false)) {
                 ArrayList<MenuOption> options = MenuUtil.createOptionList(getPet().getPetType());
                 int size = this.getPet().getPetType() == PetType.HORSE ? 18 : 9;
@@ -260,10 +260,9 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
     }
 
 
-    public boolean a(EntityHuman human) {
-        return onInteract((Player) human.getBukkitEntity());
+	public EnumInteractionResult a(EntityHuman human, Vec3D vec3d, ItemStack itemstack, EnumHand enumhand){
+		return onInteract((Player) human.getBukkitEntity()) ? EnumInteractionResult.SUCCESS : EnumInteractionResult.FAIL;
     }
-
 
     public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
         super.setPositionRotation(d0, d1, d2, f, f1);

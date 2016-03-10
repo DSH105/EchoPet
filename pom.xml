@@ -41,17 +41,6 @@
         	<scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>Commodus</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.captainbern</groupId>
-                    <artifactId>Minecraft-Reflection</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>com.captainbern</groupId>
             <artifactId>Minecraft-Reflection</artifactId>
             <version>1.0.0</version>
@@ -79,24 +68,9 @@
             <version>0.8.0-rc3</version>
         </dependency>
         <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>3.7-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.comphenix.packetwrapper</groupId>
-            <artifactId>PacketWrapper</artifactId>
-            <version>1.8.7-R0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
         	<groupId>com.sk89q</groupId>
         	<artifactId>worldguard</artifactId>
         	<version>6.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-        	<groupId>com.dsh105</groupId>
-        	<artifactId>PowerMessage</artifactId>
-        	<version>1.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
