@@ -100,7 +100,6 @@ public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet 
 		this.datawatcher.register(bG, Integer.valueOf(0));
 		this.datawatcher.register(bH, Optional.absent());
 		this.datawatcher.register(bI, Integer.valueOf(EnumHorseArmor.NONE.a()));
-		setHorseVisual(2, true);// Tamed
     }
 
     @Override

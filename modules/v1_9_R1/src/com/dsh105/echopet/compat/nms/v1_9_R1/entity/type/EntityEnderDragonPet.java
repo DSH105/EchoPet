@@ -58,7 +58,6 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
     private float bv;
     private boolean bw;
     private boolean bx;
-    private int by;
     private Entity bA;
 
     public EntityEnderDragonPet(World world) {
@@ -384,8 +383,8 @@ public class EntityEnderDragonPet extends EntityNoClipPet implements IComplex, I
 
     private void target() {
         this.bw = false;
-        ArrayList arraylist = Lists.newArrayList(this.world.players);
-        Iterator iterator = arraylist.iterator();
+		ArrayList<EntityHuman> arraylist = Lists.newArrayList(this.world.players);
+		Iterator<EntityHuman> iterator = arraylist.iterator();
         while (iterator.hasNext()) {
             if (((EntityHuman) iterator.next()).isSpectator()) {
                 iterator.remove();

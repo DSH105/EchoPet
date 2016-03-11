@@ -28,6 +28,13 @@
 	<module>./modules/EchoPet</module>
   </modules>
   
+    <distributionManagement>
+        <repository>
+            <id>codingforcookies-ftp</id>
+            <url>ftp://repo.codingforcookies.com/repository/</url>
+        </repository>
+    </distributionManagement>
+  
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -75,6 +82,10 @@
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>codingforcookies-repo</id>
+            <url>http://repo.codingforcookies.com/</url>
+        </repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -158,5 +169,12 @@
             </executions>
         </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.10</version>
+            </extension>
+        </extensions>
     </build>
 </project>

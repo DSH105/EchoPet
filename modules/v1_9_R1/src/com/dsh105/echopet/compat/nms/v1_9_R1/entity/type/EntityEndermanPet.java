@@ -65,7 +65,7 @@ public class EntityEndermanPet extends EntityPet implements IEntityEndermanPet {
     }
 
 	public IBlockData getCarried(){
-		return (IBlockData) ((Optional) this.datawatcher.get(bv)).orNull();
+		return (IBlockData) ((Optional<IBlockData>) this.datawatcher.get(bv)).orNull();
     }
 
     @Override

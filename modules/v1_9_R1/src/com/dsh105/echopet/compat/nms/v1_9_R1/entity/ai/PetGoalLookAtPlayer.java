@@ -31,16 +31,16 @@ public class PetGoalLookAtPlayer extends APetGoalLookAtPlayer {
     private float range;
     private int ticksLeft;
     private float chance;
-    private Class clazz;
+	private Class clazz;
 
-    public PetGoalLookAtPlayer(EntityPet pet, Class c) {
+	public PetGoalLookAtPlayer(EntityPet pet, Class c){
         this.pet = pet;
         this.range = 8.0F;
         this.chance = 0.02F;
         this.clazz = c;
     }
 
-    public PetGoalLookAtPlayer(EntityPet pet, Class c, float f, float f1) {
+	public PetGoalLookAtPlayer(EntityPet pet, Class c, float f, float f1){
         this.pet = pet;
         this.range = f;
         this.chance = f1;

@@ -37,7 +37,6 @@ public class EntityBatPet extends EntityPet implements IEntityBatPet {
         super(world, pet);
     }
 
-
     public void setHanging(boolean flag) {
 		int i = ((Byte) this.datawatcher.get(a)).byteValue();
         if (flag) {

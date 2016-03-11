@@ -88,7 +88,7 @@ public class EntityTameablePet extends EntityAgeablePet implements IEntityTameab
 	}
 
 	public UUID getOwnerUUID(){
-		return (UUID) ((Optional) this.datawatcher.get(bw)).orNull();
+		return (UUID) ((Optional<UUID>) this.datawatcher.get(bw)).orNull();
 	}
 
 	public void setOwnerUUID(UUID paramUUID){
