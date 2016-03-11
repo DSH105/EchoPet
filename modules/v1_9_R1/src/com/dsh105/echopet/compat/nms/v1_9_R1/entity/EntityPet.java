@@ -285,7 +285,7 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         if (makeSound) {
 			SoundEffect sound = this.getDeathSound();
             if (sound != null) {
-				a(this.getDeathSound(), 1.0F, 1.0F);// was makeSound in 1.8
+				a(sound, 1.0F, 1.0F);// was makeSound in 1.8
 				/*
 				  public void a(SoundEffect soundeffect, float f, float f1)
 				  {

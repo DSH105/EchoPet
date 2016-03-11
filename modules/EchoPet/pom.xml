@@ -56,6 +56,10 @@
                 	<artifactId>Commodus</artifactId>
                 	<groupId>com.dsh105</groupId>
                 </exclusion>
+                <exclusion>
+                	<artifactId>PowerMessage</artifactId>
+                	<groupId>com.dsh105</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -72,12 +76,23 @@
         </dependency>
         <dependency>
         	<groupId>com.dsh105</groupId>
+        	<artifactId>PowerMessage</artifactId>
+        	<version>1.0.1-SNAPSHOT</version>
+        	<exclusions>
+        		<exclusion>
+        			<artifactId>Commodus</artifactId>
+        			<groupId>com.dsh105</groupId>
+        		</exclusion>
+        	</exclusions>
+        </dependency>
+        <dependency>
+        	<groupId>com.dsh105</groupId>
         	<artifactId>Commodus</artifactId>
         	<version>1.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 	<build>
-        <directory>../../target</directory>
+	    <directory>../../target</directory>
         <sourceDirectory>src/</sourceDirectory>
         <finalName>${project.name}</finalName>
         <resources>

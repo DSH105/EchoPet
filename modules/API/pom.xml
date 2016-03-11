@@ -34,6 +34,7 @@
     </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <finalName>${project.name}</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -47,11 +48,6 @@
   </build>
   <dependencies>
   	<dependency>
-  		<groupId>com.dsh105</groupId>
-  		<artifactId>PowerMessage</artifactId>
-  		<version>1.0.1-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
   		<groupId>com.sk89q</groupId>
   		<artifactId>worldguard</artifactId>
   		<version>6.1.1-SNAPSHOT</version>
@@ -61,6 +57,11 @@
   				<groupId>org.bukkit</groupId>
   			</exclusion>
   		</exclusions>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.dsh105</groupId>
+  		<artifactId>PowerMessage</artifactId>
+  		<version>1.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>
 </project>
