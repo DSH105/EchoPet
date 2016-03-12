@@ -79,7 +79,13 @@ public class SelectorLayout {
             if (petType != null && GeneralUtil.isEnumType(PetType.class, petType.toUpperCase())) {
                 pt = PetType.valueOf(petType.toUpperCase());
             }
-			Material material = Material.getMaterial(config.getString(s + ".slot-" + i + ".material"));
+			Material material = null;
+			int materialID = config.getInt(s + ".slot-" + i + ".materialId", -1);
+			if(materialID >= 0){
+				material = Material.getMaterial(materialID);
+			}else{
+				material = Material.getMaterial(config.getString(s + ".slot-" + i + ".material"));
+			}
 			int data = config.getInt(s + ".slot-" + i + ".materialData", -1);// Support old configs
 			String entityTag = "Pig";
 			if(data > 0){
@@ -104,6 +110,7 @@ public class SelectorLayout {
                     loreList.add(ChatColor.translateAlternateColorCodes('&', part));
                 }
             }
+			if(material == null) return;
 			if(material.equals(Material.MONSTER_EGG)) selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, material, entityTag, name, loreList.toArray(new String[0])));
 			else selectorLayout.add(new SelectorIcon(i - 1, cmd, pt, material, data, name, loreList.toArray(new String[0])));
         }

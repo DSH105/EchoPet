@@ -42,12 +42,6 @@
             <version>1.9-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-        	<groupId>org.bukkit</groupId>
-        	<artifactId>craftbukkit</artifactId>
-        	<version>1.9-SNAPSHOT</version>
-        	<scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.captainbern</groupId>
             <artifactId>Minecraft-Reflection</artifactId>
             <version>1.0.0</version>
