@@ -17,11 +17,11 @@
 
 package com.dsh105.echopet.compat.api.util;
 
+import java.util.ArrayList;
+
 import com.dsh105.echopet.compat.api.entity.PetType;
 import com.dsh105.echopet.compat.api.util.menu.MenuItem;
 import com.dsh105.echopet.compat.api.util.menu.MenuOption;
-
-import java.util.ArrayList;
 
 public class MenuUtil {
 
@@ -78,9 +78,11 @@ public class MenuUtil {
             options.add(new MenuOption(i++, MenuItem.BABY));
             options.add(new MenuOption(i++, MenuItem.SADDLE));
         }
-        if (pt == PetType.SHEEP) {
-            options.add(new MenuOption(i++, MenuItem.BABY));
-            options.add(new MenuOption(i++, MenuItem.COLOR));
+		if(pt == PetType.SHEEP || pt == PetType.SNOWMAN){
+			if(pt == PetType.SHEEP){
+				options.add(new MenuOption(i++, MenuItem.BABY));
+				options.add(new MenuOption(i++, MenuItem.COLOR));
+			}
             options.add(new MenuOption(i++, MenuItem.SHEARED));
         }
         if (pt == PetType.WOLF) {

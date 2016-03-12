@@ -21,13 +21,13 @@ import com.dsh105.echopet.compat.api.entity.*;
 import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
 import com.dsh105.echopet.compat.nms.v1_9_R1.entity.EntityPet;
 
-import net.minecraft.server.v1_9_R1.SoundEffect;
-import net.minecraft.server.v1_9_R1.SoundEffects;
-import net.minecraft.server.v1_9_R1.World;
+import net.minecraft.server.v1_9_R1.*;
 
 @EntitySize(width = 0.4F, height = 1.8F)
 @EntityPetType(petType = PetType.SNOWMAN)
 public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet {
+
+	private static final DataWatcherObject<Byte> sheared = DataWatcher.a(EntitySnowman.class, DataWatcherRegistry.a);// Sheared(Removes pumpkin)
 
     public EntitySnowmanPet(World world) {
         super(world);
@@ -36,6 +36,11 @@ public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet {
     public EntitySnowmanPet(World world, IPet pet) {
         super(world, pet);
     }
+
+	protected void initDatawatcher(){
+		super.initDatawatcher();
+		this.datawatcher.register(sheared, Byte.valueOf((byte) 0));
+	}
 
     @Override
 	protected SoundEffect getIdleSound(){
@@ -51,4 +56,13 @@ public class EntitySnowmanPet extends EntityPet implements IEntitySnowmanPet {
     public SizeCategory getSizeCategory() {
         return SizeCategory.REGULAR;
     }
+
+	public void setSheared(boolean flag){
+		byte b0 = ((Byte) this.datawatcher.get(sheared)).byteValue();
+		if(flag){
+			this.datawatcher.set(sheared, Byte.valueOf((byte) (b0 | 0x10)));
+		}else{
+			this.datawatcher.set(sheared, Byte.valueOf((byte) (b0 & 0xFFFFFFEF)));
+		}
+	}
 }

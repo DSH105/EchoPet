@@ -25,7 +25,7 @@ import net.minecraft.server.v1_9_R1.*;
 public abstract class EntityAgeablePet extends EntityPet {
 
 	private static final DataWatcherObject<Boolean> bv = DataWatcher.a(EntityAgeable.class, DataWatcherRegistry.h);
-	protected int a;
+	protected int age;
     private boolean ageLocked = true;
 
     public EntityAgeablePet(World world) {
@@ -36,13 +36,26 @@ public abstract class EntityAgeablePet extends EntityPet {
         super(world, pet);
     }
 
-    public int getAge() {
-		return ((Boolean) this.datawatcher.get(bv)).booleanValue() ? -1 : this.a;
+	public int getAge(){
+		return ((Boolean) this.datawatcher.get(bv)).booleanValue() ? -1 : this.age;
     }
 
-    public void setAge(int i) {
-		a = (i < 0 ? -1 : (i >= 6000 ? 1 : 0));
-		this.datawatcher.set(bv, a < 0);
+	public void setAge(int i, boolean flag){
+		int j = getAge();
+		j += i * 20;
+		if(j > 0){
+			j = 0;
+		}
+		setAgeRaw(j);
+	}
+
+	public void setAge(int i){
+		setAge(i, false);
+	}
+
+	public void setAgeRaw(int i){
+		this.datawatcher.set(bv, Boolean.valueOf(i < 0));
+		this.age = i;
     }
 
     public boolean isAgeLocked() {
@@ -60,8 +73,8 @@ public abstract class EntityAgeablePet extends EntityPet {
     }
 
     @Override
-    public void m() {
-        super.m();
+	public void m(){
+		super.m();
         if (!(this.world.isClientSide || this.ageLocked)) {
             int i = this.getAge();
 

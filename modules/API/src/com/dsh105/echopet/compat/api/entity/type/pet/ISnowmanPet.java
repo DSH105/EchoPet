@@ -21,4 +21,7 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 
 public interface ISnowmanPet extends IPet {
 
+	public void setSheared(boolean flag);
+
+	public boolean isSheared();
 }

@@ -30,7 +30,7 @@ import net.minecraft.server.v1_9_R1.*;
 @EntityPetType(petType = PetType.HORSE)
 public class EntityHorsePet extends EntityAgeablePet implements IEntityHorsePet {
 
-	private static final DataWatcherObject<Byte> bE = DataWatcher.a(EntityHorse.class, DataWatcherRegistry.a);
+	private static final DataWatcherObject<Byte> bE = DataWatcher.a(EntityHorse.class, DataWatcherRegistry.a);// Visual??
 	private static final DataWatcherObject<Integer> bF = DataWatcher.a(EntityHorse.class, DataWatcherRegistry.b);// type
 	private static final DataWatcherObject<Integer> bG = DataWatcher.a(EntityHorse.class, DataWatcherRegistry.b);// variant
 	private static final DataWatcherObject<Optional<UUID>> bH = DataWatcher.a(EntityHorse.class, DataWatcherRegistry.m);

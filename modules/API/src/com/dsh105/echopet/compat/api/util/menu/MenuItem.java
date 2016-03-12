@@ -17,15 +17,16 @@
 
 package com.dsh105.echopet.compat.api.util.menu;
 
-import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
-import com.dsh105.echopet.compat.api.util.wrapper.WrappedMaterial;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.dsh105.echopet.compat.api.util.menu.DataMenu.DataMenuType;
+import com.dsh105.echopet.compat.api.util.wrapper.WrappedMaterial;
 
 public enum MenuItem {
 
@@ -37,7 +38,7 @@ public enum MenuItem {
     CHESTED("CHEST", 1, (short) 0, DataMenuType.BOOLEAN, "Chested", "Horse"),
     FIRE("FIREBALL", 1, (short) 0, DataMenuType.BOOLEAN, "Fire", "Blaze"),
     SADDLE("SADDLE", 1, (short) 0, DataMenuType.BOOLEAN, "Saddle", "Horse", "Pig"),
-    SHEARED("SHEARS", 1, (short) 0, DataMenuType.BOOLEAN, "Sheared", "Sheep"),
+	SHEARED("SHEARS", 1, (short) 0, DataMenuType.BOOLEAN, "Sheared", "Sheep", "Snowman"),
     SCREAMING("ENDER_PEARL", 1, (short) 0, DataMenuType.BOOLEAN, "Screaming", "Enderman"),
     POTION("POTION", 1, (short) 0, DataMenuType.BOOLEAN, "Potion", "Witch"),
     SHIELD("GLASS", 1, (short) 0, DataMenuType.BOOLEAN, "Shield", "Wither"),

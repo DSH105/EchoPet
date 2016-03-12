@@ -17,9 +17,9 @@
 
 package com.dsh105.echopet.compat.api.entity;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.List;
+
+import com.google.common.collect.ImmutableList;
 
 public enum PetData {
 
@@ -59,14 +59,14 @@ public enum PetData {
     NORMAL("normal", Type.HORSE_TYPE),
     ORANGE("orange", Type.COLOUR),
     PINK("pink", Type.COLOUR),
-    POWER("powered", Type.BOOLEAN),
+	POWER("powered", Type.BOOLEAN),
     PRIEST("priest", Type.PROF),
     PURPLE("purple", Type.COLOUR),
     RED("red", Type.CAT, Type.COLOUR),
     SADDLE("saddle", Type.BOOLEAN),
     SALT_AND_PEPPER("saltandpepper", Type.RABBIT_TYPE),
     SCREAMING("screaming", Type.BOOLEAN),
-    SHEARED("sheared", Type.BOOLEAN),
+	SHEARED("sheared", Type.BOOLEAN),
     SHIELD("shield", Type.BOOLEAN),
     SIAMESE("siamese", Type.CAT),
     SILVER("silver", Type.COLOUR),

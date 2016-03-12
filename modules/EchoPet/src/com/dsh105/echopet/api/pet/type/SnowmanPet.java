@@ -17,16 +17,29 @@
 
 package com.dsh105.echopet.api.pet.type;
 
+import org.bukkit.entity.Player;
+
 import com.dsh105.echopet.api.pet.Pet;
 import com.dsh105.echopet.compat.api.entity.EntityPetType;
 import com.dsh105.echopet.compat.api.entity.PetType;
+import com.dsh105.echopet.compat.api.entity.type.nms.IEntitySnowmanPet;
 import com.dsh105.echopet.compat.api.entity.type.pet.ISnowmanPet;
-import org.bukkit.entity.Player;
 
 @EntityPetType(petType = PetType.SNOWMAN)
 public class SnowmanPet extends Pet implements ISnowmanPet {
 
+	boolean sheared;
+
     public SnowmanPet(Player owner) {
         super(owner);
     }
+
+	public void setSheared(boolean flag){
+		((IEntitySnowmanPet) getEntityPet()).setSheared(flag);
+		this.sheared = flag;
+	}
+
+	public boolean isSheared(){
+		return this.sheared;
+	}
 }

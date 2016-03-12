@@ -535,7 +535,11 @@ public class PetManager implements IPetManager {
             }
 
             if (pd == PetData.SHEARED) {
-                ((ISheepPet) pet).setSheared(b);
+				if(petType == PetType.SHEEP){
+					((ISheepPet) pet).setSheared(b);
+				}else{
+					((ISnowmanPet) pet).setSheared(b);
+				}
             }
 
             if (pd == PetData.SCREAMING) {

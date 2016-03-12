@@ -461,12 +461,12 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
 
     public abstract SizeCategory getSizeCategory();
 
+
     // Entity
 
 	public void m(){// Search for "entityBaseTick" the method calling the method its in uses it
 		super.m();
         onLive();
-        
         
         if (this.petGoalSelector == null) {
             this.remove(false);
@@ -475,11 +475,10 @@ public abstract class EntityPet extends EntityCreature implements IAnimal, IEnti
         this.petGoalSelector.updateGoals();
     }
 
-    // EntityLiving
-
 	protected void i(){// Registers all the values into datawatcher
 		super.i();
-        initDatawatcher();
+		initDatawatcher();
+		// We don't need datawatcher stuff from EntityCreature, EntityInsentinent, or EntityLiving.
     }
 
     // Entity
