@@ -1,33 +1,72 @@
-# Eclipse
-/.classpath
-/.project
-/.settings
+# Build #
+#########
+MANIFEST.MF
+dependency-reduced-pom.xml
 
-# Netbeans
-/nbproject
+# Compiled #
+############
+bin
+build
+dist
+lib
+out
+run
+target
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
 
-# We use maven!
-/build.xml
+# Databases #
+#############
+*.db
+*.sqlite
 
-# Maven
-/target
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
 
-# Vim
-.*.sw[a-p]
+# Repository #
+##############
+.git
 
-# Various other potential build files
-/build
-/bin
-/dist
-/manifest.mf
+# Logging #
+###########
+/logs
+*.log
 
-/world
+# Misc #
+########
+*.bak
 
-# Mac filesystem dust
+# System #
+##########
 .DS_Store
+ehthumbs.db
+Thumbs.db
 
-# IntelliJ
+# Project #
+###########
+.classpath
+.externalToolBuilders
+.idea
+.project
+.settings
+.checkstyle
+run
+eclipse
+nbproject
+atlassian-ide-plugin.xml
+build.xml
+nb-configuration.xml
 *.iml
 *.ipr
 *.iws
-.idea/

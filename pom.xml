@@ -15,60 +15,31 @@
   ~ along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.dsh105</groupId>
-    <artifactId>EchoPet-Parent</artifactId>
-    <name>EchoPet Parent</name>
-    <packaging>pom</packaging>
-    <version>v2</version>
-    <url>http://github.com/DSH105/EchoPet</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <modules>
-        <module>modules/API</module>
-        <module>modules/v1_6_R3</module>
-        <module>modules/v1_7_R1</module>
-        <module>modules/v1_7_R2</module>
-        <module>modules/v1_7_R3</module>
-        <module>modules/v1_7_R4</module>
-        <module>modules/v1_8_R1</module>
-        <module>modules/v1_8_R2</module>
-        <module>modules/v1_8_R3</module>
-        <module>modules/EchoPet</module>
-    </modules>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.dsh105</groupId>
+  <artifactId>EchoPet-Parent</artifactId>
+  <name>EchoPet-Parent</name>
+  <packaging>pom</packaging>
+  <version>1</version>
+  <modules>
+	<module>./modules/API</module>
+	<module>./modules/v1_9_R1</module>
+	<module>./modules/EchoPet</module>
+  </modules>
+  
+    <distributionManagement>
+        <repository>
+            <id>codingforcookies-ftp</id>
+            <url>ftp://repo.codingforcookies.com/repository/</url>
+        </repository>
+    </distributionManagement>
+  
     <dependencies>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8.4-R0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>Commodus</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.captainbern</groupId>
-                    <artifactId>Minecraft-Reflection</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>PowerMessage</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.dsh105</groupId>
-                    <artifactId>Commodus</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.9-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.captainbern</groupId>
@@ -88,30 +59,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>6.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>6.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>1.7.5</version>
@@ -122,41 +69,24 @@
             <version>0.8.0-rc3</version>
         </dependency>
         <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib-v1_7_R4</artifactId>
-            <version>3.6.4-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.comphenix.packetwrapper</groupId>
-            <artifactId>PacketWrapper</artifactId>
-            <version>1.7.2-R0.5</version>
+        	<groupId>com.sk89q</groupId>
+        	<artifactId>worldguard</artifactId>
+        	<version>6.1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>spigot-hub</id>
-            <url>http://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
+            <id>codingforcookies-repo</id>
+            <url>http://repo.codingforcookies.com/</url>
         </repository>
         <repository>
             <id>spigot-repo</id>
-            <url>http://repo.md-5.net/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>dsh-repo</id>
-            <url>http://repo.dsh105.com/</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
-        </repository>
-        <repository>
-            <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
             <id>kitteh-repo</id>
@@ -167,16 +97,12 @@
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
         </repository>
         <repository>
-            <id>elmakers-repo</id>
-            <url>http://maven.elmakers.com/repository/</url>
-        </repository>
-        <repository>
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>yawkat-repo</id>
-            <url>http://mvn.yawk.at/</url>
+        	<id>sk89q-repo</id>
+        	<url>http://maven.sk89q.com/artifactory/repo/</url>
         </repository>
     </repositories>
 
@@ -188,7 +114,7 @@
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
-                <directory>src/main/resources/</directory>
+                <directory>src/resources/</directory>
                 <includes>
                     <include>*.yml</include>
                 </includes>
@@ -197,36 +123,44 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>1.4</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <finalName>${project.artifactId}-shaded</finalName>
+                        <artifactSet>
+                            <includes>
+                                <include>com.dsh105:*</include>
+                                <include>com.captainbern:*</include>
+                                <include>resources:*</include>
+                            </includes>
+                        </artifactSet>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
         </plugins>
-
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ftp</artifactId>
-                <version>2.6</version>
+                <version>2.10</version>
             </extension>
         </extensions>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>dsh105-ftp</id>
-            <url>ftp://repo.dsh105.com/</url>
-        </repository>
-    </distributionManagement>
 </project>
