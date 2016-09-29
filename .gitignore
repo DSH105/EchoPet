@@ -1,7 +1,9 @@
 # Eclipse
-/.classpath
-/.project
-/.settings
+.classpath/
+.project/
+.project
+.settings/
+.classpath
 
 # Netbeans
 /nbproject
@@ -31,3 +33,4 @@
 *.ipr
 *.iws
 .idea/
+/bin1
